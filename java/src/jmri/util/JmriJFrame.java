@@ -511,7 +511,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 if (sw != null) {
                     try {
                         widthInset = Integer.parseInt(sw);
-                    } catch (Exception e1) {
+                    } catch (NumberFormatException e1) {
                         log.error("Error parsing jmri.inset.width: " + e1);
                     }
                 }
@@ -519,7 +519,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 if (sh != null) {
                     try {
                         heightInset = Integer.parseInt(sh);
-                    } catch (Exception e1) {
+                    } catch (NumberFormatException e1) {
                         log.error("Error parsing jmri.inset.height: " + e1);
                     }
                 }
@@ -533,7 +533,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 log.trace("getMaximumSize returns approx due to failure {},{}", screen.width, screen.height);
                 return new Dimension(screen.width, screen.height - 45); // approximate this...
             }
-        } catch (Exception e2) {
+        } catch (RuntimeException e2) {
             // failed completely, fall back to standard method
             log.trace("getMaximumSize returns super due to failure {}", super.getMaximumSize());
             return super.getMaximumSize();

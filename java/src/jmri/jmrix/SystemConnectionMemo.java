@@ -61,11 +61,12 @@ abstract public class SystemConnectionMemo {
      * Provides a method to reserve System Names and prefixes at creation
      */
     private static void initialise() {
-        if (!initialised) {
+        log.debug("initialise called");
+//        if (!initialised) {
 //             addUserName("Internal");
 //             addSystemPrefix("I");
 //             initialised = true;
-        }
+//        }
     }
 
     /**

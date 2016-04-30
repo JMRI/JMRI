@@ -1,4 +1,3 @@
-// WindowInterface.java
 package jmri.util.swing;
 
 import java.awt.Frame;
@@ -19,7 +18,6 @@ import java.awt.Frame;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public interface WindowInterface {
 

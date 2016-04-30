@@ -1,4 +1,3 @@
-// VerticalLabelUI.java
 package jmri.util.swing;
 
 import java.awt.Dimension;
@@ -34,7 +33,6 @@ import javax.swing.plaf.basic.BasicLabelUI;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2010
- * @version $Revision$
  */
 public class VerticalLabelUI extends BasicLabelUI {
 
@@ -178,5 +176,3 @@ public class VerticalLabelUI extends BasicLabelUI {
 
     //private static final Logger log = LoggerFactory.getLogger(VerticalLabelUI.class.getName());
 }
-
-/* @(#)VerticalLabelUI.java */

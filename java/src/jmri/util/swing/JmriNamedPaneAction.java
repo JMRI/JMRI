@@ -1,4 +1,3 @@
-// JmriNamedPaneAction.java
 package jmri.util.swing;
 
 import javax.swing.Icon;
@@ -9,14 +8,8 @@ import org.slf4j.LoggerFactory;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class JmriNamedPaneAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -16587323774213371L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
@@ -57,5 +50,3 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(JmriNamedPaneAction.class.getName());
 }
-
-/* @(#)JmriAbstractAction.java */

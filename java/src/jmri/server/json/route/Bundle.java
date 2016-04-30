@@ -1,9 +1,11 @@
-package jmri.util.swing;
+// Bundle.java
+package jmri.server.json.route;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Locale;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -18,11 +20,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
+ * @version $Revision: 17977 $
  * @since 3.3.1
  */
-public class Bundle extends jmri.util.Bundle {
+public class Bundle extends jmri.server.json.Bundle {
 
-    private final static String name = "jmri.util.swing.UtilBundle"; // NOI18N
+    private final static String name = null; // no local resources
 
     //
     // below here is boilerplate to be copied exactly
@@ -41,6 +44,20 @@ public class Bundle extends jmri.util.Bundle {
     }
 
     /**
+     * Provides a translated string for a given key in a given locale from the
+     * package resource bundle or parent.
+     * <p>
+     * Note that this is intentionally package-local access.
+     *
+     * @param locale The locale to be used
+     * @param key    Bundle key to be translated
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key) {
+        return b.handleGetMessage(locale, key);
+    }
+
+    /**
      * Merges user data with a translated string for a given key from the
      * package resource bundle or parent.
      * <p>
@@ -55,6 +72,24 @@ public class Bundle extends jmri.util.Bundle {
      */
     static String getMessage(String key, Object... subs) {
         return b.handleGetMessage(key, subs);
+    }
+
+    /**
+     * Merges user data with a translated string for a given key in a given
+     * locale from the package resource bundle or parent.
+     * <p>
+     * Uses the transformation conventions of the Java MessageFormat utility.
+     * <p>
+     * Note that this is intentionally package-local access.
+     *
+     * @see java.text.MessageFormat
+     * @param locale The locale to be used
+     * @param key    Bundle key to be translated
+     * @param subs   One or more objects to be inserted into the message
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key, Object... subs) {
+        return b.handleGetMessage(locale, key, subs);
     }
 
     private final static Bundle b = new Bundle();
@@ -76,3 +111,5 @@ public class Bundle extends jmri.util.Bundle {
     }
 
 }
+
+/* @(#)Bundle.java */
