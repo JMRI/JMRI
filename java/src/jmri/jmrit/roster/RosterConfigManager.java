@@ -11,13 +11,13 @@ import javax.annotation.Nonnull;
 import jmri.implementation.FileLocationsPreferences;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.util.prefs.AbstractPreferencesManager;
-import jmri.util.prefs.InitializationException;
+import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.FileUtilSupport;
+import jmri.util.prefs.AbstractPreferencesManager;
+import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.spi.PreferencesManager;
 
 /**
  * Load and store the Roster configuration.

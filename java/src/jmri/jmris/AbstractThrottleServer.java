@@ -1,17 +1,16 @@
 package jmri.jmris;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.io.IOException;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Throttle;
-import jmri.ThrottleManager;
-import jmri.ThrottleListener;
-import jmri.LocoAddress;
+import java.util.ArrayList;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.LocoAddress;
+import jmri.Throttle;
+import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +22,10 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractThrottleServer implements ThrottleListener {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractThrottleServer.class);
-    protected ArrayList throttleList;
+    protected ArrayList<Throttle> throttleList;
 
     public AbstractThrottleServer() {
-        throttleList=new ArrayList<>();
+        throttleList=new ArrayList<Throttle>();
     }
 
     /*
@@ -47,11 +46,11 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      *
      * @param l LocoAddress of the locomotive to change speed of.
      * @param speed float representing the speed, -1 for emergency stop.
-     * @param isForward boolean, true if forward, false if reverse or 
+     * @param isForward boolean, true if forward, false if reverse or
      * undefined.
      */
     public void setThrottleSpeedAndDirection(LocoAddress l, float speed, boolean isForward){
-       // get the throttle for the address.	
+       // get the throttle for the address.
        throttleList.forEach( t -> {
           if(((Throttle)t).getLocoAddress()==l) {
              // set the speed and direction.
@@ -68,8 +67,8 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      * @param fList an ArrayList of boolean values indicating whether the
      *         function is active or not.
      */
-    public void setThrottleFunctions(LocoAddress l, ArrayList fList){
-       // get the throttle for the address.	
+    public void setThrottleFunctions(LocoAddress l, ArrayList<Boolean> fList){
+       // get the throttle for the address.
        throttleList.forEach( t -> {
           if(((Throttle)t).getLocoAddress()==l) {
              for(int i=0;i< fList.size();i++){
@@ -178,13 +177,13 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
        // update the state of this throttle if any of the properties change
        public void propertyChange(java.beans.PropertyChangeEvent e) {
           if (e.getPropertyName().equals("SpeedSetting")) {
-             try { 
+             try {
                 clientserver.sendStatus(throttle.getLocoAddress());
              } catch(IOException ioe){
                 log.error("Error writing to network port");
              }
           } else if (e.getPropertyName().equals("SpeedSteps")) {
-             try { 
+             try {
                 clientserver.sendStatus(throttle.getLocoAddress());
              } catch(IOException ioe){
                 log.error("Error writing to network port");
@@ -192,7 +191,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
           } else {
               for (int i = 0; i <= 28; i++) {
                  if (e.getPropertyName().equals("F" + i)) {
-                    try { 
+                    try {
                        clientserver.sendStatus(throttle.getLocoAddress());
                     } catch(IOException ioe){
                        log.error("Error writing to network port");
@@ -200,7 +199,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
                     break; // stop the loop, only one function property
                     // will be matched.
                  } else if (e.getPropertyName().equals("F" + i + "Momentary")) {
-                    try { 
+                    try {
                        clientserver.sendStatus(throttle.getLocoAddress());
                     } catch(IOException ioe){
                        log.error("Error writing to network port");

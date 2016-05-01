@@ -2,8 +2,8 @@ package jmri.jmrix;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import javax.annotation.Nonnull;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;

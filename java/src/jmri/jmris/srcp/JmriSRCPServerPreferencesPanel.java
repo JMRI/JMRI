@@ -1,8 +1,8 @@
-package jmri.jmris.srcp;
-
 /**
  * @author Randall Wood Copyright (C) 2012
  */
+package jmri.jmris.srcp;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;

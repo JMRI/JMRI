@@ -1,5 +1,7 @@
 package jmri.jmrit;
 
+import jmri.util.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -31,11 +33,15 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileCheckAction
  */
-public class XmlFileValidateAction extends AbstractAction {
+public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
 
-    public XmlFileValidateAction(String s, JPanel who) {
+    public XmlFileValidateAction(String s, Component who) {
         super(s);
         _who = who;
+    }
+
+    public XmlFileValidateAction(String s, WindowInterface wi) {
+        this(s, wi!=null ? wi.getFrame() : null);
     }
 
     public XmlFileValidateAction() {
@@ -44,7 +50,7 @@ public class XmlFileValidateAction extends AbstractAction {
 
     JFileChooser fci;
 
-    JPanel _who;
+    Component _who;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -129,11 +135,11 @@ public class XmlFileValidateAction extends AbstractAction {
         }
     }
     
-    protected void showOkResults(JPanel who, String text) {
+    protected void showOkResults(Component who, String text) {
         JOptionPane.showMessageDialog(who, text);
     }
 
-    protected void showFailResults(JPanel who, String text) {
+    protected void showFailResults(Component who, String text) {
         JOptionPane.showMessageDialog(who, text);
     }
     
@@ -148,14 +154,20 @@ public class XmlFileValidateAction extends AbstractAction {
 
     }
 
+    // never invoked, because we overrode actionPerformed above
+    @Override
+    public JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
+
     // Main entry point fires the action
     static public void main(String[] args) {
         // if a 1st argument provided, act
         if (args.length == 0 ) {
-            new XmlFileValidateAction("", null).actionPerformed(null);
+            new XmlFileValidateAction("", (Component) null).actionPerformed(null);
         } else {
             jmri.util.Log4JUtil.initLogging("default.lcf");
-            new XmlFileValidateAction("", null){
+            new XmlFileValidateAction("", (Component) null){
                 protected void showFailResults(JPanel who, String text) {
                     System.out.println(text);
                 }

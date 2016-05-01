@@ -9,11 +9,11 @@ import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
 import jmri.util.swing.FontComboUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.spi.PreferencesManager;
 
 /**
  * Manage preferences for the {@link apps.SystemConsole}.

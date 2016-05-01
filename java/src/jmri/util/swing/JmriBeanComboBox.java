@@ -298,7 +298,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         long lastKeyTime = 0;
         String pattern = "";
 
-        public int selectionForKey(char aKey, javax.swing.ComboBoxModel model) {
+        // FIXME: What is the correct type for the combo model here? This class may need refactored significantly to fix this?
+        public int selectionForKey(char aKey, @SuppressWarnings("rawtypes") javax.swing.ComboBoxModel model) {
             // Find index of selected item
             int selIx = 01;
             Object sel = model.getSelectedItem();

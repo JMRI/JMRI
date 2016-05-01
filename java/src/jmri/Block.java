@@ -5,9 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import jmri.util.PhysicalLocation;
 import jmri.implementation.SignalSpeedMap;
-
+import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,12 +1,12 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.ProgrammerManager;
 import jmri.ProgrammingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.annotation.Nonnull;
 
 /**
  * Provides a very basic implementation of ProgrammerManager. You give it a

@@ -7,10 +7,10 @@ import java.util.Set;
 import java.util.prefs.Preferences;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
+import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
-import jmri.util.FileUtil;
-import jmri.spi.PreferencesManager;
 
 /**
  *

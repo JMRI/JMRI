@@ -1,16 +1,16 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
-import java.util.NoSuchElementException;
-import java.util.LinkedList;
-import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import jmri.jmrix.dccpp.DCCppCommandStation;
+import jmri.jmrix.dccpp.DCCppListener;
+import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppPacketizer;
-import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppReplyParser;
-import jmri.jmrix.dccpp.DCCppListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

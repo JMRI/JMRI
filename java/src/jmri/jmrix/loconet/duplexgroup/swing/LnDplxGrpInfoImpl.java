@@ -179,16 +179,16 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * @return true if and only if sGroupPassword is a valid Duplex Group
      *         Password.
      */
+    // TODO: This warning is suppressed for now, but there is no way currently to set limitPasswordToNumericCharacters to true
+    @SuppressWarnings("unused")
     public static final boolean validateGroupPassword(String sGroupPassword) {
         // force the value to uppercase
         if (sGroupPassword.length() == 0) {
             return false;
         }
-        if (limitPasswordToNumericCharacters == true) {
-            return sGroupPassword.matches("^[0-9][0-9][0-9][0-9]$");
-        } else {
-            return sGroupPassword.matches("^[0-9A-C][0-9A-C][0-9A-C][0-9A-C]$");
-        }
+        // Return whether or not the password matches
+        return (limitPasswordToNumericCharacters && sGroupPassword.matches("^[0-9][0-9][0-9][0-9]$"))
+                || sGroupPassword.matches("^[0-9A-C][0-9A-C][0-9A-C][0-9A-C]$");
     }
 
     /**
@@ -1007,7 +1007,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     // the following code may be used to create a LocoNet message that follows the
-    // form of the message sent by a UR92 in response to a Duplex Group Name query 
+    // form of the message sent by a UR92 in response to a Duplex Group Name query
     // LocoNet message.
     public static final LocoNetMessage createUr92GroupNameReportPacket(
             String dupName,
@@ -1071,7 +1071,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     // the following code may be used to create a LocoNet message that follows the
-    // form of the message sent by a UR92 in response to a Duplex Group Channel query 
+    // form of the message sent by a UR92 in response to a Duplex Group Channel query
     // LocoNet message.
     public static final LocoNetMessage createUr92GroupChannelReportPacket(
             int dupChan) {
@@ -1094,7 +1094,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     // the following code may be used to create a LocoNet message that follows the
-    // form of the message sent by a UR92 in response to a Duplex Group Password query 
+    // form of the message sent by a UR92 in response to a Duplex Group Password query
     // LocoNet message.
     // No attempt is made to check the validity of the dupPass argument.
     public static final LocoNetMessage createUr92GroupPasswordReportPacket(
@@ -1128,7 +1128,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     // the following code may be used to create a LocoNet message that follows the
-    // form of the message sent by a UR92 in response to a Duplex Group Id query 
+    // form of the message sent by a UR92 in response to a Duplex Group Id query
     // LocoNet message.
     public static final LocoNetMessage createUr92GroupIdReportPacket(
             int dupId) {
