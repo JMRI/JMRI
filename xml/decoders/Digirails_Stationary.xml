@@ -1423,7 +1423,152 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip>&lt;html&gt;If these CVs contain a value equal to 0&lt;br&gt;all outputs will switch according to the signal rules.&lt;br&gt;The other CVs that normally control the outputs will be deactivated.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
 <!-- end of signal mast configurations -->
-
+<!-- Signal mapping -->
+            <variable item="Signal 1 Output" CV="143" default="1" comment="Signal 1 Output" include="4018">
+                <enumVal>
+                    <enumChoice choice="0" value="1">
+                        <choice xml:lang="fr">Sorties 1 à 4</choice>
+                        <choice xml:lang="de">Ausgänge 1 - 4</choice>
+                        <choice xml:lang="nl">Uitgangen 1 t/m 4</choice>
+                        <choice>Outputs 1 - 4</choice>
+                    </enumChoice> 
+                    <enumChoice choice="1" value="2">
+                        <choice xml:lang="fr">Sorties 5 à 8</choice>
+                        <choice xml:lang="de">Ausgänge 5 - 8</choice>
+                        <choice xml:lang="nl">Uitgangen 5 t/m 8</choice>
+                        <choice>Outputs 5 - 8</choice>
+                    </enumChoice> 
+                    <enumChoice choice="2" value="4">
+                        <choice xml:lang="fr">Sorties 9 à 12</choice>
+                        <choice xml:lang="de">Ausgänge 9 - 12</choice>
+                        <choice xml:lang="nl">Uitgangen 9 t/m 12</choice>
+                        <choice>Outputs 9 - 12</choice>
+                    </enumChoice> 
+                    <enumChoice choice="3" value="8">
+                        <choice xml:lang="fr">Sorties 13 à 16</choice>
+                        <choice xml:lang="de">Ausgänge 13-16</choice>
+                        <choice xml:lang="nl">Uitgangen 13 t/m 16</choice>
+                        <choice>Outputs 13 - 16</choice>
+                    </enumChoice> 
+                </enumVal>
+                <label xml:lang="fr">Signal n° 1 á:</label>
+                <label xml:lang="de">Signal 1 an:</label>
+                <label xml:lang="nl">Sein 1 op:</label>
+                <label>Signal 1 on:</label>
+                <tooltip xml:lang="fr">Mappage de fonction signal de sortie (EXPERT)</tooltip>
+                <tooltip xml:lang="de">Signal Funktionsmapping an Ausgang (EXPERT)</tooltip>
+                <tooltip xml:lang="nl">Sein functiemap op uitgang (EXPERT)</tooltip>
+                <tooltip>Signal function mapping to output (EXPERT)</tooltip>
+            </variable>
+            <variable item="Signal 2 Output" CV="167" default="2" comment="Signal 2 Output" include="4018">
+                <enumVal>
+                    <enumChoice choice="0" value="1">
+                        <choice xml:lang="fr">Sorties 1 à 4</choice>
+                        <choice xml:lang="de">Ausgänge 1 - 4</choice>
+                        <choice xml:lang="nl">Uitgangen 1 t/m 4</choice>
+                        <choice>Outputs 1 - 4</choice>
+                    </enumChoice> 
+                    <enumChoice choice="1" value="2">
+                        <choice xml:lang="fr">Sorties 5 à 8</choice>
+                        <choice xml:lang="de">Ausgänge 5 - 8</choice>
+                        <choice xml:lang="nl">Uitgangen 5 t/m 8</choice>
+                        <choice>Outputs 5 - 8</choice>
+                    </enumChoice> 
+                    <enumChoice choice="2" value="4">
+                        <choice xml:lang="fr">Sorties 9 à 12</choice>
+                        <choice xml:lang="de">Ausgänge 9-12</choice>
+                        <choice xml:lang="nl">Uitgangen 9 t/m 12</choice>
+                        <choice>Outputs 9 - 12</choice>
+                    </enumChoice> 
+                    <enumChoice choice="3" value="8">
+                        <choice xml:lang="fr">Sorties 13 à 16</choice>
+                        <choice xml:lang="de">Ausgänge 13 - 16</choice>
+                        <choice xml:lang="nl">Uitgangen 13 t/m 16</choice>
+                        <choice>Outputs 13 - 16</choice>
+                    </enumChoice> 
+                </enumVal>
+                <label xml:lang="fr">Signal n° 2 á:</label>
+                <label xml:lang="de">Signal 2 an:</label>
+                <label xml:lang="nl">Sein 2 op:</label>
+                <label>Signal 2 on:</label>
+                <tooltip xml:lang="fr">Mappage de fonction signal de sortie (EXPERT)</tooltip>
+                <tooltip xml:lang="de">Signal Funktionsmapping an Ausgang (EXPERT)</tooltip>
+                <tooltip xml:lang="nl">Sein functiemap op uitgang (EXPERT)</tooltip>
+                <tooltip>Signal function mapping to output (EXPERT)</tooltip>
+            </variable>
+            <variable item="Signal 3 Output" CV="191" default="4" comment="Signal 3 Output" include="4018">
+                <enumVal>
+                    <enumChoice choice="0" value="1">
+                        <choice xml:lang="fr">Sorties 1 à 4</choice>
+                        <choice xml:lang="de">Ausgänge 1 - 4</choice>
+                        <choice xml:lang="nl">Uitgangen 1 t/m 4</choice>
+                        <choice>Outputs 1 - 4</choice>
+                    </enumChoice> 
+                    <enumChoice choice="1" value="2">
+                        <choice xml:lang="fr">Sorties 5 à 8</choice>
+                        <choice xml:lang="de">Ausgänge 5 - 8</choice>
+                        <choice xml:lang="nl">Uitgangen 5 t/m 8</choice>
+                        <choice>Outputs 5 - 8</choice>
+                    </enumChoice> 
+                    <enumChoice choice="2" value="4">
+                        <choice xml:lang="fr">Sorties 9 à 12</choice>
+                        <choice xml:lang="de">Ausgänge 9 - 12</choice>
+                        <choice xml:lang="nl">Uitgangen 9 t/m 12</choice>
+                        <choice>Outputs 9 - 12</choice>
+                    </enumChoice> 
+                    <enumChoice choice="3" value="8">
+                        <choice xml:lang="fr">Sorties 13 à 16</choice>
+                        <choice xml:lang="de">Ausgänge 13 - 16</choice>
+                        <choice xml:lang="nl">Uitgangen 13 t/m 16</choice>
+                        <choice>Outputs 13 - 16</choice>
+                    </enumChoice> 
+                </enumVal>
+                <label xml:lang="fr">Signal n° 3 á:</label>
+                <label xml:lang="de">Signal 3 an:</label>
+                <label xml:lang="nl">Sein 3 op:</label>
+                <label>Signal 3 on:</label>
+                <tooltip xml:lang="fr">Mappage de fonction signal de sortie (EXPERT)</tooltip>
+                <tooltip xml:lang="de">Signal Funktionsmapping an Ausgang (EXPERT)</tooltip>
+                <tooltip xml:lang="nl">Sein functiemap op uitgang (EXPERT)</tooltip>
+                <tooltip>Signal function mapping to output (EXPERT)</tooltip>
+            </variable>
+            <variable item="Signal 4 Output" CV="215" default="8" comment="Signal 4 Output" include="4018">
+                <enumVal>
+                    <enumChoice choice="0" value="1">
+                        <choice xml:lang="fr">Sorties 1 à 4</choice>
+                        <choice xml:lang="de">Ausgänge 1 - 4</choice>
+                        <choice xml:lang="nl">Uitgangen 1 t/m 4</choice>
+                        <choice>Outputs 1 - 4</choice>
+                    </enumChoice> 
+                    <enumChoice choice="1" value="2">
+                        <choice xml:lang="fr">Sorties 5 à 8</choice>
+                        <choice xml:lang="de">Ausgänge 5 - 8</choice>
+                        <choice xml:lang="nl">Uitgangen 5 t/m 8</choice>
+                        <choice>Outputs 5 - 8</choice>
+                    </enumChoice> 
+                    <enumChoice choice="2" value="4">
+                        <choice xml:lang="fr">Sorties 9 à 12</choice>
+                        <choice xml:lang="de">Ausgänge 9 - 12</choice>
+                        <choice xml:lang="nl">Uitgangen 9 t/m 12</choice>
+                        <choice>Outputs 9 - 12</choice>
+                    </enumChoice> 
+                    <enumChoice choice="3" value="8">
+                        <choice xml:lang="fr">Sorties 13 à 16</choice>
+                        <choice xml:lang="de">Ausgänge 13 - 16</choice>
+                        <choice xml:lang="nl">Uitgangen 13 t/m 16</choice>
+                        <choice>Outputs 13 - 16</choice>
+                    </enumChoice> 
+                </enumVal>
+                <label xml:lang="fr">Signal n° 4 á:</label>
+                <label xml:lang="de">Signal 4 an:</label>
+                <label xml:lang="nl">Sein 4 op:</label>
+                <label>Signal 4 on:</label>
+                <tooltip xml:lang="fr">Mappage de fonction signal de sortie (EXPERT)</tooltip>
+                <tooltip xml:lang="de">Signal Funktionsmapping an Ausgang (EXPERT)</tooltip>
+                <tooltip xml:lang="nl">Sein functiemap op uitgang (EXPERT)</tooltip>
+                <tooltip>Signal function mapping to output (EXPERT)</tooltip>
+            </variable>
+            
 <!-- start of output pulse configurations CV 238 - 253 -->
             <variable CV="238" item="Pulse Duration Out 1" default="128" writeOnly="no" comment="Pulse duration for output 1 if set to pulse by CV113=7 and CV47=13." include="4018">
                 <decVal />
@@ -1558,8 +1703,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         
  <!-- reset -->       
         <resets>
-            <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8">
-                <mode>OPSBYTEMODE</mode>
+            <mode>OPSBYTEMODE</mode>
+                <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8">
                 <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
                 <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
                 <label xml:lang="de">Alle CVs zurückstellen auf Werkseinstellungen</label>
@@ -1637,7 +1782,31 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                  <row>
                         <display item="Signal 4 configuration" layout="above"/>
                  </row>
-        </column>
+            </column>
+            <column>
+                 <label>
+                     <text>Signal function mapping:</text>
+                     <text xml:lang="fr">Mappage de fonction signal:</text>
+                     <text xml:lang="de">Signal Funktionsmapping:</text>
+                     <text xml:lang="nl">Sein functiemap:</text>
+                 </label>
+                 <separator/>
+                 <row>
+                        <display item="Signal 1 Output" layout="above"/>
+                 </row>
+                 <separator/>
+                 <row>
+                        <display item="Signal 2 Output" layout="above"/>
+                 </row>
+                <separator/>
+                <row>
+                        <display item="Signal 3 Output" layout="above"/>
+                 </row>
+                <separator/>
+                <row>
+                        <display item="Signal 4 Output" layout="above"/>
+                 </row>
+            </column>
     </pane>
 
     <pane include="4024">
