@@ -7,17 +7,17 @@ import jmri.implementation.FileLocationsPreferences;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.util.prefs.AbstractPreferencesProvider;
+import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
-import jmri.spi.PreferencesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.spi.PreferencesManager;
 
 /**
  *
  * @author Randall Wood (C) 2015
  */
-public class ProgrammerConfigManager extends AbstractPreferencesProvider {
+public class ProgrammerConfigManager extends AbstractPreferencesManager {
 
     private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigManager.class);
     public final static String DEFAULT_FILE = "defaultFile";
@@ -39,13 +39,13 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
             PaneProgFrame.setShowEmptyPanes(this.isShowEmptyPanes());
             this.setShowCvNumbers(preferences.getBoolean(SHOW_CV_NUMBERS, this.isShowCvNumbers()));
             PaneProgFrame.setShowCvNumbers(this.isShowCvNumbers());
-            this.setIsInitialized(profile, true);
+            this.setInitialized(profile, true);
         }
     }
 
     @Override
-    public Set<Class<? extends PreferencesProvider>> getRequires() {
-        Set<Class<? extends PreferencesProvider>> requires = super.getRequires();
+    public Set<Class<? extends PreferencesManager>> getRequires() {
+        Set<Class<? extends PreferencesManager>> requires = super.getRequires();
         requires.add(FileLocationsPreferences.class);
         return requires;
     }

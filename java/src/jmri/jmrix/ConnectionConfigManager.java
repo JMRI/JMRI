@@ -12,20 +12,20 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
-import jmri.util.prefs.AbstractPreferencesProvider;
+import jmri.util.prefs.AbstractPreferencesManager;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.spi.PreferencesManager;
 
 /**
  * Manager for ConnectionConfig objects.
  *
  * @author Randall Wood (C) 2015
  */
-public class ConnectionConfigManager extends AbstractPreferencesProvider implements Iterable<ConnectionConfig> {
+public class ConnectionConfigManager extends AbstractPreferencesManager implements Iterable<ConnectionConfig> {
 
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
     private final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd";
@@ -87,13 +87,13 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
                     }
                 }
             }
-            setIsInitialized(profile, true);
+            setInitialized(profile, true);
             log.debug("Initialized...");
         }
     }
 
     @Override
-    public Set<Class<? extends PreferencesProvider>> getRequires() {
+    public Set<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 
