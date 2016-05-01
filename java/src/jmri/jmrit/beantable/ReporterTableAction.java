@@ -1,4 +1,3 @@
-// ReporterTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -25,14 +24,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a ReporterTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class ReporterTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9217844966853497641L;
 
     /**
      * Create an action with a specific title.
@@ -67,11 +60,6 @@ public class ReporterTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6712845607416144730L;
             public static final int LASTREPORTCOL = NUMCOLUMN;
 
             public String getValue(String name) {
@@ -351,5 +339,3 @@ public class ReporterTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
 }
-
-/* @(#)ReporterTableAction.java */

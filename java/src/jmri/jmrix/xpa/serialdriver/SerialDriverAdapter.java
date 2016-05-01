@@ -109,7 +109,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         // connect to the traffic controller
         XpaTrafficController.instance().connectPort(this);
 
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.xpa.XpaPowerManager());
+        jmri.InstanceManager.store(new jmri.jmrix.xpa.XpaPowerManager(), jmri.PowerManager.class);
 
         jmri.InstanceManager.setTurnoutManager(jmri.jmrix.xpa.XpaTurnoutManager.instance());
 

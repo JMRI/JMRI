@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    // static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle"); // changed to Bundle method
 
     AbstractAudioFrame frame = this;
 
@@ -55,9 +55,9 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     static final float FLT_PRECISION = 1 / (float) INT_PRECISION;
 
     // Common UI components for Add/Edit Audio
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JTextField sysName = new JTextField(5);
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JTextField userName = new JTextField(15);
 
     /**

@@ -60,8 +60,8 @@ public class AutoActiveTrain implements ThrottleListener {
     static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
-    /* Speed aspects as defined by Doughlas A. Kerr - "Rail Signal Aspects and Indications"
-     * doug.kerr.home.att.net/pumpkin/Rail_Signal_Aspects.pdf (from Pete Cressman)
+    /* Speed aspects as defined by Douglas A. Kerr - "Rail Signal Aspects and Indications"
+     * http://dougkerr.net/Pumpkin/articles/Rail_signal_aspects.pdf (from Pete Cressman)
      */
     public static final int SPEED_MASK = 0x07;     // least significant 3 bits
     public static final int STOP_SPEED = 0x01;     // No Speed
@@ -230,6 +230,7 @@ public class AutoActiveTrain implements ThrottleListener {
             return false;
         }
         // request a throttle for automatic operation, throttle returned via callback below
+        log.debug("{}: requesting throttle address={}", _activeTrain.getTrainName(), _address);
         boolean ok = true;
         if (_activeTrain.getTrainSource() == ActiveTrain.ROSTER) {
             if (_activeTrain.getRosterEntry() != null) {
@@ -388,16 +389,19 @@ public class AutoActiveTrain implements ThrottleListener {
                             && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
                         // entered last block of Transit, must stop and reverse
                         stopInCurrentSection(END_REVERSAL);
+                        _activeTrain.setRestart();
                     } else if ((_currentBlock == _activeTrain.getStartBlock())
                             && _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed()
                             && (as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber())) {
                         // entered start block of Transit, must stop and reset for continuing
                         stopInCurrentSection(BEGINNING_RESET);
+                        _activeTrain.setRestart();
                     } else if ((_currentBlock == _activeTrain.getEndBlock())
                             && _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() != ActiveTrain.NODELAY
                             && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
                         // entered start block of Transit, must stop and reset for continuing
                         stopInCurrentSection(BEGINNING_RESET);
+                        _activeTrain.setRestart();
                         removeCurrentSignal();
                     } else {
                         setupNewCurrentSignal(as);
@@ -753,7 +757,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 float speed = -1.0f;
                 if (strSpeed != null) {
                     try {
-                        speed = new Float(strSpeed);
+                        speed = Float.valueOf(strSpeed);
                     } catch (NumberFormatException nx) {
                         try {
                             speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(strSpeed);
@@ -1001,6 +1005,19 @@ public class AutoActiveTrain implements ThrottleListener {
                         }
                         setupNewCurrentSignal(null);
                         setSpeedBySignal();
+                    } else {
+                        // then active train is delayed
+                        _activeTrain.setTransitReversed(false);
+                        _activeTrain.resetAllAllocatedSections();
+                        setEngineDirection(); 
+                        _activeTrain.setRestart();
+                        if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
+                            DispatcherFrame.instance().forceScanOfAllocation();
+                            break;
+                        }
+                        setupNewCurrentSignal(null);
+                        setSpeedBySignal();
+                       
                     }
                 } else {
                     // dispatcher cancelled auto restart while train was stopping?
@@ -1315,6 +1332,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _abort = false;
             setHalt(false);
             slowToStop(false);
+            log.debug("AutoEngineer.setIsForward({}) for {}",_forward, _throttle.getLocoAddress());
             _throttle.setIsForward(_forward);
             _currentForward = _forward;
             _throttle.setSpeedSetting(_currentSpeed);
@@ -1346,6 +1364,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 } else if (!_halt) {
                     // test if need to change direction
                     if (_currentForward != _forward) {
+                        log.debug("AutoEngineer.setIsForward({}) for {}",_forward, _throttle.getLocoAddress());
                         _throttle.setIsForward(_forward);
                         _currentForward = _forward;
                     }

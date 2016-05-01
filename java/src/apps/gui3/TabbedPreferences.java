@@ -1,4 +1,3 @@
-// TabbedPreferences.java
 package apps.gui3;
 
 import apps.AppConfigBase;
@@ -30,6 +29,7 @@ import javax.swing.event.ListSelectionEvent;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
+import jmri.util.ThreadingUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,10 +46,16 @@ import org.slf4j.LoggerFactory;
  *<p>
  * Other Preferences Panels will need to be manually added to this file in a
  * manner similar to the WiThrottlePrefsPanel.
+ *<p>
+ * State is maintained as a bound property with name INITIALIZATION (see value below)
+ *<p>
+ * JMRI apps (generally) create one object of this type on the main thread
+ * as part of initialization, then create a separate "initialize preferences"
+ * thread to handle the init() call and adding all the tabs. 
+ * Finally, the result is displayed on the Swing thread.
  *
  * @author Bob Jacobsen Copyright 2010
  * @author Randall Wood 2012
- * @version $Revision$
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -119,6 +125,13 @@ public class TabbedPreferences extends AppConfigBase {
                 .getString("MenuWiThrottle")));
     }
 
+    /**
+     * Initialize, including loading classes referenced in the PreferencesPanel property of the apps.AppsStructureBundle bundle.
+     *<p>
+     * Keeps a current state to prevent doing its work twice.
+     *
+     * @returns The current state, which should be INITIALISED if all is well.
+     */
     @SuppressWarnings("rawtypes")
     public synchronized int init() {
         if (initialisationState == INITIALISED) {
@@ -284,6 +297,7 @@ public class TabbedPreferences extends AppConfigBase {
 
     /* Method allows for the preference to goto a specific list item */
     public void gotoPreferenceItem(String selection, String subCategory) {
+
         selection(selection);
         list.setSelectedIndex(getCategoryIndexFromString(selection));
         if (subCategory == null || subCategory.isEmpty()) {

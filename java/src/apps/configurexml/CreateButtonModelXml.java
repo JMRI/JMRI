@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistance of CreateButtonModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  * @see apps.startup.CreateButtonModelFactory
  */
 public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -65,7 +64,6 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
                 JButton b = new JButton(action);
                 Apps3.buttonSpace().add(b);
             }
-            //} else if (DecoderPro3.get)
         } catch (ClassNotFoundException ex1) {
             log.error("Could not find specified class: " + className);
             result = false;

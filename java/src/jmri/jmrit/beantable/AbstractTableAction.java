@@ -54,10 +54,6 @@ abstract public class AbstractTableAction extends AbstractAction {
 
         // create the frame
         f = new BeanTableFrame(m, helpTarget(), dataTable) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1123302534258100353L;
 
             /**
              * Include an "add" button

@@ -1,4 +1,3 @@
-// SignalGroupTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -52,10 +51,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SignalGroupTableAction extends AbstractTableAction implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3907892888059515176L;
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     /**
@@ -102,10 +97,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5080048505014587453L;
             static public final int COMMENTCOL = 2;
             static public final int DELETECOL = 3;
             static public final int ENABLECOL = 4;
@@ -952,11 +943,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     public class SignalMastAppearanceModel extends AbstractTableModel implements PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8196267502015148289L;
-
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -967,7 +953,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
         public String getColumnName(int col) {
             if (col == INCLUDE_COLUMN) {
-                return rbx.getString("ColumnLabelInclude");
+                return Bundle.getMessage("Include");
             }
             if (col == APPEAR_COLUMN) {
                 return Bundle.getMessage("LabelAspectType"); // list contains Aspects not SignalMastAppearances
@@ -1059,11 +1045,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     public abstract class SignalGroupOutputModel extends AbstractTableModel implements PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7170451044063687952L;
-
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -1101,11 +1082,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     class SignalGroupSignalModel extends SignalGroupOutputModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3600677786771301391L;
 
         SignalGroupSignalModel() {
             InstanceManager.signalHeadManagerInstance().addPropertyChangeListener(this);
@@ -1260,14 +1236,18 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     private static int ROW_HEIGHT;
 
-    private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude"),
-        rbx.getString("ColumnLabelSetState")};
-    private static String[] COLUMN_SIG_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude"),
-        "On State", "Off State", ""};
+    private static String[] COLUMN_NAMES = {
+            Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnUserName"),
+            Bundle.getMessage("Include"),
+            Bundle.getMessage("ColumnLabelSetState")
+    };
+    private static String[] COLUMN_SIG_NAMES = {
+            Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnUserName"),
+            Bundle.getMessage("Include"),
+            "On State", "Off State", ""
+    };
         // No label above last (Edit) column
 
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};

@@ -227,7 +227,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         if (m.match("L " + address.getNumber()) >= 0) {
             try {
                 String[] lines = m.toString().split(" ");
-                Float newSpeed = new Float(floatSpeed(Integer.parseInt(lines[2])));
+                Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(lines[2])));
                 super.setSpeedSetting(newSpeed);
                 if (lines[3].equals("1") && !this.f0) {
                     notifyPropertyChangeListener(Throttle.F0, this.f0, true);

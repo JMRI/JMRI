@@ -1,4 +1,3 @@
-// Apps3.java
 package apps.gui3.demo3;
 
 import apps.GuiLafConfigPane;
@@ -41,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class Apps3 {
 
@@ -273,33 +271,18 @@ public class Apps3 {
         JToolBar toolBar = new JToolBar("(Close to dock)", JToolBar.VERTICAL);
 
         toolBar.add(new JButton(new AbstractAction("Preferences") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2959095773667629933L;
-
             public void actionPerformed(ActionEvent e) {
                 addPreferencesFrame();
             }
         }));
 
         toolBar.add(new JButton(new AbstractAction("sample button 2") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1914116996373604862L;
-
             public void actionPerformed(ActionEvent e) {
                 addASampleFrame();
             }
         }));
 
         toolBar.add(new JButton(new AbstractAction("sample button 3") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6176456566676222024L;
-
             public void actionPerformed(ActionEvent e) {
                 addASampleFrame();
             }
@@ -326,8 +309,8 @@ public class Apps3 {
                 true, //closable
                 true, //maximizable
                 true);//iconifiable
-        frame.setLocation(200 + 50 * count, 200 + 50 * count);
-        count++;
+        frame.setLocation(200 + 50 * getCount(), 200 + 50 * getCount());
+        incCount();
 
         // content
         JTabbedPane p = new JTabbedPane();
@@ -388,7 +371,9 @@ public class Apps3 {
         InstanceManager.configureManagerInstance().storePrefs(file);
     }
 
-    static int count = 0;
+    private static int count = 0;
+    private int getCount() { return count; }
+    private void incCount() { count++; }
 
     protected void addASampleFrame() {
         JInternalFrame sample = new JInternalFrame("sample internal frame",
@@ -396,8 +381,8 @@ public class Apps3 {
                 true, //closable
                 true, //maximizable
                 true);//iconifiable
-        sample.setLocation(200 + 50 * count, 200 + 50 * count);
-        count++;
+        sample.setLocation(200 + 50 * getCount(), 200 + 50 * getCount());
+        incCount();
 
         // content
         sample.setSize(300, 200);

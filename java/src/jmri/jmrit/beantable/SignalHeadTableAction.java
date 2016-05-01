@@ -1,15 +1,3 @@
-// SignalHeadTableAction.java
-// This file is part of JMRI.
-//
-// JMRI is free software; you can redistribute it and/or modify it under
-// the terms of version 2 of the GNU General Public License as published
-// by the Free Software Foundation. See the "COPYING" file for a copy
-// of this license.
-//
-// JMRI is distributed in the hope that it will be useful, but WITHOUT
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-// for more details.
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -60,11 +48,6 @@ import org.slf4j.LoggerFactory;
 public class SignalHeadTableAction extends AbstractTableAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 3002943309835665818L;
-
-    /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -90,10 +73,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2404217237396255016L;
             static public final int LITCOL = NUMCOLUMN;
             static public final int HELDCOL = LITCOL + 1;
             static public final int EDITCOL = HELDCOL + 1;
@@ -2503,4 +2482,3 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class.getName());
 }
-/* @(#)SignalHeadTableAction.java */
