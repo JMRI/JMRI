@@ -1,4 +1,3 @@
-// BasePanel.java
 package jmri.jmrit.ussctc;
 
 import javax.swing.JPanel;
@@ -8,14 +7,8 @@ import jmri.*;
  * Refactored common routines and data for the GUI panels in this package.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class BasePanel extends JPanel implements Constants {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1964780376359019410L;
 
     BasePanel() {
         if (rb == null) {
