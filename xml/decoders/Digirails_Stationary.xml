@@ -1703,8 +1703,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         
  <!-- reset -->       
         <resets>
-            <mode>OPSBYTEMODE</mode>
-                <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8">
+                <factReset label="HARD RESET Reset all CVs to default values" CV="8" default="8">
                 <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
                 <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
                 <label xml:lang="de">Alle CVs zurückstellen auf Werkseinstellungen</label>
@@ -1728,8 +1727,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                      <text xml:lang="nl">Instellingen voor hele module:</text>
                  </label>
                  <separator/>
-                <display item="Presets4018" layout="above" include="4018" />
-                <display item="Presets4024" layout="above" include="4024" />
+                <display item="Presets4018" layout="above" />
+                <display item="Presets4024" layout="above" />
                 </column>
         <row>
             <column>
