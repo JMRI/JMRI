@@ -129,8 +129,9 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
                     } catch (NumberFormatException nx) {
                         try {
                             aspectSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
-                        } catch (Exception ex) {
+                        } catch (IllegalArgumentException ex) {
                             //Considered Normal if the speed does not appear in the map
+                            log.debug("Speed {} not found in map", speed);
                         }
                     }
                     if (aspectSpeed > maximumLineSpeed) {
