@@ -98,7 +98,7 @@ public class SignalSpeedMap
             }
 
             List<Element> list = root.getChild("aspectSpeeds").getChildren();
-            _table = new OrderedHashtable<String, Float>();
+            _table = new OrderedHashtable<>();
             for (int i = 0; i < list.size(); i++) {
                 String name = list.get(i).getName();
                 Float speed = Float.valueOf(0f);
@@ -112,7 +112,7 @@ public class SignalSpeedMap
                 _table.put(name, speed);
             }
 
-            _headTable = new OrderedHashtable<String, String>();
+            _headTable = new OrderedHashtable<>();
             List<Element>l = root.getChild("appearanceSpeeds").getChildren();
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getName();
@@ -162,7 +162,7 @@ public class SignalSpeedMap
 
     public java.util.Vector<String> getValidSpeedNames() {
         java.util.Enumeration<String> e = _table.keys();
-        java.util.Vector<String> v = new java.util.Vector<String>();
+        java.util.Vector<String> v = new java.util.Vector<>();
         while (e.hasMoreElements()) {
             v.add(e.nextElement());
         }
@@ -219,7 +219,7 @@ public class SignalSpeedMap
     }
 
     public void setAspectTable(@Nonnull Iterator<Entry<String, Float>> iter, int interpretation) {
-        _table = new OrderedHashtable<String, Float>();
+        _table = new OrderedHashtable<>();
         while (iter.hasNext() ) {
             Entry<String, Float> ent = iter.next();
             _table.put(ent.getKey(), ent.getValue());
@@ -227,7 +227,7 @@ public class SignalSpeedMap
         _interpretation = interpretation;
     }
     public void setAppearanceTable(@Nonnull Iterator<Entry<String, String>> iter) {
-        _headTable = new OrderedHashtable<String, String>();
+        _headTable = new OrderedHashtable<>();
         while (iter.hasNext() ) {
             Entry<String, String> ent = iter.next();
             _headTable.put(ent.getKey(), ent.getValue());

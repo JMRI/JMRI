@@ -1,4 +1,3 @@
-// OsIndicator.java
 package jmri.jmrit.ussctc;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import jmri.implementation.DefaultConditionalAction;
  * turnout has been unlocked.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class OsIndicator implements Constants {
 
@@ -143,5 +141,3 @@ public class OsIndicator implements Constants {
     String lock;
 
 }
-
-/* @(#)OsIndicator.java */
