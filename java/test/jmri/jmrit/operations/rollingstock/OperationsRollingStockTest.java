@@ -166,7 +166,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("RollingStock null Location Id", "", rs1.getLocationId());
         Assert.assertEquals("RollingStock null Track Name", "", rs1.getTrackName());
         Assert.assertEquals("RollingStock null Track Id", "", rs1.getTrackId());
-        Assert.assertEquals("RollingStock null car length", "", rs1.getLength());
+        Assert.assertEquals("RollingStock car length", "0", rs1.getLength());
 
         String testresult;
 
@@ -186,6 +186,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
 
         /* type needs to be valid for Location */
         testlocation1.addTypeName("TESTTYPE");
+        rs1.setLength("");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("RollingStock null Set Location type", "rolling stock length ()", testresult);
 
@@ -233,7 +234,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);
         
         // Normally logged message
-        jmri.util.JUnitAppender.assertErrorMessage("Rolling stock (TESTROAD TESTNUMBER1) length () is not valid");
+        jmri.util.JUnitAppender.assertErrorMessage("Loco (TESTROAD TESTNUMBER1) length () is not valid");
         
     }
 

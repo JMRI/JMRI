@@ -14,31 +14,26 @@ import jmri.jmrix.rfid.RfidTrafficController;
  */
 public class StandaloneReply extends RfidReply {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD", justification = "Kept to conform with common RFID framework")
-    RfidTrafficController tc = null;
     RfidProtocol pr = null;
 
     // create a new one
     public StandaloneReply(RfidTrafficController tc) {
         super(tc);
-        this.tc = tc;
-        this.pr = tc.getAdapterMemo().getProtocol();
+        this.pr = this.tc.getAdapterMemo().getProtocol();
         setBinary(true);
         setUnsolicited();
     }
 
     public StandaloneReply(RfidTrafficController tc, String s) {
         super(tc, s);
-        this.tc = tc;
-        this.pr = tc.getAdapterMemo().getProtocol();
+        this.pr = this.tc.getAdapterMemo().getProtocol();
         setBinary(true);
         setUnsolicited();
     }
 
     public StandaloneReply(RfidTrafficController tc, RfidReply l) {
         super(tc, l);
-        this.tc = tc;
-        this.pr = tc.getAdapterMemo().getProtocol();
+        this.pr = this.tc.getAdapterMemo().getProtocol();
         setBinary(true);
         setUnsolicited();
     }

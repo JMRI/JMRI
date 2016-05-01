@@ -122,6 +122,10 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private final static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
     static ArrayList<RosterFrame> frameInstances = new ArrayList<>();
     protected boolean allowQuit = true;
@@ -527,9 +531,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         }
 
-        ((DefaultRowSorter) rtable.getTable().getRowSorter()).sort();
+        ((DefaultRowSorter<?, ?>) rtable.getTable().getRowSorter()).sort();
         rtable.getTable().setDragEnabled(true);
         rtable.getTable().setTransferHandler(new TransferHandler() {
+            /**
+             *
+             */
+            private static final long serialVersionUID = 1L;
+
             @Override
             public int getSourceActions(JComponent c) {
                 return TransferHandler.COPY;
@@ -1411,6 +1420,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             JFrame progFrame = null;
             if (edit.isSelected()) {
                 progFrame = new PaneProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", null, false) {
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = 1L;
+
                     @Override
                     protected JPanel getModePane() {
                         return null;
@@ -1418,6 +1432,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 };
             } else if (service.isSelected()) {
                 progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {
+
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = 1L;
                 };
             } else if (ops.isSelected()) {
                 int address = Integer.parseInt(re.getDccAddress());
@@ -1666,6 +1685,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     static class ExportRosterItem extends ExportRosterItemAction {
 
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
+
         ExportRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
             setExistingEntry(re);
@@ -1678,6 +1702,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     static class CopyRosterItem extends CopyRosterItemAction {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
 
         CopyRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);

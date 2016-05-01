@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistance of PerformActionModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  * @see apps.startup.PerformActionModelFactory
  */
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {

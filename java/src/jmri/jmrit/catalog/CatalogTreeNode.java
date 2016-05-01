@@ -3,9 +3,7 @@ package jmri.jmrit.catalog;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

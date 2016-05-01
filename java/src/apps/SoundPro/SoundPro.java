@@ -1,4 +1,3 @@
-// SoundPro.java
 package apps.SoundPro;
 
 import apps.Apps;
@@ -36,7 +35,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003, 2004, 2007
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class SoundPro extends Apps {
 

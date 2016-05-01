@@ -1,13 +1,17 @@
 /* LnOpsModeProgrammer.java */
 package jmri.jmrix.loconet;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
+import jmri.AddressedProgrammer;
+import jmri.ProgListener;
+import jmri.ProgrammerException;
+import jmri.ProgrammingMode;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.beans.*;
-import java.util.*;
-
-import jmri.*;
-import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the LocoNet

@@ -1,4 +1,3 @@
-// PerformFileModel.java
 package apps;
 
 import apps.startup.AbstractStartupModel;
@@ -8,7 +7,6 @@ import apps.startup.AbstractStartupModel;
  * <P>
  * @author	Bob Jacobsen Copyright 2003
  * @author Randall Wood (c) 2016
- * @version $Revision$
  * @see apps.startup.PerformFileModelFactory
  */
 public class PerformFileModel extends AbstractStartupModel {

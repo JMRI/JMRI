@@ -1,4 +1,3 @@
-// Apps.java
 package apps;
 
 import apps.gui3.TabbedPreferences;
@@ -113,7 +112,6 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
@@ -346,6 +344,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         // return until deferred load is completed
                         SwingUtilities.invokeAndWait(new Runnable() {
                             @Override
+                            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "configDeferredLoadOK write is semi-global")
                             public void run() {
                                 configDeferredLoadOK = doDeferredLoad(file);
                             }
@@ -1045,6 +1044,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             Toolkit.getDefaultToolkit().addAWTEventListener(
                     debugListener = new AWTEventListener() {
                 @Override
+                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST, ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "KeyEvent cast won't fail, debugmsg write is semi-global")
                 public void eventDispatched(AWTEvent e) {
                     if (!debugFired) {
                         /*We set the debugmsg flag on the first instance of the user pressing any button

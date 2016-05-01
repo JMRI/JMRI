@@ -285,8 +285,6 @@ public interface UserPreferencesManager {
      * about its preferences back to this code.
      *
      * @param strClass
-     * @see jmri.UserPreferencesManager.DescribableClass
-     * @see jmri.UserPreferencesManager.UserPreferencesDetailer
      */
     public void setClassDescription(String strClass);
 

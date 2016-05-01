@@ -1,4 +1,3 @@
-// JmriInsets.java
 package jmri.util;
 
 import java.awt.GraphicsConfiguration;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author Matt Harris
- * @version $Revision$
  */
 public class JmriInsets {
 
@@ -190,7 +188,7 @@ public class JmriInsets {
      * Get insets for IceWM
      */
     private static Insets getIcewmInsets() {
-        // OK, this is being a bit lazy but the vast majority of 
+        // OK, this is being a bit lazy but the vast majority of
         // IceWM themes do not seem to modify the taskbar height
         // from the default 25 pixels nor do they change the
         // position of being along the bottom
@@ -221,8 +219,8 @@ public class JmriInsets {
             GraphicsDevice gs[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
             for (int i = 0; i < gs.length; i++) {
                 GraphicsConfiguration gc[] = gs[i].getConfigurations();
-                for (int j = 0; j < gc.length; j++) {
-                    return (Toolkit.getDefaultToolkit().getScreenInsets(gc[j]));
+                for (GraphicsConfiguration element : gc) {
+                    return (Toolkit.getDefaultToolkit().getScreenInsets(element));
                 }
             }
         } catch (HeadlessException h) {
@@ -259,7 +257,7 @@ public class JmriInsets {
                 temp = temp.substring(temp.indexOf("value=\"") + 7);
                 return Integer.parseInt(temp.substring(0, temp.indexOf('"')));
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Error parsing Gnome XML: " + e.getMessage());
         }
         return -1;
@@ -316,7 +314,7 @@ public class JmriInsets {
             if (found) {
                 return Integer.parseInt(value);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Error parsing KDI_CONFIG: " + e.getMessage());
         }
         return -1;

@@ -3,8 +3,6 @@ package jmri.implementation;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import jmri.SignalSystem;
-import jmri.implementation.SignalSpeedMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +68,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     protected Hashtable<String, Object> getTable(String aspect) {
         Hashtable<String, Object> t = aspects.get(aspect);
         if (t == null) {
-            t = new Hashtable<String, Object>();
+            t = new Hashtable<>();
             aspects.put(aspect, t);
         }
         return t;
@@ -127,12 +125,13 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
                 if (speed != null) {
                     float aspectSpeed = 0.0f;
                     try {
-                        aspectSpeed = new Float(speed);
+                        aspectSpeed = Float.valueOf(speed);
                     } catch (NumberFormatException nx) {
                         try {
                             aspectSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
-                        } catch (Exception ex) {
+                        } catch (IllegalArgumentException ex) {
                             //Considered Normal if the speed does not appear in the map
+                            log.debug("Speed {} not found in map", speed);
                         }
                     }
                     if (aspectSpeed > maximumLineSpeed) {
@@ -150,11 +149,11 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     }
 
     protected java.util.Hashtable<String, Hashtable<String, Object>> aspects
-            = new jmri.util.OrderedHashtable<String, Hashtable<String, Object>>();
+            = new jmri.util.OrderedHashtable<>();
 
-    protected java.util.Vector<String> keys = new java.util.Vector<String>();
+    protected java.util.Vector<String> keys = new java.util.Vector<>();
 
-    protected java.util.Vector<String> imageTypes = new java.util.Vector<String>();
+    protected java.util.Vector<String> imageTypes = new java.util.Vector<>();
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem

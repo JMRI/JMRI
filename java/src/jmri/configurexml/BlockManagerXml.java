@@ -120,7 +120,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                         // store common parts
                         storeCommon(b, elem);
 
-                        if ((b.getBlockSpeed() != null) && (!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")) {
+                        if ((!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")) {
                             elem.addContent(new Element("speed").addContent(b.getBlockSpeed()));
                         }
                         String perm = "no";

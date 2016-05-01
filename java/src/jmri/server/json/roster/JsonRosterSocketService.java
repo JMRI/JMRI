@@ -1,5 +1,16 @@
 package jmri.server.json.roster;
 
+import static jmri.server.json.JSON.ADD;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.DELETE;
+import static jmri.server.json.JSON.GET;
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.POST;
+import static jmri.server.json.JSON.PUT;
+import static jmri.server.json.JSON.REMOVE;
+import static jmri.server.json.JSON.TYPE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
@@ -11,16 +22,6 @@ import jmri.JmriException;
 import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import static jmri.server.json.JSON.ADD;
-import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.DELETE;
-import static jmri.server.json.JSON.GET;
-import static jmri.server.json.JSON.METHOD;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.POST;
-import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.JSON.REMOVE;
-import static jmri.server.json.JSON.TYPE;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;

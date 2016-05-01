@@ -1,10 +1,9 @@
-// Bundle.java
 package jmri.configurexml;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -20,7 +19,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @author Mark Underwood Copyright (C) 2015
- * @version $Revision$
  */
 public class Bundle extends jmri.Bundle {
 
@@ -78,5 +76,3 @@ public class Bundle extends jmri.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

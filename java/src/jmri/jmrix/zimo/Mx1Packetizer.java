@@ -3,13 +3,14 @@
  */
 package jmri.jmrix.zimo;
 
+import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
+
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
-import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
