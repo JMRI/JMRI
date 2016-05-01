@@ -1,27 +1,26 @@
 /**
- * XpaConfigureFrame.java
- *
  * Description:	Frame for configuring an XPA using a modem
- *
+ * <P>
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
  */
-package jmri.jmrix.xpa.xpaconfig;
+package jmri.jmrix.xpa.swing.xpaconfig;
 
 import java.awt.FlowLayout;
+import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.xpa.XpaMessage;
 import jmri.jmrix.xpa.XpaTrafficController;
+import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 
 public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 
     // member declarations
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7124285234526911696L;
+    XpaSystemConnectionMemo memo = null;
+
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.xpa.XpaBundle");
+
     // Drop down box and button to set XPressNet address
     javax.swing.JComboBox<String> addrBox = new javax.swing.JComboBox<String>();
     javax.swing.JButton setAddr = new javax.swing.JButton();
@@ -45,8 +44,10 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
     // Button to send a reset to the XPA
     javax.swing.JButton xpaReset = new javax.swing.JButton();
 
-    public XpaConfigureFrame() {
-        super("XPA Configuration Utility");
+    public XpaConfigureFrame(XpaSystemConnectionMemo m) {
+        super();
+        setTitle(rb.getString("MenuItemXpaConfigTool"));
+        memo = m;
     }
 
     public void initComponents() {

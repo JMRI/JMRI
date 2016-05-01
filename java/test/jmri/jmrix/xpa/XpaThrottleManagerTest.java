@@ -15,8 +15,10 @@ import junit.framework.TestSuite;
  */
 public class XpaThrottleManagerTest extends TestCase {
 
+    XpaSystemConnectionMemo memo = null;
+
     public void testCtor() {
-        XpaThrottleManager t = new XpaThrottleManager();
+        XpaThrottleManager t = new XpaThrottleManager(memo);
         Assert.assertNotNull(t);
     }
 
@@ -40,10 +42,13 @@ public class XpaThrottleManagerTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        memo = new XpaSystemConnectionMemo();
+        memo.setXpaTrafficController(new XpaTrafficController());
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        memo = null;
     }
 
 }

@@ -5,10 +5,10 @@ import jmri.jmrix.SystemConnectionMemo;
 import jmri.InstanceManager;
 
 /**
- * Provide the bare minimum required in a SystemConnectionMemo for the XPressNet
- * adapters.
- *
+ * Provide the required SystemConnectionMemo for the XPA+Modem adapters.
+ * <p>
  * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XpaSystemConnectionMemo extends SystemConnectionMemo {
 
@@ -25,6 +25,28 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
+    }
+
+    /* manage the associated traffic controller */
+    private XpaTrafficController tc = null;
+    
+    /**
+     * Set the XpaTrafficController associated with this memo
+     * <P>
+     * @param t is the XpaTrafficController memo to set
+     */
+    public void setXpaTrafficController(XpaTrafficController t){
+       if(t == null) throw new java.lang.IllegalArgumentException("Traffic Controller cannot be set to null.");
+       tc = t;
+    }
+
+    /**
+     * Get the XpaTrafficController associated with this memo
+     * <p>
+     * @return XpaTrafficController assocated with this memo.
+     */
+    public XpaTrafficController getXpaTrafficController(){
+       return tc;
     }
 
 }

@@ -26,7 +26,11 @@ import org.slf4j.LoggerFactory;
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
+
         super(new XpaSystemConnectionMemo());
+        ((XpaSystemConnectionMemo)getSystemConnectionMemo()).setXpaTrafficController(new XpaTrafficController());
+
+
         option1Name = "ModemInitString";
         options.put(option1Name, new Option("Modem Initilization String : ", new String[]{"ATX0E0"}));
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
@@ -107,19 +111,19 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     public void configure() {
 
         // connect to the traffic controller
-        XpaTrafficController.instance().connectPort(this);
+        XpaTrafficController tc = ((XpaSystemConnectionMemo)getSystemConnectionMemo()).getXpaTrafficController();
+        tc.connectPort(this);
 
-        jmri.InstanceManager.store(new jmri.jmrix.xpa.XpaPowerManager(), jmri.PowerManager.class);
+        jmri.InstanceManager.store(new jmri.jmrix.xpa.XpaPowerManager(tc), jmri.PowerManager.class);
 
         jmri.InstanceManager.setTurnoutManager(jmri.jmrix.xpa.XpaTurnoutManager.instance());
 
         // start operation
-        // sourceThread = new Thread(p);
-        // sourceThread.start();
-        sinkThread = new Thread(XpaTrafficController.instance());
+        tc.startTransmitThread();
+        sinkThread = new Thread(tc);
         sinkThread.start();
 
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.xpa.XpaThrottleManager());
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.xpa.XpaThrottleManager((XpaSystemConnectionMemo)getSystemConnectionMemo()));
 
         jmri.jmrix.xpa.ActiveFlag.setActive();
 
