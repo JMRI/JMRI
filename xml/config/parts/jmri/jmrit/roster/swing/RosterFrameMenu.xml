@@ -65,6 +65,15 @@
         <name xml:lang="de">Baue Lokpark neu auf</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
+    <node name="Validate XML File">
+        <name xml:lang="fr">Valider Fichier XML</name>
+        <name xml:lang="it">Convalida file XML</name>
+        <name xml:lang="da">Valider XML Fil</name>
+        <name xml:lang="de">Verifizierung einer XML Datei</name>
+        <name xml:lang="es">Validar fichero XML</name>
+        <name xml:lang="ja_JP">XML\u30d5\u30a1\u30a4\u30eb\u3092\u8a8d\u8a3c</name>
+        <adapter>jmri.jmrit.XmlFileValidateAction</adapter>
+    </node>
     <node>separator</node><!-- separator -->
     <node name="Open PanelPro Window">
         <name xml:lang="da">Åben PanelPro Window</name>
