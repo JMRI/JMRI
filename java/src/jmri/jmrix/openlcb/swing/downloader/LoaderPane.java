@@ -2,17 +2,18 @@ package jmri.jmrix.openlcb.swing.downloader;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
-
+import org.openlcb.MimicNodeStore;
+import org.openlcb.NodeID;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
-import org.openlcb.MimicNodeStore;
 import org.openlcb.swing.NodeSelector;
-import org.openlcb.NodeID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

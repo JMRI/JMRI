@@ -50,14 +50,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
@@ -65,6 +65,10 @@ import org.slf4j.LoggerFactory;
  */
 public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppListener {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     // Uncomment this when we add labels...
     public static enum PropertyChangeID {
 
@@ -97,7 +101,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     private DCCppTrafficController tc;
-    
+
     private JTabbedPane tabbedPane;
     private JPanel sensorPanel;
 
@@ -120,8 +124,8 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             + "Better to switch to passing use-specific objects rather than "
             + "papering this over with a deep copy of the arguments. "
             + "In any case, there's no risk of exposure here.")
-    public ConfigSensorsAndTurnoutsFrame(DCCppSensorManager sm, 
-                                         DCCppTurnoutManager tm, 
+    public ConfigSensorsAndTurnoutsFrame(DCCppSensorManager sm,
+                                         DCCppTurnoutManager tm,
                                          DCCppTrafficController t) {
         super(false, false);
         tc = t;
@@ -132,10 +136,10 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
 
         // NOTE: Look at jmri.jmrit.vsdecoder.swing.ManageLocationsFrame
         // for how to add a tab for turnouts and other things.
-        
+
         this.setTitle(Bundle.getMessage("FieldManageSensorsTurnoutsFrameTitle"));
         this.buildMenu();
-        
+
         // Panel for managing sensors
         sensorPanel = new JPanel();
         sensorPanel.setLayout(new GridBagLayout());
@@ -188,8 +192,8 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         sensorSorter.setSortKeys(sensorSortKeys);
         sensorSorter.sort();
         sensorSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
-        
-        
+
+
         JScrollPane turnoutScrollPanel = new JScrollPane();
         turnoutModel = new TurnoutTableModel();
         turnoutTable = new JTable(turnoutModel);
@@ -211,7 +215,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         turnoutSorter.setSortKeys(turnoutSortKeys);
         turnoutSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
         turnoutSorter.sort();
-        
+
         JScrollPane outputScrollPanel = new JScrollPane();
         outputModel = new OutputTableModel();
         outputTable = new JTable(outputModel);
@@ -233,7 +237,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         outputSorter.setSortKeys(outputSortKeys);
         outputSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
         outputSorter.sort();
-        
+
         tabbedPane = new JTabbedPane();
         tabbedPane.addTab(Bundle.getMessage("FieldSensorsTabTitle"), sensorScrollPanel);
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipSensorTab"));
@@ -278,7 +282,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         //buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
         JPanel buttonPane2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         //buttonPane2.setLayout(new BoxLayout(buttonPane2, BoxLayout.LINE_AXIS));
-        
+
         buttonPane.add(addButton);
         buttonPane.add(saveButton);
         buttonPane2.add(closeButton);
@@ -315,13 +319,13 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         //this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // NOI18N
 
     }
-    
+
     // DCCppListener Methods
     public void message(DCCppReply r) {
         // When we get a SensorDefReply message, add the
         // sensor information to the data map for the model.
         if (r.isSensorDefReply()) {
-            Vector v = new Vector();
+            Vector<Object> v = new Vector<Object>();
             v.add(r.getSensorDefNumInt());
             v.add(r.getSensorDefPinInt());
             v.add(r.getSensorDefPullupBool());
@@ -329,14 +333,14 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             sensorModel.insertData(v, false);
             sensorSorter.sort();
         } else if (r.isTurnoutDefReply()) {
-            Vector v = new Vector();
+            Vector<Object> v = new Vector<Object>();
             v.add(r.getTurnoutDefNumInt());
             v.add(r.getTurnoutDefAddrInt());
             v.add(r.getTurnoutDefSubAddrInt());
             turnoutModel.insertData(v, false);
             turnoutSorter.sort();
         } else if (r.isOutputListReply()) {
-            Vector v = new Vector();
+            Vector<Object> v = new Vector<Object>();
             v.add(r.getOutputNumInt());
             v.add(r.getOutputListPinInt());
             v.add((r.getOutputListIFlagInt() & 0x01) == 1); // (bool) Invert
@@ -347,11 +351,11 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             outputSorter.sort();
         }
     }
-    
+
     public void message(DCCppMessage m) {
         // Do nothing
     }
-    
+
     public void notifyTimeout(DCCppMessage m) {
         // Do nothing
     }
@@ -380,19 +384,19 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
 
     private void addButtonPressed(ActionEvent e) {
         if (cTab == CurrentTab.SENSOR) {
-            Vector v = new Vector();
+            Vector<Object> v = new Vector<Object>();
             v.add(0);     // Index
             v.add(0);     // Pin
             v.add(false); // Pullup
             sensorModel.insertData(v, true);
         } else if (cTab == CurrentTab.TURNOUT) {
-            Vector v = new Vector();
+            Vector<Object> v = new Vector<Object>();
             v.add(0); // Index
             v.add(0); // Address
             v.add(0); // Subaddress
             turnoutModel.insertData(v, true);
         } else if (cTab == CurrentTab.OUTPUT) {
-            Vector v = new Vector();
+            Vector<Object> v = new Vector<Object>();
             v.add(0); // Index
             v.add(0); // Pin
             v.add(false); // Invert
@@ -401,7 +405,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             outputModel.insertData(v, true);
         }
     }
-    
+
     private void saveButtonPressed(ActionEvent e) {
         int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
                 Bundle.getMessage("FieldMCFSaveDialogTitle"),
@@ -419,10 +423,10 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             saveTableValues();
             //OperationsXml.save();
         }
-        //if (Setup.isCloseWindowOnSaveEnabled()) {
-        if (false) {
+        // TODO: Disabled? Why? Can this go away?
+        /*if (Setup.isCloseWindowOnSaveEnabled()) {
             dispose();
-        }
+        }*/
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
@@ -430,7 +434,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         if (cTab == CurrentTab.SENSOR) {
             for (int i = 0; i < sensorModel.getRowData().size(); i++) {
 
-                Vector r = (Vector)sensorModel.getRowData().elementAt(i);
+                Vector<Object> r = (Vector<Object>)sensorModel.getRowData().elementAt(i);
                 boolean isnew = (boolean)r.elementAt(4);
                 boolean isdirty = (boolean)r.elementAt(5);
                 boolean isdelete = (boolean)r.elementAt(6);
@@ -463,7 +467,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         } else if (cTab == CurrentTab.TURNOUT) {
             for (int i = 0; i < turnoutModel.getRowData().size(); i++) {
 
-                Vector r = (Vector)turnoutModel.getRowData().elementAt(i);
+                Vector<Object> r = (Vector<Object>)turnoutModel.getRowData().elementAt(i);
                 boolean isnew = (boolean)r.elementAt(4);
                 boolean isdirty = (boolean)r.elementAt(5);
                 boolean isdelete = (boolean)r.elementAt(6);
@@ -471,7 +475,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                 //if (sensorModel.isNewRow(row)) {
                 if (isnew) {
                     // WARNING: Conversions here are brittle. Be careful.
-                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int)r.elementAt(0), 
+                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int)r.elementAt(0),
                             (int)r.elementAt(1), (int)r.elementAt(2)), this);
                     turnoutModel.setNewRow(row, false);
                 //} else if (sensorModel.isMarkedForDelete(row)) {
@@ -494,7 +498,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         } else if (cTab == CurrentTab.OUTPUT) {
             for (int i = 0; i < outputModel.getRowData().size(); i++) {
 
-                Vector r = (Vector)outputModel.getRowData().elementAt(i);
+                Vector<Object> r = (Vector<Object>)outputModel.getRowData().elementAt(i);
                 boolean isnew = (boolean)r.elementAt(6);
                 boolean isdirty = (boolean)r.elementAt(7);
                 boolean isdelete = (boolean)r.elementAt(8);
@@ -543,7 +547,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         if (outputTable.getCellEditor() != null) {
             outputTable.getCellEditor().stopCellEditing();
         }
-        
+
         // If clicked while changes not saved to BaseStation, offer
         // the option of saving.
         if (sensorModel.isDirty() || turnoutModel.isDirty() || outputModel.isDirty()) {
@@ -553,7 +557,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             if (value == JOptionPane.YES_OPTION) {
                 saveTableValues();
             }
-            
+
             // Offer to write the changes to EEPROM
             value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFCloseDialogConfirmMessage"),
                     Bundle.getMessage("FieldMCFCloseDialogTitle"),
@@ -578,11 +582,16 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
     /**
      * Private class to serve as TableModel for Reporters and Ops Locations
      */
+    @SuppressWarnings("unused")
     private static class SensorTableModel extends AbstractTableModel {
 
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
         // These get internationalized at runtime in the constructor below.
         private String[] columnNames = new String[7];
-        private Vector rowData = new Vector();
+        private Vector<Vector<Object>> rowData = new Vector<Vector<Object>>();
         //private Vector isNew = new Vector();
         //private Vector isDirty = new Vector();
         //private Vector markDelete = new Vector();
@@ -598,12 +607,19 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             columnNames[4] = "isNew";       // hidden column // NOI18N
             columnNames[5] = "isDirty";     // hidden column // NOI18N
             columnNames[6] = "isDelete";    // hidden column // NOI18N
-            rowData = new Vector();
+            rowData = new Vector<Vector<Object>>();
         }
 
+        /**
+         * Deprecated
+         * Use insertData(Vector, Boolean) instead
+         * @param values
+         * @param isnew
+         */
         // Note: May be obsoleted by insertData(Vector v)
+        @Deprecated
         public void insertData(Object[] values, boolean isnew) {
-            Vector v = new Vector();
+            Vector<Object> v = new Vector<Object>();
             for (int i = 0; i < values.length; i++) {
                 v.add(values[i]);
             }
@@ -613,37 +629,37 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             //v.add(false);
             insertData(v, isnew);
         }
-        
+
         public boolean isNewRow(int row) {
             //return((boolean) isNew.elementAt(row));
-            return((boolean)((Vector)rowData.elementAt(row)).elementAt(4));
+            return((boolean)((Vector<Object>)rowData.elementAt(row)).elementAt(4));
         }
-        
+
         public void setNewRow(int row, boolean n) {
             //isNew.setElementAt(n, row);
-            ((Vector)rowData.elementAt(row)).setElementAt(n, 4);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(n, 4);
         }
-        
+
         public boolean isDirtyRow(int row) {
             //return((boolean)isDirty.elementAt(row));
-            return((boolean)((Vector)rowData.elementAt(row)).elementAt(5));
+            return((boolean)((Vector<Object>)rowData.elementAt(row)).elementAt(5));
         }
-        
+
         public void setDirtyRow(int row, boolean d) {
             //isDirty.setElementAt(d, row);
-            ((Vector)rowData.elementAt(row)).setElementAt(d, 5);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(d, 5);
         }
-        
+
         public boolean isMarkedForDelete(int row) {
-            //return((boolean)markDelete.elementAt(row));            
-            return((boolean)((Vector)rowData.elementAt(row)).elementAt(6));
+            //return((boolean)markDelete.elementAt(row));
+            return((boolean)((Vector<Object>)rowData.elementAt(row)).elementAt(6));
         }
-        
+
         public void markForDelete(int row, boolean mark) {
             //markDelete.setElementAt(mark, row);
-            ((Vector)rowData.elementAt(row)).setElementAt(mark, 6);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(mark, 6);
         }
-        
+
         public boolean isDirty() {
             for (int i = 0; i < rowData.size(); i++) {
                 if (isDirtyRow(i)) {
@@ -653,35 +669,32 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             return(false);
         }
 
-        public boolean contains(Vector v) {
-            Iterator it = rowData.iterator();
+        public boolean contains(Vector<Object> v) {
+            Iterator<Vector<Object>> it = rowData.iterator();
             while(it.hasNext()) {
-                Vector r = (Vector)it.next();
+                Vector<Object> r = (Vector<Object>)it.next();
                 if (r.firstElement() == v.firstElement()) {
                     return(true);
                 }
             }
             return(false);
         }
-        
-        public void insertData(Vector v, boolean isnew) {
+
+        public void insertData(Vector<Object> v, boolean isnew) {
             if (!rowData.contains(v)) {
                 v.add("Delete");
                 v.add(isnew); // is new
                 v.add(false); // is dirty (no)
                 v.add(false); // is marked for delete (of course not)
                 rowData.add(v);
-                //isNew.add(isnew);
-                //isDirty.add(false);
-                //markDelete.add(false);
             }
             fireTableDataChanged();
         }
 
-        public Vector getRowData() {
+        public Vector<Vector<Object>> getRowData() {
             return(rowData);
         }
-        
+
         public String getColumnName(int col) {
             return columnNames[col].toString();
         }
@@ -695,7 +708,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public Object getValueAt(int row, int col) {
-            return(((Vector)rowData.elementAt(row)).elementAt(col));
+            return(((Vector<Object>)rowData.elementAt(row)).elementAt(col));
         }
 
         public boolean isCellEditable(int row, int col) {
@@ -703,7 +716,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public void setValueAt(Object value, int row, int col) {
-            ((Vector)rowData.elementAt(row)).setElementAt(value, col);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(value, col);
             if (col < 3) {
                 // Only set dirty if data changed, not state
                 // Data is in columns 0-2
@@ -730,15 +743,20 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             }
         }
     }
-    
+
     /**
      * Private class to serve as TableModel for Reporters and Ops Locations
      */
+    @SuppressWarnings("unused")
     private static class TurnoutTableModel extends AbstractTableModel {
 
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
         // These get internationalized at runtime in the constructor below.
         private String[] columnNames = new String[7];
-        private Vector rowData = new Vector();
+        private Vector<Vector<Object>> rowData = new Vector<Vector<Object>>();
 
         public TurnoutTableModel() {
             super();
@@ -751,46 +769,53 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             columnNames[4] = "isNew";        // hidden column // NOI18N
             columnNames[5] = "isDirty";      // hidden column // NOI18N
             columnNames[6] = "isDelete";     // hidden column // NOI18N
-            rowData = new Vector();
+            rowData = new Vector<Vector<Object>>();
         }
 
+        /**
+         * Deprecated
+         * Use insertData(Vector, Boolean) instead
+         * @param values
+         * @param isnew
+         */
         // Note: May be obsoleted by insertData(Vector v)
+        @Deprecated
         public void insertData(Object[] values, boolean isnew) {
-            Vector v = new Vector();
+            Vector<Object> v = new Vector<Object>();
             for (int i = 0; i < values.length; i++) {
                 v.add(values[i]);
             }
             insertData(v, isnew);
         }
-        
+
         public boolean isNewRow(int row) {
             //return((boolean) isNew.elementAt(row));
-            return((boolean)((Vector)rowData.elementAt(row)).elementAt(4));
+            return((boolean)((Vector<Object>)rowData.elementAt(row)).elementAt(4));
         }
-        
+
         public void setNewRow(int row, boolean n) {
             //isNew.setElementAt(n, row);
-            ((Vector)rowData.elementAt(row)).setElementAt(n, 4);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(n, 4);
         }
-        
+
         public boolean isDirtyRow(int row) {
             //return((boolean)isDirty.elementAt(row));
-            return((boolean)((Vector)rowData.elementAt(row)).elementAt(5));
+            return((boolean)((Vector<Object>)rowData.elementAt(row)).elementAt(5));
         }
-        
+
         public void setDirtyRow(int row, boolean d) {
             //isDirty.setElementAt(d, row);
-            ((Vector)rowData.elementAt(row)).setElementAt(d, 5);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(d, 5);
         }
-        
+
         public boolean isMarkedForDelete(int row) {
-            //return((boolean)markDelete.elementAt(row));            
-            return((boolean)((Vector)rowData.elementAt(row)).elementAt(6));
+            //return((boolean)markDelete.elementAt(row));
+            return((boolean)((Vector<Object>)rowData.elementAt(row)).elementAt(6));
         }
-        
+
         public void markForDelete(int row, boolean mark) {
             //markDelete.setElementAt(mark, row);
-            ((Vector)rowData.elementAt(row)).setElementAt(mark, 6);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(mark, 6);
         }
 
         public boolean isDirty() {
@@ -802,18 +827,18 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             return(false);
         }
 
-        public boolean contains(Vector v) {
-            Iterator it = rowData.iterator();
+        public boolean contains(Vector<Object> v) {
+            Iterator<Vector<Object>> it = rowData.iterator();
             while(it.hasNext()) {
-                Vector r = (Vector)it.next();
+                Vector<Object> r = it.next();
                 if (r.firstElement() == v.firstElement()) {
                     return(true);
                 }
             }
             return(false);
         }
-        
-        public void insertData(Vector v, boolean isnew) {
+
+        public void insertData(Vector<Object> v, boolean isnew) {
             if (!rowData.contains(v)) {
                 v.add("Delete");
                 v.add(isnew); // is new
@@ -824,10 +849,10 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             fireTableDataChanged();
         }
 
-        public Vector getRowData() {
+        public Vector<Vector<Object>> getRowData() {
             return(rowData);
         }
-        
+
         public String getColumnName(int col) {
             return columnNames[col].toString();
         }
@@ -841,7 +866,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public Object getValueAt(int row, int col) {
-            return(((Vector)rowData.elementAt(row)).elementAt(col));
+            return(((Vector<Object>)rowData.elementAt(row)).elementAt(col));
         }
 
         public boolean isCellEditable(int row, int col) {
@@ -849,7 +874,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public void setValueAt(Object value, int row, int col) {
-            ((Vector)((Vector)rowData.elementAt(row))).setElementAt(value, col);
+            ((Vector<Object>)((Vector<Object>)rowData.elementAt(row))).setElementAt(value, col);
             if (col < 3) {
                 // Only set dirty if data changed, not state
                 // Data is in columns 0-2
@@ -879,11 +904,16 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         /**
      * Private class to serve as TableModel for Reporters and Ops Locations
      */
+    @SuppressWarnings("unused")
     private static class OutputTableModel extends AbstractTableModel {
 
+        /**
+             *
+             */
+            private static final long serialVersionUID = 1L;
         // These get internationalized at runtime in the constructor below.
         private String[] columnNames = new String[9];
-        private Vector rowData = new Vector();
+        private Vector<Vector<Object>> rowData = new Vector<Vector<Object>>();
 
         public OutputTableModel() {
             super();
@@ -898,46 +928,53 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             columnNames[6] = "isNew";        // hidden column // NOI18N
             columnNames[7] = "isDirty";      // hidden column // NOI18N
             columnNames[8] = "isDelete";     // hidden column // NOI18N
-            rowData = new Vector();
+            rowData = new Vector<Vector<Object>>();
         }
 
+        /**
+         * Deprecated
+         * Use insertData(Vector, Boolean) instead
+         * @param values
+         * @param isnew
+         */
         // Note: May be obsoleted by insertData(Vector v)
+        @Deprecated
         public void insertData(Object[] values, boolean isnew) {
-            Vector v = new Vector();
+            Vector<Object> v = new Vector<Object>();
             for (int i = 0; i < values.length; i++) {
                 v.add(values[i]);
             }
             insertData(v, isnew);
         }
-        
+
         public boolean isNewRow(int row) {
             //return((boolean) isNew.elementAt(row));
-            return((boolean)((Vector)rowData.elementAt(row)).elementAt(6));
+            return((boolean)((Vector<Object>)rowData.elementAt(row)).elementAt(6));
         }
-        
+
         public void setNewRow(int row, boolean n) {
             //isNew.setElementAt(n, row);
-            ((Vector)rowData.elementAt(row)).setElementAt(n, 6);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(n, 6);
         }
-        
+
         public boolean isDirtyRow(int row) {
             //return((boolean)isDirty.elementAt(row));
-            return((boolean)((Vector)rowData.elementAt(row)).elementAt(7));
+            return((boolean)((Vector<Object>)rowData.elementAt(row)).elementAt(7));
         }
-        
+
         public void setDirtyRow(int row, boolean d) {
             //isDirty.setElementAt(d, row);
-            ((Vector)rowData.elementAt(row)).setElementAt(d, 7);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(d, 7);
         }
-        
+
         public boolean isMarkedForDelete(int row) {
-            //return((boolean)markDelete.elementAt(row));            
-            return((boolean)((Vector)rowData.elementAt(row)).elementAt(8));
+            //return((boolean)markDelete.elementAt(row));
+            return((boolean)((Vector<Object>)rowData.elementAt(row)).elementAt(8));
         }
-        
+
         public void markForDelete(int row, boolean mark) {
             //markDelete.setElementAt(mark, row);
-            ((Vector)rowData.elementAt(row)).setElementAt(mark, 8);
+            ((Vector<Object>)rowData.elementAt(row)).setElementAt(mark, 8);
         }
 
         public boolean isDirty() {
@@ -949,18 +986,18 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             return(false);
         }
 
-        public boolean contains(Vector v) {
-            Iterator it = rowData.iterator();
+        public boolean contains(Vector<Object> v) {
+            Iterator<Vector<Object>> it = rowData.iterator();
             while(it.hasNext()) {
-                Vector r = (Vector)it.next();
+                Vector<Object> r = it.next();
                 if (r.firstElement() == v.firstElement()) {
                     return(true);
                 }
             }
             return(false);
         }
-        
-        public void insertData(Vector v, boolean isnew) {
+
+        public void insertData(Vector<Object> v, boolean isnew) {
             if (!rowData.contains(v)) {
                 v.add("Delete");
                 v.add(isnew); // is new
@@ -971,10 +1008,10 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             fireTableDataChanged();
         }
 
-        public Vector getRowData() {
+        public Vector<Vector<Object>> getRowData() {
             return(rowData);
         }
-        
+
         public String getColumnName(int col) {
             return columnNames[col].toString();
         }
@@ -988,7 +1025,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public Object getValueAt(int row, int col) {
-            return(((Vector)rowData.elementAt(row)).elementAt(col));
+            return(((Vector<Object>)rowData.elementAt(row)).elementAt(col));
         }
 
         public boolean isCellEditable(int row, int col) {
@@ -996,7 +1033,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public void setValueAt(Object value, int row, int col) {
-            ((Vector)((Vector)rowData.elementAt(row))).setElementAt(value, col);
+            ((Vector<Object>)((Vector<Object>)rowData.elementAt(row))).setElementAt(value, col);
             if (col < 5) {
                 // Only set dirty if data changed, not state
                 // Data is in columns 0-2
@@ -1026,12 +1063,17 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
     }
 
-    
+
     static class ButtonRenderer extends JButton implements TableCellRenderer {
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
+
         public ButtonRenderer() {
             setOpaque(true);
         }
-        
+
         public Component getTableCellRendererComponent(JTable table, Object value,
                         boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {
@@ -1045,14 +1087,17 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             return this;
         }
     }
-    
+
     class ButtonEditor extends DefaultCellEditor {
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
         protected JButton button;
         private String label;
         private boolean isPushed;
-        private int index;
         private JTable table;
-        
+
         public ButtonEditor(JCheckBox checkBox, JTable t) {
             super(checkBox);
             button = new JButton();
@@ -1064,7 +1109,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                 }
             });
         }
-        
+
         public Component getTableCellEditorComponent(JTable table, Object value,
                     boolean isSelected, int row, int column) {
             if (isSelected) {
@@ -1079,7 +1124,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             isPushed = true;
             return button;
         }
-        
+
         public Object getCellEditorValue() {
             if (isPushed) {
                 int sel = table.getEditingRow();
@@ -1100,12 +1145,12 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             isPushed = false;
             return label;
         }
-        
+
         public boolean stopCellEditing() {
             isPushed = false;
             return super.stopCellEditing();
         }
-        
+
         protected void fireEditingStopped() {
             super.fireEditingStopped();
         }

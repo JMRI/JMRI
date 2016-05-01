@@ -2,9 +2,9 @@ package jmri.jmrix.roco.z21;
 
 import jmri.Turnout;
 import jmri.jmrix.lenz.XNetListener;
-import jmri.jmrix.lenz.XNetTurnoutManager;
-import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetReply;
+import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.lenz.XNetTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -7,9 +7,9 @@ import jmri.implementation.FileLocationsPreferences;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesProvider;
 import jmri.util.prefs.AbstractPreferencesProvider;
 import jmri.util.prefs.InitializationException;
-import jmri.spi.PreferencesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

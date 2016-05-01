@@ -1,12 +1,10 @@
 package jmri.implementation;
-import jmri.ProgListener;
-import jmri.Programmer;
-import jmri.jmrix.AbstractProgrammerFacade;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
-
+import jmri.ProgListener;
+import jmri.Programmer;
+import jmri.jmrix.AbstractProgrammerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

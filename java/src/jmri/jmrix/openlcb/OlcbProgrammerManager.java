@@ -1,7 +1,11 @@
 package jmri.jmrix.openlcb;
 
 import java.util.List;
-import jmri.*;
+import jmri.AddressedProgrammer;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.ProgrammingMode;
 
 /**
  * Get access to available {@link Programmer} objects.

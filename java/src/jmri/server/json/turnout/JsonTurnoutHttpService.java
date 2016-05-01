@@ -1,12 +1,5 @@
 package jmri.server.json.turnout;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.Turnout;
 import static jmri.server.json.JSON.CLOSED;
 import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
@@ -18,9 +11,17 @@ import static jmri.server.json.JSON.THROWN;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.JSON.USERNAME;
+import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.Locale;
+import jmri.InstanceManager;
+import jmri.Turnout;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
-import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 
 /**
  *

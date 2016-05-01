@@ -1,20 +1,19 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import javax.annotation.Nonnull;
 import jmri.util.FileUtil;
 import jmri.util.OrderedHashtable;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
  /**
  * Default implementation to map Signal aspects or appearances to speed requirements.
