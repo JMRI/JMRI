@@ -1,4 +1,3 @@
-// SystemConsoleConfigPanel.java
 package apps;
 
 import apps.SystemConsole.Scheme;
@@ -34,7 +33,6 @@ import jmri.util.swing.FontComboUtil;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2010, 2011
- * @version $Revision$
  */
 public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel {
 
@@ -240,4 +238,3 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         return InstanceManager.getDefault(SystemConsolePreferencesManager.class);
     }
 }
-/* @(#)SystemConsoleConfigPanel.java */

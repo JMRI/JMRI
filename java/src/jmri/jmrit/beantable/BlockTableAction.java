@@ -92,10 +92,6 @@ public class BlockTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7556903687684791477L;
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DIRECTIONCOL = EDITCOL + 1;
             static public final int LENGTHCOL = DIRECTIONCOL + 1;

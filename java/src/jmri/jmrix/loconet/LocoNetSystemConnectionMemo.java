@@ -235,8 +235,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             log.debug("set turnout retry: " + mTurnoutNoRetry);
         }
 
-        InstanceManager.setPowerManager(
-                getPowerManager());
+        InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setSensorManager(
                 getSensorManager());

@@ -49,20 +49,12 @@ public class OperationsTestCase extends TestCase {
 
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
-        
-        jmri.InstanceManager.setShutDownManager(new
-                jmri.managers.DefaultShutDownManager() {
-                    @Override
-                    public void register(jmri.ShutDownTask s) {
-                        // do nothing with registered shutdown tasks for testing.
-                    }
-                });
+        JUnitUtil.initShutDownManager();
 
         // set the file location to temp (in the root of the build directory).
         OperationsSetupXml.setFileLocation("temp" + File.separator);

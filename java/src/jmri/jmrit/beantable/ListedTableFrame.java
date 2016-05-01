@@ -1,4 +1,3 @@
-// ListedTableFrame.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -42,14 +41,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Kevin Dickerson Copyright 2010
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class ListedTableFrame extends BeanTableFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6285854187511950725L;
     ActionJList actionList;
 
     public boolean isMultipleInstances() {
@@ -220,7 +214,7 @@ public class ListedTableFrame extends BeanTableFrame {
     void buildMenus(final TabbedTableItem item) {
         JMenuBar menuBar = new JMenuBar();
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
 
         JMenuItem newItem = new JMenuItem(Bundle.getMessage("MenuNewWindow"));

@@ -34,7 +34,7 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
                 .getCommandStation()
                 .getCommandStationType();*/
 
-        jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
+        jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         systemMemo.setProgrammerManager(new XNetProgrammerManager(new Z21XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
         jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());

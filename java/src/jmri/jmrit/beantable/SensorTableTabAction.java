@@ -5,11 +5,6 @@ import jmri.Manager;
 
 public class SensorTableTabAction extends AbstractTableTabAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8373953953343271566L;
-
     public SensorTableTabAction(String s) {
         super(s);
     }

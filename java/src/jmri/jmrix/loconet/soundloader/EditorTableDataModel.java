@@ -143,7 +143,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                     return null;
                 }
                 float time = file.getHeader(row + 1).getDataLength() / rate;
-                return new Float(time);
+                return Float.valueOf(time);
             case PLAYBUTTONCOL:
                 if (file.getHeader(row + 1).isWAV()) {
                     return res.getString("ButtonPlay");

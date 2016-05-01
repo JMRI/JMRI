@@ -57,7 +57,7 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -472,7 +472,7 @@ public class JsonUtil {
     static public ObjectNode getPanel(Locale locale, Editor editor, String format) {
         if (editor.getAllowInFrameServlet()) {
             String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
-            if (!title.isEmpty() && !WebServerManager.getWebServerPreferences().getDisallowedFrames().contains(title)) {
+            if (!title.isEmpty() && !WebServerPreferences.getDefault().getDisallowedFrames().contains(title)) {
                 String type = PANEL;
                 String name = "Panel";
                 if (editor instanceof ControlPanelEditor) {
@@ -574,7 +574,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, RAILROAD);
         ObjectNode data = root.putObject(DATA);
-        data.put(NAME, WebServerManager.getWebServerPreferences().getRailRoadName());
+        data.put(NAME, WebServerPreferences.getDefault().getRailRoadName());
         return root;
     }
 
@@ -1329,9 +1329,9 @@ public class JsonUtil {
         data.put(JMRI, jmri.Version.name());
         data.put(JSON, JSON_PROTOCOL_VERSION);
         data.put(HEARTBEAT, Math.round(heartbeat * 0.9f));
-        data.put(RAILROAD, WebServerManager.getWebServerPreferences().getRailRoadName());
+        data.put(RAILROAD, WebServerPreferences.getDefault().getRailRoadName());
         data.put(NODE, NodeIdentity.identity());
-        data.put(ACTIVE_PROFILE, ProfileManager.defaultManager().getActiveProfile().getName());
+        data.put(ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfile().getName());
         return root;
     }
 

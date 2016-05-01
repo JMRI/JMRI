@@ -80,8 +80,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "SBSC_USE_STRINGBUFFER_CONCATENATION"},
-            justification = "Two locks needed for synchronization here, this is OK; String + only used for debug, so inefficient String processing not really a problem")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "SBSC_USE_STRINGBUFFER_CONCATENATION","UW_UNCOND_WAIT"}, 
+            justification = "Two locks needed for synchronization here, this is OK; String + only used for debug, so inefficient String processing not really a problem; Unconditional Wait is to give external hardware, which doesn't necessarilly respond, time to process the data.")
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
@@ -168,56 +168,52 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     public void connectPort(AbstractPortController p) {
         rcvException = false;
         xmtException = false;
-        try {
-            if (controller != null) {
-                log.warn("connectPort: connect called while connected");
-            } else {
-                log.debug("connectPort invoked");
-            }
-            if (! (p instanceof Z21Adapter) ){
-                throw new IllegalArgumentException("attempt to connect wrong port type");
-            }
-            controller = p;
-            try {
-                host = java.net.InetAddress.getByName(((Z21Adapter) controller).getHostName());
-                port = ((Z21Adapter) controller).getPort();
-                    ConnectionStatus.instance().setConnectionState(
-                            ((Z21Adapter) p).getHostName() + ":" + ((Z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_UP);
-            } catch (java.net.UnknownHostException uhe) {
-                log.error("Unknown Host: {} ", ((Z21Adapter) controller).getHostName());
-                if (((Z21Adapter) p).getPort() != 0) {
-                    ConnectionStatus.instance().setConnectionState(
-                            ((Z21Adapter) controller).getHostName() + ":" + ((Z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_DOWN);
-                } else {
-                    ConnectionStatus.instance().setConnectionState(
-                            ((Z21Adapter) controller).getHostName(), ConnectionStatus.CONNECTION_DOWN);
-                }
-            }
-            // and start threads
-            xmtThread = new Thread(xmtRunnable = new Runnable() {
-                public void run() {
-                    try {
-                        transmitLoop();
-                    } catch (Throwable e) {
-                        log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
-                    }
-                }
-            });
-            xmtThread.setName("Transmit");
-            xmtThread.start();
-            rcvThread = new Thread(new Runnable() {
-                public void run() {
-                    receiveLoop();
-                }
-            });
-            rcvThread.setName("Receive");
-            int xr = rcvThread.getPriority();
-            xr++;
-            rcvThread.setPriority(xr);      //bump up the priority
-            rcvThread.start();
-        } catch (Exception e) {
-            log.error("Failed to start up communications. Error was " + e);
+        if (controller != null) {
+            log.warn("connectPort: connect called while connected");
+        } else {
+            log.debug("connectPort invoked");
         }
+        if (! (p instanceof Z21Adapter) ){
+            throw new IllegalArgumentException("attempt to connect wrong port type");
+        }
+        controller = p;
+        try {
+           host = java.net.InetAddress.getByName(((Z21Adapter) controller).getHostName());
+           port = ((Z21Adapter) controller).getPort();
+           ConnectionStatus.instance().setConnectionState(
+                         ((Z21Adapter) p).getHostName() + ":" + ((Z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_UP);
+       } catch (java.net.UnknownHostException uhe) {
+          log.error("Unknown Host: {} ", ((Z21Adapter) controller).getHostName());
+          if (((Z21Adapter) p).getPort() != 0) {
+             ConnectionStatus.instance().setConnectionState(
+                     ((Z21Adapter) controller).getHostName() + ":" + ((Z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_DOWN);
+         } else {
+             ConnectionStatus.instance().setConnectionState(
+                    ((Z21Adapter) controller).getHostName(), ConnectionStatus.CONNECTION_DOWN);
+         }
+      }
+      // and start threads
+      xmtThread = new Thread(xmtRunnable = new Runnable() {
+         public void run() {
+            try {
+                transmitLoop();
+            } catch (Throwable e) {
+                log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
+            }
+         }
+      });
+      xmtThread.setName("Transmit");
+      xmtThread.start();
+      rcvThread = new Thread(new Runnable() {
+         public void run() {
+            receiveLoop();
+         }
+      });
+      rcvThread.setName("Receive");
+      int xr = rcvThread.getPriority();
+      xr++;
+      rcvThread.setPriority(xr);      //bump up the priority
+      rcvThread.start();
     }
 
     /**
@@ -247,6 +243,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
      * <P>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      */
+     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP", "NO_NOTIFY_NOT_NOTIFYALL"},
+              justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.  Notify is used because Having more than one thread waiting on xmtRunnable is an error.")
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
@@ -379,6 +377,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"},
+                     justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.")
     @Override
     protected void terminate() {
         if (log.isDebugEnabled()) {

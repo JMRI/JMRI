@@ -1051,41 +1051,41 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
 
             LayoutSlip ls = (LayoutSlip) connected;
-            if (cType == LayoutEditor.SLIP_A) {
-                if (ls.getSlipState() == LayoutSlip.STATE_AD) {
-                    return ls.getSignalHead(LayoutTurnout.POINTA2);
-                } else {
-                    return ls.getSignalHead(LayoutTurnout.POINTA);
-                }
-            }
-            if (cType == LayoutEditor.SLIP_B) {
-                if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
-                    if (ls.getSlipState() == LayoutSlip.STATE_BC) {
-                        return ls.getSignalHead(LayoutTurnout.POINTB2);
+            switch (cType) {
+                case LayoutEditor.SLIP_A:
+                    if (ls.getSlipState() == LayoutSlip.STATE_AD) {
+                        return ls.getSignalHead(LayoutTurnout.POINTA2);
+                    } else {
+                        return ls.getSignalHead(LayoutTurnout.POINTA);
+                    }
+                case LayoutEditor.SLIP_B:
+                    if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                        if (ls.getSlipState() == LayoutSlip.STATE_BC) {
+                            return ls.getSignalHead(LayoutTurnout.POINTB2);
+                        } else {
+                            return ls.getSignalHead(LayoutTurnout.POINTB);
+                        }
                     } else {
                         return ls.getSignalHead(LayoutTurnout.POINTB);
                     }
-                } else {
-                    return ls.getSignalHead(LayoutTurnout.POINTB);
-                }
-            }
-            if (cType == LayoutEditor.SLIP_C) {
-                if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
-                    if (ls.getSlipState() == LayoutSlip.STATE_BC) {
-                        return ls.getSignalHead(LayoutTurnout.POINTC2);
+                case LayoutEditor.SLIP_C:
+                    if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                        if (ls.getSlipState() == LayoutSlip.STATE_BC) {
+                            return ls.getSignalHead(LayoutTurnout.POINTC2);
+                        } else {
+                            return ls.getSignalHead(LayoutTurnout.POINTC);
+                        }
                     } else {
                         return ls.getSignalHead(LayoutTurnout.POINTC);
                     }
-                } else {
-                    return ls.getSignalHead(LayoutTurnout.POINTC);
-                }
-            }
-            if (cType == LayoutEditor.SLIP_D) {
-                if (ls.getSlipState() == LayoutSlip.STATE_AD) {
-                    return ls.getSignalHead(LayoutTurnout.POINTD2);
-                } else {
-                    return ls.getSignalHead(LayoutTurnout.POINTD);
-                }
+                case LayoutEditor.SLIP_D:
+                    if (ls.getSlipState() == LayoutSlip.STATE_AD) {
+                        return ls.getSignalHead(LayoutTurnout.POINTD2);
+                    } else {
+                        return ls.getSignalHead(LayoutTurnout.POINTD);
+                    }
+                default:
+                    break;
             }
         }
         // block boundary must be at a level crossing
@@ -1095,37 +1095,37 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             return null;
         }
         LevelXing xing = (LevelXing) connected;
-        if (cType == LayoutEditor.LEVEL_XING_A) {
-            // block boundary is at the A connection of a level crossing
-            if (facingIsBlock1) {
-                return xing.getSignalHead(LevelXing.POINTA);
-            } else {
-                return xing.getSignalHead(LevelXing.POINTC);
-            }
-        }
-        if (cType == LayoutEditor.LEVEL_XING_B) {
-            // block boundary is at the B connection of a level crossing
-            if (facingIsBlock1) {
-                return xing.getSignalHead(LevelXing.POINTB);
-            } else {
-                return xing.getSignalHead(LevelXing.POINTD);
-            }
-        }
-        if (cType == LayoutEditor.LEVEL_XING_C) {
-            // block boundary is at the C connection of a level crossing
-            if (facingIsBlock1) {
-                return xing.getSignalHead(LevelXing.POINTC);
-            } else {
-                return xing.getSignalHead(LevelXing.POINTA);
-            }
-        }
-        if (cType == LayoutEditor.LEVEL_XING_D) {
-            // block boundary is at the D connection of a level crossing
-            if (facingIsBlock1) {
-                return xing.getSignalHead(LevelXing.POINTD);
-            } else {
-                return xing.getSignalHead(LevelXing.POINTB);
-            }
+        switch (cType) {
+            case LayoutEditor.LEVEL_XING_A:
+                // block boundary is at the A connection of a level crossing
+                if (facingIsBlock1) {
+                    return xing.getSignalHead(LevelXing.POINTA);
+                } else {
+                    return xing.getSignalHead(LevelXing.POINTC);
+                }
+            case LayoutEditor.LEVEL_XING_B:
+                // block boundary is at the B connection of a level crossing
+                if (facingIsBlock1) {
+                    return xing.getSignalHead(LevelXing.POINTB);
+                } else {
+                    return xing.getSignalHead(LevelXing.POINTD);
+                }
+            case LayoutEditor.LEVEL_XING_C:
+                // block boundary is at the C connection of a level crossing
+                if (facingIsBlock1) {
+                    return xing.getSignalHead(LevelXing.POINTC);
+                } else {
+                    return xing.getSignalHead(LevelXing.POINTA);
+                }
+            case LayoutEditor.LEVEL_XING_D:
+                // block boundary is at the D connection of a level crossing
+                if (facingIsBlock1) {
+                    return xing.getSignalHead(LevelXing.POINTD);
+                } else {
+                    return xing.getSignalHead(LevelXing.POINTB);
+                }
+            default:
+                break;
         }
         return null;
     }

@@ -264,10 +264,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         @Override
         public String getColumnName(int col) {
             if (col == USERNAME_COLUMN) {
-                return rb.getString("ColumnUserName");
+                return Bundle.getMessage("ColumnUserName");
             }
             if (col == SYSNAME_COLUMN) {
-                return rb.getString("ColumnSystemName");
+                return Bundle.getMessage("ColumnSystemName");
             }
             if (col == ACTIVE_COLUMN) {
                 return rb.getString("ColumnActive");
@@ -313,9 +313,9 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             // have the delete column hold a button
             /*AbstractTableAction.rb.getString("EditDelete")*/
             setColumnToHoldButton(table, EDIT_COLUMN,
-                    new JButton(rb.getString("ButtonEdit")));
+                    new JButton(Bundle.getMessage("ButtonEdit")));
             setColumnToHoldButton(table, DEL_COLUMN,
-                    new JButton(rb.getString("ButtonDelete")));
+                    new JButton(Bundle.getMessage("ButtonDelete")));
         }
 
         protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
@@ -409,9 +409,9 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 case ENABLE_COLUMN:
                     return sml.isEnabled(_signalMastList.get(r));
                 case EDIT_COLUMN:
-                    return rb.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 case DEL_COLUMN:
-                    return rb.getString("ButtonDelete");
+                    return Bundle.getMessage("ButtonDelete");
                 default:
                     return null;
             }

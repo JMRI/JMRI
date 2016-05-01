@@ -1,6 +1,4 @@
 /**
- * XNetTurnout.java
- *
  * Description:	extend jmri.AbstractTurnout for XNet layouts
  * <P>
  * Turnout opperation on XPressNet based systems goes through the following
@@ -96,10 +94,8 @@
  * NOTE: For LZ100 and LZV100 command stations prior to version 3.2, it may be
  * necessary to poll for the feedback response data.
  * </P>
- *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @author Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
+ * @author      Paul Bender Copyright (C) 2003-2010
  */
 package jmri.jmrix.lenz;
 

@@ -193,6 +193,12 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                         moveButton.setEnabled(false);
                         setButton.setEnabled(false);
                     }
+                    // adjust move button text
+                    if (rl == _train.getTrainTerminatesRouteLocation()) {
+                        moveButton.setText(Bundle.getMessage("Terminate"));
+                    } else {
+                        moveButton.setText(Bundle.getMessage("Move"));
+                    }
                     updateComplete();
                 }
             }

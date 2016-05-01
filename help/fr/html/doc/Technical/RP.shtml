@@ -86,7 +86,7 @@ la conversion demandera beaucoup de travail.
 
 <h2>Format du Code</h2>
 Les
-<A HREF="http://java.sun.com/docs/codeconv/"> recommandations Java </A>
+<A HREF="http://www.oracle.com/technetwork/java/codeconventions-150003.pdf"> recommandations Java </A>
 pour les noms, mise en forme, etc sont vraiment utiles.
 Si vous trouvez que vous ne pouvez pas lire un morceau de code, ceux-ci vous aideront &#224; mieux faire.
 

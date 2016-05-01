@@ -33,10 +33,6 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
 
     public static final String IMAGE_PATH = "imagePath";
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4576214324220842001L;
     private String _imagePath;
     protected JLabel bgImg = null;
     private BufferedImage image = null;

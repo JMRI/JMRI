@@ -1032,7 +1032,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     while (priorDiffs.size() >= MAX_ERROR_ARRAY) {
                         priorDiffs.remove(0);
                     }
-                    priorDiffs.add(new Double(diffTime));
+                    priorDiffs.add(Double.valueOf(diffTime));
                     recomputeInternalSync();
                     issueClockSet(
                             now.getHours(),
@@ -1063,7 +1063,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     while (priorOffsetErrors.size() >= MAX_ERROR_ARRAY) {
                         priorOffsetErrors.remove(0);
                     }
-                    priorOffsetErrors.add(new Double(diffTime));
+                    priorOffsetErrors.add(Double.valueOf(diffTime));
                     recomputeOffset();
                     if (log.isDebugEnabled() && extraDebug) {
                         log.debug("syncState compute offset. NCE: "
@@ -1210,7 +1210,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         while (priorCorrections.size() >= MAX_ERROR_ARRAY) {
             priorCorrections.remove(0);
         }
-        priorCorrections.add(new Double(newRateAdj));
+        priorCorrections.add(Double.valueOf(newRateAdj));
         syncInterval = syncInterval + newRateAdj;
         if (syncInterval > 57) {
             syncInterval = 57;
@@ -1267,7 +1267,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         while (priorCorrections.size() >= MAX_ERROR_ARRAY) {
             priorCorrections.remove(0);
         }
-        priorCorrections.add(new Double(newRateAdj));
+        priorCorrections.add(Double.valueOf(newRateAdj));
         double oldInternalRate = internalClock.getRate();
         double newInternalRate = oldInternalRate + newRateAdj;
         if (Math.abs(currError) > 60) {
@@ -1487,7 +1487,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     while (priorDiffs.size() >= MAX_ERROR_ARRAY) {
                         priorDiffs.remove(0);
                     }
-                    priorDiffs.add(new Double(diffTime));
+                    priorDiffs.add(Double.valueOf(diffTime));
                     recomputeNceSync();
                     // initialize things if not running
                     if (alarmSyncUpdate == null) {

@@ -23,7 +23,7 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood
  */
-class JsonTurnoutSocketService extends JsonSocketService {
+public class JsonTurnoutSocketService extends JsonSocketService {
 
     private final JsonTurnoutHttpService service;
     private final HashMap<String, TurnoutListener> turnouts = new HashMap<>();

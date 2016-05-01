@@ -20,7 +20,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Make sure an XML file is readable, and validates OK
+ * Make sure an XML file is readable, and validates OK.
+ *<p>
+ * Can also be run from the command line with e.g. 
+ *    ./runtest.csh jmri/jmrit/XmlFileValidateAction foo.xml 
+ * in which case if there's a filename argument, it checks that directly, otherwise
+ * it pops a file selection dialog. (The dialog form has to be manually canceled when done)
  *
  * @author	Bob Jacobsen Copyright (C) 2005, 2007
  * @see jmri.jmrit.XmlFile
@@ -51,77 +56,87 @@ public class XmlFileValidateAction extends AbstractAction {
         int retVal = fci.showOpenDialog(_who);
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = fci.getSelectedFile();
-            if (log.isDebugEnabled()) {
-                log.debug("located file " + file + " for XML processing");
-            }
-            // handle the file (later should be outside this thread?)
-            boolean original = XmlFile.verify;
-            try {
-                XmlFile.verify = true;
-                readFile(file);
-            } catch (Exception ex) {
-                // because of XInclude, we're doing this
-                // again to validate the entire file
-                // without losing the error message
-                XmlFile.verify = false;
-                Document doc;
-                try {
-                    InputStream stream = new BufferedInputStream(new FileInputStream(file));
-                    SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", false);
-                    builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
-                    builder.setFeature("http://apache.org/xml/features/xinclude", true);
-                    builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
-                    builder.setFeature("http://apache.org/xml/features/validation/schema", false);
-                    builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", false);
-                    builder.setFeature("http://xml.org/sax/features/namespaces", true);
-                    doc = builder.build(new BufferedInputStream(stream));
-                } catch (Exception ex2) {
-                    JOptionPane.showMessageDialog(_who, "Err(1): " + ex2);
-                    return;
-                }
-                XMLOutputter outputter = new XMLOutputter();
-                outputter.setFormat(Format.getPrettyFormat()
-                        .setLineSeparator(System.getProperty("line.separator"))
-                        .setTextMode(Format.TextMode.PRESERVE));
-                StringWriter out = new StringWriter();
-                try {
-                    outputter.output(doc, out);
-                } catch (Exception ex2) {
-                    JOptionPane.showMessageDialog(_who, "Err(4): " + ex2);
-                    return;
-                }
-                StringReader input = new StringReader(new String(out.getBuffer()));
-                SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", true);
-                builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
-                builder.setFeature("http://apache.org/xml/features/xinclude", true);
-                builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
-                builder.setFeature("http://apache.org/xml/features/validation/schema", true);
-                builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", true);
-                builder.setFeature("http://xml.org/sax/features/namespaces", true);
-                try {
-                    XmlFile.verify = true;
-                    builder.build(input).getRootElement();
-                } catch (Exception ex2) {
-                    JOptionPane.showMessageDialog(_who, "Err(2): " + ex2);
-                    return;
-                }
-
-                JOptionPane.showMessageDialog(_who, "Err(3): " + ex);
-                return;
-            } finally {
-                XmlFile.verify = original;
-            }
-            JOptionPane.showMessageDialog(_who, "OK");
-            if (log.isDebugEnabled()) {
-                log.debug("parsing complete");
-            }
-
+            processFile(fci.getSelectedFile());
         } else {
             log.debug("XmlFileValidateAction cancelled in open dialog");
         }
     }
+            
+    protected void processFile(File file) {
+        if (log.isDebugEnabled()) {
+            log.debug("located file " + file + " for XML processing");
+        }
+        // handle the file (later should be outside this thread?)
+        boolean original = XmlFile.verify;
+        try {
+            XmlFile.verify = true;
+            readFile(file);
+        } catch (Exception ex) {
+            // because of XInclude, we're doing this
+            // again to validate the entire file
+            // without losing the error message
+            XmlFile.verify = false;
+            Document doc;
+            try {
+                InputStream stream = new BufferedInputStream(new FileInputStream(file));
+                SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", false);
+                builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
+                builder.setFeature("http://apache.org/xml/features/xinclude", true);
+                builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
+                builder.setFeature("http://apache.org/xml/features/validation/schema", false);
+                builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", false);
+                builder.setFeature("http://xml.org/sax/features/namespaces", true);
+                doc = builder.build(new BufferedInputStream(stream));
+            } catch (Exception ex2) {
+                showFailResults(_who, "Err(1): " + ex2);
+                return;
+            }
+            XMLOutputter outputter = new XMLOutputter();
+            outputter.setFormat(Format.getPrettyFormat()
+                    .setLineSeparator(System.getProperty("line.separator"))
+                    .setTextMode(Format.TextMode.PRESERVE));
+            StringWriter out = new StringWriter();
+            try {
+                outputter.output(doc, out);
+            } catch (Exception ex2) {
+                showFailResults(_who, "Err(4): " + ex2);
+                return;
+            }
+            StringReader input = new StringReader(new String(out.getBuffer()));
+            SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", true);
+            builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
+            builder.setFeature("http://apache.org/xml/features/xinclude", true);
+            builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
+            builder.setFeature("http://apache.org/xml/features/validation/schema", true);
+            builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", true);
+            builder.setFeature("http://xml.org/sax/features/namespaces", true);
+            try {
+                XmlFile.verify = true;
+                builder.build(input).getRootElement();
+            } catch (Exception ex2) {
+                showFailResults(_who, "Err(2): " + ex2);
+                return;
+            }
 
+            showFailResults(_who, "Err(3): " + ex);
+            return;
+        } finally {
+            XmlFile.verify = original;
+        }
+        showOkResults(_who, "OK");
+        if (log.isDebugEnabled()) {
+            log.debug("parsing complete");
+        }
+    }
+    
+    protected void showOkResults(JPanel who, String text) {
+        JOptionPane.showMessageDialog(who, text);
+    }
+
+    protected void showFailResults(JPanel who, String text) {
+        JOptionPane.showMessageDialog(who, text);
+    }
+    
     /**
      * Ask SAX to read and verify a file
      */
@@ -135,7 +150,20 @@ public class XmlFileValidateAction extends AbstractAction {
 
     // Main entry point fires the action
     static public void main(String[] args) {
-        new XmlFileValidateAction("", null).actionPerformed(null);
+        // if a 1st argument provided, act
+        if (args.length == 0 ) {
+            new XmlFileValidateAction("", null).actionPerformed(null);
+        } else {
+            jmri.util.Log4JUtil.initLogging("default.lcf");
+            new XmlFileValidateAction("", null){
+                protected void showFailResults(JPanel who, String text) {
+                    System.out.println(text);
+                }
+                protected void showOkResults(JPanel who, String text) {
+                    // silent if OK
+                }
+            }.processFile(new File(args[0]));
+        }
     }
 
     // initialize logging

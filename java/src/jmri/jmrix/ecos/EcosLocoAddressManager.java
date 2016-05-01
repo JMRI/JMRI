@@ -216,7 +216,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         if (ecosLocoShutDownTask == null) {
             ecosLocoShutDownTask = new QuietShutDownTask("Ecos Loco Database Shutdown") {
                 @Override
-                public boolean doAction() {
+                public boolean execute() {
                     return shutdownDispose();
                 }
             };

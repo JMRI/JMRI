@@ -124,8 +124,6 @@ public class JmriConfigurationManager implements ConfigureManager {
             log.debug("Saving preferences for {}", o.getClass().getName());
             o.savePreferences(profile);
         });
-        log.debug("Saving backwards compatible preferences...");
-        this.legacy.storePrefs();
     }
 
     /**
@@ -135,15 +133,7 @@ public class JmriConfigurationManager implements ConfigureManager {
      */
     @Override
     public void storePrefs(File file) {
-        // only call storePrefs() once legacy is removed
-        log.debug("Saving preferences...");
-        Profile profile = ProfileManager.getDefault().getActiveProfile();
-        InstanceManager.getList(PreferencesProvider.class).stream().forEach((o) -> {
-            log.debug("Saving preferences for {}", o.getClass().getName());
-            o.savePreferences(profile);
-        });
-        log.debug("Saving backwards compatible preferences...");
-        this.legacy.storePrefs(file);
+        this.storePrefs();
     }
 
     @Override

@@ -102,13 +102,13 @@ abstract public class PaneProgFrame extends JmriJFrame
     FunctionLabelPane _flPane = null;
     RosterMediaPane _rMPane = null;
 
-    List<JPanel> paneList = new ArrayList<JPanel>();
+    List<JPanel> paneList = new ArrayList<>();
     int paneListIndex;
 
     List<Element> decoderPaneList;
 
     BusyGlassPane glassPane;
-    List<JComponent> activeComponents = new ArrayList<JComponent>();
+    List<JComponent> activeComponents = new ArrayList<>();
 
     String filename = null;
     String programmerShowEmptyPanes = "";
@@ -860,7 +860,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             x--;
             if (x == 0) {
                 log.error("We have tried to remove all the entries, however an error has occured which has result in the entries not being deleted correctly");
-                l = new ArrayList<RosterEntry>();
+                l = new ArrayList<>();
             }
         }
 
@@ -1266,7 +1266,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      *
      */
     public void prepGlassPane(AbstractButton activeButton) {
-        List<Rectangle> rectangles = new ArrayList<Rectangle>();
+        List<Rectangle> rectangles = new ArrayList<>();
 
         if (glassPane != null) {
             glassPane.dispose();

@@ -1,4 +1,3 @@
-// JmriInsets.java
 package jmri.util;
 
 import java.awt.GraphicsConfiguration;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author Matt Harris
- * @version $Revision$
  */
 public class JmriInsets {
 
@@ -259,7 +257,7 @@ public class JmriInsets {
                 temp = temp.substring(temp.indexOf("value=\"") + 7);
                 return Integer.parseInt(temp.substring(0, temp.indexOf('"')));
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Error parsing Gnome XML: " + e.getMessage());
         }
         return -1;
@@ -316,7 +314,7 @@ public class JmriInsets {
             if (found) {
                 return Integer.parseInt(value);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Error parsing KDI_CONFIG: " + e.getMessage());
         }
         return -1;

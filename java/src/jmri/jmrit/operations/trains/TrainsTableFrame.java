@@ -357,12 +357,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeOpenFile"), new Object[]{
-                                    train.getName(),
-                                    (trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                            .getMessage("print"))}), MessageFormat.format(Bundle
-                                        .getMessage("CanNotPrintManifest"),
-                                        new Object[]{trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                                    : Bundle.getMessage("print")}), JOptionPane.ERROR_MESSAGE);
+                                        train.getName()}),
+                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         train.openFile();
                     }
@@ -386,12 +382,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
-                                    train.getName(),
-                                    (trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                            .getMessage("print"))}), MessageFormat.format(Bundle
-                                        .getMessage("CanNotPrintManifest"),
-                                        new Object[]{trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                                    : Bundle.getMessage("print")}), JOptionPane.ERROR_MESSAGE);
+                                        train.getName()}),
+                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
@@ -552,20 +544,19 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
 
     public void dispose() {
-        /*
-         * all JMRI window position and size are now saved in user preference file
-         * trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
-         * trainManager.setTrainsFrame(null);
-         */
         trainsModel.dispose();
         trainManager.runShutDownScripts();
         trainManager.removePropertyChangeListener(this);
         Setup.removePropertyChangeListener(this);
         removePropertyChangeLocations();
+        setModifiedFlag(false);
         super.dispose();
     }
 
     protected void handleModified() {
+        if (!getModifiedFlag()) {
+            return;
+        }
         if (Setup.isAutoSaveEnabled()) {
             storeValues();
             return;
