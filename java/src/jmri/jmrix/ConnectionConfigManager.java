@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
+import jmri.util.prefs.InitializationException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.spi.PreferencesManager;
 
 /**
  * Manager for ConnectionConfig objects.
@@ -28,21 +31,22 @@ import jmri.spi.PreferencesManager;
 public class ConnectionConfigManager extends AbstractPreferencesManager implements Iterable<ConnectionConfig> {
 
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
-    private final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd";
-    private final String CONNECTIONS = "connections";
-    public final static String CONNECTION = "connection";
-    public final static String CLASS = "class";
-    public final static String USER_NAME = "userName";
-    public final static String SYSTEM_NAME = "systemPrefix";
-    public final static String MANUFACTURER = "manufacturer";
+    private final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
+    private final String CONNECTIONS = "connections"; // NOI18N
+    public final static String CONNECTION = "connection"; // NOI18N
+    public final static String CLASS = "class"; // NOI18N
+    public final static String USER_NAME = "userName"; // NOI18N
+    public final static String SYSTEM_NAME = "systemPrefix"; // NOI18N
+    public final static String MANUFACTURER = "manufacturer"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManager.class);
 
     @Override
-    public void initialize(Profile profile) {
+    public void initialize(Profile profile) throws InitializationException {
         if (!isInitialized(profile)) {
             log.debug("Initializing...");
             Element sharedConnections = null;
             Element perNodeConnections = null;
+            InitializationException initializationException = null;
             try {
                 sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
             } catch (NullPointerException ex) {
@@ -62,17 +66,17 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                 for (Element shared : sharedConnections.getChildren(CONNECTION)) {
                     Element perNode = shared;
                     String className = shared.getAttributeValue(CLASS);
-                    String userName = shared.getAttributeValue(USER_NAME, "");
-                    String systemName = shared.getAttributeValue(SYSTEM_NAME, "");
-                    String manufacturer = shared.getAttributeValue(MANUFACTURER, "");
+                    String userName = shared.getAttributeValue(USER_NAME, ""); // NOI18N
+                    String systemName = shared.getAttributeValue(SYSTEM_NAME, ""); // NOI18N
+                    String manufacturer = shared.getAttributeValue(MANUFACTURER, ""); // NOI18N
                     log.debug("Read shared connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
                     if (perNodeConnections != null) {
                         for (Element e : perNodeConnections.getChildren(CONNECTION)) {
                             if (systemName.equals(e.getAttributeValue(SYSTEM_NAME))) {
                                 perNode = e;
                                 className = perNode.getAttributeValue(CLASS);
-                                userName = perNode.getAttributeValue(USER_NAME, "");
-                                manufacturer = perNode.getAttributeValue(MANUFACTURER, "");
+                                userName = perNode.getAttributeValue(USER_NAME, ""); // NOI18N
+                                manufacturer = perNode.getAttributeValue(MANUFACTURER, ""); // NOI18N
                                 log.debug("Read perNode connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
                             }
                         }
@@ -82,12 +86,33 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                         ((XmlAdapter) Class.forName(className).newInstance()).load(shared, perNode);
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", className, shared, ex);
+                        if (initializationException == null) {
+                            String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
+                            String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
+                            initializationException = new InitializationException(english, localized);
+                        } else {
+                            String english = Bundle.getMessage(Locale.ENGLISH, "ErrorMultipleConnections"); // NOI18N
+                            String localized = Bundle.getMessage("ErrorMultipleConnections"); // NOI18N
+                            initializationException = new InitializationException(english, localized);
+                        }
                     } catch (Exception ex) {
                         log.error("Unable to load {} into {}", shared, className, ex);
+                        if (initializationException == null) {
+                            String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
+                            String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
+                            initializationException = new InitializationException(english, localized);
+                        } else {
+                            String english = Bundle.getMessage(Locale.ENGLISH, "ErrorMultipleConnections"); // NOI18N
+                            String localized = Bundle.getMessage("ErrorMultipleConnections"); // NOI18N
+                            initializationException = new InitializationException(english, localized);
+                        }
                     }
                 }
             }
             setInitialized(profile, true);
+            if (initializationException != null) {
+                throw initializationException;
+            }
             log.debug("Initialized...");
         }
     }
@@ -124,11 +149,25 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
         }
     }
 
-    public boolean add(ConnectionConfig c) {
-        boolean result = connections.add(c);
-        int i = connections.indexOf(c);
-        fireIndexedPropertyChange(CONNECTIONS, i, null, c);
-        return result;
+    /**
+     * Add a {@link jmri.jmrix.ConnectionConfig} following the rules specified
+     * in {@link java.util.Collection#add(java.lang.Object)}.
+     *
+     * @param c an existing ConnectionConfig
+     * @return true if c was added, false otherwise
+     * @throws NullPointerException if c is null
+     */
+    public boolean add(@Nonnull ConnectionConfig c) throws NullPointerException {
+        if (c == null) {
+            throw new NullPointerException();
+        }
+        if (!connections.contains(c)) {
+            boolean result = connections.add(c);
+            int i = connections.indexOf(c);
+            fireIndexedPropertyChange(CONNECTIONS, i, null, c);
+            return result;
+        }
+        return false;
     }
 
     public boolean remove(ConnectionConfig c) {
