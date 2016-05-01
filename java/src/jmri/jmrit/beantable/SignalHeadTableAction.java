@@ -1309,7 +1309,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     try {
                         number = Integer.parseInt(jtf.getText());
                         s.setOutputForAppearance(s.getValidStates()[i], number);
-                    } catch (Exception ex) {
+                    } catch (RuntimeException ex) {
+                        log.warn("error setting \"{}\" output for appearance \"{}\"", systemNameText, jtf.getText());
                     }
                 } else {
                     s.dispose();

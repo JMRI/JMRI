@@ -4,7 +4,7 @@ import jmri.util.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.BufferedInputStream;
-import java.io.File;
+import java.io.*;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import org.jdom2.Document;
+import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
@@ -93,7 +93,7 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
                 builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", false);
                 builder.setFeature("http://xml.org/sax/features/namespaces", true);
                 doc = builder.build(new BufferedInputStream(stream));
-            } catch (Exception ex2) {
+            } catch (JDOMException | IOException ex2) {
                 showFailResults(_who, "Err(1): " + ex2);
                 return;
             }
@@ -104,7 +104,7 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
             StringWriter out = new StringWriter();
             try {
                 outputter.output(doc, out);
-            } catch (Exception ex2) {
+            } catch (IOException ex2) {
                 showFailResults(_who, "Err(4): " + ex2);
                 return;
             }
@@ -119,7 +119,7 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
             try {
                 XmlFile.verify = true;
                 builder.build(input).getRootElement();
-            } catch (Exception ex2) {
+            } catch (JDOMException | IOException ex2) {
                 showFailResults(_who, "Err(2): " + ex2);
                 return;
             }
@@ -168,10 +168,12 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
         } else {
             jmri.util.Log4JUtil.initLogging("default.lcf");
             new XmlFileValidateAction("", (Component) null){
-                protected void showFailResults(JPanel who, String text) {
+                @Override
+                protected void showFailResults(Component who, String text) {
                     System.out.println(text);
                 }
-                protected void showOkResults(JPanel who, String text) {
+                @Override
+                protected void showOkResults(Component who, String text) {
                     // silent if OK
                 }
             }.processFile(new File(args[0]));
