@@ -168,10 +168,12 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
         } else {
             jmri.util.Log4JUtil.initLogging("default.lcf");
             new XmlFileValidateAction("", (Component) null){
-                protected void showFailResults(JPanel who, String text) {
+                @Override
+                protected void showFailResults(Component who, String text) {
                     System.out.println(text);
                 }
-                protected void showOkResults(JPanel who, String text) {
+                @Override
+                protected void showOkResults(Component who, String text) {
                     // silent if OK
                 }
             }.processFile(new File(args[0]));
