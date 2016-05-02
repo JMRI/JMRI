@@ -1,4 +1,3 @@
-// XpaTrafficController.java
 package jmri.jmrix.xpa;
 
 import java.io.DataInputStream;
@@ -15,10 +14,9 @@ import org.slf4j.LoggerFactory;
  * a pair of *Streams, which then carry sequences of characters for
  * transmission. Note that this processing is handled in an independent thread.
  *
- * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
+ * @author	Paul Bender Copyright (C) 2004,2016
  */
-public class XpaTrafficController implements XpaInterface, Runnable {
+final public class XpaTrafficController implements XpaInterface, Runnable {
 
     // Linked list to store the transmit queue.
     LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
@@ -28,20 +26,28 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      *
      */
     XmtHandler xmtHandler = new XmtHandler();
+    Thread xmtThread = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
     public XpaTrafficController() {
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
-        self = this;
-
-        // Start the xmtHandler thread
-        Thread xmtThread = new Thread(xmtHandler, "XPA transmit handler");
-        xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
-        xmtThread.start();
     }
+
+    /**
+     * Start the Transmit thread
+     *
+     */
+    public void startTransmitThread() {
+        if(xmtThread == null )
+        {
+           // Start the xmtHandler thread
+           Thread xmtThread = new Thread(xmtHandler, "XPA transmit handler");
+           xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
+           xmtThread.start();
+        }
+    }
+
 
 // The methods to implement the XpaInterface
     protected Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
@@ -197,18 +203,13 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      *
      * @return The registered XpaTrafficController instance for general use, if
      *         need be creating one.
+     * @deprecated since 4.3.6
      */
+    @Deprecated
     static public XpaTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new XpaTrafficController object");
-            }
-            self = new XpaTrafficController();
-        }
-        return self;
+        log.error("Deprecated instance method called");
+        return null;
     }
-
-    static volatile private XpaTrafficController self = null;
 
     // data members to hold the streams
     DataInputStream istream = null;

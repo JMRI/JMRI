@@ -113,9 +113,6 @@ public class ActiveSystemsMenu extends JMenu {
 
         /*        if (jmri.jmrix.wangrow.ActiveFlag.isActive())
          m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));*/
-        if (jmri.jmrix.xpa.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.xpa.XpaMenu"));
-        }
 
         if (jmri.jmrix.direct.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
@@ -179,9 +176,6 @@ public class ActiveSystemsMenu extends JMenu {
         }
         /*if (jmri.jmrix.wangrow.ActiveFlag.isActive())
          m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));*/
-        if (jmri.jmrix.xpa.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.xpa.XpaMenu"));
-        }
 
         m.add(new javax.swing.JSeparator());
 

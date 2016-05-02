@@ -1,12 +1,9 @@
 /**
- * XpaPacketGenFrame.java
- *
  * Description:	Frame for user input of Xpa+Modem (dialing) messages
- *
+ * <p>
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
  */
-package jmri.jmrix.xpa.packetgen;
+package jmri.jmrix.xpa.swing.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
@@ -15,17 +12,16 @@ import jmri.jmrix.xpa.XpaTrafficController;
 
 public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 696357180743551670L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    public XpaPacketGenFrame() {
+    jmri.jmrix.xpa.XpaSystemConnectionMemo memo = null;
+
+    public XpaPacketGenFrame(jmri.jmrix.xpa.XpaSystemConnectionMemo m) {
         super();
+        memo = m;
     }
 
     public void initComponents() throws Exception {
@@ -69,7 +65,7 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
             m.setElement(i, packetTextField.getText().charAt(i));
         }
 
-        XpaTrafficController.instance().sendXpaMessage(m, this);
+        memo.getXpaTrafficController().sendXpaMessage(m, this);
     }
 
     public void message(XpaMessage m) {
