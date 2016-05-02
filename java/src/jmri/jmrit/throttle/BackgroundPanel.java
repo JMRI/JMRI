@@ -8,11 +8,6 @@ import jmri.util.swing.ResizableImagePanel;
 
 public class BackgroundPanel extends ResizableImagePanel implements AddressListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4774584990257220648L;
-
     public BackgroundPanel() {
         super();
         setBackground(Color.GRAY);
