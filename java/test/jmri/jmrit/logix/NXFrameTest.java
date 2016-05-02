@@ -179,19 +179,20 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     }
 
     /**
+     * works through a list of sensors, activating one, then the next, then 
+     * inactivating the first and continuing. Leaves last ACTIVE.
      * @param sensor - active start sensor
      * @return - active end sensor
      * @throws Exception
      */
     private Sensor runtimes(Sensor sensor, String[] sensors) throws Exception {
         flushAWT();
-        for (int i=0; i<sensors.length; i++) {
+        _sensorMgr.getSensor(sensors[0]).setState(Sensor.ACTIVE);
+        for (int i=1; i<sensors.length; i++) {
             flushAWT();
-            Sensor sensorNext = _sensorMgr.getSensor(sensors[i]);
-            sensorNext.setState(Sensor.ACTIVE);
+            _sensorMgr.getSensor(sensors[i]).setState(Sensor.ACTIVE);
             flushAWT();           
-            sensor.setState(Sensor.INACTIVE);
-            sensor = sensorNext;
+            _sensorMgr.getSensor(sensors[i-i]).setState(Sensor.INACTIVE);
         }
         return sensor;
     }

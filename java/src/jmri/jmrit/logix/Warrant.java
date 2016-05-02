@@ -1603,7 +1603,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if ((curBlock.getState() & (OBlock.OCCUPIED | OBlock.DARK))==0 && !_tempRunBlind) {
             _engineer.setHalt(true);        // immediate setspeed = 0
             // should not happen, but...what if...
-            log.error("checkCurrentBlock, block \""+curBlock.getDisplayName()+"\" not occupied! warrant "+getDisplayName());
+            log.error("checkCurrentBlock, block \""+curBlock.getDisplayName()+"\" not occupied! warrant "+getDisplayName(), new Exception("traceback"));
             return true;
         }
         // An estimate for how far to look ahead for a possible speed change
