@@ -194,6 +194,12 @@ Add the word "Includes" to the last line so it looks like
     AddHandler server-parsed .shtml
 </PRE>
 
+        Then find the reference to the include_module and make sure it's loaded by a line like:
+<PRE>
+LoadModule include_module libexec/apache2/mod_include.so
+</PRE>
+        By default, that's commented out with a leading # character.
+<p>          
     <li>Finally, configure the server to allow <a href="#redirect">.htaccess files to provide redirects</a>.  
         We use this to allow people with old URLs in bookmarks to reach the right current pages.
         <p>
@@ -220,6 +226,12 @@ DocumentRoot "/Library/WebServer/Documents"
 LoadModule rewrite_module libexec/apache2/mod_rewrite.so
 </PRE>
         By default, that's commented out with a leading # character.
+<p>          
+        We also want PHP turned on, so that the indices for the resources pages will work.
+        Find the follow line and make sure it's not commented out:
+<PRE>
+LoadModule php5_module libexec/apache2/libphp5.so
+</PRE>
           
     </ul>
 
