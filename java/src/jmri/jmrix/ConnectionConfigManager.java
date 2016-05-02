@@ -89,7 +89,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                         if (initializationException == null) {
                             String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                             String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
-                            initializationException = new InitializationException(english, localized);
+                            initializationException = new InitializationException(english, localized, ex);
                         } else {
                             String english = Bundle.getMessage(Locale.ENGLISH, "ErrorMultipleConnections"); // NOI18N
                             String localized = Bundle.getMessage("ErrorMultipleConnections"); // NOI18N
@@ -100,7 +100,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                         if (initializationException == null) {
                             String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                             String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
-                            initializationException = new InitializationException(english, localized);
+                            initializationException = new InitializationException(english, localized, ex);
                         } else {
                             String english = Bundle.getMessage(Locale.ENGLISH, "ErrorMultipleConnections"); // NOI18N
                             String localized = Bundle.getMessage("ErrorMultipleConnections"); // NOI18N
@@ -134,13 +134,13 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
 
     private synchronized void savePreferences(Profile profile, boolean shared) {
         Element element = new Element(CONNECTIONS, NAMESPACE);
-        for (ConnectionConfig o : connections) {
+        connections.stream().forEach((o) -> {
             log.debug("Saving connection {} ({})...", o.getConnectionName(), shared);
             Element e = ConfigXmlManager.elementFromObject(o, shared);
             if (e != null) {
                 element.addContent(e);
             }
-        }
+        });
         // save connections, or save an empty connections element if user removed all connections
         try {
             ProfileUtils.getAuxiliaryConfiguration(profile).putConfigurationFragment(JDOMUtil.toW3CElement(element), shared);
