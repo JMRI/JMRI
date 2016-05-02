@@ -1,18 +1,11 @@
-// FollowerAction.java
 package jmri.jmrit.ussctc;
 
 /**
  * JmriJFrameAction to create and register a FollowerFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007
- * @version $Revision$
  */
 public class FollowerAction extends jmri.util.JmriJFrameAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2468330475804527825L;
 
     public FollowerAction(String s) {
         super(s);
@@ -32,5 +25,3 @@ public class FollowerAction extends jmri.util.JmriJFrameAction {
     }
 
 }
-
-/* @(#)FollowerAction.java */

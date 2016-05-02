@@ -218,6 +218,7 @@ public abstract class XmlFile {
                     .setLineSeparator(System.getProperty("line.separator"))
                     .setTextMode(Format.TextMode.TRIM_FULL_WHITE));
             fmt.output(doc, o);
+            o.flush();
         } finally {
             o.close();
         }

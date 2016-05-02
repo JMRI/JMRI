@@ -1,5 +1,4 @@
-// XpaConfigureAction.java
-package jmri.jmrix.xpa.xpaconfig;
+package jmri.jmrix.xpa.swing.xpaconfig;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -8,23 +7,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a XpaConfigureFrame object
- *
+ * <P>
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
  */
 public class XpaConfigureAction extends AbstractAction {
+  
+    private jmri.jmrix.xpa.XpaSystemConnectionMemo memo = null;
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5845992931132270975L;
-
-    public XpaConfigureAction(String s) {
+    public XpaConfigureAction(String s,jmri.jmrix.xpa.XpaSystemConnectionMemo m) {
         super(s);
+        memo = m;
     }
 
     public void actionPerformed(ActionEvent e) {
-        XpaConfigureFrame f = new XpaConfigureFrame();
+        XpaConfigureFrame f = new XpaConfigureFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

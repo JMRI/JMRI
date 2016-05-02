@@ -14,8 +14,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
-import jmri.spi.PreferencesProvider;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
-public class GuiLafPreferencesManager extends Bean implements PreferencesProvider {
+public class GuiLafPreferencesManager extends Bean implements PreferencesManager {
 
     public static final String FONT_SIZE = "fontSize";
     public static final String LOCALE = "locale";
@@ -88,7 +88,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     }
 
     @Override
-    public Iterable<Class<? extends PreferencesProvider>> getRequires() {
+    public Iterable<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 

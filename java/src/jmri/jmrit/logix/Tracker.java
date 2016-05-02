@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Track an occupied block to its adjacent blocks.
  *
- * @version $Revision: 22833 $
  * @author	Pete Cressman Copyright (C) 2013
  */
 public class Tracker {

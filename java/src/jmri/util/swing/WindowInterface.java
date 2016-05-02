@@ -30,7 +30,7 @@ public interface WindowInterface {
     public void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action);
 
     /**
-     * Show, in whatever way is appropriate, a specific JmriPanel
+     * Show, in whatever way is appropriate, a specific JmriPanel, in a hinted location
      *
      * @param child  new JmriPanel to show
      * @param action JmriAbstractAction making the request
@@ -53,7 +53,6 @@ public interface WindowInterface {
 
     public void dispose();
 
-    //public void runMethod(String method, Object args[]);
     /**
      * Returns the WindowInterface as a Frame or null.
      *
@@ -65,7 +64,6 @@ public interface WindowInterface {
      * Suggested location for subsequent panels
      */
     public enum Hint {
-
         DEFAULT, // let the interface pick
         REPLACE, // replace the current content with new
         EXTEND     // place nearby

@@ -1,4 +1,4 @@
-# Providers of PreferencesProvider instances
+# Providers of PreferencesManagers instances
 # Order is insignificant
 apps.StartupActionsManager
 apps.gui.GuiLafPreferencesManager
