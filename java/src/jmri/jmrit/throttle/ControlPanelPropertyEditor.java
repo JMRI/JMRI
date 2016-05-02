@@ -20,14 +20,8 @@ import javax.swing.JTextField;
  * A very specific dialog for editing the properties of a FunctionButton object.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version $Revision$
  */
 public class ControlPanelPropertyEditor extends JDialog {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9096645075332040546L;
 
     private ControlPanel control;
 

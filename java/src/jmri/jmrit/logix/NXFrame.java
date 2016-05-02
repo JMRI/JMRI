@@ -44,7 +44,6 @@ import org.slf4j.LoggerFactory;
  */
 public class NXFrame extends WarrantRoute {
 
-    private static final long serialVersionUID = -8971792418011219112L;
     private float _scale = 87.1f;
 
     JTextField _trainName = new JTextField(6);

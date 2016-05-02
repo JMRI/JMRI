@@ -23,8 +23,6 @@ import org.slf4j.LoggerFactory;
 
 public class Engineer extends Thread implements Runnable, java.beans.PropertyChangeListener {
 
-//    private static final long serialVersionUID = 7088050907933847146L;
-
     private int     _idxCurrentCommand;     // current throttle command
     private float   _normalSpeed = 0;       // current commanded throttle setting (unmodified)
     private String  _speedType = Warrant.Normal;    // current speed name

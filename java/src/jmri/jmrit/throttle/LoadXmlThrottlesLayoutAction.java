@@ -15,14 +15,8 @@ import org.slf4j.LoggerFactory;
  * Load throttles from XML
  *
  * @author Glen Oberhauser 2004
- * @version $Revision$
  */
 public class LoadXmlThrottlesLayoutAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 447922874340812542L;
 
     /**
      * Constructor
@@ -125,7 +119,6 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
      * An extension of the abstract XmlFile. No changes made to that class.
      *
      * @author glen
-     * @version $Revision$
      */
     static class ThrottlePrefs extends XmlFile {
     }

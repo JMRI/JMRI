@@ -50,7 +50,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public static final String Normal = "Normal";   // NOI18N
     public static final String Clear = "Clear";     // NOI18N
     
-    private static final long serialVersionUID = 7798395667392538744L;
     // permanent members.
     private ArrayList <BlockOrder> _savedOrders = new ArrayList <BlockOrder>();
     private BlockOrder _viaOrder;
