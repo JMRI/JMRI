@@ -111,19 +111,22 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     public void configure() {
 
         // connect to the traffic controller
-        XpaTrafficController tc = ((XpaSystemConnectionMemo)getSystemConnectionMemo()).getXpaTrafficController();
+        XpaSystemConnectionMemo memo = ((XpaSystemConnectionMemo)getSystemConnectionMemo());
+        XpaTrafficController tc = memo.getXpaTrafficController();
         tc.connectPort(this);
+        
+        memo.setPowerManager(new jmri.jmrix.xpa.XpaPowerManager(tc));
+        jmri.InstanceManager.store(memo.getPowerManager(), jmri.PowerManager.class);
 
-        jmri.InstanceManager.store(new jmri.jmrix.xpa.XpaPowerManager(tc), jmri.PowerManager.class);
-
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.xpa.XpaTurnoutManager.instance());
+        memo.setTurnoutManager(new jmri.jmrix.xpa.XpaTurnoutManager(memo));
+        jmri.InstanceManager.store(memo.getTurnoutManager(),jmri.TurnoutManager.class);
+        memo.setThrottleManager(new jmri.jmrix.xpa.XpaThrottleManager(memo));
+        jmri.InstanceManager.store(memo.getThrottleManager(),jmri.ThrottleManager.class);
 
         // start operation
         tc.startTransmitThread();
         sinkThread = new Thread(tc);
         sinkThread.start();
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.xpa.XpaThrottleManager((XpaSystemConnectionMemo)getSystemConnectionMemo()));
 
         jmri.jmrix.xpa.ActiveFlag.setActive();
 

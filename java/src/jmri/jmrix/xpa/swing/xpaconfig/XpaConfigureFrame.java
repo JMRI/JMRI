@@ -166,17 +166,17 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         // The first address available for the XPA is 1, so we 
         // have to add 1 to the selected index to get the correct value.
         XpaMessage m = XpaMessage.getDeviceSettingMsg(addrBox.getSelectedIndex() + 1);
-        XpaTrafficController.instance().sendXpaMessage(m, this);
+        memo.getXpaTrafficController().sendXpaMessage(m, this);
     }
 
     public void setFunctionActionPerformed(java.awt.event.ActionEvent e) {
         XpaMessage m = XpaMessage.getDeviceSettingMsg(validTimeValues[functionBox.getSelectedIndex()]);
-        XpaTrafficController.instance().sendXpaMessage(m, this);
+        memo.getXpaTrafficController().sendXpaMessage(m, this);
     }
 
     public void xpaResetActionPerformed(java.awt.event.ActionEvent e) {
         XpaMessage m = XpaMessage.getDeviceSettingMsg(99);
-        XpaTrafficController.instance().sendXpaMessage(m, this);
+        memo.getXpaTrafficController().sendXpaMessage(m, this);
     }
 
     public void zeroEmergencyOffActionPerformed(java.awt.event.ActionEvent e) {
@@ -198,7 +198,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         } else {
             m = XpaMessage.getDeviceSettingMsg(41);
         }
-        XpaTrafficController.instance().sendXpaMessage(m, this);
+        memo.getXpaTrafficController().sendXpaMessage(m, this);
     }
 
     public void message(XpaMessage m) {
