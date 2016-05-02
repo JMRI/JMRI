@@ -81,7 +81,7 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.wangrow.WangrowMenu");
         // XPressNet Allows Multiple Connections now
         add(new jmri.jmrix.lenz.swing.XNetMenu(null));
-        addMenu("jmri.jmrix.xpa.XpaMenu");
+        add(new jmri.jmrix.xpa.swing.XpaMenu(null));
         addMenu("jmri.jmrix.zimo.Mx1Menu");
         add(new javax.swing.JSeparator());
         addMenu("jmri.jmrix.direct.DirectMenu");

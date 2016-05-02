@@ -5,7 +5,8 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -1220,7 +1221,8 @@ public class TransitTableAction extends AbstractTableAction {
         for (int i = 0; i < sectionList.size(); i++) {
             TransitSection ts = new TransitSection(sectionList.get(i),
                     sequence[i], direction[i], alternate[i]);
-            if (ts.equals(null)) {
+            // FIXME: Why is this null check here? We just instansiated ts as a new TransitSection, which should keep it from ever being null
+            if (null == ts) {
                 log.error("Trouble creating TransitSection");
                 return false;
             }
