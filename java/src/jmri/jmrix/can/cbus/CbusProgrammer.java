@@ -1,16 +1,16 @@
 // CbusProgrammer.java
 package jmri.jmrix.can.cbus;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.*;
+import java.util.ArrayList;
+import java.util.List;
+import jmri.AddressedProgrammer;
+import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-
-import java.util.*;
-
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.TrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements the jmri.Programmer interface via commands for CBUS.

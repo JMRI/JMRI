@@ -1,8 +1,8 @@
 package jmri.jmrix.xpa;
 
 import java.util.ResourceBundle;
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.InstanceManager;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Provide the required SystemConnectionMemo for the XPA+Modem adapters.

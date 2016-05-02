@@ -18,7 +18,7 @@ import jmri.ThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.util.prefs.AbstractPreferencesProvider;
+import jmri.util.prefs.AbstractPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright (C) 2015
  * @since 2.9.4
  */
-public class ManagerDefaultSelector extends AbstractPreferencesProvider {
+public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
     public final Hashtable<Class<?>, String> defaults = new Hashtable<>();
 
@@ -216,7 +216,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
             }
             this.configure();
             InstanceManager.configureManagerInstance().registerPref(this); // allow ProfileConfig.xml to be written correctly
-            this.setIsInitialized(profile, true);
+            this.setInitialized(profile, true);
         }
     }
 

@@ -103,7 +103,7 @@ public enum LnCommandStationType {
             log.debug("attempting to create {}", className);
             Class<?> c = Class.forName(className);
             java.lang.reflect.Constructor<?>[] allConstructors = c.getDeclaredConstructors();
-            for (java.lang.reflect.Constructor ctor : allConstructors) {
+            for (java.lang.reflect.Constructor<?> ctor : allConstructors) {
                 Class<?>[] pType = ctor.getParameterTypes();
                 if (pType.length == 1 && pType[0].equals(LocoNetSystemConnectionMemo.class)) {
                     // this is the right ctor
@@ -133,7 +133,7 @@ public enum LnCommandStationType {
             log.debug("attempting to create {}", className);
             Class<?> c = Class.forName(className);
             java.lang.reflect.Constructor<?>[] allConstructors = c.getDeclaredConstructors();
-            for (java.lang.reflect.Constructor ctor : allConstructors) {
+            for (java.lang.reflect.Constructor<?> ctor : allConstructors) {
                 Class<?>[] pType = ctor.getParameterTypes();
                 if (pType.length == 1 && pType[0].equals(LnTrafficController.class)) {
                     // this is the right ctor

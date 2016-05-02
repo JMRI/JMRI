@@ -1,5 +1,12 @@
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.ADD;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.ROSTER;
+import static jmri.jmris.json.JSON.TYPE;
+import static jmri.jmrit.roster.Roster.REMOVE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -8,13 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Locale;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.ADD;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.ROSTER;
-import static jmri.jmris.json.JSON.TYPE;
 import jmri.jmrit.roster.Roster;
-import static jmri.jmrit.roster.Roster.REMOVE;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
