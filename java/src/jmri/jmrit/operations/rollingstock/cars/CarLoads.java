@@ -465,6 +465,14 @@ public class CarLoads extends RollingStockAttribute {
     public Hashtable<String, List<CarLoad>> getList() {
         return (Hashtable<String, List<CarLoad>>) listCarLoads.clone();
     }
+    
+    @Override
+    public void dispose() {
+        listCarLoads.clear();
+        setDefaultEmptyName(Bundle.getMessage("EmptyCar"));
+        setDefaultLoadName(Bundle.getMessage("LoadedCar"));
+        super.dispose();
+    }
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
