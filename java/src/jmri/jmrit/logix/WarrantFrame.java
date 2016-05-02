@@ -55,8 +55,6 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantFrame extends WarrantRoute {
 
-    private static final long serialVersionUID = -5799190071870090700L;
-
     static int ROW_HEIGHT;
 
     private Warrant _warrant;
@@ -1237,10 +1235,6 @@ public class WarrantFrame extends WarrantRoute {
      */
     class ThrottleTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6424673093367457660L;
         public static final int ROW_NUM = 0;
         public static final int TIME_COLUMN = 1;
         public static final int COMMAND_COLUMN = 2;

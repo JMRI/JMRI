@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Hold configuration data for Warrants, includes Speed Map
  * 
  * @author Pete Cressman Copyright (C) 2015
- * @version $Revision: 28030 $
  */
 public class WarrantPreferences  {
 
