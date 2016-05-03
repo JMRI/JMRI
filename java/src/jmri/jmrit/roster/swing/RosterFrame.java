@@ -1388,12 +1388,18 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             @Override
             protected void done(int dccAddress) {
                 // if Done, updated the selected decoder
-                who.selectLoco(dccAddress, !shortAddr, cv8val, cv7val);
+                // on the GUI thread, right now
+                jmri.util.ThreadingUtil.runOnGUI(()->{
+                    who.selectLoco(dccAddress, !shortAddr, cv8val, cv7val);
+                });
             }
 
             @Override
             protected void message(String m) {
-                statusField.setText(m);
+                // on the GUI thread, right now
+                jmri.util.ThreadingUtil.runOnGUI(()->{
+                    statusField.setText(m);
+                });
             }
 
             @Override
