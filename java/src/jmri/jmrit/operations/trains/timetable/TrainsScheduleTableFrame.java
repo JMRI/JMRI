@@ -233,6 +233,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         addPropertyChangeTrainSchedules();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByName) {
@@ -252,6 +253,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     // add, build, print, switch lists, terminate, and save buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("button activated");
         if (ae.getSource() == clearButton) {
@@ -467,6 +469,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         runFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
     }
 
+    @Override
     protected void storeValues() {
         // Save comment
         TrainSchedule ts = trainScheduleManager.getScheduleById(getSelectedScheduleId());
@@ -478,6 +481,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         OperationsXml.save();
     }
 
+    @Override
     public void dispose() {
         Setup.removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
@@ -514,6 +518,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());

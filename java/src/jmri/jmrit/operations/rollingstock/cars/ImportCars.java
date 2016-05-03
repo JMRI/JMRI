@@ -80,6 +80,7 @@ public class ImportCars extends ImportRollingStock {
     private static final int MAXIMUM_NUMBER_FIELDS = CAR_EXTENSIONS - 1;
 
     // we use a thread so the status frame will work!
+    @Override
     public void run() {
         File file = getFile();
         if (file == null) {

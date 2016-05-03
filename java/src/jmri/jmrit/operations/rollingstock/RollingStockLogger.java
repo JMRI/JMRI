@@ -354,6 +354,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
         removeEngineListeners();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(RollingStock.TRACK_CHANGED_PROPERTY)) {
             if (Control.SHOW_PROPERTY) {

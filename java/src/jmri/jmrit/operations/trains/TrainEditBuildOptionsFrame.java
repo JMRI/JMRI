@@ -434,6 +434,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     }
 
     // Save
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             if (ae.getSource() == saveTrainButton) {
@@ -455,6 +456,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (_train != null) {
@@ -522,6 +524,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     }
 
     // Car type combo box has been changed, show loads associated with this car type
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == numEngines1Box) {
             modelEngine1Box.setEnabled(!numEngines1Box.getSelectedItem().equals("0"));
@@ -961,6 +964,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
      * MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] {Bundle.getMessage("save")}),
      * JOptionPane.ERROR_MESSAGE); return false; }
      */
+    @Override
     public void dispose() {
         CarOwners.instance().removePropertyChangeListener(this);
         EngineModels.instance().removePropertyChangeListener(this);
@@ -970,6 +974,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
