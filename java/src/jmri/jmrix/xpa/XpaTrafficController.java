@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2004,2016
  */
-final public class XpaTrafficController implements XpaInterface, Runnable {
+public class XpaTrafficController implements XpaInterface, Runnable {
 
     // Linked list to store the transmit queue.
     LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
@@ -50,7 +50,7 @@ final public class XpaTrafficController implements XpaInterface, Runnable {
 
 
 // The methods to implement the XpaInterface
-    protected Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
+    private Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
 
     public boolean status() {
         return (ostream != null && istream != null);
