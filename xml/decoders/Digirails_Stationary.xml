@@ -30,7 +30,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2016-05-02</date>
+      <date>2016-05-03</date>
       <authorinitials>EB</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
@@ -73,7 +73,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </model>
         </family>
         
-        <programming direct="yes" paged="no" register="no" ops="yes"/>
+        <programming direct="yes" paged="no" register="no" ops="no"/>
  
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -188,20 +188,20 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label>Presets</label>
                 <tooltip xml:lang="fr">&lt;html&gt;Ce CV en écriture seule règle automatiquement une des applications préréglées:&lt;br&gt; 0: 8 x aiguillages avec 2 bobines magnétiques&lt;br&gt;1: 16 x interrupteur à contact permanent (I/O)&lt;br&gt;2: 8 x signal à 2 lampes&lt;br&gt;3: 8 x signal de passage à niveau&lt;br&gt;4: 2 groupes de 8 sorties pour tubes fluorescents&lt;br&gt;5: 1 x 16 sorties pour tubes fluorescents&lt;br&gt;6: 8 x aiguillages contrôle du moteur&lt;br&gt;7: 4 x signal NS à 3 lampes (Prorail 1854)&lt;br&gt;8: 4 x signal principal DB&lt;br&gt;9: 4 x signal avertisseur DB associé à un signal principal&lt;br&gt;10: 2 x combinaison du signal avertisseur avec le signal principal DB&lt;br&gt;11: 4 x signal avertisseur DB&lt;br&gt;12: 4 x signal principal SNCB&lt;br&gt;13: 8 x aiguillages à moteur à impulsions&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Diese nur-schreibbare CV legt automatisch eine der Standardvoreinstellungen fest:&lt;br&gt;0: 8x Weiche mit Doppelspulen Weichenantrieb&lt;br&gt;1: 16x permanenter An/Aus Schalter&lt;br&gt;2: 8x Zwei-Licht Signal mit Dimmeffekt&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 Gruppen mit 8x Leuchtstofflampen&lt;br&gt;5: 1 x 16 Ausgänge mit Leuchtstofflampen&lt;br&gt;6: 8x Weichenantrieb Steuerung&lt;br&gt;7: 4x Niederländisches Drei-Licht Signal (Prorail 1854)&lt;br&gt;8: 4x DB Hauptsignal&lt;br&gt;9: 4x DB Vorsignal verbunden mit Hauptsignal&lt;br&gt;10: 2x Kombina on DB Hauptsignal und Vorsignal&lt;br&gt;11: 4x DB Vorsignal&lt;br&gt;12: 4x NMBS Hauptsignal&lt;br&gt;13: 8x Weichenantrieb Steuerung mit Zeitbegrenzung&lt;br&gt;&lt;/html&gt;</tooltip>
-                <tooltip xml:lang="nl">&lt;html&gt;Deze alleen schrijfbare CV stelt automatisch een aantal standaard toepassingen in:&lt;br&gt;0: 8x Wissel met spoelaandrijving&lt;br&gt;1: 16x permanent aan/uit schakelaar&lt;br&gt;2: 8x Tweelichtsein met fader effect&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 groepen van 8x TL verlichtingseffect&lt;br&gt;5: 1 x 16 uitgangen met TL verl.effect&lt;br&gt;6: 8x Wisselmotor aansturing&lt;br&gt;7: 4x NS drielichtsein met cijferbak&lt;br&gt;8: 4x DB Hoofdsein&lt;br&gt;9: 4x DB Voorsein behorend bij hoofdsein&lt;br&gt;10: 2x Combinatie DB hoofdsein en DB voorsein&lt;br&gt;11: 4x DB Voorsein&lt;br&gt;12: 4x NMBS Sein&lt;br&gt;13: 8x Wisselmotor aansturing met tijdsbegrenzing&lt;br&gt;&lt;/html&gt;</tooltip>
-                <tooltip>&lt;html&gt;This write-only CV automatically sets a number of standard applications:&lt;br&gt;0: 8x Turnout with twin-coil motor&lt;br&gt;1: 16x permanent on/off switch&lt;br&gt;2: 8x two-light signal with fade effect&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 groups with 8x Fluorescent lamp&lt;br&gt;5: 1 x 16 output with Fluorescent lamp&lt;br&gt;6: 8x Turnout motor control&lt;br&gt;7: 4x Dutch (Prorail 1854) three-light signal&lt;br&gt;8: 4x DB Main signal&lt;br&gt;9: 4x DB pre-signal associated with main signal&lt;br&gt;10: 2x Combination of DB Main signal and approach signal&lt;br&gt;11: 4x DB approach signal&lt;br&gt;12: 4x NMBS Main signal&lt;br&gt;13: 8x Turnout control with time limit&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="nl">&lt;html&gt;Deze alleen schrijfbare CV stelt automatisch een standaard toepassing in:&lt;br&gt;0: 8x Wissel met spoelaandrijving&lt;br&gt;1: 16x permanent aan/uit schakelaar&lt;br&gt;2: 8x Tweelichtsein met fader effect&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 groepen van 8x TL verlichtingseffect&lt;br&gt;5: 1 x 16 uitgangen met TL verl.effect&lt;br&gt;6: 8x Wisselmotor aansturing&lt;br&gt;7: 4x NS drielichtsein met cijferbak&lt;br&gt;8: 4x DB Hoofdsein&lt;br&gt;9: 4x DB Voorsein behorend bij hoofdsein&lt;br&gt;10: 2x Combinatie DB hoofdsein en DB voorsein&lt;br&gt;11: 4x DB Voorsein&lt;br&gt;12: 4x NMBS Sein&lt;br&gt;13: 8x Wisselmotor aansturing met tijdsbegrenzing&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip>&lt;html&gt;This write-only CV automatically sets a one of these standard applications:&lt;br&gt;0: 8x Turnout with twin-coil motor&lt;br&gt;1: 16x permanent on/off switch&lt;br&gt;2: 8x two-light signal with fade effect&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 groups with 8x Fluorescent lamp&lt;br&gt;5: 1 x 16 output with Fluorescent lamp&lt;br&gt;6: 8x Turnout motor control&lt;br&gt;7: 4x Dutch (Prorail 1854) three-light signal&lt;br&gt;8: 4x DB Main signal&lt;br&gt;9: 4x DB pre-signal associated with main signal&lt;br&gt;10: 2x Combination of DB Main signal and approach signal&lt;br&gt;11: 4x DB approach signal&lt;br&gt;12: 4x NMBS Main signal&lt;br&gt;13: 8x Turnout control with time limit&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
             <variable item="Presets4024" CV="47" mask="XXXXXXXV" writeOnly="yes" default="0" include="4024">
                 <enumVal>
                     <enumChoice choice="0">
                         <choice>4 servos (1-4) and 4 separate switching outputs (5-8)</choice>
-                        <choice xml:lang="fr">4 servos (1-4) et 4 sor es commutateurs séparées (5-8)</choice>
+                        <choice xml:lang="fr">4 servos (1-4) et 4 sorties commutateurs séparées (5-8)</choice>
                         <choice xml:lang="de">4 Servos (1-4) und 4 separate Schaltausgänge (5-8)</choice>
                         <choice xml:lang="nl">4 Servo’s (1 t/m 4) en 4 aparte schakeluitgangen (5 t/m 8)</choice>
                     </enumChoice>
                     <enumChoice choice="1">
                         <choice>4 servos (1-4) with connected switching outputs (1-4)</choice>
-                        <choice xml:lang="fr">4 servos (1-4) avec des sortiee commutateurs connectés (1-4)</choice>
+                        <choice xml:lang="fr">4 servos (1-4) avec des sorties commutateurs connectés (1-4)</choice>
                         <choice xml:lang="de">4 Servos (1-4) mit verknüpften Schaltausgänge (1-4)</choice>
                         <choice xml:lang="nl">4 Servo’s (1 t/m 4) met gekoppelde schakeluitgangen (1 t/m 4)</choice>
                     </enumChoice>
@@ -884,6 +884,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Schrittgröße</label>
                 <label xml:lang="nl">Stapgrootte</label>
                 <label>Step size</label>
+                <tooltip xml:lang="fr">La valeur 15 est la plus rapide; 0 la plus lente.</tooltip>
+                <tooltip xml:lang="de">Wert 15 ist am Schnellsten; Wert 0 am Langsamsten.</tooltip>
+                <tooltip xml:lang="nl">Waarde 15 is snelst aan, 0 is langzaam.</tooltip>
                 <tooltip>Value 15 is the fastest; value 0 is the slowest.</tooltip>
             </variable>
             <variable CV="113" mask="VVVVXXXX" item="Servo 1 Step Speed" default="0" writeOnly="no" include="4024">
@@ -893,7 +896,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Stapsnelheid</label>
                 <label>Step speed</label>
                 <tooltip>&lt;html&gt;Value 15 is the smallest and value 0 is the largest.&lt;br&gt;
-                Value 0 corresponds to 50 steps per second. 1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
+                Value 0 corresponds to 50 steps per second.&lt;br&gt;
+                    1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
                 Value 16 in combination with bits 0-3 set to 0 causes the servo to switch between&lt;br&gt;
                 the two extreme positions in 126 seconds.&lt;/html&gt;</tooltip>
             </variable>
@@ -903,6 +907,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Schrittgröße</label>
                 <label xml:lang="nl">Stapgrootte</label>
                 <label>Step size</label>
+                <tooltip xml:lang="fr">La valeur 15 est la plus rapide; 0 la plus lente.</tooltip>
+                <tooltip xml:lang="de">Wert 15 ist am Schnellsten; Wert 0 am Langsamsten.</tooltip>
+                <tooltip xml:lang="nl">Waarde 15 is snelst aan, 0 is langzaam.</tooltip>
                 <tooltip>Value 15 is the fastest; value 0 is the slowest.</tooltip>
             </variable>
             <variable CV="114" mask="VVVVXXXX" item="Servo 2 Step Speed" default="0" writeOnly="no" include="4024">
@@ -912,7 +919,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Stapsnelheid</label>
                 <label>Step speed</label>
                 <tooltip>&lt;html&gt;Value 15 is the smallest; value 0 is the largest.&lt;br&gt;
-                Value 0 corresponds to 50 steps per second. 1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
+                Value 0 corresponds to 50 steps per second.&lt;br&gt;
+                    1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
                 Value 16 in combination with bits 0-3 set to 0 causes the servo to switch between&lt;br&gt;
                 the two extreme positions in 126 seconds.&lt;/html&gt;</tooltip>
             </variable>
@@ -922,6 +930,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Schrittgröße</label>
                 <label xml:lang="nl">Stapgrootte</label>
                 <label>Step size</label>
+                <tooltip xml:lang="fr">La valeur 15 est la plus rapide; 0 la plus lente.</tooltip>
+                <tooltip xml:lang="de">Wert 15 ist am Schnellsten; Wert 0 am Langsamsten.</tooltip>
+                <tooltip xml:lang="nl">Waarde 15 is snelst aan, 0 is langzaam.</tooltip>
                 <tooltip>Value 15 is the fastest; value 0 is the slowest.</tooltip>
             </variable>
             <variable CV="115" mask="VVVVXXXX" item="Servo 3 Step Speed" default="0" writeOnly="no" include="4024">
@@ -931,7 +942,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Stapsnelheid</label>
                 <label>Step speed</label>
                 <tooltip>&lt;html&gt;Value 15 is the smallest; value 0 is the largest.&lt;br&gt;
-                Value 0 corresponds to 50 steps per second. 1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
+                Value 0 corresponds to 50 steps per second.&lt;br&gt;
+                    1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
                 Value 16 in combination with bits 0-3 set to 0 causes the servo to switch between&lt;br&gt;
                 the two extreme positions in 126 seconds.&lt;/html&gt;</tooltip>
             </variable>
@@ -941,6 +953,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Schrittgröße</label>
                 <label xml:lang="nl">Stapgrootte</label>
                 <label>Step size</label>
+                <tooltip xml:lang="fr">La valeur 15 est la plus rapide; 0 la plus lente.</tooltip>
+                <tooltip xml:lang="de">Wert 15 ist am Schnellsten; Wert 0 am Langsamsten.</tooltip>
+                <tooltip xml:lang="nl">Waarde 15 is snelst aan, 0 is langzaam.</tooltip>
                 <tooltip>Value 15 is the fastest; value 0 is the slowest.</tooltip>
             </variable>
             <variable CV="116" mask="VVVVXXXX" item="Servo 4 Step Speed" default="0" writeOnly="no" include="4024">
@@ -950,7 +965,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Stapsnelheid</label>
                 <label>Step speed</label>
                 <tooltip>&lt;html&gt;Value 15 is the smallest; value 0 is the largest.&lt;br&gt;
-                Value 0 corresponds to 50 steps per second. 1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
+                Value 0 corresponds to 50 steps per second.&lt;br&gt;
+                    1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
                 Value 16 in combination with bits 0-3 set to 0 causes the servo to switch between&lt;br&gt;
                 the two extreme positions in 126 seconds.&lt;/html&gt;</tooltip>
             </variable>
@@ -963,10 +979,13 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             <variable CV="117" mask="XXXXXXXV" item="Output 5 Independent" default="0" writeOnly="no"  include="4024">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Actionne indépendamment du servo</label>
-                <label xml:lang="de">Schaltet unabhängig von Servo</label>
+                <label xml:lang="de">Schaltet unabhängig vom Servo</label>
                 <label xml:lang="nl">Onafhankelijk van servo</label>
                 <label>Switch independently from servo 1</label>
-                <tooltip>Choose just 1 option</tooltip>
+                <tooltip>Select just 1 option per output</tooltip>
+                <tooltip xml:lang="fr">Selectionne une des options</tooltip>
+                <tooltip xml:lang="de">Selektiere nur eine Option pro Ausgang</tooltip>
+                <tooltip xml:lang="nl">Selekteer 1 optie per uitgang</tooltip>
             </variable>
             <variable CV="117" mask="XXXXXXVX" item="Output 5 ON A" default="0" writeOnly="no" include="4024">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1005,10 +1024,13 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             <variable CV="118" mask="XXXXXXXV" item="Output 6 Independent" default="0" writeOnly="no"  include="4024">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Actionne indépendamment du servo</label>
-                <label xml:lang="de">Schaltet unabhängig von Servo</label>
+                <label xml:lang="de">Schaltet unabhängig vom Servo</label>
                 <label xml:lang="nl">Onafhankelijk van servo</label>
                 <label>Switch independently from servo 2</label>
-                <tooltip>Choose just 1 option</tooltip>
+                <tooltip>Select just 1 option per output</tooltip>
+                <tooltip xml:lang="fr">Selectionne une des options</tooltip>
+                <tooltip xml:lang="de">Selektiere nur eine Option pro Ausgang</tooltip>
+                <tooltip xml:lang="nl">Selekteer 1 optie per uitgang</tooltip>
             </variable>
             <variable CV="118" mask="XXXXXXVX" item="Output 6 ON A" default="0" writeOnly="no" include="4024">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1047,10 +1069,13 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             <variable CV="119" mask="XXXXXXXV" item="Output 7 Independent" default="0" writeOnly="no"  include="4024">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Actionne indépendamment du servo</label>
-                <label xml:lang="de">Schaltet unabhängig von Servo</label>
+                <label xml:lang="de">Schaltet unabhängig vom Servo</label>
                 <label xml:lang="nl">Onafhankelijk van servo</label>
                 <label>Switch independently from servo 3</label>
-                <tooltip>Choose just 1 option</tooltip>
+                <tooltip>Select just 1 option per output</tooltip>
+                <tooltip xml:lang="fr">Selectionne une des options</tooltip>
+                <tooltip xml:lang="de">Selektiere nur eine Option pro Ausgang</tooltip>
+                <tooltip xml:lang="nl">Selekteer 1 optie per uitgang</tooltip>
             </variable>
             <variable CV="119" mask="XXXXXXVX" item="Output 7 ON A" default="0" writeOnly="no" include="4024">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1089,10 +1114,13 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             <variable CV="120" mask="XXXXXXXV" item="Output 8 Independent" default="0" writeOnly="no"  include="4024">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Actionne indépendamment du servo</label>
-                <label xml:lang="de">Schaltet unabhängig von Servo</label>
+                <label xml:lang="de">Schaltet unabhängig vom Servo</label>
                 <label xml:lang="nl">Onafhankelijk van servo</label>
                 <label>Switch independently from servo 4</label>
-                <tooltip>Choose just 1 option</tooltip>
+                <tooltip>Select just 1 option per output</tooltip>
+                <tooltip xml:lang="fr">Selectionne une des options</tooltip>
+                <tooltip xml:lang="de">Selektiere nur eine Option pro Ausgang</tooltip>
+                <tooltip xml:lang="nl">Selekteer 1 optie per uitgang</tooltip>
             </variable>
             <variable CV="120" mask="XXXXXXVX" item="Output 8 ON A" default="0" writeOnly="no" include="4024">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1197,6 +1225,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Masse</label>
                 <label xml:lang="nl">Massa</label>
                 <label>Mass</label>
+                <tooltip xml:lang="fr">&lt;html&gt;Si la valeur n’est pas égale à 0, le servo va alternativement&lt;br&gt;ajouter et soustraire cette valeur à la position finale,&lt;br&gt;où la valeur est aussi réduite d’1 à chaque fois, jusqu’à ce que la valeur atteigne 0.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="de">&lt;html&gt;Wenn der Wert nicht 0 ist, dann wird der Servo diesen Wert&lt;br&gt;abwechselnd bei der Endposi on subtrahiert bzw. addiert,&lt;br&gt;wobei der Wert auch jedes Mal um 1 verringert wird, bis der Wert 0 ist.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="nl">&lt;html&gt;Als deze waarde ongelijk 0 is, zal de servo de deze waarde&lt;br&gt;afwisselend bij de eindpositie optellen en aftrekken,&lt;br&gt;waarbij gelijktijdig bij optellen of aftrekken de waarde met 1 verminderd wordt&lt;br&gt;totdat deze ook 0 is geworden.&lt;/html&gt;</tooltip>
                 <tooltip>&lt;html&gt;Mass simulation: if the value is not equal to 0,&lt;br&gt;the servo will alternately add and subtract this value at the end position,&lt;br&gt;whereby the value is also decreased by 1 each time, until the value reaches 0.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="138" item="Servo 2 Mass Simulation" default="0" writeOnly="no" include="4024">
@@ -1205,6 +1236,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Masse</label>
                 <label xml:lang="nl">Massa</label>
                 <label>Mass</label>
+                <tooltip xml:lang="fr">&lt;html&gt;Si la valeur n’est pas égale à 0, le servo va alternativement&lt;br&gt;ajouter et soustraire cette valeur à la position finale,&lt;br&gt;où la valeur est aussi réduite d’1 à chaque fois, jusqu’à ce que la valeur atteigne 0.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="de">&lt;html&gt;Wenn der Wert nicht 0 ist, dann wird der Servo diesen Wert&lt;br&gt;abwechselnd bei der Endposi on subtrahiert bzw. addiert,&lt;br&gt;wobei der Wert auch jedes Mal um 1 verringert wird, bis der Wert 0 ist.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="nl">&lt;html&gt;Als deze waarde ongelijk 0 is, zal de servo de deze waarde&lt;br&gt;afwisselend bij de eindpositie optellen en aftrekken,&lt;br&gt;waarbij gelijktijdig bij optellen of aftrekken de waarde met 1 verminderd wordt&lt;br&gt;totdat deze ook 0 is geworden.&lt;/html&gt;</tooltip>
                 <tooltip>&lt;html&gt;Mass simulation: if the value is not equal to 0,&lt;br&gt;the servo will alternately add and subtract this value at the end position,&lt;br&gt;whereby the value is also decreased by 1 each time, until the value reaches 0.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="139" item="Servo 3 Mass Simulation" default="0" writeOnly="no" include="4024">
@@ -1213,6 +1247,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Masse</label>
                 <label xml:lang="nl">Massa</label>
                 <label>Mass</label>
+                <tooltip xml:lang="fr">&lt;html&gt;Si la valeur n’est pas égale à 0, le servo va alternativement&lt;br&gt;ajouter et soustraire cette valeur à la position finale,&lt;br&gt;où la valeur est aussi réduite d’1 à chaque fois, jusqu’à ce que la valeur atteigne 0.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="de">&lt;html&gt;Wenn der Wert nicht 0 ist, dann wird der Servo diesen Wert&lt;br&gt;abwechselnd bei der Endposi on subtrahiert bzw. addiert,&lt;br&gt;wobei der Wert auch jedes Mal um 1 verringert wird, bis der Wert 0 ist.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="nl">&lt;html&gt;Als deze waarde ongelijk 0 is, zal de servo de deze waarde&lt;br&gt;afwisselend bij de eindpositie optellen en aftrekken,&lt;br&gt;waarbij gelijktijdig bij optellen of aftrekken de waarde met 1 verminderd wordt&lt;br&gt;totdat deze ook 0 is geworden.&lt;/html&gt;</tooltip>
                 <tooltip>&lt;html&gt;Mass simulation: if the value is not equal to 0,&lt;br&gt;the servo will alternately add and subtract this value at the end position,&lt;br&gt;whereby the value is also decreased by 1 each time, until the value reaches 0.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="140" item="Servo 4 Mass Simulation" default="0" writeOnly="no" include="4024">
@@ -1221,6 +1258,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Masse</label>
                 <label xml:lang="nl">Massa</label>
                 <label>Mass</label>
+                <tooltip xml:lang="fr">&lt;html&gt;Si la valeur n’est pas égale à 0, le servo va alternativement&lt;br&gt;ajouter et soustraire cette valeur à la position finale,&lt;br&gt;où la valeur est aussi réduite d’1 à chaque fois, jusqu’à ce que la valeur atteigne 0.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="de">&lt;html&gt;Wenn der Wert nicht 0 ist, dann wird der Servo diesen Wert&lt;br&gt;abwechselnd bei der Endposi on subtrahiert bzw. addiert,&lt;br&gt;wobei der Wert auch jedes Mal um 1 verringert wird, bis der Wert 0 ist.&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="nl">&lt;html&gt;Als deze waarde ongelijk 0 is, zal de servo de deze waarde&lt;br&gt;afwisselend bij de eindpositie optellen en aftrekken,&lt;br&gt;waarbij gelijktijdig bij optellen of aftrekken de waarde met 1 verminderd wordt&lt;br&gt;totdat deze ook 0 is geworden.&lt;/html&gt;</tooltip>
                 <tooltip>&lt;html&gt;Mass simulation: if the value is not equal to 0,&lt;br&gt;the servo will alternately add and subtract this value at the end position,&lt;br&gt;whereby the value is also decreased by 1 each time, until the value reaches 0.&lt;/html&gt;</tooltip>
             </variable>
 
@@ -1431,10 +1471,10 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Signal 1 an:</label>
                 <label xml:lang="nl">Sein 1 op:</label>
                 <label>Signal 1 on:</label>
-                <tooltip xml:lang="fr">Mappage de fonction signal de sortie (EXPERT)</tooltip>
-                <tooltip xml:lang="de">Signal Funktionsmapping an Ausgang (EXPERT)</tooltip>
-                <tooltip xml:lang="nl">Sein functiemap op uitgang (EXPERT)</tooltip>
-                <tooltip>Signal function mapping to output (EXPERT)</tooltip>
+                <tooltip xml:lang="fr">Mappage de fonction signal par groupe des sorties (EXPERT)</tooltip>
+                <tooltip xml:lang="de">Signalfunktionsmapping nach Ausgangsgruppe (EXPERT)</tooltip>
+                <tooltip xml:lang="nl">Seinfunctiemap op uitgangsgroep (EXPERT)</tooltip>
+                <tooltip>Signal function mapping to output group (EXPERT)</tooltip>
             </variable>
             <variable item="Signal 2 Output" CV="167" default="2" comment="Signal 2 Output" include="4018">
                 <decVal min="1" max="8" />
@@ -1442,10 +1482,10 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Signal 2 an:</label>
                 <label xml:lang="nl">Sein 2 op:</label>
                 <label>Signal 2 on:</label>
-                <tooltip xml:lang="fr">Mappage de fonction signal de sortie (EXPERT)</tooltip>
-                <tooltip xml:lang="de">Signal Funktionsmapping an Ausgang (EXPERT)</tooltip>
-                <tooltip xml:lang="nl">Sein functiemap op uitgang (EXPERT)</tooltip>
-                <tooltip>Signal function mapping to output (EXPERT)</tooltip>
+                <tooltip xml:lang="fr">Mappage de fonction signal par groupe des sorties (EXPERT)</tooltip>
+                <tooltip xml:lang="de">Signalfunktionsmapping nach Ausgangsgruppe (EXPERT)</tooltip>
+                <tooltip xml:lang="nl">Seinfunctiemap op uitgangsgroep (EXPERT)</tooltip>
+                <tooltip>Signal function mapping to output group (EXPERT)</tooltip>
             </variable>
             <variable item="Signal 3 Output" CV="191" default="4" comment="Signal 3 Output" include="4018">
                 <decVal min="1" max="8" />
@@ -1453,10 +1493,10 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Signal 3 an:</label>
                 <label xml:lang="nl">Sein 3 op:</label>
                 <label>Signal 3 on:</label>
-                <tooltip xml:lang="fr">Mappage de fonction signal de sortie (EXPERT)</tooltip>
-                <tooltip xml:lang="de">Signal Funktionsmapping an Ausgang (EXPERT)</tooltip>
-                <tooltip xml:lang="nl">Sein functiemap op uitgang (EXPERT)</tooltip>
-                <tooltip>Signal function mapping to output (EXPERT)</tooltip>
+                <tooltip xml:lang="fr">Mappage de fonction signal par groupe des sorties (EXPERT)</tooltip>
+                <tooltip xml:lang="de">Signalfunktionsmapping nach Ausgangsgruppe (EXPERT)</tooltip>
+                <tooltip xml:lang="nl">Seinfunctiemap op uitgangsgroep (EXPERT)</tooltip>
+                <tooltip>Signal function mapping to output group (EXPERT)</tooltip>
             </variable>
             <variable item="Signal 4 Output" CV="215" default="8" comment="Signal 4 Output" include="4018">
                 <decVal min="1" max="8" />
@@ -1464,10 +1504,10 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Signal 4 an:</label>
                 <label xml:lang="nl">Sein 4 op:</label>
                 <label>Signal 4 on:</label>
-                <tooltip xml:lang="fr">Mappage de fonction signal de sortie (EXPERT)</tooltip>
-                <tooltip xml:lang="de">Signal Funktionsmapping an Ausgang (EXPERT)</tooltip>
-                <tooltip xml:lang="nl">Sein functiemap op uitgang (EXPERT)</tooltip>
-                <tooltip>Signal function mapping to output (EXPERT)</tooltip>
+                <tooltip xml:lang="fr">Mappage de fonction signal par groupe des sorties (EXPERT)</tooltip>
+                <tooltip xml:lang="de">Signalfunktionsmapping nach Ausgangsgruppe (EXPERT)</tooltip>
+                <tooltip xml:lang="nl">Seinfunctiemap op uitgangsgroep (EXPERT)</tooltip>
+                <tooltip>Signal function mapping to output group (EXPERT)</tooltip>
             </variable>
             
 <!-- Signal mapping (matrix) -->
@@ -1761,7 +1801,10 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <grid>
         <griditem gridx="0" gridy="0">
             <label>
-                <text>Uitgangen:</text>
+                <text>Output group:</text>
+                <text xml:lang="fr">Groupe de sorties:</text>
+                <text xml:lang="de">Ausgangsgruppe:</text>
+                <text xml:lang="nl">Uitgangsgroep:</text>
             </label>
         </griditem>
         <griditem gridx="1" gridy="0">
@@ -2429,6 +2472,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                     <separator/>
                         <label>
                             <text>Output 5 Configuration</text>
+                            <text xml:lang="fr">Sortie 5 Configuration</text>
+                            <text xml:lang="de">Ausgang 5 Konfiguration</text>
                             <text xml:lang="nl">Uitgang 5 Configuratie</text>
                         </label>
                         <display item="Output 5"/>
@@ -2445,6 +2490,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                      <separator/>
                         <label>
                             <text>Output 6 Configuration</text>
+                            <text xml:lang="fr">Sortie 6 Configuration</text>
+                            <text xml:lang="de">Ausgang 6 Konfiguration</text>
                             <text xml:lang="nl">Uitgang 6 Configuratie</text>
                         </label>
                         <display item="Output 6"/>
@@ -2460,6 +2507,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                  <column>
                         <label>
                             <text>Output 7 Configuration</text>
+                            <text xml:lang="fr">Sortie 7 Configuration</text>
+                            <text xml:lang="de">Ausgang 7 Konfiguration</text>
                             <text xml:lang="nl">Uitgang 7 Configuratie</text>
                         </label>
                         <display item="Output 7"/>
@@ -2474,6 +2523,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                  <column>
                         <label>
                             <text>Output 8 Configuration</text>
+                            <text xml:lang="fr">Sortie 8 Configuration</text>
+                            <text xml:lang="de">Ausgang 8 Konfiguration</text>
                             <text xml:lang="nl">Uitgang 8 Configuratie</text>
                         </label>
                         <display item="Output 8"/>
