@@ -46,6 +46,7 @@ public class CarTypes extends RollingStockAttribute {
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         if (Setup.getCarTypes().equals(Setup.AAR)) {
             return ARR_TYPES;
@@ -101,12 +102,14 @@ public class CarTypes extends RollingStockAttribute {
         }
     }
 
+    @Override
     public void addName(String type) {
         super.addName(type);
         maxNameLengthSubType = 0; // reset
         setDirtyAndFirePropertyChange(CARTYPES_CHANGED_PROPERTY, null, type);
     }
 
+    @Override
     public void deleteName(String type) {
         super.deleteName(type);
         maxNameLengthSubType = 0; // reset
@@ -128,6 +131,7 @@ public class CarTypes extends RollingStockAttribute {
      *
      * @return the maximum character length of a car type
      */
+    @Override
     public int getMaxNameLength() {
         if (maxNameLengthSubType == 0) {
             String maxName = "";

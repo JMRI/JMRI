@@ -168,6 +168,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
         removeTrainListeners();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {

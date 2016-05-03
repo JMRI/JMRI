@@ -49,6 +49,7 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
     HardcopyWriter writer;
     public static final int MAX_NAME_LENGTH = 25;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // obtain a HardcopyWriter
         try {

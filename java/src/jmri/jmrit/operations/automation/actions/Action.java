@@ -35,6 +35,7 @@ public abstract class Action {
     /**
      * for combo boxes
      */
+    @Override
     public String toString() {
         return getName();
     }

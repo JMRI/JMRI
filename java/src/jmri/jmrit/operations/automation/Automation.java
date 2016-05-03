@@ -60,6 +60,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return getName();
     }
@@ -167,6 +168,7 @@ public class Automation implements java.beans.PropertyChangeListener {
             item.getAction().removePropertyChangeListener(this);
             item.getAction().addPropertyChangeListener(this);
             Thread runAction = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     item.getAction().doAction();
                 }
@@ -638,6 +640,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

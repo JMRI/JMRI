@@ -30,6 +30,7 @@ public class CarsSetFrameAction extends AbstractAction {
         _carsTable = carsTable;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a car table frame
         CarsSetFrame csf = new CarsSetFrame();

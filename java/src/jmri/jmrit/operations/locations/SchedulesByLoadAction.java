@@ -22,6 +22,7 @@ public class SchedulesByLoadAction extends AbstractAction {
         super(actionName);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (_slf != null) {
             _slf.dispose();

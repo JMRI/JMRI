@@ -41,15 +41,18 @@ public class CarColors extends RollingStockAttribute {
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return COLORS;
     }
 
+    @Override
     public void addName(String color) {
         super.addName(color);
         setDirtyAndFirePropertyChange(CARCOLORS_CHANGED_PROPERTY, null, color);
     }
 
+    @Override
     public void deleteName(String color) {
         super.deleteName(color);
         setDirtyAndFirePropertyChange(CARCOLORS_CHANGED_PROPERTY, color, null);
