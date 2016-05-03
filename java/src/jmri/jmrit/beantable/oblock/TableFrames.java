@@ -33,8 +33,8 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import jmri.InstanceManager;
 import jmri.Path;
-import jmri.jmrit.logix.OBlock;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.WarrantTableAction;
@@ -107,7 +107,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         setTitle(Bundle.getMessage("TitleOBlocks"));
         JMenuBar menuBar = new JMenuBar();
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintOBlockTable"));

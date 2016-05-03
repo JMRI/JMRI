@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -38,7 +39,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     protected String _number = NONE;
     protected String _road = NONE;
     protected String _type = NONE;
-    protected String _length = NONE;
+    protected String _length = "0";
     protected String _color = NONE;
     protected String _weight = DEFAULT_WEIGHT;
     protected String _weightTons = DEFAULT_WEIGHT;
@@ -139,6 +140,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * For combobox and identification
      */
+    @Override
     public String toString() {
         return getRoadName() + " " + getNumber();
     }
@@ -207,7 +209,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         try {
             return Integer.parseInt(getLength());
         } catch (Exception e) {
-            log.error("Rolling stock ({}) length ({}) is not valid ", toString(), getLength());
+            log.error(Car.class.isInstance(this)?"Car":"Loco" +" ({}) length ({}) is not valid ", toString(), getLength());
         }
         return 0;
     }
@@ -1289,6 +1291,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     }
 
     // rolling stock listens for changes in a location name or if a location is deleted
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         // if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + toString()+ " property name: "
         // +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());

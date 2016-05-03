@@ -216,6 +216,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     // Save, Delete, Add
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addTypeButton) {
             addNewScheduleItem();
@@ -270,6 +271,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("Radio button action");
         scheduleModel.setMatchMode(ae.getSource() == matchRadioButton);
@@ -380,6 +382,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         addScheduleButton.setEnabled(!enabled);
     }
 
+    @Override
     public void dispose() {
         CarTypes.instance().removePropertyChangeListener(this);
         _location.removePropertyChangeListener(this);
@@ -388,6 +391,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

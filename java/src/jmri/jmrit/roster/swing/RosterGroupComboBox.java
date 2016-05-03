@@ -1,4 +1,3 @@
-// RosterGroupComboBox.java
 package jmri.jmrit.roster.swing;
 
 import java.beans.PropertyChangeEvent;
@@ -14,15 +13,10 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
  * A JComboBox of Roster Groups.
  *
  * @author Randall Wood Copyright (C) 2011, 2014
- * @version	$Revision: $
  * @see jmri.jmrit.roster.Roster
  */
 public class RosterGroupComboBox extends JComboBox<String> implements RosterGroupSelector {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1817542492929278953L;
     private Roster _roster;
     private boolean allEntriesEnabled = true;
 

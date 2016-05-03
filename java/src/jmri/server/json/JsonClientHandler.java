@@ -1,27 +1,5 @@
 package jmri.server.json;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.ServiceLoader;
-import jmri.JmriException;
-import jmri.jmris.json.JsonConsistServer;
-import jmri.jmris.json.JsonLightServer;
-import jmri.jmris.json.JsonMemoryServer;
-import jmri.jmris.json.JsonOperationsServer;
-import jmri.jmris.json.JsonProgrammerServer;
-import jmri.jmris.json.JsonReporterServer;
-import jmri.jmris.json.JsonRouteServer;
-import jmri.jmris.json.JsonSensorServer;
-import jmri.jmris.json.JsonServerPreferences;
-import jmri.jmris.json.JsonSignalHeadServer;
-import jmri.jmris.json.JsonSignalMastServer;
-import jmri.jmris.json.JsonThrottleServer;
-import jmri.jmris.json.JsonUtil;
 import static jmri.server.json.JSON.CARS;
 import static jmri.server.json.JSON.CONSIST;
 import static jmri.server.json.JSON.CONSISTS;
@@ -30,13 +8,10 @@ import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.FORMAT;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
-import static jmri.server.json.JSON.LIGHT;
 import static jmri.server.json.JSON.LIGHTS;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
 import static jmri.server.json.JSON.LOCATIONS;
-import static jmri.server.json.JSON.MEMORIES;
-import static jmri.server.json.JSON.MEMORY;
 import static jmri.server.json.JSON.METADATA;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
@@ -47,8 +22,6 @@ import static jmri.server.json.JSON.PONG;
 import static jmri.server.json.JSON.PROGRAMMER;
 import static jmri.server.json.JSON.REPORTER;
 import static jmri.server.json.JSON.REPORTERS;
-import static jmri.server.json.JSON.ROUTE;
-import static jmri.server.json.JSON.ROUTES;
 import static jmri.server.json.JSON.SENSOR;
 import static jmri.server.json.JSON.SENSORS;
 import static jmri.server.json.JSON.SIGNAL_HEAD;
@@ -61,6 +34,26 @@ import static jmri.server.json.JSON.TRAIN;
 import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.XML;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.ServiceLoader;
+import jmri.JmriException;
+import jmri.jmris.json.JsonConsistServer;
+import jmri.jmris.json.JsonOperationsServer;
+import jmri.jmris.json.JsonProgrammerServer;
+import jmri.jmris.json.JsonReporterServer;
+import jmri.jmris.json.JsonSensorServer;
+import jmri.jmris.json.JsonServerPreferences;
+import jmri.jmris.json.JsonSignalHeadServer;
+import jmri.jmris.json.JsonSignalMastServer;
+import jmri.jmris.json.JsonThrottleServer;
+import jmri.jmris.json.JsonUtil;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,12 +61,9 @@ import org.slf4j.LoggerFactory;
 public class JsonClientHandler {
 
     private final JsonConsistServer consistServer;
-    private final JsonLightServer lightServer;
-    private final JsonMemoryServer memoryServer;
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
     private final JsonReporterServer reporterServer;
-    private final JsonRouteServer routeServer;
     private final JsonSensorServer sensorServer;
     private final JsonSignalHeadServer signalHeadServer;
     private final JsonSignalMastServer signalMastServer;
@@ -85,12 +75,9 @@ public class JsonClientHandler {
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
         this.consistServer = new JsonConsistServer(this.connection);
-        this.lightServer = new JsonLightServer(this.connection);
-        this.memoryServer = new JsonMemoryServer(this.connection);
         this.operationsServer = new JsonOperationsServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
         this.reporterServer = new JsonReporterServer(this.connection);
-        this.routeServer = new JsonRouteServer(this.connection);
         this.sensorServer = new JsonSensorServer(this.connection);
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
         this.signalMastServer = new JsonSignalMastServer(this.connection);
@@ -113,12 +100,9 @@ public class JsonClientHandler {
     public void dispose() {
         this.throttleServer.dispose();
         this.consistServer.dispose();
-        this.lightServer.dispose();
-        this.memoryServer.dispose();
         this.operationsServer.dispose();
         this.programmerServer.dispose();
         this.reporterServer.dispose();
-        this.routeServer.dispose();
         this.sensorServer.dispose();
         this.signalHeadServer.dispose();
         this.signalMastServer.dispose();
@@ -217,9 +201,6 @@ public class JsonClientHandler {
                     case LOCATIONS:
                         reply = JsonUtil.getLocations(this.connection.getLocale());
                         break;
-                    case MEMORIES:
-                        reply = JsonUtil.getMemories(this.connection.getLocale());
-                        break;
                     case METADATA:
                         reply = JsonUtil.getMetadata(this.connection.getLocale());
                         break;
@@ -228,17 +209,6 @@ public class JsonClientHandler {
                         break;
                     case REPORTERS:
                         reply = JsonUtil.getReporters(this.connection.getLocale());
-                        break;
-//                    case ROSTER:
-//                        reply = JsonUtil.getRoster(this.connection.getLocale(), data);
-//                        this.rosterServer.listen();
-//                        break;
-//                    case ROSTER_GROUPS:
-//                        reply = JsonUtil.getRosterGroups(this.connection.getLocale());
-//                        this.rosterServer.listen();
-//                        break;
-                    case ROUTES:
-                        reply = JsonUtil.getRoutes(this.connection.getLocale());
                         break;
                     case SENSORS:
                         reply = JsonUtil.getSensors(this.connection.getLocale());
@@ -265,22 +235,15 @@ public class JsonClientHandler {
                             }
                             return;
                         } else {
-                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownList", list));
+                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", list));
                             return;
                         }
                 }
-                //log.debug("Sending to client: {}", this.connection.getObjectMapper.writeValueAsString(reply));
                 this.connection.sendMessage(this.connection.getObjectMapper().writeValueAsString(reply));
             } else if (!data.isMissingNode()) {
                 switch (type) {
                     case CONSIST:
                         this.consistServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case LIGHT:
-                        this.lightServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case MEMORY:
-                        this.memoryServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case METADATA:
                         this.connection.sendMessage(JsonUtil.getMetadata(this.connection.getLocale(), data.path(NAME).asText()));
@@ -299,15 +262,6 @@ public class JsonClientHandler {
                         break;
                     case REPORTER:
                         this.reporterServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-//                    case ROSTER_ENTRY:
-//                        this.rosterServer.parseRosterEntryRequest(this.connection.getLocale(), data);
-//                        break;
-//                    case ROSTER_GROUP:
-//                        this.rosterServer.parseRosterGroupRequest(this.connection.getLocale(), data);
-//                        break;
-                    case ROUTE:
-                        this.routeServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case THROTTLE:
                         this.throttleServer.parseRequest(this.connection.getLocale(), data);

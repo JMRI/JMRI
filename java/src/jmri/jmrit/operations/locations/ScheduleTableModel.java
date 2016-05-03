@@ -1,9 +1,6 @@
 // ScheduleTableModel.java
 package jmri.jmrit.operations.locations;
 
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -19,6 +16,8 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -153,14 +152,17 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
     }
 
+    @Override
     public int getRowCount() {
         return _list.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHEST_COLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -203,6 +205,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -242,6 +245,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case RANDOM_COLUMN:
@@ -263,6 +267,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= _list.size()) {
             return "ERROR row " + row; // NOI18N
@@ -312,6 +317,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning schedule table row {} still in edit", row);
@@ -695,6 +701,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     // this table listens for changes to a schedule and it's car types
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

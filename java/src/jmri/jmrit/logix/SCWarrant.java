@@ -208,7 +208,7 @@ public class SCWarrant extends Warrant {
             String pathAlreadySet = block.isPathSet(bo.getPathName());
             if (pathAlreadySet == null) {
                 String message = null;
-                if ((block.getState() & OBlock.OCCUPIED) > 0) {
+                if ((block.getState() & OBlock.OCCUPIED) != 0) {
                     log.info(_trainName+" block allocation failed "+block.getDisplayName() + " not allocated, but Occupied.");
                     message = " block allocation failed ";
                 }
@@ -254,7 +254,7 @@ public class SCWarrant extends Warrant {
             log.debug(_trainName+" ensureRouteConsecutivity for loop #"+i);
             BlockOrder bo = getBlockOrderAt(i);
             OBlock block = bo.getBlock();
-            if (!block.isAllocatedTo(this) || (block.getState() & OBlock.OCCUPIED) > 0) {
+            if (!block.isAllocatedTo(this) || (block.getState() & OBlock.OCCUPIED) != 0) {
                 deAllocateRestOfRoute = true;
             }
             if (deAllocateRestOfRoute) {

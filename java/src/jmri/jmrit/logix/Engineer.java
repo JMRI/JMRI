@@ -7,7 +7,6 @@ import jmri.Sensor;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.ThreadingUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +22,6 @@ import org.slf4j.LoggerFactory;
     /************************** Thread running the train *****************/
 
 public class Engineer extends Thread implements Runnable, java.beans.PropertyChangeListener {
-
-//    private static final long serialVersionUID = 7088050907933847146L;
 
     private int     _idxCurrentCommand;     // current throttle command
     private float   _normalSpeed = 0;       // current commanded throttle setting (unmodified)

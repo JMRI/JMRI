@@ -139,6 +139,9 @@ public class Log4JUtil {
         }
         return (program + " version " + jmri.Version.name()
                 + " starts under Java " + System.getProperty("java.version", "<unknown>")
+                + " on " + System.getProperty("os.name", "<unknown>")
+                + " " + System.getProperty("os.arch", "<unknown>")
+                + " v" + System.getProperty("os.version", "<unknown>")
                 + " at " + (new java.util.Date()));
     }
 

@@ -85,6 +85,7 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
         
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             // confirm that factor is between 0 and 1000
@@ -119,6 +120,7 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
         trackBox.setSelectedItem(_track.getAlternateTrack());
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

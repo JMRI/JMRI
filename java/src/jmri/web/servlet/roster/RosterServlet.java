@@ -1,6 +1,23 @@
 // RosterServlet.java
 package jmri.web.servlet.roster;
 
+import static jmri.jmris.json.JSON.ADDRESS;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.DECODER_FAMILY;
+import static jmri.jmris.json.JSON.DECODER_MODEL;
+import static jmri.jmris.json.JSON.GROUP;
+import static jmri.jmris.json.JSON.ID;
+import static jmri.jmris.json.JSON.LIST;
+import static jmri.jmris.json.JSON.MFG;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.NUMBER;
+import static jmri.jmris.json.JSON.ROAD;
+import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
+import static jmri.web.servlet.ServletUtil.UTF8;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_XML;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -18,28 +35,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.jmris.json.JSON;
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.DECODER_FAMILY;
-import static jmri.jmris.json.JSON.DECODER_MODEL;
-import static jmri.jmris.json.JSON.GROUP;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.LIST;
-import static jmri.jmris.json.JSON.MFG;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.NUMBER;
-import static jmri.jmris.json.JSON.ROAD;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.servlet.ServletUtil;
-import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
-import static jmri.web.servlet.ServletUtil.UTF8;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_XML;
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

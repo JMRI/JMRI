@@ -163,6 +163,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         log.debug("queue update");
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 log.debug("update, setMode " + isSetMode);
                 initialize();
@@ -192,6 +193,12 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     } else {
                         moveButton.setEnabled(false);
                         setButton.setEnabled(false);
+                    }
+                    // adjust move button text
+                    if (rl == _train.getTrainTerminatesRouteLocation()) {
+                        moveButton.setText(Bundle.getMessage("Terminate"));
+                    } else {
+                        moveButton.setText(Bundle.getMessage("Move"));
                     }
                     updateComplete();
                 }

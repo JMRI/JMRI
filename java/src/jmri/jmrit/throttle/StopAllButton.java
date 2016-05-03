@@ -9,11 +9,6 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class StopAllButton extends JButton {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 345247076988023369L;
-
     public StopAllButton() {
         //   	stop.setText(Bundle.getMessage("ThrottleToolBarStopAll"));
         setIcon(new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png"));

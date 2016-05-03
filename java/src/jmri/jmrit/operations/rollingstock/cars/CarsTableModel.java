@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
@@ -404,6 +405,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
             }
         }
+        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -424,14 +426,17 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
     }
 
+    @Override
     public int getRowCount() {
         return sysList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case SELECT_COLUMN:
@@ -487,6 +492,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SELECT_COLUMN:
@@ -499,6 +505,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case SELECT_COLUMN:
@@ -514,6 +521,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= sysList.size()) {
             return "ERROR row " + row; // NOI18N
@@ -607,6 +615,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     CarEditFrame cef = null;
     CarSetFrame csf = null;
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         Car car = (Car) sysList.get(row);
         switch (col) {
@@ -620,6 +629,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 }
                 // use invokeLater so new window appears on top
                 SwingUtilities.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         csf = new CarSetFrame();
                         csf.initComponents();
@@ -634,6 +644,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 }
                 // use invokeLater so new window appears on top
                 SwingUtilities.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         cef = new CarEditFrame();
                         cef.initComponents();
@@ -701,6 +712,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

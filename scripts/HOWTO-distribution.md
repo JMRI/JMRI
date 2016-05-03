@@ -196,19 +196,19 @@ We roll some general code maintenance items into the release process.  They can 
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 
 ```
-The release-4.3.3 branch has been created. 
+The release-4.3.5 branch has been created. 
 
-From now on, please document your changes in the [jmri4.3.4.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.4.shtml) release note file.
+From now on, please document your changes in the [jmri4.3.6.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.6.shtml) release note file.
 
-Maintainers, please set the 4.3.4 milestone on pulls from now on.
+Maintainers, please set the 4.3.6 milestone on pulls from now on.
 
-Jenkins will be creating files shortly at [the usual place](http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.3/).
-```
+Jenkins will be creating files shortly at the [new server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/)
+````
 
 ================================================================================
 ## Build Files with Jenkins
 
-- Log in to the [Jenkins CI engine](http://builds.jmri.org/jenkins/job/Test%20Releases/)
+- Log in to the [Jenkins CI engine](http://jmri.tagadab.com/jenkins/job/TestReleases/)
 
 - Click "New Item"
 
@@ -271,6 +271,17 @@ If you're building locally:
     (The user has to have put the htdocs link in their SF.net account)
 
 ================================================================================
+## Put Files Out For Checking
+
+- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
+
+- Announce the file set to jmri-developers with a download URL like:
+
+    http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/
+
+- *Wait for some replies* before proceeding
+
+================================================================================
 ## Further Changes
 
 If anybody wants to add a change from here on in, they should
@@ -287,16 +298,22 @@ If anybody wants to add a change from here on in, they should
 
   Note: The GitHub automated CI tests do their build after doing a (temporary) merge with the target branch. If the release branch and master have diverged enough that a single set of changes can't be used with both, a more complicated procedure than above might be needed.  In that case, try a PR onto the release branch of the needed change, and then pull the release branch back onto the master branch before fixing conflicts.
 
-================================================================================
-## Release-specific Updates
+(The following is tentative text for this section from a 4/2016 jmri-developers discussion on how to do this for the run-up to 4.4, starting with 4.3.7 - Bob)
 
-- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
+As part of building e.g. release 4.3.7, we create a "release-4.3.8-suggested-patches" branch off the final v4.3.7 tag.
 
-- Announce the file set to jmri-developers with a download URL like:
+- Developer notices issue needing to be resolved post 4.3.7
+- Developer makes own development branch from 'release-4.3.8-suggested-patches'
+- Developer makes necessary changes, commits and then pushes to own fork.
+- Developer then creates PR from own development branch onto 'JMRI/JMRI/release-4.3.8-suggested-patches'
+- Developer additionally creates second PR from own development branch onto 'JMRI/JMRI/master' (*) - could also be performed by the Release Pumpkin meaning the
+developer need only create a single PR between 'needed-patches' - decision needed
+- If decisions is to include this, Release Pumpkin merges first PR into 'JMRI/JMRI/release-4.3.8-suggested-patches'
+- 4.3.8 is eventually built (and if need be, rebuilt) from release-4.3.8-suggested-patches
+- Maintainer merges second PR into 'JMRI/JMRI/master'
 
-    http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.3/
+It still gets a bit tricky if there’s a difference (e.g. due to a conflict with another change) that arises in either PR.  We’ll have to manage that a little carefully. One way to handle that is to _not_ merge any conflicts on master (_any_ PRs to master, not just in these dual-hatted PRs) until after the test release is done and merged back.
 
-- *Wait for some replies* before proceeding
 
 ====================================================================================
 ## Release Files on SF.net
@@ -379,7 +396,7 @@ File | SHA256 checksum
 
 - Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
 ```
-curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.3/ws/dist/release/*zip*/release.zip" 
+curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
 and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
 ```
@@ -439,6 +456,8 @@ git push github
 
 - Confirm that the tag for the current release (release-4.3.3) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 
+- Go to the GitHub PR and Issues lists and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels
+
 ====================================================================================
 ## Associated Documentation
 
@@ -456,7 +475,7 @@ git push github
         https://submit.symantec.com/whitelist/isv/
 ```
 
-    If you don't, a bunch of Windows users are likely to whine
+If you don't, a bunch of Windows users are likely to whine
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/Web%20Site/) to speed it along; note there are multiple components that need to run)
 

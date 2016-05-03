@@ -1,4 +1,3 @@
-// SectionManagerXML.java
 package jmri.configurexml;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision$
  */
 public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -103,17 +101,9 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                                         log.error("Unexpected null getFromBlock while storing ep " + i + " in Section " + sname + ", skipped");
                                         break;
                                     }
-                                    if (ep.getFromBlock().getSystemName() == null) {
-                                        log.error("Unexpected null in FromBlock systemName while storing ep " + i + " in Section " + sname + ", skipped");
-                                        break;
-                                    }
                                     epElem.setAttribute("fromblock", ep.getFromBlock().getSystemName());
                                     if (ep.getBlock() == null) {
                                         log.error("Unexpected null getBlock while storing ep " + i + " in Section " + sname + ", skipped");
-                                        break;
-                                    }
-                                    if (ep.getBlock().getSystemName() == null) {
-                                        log.error("Unexpected null in Block systemName while storing ep " + i + " in Section " + sname + ", skipped");
                                         break;
                                     }
                                     epElem.setAttribute("toblock", ep.getBlock().getSystemName());

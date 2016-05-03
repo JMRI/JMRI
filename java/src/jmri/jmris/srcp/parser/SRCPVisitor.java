@@ -5,7 +5,7 @@ import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/* This class provides an interface between the JavaTree/JavaCC 
+/* This class provides an interface between the JavaTree/JavaCC
  * parser for the SRCP protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2010
  */
@@ -153,7 +153,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
                 && isSupported(bus, "GA")) {
             // This is a message asking for the status of a "General Accessory".
             int address = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(2)).jjtGetValue()));
-            // our implementation ignores the port, but maybe we shouldn't to 
+            // our implementation ignores the port, but maybe we shouldn't to
             // follow the letter of the standard.
             //int port = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
             try {
@@ -187,7 +187,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("GL")
                 && isSupported(bus, "GL")) {
             // This is a Generic Loco request
-            // the 3rd child is the address of the locomotive we are 
+            // the 3rd child is the address of the locomotive we are
             // requesting status of.
             int address=Integer.parseInt(((String) ((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
             // This is a Throttle Status request
@@ -195,7 +195,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
                 ((jmri.jmris.srcp.JmriSRCPThrottleServer)(((jmri.jmris.ServiceHandler) data).getThrottleServer())).sendStatus(bus,address);
             } catch (java.io.IOException ie) {
             }
-            
+
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
             // This is a Time request
             try {
@@ -204,7 +204,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
             }
 
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SERVER")) {
-            // for the GET <bus> SERVER request, we return the current server 
+            // for the GET <bus> SERVER request, we return the current server
             // state.  In JMRI, we always return "Running".
             outputString = "100 INFO 0 SERVER RUNNING";
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("DESCRIPTION")) {
@@ -326,7 +326,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
                     } else if (devicegroup.equals("GL") && isSupported(bus, devicegroup)) {
                         // outputString=outputString + " GL " +address;
                         // this one needs some tought on how to proceed,
-                        // since the throttle manager differs from 
+                        // since the throttle manager differs from
                         // other JMRI managers.
                         // for now, just say no data.
                         outputString = "416 ERROR no data";
@@ -372,7 +372,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
             int port = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(3)).jjtGetValue()));
             // we expect to get both the value and delay, but JMRI only cares about
             // the port which indicates which output of a pair we are using.
-            // leave the values below commented out, unless we decide to use them 
+            // leave the values below commented out, unless we decide to use them
             // later.
             //int value = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue()));
             //int delay = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(5)).jjtGetValue()));
@@ -416,19 +416,19 @@ public class SRCPVisitor implements SRCPParserVisitor {
                 && isSupported(bus, "GL")) {
             // This is a Generic Loco request
             int address = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(2)).jjtGetValue()));
-            String drivemode = (String) ((SimpleNode) node.jjtGetChild(3)).jjtGetValue(); 
-            
+            String drivemode = (String) ((SimpleNode) node.jjtGetChild(3)).jjtGetValue();
+
             int speedstep = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(4)).jjtGetValue()));
 
             int maxspeedstep = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(5)).jjtGetValue()));
             ((jmri.jmris.srcp.JmriSRCPThrottleServer) ((jmri.jmris.ServiceHandler) data).getThrottleServer()).setThrottleSpeedAndDirection(bus,address,(float)speedstep/(float)maxspeedstep,drivemode.equals("0"));
             // setup the array list of function values.
-            
+
             int numFunctions = node.jjtGetNumChildren() - 6;
-            java.util.ArrayList functionList = new java.util.ArrayList<>();
+            java.util.ArrayList<Boolean> functionList = new java.util.ArrayList<Boolean>();
             for(int i = 0; i < numFunctions;i++){
                 // the functions start at the 7th child (index 6) of the node.
-                String functionMode = (String) ((SimpleNode) node.jjtGetChild(i+6)).jjtGetValue(); 
+                String functionMode = (String) ((SimpleNode) node.jjtGetChild(i+6)).jjtGetValue();
                 functionList.add(Boolean.valueOf(functionMode.equals("1")));
             }
             ((jmri.jmris.srcp.JmriSRCPThrottleServer) ((jmri.jmris.ServiceHandler) data).getThrottleServer()).setThrottleFunctions(bus,address,functionList);
@@ -503,7 +503,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
         log.debug("RESET " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SERVER")) {
             // for the RESET <bus> SERVER request, the protocol requries that
-            // we re-initialize the server.  Since we may have a local GUI 
+            // we re-initialize the server.  Since we may have a local GUI
             // controlling things, we ignore the request, but send a prohibited
             // response to the requesting client.
             outputString = "413 ERROR temporarily prohibited";
@@ -556,7 +556,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
                       // analog non-dcc throttles.
             case "P": // protocol by server.  The documentation indicates
                       // the server gets to choose the type of decoder,
-                      // but otherwise is silent on what parameters this 
+                      // but otherwise is silent on what parameters this
                       // should take.
             case "F": // Fleischmann
             case "L": // LocoNet

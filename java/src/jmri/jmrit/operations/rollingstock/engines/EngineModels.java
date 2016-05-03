@@ -68,10 +68,12 @@ public class EngineModels extends RollingStockAttribute {
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return MODELS;
     }
 
+    @Override
     public void dispose() {
         _engineHorsepowerHashTable.clear();
         _engineLengthHashTable.clear();
@@ -82,11 +84,13 @@ public class EngineModels extends RollingStockAttribute {
         loadDefaults();
     }
 
+    @Override
     public void addName(String model) {
         super.addName(model);
         setDirtyAndFirePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, null, model);
     }
 
+    @Override
     public void deleteName(String model) {
         super.deleteName(model);
         setDirtyAndFirePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, model, null);

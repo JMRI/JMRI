@@ -1,4 +1,3 @@
-// FileLocationPane.java
 package apps;
 
 import java.awt.event.ActionEvent;
@@ -27,7 +26,6 @@ import jmri.util.FileUtil;
  * is provided so that the user can select the path.
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  */
 public class FileLocationPane extends JPanel implements PreferencesPanel {
 
@@ -69,8 +67,8 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
                 }
                 scriptLocation.setText(fcScript.getSelectedFile() + File.separator);
                 validate();
-                if (getTopLevelAncestor() != null) {
-                    ((JFrame) getTopLevelAncestor()).pack();
+                if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
+                    ((JFrame)getTopLevelAncestor()).pack();
                 }
             }
         });
@@ -110,8 +108,8 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
                 }
                 userLocation.setText(fcUser.getSelectedFile() + File.separator);
                 validate();
-                if (getTopLevelAncestor() != null) {
-                    ((JFrame) getTopLevelAncestor()).pack();
+                if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
+                    ((JFrame)getTopLevelAncestor()).pack();
                 }
             }
         });

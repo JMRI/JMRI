@@ -6,17 +6,16 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * XpaThrottleTest.java
- *
  * Description:	tests for the jmri.jmrix.xpa.XpaThrottle class
- *
+ * <P>
  * @author	Paul Bender
- * @version $Revision: 17977 $
  */
 public class XpaThrottleTest extends TestCase {
 
+    private XpaTrafficController tc = null;
+
     public void testCtor() {
-        XpaThrottle t = new XpaThrottle(new jmri.DccLocoAddress(3, false));
+        XpaThrottle t = new XpaThrottle(new jmri.DccLocoAddress(3, false),tc);
         Assert.assertNotNull(t);
     }
 
@@ -40,10 +39,12 @@ public class XpaThrottleTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new XpaTrafficController();
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        tc = null;
     }
 
 }

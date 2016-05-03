@@ -42,14 +42,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision$
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 522758580232523066L;
     private DccThrottle throttle;
     private DccThrottle consistThrottle;
 

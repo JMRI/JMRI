@@ -1,7 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-
 import java.text.MessageFormat;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -9,6 +7,7 @@ import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 
 public abstract class Action {
 
@@ -36,6 +35,7 @@ public abstract class Action {
     /**
      * for combo boxes
      */
+    @Override
     public String toString() {
         return getName();
     }

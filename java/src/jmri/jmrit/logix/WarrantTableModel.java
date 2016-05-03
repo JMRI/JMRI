@@ -39,7 +39,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                                                                         // implements
                                                                         // PropertyChangeListener
 {
-    private static final long serialVersionUID = 6318203351014416147L;
     public static final int WARRANT_COLUMN = 0;
     public static final int ROUTE_COLUMN = 1;
     public static final int TRAIN_NAME_COLUMN = 2;
@@ -660,8 +659,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     if (oldMode != Warrant.MODE_NONE) {
                         OBlock block = bean.getCurrentBlockOrder().getBlock();
                         int state = block.getState();
-                        if ((state & OBlock.OCCUPIED) > 0
-                                || (state & OBlock.DARK) > 0) {
+                        if ((state & OBlock.OCCUPIED) != 0
+                                || (state & OBlock.DARK) != 0) {
                             _frame.setStatusText(
                                     Bundle.getMessage("warrantEnd",
                                             bean.getTrainName(),

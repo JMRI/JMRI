@@ -61,10 +61,10 @@
                             </xs:element>
                         </xs:sequence>
                         <xs:attribute name="class" type="xs:string" use="required" />
-                        <xs:element name="locX" type="xs:float" use="optional" />
-                        <xs:element name="locY" type="xs:float" use="optional" />
-                        <xs:element name="width" type="xs:float" use="optional" />
-                        <xs:element name="height" type="xs:float" use="optional" />
+                        <xs:attribute name="locX" type="xs:float" use="optional" />
+                        <xs:attribute name="locY" type="xs:float" use="optional" />
+                        <xs:attribute name="width" type="xs:float" use="optional" />
+                        <xs:attribute name="height" type="xs:float" use="optional" />
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>

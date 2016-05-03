@@ -89,6 +89,7 @@ public class AutomationsTableFrame extends OperationsFrame {
         }
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByNameRadioButton) {
@@ -104,6 +105,7 @@ public class AutomationsTableFrame extends OperationsFrame {
     }
 
     // add button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("add automation button activated");
         if (ae.getSource() == addButton) {
@@ -111,6 +113,7 @@ public class AutomationsTableFrame extends OperationsFrame {
         }
     }
     
+    @Override
     public void dispose() {
         saveTableDetails(automationsTable);
         automationsModel.dispose();

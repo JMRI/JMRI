@@ -2,8 +2,13 @@ package jmri.jmris;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
+import jmri.profile.ProfileManager;
+import jmri.profile.ProfileUtils;
+import jmri.util.FileUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -21,17 +26,49 @@ abstract public class AbstractServerPreferences extends Bean {
     private final static Logger log = LoggerFactory.getLogger(AbstractServerPreferences.class);
 
     public AbstractServerPreferences(String fileName) {
-        port=asLoadedPort=getDefaultPort();
-        openFile(fileName);
+        boolean migrate = false;
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        try {
+            if (sharedPreferences.keys().length == 0) {
+                log.info("No preferences exist.");
+                migrate = true;
+            }
+        } catch (BackingStoreException ex) {
+            log.info("No preferences file exists.");
+            migrate = true;
+        }
+        if (migrate) {
+            if (fileName != null) {
+                this.openFile(fileName);
+            } else {
+                migrate = false;
+            }
+        }
+        this.readPreferences(sharedPreferences);
+        if (migrate) {
+            try {
+                log.info("Migrating from old preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:profile"));
+                sharedPreferences.sync();
+            } catch (BackingStoreException ex) {
+                log.error("Unable to write preferences.", ex);
+            }
+        }
     }
 
     public AbstractServerPreferences() {
-        port=asLoadedPort=getDefaultPort();
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        this.readPreferences(sharedPreferences);
+    }
+
+    protected void readPreferences(Preferences sharedPreferences) {
+        this.setPort(sharedPreferences.getInt(PORT, this.getDefaultPort()));
+        this.asLoadedPort = this.getPort();
     }
 
     public void load(Element child) {
         Attribute a;
-        if ((a = child.getAttribute(PORT)) != null) {
+        a = child.getAttribute(PORT);
+        if (a != null) {
             try {
                 this.setPort(a.getIntValue());
                 this.asLoadedPort = this.getPort();
@@ -77,34 +114,8 @@ abstract public class AbstractServerPreferences extends Bean {
     }
 
     public void save() {
-        if (this.fileName == null) {
-            return;
-        }
-
-        XmlFile xmlFile = new XmlFile() {
-        };
-        xmlFile.makeBackupFile(this.fileName);
-        File file = new File(this.fileName);
-        try {
-            File parentDir = file.getParentFile();
-            if (!parentDir.exists()) {
-                if (!parentDir.mkdir()) {
-                    log.warn("Could not create parent directory for prefs file :{}", fileName);
-                    return;
-                }
-            }
-            if (file.createNewFile()) {
-                log.debug("Creating new Server prefs file: {}", fileName);
-            }
-        } catch (IOException ea) {
-            log.error("Could not create Server preferences file.");
-        }
-
-        try {
-            xmlFile.writeXML(file, XmlFile.newDocument(store()));
-        } catch (IOException eb) {
-            log.warn("Exception in storing Server xml: {}", eb.getLocalizedMessage());
-        }
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        sharedPreferences.putInt(PORT, this.port);
     }
 
     public boolean isDirty() {
@@ -126,6 +137,6 @@ abstract public class AbstractServerPreferences extends Bean {
 
     abstract public int getDefaultPort();
 
-    public static class AbstractServerPreferencesXml extends XmlFile {
+    private static class AbstractServerPreferencesXml extends XmlFile {
     }
 }

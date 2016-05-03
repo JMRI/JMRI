@@ -14,8 +14,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
-import jmri.spi.PreferencesProvider;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
-public class GuiLafPreferencesManager extends Bean implements PreferencesProvider {
+public class GuiLafPreferencesManager extends Bean implements PreferencesManager {
 
     public static final String FONT_SIZE = "fontSize";
     public static final String LOCALE = "locale";
@@ -88,7 +88,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     }
 
     @Override
-    public Iterable<Class<? extends PreferencesProvider>> getRequires() {
+    public Iterable<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 
@@ -185,14 +185,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     }
 
     private void listLAFfonts() {
-        log.info("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
+        log.debug("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
         java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
             if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
                 Font f = UIManager.getFont(key);
-                log.info("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
+                log.debug("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
             }
         }
     }

@@ -1,4 +1,3 @@
-// CombinedLocoSelListPane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionListener;
@@ -16,10 +15,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.progsupport.ProgModeSelector;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,14 +35,8 @@ import org.slf4j.LoggerFactory;
  * no selection.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8124040231760463058L;
 
     public CombinedLocoSelListPane(JLabel s, ProgModeSelector selector) {
         super(s, selector);
@@ -58,7 +50,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
         pane1a.add(new JLabel("Decoder installed: "));
         // create the list of manufacturers
-        mMfgList = new JList<String>();
+        mMfgList = new JList<>();
         updateMfgListContents(null);
         mMfgList.clearSelection();
         mMfgList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -142,7 +134,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         String currentValue = mMfgList.getSelectedValue();
 
         List<String> allMfgList = DecoderIndexFile.instance().getMfgNameList();
-        List<String> theMfgList = new ArrayList<String>();
+        List<String> theMfgList = new ArrayList<>();
 
         for (int i = 0; i < allMfgList.size(); i++) {
             // see if this qualifies; either a non-zero set of decoders, or

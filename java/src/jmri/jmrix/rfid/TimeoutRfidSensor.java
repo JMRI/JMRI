@@ -1,4 +1,3 @@
-// MergRfidReporter.java
 package jmri.jmrix.rfid;
 
 import jmri.IdTag;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2014
- * @version $Revision$
  * @since 3.9.2
  */
 public class TimeoutRfidSensor extends RfidSensor {
@@ -35,7 +33,7 @@ public class TimeoutRfidSensor extends RfidSensor {
     /**
      * Timeout in ms
      */
-    private static final int timeout = 1000;
+    private static final int TIMEOUT = 1000;
 
     /**
      * Time when something was last sensed by this object
@@ -83,7 +81,7 @@ public class TimeoutRfidSensor extends RfidSensor {
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
-            while ((whenLastSensed + timeout) > System.currentTimeMillis()) {
+            while ((whenLastSensed + TIMEOUT) > System.currentTimeMillis()) {
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException ex) {
@@ -98,10 +96,6 @@ public class TimeoutRfidSensor extends RfidSensor {
 
     }
 
-    static final long serialVersionUID = 5290531989069550265L;
-
     private static final Logger log = LoggerFactory.getLogger(TimeoutRfidSensor.class.getName());
 
 }
-
-/* @(#)TimeoutRfidSensor.java */

@@ -28,6 +28,7 @@ public class ShowCheckboxesCarsTableAction extends AbstractAction {
         _carsTableModel = carsTableModel;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         _carsTableModel.toggleSelectVisible();
     }

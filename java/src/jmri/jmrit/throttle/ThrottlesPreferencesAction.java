@@ -6,11 +6,6 @@ import javax.swing.AbstractAction;
 public class ThrottlesPreferencesAction extends AbstractAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -1272033268282072446L;
-
-    /**
      * Constructor
      *
      * @param s Name for the action.

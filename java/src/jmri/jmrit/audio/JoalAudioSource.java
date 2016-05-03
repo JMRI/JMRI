@@ -134,26 +134,30 @@ public class JoalAudioSource extends AbstractAudioSource {
             return false;
         }
 
-        int[] bids = new int[1];
-        // Make an int[] of the buffer ids
-        bids[0] = ((JoalAudioBuffer) audioBuffer).getDataStorageBuffer()[0];
-        if (log.isDebugEnabled()) {
-            log.debug("Queueing Buffer: " + audioBuffer.getSystemName() + " bid: "
-                    + ((JoalAudioBuffer) audioBuffer).getDataStorageBuffer()[0] + " Source: " + this.getSystemName());
-        }
+        if (audioBuffer instanceof JoalAudioBuffer) {
+            int[] bids = new int[1];
+            // Make an int[] of the buffer ids
+            bids[0] = ((JoalAudioBuffer) audioBuffer).getDataStorageBuffer()[0];
+            if (log.isDebugEnabled()) {
+                log.debug("Queueing Buffer: " + audioBuffer.getSystemName() + " bid: "
+                        + ((JoalAudioBuffer) audioBuffer).getDataStorageBuffer()[0] + " Source: " + this.getSystemName());
+            }
 
-        // Bind this AudioSource to the specified AudioBuffer
-        al.alSourceQueueBuffers(_source[0], 1, bids, 0);
-        if (JoalAudioFactory.checkALError()) {
-            log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + audioBuffer.getDisplayName() + ")");
-            return false;
-        }
+            // Bind this AudioSource to the specified AudioBuffer
+            al.alSourceQueueBuffers(_source[0], 1, bids, 0);
+            if (JoalAudioFactory.checkALError()) {
+                log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + audioBuffer.getDisplayName() + ")");
+                return false;
+            }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Queue JoalAudioBuffer (" + audioBuffer.getSystemName()
-                    + ") to JoalAudioSource (" + this.getSystemName() + ")");
+            if (log.isDebugEnabled()) {
+                log.debug("Queue JoalAudioBuffer (" + audioBuffer.getSystemName()
+                        + ") to JoalAudioSource (" + this.getSystemName() + ")");
+            }
+            return true;
+        } else {
+            throw new IllegalArgumentException(audioBuffer.getSystemName() + " is not a JoalAudioBuffer");
         }
-        return true;
 
     }
 
@@ -177,7 +181,11 @@ public class JoalAudioSource extends AbstractAudioSource {
         // While the list isn't empty, pop elements and process.
         AudioBuffer b;
         while ((b = audioBuffers.poll()) != null) {
-            bids[0] = ((JoalAudioBuffer) b).getDataStorageBuffer()[0];
+            if (b instanceof JoalAudioBuffer) {
+                bids[0] = ((JoalAudioBuffer) b).getDataStorageBuffer()[0];
+            } else {
+                throw new IllegalArgumentException(b.getSystemName() + " is not a JoalAudioBuffer");
+            }
             al.alSourceQueueBuffers(_source[0], 1, bids, 0);
             if (log.isDebugEnabled()) {
                 log.debug("Queueing Buffer [" + i + "] " + b.getSystemName());

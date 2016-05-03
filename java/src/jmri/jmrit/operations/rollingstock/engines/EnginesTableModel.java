@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
@@ -239,18 +240,22 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 tcm.getColumn(i).setPreferredWidth(_enginesTableColumnWidths[i]);
             }
         }
+        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
+    @Override
     public int getRowCount() {
         return sysList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHEST_COLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NUM_COLUMN:
@@ -297,6 +302,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case NUM_COLUMN:
@@ -330,6 +336,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case SET_COLUMN:
@@ -341,6 +348,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= sysList.size()) {
             return "ERROR row " + row; // NOI18N
@@ -420,6 +428,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     EngineEditFrame engineEditFrame = null;
     EngineSetFrame engineSetFrame = null;
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         Engine engine = (Engine) sysList.get(row);
         switch (col) {
@@ -430,6 +439,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 }
                 // use invokeLater so new window appears on top
                 SwingUtilities.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         engineSetFrame = new EngineSetFrame();
                         engineSetFrame.initComponents();
@@ -444,6 +454,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 }
                 // use invokeLater so new window appears on top
                 SwingUtilities.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         engineEditFrame = new EngineEditFrame();
                         engineEditFrame.initComponents();
@@ -495,6 +506,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

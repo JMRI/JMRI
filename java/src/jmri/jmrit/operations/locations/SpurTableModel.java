@@ -29,6 +29,7 @@ public class SpurTableModel extends TrackTableModel {
         super.initTable(table, location, Track.SPUR);
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NAME_COLUMN:
@@ -37,6 +38,7 @@ public class SpurTableModel extends TrackTableModel {
         return super.getColumnName(col);
     }
 
+    @Override
     protected void editTrack(int row) {
         log.debug("Edit spur");
         if (tef != null) {
@@ -44,6 +46,7 @@ public class SpurTableModel extends TrackTableModel {
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 tef = new SpurEditFrame();
                 Track spur = tracksList.get(row);
@@ -54,6 +57,7 @@ public class SpurTableModel extends TrackTableModel {
     }
 
     // this table listens for changes to a location and it's spurs
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

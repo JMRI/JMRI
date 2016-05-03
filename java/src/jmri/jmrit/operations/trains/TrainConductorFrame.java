@@ -1,13 +1,12 @@
 // TrainConductorFrame.java
 package jmri.jmrit.operations.trains;
 
-import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
-
 import java.awt.Dimension;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 
 /**
  * Conductor Frame. Shows work for a train one location at a time.

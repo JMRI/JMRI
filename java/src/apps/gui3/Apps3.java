@@ -1,4 +1,3 @@
-// Apps3.java
 package apps.gui3;
 
 import apps.AppsBase;
@@ -55,7 +54,6 @@ import org.slf4j.LoggerFactory;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public abstract class Apps3 extends AppsBase {
 

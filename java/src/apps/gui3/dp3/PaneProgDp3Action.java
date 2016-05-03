@@ -9,7 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -28,6 +28,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeNode;
+import org.jdom2.*;
+import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -176,7 +178,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     } else {
                         try {
                             saveRosterEntry();
-                        } catch (jmri.JmriException ex) {
+                        } catch (JmriException ex) {
                             log.warn("Exception while saving roster entry", ex); // NOI18N
                             return;
                         }
@@ -410,7 +412,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     try {
                         log.debug("saveBasicRoster button pressed, calls saveRosterEntry");
                         saveRosterEntry();
-                    } catch (jmri.JmriException ex) {
+                    } catch (JmriException ex) {
                         return;
                     }
                 }
@@ -446,7 +448,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             Element decoderRoot = null;
             try {
                 decoderRoot = decoderFile.rootFromName(DecoderFile.fileLocation + decoderFile.getFilename());
-            } catch (Exception e) {
+            } catch (JDOMException | IOException e) {
                 log.error("Exception while loading decoder XML file: " + decoderFile.getFilename(), e);
                 return;
             } // NOI18N
@@ -512,7 +514,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             f.repaint();
             f.pack();
             return;
-        } catch (Exception e) {
+        } catch (JDOMException | IOException e) {
             log.error("exception reading programmer file: ", e); // NOI18N
         }
     }
@@ -574,19 +576,19 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         return oops;
     }
 
-    void saveRosterEntry() throws jmri.JmriException {
+    void saveRosterEntry() throws JmriException {
         log.debug("saveRosterEntry");
         if (rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))) { // NOI18N
             synchronized (this) {
                 JOptionPane.showMessageDialog(progPane, SymbolicProgBundle.getMessage("PromptFillInID")); // NOI18N
             }
-            throw new jmri.JmriException("No Roster ID"); // NOI18N
+            throw new JmriException("No Roster ID"); // NOI18N
         }
         if (checkDuplicate()) {
             synchronized (this) {
                 JOptionPane.showMessageDialog(progPane, SymbolicProgBundle.getMessage("ErrorDuplicateID")); // NOI18N
             }
-            throw new jmri.JmriException("Duplicate ID"); // NOI18N
+            throw new JmriException("Duplicate ID"); // NOI18N
         }
 
         if (re == null) {

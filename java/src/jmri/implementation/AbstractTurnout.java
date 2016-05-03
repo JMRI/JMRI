@@ -9,8 +9,6 @@ import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.TurnoutOperator;
-import jmri.implementation.SignalSpeedMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -339,7 +337,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 _cabLockout = false;
             }
         }
-        if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0
+        if ((turnoutLockout & PUSHBUTTONLOCKOUT) != 0
                 && _pushButtonLockout != locked) {
             firechange = true;
             if (canLock(PUSHBUTTONLOCKOUT)) {

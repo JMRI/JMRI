@@ -55,10 +55,6 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantTableAction extends AbstractAction {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -4761753768022771535L;
     static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
     private static WarrantTableAction _instance;
@@ -148,7 +144,6 @@ public class WarrantTableAction extends AbstractAction {
         _warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
         _warrantMenu.add(_trackerTable);
         _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
-            private static final long serialVersionUID = 4129760191508866189L;
 
             public void actionPerformed(ActionEvent e) {
                 WarrantTableFrame.nxAction();
@@ -533,10 +528,6 @@ public class WarrantTableAction extends AbstractAction {
 
     static class CreateWarrantFrame extends JFrame {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -1815517166489246531L;
         JTextField _sysNameBox;
         JTextField _userNameBox;
 
@@ -557,13 +548,13 @@ public class WarrantTableAction extends AbstractAction {
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             JPanel p = new JPanel();
-            p.add(new JLabel(Bundle.getMessage("SystemName")));
+            p.add(new JLabel(Bundle.getMessage("LabelSystemName")));
             _sysNameBox = new JTextField(15);
             p.add(_sysNameBox);
             panel.add(p);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             p = new JPanel();
-            p.add(new JLabel(Bundle.getMessage("UserName")));
+            p.add(new JLabel(Bundle.getMessage("LabelUserName")));
             _userNameBox = new JTextField(15);
             p.add(_userNameBox);
             panel.add(p);

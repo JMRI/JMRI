@@ -53,16 +53,8 @@ import org.slf4j.LoggerFactory;
  * @author glen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
- *
- * @version $Revision$
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2556116647848797537L;
-
     private DccThrottle throttle;
 
     private JSlider speedSlider;
@@ -1051,7 +1043,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author glen
-     * @version $Revision$
      */
     class ControlPadKeyListener extends KeyAdapter {
 

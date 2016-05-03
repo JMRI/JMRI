@@ -44,7 +44,6 @@ import org.slf4j.LoggerFactory;
  */
 public class NXFrame extends WarrantRoute {
 
-    private static final long serialVersionUID = -8971792418011219112L;
     private float _scale = 87.1f;
 
     JTextField _trainName = new JTextField(6);
@@ -211,16 +210,16 @@ public class NXFrame extends WarrantRoute {
                 break;
             case SignalSpeedMap.SPEED_MPH:
                 float factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
-                maxSpeed = Math.round(_maxSpeed*factor*_scale*2.2369363f*1000)/1000; // 2.2369363*1000 is 3600 converted by mile/km
+                maxSpeed = _maxSpeed*factor*_scale*2.2369363f; // 2.2369363 is 3.6 converted by mile/km
                 maxSpeedLabel = "MaxMph";
-                throttleIncr = Math.round(_throttleIncr*factor*_scale*2.2369363f*1000)/1000;
+                throttleIncr = _throttleIncr*factor*_scale*2.2369363f;
                 throttleIncrLabel = "MinMph";
                 break;
             case SignalSpeedMap.SPEED_KMPH:
                 factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
-                maxSpeed = Math.round(_maxSpeed*factor*_scale*3.6f*1000)/1000;
+                maxSpeed = _maxSpeed*factor*_scale*3.6f;
                 maxSpeedLabel = "MaxKMph";
-                throttleIncr = Math.round(_throttleIncr*factor*_scale*3.6f*1000)/1000;
+                throttleIncr = _throttleIncr*factor*_scale*3.6f;
                 throttleIncrLabel = "MinKMph";
                 break;
             default:

@@ -1,4 +1,3 @@
-// Apps.java
 package apps;
 
 import apps.gui3.TabbedPreferences;
@@ -55,6 +54,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.NamedBeanHandleManager;
+import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
@@ -112,7 +112,6 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
@@ -227,8 +226,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
         // Install an IdTag manager
         InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
-        //Install Entry Exit Pairs Manager
-        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
@@ -279,6 +276,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("No saved preferences, will open preferences window.  Searched for {}", file.getPath());
             configOK = false;
         }
+
+        //Install Entry Exit Pairs Manager
+        //   Done after load config file so that connection-system-specific Managers are defined and usable
+        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
         // Add actions to abstractActionModel
         // Done here as initial non-GUI initialisation is completed
@@ -343,6 +344,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         // return until deferred load is completed
                         SwingUtilities.invokeAndWait(new Runnable() {
                             @Override
+                            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "configDeferredLoadOK write is semi-global")
                             public void run() {
                                 configDeferredLoadOK = doDeferredLoad(file);
                             }
@@ -871,9 +873,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line1()));
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
-        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
-
-        // add listerner for Com port updates
+        
+        if (ProfileManager.getDefault()!=null && ProfileManager.getDefault().getActiveProfile() != null) {
+            pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
+        } else {
+            pane2.add(new JLabel(Bundle.getMessage("FailedProfile")));            
+        }
+        // add listener for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
         int i = 0;
         for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
@@ -903,10 +909,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      */
     @Override
     public void windowClosing(WindowEvent e) {
-        if (JOptionPane.showConfirmDialog(null,
-                Bundle.getMessage("MessageLongCloseWarning"),
-                Bundle.getMessage("MessageShortCloseWarning"),
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()
+                && JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
+                        null,
+                        Bundle.getMessage("MessageLongCloseWarning"),
+                        Bundle.getMessage("MessageShortCloseWarning"),
+                        JOptionPane.YES_NO_OPTION)) {
             handleQuit();
         }
         // if get here, didn't quit, so don't close window
@@ -1035,26 +1043,27 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             debugFired = false;
             Toolkit.getDefaultToolkit().addAWTEventListener(
                     debugListener = new AWTEventListener() {
-                        @Override
-                        public void eventDispatched(AWTEvent e) {
-                            if (!debugFired) {
-                                /*We set the debugmsg flag on the first instance of the user pressing any button
+                @Override
+                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST, ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "KeyEvent cast won't fail, debugmsg write is semi-global")
+                public void eventDispatched(AWTEvent e) {
+                    if (!debugFired) {
+                        /*We set the debugmsg flag on the first instance of the user pressing any button
                                  and the if the debugFired hasn't been set, this allows us to ensure that we don't
                                  miss the user pressing F8, while we are checking*/
-                                debugmsg = true;
-                                if (e.getID() == KeyEvent.KEY_PRESSED) {
-                                    KeyEvent ky = (KeyEvent) e;
-                                    if (ky.getKeyCode() == 119) {
-                                        startupDebug();
-                                    } else {
-                                        debugmsg = false;
-                                    }
-                                } else {
-                                    debugmsg = false;
-                                }
+                        debugmsg = true;
+                        if (e.getID() == KeyEvent.KEY_PRESSED) {
+                            KeyEvent ky = (KeyEvent) e;
+                            if (ky.getKeyCode() == 119) {
+                                startupDebug();
+                            } else {
+                                debugmsg = false;
                             }
+                        } else {
+                            debugmsg = false;
                         }
-                    },
+                    }
+                }
+            },
                     AWTEvent.KEY_EVENT_MASK);
         }
 
@@ -1286,5 +1295,5 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Apps.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Apps.class);
 }

@@ -1,7 +1,9 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.rfid.networkdriver;
 
-import jmri.jmrix.rfid.*;
+import jmri.jmrix.rfid.RfidNetworkPortController;
+import jmri.jmrix.rfid.RfidProtocol;
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
+import jmri.jmrix.rfid.RfidTrafficController;
 import jmri.jmrix.rfid.generic.standalone.StandaloneReporterManager;
 import jmri.jmrix.rfid.generic.standalone.StandaloneSensorManager;
 import jmri.jmrix.rfid.generic.standalone.StandaloneTrafficController;
@@ -22,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2015
- * @version	$Revision: 28746 $
  */
 public class NetworkDriverAdapter extends RfidNetworkPortController {
 
@@ -40,58 +41,44 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
     /**
      * set up all of the other objects to operate connected to this port
      */
+    @Override
     public void configure() {
         RfidTrafficController control;
         RfidProtocol protocol;
 
         // set up the system connection first
         String opt1 = getOptionState(option1Name);
-        if (opt1.equals("Generic Stand-alone")) {
-            // create a Generic Stand-alone port controller
-            log.debug("Create Generic Standalone SpecificTrafficController");
-            control = new StandaloneTrafficController(this.getSystemConnectionMemo());
-            this.getSystemConnectionMemo().configureManagers(
-                    new StandaloneSensorManager(control, this.getSystemPrefix()),
-                    new StandaloneReporterManager(control, this.getSystemPrefix()));
-        } else if (opt1.equals("MERG Concentrator")) {
-            // create a MERG Concentrator port controller
-            log.debug("Create MERG Concentrator SpecificTrafficController");
-            control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
-            this.getSystemConnectionMemo().configureManagers(
-                    new ConcentratorSensorManager(control, this.getSystemPrefix()),
-                    new ConcentratorReporterManager(control, this.getSystemPrefix()));
-        } else {
-            // no connection at all - warn
-            log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone");
-            // create a Generic Stand-alone port controller
-            control = new StandaloneTrafficController(this.getSystemConnectionMemo());
-            this.getSystemConnectionMemo().configureManagers(
-                    new StandaloneSensorManager(control, this.getSystemPrefix()),
-                    new StandaloneReporterManager(control, this.getSystemPrefix()));
+        switch (opt1) {
+            case "Generic Stand-alone":
+                // create a Generic Stand-alone port controller
+                log.debug("Create Generic Standalone SpecificTrafficController");
+                control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().configureManagers(
+                        new StandaloneSensorManager(control, this.getSystemPrefix()),
+                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                break;
+            case "MERG Concentrator":
+                // create a MERG Concentrator port controller
+                log.debug("Create MERG Concentrator SpecificTrafficController");
+                control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
+                this.getSystemConnectionMemo().configureManagers(
+                        new ConcentratorSensorManager(control, this.getSystemPrefix()),
+                        new ConcentratorReporterManager(control, this.getSystemPrefix()));
+                break;
+            default:
+                // no connection at all - warn
+                log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone");
+                // create a Generic Stand-alone port controller
+                control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().configureManagers(
+                        new StandaloneSensorManager(control, this.getSystemPrefix()),
+                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                break;
         }
 
         // Now do the protocol
         String opt3 = getOptionState(option3Name);
-        if (!opt1.equals("MERG Concentrator")) {
-            if (opt3.equals("CORE-ID")) {
-                log.info("set protocol to CORE-ID");
-                protocol = new CoreIdRfidProtocol();
-            } else if (opt3.equals("Olimex")) {
-                log.info("set protocol to Olimex");
-                protocol = new OlimexRfidProtocol();
-            } else if (opt3.equals("Parallax")) {
-                log.info("set protocol to Parallax");
-                protocol = new ParallaxRfidProtocol();
-            } else if (opt3.equals("SeeedStudio")) {
-                log.info("set protocol to SeeedStudio");
-                protocol = new SeeedStudioRfidProtocol();
-            } else {
-                // no protocol at all - warn
-                log.warn("protocol option " + opt3 + " defaults to CORE-ID");
-                // create a coreid protocol
-                protocol = new CoreIdRfidProtocol();
-            }
-        } else {
+        if (opt1.equals("MERG Concentrator")) {
             // MERG Concentrator only supports CORE-ID
             log.info("set protocol to CORE-ID");
             String opt2 = getOptionState(option2Name);
@@ -107,6 +94,31 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
                 default :
                     // unrecognised concentrator range - warn
                     log.warn("concentrator range '{}' not supported - default to no concentrator", opt2);
+                    protocol = new CoreIdRfidProtocol();
+                    break;
+            }
+        } else {
+            switch (opt3) {
+                case "CORE-ID":
+                    log.info("set protocol to CORE-ID");
+                    protocol = new CoreIdRfidProtocol();
+                    break;
+                case "Olimex":
+                    log.info("set protocol to Olimex");
+                    protocol = new OlimexRfidProtocol();
+                    break;
+                case "Parallax":
+                    log.info("set protocol to Parallax");
+                    protocol = new ParallaxRfidProtocol();
+                    break;
+                case "SeeedStudio":
+                    log.info("set protocol to SeeedStudio");
+                    protocol = new SeeedStudioRfidProtocol();
+                    break;
+                default:
+                    // no protocol at all - warn
+                    log.warn("protocol option " + opt3 + " defaults to CORE-ID");
+                    // create a coreid protocol
                     protocol = new CoreIdRfidProtocol();
                     break;
             }

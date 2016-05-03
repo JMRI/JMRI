@@ -20,8 +20,10 @@ package jmri;
  */
 public interface RailComManager extends IdTagManager {
 
+    @Override
     public RailCom provideIdTag(String name);
 
+    @Override
     public RailCom getIdTag(String name);
 
 }
