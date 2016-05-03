@@ -1,4 +1,3 @@
-// RosterEntryComboBox.java
 package jmri.jmrit.roster.swing;
 
 import java.awt.event.ActionEvent;
@@ -24,17 +23,12 @@ import org.slf4j.LoggerFactory;
  * display if a RosterEntry is added, removed, or changes.
  *
  * @author Randall Wood Copyright (C) 2011
- * @version $Revision: $
  * @see jmri.jmrit.roster.Roster
  * @see jmri.jmrit.roster.RosterEntry
  * @see javax.swing.JComboBox
  */
 public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntrySelector {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3147210325149684853L;
     protected Roster _roster;
     protected String _group;
     protected String _roadName;
