@@ -24,6 +24,7 @@ public class ChangeTrackTypeAction extends AbstractAction {
         _tef = tef;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         new ChangeTrackFrame(_tef);
     }

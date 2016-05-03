@@ -151,6 +151,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         log.debug("queue update");
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 log.debug("update");
                 if (_train == null || _train.getRoute() == null) {
@@ -230,6 +231,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         setVisible(true);
     }
 
+    @Override
     public void dispose() {
         if (_train != null) {
             _train.removePropertyChangeListener(this);
@@ -237,6 +239,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // if (Control.showProperty && log.isDebugEnabled())
         log.debug("Property change " + e.getPropertyName() + " for: " + e.getSource().toString() + " old: "

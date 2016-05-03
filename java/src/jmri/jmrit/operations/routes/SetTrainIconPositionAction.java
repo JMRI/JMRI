@@ -25,6 +25,7 @@ public class SetTrainIconPositionAction extends AbstractAction {
 
     SetTrainIconPositionFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a copy route frame
         if (f == null || !f.isVisible()) {

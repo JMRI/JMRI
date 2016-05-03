@@ -18,6 +18,7 @@ public class TrainsScheduleEditAction extends AbstractAction {
     
     TrainsScheduleEditFrame frame;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (frame != null) {
             frame.dispose();

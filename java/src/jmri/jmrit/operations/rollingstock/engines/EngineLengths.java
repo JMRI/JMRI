@@ -41,20 +41,24 @@ public class EngineLengths extends RollingStockAttribute {
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return LENGTHS;
     }
 
     // override, need to perform a number sort
+    @Override
     public void setNames(String[] lengths) {
         setValues(lengths);
     }
 
+    @Override
     public void addName(String length) {
         super.addName(length);
         setDirtyAndFirePropertyChange(ENGINELENGTHS_CHANGED_PROPERTY, null, length);
     }
 
+    @Override
     public void deleteName(String length) {
         super.deleteName(length);
         setDirtyAndFirePropertyChange(ENGINELENGTHS_CHANGED_PROPERTY, length, null);

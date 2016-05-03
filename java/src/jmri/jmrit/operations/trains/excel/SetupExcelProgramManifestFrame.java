@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
 
+    @Override
     public void initComponents() {
         super.initComponents();
 
@@ -30,6 +31,7 @@ public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
     }
 
     // Save and Test
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
             File f = selectFile(TrainCustomManifest.getDirectoryName());

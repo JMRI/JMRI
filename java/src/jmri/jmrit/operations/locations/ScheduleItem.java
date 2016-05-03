@@ -363,6 +363,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("ScheduleItem ({}) id ({}) sees property change: ({}) old: ({}) new: ({})", getTypeName(),

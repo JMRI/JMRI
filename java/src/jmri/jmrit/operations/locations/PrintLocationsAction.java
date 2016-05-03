@@ -75,6 +75,7 @@ public class PrintLocationsAction extends AbstractAction {
     HardcopyWriter writer;
     LocationPrintOptionFrame lpof = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (lpof == null) {
             lpof = new LocationPrintOptionFrame(this);
@@ -946,10 +947,12 @@ public class PrintLocationsAction extends AbstractAction {
             initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
         }
 
+        @Override
         public void initComponents() {
 
         }
 
+        @Override
         public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
             setVisible(false);
             pla.printLocations();
