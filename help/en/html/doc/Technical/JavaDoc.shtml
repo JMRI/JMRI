@@ -83,6 +83,24 @@ For more detail, please see
 or
 <a href="http://edn.embarcadero.com/article/31863">Embarcadero Software introduction</a>.
 
+<p>Our Ant JavaDoc processing makes basic UML class diagrams automatically.
+For an example, see the 
+<a href="http://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor interface JavaDoc</a>,
+then click the "Show UML Class Diagram link" to see the
+<a href="http://jmri.org/JavaDoc/doc/jmri/Sensor.png">class diagram embedded in it</a>.
+
+For a more complex example see
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">ProgModeSelector class JavaDoc</a>
+then click the "Show UML Class Diagram link" to see the
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">class diagram embedded in it</a>.
+
+<p>You can also define custom UML diagrams using 
+<a href="http://plantuml.com">PlantUML</a>.
+For an example of the source syntax to define state and sequence diagrams, see the
+<a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">java/src/jmri/jmrix/lenz/XNetProgrammer.java</a> file.
+The resulting diagrams are visible in the 
+<a href ="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">JavaDoc output</a>.
+
 <h2>Processing</h2>
 
 The standard JMRI Ant build provides three documentation targets:

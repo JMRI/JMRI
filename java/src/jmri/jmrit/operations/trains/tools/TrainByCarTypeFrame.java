@@ -118,6 +118,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         initMinimumSize();
     }
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("combo box action");
         if (ae.getSource().equals(typeComboBox)) {
@@ -431,6 +432,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         }
     }
 
+    @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
         CarTypes.instance().removePropertyChangeListener(this);
@@ -444,6 +446,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         if (e.getSource().equals(_car) || e.getSource().equals(_train)

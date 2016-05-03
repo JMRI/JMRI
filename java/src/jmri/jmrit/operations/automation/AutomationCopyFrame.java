@@ -76,6 +76,7 @@ public class AutomationCopyFrame extends OperationsFrame {
         addButtonAction(copyButton);
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
             log.debug("copy automation button activated");
@@ -133,6 +134,7 @@ public class AutomationCopyFrame extends OperationsFrame {
         return true;
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

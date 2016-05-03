@@ -51,8 +51,6 @@ import org.slf4j.LoggerFactory;
 
 public abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListener, PropertyChangeListener {
 
-    private static final long serialVersionUID = 6066050907933847146L;
-
     enum Location {ORIGIN, DEST, VIA, AVOID}
     protected RouteLocation  _origin = new RouteLocation(Location.ORIGIN);
     protected RouteLocation  _destination = new RouteLocation(Location.DEST);
@@ -1046,10 +1044,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     /************************* Route Table ******************************/
     class RouteTableModel extends AbstractTableModel {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1966890806689115258L;
+
         public static final int BLOCK_COLUMN = 0;
         public static final int ENTER_PORTAL_COL =1;
         public static final int PATH_COLUMN = 2;

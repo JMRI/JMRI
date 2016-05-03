@@ -1,4 +1,3 @@
-// JmriAbstractAction.java
 package jmri.util.swing;
 
 import java.awt.event.ActionEvent;
@@ -17,14 +16,9 @@ import org.slf4j.LoggerFactory;
  * by extending classes.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 373576744806206486L;
     protected WindowInterface.Hint hint = WindowInterface.Hint.DEFAULT;
     protected WindowInterface wi;
     protected Object context = null;
@@ -126,7 +120,3 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
         return null;
     } */
 }
-
-/*
- * @(#)JmriAbstractAction.java
- */

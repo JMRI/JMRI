@@ -34,7 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(WarrantTest.suite());
         suite.addTest(LogixActionTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(NXWarrantTest.suite());            
+            suite.addTest(NXFrameTest.suite()); //formerly NXWarrantTest        
             suite.addTest(LearnWarrantTest.suite());            
         }
         return suite;

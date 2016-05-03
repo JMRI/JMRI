@@ -98,6 +98,7 @@ public class SchedulesTableFrame extends OperationsFrame {
         }
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByName) {
@@ -121,6 +122,7 @@ public class SchedulesTableFrame extends OperationsFrame {
     // f.initComponents(null, null, null);
     // }
     // }
+    @Override
     public void dispose() {
         saveTableDetails(schedulesTable);
         schedulesModel.dispose();

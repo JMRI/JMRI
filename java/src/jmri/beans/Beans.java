@@ -1,5 +1,6 @@
 package jmri.beans;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -9,8 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * JMRI-specific extensions to the Java Beans utility class.

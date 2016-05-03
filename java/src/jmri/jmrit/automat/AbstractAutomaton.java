@@ -13,11 +13,11 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.Sensor;
-import jmri.jmrit.logix.Warrant;
-import jmri.jmrit.logix.OBlock;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.Turnout;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.Warrant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

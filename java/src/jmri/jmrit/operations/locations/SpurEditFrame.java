@@ -35,6 +35,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super();
     }
 
+    @Override
     public void initComponents(Location location, Track track) {
         _type = Track.SPUR;
 
@@ -77,6 +78,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         setVisible(true);
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == editScheduleButton) {
             editAddSchedule();
@@ -84,6 +86,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.buttonActionPerformed(ae);
     }
     
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         updateScheduleButtonText();
     }
@@ -107,6 +110,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         sef = new ScheduleEditFrame(schedule, _track);
     }
 
+    @Override
     protected void enableButtons(boolean enabled) {
         editScheduleButton.setEnabled(enabled);
         comboBoxSchedules.setEnabled(enabled);
@@ -116,6 +120,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.enableButtons(enabled);
     }
 
+    @Override
     protected void saveTrack(Track track) {
         // save the schedule
         Object selected = comboBoxSchedules.getSelectedItem();
@@ -130,6 +135,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.saveTrack(track);
     }
 
+    @Override
     protected void addNewTrack() {
         super.addNewTrack();
         updateScheduleComboBox(); // reset schedule and error text
@@ -148,6 +154,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         }
     }
 
+    @Override
     public void dispose() {
         ScheduleManager.instance().removePropertyChangeListener(this);
         if (_track != null) {
@@ -158,6 +165,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

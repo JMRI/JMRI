@@ -20,6 +20,7 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
         super();
     }
 
+    @Override
     public void initComponents(Location location, Track track) {
         _type = Track.YARD;
         super.initComponents(location, track);

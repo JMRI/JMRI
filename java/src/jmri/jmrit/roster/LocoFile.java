@@ -1,16 +1,13 @@
-// LocoFile.java
 package jmri.jmrit.roster;
 
-import java.io.File;
+import java.io.*;
 import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  * @author Dennis Miller Copyright (C) 2004
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -208,7 +204,7 @@ class LocoFile extends XmlFile {
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
-            java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+            java.util.Map<String, String> m = new java.util.HashMap<>();
             m.put("type", "text/xsl");
             m.put("href", xsltLocation + "locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -301,7 +297,7 @@ class LocoFile extends XmlFile {
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());
 
             writeXML(pFile, doc);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             // need to trace this one back
             ex.printStackTrace();
         }
@@ -336,7 +332,7 @@ class LocoFile extends XmlFile {
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
-            java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+            java.util.Map<String, String> m = new java.util.HashMap<>();
             m.put("type", "text/xsl");
             m.put("href", xsltLocation + "locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -347,7 +343,7 @@ class LocoFile extends XmlFile {
             newLocomotive.addContent(values.clone());
 
             writeXML(pFile, doc);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             // need to trace this one back
             ex.printStackTrace();
         }

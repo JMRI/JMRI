@@ -12,11 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.IdentifyLoco;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
-import jmri.jmrit.progsupport.ProgModeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

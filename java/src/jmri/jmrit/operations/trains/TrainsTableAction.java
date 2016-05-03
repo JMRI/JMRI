@@ -24,6 +24,7 @@ public class TrainsTableAction extends AbstractAction {
 
     static TrainsTableFrame trainsTableFrame = null;
 
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one TrainsTableFrame")
     public void actionPerformed(ActionEvent e) {
         // create a train table frame

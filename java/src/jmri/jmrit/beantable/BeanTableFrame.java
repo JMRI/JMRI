@@ -1,4 +1,3 @@
-// BeanTableFrame.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -30,14 +29,9 @@ import org.slf4j.LoggerFactory;
  * invoke {@link #addToBottomBox} as needed.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 957809881083826909L;
     BeanTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;

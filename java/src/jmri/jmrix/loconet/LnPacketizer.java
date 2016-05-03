@@ -192,7 +192,8 @@ public class LnPacketizer extends LnTrafficController {
      * LnPortController via <code>connectPort</code>. Terminates with the input
      * stream breaking out of the try block.
      */
-    @SuppressWarnings("null")
+    // TODO: This warning is suppressed for now, but there is no way currently to set fulldebug to true
+    @SuppressWarnings("unused")
     public void run() {
         int opCode;
         while (true) {   // loop permanently, program close will exit
@@ -336,7 +337,6 @@ public class LnPacketizer extends LnTrafficController {
             trafficController = lt;
         }
 
-        @SuppressWarnings("null")
         public void run() {
 
             int opCode;

@@ -1,4 +1,3 @@
-// WarrantManager.java
 package jmri.jmrit.logix;
 
 import java.io.File;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision$
  */
 public class WarrantManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
@@ -153,5 +151,3 @@ public class WarrantManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
 }
-
-/* @(#)WarrantManager.java */

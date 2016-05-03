@@ -1,6 +1,13 @@
 //SimpleOperationsServer.java
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.ID;
+import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.TYPE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -12,12 +19,6 @@ import javax.management.Attribute;
 import jmri.JmriException;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.ERROR;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.MESSAGE;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.TYPE;
 import jmri.jmrit.operations.trains.Train;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

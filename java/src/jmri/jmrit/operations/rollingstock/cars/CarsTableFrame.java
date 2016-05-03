@@ -272,6 +272,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         createShutDownTask();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByNumber) {
@@ -342,6 +343,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     CarEditFrame f = null;
 
     // add, find or save button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // log.debug("car button activated");
         if (ae.getSource() == findButton) {
@@ -386,6 +388,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         return widths;
     }
 
+    @Override
     public void dispose() {
         carsTableModel.removeTableModelListener(this);
         carsTableModel.dispose();
@@ -395,6 +398,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         super.dispose();
     }
 
+    @Override
     public void tableChanged(TableModelEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Table changed");

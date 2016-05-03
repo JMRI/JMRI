@@ -23,6 +23,7 @@ public class AlternateTrackAction extends AbstractAction {
         _tef = tef;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         new AlternateTrackFrame(_tef);
     }

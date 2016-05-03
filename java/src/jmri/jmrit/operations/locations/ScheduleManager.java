@@ -347,6 +347,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
      * Check for car type and road name changes.
      *
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

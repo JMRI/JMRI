@@ -9,8 +9,8 @@ import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
-import jmri.spi.PreferencesProvider;
 import jmri.util.swing.FontComboUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-public class SystemConsolePreferencesManager extends Bean implements PreferencesProvider {
+public class SystemConsolePreferencesManager extends Bean implements PreferencesManager {
 
     public static final String SCHEME = "scheme";
     public static final String FONT_SIZE = "fontSize";
@@ -76,7 +76,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     @Override
-    public Iterable<Class<? extends PreferencesProvider>> getRequires() {
+    public Iterable<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 

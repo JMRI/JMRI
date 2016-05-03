@@ -23,19 +23,25 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the Warrant creation
+ * Tests for the NXFrame class, and it's interactions with Warrants. 
  *
  * @author  Pete Cressman 2015
  * 
  * todo - test error conditions
  */
-public class NXWarrantTest extends jmri.util.SwingTestCase {    
+public class NXFrameTest extends jmri.util.SwingTestCase {    
 
     OBlockManager _OBlockMgr;
     PortalManager _portalMgr;
     SensorManager _sensorMgr;
     TurnoutManager _turnoutMgr;
-    
+
+
+    public void testGetInstance(){
+        NXFrame nxFrame = NXFrame.getInstance();
+        Assert.assertNotNull("NXFrame", nxFrame);
+    }
+
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testNXWarrant() throws Exception {
 
@@ -46,7 +52,6 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
         NXFrame nxFrame = NXFrame.getInstance();
-        Assert.assertNotNull("NXFrame", nxFrame);
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame.setRampIncrement(0.075f);
@@ -174,38 +179,39 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     }
 
     /**
+     * works through a list of sensors, activating one, then the next, then 
+     * inactivating the first and continuing. Leaves last ACTIVE.
      * @param sensor - active start sensor
      * @return - active end sensor
      * @throws Exception
      */
     private Sensor runtimes(Sensor sensor, String[] sensors) throws Exception {
         flushAWT();
-        for (int i=0; i<sensors.length; i++) {
+        _sensorMgr.getSensor(sensors[0]).setState(Sensor.ACTIVE);
+        for (int i=1; i<sensors.length; i++) {
             flushAWT();
-            Sensor sensorNext = _sensorMgr.getSensor(sensors[i]);
-            sensorNext.setState(Sensor.ACTIVE);
+            _sensorMgr.getSensor(sensors[i]).setState(Sensor.ACTIVE);
             flushAWT();           
-            sensor.setState(Sensor.INACTIVE);
-            sensor = sensorNext;
+            _sensorMgr.getSensor(sensors[i-i]).setState(Sensor.INACTIVE);
         }
         return sensor;
     }
 
     // from here down is testing infrastructure
-    public NXWarrantTest(String s) {
+    public NXFrameTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
-        String[] testCaseName = {"-noloading", NXWarrantTest.class.getName()};
+        String[] testCaseName = {"-noloading", NXFrameTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        return new TestSuite(NXWarrantTest.class);
+        return new TestSuite(NXFrameTest.class);
     }
 
     @Override

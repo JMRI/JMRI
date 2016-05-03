@@ -1,6 +1,9 @@
 package jmri.jmrix.rfid.networkdriver;
 
-import jmri.jmrix.rfid.*;
+import jmri.jmrix.rfid.RfidNetworkPortController;
+import jmri.jmrix.rfid.RfidProtocol;
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
+import jmri.jmrix.rfid.RfidTrafficController;
 import jmri.jmrix.rfid.generic.standalone.StandaloneReporterManager;
 import jmri.jmrix.rfid.generic.standalone.StandaloneSensorManager;
 import jmri.jmrix.rfid.generic.standalone.StandaloneTrafficController;

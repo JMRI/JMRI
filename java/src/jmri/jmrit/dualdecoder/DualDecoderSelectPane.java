@@ -1,13 +1,21 @@
 // DualDecoderSelectPane.java
 package jmri.jmrit.dualdecoder;
 
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
+import jmri.ProgListener;
+import jmri.Programmer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import jmri.*;
 
 /**
  * Pane for selecting an active decoder from multiple ones in a loco

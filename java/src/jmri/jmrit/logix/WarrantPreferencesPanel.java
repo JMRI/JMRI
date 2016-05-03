@@ -619,8 +619,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     /************************* SpeedName Table ******************************/
     class SpeedNameTableModel extends AbstractTableModel {
         
-        private static final long serialVersionUID = 7088050123933847145L;
-
         public SpeedNameTableModel() {
             super();
         }
@@ -702,7 +700,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
     /************************* appearance Table ******************************/
     class AppearanceTableModel extends AbstractTableModel {
-        private static final long serialVersionUID = 7088050123933847144L;
 
         public AppearanceTableModel() {
             super();
@@ -779,7 +776,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
     /************************* Throttle Step Increment Table ******************************/
     class StepIncrementTableModel extends AbstractTableModel {
-        private static final long serialVersionUID = 7088050123933847143L;
 
         public StepIncrementTableModel() {
             super();

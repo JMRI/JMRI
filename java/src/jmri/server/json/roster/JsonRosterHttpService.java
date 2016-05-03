@@ -1,14 +1,5 @@
 package jmri.server.json.roster;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
-import javax.annotation.Nonnull;
-import javax.servlet.http.HttpServletResponse;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
 import static jmri.server.json.JSON.ADDRESS;
 import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
@@ -32,6 +23,16 @@ import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.JSON.SELECTED_ICON;
 import static jmri.server.json.JSON.SHUNTING_FUNCTION;
 import static jmri.server.json.JSON.TYPE;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.Locale;
+import javax.annotation.Nonnull;
+import javax.servlet.http.HttpServletResponse;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 

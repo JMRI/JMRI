@@ -58,7 +58,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Pete Cressman Copyright 2009
- * @version $Revision$
  */
 public class Maintenance {
 
@@ -160,16 +159,16 @@ public class Maintenance {
 
         class SearchListener implements ActionListener {
 
-            JList l;
+            JList<String> list;
             Vector<String> n;
 
-            SearchListener(JList list, Vector<String> name) {
-                l = list;
-                n = name;
+            SearchListener(JList<String> list, Vector<String> name) {
+                this.list = list;
+                this.n = name;
             }
 
             public void actionPerformed(ActionEvent e) {
-                int index = l.getMaxSelectionIndex();
+                int index = list.getMaxSelectionIndex();
                 if (index < 0) {
                     javax.swing.JOptionPane.showMessageDialog(null,
                             rbm.getString("OrphanDeleteHint"),
@@ -177,8 +176,8 @@ public class Maintenance {
                             javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
-                int min = l.getMinSelectionIndex();
-                DefaultListModel model = (DefaultListModel) l.getModel();
+                int min = list.getMinSelectionIndex();
+                DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
                 while (index >= min) {
                     String[] names = getTypeAndNames(n.get(index));
                     if (names[0].equals("Sensor")) {
@@ -233,7 +232,7 @@ public class Maintenance {
                     index = model.getSize() - 1;
                 }
                 if (index >= 0) {
-                    l.setSelectedIndex(index);
+                    list.setSelectedIndex(index);
                 }
             }
         }
@@ -278,16 +277,16 @@ public class Maintenance {
 
         class EmptyListener implements ActionListener {
 
-            JList l;
-            Vector<String> n;
+            JList<String> list;
+            Vector<String> name;
 
-            EmptyListener(JList list, Vector<String> name) {
-                l = list;
-                n = name;
+            EmptyListener(JList<String> list, Vector<String> name) {
+                this.list = list;
+                this.name = name;
             }
 
             public void actionPerformed(ActionEvent e) {
-                int index = l.getMaxSelectionIndex();
+                int index = list.getMaxSelectionIndex();
                 if (index < 0) {
                     javax.swing.JOptionPane.showMessageDialog(null,
                             rbm.getString("OrphanDeleteHint"),
@@ -295,10 +294,10 @@ public class Maintenance {
                             javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
-                int min = l.getMinSelectionIndex();
-                DefaultListModel model = (DefaultListModel) l.getModel();
+                int min = list.getMinSelectionIndex();
+                DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
                 while (index >= min) {
-                    String[] names = getTypeAndNames(n.get(index));
+                    String[] names = getTypeAndNames(name.get(index));
                     model.remove(index);
                     Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(names[2]);
                     if (c != null) {
@@ -309,7 +308,7 @@ public class Maintenance {
                             x.activateLogix();
                         }
                         InstanceManager.conditionalManagerInstance().deregister(c);
-                        n.remove(index);
+                        name.remove(index);
                         index--;
                     }
                 }
@@ -318,7 +317,7 @@ public class Maintenance {
                     index = model.getSize() - 1;
                 }
                 if (index >= 0) {
-                    l.setSelectedIndex(index);
+                    list.setSelectedIndex(index);
                 }
             }
         }
@@ -337,7 +336,6 @@ public class Maintenance {
      * Searches each Manager for a reference to the "name" returns 4 element
      * String: {Type, userName, sysName, numListeners}
      */
-    @SuppressWarnings("null")
     static String[] getTypeAndNames(String name) {
         String userName = name.trim();
         String sysName = userName;
@@ -565,7 +563,7 @@ public class Maintenance {
         return false;
     }
 
-    //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     static boolean search(String name, JTextArea text) {
@@ -1368,11 +1366,11 @@ public class Maintenance {
                     names[0] = "Unknown Type?";
                 }
                 /*
-                 JOptionPane.showMessageDialog(null, 
+                 JOptionPane.showMessageDialog(null,
                  MessageFormat.format(rbm.getString("OrphanName"), (Object[])names)+" has "+numListeners+
-                 " listeners installed and only "+referenceCount+ 
+                 " listeners installed and only "+referenceCount+
                  " references found.\n"+names[0]+
-                 " Tables are listeneners.  Check that the table is closed.", 
+                 " Tables are listeneners.  Check that the table is closed.",
                  rbm.getString("infoTitle"), JOptionPane.INFORMATION_MESSAGE);
                  */
                 if (text != null) {

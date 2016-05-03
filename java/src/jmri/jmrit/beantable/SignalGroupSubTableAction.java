@@ -1,4 +1,3 @@
-// SignalGroupSubTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -45,7 +44,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Kevin Dickerson Copyright (C) 2010
  *
- * @version $Revision$
  */
 public class SignalGroupSubTableAction {
 
@@ -610,11 +608,6 @@ public class SignalGroupSubTableAction {
      */
     public abstract class SignalGroupOutputModel extends AbstractTableModel implements PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6276559655520465435L;
-
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -665,11 +658,6 @@ public class SignalGroupSubTableAction {
      * Table model for selecting Turnouts and Turnout State
      */
     class SignalGroupTurnoutModel extends SignalGroupOutputModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2635253900965148562L;
 
         SignalGroupTurnoutModel() {
             InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
@@ -733,11 +721,6 @@ public class SignalGroupSubTableAction {
      * Set up table for selecting Sensors and Sensor State
      */
     class SignalGroupSensorModel extends SignalGroupOutputModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 368748896590901351L;
 
         SignalGroupSensorModel() {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
@@ -930,4 +913,3 @@ public class SignalGroupSubTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class.getName());
 }
-/* @(#)SignalGroupSubTableAction.java */
