@@ -4,12 +4,13 @@
  */
 package jmri.web.servlet;
 
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 /**
  * Servlet that simply sends an HTTP 403 FORBIDDEN error.

@@ -24,6 +24,7 @@ public class TrackDestinationEditAction extends AbstractAction {
         _frame = frame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (tdef != null) {
             tdef.dispose();

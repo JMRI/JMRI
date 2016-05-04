@@ -1,16 +1,16 @@
 package jmri.jmrix.roco.z21.simulator;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import jmri.jmrix.lenz.XNetMessage;
+import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.roco.z21.Z21Adapter;
 import jmri.jmrix.roco.z21.Z21Message;
 import jmri.jmrix.roco.z21.Z21Reply;
 import jmri.jmrix.roco.z21.Z21TrafficController;
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 
 
 /**

@@ -198,7 +198,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
      */
     public boolean isCellEditable(int index) {
         if (getModel() instanceof EditableListModel) {
-            return ((EditableListModel) getModel()).isCellEditable(index);
+            return ((EditableListModel<E>) getModel()).isCellEditable(index);
         }
         return false;
     }
@@ -237,7 +237,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
         @Override
         @SuppressWarnings("unchecked") // have to cast CellEditor to ListCellEditor to access methods
         public void actionPerformed(ActionEvent e) {
-            EditableList list = (EditableList) e.getSource();
+            EditableList<E> list = (EditableList<E>) e.getSource();
             if (!list.hasFocus()) {
                 ListCellEditor<E> cellEditor = list.getListCellEditor();
                 if (cellEditor != null && !cellEditor.stopCellEditing()) {
@@ -263,9 +263,10 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
          */
         private static final long serialVersionUID = -8222730187928540505L;
 
+        @SuppressWarnings("unchecked")
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditableList list = (EditableList) e.getSource();
+            EditableList<E> list = (EditableList<E>) e.getSource();
             list.removeEditor();
         }
 

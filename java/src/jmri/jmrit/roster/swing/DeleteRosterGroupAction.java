@@ -1,4 +1,3 @@
-// DeleteRosterGroupAction.java
 package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
@@ -26,14 +25,8 @@ import jmri.util.swing.WindowInterface;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class DeleteRosterGroupAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5645990386314165982L;
 
     public DeleteRosterGroupAction(String s, WindowInterface wi) {
         super(s, wi);

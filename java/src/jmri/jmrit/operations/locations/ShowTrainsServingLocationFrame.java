@@ -177,6 +177,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         pTrains.revalidate();
     }
 
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("check box action");
@@ -186,6 +187,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 
     private String comboBoxSelect;
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("combo box action");
         if (typeComboBox.isEnabled() && ae.getSource().equals(typeComboBox)) {
@@ -224,6 +226,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         typeComboBox.setEnabled(true);
     }
 
+    @Override
     public void dispose() {
         _location.removePropertyChangeListener(this);
         if (_track != null) {
@@ -251,6 +254,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

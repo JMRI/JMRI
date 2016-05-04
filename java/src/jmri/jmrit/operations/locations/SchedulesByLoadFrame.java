@@ -1,8 +1,6 @@
 // SchedulesByLoadFrame.java
 package jmri.jmrit.operations.locations;
 
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -21,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.PrintCarLoadsAction;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,6 +106,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight250));
     }
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == typesComboBox) {
             updateLoadComboBox();
@@ -117,6 +117,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         typesComboBox.setEnabled(!allTypesCheckBox.isSelected());
         loadsComboBox.setEnabled(!allLoadsCheckBox.isSelected());
@@ -220,6 +221,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         repaint();
     }
 
+    @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
         CarTypes.instance().removePropertyChangeListener(this);
@@ -235,6 +237,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled())
             log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N

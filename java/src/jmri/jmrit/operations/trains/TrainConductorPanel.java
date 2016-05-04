@@ -163,6 +163,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         log.debug("queue update");
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 log.debug("update, setMode " + isSetMode);
                 initialize();

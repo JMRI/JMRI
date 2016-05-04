@@ -59,7 +59,6 @@ import org.slf4j.LoggerFactory;
 
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseListener 
 {
-    private static final long serialVersionUID = 8994208663637783635L;
     static final String halt = Bundle.getMessage("Halt");
     static final String resume = Bundle.getMessage("Resume");
     static final String abort = Bundle.getMessage("Abort");
@@ -210,7 +209,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         menuBar.add(fileMenu);
         JMenu warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("ConcatWarrants")){
-            private static final long serialVersionUID = 8994208663637773635L;
             public void actionPerformed(ActionEvent e) {
                 concatMenuAction();
             }
@@ -218,7 +216,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
         warrantMenu.add(WarrantTableAction._trackerTable);
         warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
-            private static final long serialVersionUID = -4129760191508866189L;
 
             public void actionPerformed(ActionEvent e) {
                 nxAction();
@@ -329,10 +326,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
 
     static public class ComboBoxCellEditor extends DefaultCellEditor
     {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 3035798240606397980L;
         TableSorter _sorter;
         
         ComboBoxCellEditor(JComboBox <String> comboBox) {

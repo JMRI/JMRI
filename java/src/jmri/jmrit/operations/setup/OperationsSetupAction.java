@@ -24,6 +24,7 @@ public class OperationsSetupAction extends AbstractAction {
 
     static OperationsSetupFrame operationsSetupFrame = null;
 
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only one OperationsSetupFrame")
     public void actionPerformed(ActionEvent e) {
         // create a settings frame

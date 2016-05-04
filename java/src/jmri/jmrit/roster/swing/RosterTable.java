@@ -1,4 +1,3 @@
-// BeanTableFrame.java
 package jmri.jmrit.roster.swing;
 
 import apps.gui.GuiLafPreferencesManager;
@@ -40,14 +39,9 @@ import jmri.util.swing.XTableColumnModel;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  * @author Randall Wood Copyright (C) 2013
- * @version	$Revision$
  */
 public class RosterTable extends JmriPanel implements RosterEntrySelector, RosterGroupSelector {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4642772877556156627L;
     RosterTableModel dataModel;
     TableRowSorter<RosterTableModel> sorter;
     JTable dataTable;

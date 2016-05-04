@@ -25,6 +25,7 @@ public class PoolTrackAction extends AbstractAction {
         _tef = tef;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (_ptf != null) {
             _ptf.dispose();

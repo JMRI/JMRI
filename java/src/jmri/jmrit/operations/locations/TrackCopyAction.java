@@ -27,6 +27,7 @@ public class TrackCopyAction extends AbstractAction {
     private LocationEditFrame _lef;
     TrackCopyFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a copy track frame
         if (f == null || !f.isVisible()) {

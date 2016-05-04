@@ -3,10 +3,9 @@ package jmri;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.managers.AbstractManager;
 import jmri.implementation.SignalSpeedMap;
-
 import jmri.jmrit.roster.RosterEntry;
+import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

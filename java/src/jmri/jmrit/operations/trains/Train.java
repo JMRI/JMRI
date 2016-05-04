@@ -246,6 +246,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @return train's name
      */
+    @Override
     public String toString() {
         return _name;
     }
@@ -4235,6 +4236,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Train ({}) sees property change: ({}) old: ({}) new: ({})",

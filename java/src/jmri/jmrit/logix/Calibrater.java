@@ -45,8 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Calibrater extends jmri.util.JmriJFrame {
 
-    private static final long serialVersionUID = 991792418011219112L;
-    
     private int _calibrateIndex;
     private Warrant _warrant;
     private float _maxSpeed;

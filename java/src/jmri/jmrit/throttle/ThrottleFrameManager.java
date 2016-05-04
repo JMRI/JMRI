@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * confused with ThrottleManager
  *
  * @author Glen Oberhauser
- * @version $Revision$
  */
 public class ThrottleFrameManager {
 

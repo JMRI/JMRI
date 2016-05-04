@@ -1,15 +1,6 @@
 //JmriSRCPProgrammerServer.java
 package jmri.jmris.json;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.IOException;
-import java.util.Locale;
-import jmri.JmriException;
-import jmri.ProgListener;
-import jmri.jmris.AbstractProgrammerServer;
-import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.CODE;
 import static jmri.jmris.json.JSON.DATA;
 import static jmri.jmris.json.JSON.ERROR;
@@ -23,6 +14,16 @@ import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.VALUE;
 import static jmri.jmris.json.JSON.WRITE;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.IOException;
+import java.util.Locale;
+import jmri.JmriException;
+import jmri.ProgListener;
+import jmri.jmris.AbstractProgrammerServer;
+import jmri.jmris.JmriConnection;
 import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

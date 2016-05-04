@@ -14,7 +14,9 @@ import javax.swing.table.AbstractTableModel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
+import org.jdom2.Content;
 import org.jdom2.Element;
+import org.jdom2.util.IteratorIterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -540,7 +542,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
 
         int count = 0;
-        java.util.Iterator iterator = child.getDescendants();
+        IteratorIterable<Content> iterator = child.getDescendants();
         while (iterator.hasNext()) {
             Object ex = iterator.next();
             if (ex instanceof Element) {
@@ -565,7 +567,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * enumChoiceGroup elements as needed.
      */
     protected void handleENumValChildren(Element e, EnumVariableValue var) {
-        @SuppressWarnings("unchecked")
         List<Element> local = e.getChildren();
         for (int k = 0; k < local.size(); k++) {
             Element el = local.get(k);
