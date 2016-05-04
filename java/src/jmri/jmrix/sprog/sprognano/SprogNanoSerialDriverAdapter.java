@@ -1,5 +1,5 @@
-// SerialDriverAdapter.java
-package jmri.jmrix.sprog.sprogCS;
+// SprogNanoSerialDriverAdapter.java
+package jmri.jmrix.sprog.sprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogTrafficController;
@@ -9,37 +9,37 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements SerialPortAdapter for the Sprog system.
  * <P>
- * This connects an Sprog command station via a serial com port. Also used for
- * the USB SPROG, which appears to the computer as a serial port.
+ * This connects an SSPROG DCC SPROG Nano command station via a USB virtual 
+ * serial com port.
  * <P>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
- * @author	Andrew Crosland Copyright (C) 2006
+ * @author	Andrew Crosland Copyright (C) 2016
  * @version	$Revision$
  */
-public class SprogCSSerialDriverAdapter
+public class SprogNanoSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 
-    public SprogCSSerialDriverAdapter() {
+    public SprogNanoSerialDriverAdapter() {
         super(SprogMode.OPS);
         options.put("TrackPowerState", new Option("Track Power At StartUp:", new String[]{"Powered Off", "Powered On"}, true));
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        this.getSystemConnectionMemo().setUserName("SPROG Command Station");
+        this.getSystemConnectionMemo().setUserName("SPROG Nano Command Station");
     }
 
-    static public SprogCSSerialDriverAdapter instance() {
+    static public SprogNanoSerialDriverAdapter instance() {
         if (mInstance == null) {
-            SprogCSSerialDriverAdapter m = new SprogCSSerialDriverAdapter();
+            SprogNanoSerialDriverAdapter m = new SprogNanoSerialDriverAdapter();
             m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
             mInstance = m;
         }
         return mInstance;
     }
-    static volatile SprogCSSerialDriverAdapter mInstance = null;
+    static volatile SprogNanoSerialDriverAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogNanoSerialDriverAdapter.class.getName());
 
 }
 
-/* @(#)SerialdriverAdapter.java */
+/* @(#)SprogNanoSerialDriverAdapter.java */

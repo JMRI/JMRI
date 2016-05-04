@@ -1,14 +1,14 @@
 // SprogProgrammer.java
 package jmri.jmrix.sprog;
 
-import java.util.ArrayList;
-import java.util.List;
-import jmri.PowerManager;
-import jmri.ProgrammingMode;
-import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.PowerManager;
+import jmri.*;
+import jmri.jmrix.AbstractProgrammer;
+
+import java.util.*;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Implements the jmri.Programmer interface via commands for the Sprog
