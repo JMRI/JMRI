@@ -1,4 +1,3 @@
-// SpeedProfileAction.java
 package jmri.jmrit.roster.swing.speedprofile;
 
 import java.awt.event.ActionEvent;
@@ -14,11 +13,6 @@ import org.slf4j.LoggerFactory;
  * @author	Kevin Dickerson Copyright (C) 2011
  */
 public class SpeedProfileAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7900417672370349395L;
 
     public SpeedProfileAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -49,6 +43,3 @@ public class SpeedProfileAction extends JmriAbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(SpeedProfileAction.class);
 }
-
-
-/* @(#)SpeedProfileAction.java */

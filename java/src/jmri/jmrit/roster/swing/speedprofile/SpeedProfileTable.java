@@ -77,7 +77,6 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         static final int REVERSE_SPEED_COL = 4;
         static final int REVERSE_FACTOR_COL = 5;
         static final int NUMCOLS = 6;
-        private static final long serialVersionUID = 865383251598012193L;
         
         ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<Map.Entry<Integer, SpeedStep>>();
         
