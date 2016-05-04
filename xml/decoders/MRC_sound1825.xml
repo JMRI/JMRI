@@ -7,6 +7,8 @@
   <version author="Alain Le Marchand" version="1" lastUpdated="20160409"/>
   <!-- made from the MRC_1750 version 1  -->
   <!-- MRC documentation dated 11-May-2015 (PDF)-->
+  <version author="Alain Le Marchand" version="2" lastUpdated="20160503"/>
+  <!-- added missing CV29 bit for speed table (cv29table1-28.xml)  -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="25" highVersionID="25" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1825 - HO Scale - Athearn SD45/60" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" formFactor="HO" connector="DropIn" comment="&lt;html&gt;HO-Scale, &lt;br&gt; with multiple types (34 horns, 8 bells) &lt;br&gt;and with wireless remote&lt;/html&gt;">
@@ -116,6 +118,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="49" mask="XXXXXXXV" item="Sound Option 1" tooltip="can turn off all sound except the Horn" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Sound on/off</label>
