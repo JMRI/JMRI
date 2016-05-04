@@ -1,6 +1,7 @@
 // FileUtil.java
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1041,15 +1043,15 @@ public final class FileUtil {
      */
     public static String readURL(URL url) throws IOException {
         try {
-            InputStreamReader in = new InputStreamReader(url.openStream(), "UTF-8"); // NOI18N
-            BufferedReader reader = new BufferedReader(in);
-            StringBuilder builder = new StringBuilder();
-            String aux;
-            while ((aux = reader.readLine()) != null) {
-                builder.append(aux);
+            StringBuilder builder;
+            try (InputStreamReader in = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+                    BufferedReader reader = new BufferedReader(in)) {
+                builder = new StringBuilder();
+                String aux;
+                while ((aux = reader.readLine()) != null) {
+                    builder.append(aux);
+                }
             }
-            reader.close();
-            in.close();
             return builder.toString();
         } catch (NullPointerException ex) {
             return null;
@@ -1106,6 +1108,8 @@ public final class FileUtil {
      * @param path
      * @return true if path was deleted, false otherwise
      */
+    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification="listFiles() is documented to return null only if isDirectory() is false")
     public static boolean delete(File path) {
         if (path.isDirectory()) {
             for (File file : path.listFiles()) {
@@ -1174,9 +1178,9 @@ public final class FileUtil {
      * @throws java.io.IOException if file cannot be written to
      */
     public static void appendTextToFile(File file, String text) throws IOException {
-        PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8")); // NOI18N
-        pw.println(text);
-        pw.close();
+        try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), StandardCharsets.UTF_8))) {
+            pw.println(text);
+        }
     }
 
     /**
