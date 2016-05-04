@@ -348,17 +348,8 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
 
     public class RosterCellEditor extends DefaultCellEditor implements TableCellEditor {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6459789129802283684L;
-
         public RosterCellEditor() {
             super(new JTextField() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -3459969794810110857L;
 
                 @Override
                 public void setBorder(Border border) {
