@@ -1,4 +1,3 @@
-// QuantumCvMgrImporter.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.BufferedReader;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Alex Shepherd Copyright (C) 2003
  * @author	Dave Heap Copyright (C) 2015
- * @version	$Revision: 24747 $
  */
 public class QuantumCvMgrImporter {
 

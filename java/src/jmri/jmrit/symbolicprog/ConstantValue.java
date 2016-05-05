@@ -1,4 +1,3 @@
-// ConstantValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * there's no CV associated with this.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  */
 public class ConstantValue extends VariableValue {

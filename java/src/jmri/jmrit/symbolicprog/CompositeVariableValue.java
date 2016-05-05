@@ -1,4 +1,3 @@
-// CompositeVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
@@ -47,7 +46,6 @@ import org.slf4j.LoggerFactory;
  * </ol>
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2013
- * @version	$Revision$
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {

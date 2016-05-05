@@ -28,14 +28,8 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2007
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
  * speed table
- * @version $Revision$
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6912067927864604835L;
 
     private String headers[] = null;
 
