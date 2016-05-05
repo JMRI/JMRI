@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -22,18 +22,6 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
-    <revision>
-      <revnumber>1</revnumber>
-      <date>2009-12-28</date>
-      <authorinitials>RGJ</authorinitials>
-      <revremark>Initial version</revremark>
-    </revision>
-    <revision>
-      <revnumber>1.1</revnumber>
-      <date>2011-06-13</date>
-      <authorinitials>KWD</authorinitials>
-      <revremark>Add Aspect Mapping and Specific Aspects</revremark>
-    </revision>
   </revhistory>
   <aspecttable>basic</aspecttable>
   <name>Double searchlight low signal</name>
@@ -70,6 +58,11 @@
       <show>yellow</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-290.gif</imagelink>
     </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/two-low-dark.gif</imagelink>
+    </appearance>
   </appearances>
   <specificappearances>
     <!-- Start of Specific Appearances list -->
@@ -78,7 +71,11 @@
     </danger>
     <held>
       <aspect>Stop</aspect>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/two-low-held.gif</imagelink>
     </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
   </specificappearances>
   <!-- End of Specific Appearances list -->
   <aspectMappings>
