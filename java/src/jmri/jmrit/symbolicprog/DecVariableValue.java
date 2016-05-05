@@ -1,4 +1,3 @@
-// DecVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Decimal representation of a value.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  */
 public class DecVariableValue extends VariableValue

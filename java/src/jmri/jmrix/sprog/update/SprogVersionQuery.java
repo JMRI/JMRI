@@ -239,9 +239,8 @@ public class SprogVersionQuery implements SprogListener {
                         }
                     } else {
                         // Reply contained "SPROG" but couldn't be parsed
-                        log.debug("Found an unknown SPROG " + splits[index]);
+                        log.warn("Found an unknown SPROG " + splits[index]);
                         v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
-                        break;
                     }
 
                     if ((v.sprogType.sprogType == SprogType.SPROGII) && (v.getMajorVersion() >= 3)) {
