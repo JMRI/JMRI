@@ -1,4 +1,3 @@
-// FnMapPanelESU.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Dimension;
@@ -84,14 +83,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Dave Heap Copyright (C) 2014
- * @version	$Revision: 24716 $
  */
 public class FnMapPanelESU extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5897048084177413562L;
 
     // columns
     final int firstCol = 0;
