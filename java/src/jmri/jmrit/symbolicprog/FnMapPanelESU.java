@@ -369,6 +369,7 @@ public class FnMapPanelESU extends JPanel {
                                 try {
                                     itemLabel[item] = rosterEntry.getFunctionLabel(Integer.valueOf(itemName[item][0].substring(1)));
                                 } catch (Exception e) {
+                                    log.warn("Error for function label \"{}\" in \"{}\"", itemName[item][0], item);
                                 }
                             }
                             if (itemLabel[item] == null) {
