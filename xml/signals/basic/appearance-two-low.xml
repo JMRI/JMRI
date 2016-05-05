@@ -22,6 +22,18 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>2.2</revnumber>
+      <date>2016-04-01</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add low appearances</revremark>
+    </revision>
+    <revision>
+      <revnumber>2.3</revnumber>
+      <date>2016-05-05</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add Held and Dark specific appearances</revremark>
+    </revision>
   </revhistory>
   <aspecttable>basic</aspecttable>
   <name>Double searchlight low signal</name>
