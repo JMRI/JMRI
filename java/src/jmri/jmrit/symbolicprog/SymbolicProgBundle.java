@@ -1,4 +1,3 @@
-// SymbolicProgBundle.java
 package jmri.jmrit.symbolicprog;
 
 /**
@@ -8,7 +7,6 @@ package jmri.jmrit.symbolicprog;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class SymbolicProgBundle {
 

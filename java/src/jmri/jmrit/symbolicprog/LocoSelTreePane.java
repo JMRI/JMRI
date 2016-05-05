@@ -1,4 +1,3 @@
-// LocoSelTreePane.java
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
@@ -19,14 +18,8 @@ import jmri.jmrit.progsupport.ProgModeSelector;
  * no selection.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008, 2015
- * @version	$Revision$
  */
 public class LocoSelTreePane extends CombinedLocoSelTreePane {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4048446656319711656L;
 
     public LocoSelTreePane(JLabel s, ProgModeSelector selector) {
         super(s, selector);

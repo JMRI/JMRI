@@ -1,4 +1,3 @@
-// CombinedLocoSelPane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.BorderLayout;
@@ -54,14 +53,8 @@ import org.slf4j.LoggerFactory;
  * further information.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8136064467797917479L;
 
     public CombinedLocoSelPane(JLabel s, ProgModeSelector selector) {
         _statusLabel = s;

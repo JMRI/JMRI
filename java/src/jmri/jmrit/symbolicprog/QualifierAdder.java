@@ -1,4 +1,3 @@
-// QualifierAdder.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame
  *
  * @author	Bob Jacobsen Copyright (C) 2014
- * @version	$Revision$
  *
  */
 public abstract class QualifierAdder {
