@@ -1,4 +1,3 @@
-// VariableTableModel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -278,7 +277,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error("CvModel reference is null; cannot add variables");
             return;
         }
-        if (CV != "") // some variables have no CV per se
+        if (!CV.equals("")) // some variables have no CV per se
         {
             _cvModel.addCV(CV, readOnly, infoOnly, writeOnly);
         }
