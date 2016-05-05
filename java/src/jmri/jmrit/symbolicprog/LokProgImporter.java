@@ -40,15 +40,15 @@ public class LokProgImporter {
     private static final String CV_SEPARATOR = " = ";
 
     public LokProgImporter(File file, CvTableModel cvModel) throws IOException {
-        try {
+        try (
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+            ){
             CvValue cvObject;
             String CVindex = "";
             String line = null;
             String name = null;
             int value = 0;
-
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.startsWith(INDEX_PREFIX)) {
