@@ -266,11 +266,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             _speedType = endSpeedType;
             return;
         }
-        if (_ramp!=null) {
-            _ramp.quit();
-            _ramp = null;
-        }
         synchronized(this) {
+            if (_ramp!=null) {
+                _ramp.quit();
+                _ramp = null;
+            }
             if (_debug) log.debug("rampSpeedTo: \""+endSpeedType+"\" from \""+
                     _speedType+"\" setting= "+_throttle.getSpeedSetting()+" for warrant "+_warrant.getDisplayName());
             _ramp = new ThrottleRamp(endSpeedType);
@@ -336,7 +336,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return _throttle.getSpeedSetting();
     }
     
-    public int getRunState() {
+    synchronized public int getRunState() {
         if (_abort) {
             return Warrant.ABORT;
         } else  if (_halt) {
