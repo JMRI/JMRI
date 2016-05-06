@@ -10,31 +10,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SignalMast implemented via Turnout objects.
+ * SignalMast implemented via a Binary Matrix of Apects x Turnout objects.
  * <p>
- * A Signalmast that is built up using turnouts to control a specific
+ * A Signalmast that is built up from an array of 1 - 5 turnouts to control a specific
  * appearance. System name specifies the creation information:
  * <pre>
- * IF$tsm:basic:one-searchlight:(IT1)(IT2)
+ * IF$xsm:basic:one-searchlight:(IT1)(IT2) // update when released for MatrixSignalMast object
  * </pre> The name is a colon-separated series of terms:
  * <ul>
- * <li>IF$tsm - defines signal masts of this type
+ * <li>IF$xsm - defines signal masts of this type (x for logic matriX)
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map
- * <li>(IT1)(IT2) - colon-separated list of names for Turnouts
+ * <li>(IT1)(IT2)(ITn) - colon-separated list of names for Turnouts
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2014
- * @version $Revision: 19027 $
+ * @author	Bob Jacobsen Copyright (C) 2009, 2014, 2016
  */
-public class TurnoutSignalMast extends AbstractSignalMast {
+public class MatrixSignalMast extends AbstractSignalMast {
 
-    public TurnoutSignalMast(String systemName, String userName) {
+    public MatrixSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);
     }
 
-    public TurnoutSignalMast(String systemName) {
+    public MatrixSignalMast(String systemName) {
         super(systemName);
         configureFromName(systemName);
     }
@@ -46,8 +45,8 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             log.error("SignalMast system name needs at least three parts: " + systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
-        if (!parts[0].equals("IF$tsm")) {
-            log.warn("SignalMast system name should start with IF$tsm but is " + systemName);
+        if (!parts[0].equals("IF$xsm")) {
+            log.warn("SignalMast system name should start with IF$xsm but is " + systemName);
         }
         String system = parts[1];
         String mast = parts[2];
@@ -69,21 +68,21 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     @Override
     public void setAspect(String aspect) {
-        // check it's a choice
+        // check it's a valid choice
         if (!map.checkAspect(aspect)) {
             // not a valid aspect
-            log.warn("attempting to set invalid aspect: " + aspect + " on mast: " + getDisplayName());
-            throw new IllegalArgumentException("attempting to set invalid aspect: " + aspect + " on mast: " + getDisplayName());
+            log.warn("attempting to set invalid Aspect: " + aspect + " on mast: " + getDisplayName());
+            throw new IllegalArgumentException("attempting to set invalid Aspect: " + aspect + " on mast: " + getDisplayName());
         } else if (disabledAspects.contains(aspect)) {
-            log.warn("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
-            throw new IllegalArgumentException("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
+            log.warn("attempting to set an Aspect that has been Disabled: " + aspect + " on mast: " + getDisplayName());
+            throw new IllegalArgumentException("attempting to set an Aspect that has been Disabled: " + aspect + " on mast: " + getDisplayName());
         }
         if (getLit()) { //If the signalmast is lit, then send the commands to change the aspect.
             if (resetPreviousStates) {
-                //Clear all the current states, this will result in the signalmast going blank for a very short time.
+                //Clear all the current states, this will result in the signalmast going blank for a very short time. // EBR check for Matrix
                 for (String appearances : turnouts.keySet()) {
                     if (!isAspectDisabled(appearances)) {
-                        int setState = Turnout.CLOSED;
+                        int setState = Turnout.CLOSED; // this would give a RED appearance/STOP aspect EBR
                         if (turnouts.get(appearances).getTurnoutState() == Turnout.CLOSED) {
                             setState = Turnout.THROWN;
                         }
@@ -93,11 +92,11 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                     }
                 }
             }
-            Turnout turnToSet = turnouts.get(aspect).getTurnout();
+            Turnout turnToSet = turnouts.get(aspect).getTurnout(); // for  matrix nest a loop?
             int stateToSet = turnouts.get(aspect).getTurnoutState();
-            //Set the new signal mast state
+            //Set the new Signal Mast state
             if (turnToSet != null) {
-                turnToSet.setCommandedState(stateToSet);
+                turnToSet.setCommandedState(stateToSet); // repeat for matrix?
             } else {
                 log.error("Trying to set a state " + aspect + " on signal mast " + getDisplayName() + " which has not been configured");
             }
@@ -107,10 +106,10 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         super.setAspect(aspect);
     }
 
-    TurnoutAspect unLit = null;
+    MatrixAspect unLit = null;
 
     public void setUnLitTurnout(String turnoutName, int turnoutState) {
-        unLit = new TurnoutAspect(turnoutName, turnoutState);
+        unLit = new MatrixAspect(turnoutName, turnoutState);
     }
 
     public String getUnLitTurnoutName() {
@@ -144,7 +143,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             setAspect(getAspect());
         } else {
             if (unLit != null) {
-                Turnout t = unLit.getTurnout();
+                Turnout t = unLit.getTurnout(); // matrix
                 if (t != null && t.getKnownState() != getUnLitTurnoutState()) {
                     t.setCommandedState(getUnLitTurnoutState());
                 }
@@ -165,7 +164,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     }
 
     public String getTurnoutName(String appearance) {
-        TurnoutAspect aspect = turnouts.get(appearance);
+        MatrixAspect aspect = turnouts.get(appearance);
         if (aspect != null) {
             return aspect.getTurnoutName();
         }
@@ -173,7 +172,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     }
 
     public int getTurnoutState(String appearance) {
-        TurnoutAspect aspect = turnouts.get(appearance);
+        MatrixAspect aspect = turnouts.get(appearance);
         if (aspect != null) {
             return aspect.getTurnoutState();
         }
@@ -185,10 +184,10 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             log.debug("Appearance " + appearance + " is already defined so will override");
             turnouts.remove(appearance);
         }
-        turnouts.put(appearance, new TurnoutAspect(turn, state));
+        turnouts.put(appearance, new MatrixAspect(turn, state));
     }
 
-    HashMap<String, TurnoutAspect> turnouts = new HashMap<String, TurnoutAspect>();
+    HashMap<String, MatrixAspect> turnouts = new HashMap<String, MatrixAspect>();
 
     boolean resetPreviousStates = false;
 
@@ -204,12 +203,12 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         return resetPreviousStates;
     }
 
-    static class TurnoutAspect implements java.io.Serializable {
+    static class MatrixAspect implements java.io.Serializable {
 
         NamedBeanHandle<Turnout> namedTurnout;
         int state;
 
-        TurnoutAspect(String turnoutName, int turnoutState) {
+        MatrixAspect(String turnoutName, int turnoutState) {
             if (turnoutName != null && !turnoutName.equals("")) {
                 Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
                 namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
@@ -237,12 +236,12 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     }
 
     boolean isTurnoutUsed(Turnout t) {
-        for (TurnoutAspect ta : turnouts.values()) {
-            if (t.equals(ta.getTurnout())) {
+        for (MatrixAspect ma : turnouts.values()) {
+            if (t.equals(ma.getTurnout())) {
                 return true;
             }
         }
-        if (t.equals(getUnLitTurnout())) /*getUnLitTurnout()!=null && getUnLitTurnout() == t)*/ {
+        if (t.equals(getUnLitTurnout())) {
             return true;
         }
         return false;
@@ -259,23 +258,29 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     static int lastRef = 0;
 
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
             if (evt.getOldValue() instanceof Turnout) {
                 if (isTurnoutUsed((Turnout) evt.getOldValue())) {
                     java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); //IN18N
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { //NOI18N
             //Do nothing at this stage
         }
+    }
+
+    int BitNum = -1;
+
+    public void setBitNum(int number) {
+            BitNum = number;
     }
 
     public void dispose() {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class.getName());
 }
 
 /* @(#)TurnoutSignalMast.java */
