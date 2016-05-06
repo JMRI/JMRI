@@ -53,11 +53,16 @@ abstract class AbstractPanelServlet extends HttpServlet {
         this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "HRS_REQUEST_PARAMETER_TO_HTTP_HEADER", justification = "redirect to new URL carries original parameters") 
+    void sendRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("/panel/" + request.getParameter(JSON.NAME));
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("Handling GET request for {}", request.getRequestURI());
         if (request.getParameter(JSON.NAME) != null) {
-            response.sendRedirect("/panel/" + request.getParameter(JSON.NAME));
+            sendRedirect(request, response);
         } else if (request.getRequestURI().endsWith("/")) {
             listPanels(request, response);
         } else {
