@@ -62,8 +62,26 @@ public class MatrixSignalMast extends AbstractSignalMast {
             log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
         }
 
-        configureSignalSystemDefinition(system);
-        configureAspectTable(system, mast);
+        configureSignalSystemDefinition(system); //  (checks for system) AbstractSignalMast
+        configureAspectTable(system, mast); //  (create -default- appmapping in var "map") AbstractSignalMast
+    }
+
+    protected HashMap<String, String> appearanceToOutput = new HashMap<String, String>();
+
+    public void setOutputForAppearance(String appearance, String bitnum) { // copied from dccmast, store keypair appearace-bitnum
+        if (appearanceToOutput.containsKey(appearance)) {
+            log.debug("Appearance " + appearance + " is already defined as " + appearanceToOutput.get(appearance));
+            appearanceToOutput.remove(appearance);
+        }
+        appearanceToOutput.put(appearance, bitnum); // stores
+    }
+
+    public String getOutputForAppearance(String appearance) { // copied from dccmast, gives "00010"
+        if (!appearanceToOutput.containsKey(appearance)) {
+            log.error("Trying to get appearance " + appearance + " but it has not been configured");
+            return "nnnnn";
+        }
+        return appearanceToOutput.get(appearance);
     }
 
     @Override
@@ -79,7 +97,10 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
         if (getLit()) { //If the signalmast is lit, then send the commands to change the aspect.
             if (resetPreviousStates) {
-                //Clear all the current states, this will result in the signalmast going blank for a very short time. // EBR check for Matrix
+                //Clear all the current states, this will result in the signalmast going blank for a very short time.
+                // EBR change for MatrixMast
+                // ToDo: drop down choice for DCCPackets or Turnouts outputs
+                // c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetRepeatCount);
                 for (String appearances : turnouts.keySet()) {
                     if (!isAspectDisabled(appearances)) {
                         int setState = Turnout.CLOSED; // this would give a RED appearance/STOP aspect EBR
@@ -92,13 +113,20 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     }
                 }
             }
-            Turnout turnToSet = turnouts.get(aspect).getTurnout(); // for  matrix nest a loop?
-            int stateToSet = turnouts.get(aspect).getTurnoutState();
-            //Set the new Signal Mast state
-            if (turnToSet != null) {
-                turnToSet.setCommandedState(stateToSet); // repeat for matrix?
+            if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != "nnnnn") {
+                // ToDo: drop down choice foor DCC or Turnouts
+                // c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetRepeatCount);
+
+                Turnout turnToSet = turnouts.get(aspect).getTurnout(); // 3x
+                String bitstring = appearanceToOutput.get(aspect);
+                // for  MatrixMast nest a loop, using appearanceToOutput() EBR
+                int stateToSet = turnouts.get(aspect).getTurnoutState();
+                //Set the new Signal Mast state
+                if (turnToSet != null) {
+                    turnToSet.setCommandedState(stateToSet); // repeat for matrix?
+                }
             } else {
-                log.error("Trying to set a state " + aspect + " on signal mast " + getDisplayName() + " which has not been configured");
+                log.error("Trying to set a aspect ( " + aspect + ") on signal mast " + getDisplayName() + " which has not been configured");
             }
         } else if (log.isDebugEnabled()) {
             log.debug("Mast set to unlit, will not send aspect change to hardware");
@@ -140,10 +168,10 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
         if (newLit) {
             //This will force the signalmast to send out the commands to set the aspect again.
-            setAspect(getAspect());
+            setAspect(getAspect()); // method defined above
         } else {
             if (unLit != null) {
-                Turnout t = unLit.getTurnout(); // matrix
+                Turnout t = unLit.getTurnout();
                 if (t != null && t.getKnownState() != getUnLitTurnoutState()) {
                     t.setCommandedState(getUnLitTurnoutState());
                 }
@@ -151,10 +179,12 @@ public class MatrixSignalMast extends AbstractSignalMast {
             } else {
                 for (String appearances : turnouts.keySet()) {
                     int setState = Turnout.CLOSED;
-                    if (turnouts.get(appearances).getTurnoutState() == Turnout.CLOSED) {
-                        setState = Turnout.THROWN;
-                    }
+                    // matrix, only support on = closed state
+//                    if (turnouts.get(appearances).getTurnoutState() == Turnout.CLOSED) {
+//                        setState = Turnout.THROWN;
+//                    }
                     if (turnouts.get(appearances).getTurnout().getKnownState() != setState) {
+                        // ToDo: read bits/method?
                         turnouts.get(appearances).getTurnout().setCommandedState(setState);
                     }
                 }
@@ -163,24 +193,16 @@ public class MatrixSignalMast extends AbstractSignalMast {
         super.setLit(newLit);
     }
 
-    public String getTurnoutName(String appearance) {
-        MatrixAspect aspect = turnouts.get(appearance);
+    public String getTurnoutName(String bitCol) {
+        MatrixAspect aspect = outputs.get(bitCol);
         if (aspect != null) {
             return aspect.getTurnoutName();
         }
         return "";
     }
 
-    public int getTurnoutState(String appearance) {
-        MatrixAspect aspect = turnouts.get(appearance);
-        if (aspect != null) {
-            return aspect.getTurnoutState();
-        }
-        return -1;
-    }
-
     public void setTurnout(String appearance, String turn, int state) {
-        if (turnouts.containsKey(appearance)) {
+        if (outputs.containsKey(appearance)) {
             log.debug("Appearance " + appearance + " is already defined so will override");
             turnouts.remove(appearance);
         }
@@ -233,6 +255,10 @@ public class MatrixSignalMast extends AbstractSignalMast {
         int getTurnoutState() {
             return state;
         }
+
+        String getMatrixBits(String aspect) {
+            return aspects.getBitstring();
+        }
     }
 
     boolean isTurnoutUsed(Turnout t) {
@@ -271,7 +297,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     int BitNum = -1;
-
     public void setBitNum(int number) {
             BitNum = number;
     }
@@ -283,4 +308,4 @@ public class MatrixSignalMast extends AbstractSignalMast {
     private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class.getName());
 }
 
-/* @(#)TurnoutSignalMast.java */
+/* @(#)MatrixSignalMast.java */

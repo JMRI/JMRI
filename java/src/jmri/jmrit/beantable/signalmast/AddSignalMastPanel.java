@@ -82,6 +82,7 @@ public class AddSignalMastPanel extends JPanel {
     JScrollPane matrixMastScroll;
     JPanel matrixMastPanel = new JPanel();
     JSpinner bitNumSpinner = new JSpinner();
+    JTextField matrixAspectBitsField = new JTextField(5); // for debug
 
     JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
 
@@ -259,6 +260,7 @@ public class AddSignalMastPanel extends JPanel {
         systemPrefixBox.setEnabled(true);
         dccAspectAddressLabel.setEnabled(true);
         dccAspectAddressField.setEnabled(true);
+        matrixAspectBitsField.setEnabled(true); // for debug
 
         if (mast instanceof jmri.implementation.SignalHeadSignalMast) {
             signalMastDriver.setSelectedItem(Bundle.getMessage("HeadCtlMast"));
@@ -367,8 +369,8 @@ public class AddSignalMastPanel extends JPanel {
                     String key = aspects.nextElement();
                     // select the right checkboxes ToDo
                     MatrixAspectPanel matrixPanel = matrixAspect.get(key);
-                    //matrixPanel.setSelectedTurnout(xmast.getTurnoutName(key));
-                    //matrixPanel.setTurnoutState(xmast.getTurnoutState(key));
+                    matrixPanel.setMatrixBoxes(xmast.getBits(key));
+                    // bits 1-5
                     matrixPanel.setAspectDisabled(xmast.isAspectDisabled(key));
                 }
             }
@@ -383,6 +385,8 @@ public class AddSignalMastPanel extends JPanel {
                     turnoutUnLitState.setSelectedItem(stateThrown);
                 }
             }
+            matrixAspectBitsField.setText("" + xmast.getMatrixSignalMastBits()); // ? where stored? EBR
+            matrixAspectBitsField.setEnabled(false);
         }
         cancel.setVisible(true);
         cancel.addActionListener(new ActionListener() {
@@ -1385,20 +1389,23 @@ public class AddSignalMastPanel extends JPanel {
         if (!Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
             return;
         }
-        String bitString = "00000"; // make from mast(aspect) EBR
+        String bitString = "00000"; // ToDo: make/read from mast(aspect) EBR
         matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
+        SignalSystem sigsys = InstanceManager.signalSystemManagerInstance().getSystem(sigsysname);
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aPanel = new MatrixAspectPanel(aspect, bitString); // build 1 line, include bitString?
             matrixAspect.put(aspect, aPanel);
+            aPanel.setAspectBits((String) sigsys.getProperty(aspect, "matrixAspect"));
         }
 
         matrixMastPanel.removeAll();
         matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(matrixAspect.size() + 1, 2));
+        matrixMastPanel.add(matrixAspectBitsField); // per aspect?, copied from update dccmast panel
         for (String aspect : matrixAspect.keySet()) {
             matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
             // repeat Matrix checkboxes in getPanel
@@ -1474,6 +1481,7 @@ public class AddSignalMastPanel extends JPanel {
         JCheckBox bitCheck3 = new JCheckBox();
         JCheckBox bitCheck4 = new JCheckBox();
         JCheckBox bitCheck5 = new JCheckBox();
+        JTextField aspectBitsField = new JTextField(5);
 
         String aspect = "";
 
@@ -1497,12 +1505,13 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         void setReference(String reference) {
-            bitCheck1.setReference(reference); // EBR was turnout, should be/
+            bitCheck1.setReference(reference); // EBR was turnout, should be
         }
 
         void setAspectDisabled(boolean boo) {
             disabledCheck.setSelected(boo);
             if (boo) {
+                aspectBitsField.setEnabled(false);
                 bitCheck1.setEnabled(false);
                 if (bitCheck2.isVisible()) {
                     bitCheck2.setEnabled(false);
@@ -1517,6 +1526,7 @@ public class AddSignalMastPanel extends JPanel {
                     bitCheck5.setEnabled(false);
                 }
             } else {
+                aspectBitsField.setEnabled(false);
                 bitCheck1.setEnabled(true);
                 if (bitCheck2.isVisible()) {
                     bitCheck2.setEnabled(true);
@@ -1535,6 +1545,25 @@ public class AddSignalMastPanel extends JPanel {
 
         boolean isAspectDisabled() {
             return disabledCheck.isSelected();
+        }
+
+        String getAspectBits() { // string of "00100" from sygsys, copied from DCCmast
+            try {
+                String value = aspectBits.getText();
+                return value;
+
+            } catch (Exception ex) {
+                log.error("failed to read aspectBits");
+            }
+            return "nnnnn";
+        }
+//
+//        void setAspectBits(int i) {
+//            aspectBits.setText("" + i);
+//        }
+
+        void setAspectBits(String s) {
+            aspectBits.setText(s);
         }
 
         JPanel panel;

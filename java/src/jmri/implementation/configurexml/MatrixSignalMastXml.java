@@ -30,9 +30,11 @@ public class MatrixSignalMastXml
      */
     public Element store(Object o) {
         MatrixSignalMast p = (MatrixSignalMast) o;
+
         Element e = new Element("signalmast");
         e.setAttribute("class", this.getClass().getName());
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
+
         storeCommon(p, e);
 
         // mast properties:
@@ -44,17 +46,33 @@ public class MatrixSignalMastXml
         }
         e.addContent(unlit);
 
-        Element bitnum = new Element("bitnum");
-        bitnum.setAttribute("bits", "5");  // add a method to MatrixMast to read value
-        // number of bits in  matrix; default = 1, max. = 5
-        // (might be the same as number of turnouts stored)
-        e.addContent(bitnum);
+        List<String> outputs = p.getOutputs();
+        // max. 5 outputs (either: turnouts (beannames) or DCC addresses (numbers)
+        if (outputs != null) {
+            Element outps = new Element("outputs");
+            for (String _output : outputs) {
+                Element outp = new Element("output");
+                outp.addContent(_output);
+                outps.addContent(outp);
+            }
+            if (outputs.size() != 0) {
+                e.addContent(outps);
+            }
+        }
 
-        Element outputs = new Element("outputs");
-        bitnum.setAttribute("turnouts", "LT1, LT2, LT3, LT4, LT5"); // add a method in MatrixMast.java to read these
-        // max 5 outputs (turnouts)
-        e.addContent(outputs);
-
+        List<String> bitStrings = p.getBitStrings();
+        // string of max. 5 chars "00101" describing matrix row per aspect
+        if (bitStrings != null) {
+            Element bss = new Element("bitStrings");
+            for (String _bitstring : bitStrings) {
+                Element bs = new Element("bitString");
+                bs.addContent(_bitstring);
+                bss.addContent(bs);
+            }
+            if (bitStrings.size() != 0) {
+                e.addContent(bs);
+            }
+        }
         List<String> disabledAspects = p.getDisabledAspects();
         if (disabledAspects != null) {
             Element el = new Element("disabledAspects");
@@ -86,6 +104,7 @@ public class MatrixSignalMastXml
         }
 
         loadCommon(m, shared);
+
         if (shared.getChild("unlit") != null) {
             Element unlit = shared.getChild("unlit");
             if (unlit.getAttribute("allowed") != null) {
@@ -96,30 +115,29 @@ public class MatrixSignalMastXml
                 }
             }
         }
-        Element e = shared.getChild("disabledAspects");
+        Element outps = shared.getChild("outputs"); // multiple
+        if (outps != null) {
+            List<Element> list = outps.getChildren("output"); // singular
+            for (Element output : list) {
+                ((MatrixSignalMast) m).setOutputs(output.getText());
+            }
+        }
+
+        Element e = shared.getChild("disabledAspects"); // multiple
         if (e != null) {
-            List<Element> list = e.getChildren("disabledAspect");
+            List<Element> list = e.getChildren("disabledAspect"); // singular
             for (Element aspect : list) {
                 ((MatrixSignalMast) m).setAspectDisabled(aspect.getText());
             }
         }
-        Element b = shared.getChild("bitnum");
-        if (b != null) {
-            int bitNum = -1;
-            try {
-                String value = b.getChild("bitnum").getValue();
-                bitNum = parseInt(value); // Integer? EBR
-
-            } catch (Exception ex) {
-                log.error("failed to convert number of bits in matrix");
+        Element bss = shared.getChild("bitStrings"); // multiple
+        if (bss != null) {
+            List<Element> list = bss.getChildren("bitString"); // singular
+            for (Element aspect : list) {
+                ((MatrixSignalMast) m).setAspectBitstring(aspect.getText());
             }
-            m.setBitNum(bitNum);
         }
         return true;
-    }
-
-    public void setBitNum(int value) {
-        m.bitNum = value; // declare?
     }
 
     public void load(Element element, Object o) {

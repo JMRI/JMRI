@@ -47,8 +47,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DccSignalMast extends AbstractSignalMast {
 
-    private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
-
     public DccSignalMast(String sys, String user) {
         super(sys, user);
         configureFromName(sys);
@@ -75,7 +73,7 @@ public class DccSignalMast extends AbstractSignalMast {
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].endsWith(mastType)) {
-            log.warn("First part of signal mast is incorrect " + systemName + " : " + mastType);
+            log.warn("First part of SignalMast system name is incorrect " + systemName + " : " + mastType);
         } else {
             String commandStationPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
@@ -215,4 +213,9 @@ public class DccSignalMast extends AbstractSignalMast {
         }
         return null;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
+
 }
+
+/* @(#)DccSignalMast.java */
