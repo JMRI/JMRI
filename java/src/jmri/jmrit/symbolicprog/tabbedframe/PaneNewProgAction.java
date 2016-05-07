@@ -1,4 +1,3 @@
-// PaneNewProgAction.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.event.ActionEvent;
@@ -31,14 +30,9 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2015
- * @version	$Revision$
  */
 public class PaneNewProgAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4761829946106004226L;
     Object o1, o2, o3, o4;
 
     public PaneNewProgAction() {
@@ -111,5 +105,3 @@ public class PaneNewProgAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(PaneProgAction.class.getName());
 
 }
-
-/* @(#)PaneProgAction.java */
