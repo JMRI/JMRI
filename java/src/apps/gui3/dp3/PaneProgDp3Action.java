@@ -132,7 +132,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
 
                 @Override
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
-                        String filename) {
+                        String progName) { // progName is ignored here
                     log.debug("startProgrammer");
                     String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"), // NOI18N
                             new Object[]{Bundle.getMessage("NewDecoder")}); // NOI18N
@@ -140,9 +140,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                         title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"), // NOI18N
                                 new Object[]{re.getId()});
                     }
-                    JFrame p = new PaneServiceProgFrame(decoderFile, re,
-                            title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
-                            modePane.getProgrammer());
+                    JFrame p;
                     if (!modePane.isSelected() || modePane.getProgrammer() == null) {
                         p = new PaneProgFrame(decoderFile, re,
                                 title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
@@ -151,6 +149,10 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                                         return null;
                                     }
                                 };
+                    } else {
+                        p = new PaneServiceProgFrame(decoderFile, re,
+                            title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
+                            modePane.getProgrammer());
                     }
                     p.pack();
                     p.setVisible(true);
@@ -182,7 +184,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                         }
                     }
                     // create a dummy RosterEntry with the decoder info
-                    startProgrammer(decoderFile, re, null);
+                    startProgrammer(decoderFile, re, ""); // no programmer name in this case
                     //Set our roster entry back to null so that a fresh roster entry can be created if needed
                     re = null;
                 }
