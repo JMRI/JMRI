@@ -1,4 +1,3 @@
-// CvTableModel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -22,14 +21,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2006
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2063387827430135656L;
     private int _numRows = 0;                // must be zero until Vectors are initialized
     static final int MAXCVNUM = 1024;
     private Vector<CvValue> _cvDisplayVector = new Vector<CvValue>();  // vector of CvValue objects, in display-row order, for doing row mapping

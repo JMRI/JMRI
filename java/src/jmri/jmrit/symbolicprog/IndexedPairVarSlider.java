@@ -1,4 +1,3 @@
-// IndexedPairVarSlider.java
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.BoundedRangeModel;
@@ -15,16 +14,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author    Bob Jacobsen   Copyright (C) 2013
- * @version   $Revision$
  * @deprecated // since 3.7.1
  */
 @Deprecated // since 3.7.1
 public class IndexedPairVarSlider extends JSlider implements ChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8054104892132955807L;
     IndexedPairVariableValue _iVar;
 
     IndexedPairVarSlider(IndexedPairVariableValue iVar, int min, int max) {

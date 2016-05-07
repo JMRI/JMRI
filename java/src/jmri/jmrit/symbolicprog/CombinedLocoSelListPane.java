@@ -139,7 +139,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         for (int i = 0; i < allMfgList.size(); i++) {
             // see if this qualifies; either a non-zero set of decoders, or
             // matches the specific name
-            if ((specific != null && (allMfgList.get(i) == specific))
+            if ((specific != null && (allMfgList.get(i).equals(specific)))
                     || (0 != DecoderIndexFile.instance()
                     .matchingDecoderList(allMfgList.get(i), null, null, null, null, null)
                     .size())) {

@@ -1,4 +1,3 @@
-// NewLocoSelPane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionListener;
@@ -33,16 +32,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  * @see jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see jmri.jmrit.roster.IdentifyLoco
  */
 public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3220976963077803055L;
 
     public NewLocoSelPane(JLabel s, ProgModeSelector selector) {
         _statusLabel = s;

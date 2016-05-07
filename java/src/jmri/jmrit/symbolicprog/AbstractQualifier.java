@@ -1,4 +1,3 @@
-// AbstractQualifier.java
 package jmri.jmrit.symbolicprog;
 
 /**
@@ -9,7 +8,6 @@ package jmri.jmrit.symbolicprog;
  * whether the "qualified" Object is available or not.
  *
  * @author	Bob Jacobsen Copyright (C) 2010, 2014
- * @version	$Revision$
  *
  */
 public abstract class AbstractQualifier implements Qualifier, java.beans.PropertyChangeListener {

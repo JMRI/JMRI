@@ -1,4 +1,3 @@
-// SplitVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * </PRE> decoders.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2004, 2013
- * @version	$Revision$
  *
  */
 public class SplitVariableValue extends VariableValue

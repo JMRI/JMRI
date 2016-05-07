@@ -1,4 +1,3 @@
-// ArithmeticQualifier.java
 package jmri.jmrit.symbolicprog;
 
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * 0). Comparisons with the value of a non-existant variable always fail.
  *
  * @author	Bob Jacobsen Copyright (C) 2010, 2014
- * @version	$Revision$
  *
  */
 public abstract class ArithmeticQualifier extends AbstractQualifier {

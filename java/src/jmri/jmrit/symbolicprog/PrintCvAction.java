@@ -1,4 +1,3 @@
-// PrintCvAction.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Font;
@@ -21,14 +20,9 @@ import org.slf4j.LoggerFactory;
  * Macintosh MRJ
  *
  * @author	Bob Jacobsen Copyright (C) 2003; D Miller Copyright 2003, 2005
- * @version $Revision$
  */
 public class PrintCvAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -834651924896005111L;
     final int TABLE_COLS = 3;
 
     public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, boolean preview, RosterEntry pRoster) {

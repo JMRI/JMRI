@@ -411,7 +411,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     boolean checkIfEntrySelected(boolean allowMultiple) {
         if ((re == null && !allowMultiple) || (this.getSelectedRosterEntries().length < 1)) {
-            JOptionPane.showMessageDialog(null, "Please select a loco from the roster first");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoSelection"));
             return false;
         }
         return true;
@@ -554,10 +554,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rtable.getTable().addMouseListener(rosterMouseListener);
         try {
             clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             try {
                 clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time"));
-            } catch (Exception ex) {
+            } catch (RuntimeException ex) {
                 clickDelay = 500;
                 log.error("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
             }
@@ -1150,7 +1150,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 String columnName = (String) tc.getHeaderValue();
                 int index = tcm.getColumnIndex(tc.getIdentifier(), false);
                 prefsMgr.setTableColumnPreferences(rostertableref, columnName, index, tc.getPreferredWidth(), RowSorterUtil.getSortOrder(rtable.getTable().getRowSorter(), tc.getModelIndex()), !tcm.isColumnVisible(tc));
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 log.warn("unable to store settings for table column " + tc.getHeaderValue(), e);
             }
         }
