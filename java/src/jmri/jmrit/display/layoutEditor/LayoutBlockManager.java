@@ -1,4 +1,3 @@
-// jmri.jmrit.display.LayoutBlockManager.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * the user for the most part.
  *
  * @author Dave Duchamp Copyright (C) 2007
- * @version	$Revision$
  */
 public class LayoutBlockManager extends AbstractManager implements jmri.InstanceManagerAutoDefault {
 
@@ -2268,5 +2266,3 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class.getName());
 }
-
-/* @(#)LayoutBlockManager.java */
