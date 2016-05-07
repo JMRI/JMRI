@@ -1052,8 +1052,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                                  miss the user pressing F8, while we are checking*/
                         debugmsg = true;
                         if (e.getID() == KeyEvent.KEY_PRESSED) {
-                            KeyEvent ky = (KeyEvent) e;
-                            if (ky.getKeyCode() == 119) {
+                            if (e instanceof KeyEvent && ((KeyEvent)e).getKeyCode() == 119) {
                                 startupDebug();
                             } else {
                                 debugmsg = false;
