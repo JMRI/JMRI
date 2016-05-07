@@ -1014,6 +1014,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
     static SplashWindow sp = null;
     static AWTEventListener debugListener = null;
+    
+    // TODO: Remove the "static" nature of much of the initialization someday.
+    //       It exits to allow splash() to be called first-thing in main(), see e.g.
+    //       apps.DecoderPro.DecoderPro.main(...) 
+    //       Or maybe, just not worry about this here, in the older base class,
+    //       and address it in the newer apps.gui3.Apps3 as that's the base class of the future.
     static boolean debugFired = false;  // true if we've seen F8 during startup
     static boolean debugmsg = false;    // true while we're handling the "No Logix?" prompt window on startup
 
@@ -1023,13 +1029,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Invoke the standard Log4J logging initialization.
-     *
+     * <p>
      * No longer used here. ({@link #splash} calls the initialization directly.
      * Left as a deprecated method because other code, e.g. CATS is still using
      * in in JMRI 3.7 and perhaps 3.8
      *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
-     * directly.
+     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging} directly.
      */
     @Deprecated
     static protected void initLog4J() {
