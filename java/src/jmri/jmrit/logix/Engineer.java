@@ -328,8 +328,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             speed = 0.0f;
         }
         _throttle.setSpeedSetting(speed);
-        if (_debug) log.debug("_speedType="+_speedType+", Speed set to "+
+        if (_debug) {
+           synchronized(this) {
+              log.debug("_speedType="+_speedType+", Speed set to "+
                 speed+" _waitForClear= "+_waitForClear+" _waitForSync= "+_waitForSync+", warrant "+_warrant.getDisplayName());
+           }
+        }
     }
     
     protected float getSpeed() {
