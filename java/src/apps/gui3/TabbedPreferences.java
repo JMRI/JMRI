@@ -201,7 +201,7 @@ public class TabbedPreferences extends AppConfigBase {
         return initialisationState;
     }
 
-    private void setInitalisationState(int state) {
+    private synchronized void setInitalisationState(int state) { // currently only used in init(), but synchronized in case added elsewhere later
         int old = this.initialisationState;
         this.initialisationState = state;
         this.firePropertyChange(INITIALIZATION, old, state);
