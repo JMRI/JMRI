@@ -772,6 +772,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             notify();
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UL_UNRELEASED_LOCK_EXCEPTION_PATH", justification = "warning indicates that _lock should be released in a finally clause of a try block, but _lock is already released in a finally clause of a try block.")
         public void run() {
             _lock.lock();
             _speedOverride = true;
