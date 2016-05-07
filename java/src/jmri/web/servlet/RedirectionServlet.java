@@ -38,7 +38,6 @@ public class RedirectionServlet extends HttpServlet {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "HRS_REQUEST_PARAMETER_TO_HTTP_HEADER", justification = "redirect to new URL carries original parameters") 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean firstParameter = true;
         String target = redirections.getProperty(request.getContextPath());
