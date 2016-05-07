@@ -692,13 +692,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 log.error(_message);
                 return _message;
             }
-            _student = student;
+            synchronized(this) {
+               _student = student;
+            }
         } else if (mode == MODE_RUN || mode == MODE_MANUAL) {
             if (commands == null || commands.size() == 0) {
                 _commands = _throttleCommands;
             } else {
                 _commands = commands;
-
             }
             // set mode before setStoppingBlock and callback to notifyThrottleFound are called
             _idxCurrentOrder = 0;
@@ -851,7 +852,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
         startupWarrant();
         if (_runMode == MODE_LEARN) {
-            _student.notifyThrottleFound(throttle);
+            synchronized(this) {
+               _student.notifyThrottleFound(throttle);
+            }
         } else {
             getBlockSpeedTimes();
             _idxSpeedChange = -1;
