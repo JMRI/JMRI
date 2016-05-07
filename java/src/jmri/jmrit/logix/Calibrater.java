@@ -156,7 +156,6 @@ public class Calibrater extends jmri.util.JmriJFrame {
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            _warrant.getRosterEntry();
             if (_speedProfile == null) {
                 _speedProfile = new RosterSpeedProfile(ent);
                 ent.setSpeedProfile(_speedProfile);
