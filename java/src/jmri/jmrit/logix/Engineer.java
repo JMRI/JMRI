@@ -317,6 +317,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     throttleSpeed = mapSpeed;                  
                 }
                 break;
+            default:
+                 log.error("Unknown speed interpretation " + _speedMap.getInterpretation());
+                 throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _speedMap.getInterpretation());
         }
         return throttleSpeed;
     }
@@ -473,6 +476,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             case 26: _throttle.setF26(isSet); break;
             case 27: _throttle.setF27(isSet); break;
             case 28: _throttle.setF28(isSet); break;
+            default:
+                 log.error("Function value " + cmdNum + " out of range");
+                 throw new java.lang.IllegalArgumentException("Function Value " +cmdNum + " out of range");
         }
     }
 
@@ -508,6 +514,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             case 26: _throttle.setF26Momentary(!isTrue); break;
             case 27: _throttle.setF27Momentary(!isTrue); break;
             case 28: _throttle.setF28Momentary(!isTrue); break;
+            default:
+                 log.error("Function value " + cmdNum + " out of range");
+                 throw new java.lang.IllegalArgumentException("Function Value " +cmdNum + " out of range");
         }
     }
 
