@@ -60,11 +60,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a frame for selecting the information
  * needed to open a PaneProgFrame in service mode.
  * <P>
- * The name is a historical accident, and probably should have included
+ * The class name is a historical accident, and probably should have included
  * "ServiceMode" or something.
- * <P>
- * The resulting JFrame is constructed on the fly here, and has no specific
- * type.
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
@@ -74,7 +71,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
 
     Object o1, o2, o3, o4;
     JLabel statusLabel;
-    jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
+    final jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
     public PaneProgDp3Action(String s, jmri.util.swing.WindowInterface wi) {
         super(s, wi);
@@ -159,6 +156,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     p.setVisible(true);
                 }
 
+                @Override
                 protected void openNewLoco() {
                     log.debug("openNewLoco");
                     // find the decoderFile object
@@ -229,6 +227,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     return pan;
                 }
 
+                @Override
                 protected void selectDecoder(int mfgID, int modelID, int productID) {
                     log.debug("selectDecoder");
                     //On selecting a new decoder start a fresh with a new roster entry
