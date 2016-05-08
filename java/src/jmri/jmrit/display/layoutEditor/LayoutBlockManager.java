@@ -221,6 +221,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * Editor panels have been loaded.
      */
     public void initializeLayoutBlockPaths() {
+        log.debug("start initializeLayoutBlockPaths");
         // cycle through all LayoutBlocks, completing initialization of associated jmri.Blocks
         java.util.Iterator<String> iter = getSystemNameList().iterator();
         while (iter.hasNext()) {
@@ -228,6 +229,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             if (sName == null) {
                 log.error("System name null during 1st initialization of LayoutBlocks");
             } else {
+                log.debug("initializeLayoutBlock on \"{}\"", sName);
                 LayoutBlock b = getBySystemName(sName);
                 b.initializeLayoutBlock();
             }
@@ -264,7 +266,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 //		layoutEditorTests.runClinicTests();
 //		layoutEditorTests.runTestPanel3Tests();
         initialized = true;
+        log.debug("start initializeLayoutBlockRouting");
         initializeLayoutBlockRouting();
+        log.debug("end initializeLayoutBlockRouting and initializeLayoutBlockPaths");
     }
 
     private boolean initialized = false;
@@ -2100,6 +2104,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     private void initializeLayoutBlockRouting() {
         if (!enableAdvancedRouting || !initialized) {
+            log.debug("initializeLayoutBlockRouting immediate return due to {} {}", enableAdvancedRouting, initialized);
             return;
         }
         // cycle through all LayoutBlocks, completing initialization of the layout block routing
@@ -2118,6 +2123,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     private long lastRoutingChange;
 
     void setLastRoutingChange() {
+        log.debug("setLastRoutingChange");
         lastRoutingChange = System.nanoTime();
         stabilised = false;
         setRoutingStabilised();
@@ -2150,22 +2156,35 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             log.debug("routing table has now been stable for 2 seconds");
                             checking = false;
                             stabilised = true;
-                            firePropertyChange("topology", false, true);
+                            jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
+                                firePropertyChange("topology", false, true);
+                            });
                             if (namedStabilisedIndicator != null) {
-                                namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
+                                jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
+                                    log.debug("Setting StabilisedIndicator Sensor {} ACTIVE", namedStabilisedIndicator.getBean().getSystemName());
+                                    try {
+                                        namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
+                                    } catch (jmri.JmriException ex) {
+                                        log.debug("Error setting stability indicator sensor");
+                                    }
+                                });
+                            } else {
+                                log.debug("Stable, no sensor to set");
                             }
+                        } else {
+                            log.debug("routing table not stable at {} in {}", lastRoutingChange, Thread.currentThread().getName());
                         }
                         oldvalue = lastRoutingChange;
                     }
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                     checking = false;
-                } catch (jmri.JmriException ex) {
-                    log.debug("Error setting stability indicator sensor");
+//                 } catch (jmri.JmriException ex) {
+//                     log.debug("Error setting stability indicator sensor");
                 }
             }
         };
-        thr = new Thread(r, "Routing stabilisiing timer");
+        thr = new Thread(r, "Routing stabilising timer");
         thr.start();
     }
 
