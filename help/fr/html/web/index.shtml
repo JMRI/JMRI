@@ -30,8 +30,7 @@ JMRI peut fournir un acc&#232;s Internet &#224; votre r&#233;seau miniature.
 La m&#233;thode de base a &#233;t&#233; d&#233;velopp&#233;e par Konrad Froetzheim et ses coll&#232;gues
 au d&#233;but des ann&#233;es 1990 pour leur "Internet Model Railroad".
 Un serveur web standard communique avec le navigateur web normal de l'utilisateur  acceptant
-les requ&#234;tes HTTP de la mani&#232;re habituelle. <a href="WebServer.shtml"> 
-D&#233;tails du serveur web JMRI</a>
+les requ&#234;tes HTTP de la mani&#232;re habituelle.
 
 <p>
 Par exemple, l'utilisateur peut avoir son navigateur qui demande le 
@@ -185,32 +184,19 @@ Par exemple, pour afficher "myFile.xml" &#224; partir du r&#233;pertoire JMRI pr
 
 Pour obtenir une vue joliment format&#233; de votre liste JMRI simplement aller &#224;:
 <code><pre>
-<a href="http://localhost:12080/prefs/roster.xml"> http://localhost:12080/prefs/roster.xml </a>
+<a href="http://localhost:12080/roster?format=xml"> http://localhost:12080/roster?format=xml </a>
 </Pre></code>
 Notez que ceci est votre fichier roster.xml qui s'affiche uniquement en utilisant une transformation XSLT.
 
+<h2><a name="security">s&#233;curit&#233;</a></h2>
 
-<h3> XML et acc&#232;s Ajax </h3>
+<p>Par d&#233;faut, JMRI permet uniquement un acc&#232;s limit&#233; &#224; votre ordinateur.
+Seuls les fichiers qui se trouvent dans le r&#233;pertoire de distribution JMRI
+ou le r&#233;pertoire JMRI preferences seront fournis en r&#233;ponse &#224; des
+demandes. Ce n'est pas la s&#233;curit&#233; &#233;tanche &#224; tout, cependant, et vous devriez faire
+attention &#224; ne pas mettre un contenu important dans ces r&#233;pertoires ou les lier
+&#224; d'autres parties de votre ordinateur.</p>
 
-JMRI fournit XML et acc&#232;s Ajax  via un
-<a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html"> XML IO servlet personnalis&#233;</a>.
-
-<p>
-Il ya trois pages d'exemples qui montrent comment cela peut &#234;tre utilis&#233;:
-<dl>
-<dt><a href="http://localhost:12080/web/request.html"> web/request.html </a>
-<dd> Rend une seule requ&#234;te XML pour tous les capteurs disponibles, et montre leur statut dans un tableau.
-<dt><a href="http://localhost:12080/web/monitor.html"> web/monitor.html </a>
-<dd> utilise les requ&#234;tes retard&#233;es pour surveiller l'&#233;tat de tous les capteurs,
-la mise &#224; jour d'une table lors de tout changement.
-<dt><a href="http://localhost:12080/web/throttle.html"> web/throttle.html </a>
-<dd> Envoie une commande de vitesse pour une locomotive DCC sur le r&#233;seau quand une touche est enfonc&#233;e.
-</Dl>
-
-<p>
-Par d&#233;faut, ceci est configur&#233; pour g&#233;rer les URLs qui commencent par "/xmlio".
-Les Informations sur l'utilisation et la personnalisation peuvent &#234;tre trouv&#233;es sur une
-<a  href="XMLIO.shtml"> Page s&#233;par&#233;e</a>..
 </div>
 <!--#include virtual="/Footer" -->
 </body>

@@ -18,13 +18,6 @@
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="WebServer.shtml"> Configuration Avanc&#233;e</a></h3></dt>
-		<dd>D&#233;tails du support int&#233;gr&#233; de JMRI.
-		    <UL>
-		    <LI><dfn><a href="WebServer.shtml">Serveur Web JMRI</a></dfn>
-		    </UL>
-		</dd>
-
 		<dt><h3>Serlets</h3></dt>
 		<dd> D&#233;tails des composants web de JMRI .
 		 <UL>

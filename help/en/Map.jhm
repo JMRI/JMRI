@@ -1848,7 +1848,7 @@
 
 <mapID target="manual.DecoderPro.Basic_BasicPane_Top" url="manual/DecoderPro/Basic_BasicPane.shtml#Top"/>
 
-<mapID target="html.web.WebServer" url="html/web/WebServer.shtml"/>
+<mapID target="html.web.WebServer" url="html/web/index.shtml"/>
 
 <mapID target="html.hardware.pi.index" url="html/hardware/pi/index.shtml"/>
 
