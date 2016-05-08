@@ -81,6 +81,8 @@
     </node>
     <node>separator</node><!-- separator -->
     <node name="Open PanelPro Window">
+        <name xml:lang="fr">Ouvrir la fenêtre PanelPro</name>
+        <name xml:lang="it">Aprire la finestra PanelPro</name>        
         <name xml:lang="da">Åben PanelPro Window</name>
         <name xml:lang="de">Öffne PanelPro Fenster</name>
         <adapter>apps.PanelPro.PanelProAction</adapter>
