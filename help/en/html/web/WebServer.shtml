@@ -12,57 +12,10 @@
         <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
         <link rel="home" title="Home" href="/">
         <!-- /Style -->
+        <meta http-equiv="refresh" content="0; url=index.shtml">
     </head>
 
     <body>
-        <!--#include virtual="/Header" -->
-
-        <!--#include virtual="Sidebar" -->
-        <div id="mainContent">
-
-            <h1>JMRI Web Server</h1>
-
-            <p>JMRI includes a built-in web server, which provides access
-                to JMRI features via standard web protocols, from other computers
-                and devices.</p>
-            <p>The JMRI web server is built on the
-                <a href="https://en.wikipedia.org/wiki/Jetty_(web_server)" target="_new">Jetty</a> web server.</p>
-
-            <h2>Configuration</h2>
-
-            <p>Two properties files configure the JMRI web server and its
-                default features. Changing these files requires rebuilding JMRI.
-                Preferences are managed through
-                <a href="index.shtml#Configure">Web Server Preferences</a>.</p>
-
-            <dl>
-                <dt><a href="https://svn.code.sf.net/p/jmri/code/trunk/jmri/java/src/jmri/web/server/Services.properties" target="_new">jmri/web/server/Services.properties</a>
-                <dd>Maps URLs to the classes that handle them. Of particular interest are:
-                    <dl>
-                        <dt>FileServlet</dt><dd>Local file browser.</dd>
-                        <dt><a href="FrameServlet.shtml">FrameServlet</a></dt><dd>Images of open JMRI windows.</dd>
-                        <dt><a href="JsonServlet.shtml">JsonServlet</a></dt><dd>JSON protocol to control your JMRI railroad.</dd>
-                        <dt><a href="PanelServlet.shtml">PanelServlet</a></dt><dd>Real-time JMRI panels.</dd>
-                        <dt><a href="RosterServlet.shtml">RosterServlet</a></dt><dd>Access the roster.</dd>
-                    </dl>
-                </dd></dt>
-                <dt><a href="https://svn.code.sf.net/p/jmri/code/trunk/jmri/java/src/jmri/web/server/FilePaths.properties" target=_new>jmri/web/server/FilePaths.properties</a>
-                <dd>Maps URLs to directories in JMRI and maps URLs that are redirected to other URLs.</dd>
-                </dt>
-            </dl>
-
-            <h2>Security</h2>
-
-            <p>By default, JMRI only allows limited access to your computer.
-                Only files that are located within the JMRI distribution directory
-                or the JMRI preferences directory will be provided in response to
-                requests.  This is not air-tight security, however, and you should
-                be careful to not put important content in those directories or link
-                them to other parts of your computer.</p>
-
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
-
-</body>
+        <p>This content has been superceded by <a href="index.shtml">JMRI Web Access</a>.</p>
+    </body>
 </html>
