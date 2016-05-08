@@ -85,7 +85,7 @@ updating a table when any change.</dd>
 <p>
 Please note that the XML I/O servlet was only supported with 
 the 
-<a href="WebServer.shtml">JMRI Web Server</a>, and may
+<a href="index.shtml">JMRI Web Server</a>, and may
 not work with other servlet containers.
 
 <h2>Request Format</h2>

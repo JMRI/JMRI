@@ -15,13 +15,6 @@
 		    </ul>
 		</dd>
 
-		<dt><h3><a href="WebServer.shtml">Advanced Configuration</a></h3></dt>
-		<dd>Details of JMRI's built-in web support.
-		    <ul>
-		    <li><dfn><a href="WebServer.shtml">JMRI Web Server</a></dfn></li>
-		    </ul>
-		</dd>
-
 		<dt><h3>Servlets</h3></dt>
 		<dd>Details of the JMRI web components.
 		    <ul>
