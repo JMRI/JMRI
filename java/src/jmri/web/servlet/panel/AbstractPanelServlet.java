@@ -2,6 +2,7 @@ package jmri.web.servlet.panel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import java.awt.Container;
 import java.awt.Frame;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -161,7 +162,14 @@ abstract class AbstractPanelServlet extends HttpServlet {
         return bi;
     }
 
-    abstract protected JComponent getPanel(String name);
+    @CheckForNull
+    protected JComponent getPanel(String name) {
+        Editor editor = getEditor(name);
+        if (editor != null) {
+            return editor.getTargetPanel();
+        }
+        return null;
+    }
 
     protected String getPanelText(String name, boolean useXML) {
         if (useXML) {
@@ -178,8 +186,9 @@ abstract class AbstractPanelServlet extends HttpServlet {
     @CheckForNull
     protected Editor getEditor(String name) {
         for (Editor editor : Editor.getEditors()) {
-            if (Frame.class.isInstance(editor)) {
-                if (((Frame) editor.getTargetPanel().getTopLevelAncestor()).getTitle().equals(name)) {
+            Container container = editor.getTargetPanel().getTopLevelAncestor();
+            if (Frame.class.isInstance(container)) {
+                if (((Frame) container).getTitle().equals(name)) {
                     return editor;
                 }
             }
