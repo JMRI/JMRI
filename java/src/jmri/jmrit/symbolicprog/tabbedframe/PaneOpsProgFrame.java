@@ -1,4 +1,3 @@
-// PaneOpsProgFrame.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.util.List;
@@ -16,15 +15,10 @@ import org.slf4j.LoggerFactory;
  * Extend the PaneProgFrame to handle ops mode operations
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version	$Revision$
  */
 public class PaneOpsProgFrame extends PaneProgFrame
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 151719893908045286L;
     JPanel modePane;
 
     /**

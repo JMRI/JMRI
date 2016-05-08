@@ -1,4 +1,3 @@
-// PaneEditAction.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.event.ActionEvent;
@@ -26,14 +25,8 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class PaneEditAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6644018374123999540L;
     Object o1, o2, o3, o4;
 
     public PaneEditAction() {
@@ -104,5 +97,3 @@ public class PaneEditAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class.getName());
 
 }
-
-/* @(#)PaneOpsProgAction.java */

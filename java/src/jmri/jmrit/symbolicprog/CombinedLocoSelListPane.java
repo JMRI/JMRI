@@ -45,6 +45,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Create the panel used to select the decoder
      */
+    @Override
     protected JPanel layoutDecoderSelection() {
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
@@ -190,6 +191,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Decoder identify has matched one or more specific types
      */
+    @Override
     void updateForDecoderTypeID(List<DecoderFile> pModelList) {
         // use a DefaultComboBoxModel to get the efficient ctor
         mDecoderList.setModel(DecoderIndexFile.jComboBoxModelFromList(pModelList));
@@ -205,6 +207,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      * @param pMfgID   Manufacturer ID number (CV8)
      * @param pModelID Model ID number (CV7)
      */
+    @Override
     void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {
         String msg = "Found mfg " + pMfgID + " (" + pMfg + ") version " + pModelID + "; no such decoder defined";
         log.warn(msg);
@@ -231,6 +234,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Decoder identify did not match anything, warn and show all
      */
+    @Override
     void updateForDecoderNotID(int pMfgID, int pModelID) {
         String msg = "Found mfg " + pMfgID + " version " + pModelID + "; no such manufacterer defined";
         log.warn(msg);
@@ -277,6 +281,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      *
      * @return true if a decoder type is selected
      */
+    @Override
     boolean isDecoderSelected() {
         return !mDecoderList.isSelectionEmpty();
     }
@@ -286,6 +291,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      *
      * @return The selected decoder type name, or null if none selected.
      */
+    @Override
     protected String selectedDecoderType() {
         if (!isDecoderSelected()) {
             return null;
