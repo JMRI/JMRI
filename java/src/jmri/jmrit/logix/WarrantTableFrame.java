@@ -83,12 +83,15 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             _instance = new WarrantTableFrame();
             try {
                 _instance.initComponents();
-            } catch (Exception ex ) {/*bogus*/ }
+            } catch (Exception ex ) {
+                log.error("Unable to initilize Warrant Table Frame", ex);
+            }
         }
         _instance.setVisible(true);
         _instance.pack();
         return _instance;
     }
+
     // for JUnit test
     protected static WarrantTableFrame reset() {
         _instance = null;
@@ -105,6 +108,16 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         setTitle(Bundle.getMessage("WarrantTable"));
         _model = new WarrantTableModel(this);
         _model.init();
+
+    }
+
+    /**
+     * By default, Swing components should be created an installed in this
+     * method, rather than in the ctor itself.
+     */
+    @Override
+    public void initComponents() throws Exception {
+
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??            
         JTable table;   // = new JTable(_model);
         ComboBoxCellEditor comboEd;
@@ -230,6 +243,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
 //        setLocation(50,0);
         pack();
     }
+
     protected void scrollTable() {
         JScrollBar bar = _tablePane.getVerticalScrollBar();
         bar.setValue(bar.getMaximum());
