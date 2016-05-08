@@ -302,7 +302,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
             switch (c) {
                 case INCLUDECOL:
-                    mgr.getBySystemName(sysNameList.get(r)).setProperty("WifiControllable", ((Boolean) type).booleanValue());
+                    mgr.getBySystemName(sysNameList.get(r)).setProperty("WifiControllable", type);
                     if (!isDirty) {
                         this.fireTableChanged(new TableModelEvent(this));
                         isDirty = true;
@@ -372,7 +372,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
             switch (c) {
                 case INCLUDECOL:
-                    mgr.getBySystemName(sysNameList.get(r)).setProperty("WifiControllable", ((Boolean) type).booleanValue());
+                    mgr.getBySystemName(sysNameList.get(r)).setProperty("WifiControllable", type);
                     if (!isDirty) {
                         this.fireTableChanged(new TableModelEvent(this));
                         isDirty = true;

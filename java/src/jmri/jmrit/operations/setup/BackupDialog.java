@@ -135,6 +135,7 @@ public class BackupDialog extends JDialog {
             {
                 backupButton = new JButton(Bundle.getMessage("BackupDialog.backupButton.text"));
                 backupButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         do_backupButton_actionPerformed(e);
                     }
@@ -145,6 +146,7 @@ public class BackupDialog extends JDialog {
             {
                 JButton cancelButton = new JButton(Bundle.getMessage("BackupDialog.cancelButton.text"));
                 cancelButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent arg0) {
                         do_cancelButton_actionPerformed(arg0);
                     }

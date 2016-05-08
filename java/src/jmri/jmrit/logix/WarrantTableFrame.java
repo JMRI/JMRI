@@ -59,7 +59,6 @@ import org.slf4j.LoggerFactory;
 
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseListener 
 {
-    private static final long serialVersionUID = 8994208663637783635L;
     static final String halt = Bundle.getMessage("Halt");
     static final String resume = Bundle.getMessage("Resume");
     static final String abort = Bundle.getMessage("Abort");
@@ -84,12 +83,15 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             _instance = new WarrantTableFrame();
             try {
                 _instance.initComponents();
-            } catch (Exception ex ) {/*bogus*/ }
+            } catch (Exception ex ) {
+                log.error("Unable to initilize Warrant Table Frame", ex);
+            }
         }
         _instance.setVisible(true);
         _instance.pack();
         return _instance;
     }
+
     // for JUnit test
     protected static WarrantTableFrame reset() {
         _instance = null;
@@ -106,6 +108,16 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         setTitle(Bundle.getMessage("WarrantTable"));
         _model = new WarrantTableModel(this);
         _model.init();
+
+    }
+
+    /**
+     * By default, Swing components should be created an installed in this
+     * method, rather than in the ctor itself.
+     */
+    @Override
+    public void initComponents() throws Exception {
+
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??            
         JTable table;   // = new JTable(_model);
         ComboBoxCellEditor comboEd;
@@ -210,7 +222,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         menuBar.add(fileMenu);
         JMenu warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("ConcatWarrants")){
-            private static final long serialVersionUID = 8994208663637773635L;
             public void actionPerformed(ActionEvent e) {
                 concatMenuAction();
             }
@@ -218,7 +229,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
         warrantMenu.add(WarrantTableAction._trackerTable);
         warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
-            private static final long serialVersionUID = -4129760191508866189L;
 
             public void actionPerformed(ActionEvent e) {
                 nxAction();
@@ -233,6 +243,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
 //        setLocation(50,0);
         pack();
     }
+
     protected void scrollTable() {
         JScrollBar bar = _tablePane.getVerticalScrollBar();
         bar.setValue(bar.getMaximum());
@@ -329,10 +340,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
 
     static public class ComboBoxCellEditor extends DefaultCellEditor
     {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 3035798240606397980L;
         TableSorter _sorter;
         
         ComboBoxCellEditor(JComboBox <String> comboBox) {

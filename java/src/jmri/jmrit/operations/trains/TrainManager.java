@@ -907,6 +907,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void buildSelectedTrains(final List<Train> trains) {
         // use a thread to allow table updates during build
         Thread build = new Thread(new Runnable() {
+            @Override
             public void run() {
                 for (Train train : trains) {
                     train.buildIfSelected();
@@ -1139,6 +1140,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * replacement.
      *
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("TrainManager sees property change: " + e.getPropertyName() + " old: "
                 + e.getOldValue() + " new " + e.getNewValue()); // NOI18N

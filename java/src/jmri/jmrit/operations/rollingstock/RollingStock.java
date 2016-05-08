@@ -140,6 +140,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * For combobox and identification
      */
+    @Override
     public String toString() {
         return getRoadName() + " " + getNumber();
     }
@@ -1290,6 +1291,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     }
 
     // rolling stock listens for changes in a location name or if a location is deleted
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         // if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + toString()+ " property name: "
         // +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());

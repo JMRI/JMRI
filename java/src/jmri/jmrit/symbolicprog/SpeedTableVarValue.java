@@ -1,4 +1,3 @@
-// SpeedTableVarValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.BorderLayout;
@@ -74,7 +73,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue
  * (Vstart & Vhigh not written)
  * @author Dave Heap - generate cvList array to incorporate Vstart & Vhigh
- * @version	$Revision$
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {

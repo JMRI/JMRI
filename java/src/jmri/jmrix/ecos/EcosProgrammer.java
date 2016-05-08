@@ -1,14 +1,14 @@
 // EcosProgrammer.java
 package jmri.jmrix.ecos;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.*;
+import java.util.ArrayList;
+import java.util.List;
+import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
-
-import java.util.*;
 import jmri.managers.DefaultProgrammerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements the jmri.Programmer interface via commands for the Ecos

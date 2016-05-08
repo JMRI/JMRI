@@ -17,10 +17,6 @@ import org.jdom2.Element;
 
 public class ThrottlesListPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2070978940988241144L;
     private ThrottlesTableModel throttleFramesLM;
     private JTable throttleFrames;
 

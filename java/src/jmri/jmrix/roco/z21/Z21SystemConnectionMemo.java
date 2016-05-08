@@ -104,6 +104,11 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureManagers() {
         log.debug("Called Configure Managers");
+
+        // set the broadcast flags so we get messages we may want to hear
+        _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
+                           0x00010001),null);  //right now,just the XPressNet flags.
+
         // add an XPressNet Tunnel.
         _xnettunnel = new Z21XPressNetTunnel(this);
  

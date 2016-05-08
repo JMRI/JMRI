@@ -3,7 +3,6 @@ package jmri.jmrit.jython;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 import javax.script.ScriptException;
 import javax.swing.Icon;
 import javax.swing.JFileChooser;

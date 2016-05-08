@@ -13,21 +13,21 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -54,8 +54,6 @@ import org.slf4j.LoggerFactory;
  * @author  Pete Cressman Copyright (C) 2009, 2010
  */
 public class WarrantFrame extends WarrantRoute {
-
-    private static final long serialVersionUID = -5799190071870090700L;
 
     static int ROW_HEIGHT;
 
@@ -1237,10 +1235,6 @@ public class WarrantFrame extends WarrantRoute {
      */
     class ThrottleTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6424673093367457660L;
         public static final int ROW_NUM = 0;
         public static final int TIME_COLUMN = 1;
         public static final int COMMAND_COLUMN = 2;

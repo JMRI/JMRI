@@ -135,12 +135,14 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         setVisible(true);
     }
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("combo box action");
         updateTrains();
     }
 
     // Save, Delete, Add
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             save();
@@ -220,6 +222,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         }
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         // copy checkbox?
         if (ae.getSource() == copyCheckBox) {
@@ -252,6 +255,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         }
     }
 
+    @Override
     public void dispose() {
         manager.removePropertyChangeListener(this);
         CarTypes.instance().removePropertyChangeListener(this);
@@ -259,6 +263,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "

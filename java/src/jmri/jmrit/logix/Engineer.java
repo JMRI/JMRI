@@ -7,7 +7,6 @@ import jmri.Sensor;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.ThreadingUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +22,6 @@ import org.slf4j.LoggerFactory;
     /************************** Thread running the train *****************/
 
 public class Engineer extends Thread implements Runnable, java.beans.PropertyChangeListener {
-
-//    private static final long serialVersionUID = 7088050907933847146L;
 
     private int     _idxCurrentCommand;     // current throttle command
     private float   _normalSpeed = 0;       // current commanded throttle setting (unmodified)
@@ -265,15 +262,17 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return;
         }
         if (_throttle.getSpeedSetting()<=0 && (endSpeedType.equals(Warrant.Stop) || endSpeedType.equals(Warrant.EStop))) {
-            _waitForClear = true;
+            synchronized(this) {
+                _waitForClear = true;
+            }
             _speedType = endSpeedType;
             return;
         }
-        if (_ramp!=null) {
-            _ramp.quit();
-            _ramp = null;
-        }
         synchronized(this) {
+            if (_ramp!=null) {
+                _ramp.quit();
+                _ramp = null;
+            }
             if (_debug) log.debug("rampSpeedTo: \""+endSpeedType+"\" from \""+
                     _speedType+"\" setting= "+_throttle.getSpeedSetting()+" for warrant "+_warrant.getDisplayName());
             _ramp = new ThrottleRamp(endSpeedType);
@@ -320,6 +319,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     throttleSpeed = mapSpeed;                  
                 }
                 break;
+            default:
+                 log.error("Unknown speed interpretation " + _speedMap.getInterpretation());
+                 throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _speedMap.getInterpretation());
         }
         return throttleSpeed;
     }
@@ -331,15 +333,19 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             speed = 0.0f;
         }
         _throttle.setSpeedSetting(speed);
-        if (_debug) log.debug("_speedType="+_speedType+", Speed set to "+
+        if (_debug) {
+           synchronized(this) {
+              log.debug("_speedType="+_speedType+", Speed set to "+
                 speed+" _waitForClear= "+_waitForClear+" _waitForSync= "+_waitForSync+", warrant "+_warrant.getDisplayName());
+           }
+        }
     }
     
     protected float getSpeed() {
         return _throttle.getSpeedSetting();
     }
     
-    public int getRunState() {
+    synchronized public int getRunState() {
         if (_abort) {
             return Warrant.ABORT;
         } else  if (_halt) {
@@ -472,6 +478,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             case 26: _throttle.setF26(isSet); break;
             case 27: _throttle.setF27(isSet); break;
             case 28: _throttle.setF28(isSet); break;
+            default:
+                 log.error("Function value " + cmdNum + " out of range");
+                 throw new java.lang.IllegalArgumentException("Function Value " +cmdNum + " out of range");
         }
     }
 
@@ -507,6 +516,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             case 26: _throttle.setF26Momentary(!isTrue); break;
             case 27: _throttle.setF27Momentary(!isTrue); break;
             case 28: _throttle.setF28Momentary(!isTrue); break;
+            default:
+                 log.error("Function value " + cmdNum + " out of range");
+                 throw new java.lang.IllegalArgumentException("Function Value " +cmdNum + " out of range");
         }
     }
 
@@ -762,6 +774,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             notify();
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UL_UNRELEASED_LOCK_EXCEPTION_PATH", justification = "warning indicates that _lock should be released in a finally clause of a try block, but _lock is already released in a finally clause of a try block.")
         public void run() {
             _lock.lock();
             _speedOverride = true;
@@ -842,8 +855,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 });
                 _lock.unlock();
             }
-            if (_debug) log.debug("rampSpeed complete to \""+endSpeedType+
+            synchronized(this) {
+               if (_debug) log.debug("rampSpeed complete to \""+endSpeedType+
                     "\" _waitForClear= "+_waitForClear+" on warrant "+_warrant.getDisplayName());
+            }
             checkHalt();
         }
     }

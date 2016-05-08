@@ -90,6 +90,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         return _id;
     }
 
+    @Override
     public String toString() {
         return getId(); // for property changes
     }
@@ -531,6 +532,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("AutomationItem id ({}) sees property change: ({}) old: ({}) new: ({})",

@@ -357,6 +357,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     // Save, Delete, Add
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveTrackButton) {
             log.debug("track save button activated");
@@ -738,6 +739,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         enableCheckboxes(enabled);
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == orderNormal) {
@@ -1132,6 +1134,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         revalidate();
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == autoDropCheckBox || ae.getSource() == autoPickupCheckBox) {
             updateTrainComboBox();
@@ -1179,6 +1182,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
+    @Override
     public void dispose() {
         if (_track != null) {
             _track.removePropertyChangeListener(this);
@@ -1193,6 +1197,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

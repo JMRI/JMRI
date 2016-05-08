@@ -76,6 +76,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         super(Bundle.getMessage("TitleSwitchLists"));
     }
 
+    @Override
     public void initComponents() {
         // listen for any changes in the number of locations
         locationManager.addPropertyChangeListener(this);
@@ -203,6 +204,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     private static final boolean IS_UPDATE = true;
 
     // Buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == clearButton) {
             selectCheckboxes(false);
@@ -245,6 +247,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == switchListRealTimeCheckBox) {
             updateButton.setVisible(!switchListRealTimeCheckBox.isSelected());
@@ -516,6 +519,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     private void addLocationCheckBoxAction(JCheckBox b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 locationCheckBoxActionPerformed(e);
             }
@@ -533,6 +537,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     private void addCommentButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 commentButtonActionPerformed(e);
             }
@@ -546,11 +551,13 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         new TrainSwitchListCommentFrame(l);
     }
 
+    @Override
     protected void comboBoxActionPerformed(ActionEvent ae) {
         log.debug("combo box action");
         enableSaveButton(true);
     }
 
+    @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
         Setup.removePropertyChangeListener(this);
@@ -560,6 +567,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         super.dispose();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
@@ -625,6 +633,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
 
         // Buttons
+        @Override
         public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
             if (ae.getSource() == saveButton) {
                 _location.setSwitchListComment(commentTextArea.getText());

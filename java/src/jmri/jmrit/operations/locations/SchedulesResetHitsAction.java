@@ -21,6 +21,7 @@ public class SchedulesResetHitsAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         ScheduleManager.instance().resetHitCounts();
     }

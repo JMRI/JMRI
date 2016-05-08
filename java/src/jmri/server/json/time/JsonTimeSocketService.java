@@ -1,5 +1,7 @@
 package jmri.server.json.time;
 
+import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -12,7 +14,6 @@ import jmri.Timebase;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
 
 /**
  *

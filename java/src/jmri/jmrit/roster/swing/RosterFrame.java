@@ -122,7 +122,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
-    private final static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
     static ArrayList<RosterFrame> frameInstances = new ArrayList<>();
     protected boolean allowQuit = true;
     protected String baseTitle = "Roster";
@@ -412,7 +411,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     boolean checkIfEntrySelected(boolean allowMultiple) {
         if ((re == null && !allowMultiple) || (this.getSelectedRosterEntries().length < 1)) {
-            JOptionPane.showMessageDialog(null, "Please select a loco from the roster first");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoSelection"));
             return false;
         }
         return true;
@@ -527,9 +526,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         }
 
-        ((DefaultRowSorter) rtable.getTable().getRowSorter()).sort();
+        ((DefaultRowSorter<?, ?>) rtable.getTable().getRowSorter()).sort();
         rtable.getTable().setDragEnabled(true);
         rtable.getTable().setTransferHandler(new TransferHandler() {
+
             @Override
             public int getSourceActions(JComponent c) {
                 return TransferHandler.COPY;
@@ -554,10 +554,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rtable.getTable().addMouseListener(rosterMouseListener);
         try {
             clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             try {
                 clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time"));
-            } catch (Exception ex) {
+            } catch (RuntimeException ex) {
                 clickDelay = 500;
                 log.error("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
             }
@@ -1150,7 +1150,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 String columnName = (String) tc.getHeaderValue();
                 int index = tcm.getColumnIndex(tc.getIdentifier(), false);
                 prefsMgr.setTableColumnPreferences(rostertableref, columnName, index, tc.getPreferredWidth(), RowSorterUtil.getSortOrder(rtable.getTable().getRowSorter(), tc.getModelIndex()), !tcm.isColumnVisible(tc));
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 log.warn("unable to store settings for table column " + tc.getHeaderValue(), e);
             }
         }
@@ -1379,12 +1379,18 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             @Override
             protected void done(int dccAddress) {
                 // if Done, updated the selected decoder
-                who.selectLoco(dccAddress, !shortAddr, cv8val, cv7val);
+                // on the GUI thread, right now
+                jmri.util.ThreadingUtil.runOnGUI(()->{
+                    who.selectLoco(dccAddress, !shortAddr, cv8val, cv7val);
+                });
             }
 
             @Override
             protected void message(String m) {
-                statusField.setText(m);
+                // on the GUI thread, right now
+                jmri.util.ThreadingUtil.runOnGUI(()->{
+                    statusField.setText(m);
+                });
             }
 
             @Override
@@ -1417,8 +1423,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     }
                 };
             } else if (service.isSelected()) {
-                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {
-                };
+                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {};
             } else if (ops.isSelected()) {
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = re.isLongAddress();
@@ -1678,7 +1683,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     static class CopyRosterItem extends CopyRosterItemAction {
-
         CopyRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
             setExistingEntry(re);
@@ -1689,4 +1693,5 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             return true;
         }
     }
+    private final static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
 }

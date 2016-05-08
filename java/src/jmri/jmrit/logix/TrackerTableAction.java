@@ -45,11 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrackerTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3359499686576807040L;
-
     static int STRUT_SIZE = 10;
 
     private static TrackerTableAction _instance;
@@ -119,7 +114,6 @@ public class TrackerTableAction extends AbstractAction {
      */
     static class TableFrame extends JmriJFrame implements PropertyChangeListener, MouseListener {
 
-        private static final long serialVersionUID = -56337259221744388L;
         private TrackerTableModel _model;
         private JmriJFrame _pickFrame;
         JDialog _dialog;
@@ -686,7 +680,6 @@ public class TrackerTableAction extends AbstractAction {
 
     static class TrackerTableModel extends AbstractTableModel {
 
-        private static final long serialVersionUID = -8320710926680330134L;
         public static final int NAME_COL = 0;
         public static final int STATUS_COL = 1;
         public static final int STOP_COL = 2;

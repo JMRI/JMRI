@@ -1,4 +1,3 @@
-// VariableTableModel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -14,7 +13,9 @@ import javax.swing.table.AbstractTableModel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
+import org.jdom2.Content;
 import org.jdom2.Element;
+import org.jdom2.util.IteratorIterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +28,8 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2007
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
  * speed table
- * @version $Revision$
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6912067927864604835L;
 
     private String headers[] = null;
 
@@ -276,7 +271,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error("CvModel reference is null; cannot add variables");
             return;
         }
-        if (CV != "") // some variables have no CV per se
+        if (!CV.equals("")) // some variables have no CV per se
         {
             _cvModel.addCV(CV, readOnly, infoOnly, writeOnly);
         }
@@ -540,7 +535,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
 
         int count = 0;
-        java.util.Iterator iterator = child.getDescendants();
+        IteratorIterable<Content> iterator = child.getDescendants();
         while (iterator.hasNext()) {
             Object ex = iterator.next();
             if (ex instanceof Element) {
@@ -565,7 +560,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * enumChoiceGroup elements as needed.
      */
     protected void handleENumValChildren(Element e, EnumVariableValue var) {
-        @SuppressWarnings("unchecked")
         List<Element> local = e.getChildren();
         for (int k = 0; k < local.size(); k++) {
             Element el = local.get(k);

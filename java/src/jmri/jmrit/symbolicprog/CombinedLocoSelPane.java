@@ -1,4 +1,3 @@
-// CombinedLocoSelPane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.BorderLayout;
@@ -17,12 +16,12 @@ import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.IdentifyDecoder;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.IdentifyLoco;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
-import jmri.jmrit.progsupport.ProgModeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,14 +53,8 @@ import org.slf4j.LoggerFactory;
  * further information.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8136064467797917479L;
 
     public CombinedLocoSelPane(JLabel s, ProgModeSelector selector) {
         _statusLabel = s;

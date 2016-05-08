@@ -24,11 +24,10 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
-import jmri.jmrit.progsupport.ProgModeSelector;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -484,7 +483,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         // get the decoder type, it has to be there (assumption!),
         String modelString = locoEntry.getDecoderModel();
         String familyString = locoEntry.getDecoderFamily();
-        String titleString = DecoderFile.titleString(modelString, familyString);
 
         // close the entire GUI (not currently done, users want left open)
         //collapseAll();

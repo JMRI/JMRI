@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2013, 2014
- * @version	$Revision$
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
