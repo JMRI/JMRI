@@ -2246,7 +2246,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             }
             if (facingBlock == null) {
                 log.error("No facing block found for source mast " + getSourceMast().getDisplayName());
-                new Exception("Traceback").printStackTrace();
                 throw new jmri.JmriException("No facing block found for source mast " + getSourceMast().getDisplayName());
             }
             if (destinationBlock == null) {
