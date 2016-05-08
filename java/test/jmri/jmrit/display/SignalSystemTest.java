@@ -28,11 +28,9 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         InstanceManager.configureManagerInstance()
                 .load(new java.io.File("java/test/jmri/jmrit/display/verify/SimplePanel_OBlocks-DB1969.xml"));
         
-        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
-            InstanceManager.logixManagerInstance().activateAllLogixs();
-            InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-        });
-                
+        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+    
         // check aspects
 
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp1+Vr1");
@@ -95,14 +93,19 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
         
         // load file
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");
+
         InstanceManager.configureManagerInstance()
                 .load(new java.io.File("java/test/jmri/jmrit/display/verify/AA1UPtest.xml"));
 
-        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
-            InstanceManager.logixManagerInstance().activateAllLogixs();
-            InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-        });
-                
+        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+
+        jmri.util.JUnitUtil.waitFor(()->{
+                 return InstanceManager.sensorManagerInstance().provideSensor("IS_ROUTING_DONE").getKnownState() == jmri.Sensor.ACTIVE; 
+             },
+             "LayoutEditor stabilized sensor went ACTIVE");
+
         // check aspects
         checkAspect("IF$vsm:BNSF-1996:SE-1A($0152)", "Stop");
 
@@ -144,7 +147,7 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0100)");
         jmri.util.JUnitAppender.clearBacklog();
         jmri.util.JUnitAppender.verifyNoBacklog();
-        log.warn("suppressing multiple messages from AA1UPtest.xml file");
+        log.warn("suppressing multiple \"No facing block found ...\" messages from AA1UPtest.xml file");
     }
     
     void checkAspect(String mastName, String aspect) {
