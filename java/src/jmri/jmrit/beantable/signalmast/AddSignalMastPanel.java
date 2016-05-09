@@ -4,6 +4,7 @@ package jmri.jmrit.beantable.signalmast;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ChangeListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
@@ -54,8 +55,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JPanel to create a new SignalMast
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2010
- * @version $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2009, 2010, 2016
  */
 public class AddSignalMastPanel extends JPanel {
 
@@ -169,9 +169,6 @@ public class AddSignalMastPanel extends JPanel {
         matrixMastScroll = new JScrollPane(matrixMastPanel); // EBR
         matrixMastScroll.setBorder(BorderFactory.createEmptyBorder());
         matrixMastScroll.setVisible(false);
-        JLabel turnoutStateLabel = new JLabel(Bundle.getMessage("SetState"));
-        // added in getPanel (turnout & aspect)
-        JComboBox<String> turnoutState = new JComboBox<String>(turnoutStates);
         add(matrixMastScroll);
 
         JButton ok;
@@ -365,6 +362,7 @@ public class AddSignalMastPanel extends JPanel {
 
             if (appMap != null) {
                 java.util.Enumeration<String> aspects = appMap.getAspects();
+                // URGENT hashtable/right names?
                 while (aspects.hasMoreElements()) {
                     String key = aspects.nextElement();
                     // select the right checkboxes ToDo
@@ -426,7 +424,7 @@ public class AddSignalMastPanel extends JPanel {
             updateDCCMastPanel();
             dccMastScroll.setVisible(true);
         } else if (Bundle.getMessage("MatrixMast").equals(signalMastDriver.getSelectedItem())) { // EBR
-            updateMatrixAspectPanel();
+            updateMatrixMastPanel();
             matrixMastScroll.setVisible(true);
         }
         updateUnLit();
@@ -745,27 +743,33 @@ public class AddSignalMastPanel extends JPanel {
                 String name = "IF$xtm:"
                         + sigsysname
                         + ":" + mastname.substring(11, mastname.length() - 4);
-                name += "($" + (paddedNumber.format(MatrixSignalMast.getLastRef() + 1)) + ")";
+                name += "($" + (paddedNumber.format(MatrixSignalMast.getLastRef() + 1));
+                name += ")_t"; // for "turnout-outputs", add option for direct packets
                 MatrixSignalMast matrixMast = new MatrixSignalMast(name);
-                for (String aspect : matrixAspect.keySet()) { // make matrix, copy of VirtualMast? store , compare with #834
+
+                int bitNum = 0;
+                for (String aspect : matrixAspect.keySet()) {
+                    // make matrix, store , compare with #834
                     matrixAspect.get(aspect).setReference(name + ":" + aspect);
-                    matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
+                    matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // build aspect details panel
                     if (matrixAspect.get(aspect).isAspectDisabled()) {
                         matrixMast.setAspectDisabled(aspect);
                     } else {
                         matrixMast.setAspectEnabled(aspect);
-                        matrixMast.setTurnout(aspect, matrixAspect.get(aspect).getTurnoutName(), matrixAspect.get(aspect).getTurnoutState());
+                        matrixMast.setBitstring(aspect, matrixAspect.get(aspect).getBitstring(), matrixAspect.get(aspect).getBitstring());
                     }
+                    bitNum ++;
                 }
-                matrixMast.resetPreviousStates(resetPreviousState.isSelected());
+                matrixMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel
+                matrixMast.setAllowUnLit(allowUnLit.isSelected());
+//                if (allowUnLit.isSelected()) {
+//                    matrixMast.setUnLitTurnout(matrixUnLitBox.getDisplayName(), turnoutStateValues[turnoutUnLitState.getSelectedIndex()]);
+//                }
                 if (!user.equals("")) {
                     matrixMast.setUserName(user);
                 }
+
                 InstanceManager.signalMastManagerInstance().register(matrixMast);
-                matrixMast.setAllowUnLit(allowUnLit.isSelected());
-                if (allowUnLit.isSelected()) {
-                    matrixMast.setUnLitTurnout(matrixUnLitBox.getDisplayName(), turnoutStateValues[turnoutUnLitState.getSelectedIndex()]);
-                }
             }
             prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
             prefs.addComboBoxLastSelection(driverSelectionCombo, (String) signalMastDriver.getSelectedItem());
@@ -837,7 +841,8 @@ public class AddSignalMastPanel extends JPanel {
                 for (String aspect : matrixAspect.keySet()) {
                     matrixAspect.get(aspect).setReference(name + ":" + aspect);
                     // remove next line, replace with checkboxes EBR compare with #746
-                    matrixMast.setTurnout(aspect, matrixAspect.get(aspect).getTurnoutName(), matrixAspect.get(aspect).getTurnoutState());
+                    //matrixMast.setBitstring(aspect, matrixAspect.get(aspect).getBitstring());
+                    // from matrixHashtable to matrixMast
                     matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
                     if (matrixAspect.get(aspect).isAspectDisabled()) {
                         matrixMast.setAspectDisabled(aspect);
@@ -848,7 +853,7 @@ public class AddSignalMastPanel extends JPanel {
                 matrixMast.resetPreviousStates(resetPreviousState.isSelected());
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
-                    matrixMast.setUnLitTurnout(turnoutUnLitBox.getDisplayName(), turnoutStateValues[turnoutUnLitState.getSelectedIndex()]);
+                    matrixMast.setUnLitBitstring();
                 }
             }
         }
@@ -1382,7 +1387,291 @@ public class AddSignalMastPanel extends JPanel {
             }
             return panel;
         }
+    }
 
+    //start updatematrixmastpanel
+    BeanSelectCreatePanel matrixUnLitBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+    JComboBox<String> matrixUnLitState = new JComboBox<String>(turnoutStates);
+    BeanSelectCreatePanel turnoutBox1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel turnoutBox2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel turnoutBox3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel turnoutBox4 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel turnoutBox5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+    // no states, on = thrown, off = closed
+    // number of columns
+    //already defined? JSpinner bitNumSpinner = JSpinner(new SpinnerNumberModel(bitNum, 1, 5, bitNum));
+    // ToDo: add boxes to set DCC Packets (with drop down selection "Output Type": Turnouts/Direct DCC Packets)
+
+    void updateMatrixMastPanel() {
+        if ((!Bundle.getMessage("MatrixMast").equals(signalMastDriver.getSelectedItem()))) {
+            return;
+        }
+        //for option dcc packet
+/*        matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
+        //option todo
+        java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        systemPrefixBox.removeAllItems();
+        if (connList != null) {
+            for (int x = 0; x < connList.size(); x++) {
+                jmri.CommandStation station = connList.get(x);
+                systemPrefixBox.addItem(station.getUserName());
+                }
+        } else {
+            systemPrefixBox.addItem("None");
+        }*/
+        if (bitNum == null) {
+            int bitNum = 5; // default to 5 col
+        }
+
+        String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
+        mastType = mastType.substring(11, mastType.indexOf(".xml"));
+        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
+        java.util.Enumeration<String> aspects = sigMap.getAspects();
+        SignalSystem sigsys = InstanceManager.signalSystemManagerInstance().getSystem(sigsysname);
+        while (aspects.hasMoreElements()) {
+            String aspect = aspects.nextElement();
+            MatrixAspectPanel aPanel = new MatrixAspectPanel(aspect);
+            matrixAspect.put(aspect, aPanel);
+            aPanel.setAspectId((String) sigsys.getProperty(aspect, "bitString"));
+        }
+        matrixMastPanel.removeAll();
+        matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size() + 3, 2));
+        bitNumSpinner.addChangeListener(new ChangeListener() {
+            public void stateChanged (ChangeEvent e) {
+                bitNum = bitNumSpinner.getValue();
+                // hide/show last cols in matrix & outputs ToDo EBR
+/*
+                for (int i=0; i<=5; i++){
+                    ("bit" + i).setVisible(i<bitNum);
+                }
+*/
+                // updateMatrixAspectPanel(); // hide/show last cols in matrix (per aspect)
+            }
+        });
+        matrixMastPanel.add(bitNumSpinner);
+        // repeat next line 5 x for output turnouts
+        // binary matrix outputs go here
+        matrixMastPanel.add(turnoutBox1);
+        matrixMastPanel.add(turnoutBox2);
+        matrixMastPanel.add(turnoutBox3);
+        matrixMastPanel.add(turnoutBox4);
+        matrixMastPanel.add(turnoutBox5);
+
+        //matrixMastPanel.add(systemPrefixBoxLabel);
+        //matrixMastPanel.add(systemPrefixBox);
+        //matrixMastPanel.add(matrixDCCAddressLabel);
+        //matrixMastPanel.add(matrixDCCAddressField);
+        // option DCC packet
+ /*       if (matrixDCCListener == null) {
+            matrixDCCListener = new FocusListener() {
+                public void focusLost(FocusEvent e) {
+                    if (matrixDCCAddressField.getText().equals("")) {
+                        return;
+                    }
+                    validateMatrixDCCAddressField();
+                    // todo set the checkboxes & check sth?, copy from UpdateDCCMastPanel
+                }
+
+                public void focusGained(FocusEvent e) {
+                }
+
+            };
+
+            matrixDCCAddressField.addFocusListener(matrixDCCAddressListener);
+        }
+
+        if (mast == null) {
+            systemPrefixBoxLabel.setEnabled(true);
+            systemPrefixBox.setEnabled(true);
+            matrixDCCAddressLabel.setEnabled(true);
+            matrixDCCAddressField.setEnabled(true);
+        }
+*/
+        for (String aspect : matrixAspect.keySet()) {
+            matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
+            // build aspect sub panels
+        }
+        if ((matrixAspect.size() & 1) == 1) {
+            matrixMastPanel.add(new JLabel());
+            // spacer
+        }
+        //todo copy option matrixMast bitstrings = settings
+        // matrixMastPanel.add(new JLabel(Bundle.getMessage("DCCMastCopyAspectId")));
+        // matrixMastPanel.add(copyFromMastSelection());
+
+        // ToDo: for bitNum loop to hide checkboxes and outputs > bitNum
+    }
+
+    //FocusListener matrixDCCAddressListener = null;
+
+    // todo
+/*    static boolean validateMatrixAspectBits(String strAspect) {
+        int aspect = -1;
+        try {
+            aspect = Integer.parseInt(strAspect.trim());
+        } catch (java.lang.NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("AspectMastBitsWarning"));
+            return false;
+        }
+
+        if (aspect < 0 || aspect > 31) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("AspectMastBitsOutOfRange"));
+            log.error("invalid aspect " + aspect);
+            return false;
+        }
+        return true;
+    }
+
+    boolean validateAspectBits() {
+        if (matrixAspectBitsField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixMastBitsBlank"));
+            return false;
+        }
+        int address = -1;
+        try {
+            address = Integer.parseInt(dccAspectAddressField.getText().trim());
+        } catch (java.lang.NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAddressNumber"));
+            return false;
+        }
+
+        if (address < NmraPacket.accIdLowLimit || address > NmraPacket.accIdAltHighLimit) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAddressOutOfRange"));
+            log.error("invalid address " + address);
+            return false;
+        }
+        if (DccSignalMast.isDCCAddressUsed(address) != null) {
+            String msg = Bundle.getMessage("DCCMastAddressAssigned", new Object[]{dccAspectAddressField.getText(), DccSignalMast.isDCCAddressUsed(address)});
+            JOptionPane.showMessageDialog(null, msg);
+            return false;
+        }
+        return true;
+    }*/
+
+/*    JComboBox<String> copyFromMastSelection() {
+        JComboBox<String> mastSelect = new JComboBox<String>();
+        List<String> names = InstanceManager.signalMastManagerInstance().getSystemNameList();
+        for (String name : names) {
+            if ((InstanceManager.signalMastManagerInstance().getNamedBean(name) instanceof DccSignalMast)
+                    && InstanceManager.signalMastManagerInstance().getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)) {
+                mastSelect.addItem(InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName());
+            }
+        }
+        if (mastSelect.getItemCount() == 0) {
+            mastSelect.setEnabled(false);
+        } else {
+            mastSelect.insertItemAt("", 0);
+            mastSelect.setSelectedIndex(0);
+            mastSelect.addActionListener(new ActionListener() {
+                @SuppressWarnings("unchecked") // e.getSource() cast from mastSelect source
+                public void actionPerformed(ActionEvent e) {
+                    JComboBox<String> eb = (JComboBox<String>) e.getSource();
+                    String sourceMast = (String) eb.getSelectedItem();
+                    if (sourceMast != null && !sourceMast.equals("")) {
+                        copyFromAnotherDCCMastAspect(sourceMast);
+                    }
+                }
+            });
+        }
+        return mastSelect;
+    }
+
+    void copyFromAnotherDCCMastAspect(String strMast) {
+        DccSignalMast mast = (DccSignalMast) InstanceManager.signalMastManagerInstance().getNamedBean(strMast);
+        for (String aspect : dccAspect.keySet()) {
+            if (mast.isAspectDisabled(aspect)) {
+                dccAspect.get(aspect).setAspectDisabled(true);
+            } else {
+                dccAspect.get(aspect).setAspectId(mast.getOutputForAppearance(aspect));
+            }
+        }
+    }*/
+
+    static class MatrixAspectPanel {
+
+        String aspect = "";
+        JCheckBox disabledCheck = new JCheckBox(Bundle.getMessage("DisableAspect"));
+        //JLabel aspectLabel = new JLabel(Bundle.getMessage("DCCMastSetAspectId"));
+        //JTextField aspectId = new JTextField(5);
+
+        MatrixAspectPanel(String aspect) {
+            this.aspect = aspect;
+        }
+
+        void setAspectDisabled(boolean boo) {
+            disabledCheck.setSelected(boo);
+            if (boo) {
+                //aspectLabel.setEnabled(false);
+
+                //aspectId.setEnabled(false);
+            } else {
+                //aspectLabel.setEnabled(true);
+                //aspectId.setEnabled(true);
+            }
+        }
+
+        boolean isAspectDisabled() {
+            return disabledCheck.isSelected();
+        }
+
+/*        int getAspectId() {
+            try {
+                String value = aspectId.getText();
+                return Integer.parseInt(value);
+
+            } catch (Exception ex) {
+                log.error("failed to convert DCC number");
+            }
+            return -1;
+        }*/
+
+/*        void setAspectId(int i) {
+            aspectId.setText("" + i);
+        }
+
+        void setAspectId(String s) {
+            aspectId.setText(s);
+        }*/
+
+        JPanel panel;
+
+        JPanel getPanel() {
+            if (panel == null) {
+                panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                //JPanel matrixDetails = new JPanel();
+                //matrixDetails.add(aspectLabel);
+                //matrixDetails.add(aspectId);
+                //panel.add(matrixDetails);
+                panel.add(disabledCheck);
+                TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+                border.setTitle(aspect);
+                panel.setBorder(border);
+/*
+                aspectId.addFocusListener(new FocusListener() {
+                    public void focusLost(FocusEvent e) {
+                        if (aspectId.getText().equals("")) {
+                            return;
+                        }
+                        if (!validateAspectId(aspectId.getText())) {
+                            aspectId.requestFocusInWindow();
+                        }
+                    }
+
+                    public void focusGained(FocusEvent e) {
+                    }
+
+                });
+*/
+                disabledCheck.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setAspectDisabled(disabledCheck.isSelected());
+                    }
+                });
+
+            }
+            return panel;
+        }
     }
 
     void updateMatrixAspectPanel() { // EBR
@@ -1390,6 +1679,7 @@ public class AddSignalMastPanel extends JPanel {
             return;
         }
         String bitString = "00000"; // ToDo: make/read from mast(aspect) EBR
+
         matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
@@ -1425,43 +1715,10 @@ public class AddSignalMastPanel extends JPanel {
     //int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
     // already defined
 
-    BeanSelectCreatePanel matrixUnLitBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    JComboBox<String> matrixUnLitState = new JComboBox<String>(turnoutStates);
-    BeanSelectCreatePanel turnout1Box = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    BeanSelectCreatePanel turnout2Box = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    BeanSelectCreatePanel turnout3Box = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    BeanSelectCreatePanel turnout4Box = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    BeanSelectCreatePanel turnout5Box = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    // no states, on = thrown, off = closed
-
     void matrixUnLitPanel() {
         matrixUnLitPanel.setLayout(new BoxLayout(matrixUnLitPanel, BoxLayout.Y_AXIS));
         JPanel matrixDetails = new JPanel();
-        // number of columns
-        int bitNum = 5; // default to 5 col
-        bitNumSpinner = new JSpinner(new SpinnerNumberModel(bitNum, 1, 5, 1));
-//        bitNumSpinner.addChangeListener((ItemEvent e) -> {
-//            bitNum = bitNumSpinner.getValue();
-//            updateMatrixAspectPanel(); // hide/show last cols in matrix
-//        });
-        matrixDetails.add(bitNumSpinner);
-        // repeat next line 5 x for output turnouts
-        // binary matrix outputs go here
-        // ToDo: for bitNum loop
-        matrixDetails.add(turnout1Box);
-        if (bitNum > 1) {
-            matrixDetails.add(turnout2Box);
-        }
-        if (bitNum > 2) {
-            matrixDetails.add(turnout3Box);
-        }
-        if (bitNum > 3) {
-            matrixDetails.add(turnout4Box);
-        }
-        if (bitNum > 4) {
-            matrixDetails.add(turnout5Box);
-        }
-        // ToDo: add boxes for DCC Packets
+
         matrixDetails.add(turnoutUnLitBox);
         matrixDetails.add(new JLabel(Bundle.getMessage("SetState")));
         matrixDetails.add(turnoutUnLitState);
@@ -1473,7 +1730,7 @@ public class AddSignalMastPanel extends JPanel {
 
     HashMap<String, MatrixAspectPanel> matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
 
-    class MatrixAspectPanel {
+ /*   class MatrixAspectPanel {
 
         JCheckBox disabledCheck = new JCheckBox(Bundle.getMessage("DisableAspect"));
         JCheckBox bitCheck1 = new JCheckBox();
@@ -1482,7 +1739,8 @@ public class AddSignalMastPanel extends JPanel {
         JCheckBox bitCheck4 = new JCheckBox();
         JCheckBox bitCheck5 = new JCheckBox();
         JTextField aspectBitsField = new JTextField(5);
-
+        //String bitString = "00000";
+        String aspectBits = "00000";
         String aspect = "";
 
         MatrixAspectPanel(String aspect) {
@@ -1501,14 +1759,22 @@ public class AddSignalMastPanel extends JPanel {
             if (bitNum > 1) {
                 bitCheck2.setSelected(bitString.substring(1, 2) == "1");
             }
-            // repeat for each char in bitString // todo
+            if (bitNum > 2) {
+                bitCheck3.setSelected(bitString.substring(2, 3) == "1");
+            }
+            if (bitNum > 3) {
+                bitCheck4.setSelected(bitString.substring(3, 4) == "1");
+            }
+            if (bitNum > 4) {
+                bitCheck5.setSelected(bitString.substring(4, 5) == "1");
+            }// repeat for each char in bitString // todo
         }
 
-        void setReference(String reference) {
-            bitCheck1.setReference(reference); // EBR was turnout, should be
+        void setReference(String bits) {
+            matrixAspectBitsField.setReference(bits); // EBR was turnout, should be string
         }
 
-        void setAspectDisabled(boolean boo) {
+        void setAspectDisabled(boolean boo) { // called from Disabled aspect checkbox
             disabledCheck.setSelected(boo);
             if (boo) {
                 aspectBitsField.setEnabled(false);
@@ -1543,11 +1809,52 @@ public class AddSignalMastPanel extends JPanel {
             }
         }
 
+        public void setBit1(boolean state) { //called from checkbox1
+            if (state = true) {
+                aspectBits.setCharAt(0, "1");
+            } else {
+                aspectBits.setCharAt(0, "0");
+                }
+            aspectBitsField.setText(aspectBits);
+        }
+        public void setBit2(boolean state) { //called from checkbox2
+            if (state = true) {
+                aspectBits.setCharAt(1, "1");
+            } else {
+                aspectBits.setCharAt(1, "0");
+            }
+            aspectBitsField.setValue(aspectBits);
+        }
+        public void setBit3(boolean state) { //called from checkbox3
+            if (state = true) {
+                aspectBits.setCharAt(2, "1");
+            } else {
+                aspectBits.setCharAt(2, "0");
+            }
+            aspectBitsField.setText(aspectBits);
+        }
+        public void setBit4(boolean state) { //called from checkbox4
+            if (state = true) {
+                aspectBits.setCharAt(3, "1");
+            } else {
+                aspectBits.setCharAt(3, "0");
+            }
+            aspectBitsField.setText(aspectBits);
+        }
+        public void setBit5(boolean state) { //called from checkbox5
+            if (state = true) {
+                aspectBits.setCharAt(4, "1");
+            } else {
+                aspectBits.setCharAt(4, "0");
+            }
+            aspectBitsField.setText(aspectBits);
+        }
+
         boolean isAspectDisabled() {
             return disabledCheck.isSelected();
         }
 
-        String getAspectBits() { // string of "00100" from sygsys, copied from DCCmast
+        String getAspectBits() { // string like "00100" from sygsys, copied from DCCmast
             try {
                 String value = aspectBits.getText();
                 return value;
@@ -1557,10 +1864,6 @@ public class AddSignalMastPanel extends JPanel {
             }
             return "nnnnn";
         }
-//
-//        void setAspectBits(int i) {
-//            aspectBits.setText("" + i);
-//        }
 
         void setAspectBits(String s) {
             aspectBits.setText(s);
@@ -1576,17 +1879,16 @@ public class AddSignalMastPanel extends JPanel {
                 panel.add(disabledCheck); // before checkboxes, not below
                 JPanel matrixDetails = new JPanel();
                 matrixDetails.add(bitCheck1);
-//                bitCheck1.addItemListener(new ItemListener()) {
-//                    @Override
-//                    public void itemStateChanged(ItemEvent e) {
-//                        // ToDo refresh aspectSetting EBR, can be in OK to store/warn for duplicates
-//                    }
-//                }
                 matrixDetails.add(bitCheck2);
                 matrixDetails.add(bitCheck3);
                 matrixDetails.add(bitCheck4);
                 matrixDetails.add(bitCheck5);
-                panel.add(matrixDetails);
+                    //ToDo refresh aspectSetting EBR, can be in OK to store/warn for duplicates
+                }
+                matrixDetails.add(aspectBitsField);
+
+                    // set inactive?
+                panel.add(matrixAspectBitsField);
                 // panel.add(disabledCheck); // here in TurnoutSignalMast
                 TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 border.setTitle(aspect);
@@ -1598,14 +1900,38 @@ public class AddSignalMastPanel extends JPanel {
                     }
                 });
 
-            }
+                bitCheck1.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setBit1(bitCheck1.isSelected());
+                    }
+                });
+                bitCheck2.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setBit2(bitCheck2.isSelected());
+                    }
+                });
+                bitCheck3.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setBit3(bitCheck3.isSelected());
+                    }
+                });
+                bitCheck4.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setBit4(bitCheck4.isSelected());
+                    }
+                });
+                bitCheck5.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setBit5(bitCheck5.isSelected());
+                    }
+                });
             return panel;
         }
 
-    }
+    }*/
 
     private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class.getName());
 }
 
 
-/* @(#)SensorTableAction.java */
+/* @(#)AddSignalMast.java */

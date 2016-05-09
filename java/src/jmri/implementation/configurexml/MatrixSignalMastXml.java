@@ -35,7 +35,7 @@ public class MatrixSignalMastXml
         e.setAttribute("class", this.getClass().getName());
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
 
-        storeCommon(p, e);
+        storeCommon(p, e); // username, comment & properties
 
         // mast properties:
         Element unlit = new Element("unlit");
@@ -47,13 +47,17 @@ public class MatrixSignalMastXml
         e.addContent(unlit);
 
         List<String> outputs = p.getOutputs();
-        // max. 5 outputs (either: turnouts (beannames) or DCC addresses (numbers)
+        // max. 5 outputs (either: turnouts (bean names) or DCC addresses (numbers)
         if (outputs != null) {
             Element outps = new Element("outputs");
+            int i = 1;
             for (String _output : outputs) {
+                String key = ("bit" + i);
                 Element outp = new Element("output");
-                outp.addContent(_output);
+                outp.setAttribute("defines", key);
+                outp.addContent(p.getTurnoutName(key)); // get beanname
                 outps.addContent(outp);
+                i++;
             }
             if (outputs.size() != 0) {
                 e.addContent(outps);
@@ -64,13 +68,16 @@ public class MatrixSignalMastXml
         // string of max. 5 chars "00101" describing matrix row per aspect
         if (bitStrings != null) {
             Element bss = new Element("bitStrings");
+            int i = 1;
             for (String _bitstring : bitStrings) {
+                String key = aspect;
                 Element bs = new Element("bitString");
+                outp.setAttribute("aspect", key);
                 bs.addContent(_bitstring);
                 bss.addContent(bs);
             }
             if (bitStrings.size() != 0) {
-                e.addContent(bs);
+                e.addContent(bss);
             }
         }
         List<String> disabledAspects = p.getDisabledAspects();
@@ -103,7 +110,7 @@ public class MatrixSignalMastXml
             m.setUserName(getUserName(shared));
         }
 
-        loadCommon(m, shared);
+        loadCommon(m, shared); // username & comment
 
         if (shared.getChild("unlit") != null) {
             Element unlit = shared.getChild("unlit");
@@ -115,6 +122,7 @@ public class MatrixSignalMastXml
                 }
             }
         }
+
         Element outps = shared.getChild("outputs"); // multiple
         if (outps != null) {
             List<Element> list = outps.getChildren("output"); // singular
