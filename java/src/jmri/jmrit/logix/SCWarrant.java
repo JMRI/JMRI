@@ -387,6 +387,7 @@ public class SCWarrant extends Warrant {
      * Do not worry about sensors and blocks. They are handled by goingActive and goingInactive.
      */
  @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "Unconditional wait is give the warrant that now has _stoppingBlock allocated a little time to deallocate it.  This occurs after this method sets _stoppingBlock to null.")
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {
             if (_debug) log.debug(_trainName+" propertyChange \""+evt.getPropertyName()+
