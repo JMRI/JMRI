@@ -153,7 +153,7 @@ public class SCWarrant extends Warrant {
             BlockOrder bo = getBlockOrderAt(i);
             if (bo == null) {
                 log.debug(_trainName+" getAndGetNotifiedFromNextSignal could not find a BlockOrder for index "+i);
-            } else if (bo.getEntryName() == "") {
+            } else if (bo.getEntryName().equals("")) {
                 log.debug(_trainName+" getAndGetNotifiedFromNextSignal could not find an entry to Block for index "+i);
             } else {
                 log.debug(_trainName+" getAndGetNotifiedFromNextSignal examines block "+bo.getBlock().getDisplayName()+" with entryname = "+bo.getEntryName());
