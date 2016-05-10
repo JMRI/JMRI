@@ -50,9 +50,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.decoderdefn.PackageTest.suite());
         suite.addTest(jmri.jmrit.dispatcher.DispatcherTest.suite());
         suite.addTest(jmri.jmrit.display.PackageTest.suite());
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrit.jython.JythonTest.suite());
-        }
+        suite.addTest(jmri.jmrit.jython.PackageTest.suite());
         suite.addTest(jmri.jmrit.log.PackageTest.suite());
         suite.addTest(jmri.jmrit.logix.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.OperationsTest.suite());
@@ -74,6 +72,10 @@ public class PackageTest extends TestCase {
             suite.addTest(jmri.jmrit.ussctc.UssCtcTest.suite());
         }
         suite.addTest(jmri.jmrit.consisttool.PackageTest.suite());
+        suite.addTest(jmri.jmrit.withrottle.PackageTest.suite());
+        suite.addTest(jmri.jmrit.ampmeter.PackageTest.suite());
+        suite.addTest(jmri.jmrit.lcdclock.PackageTest.suite());
+        suite.addTest(jmri.jmrit.throttle.PackageTest.suite());
 
         return suite;
     }
