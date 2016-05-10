@@ -24,7 +24,7 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.ampmenter.PackageTest");   // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrit.ampmeter.PackageTest");   // no tests in this class itself
 
         suite.addTest(BundleTest.suite());
 

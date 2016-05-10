@@ -54,10 +54,10 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.log.PackageTest.suite());
         suite.addTest(jmri.jmrit.logix.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.OperationsTest.suite());
+        suite.addTest(jmri.jmrit.progsupport.PackageTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             //suite.addTest(jmri.jmrit.mastbuilder.MastBuilderTest.suite());
             suite.addTest(jmri.jmrit.powerpanel.PowerPanelTest.suite());
-            suite.addTest(jmri.jmrit.progsupport.ProgServiceModePaneTest.suite());
         }
         suite.addTest(jmri.jmrit.revhistory.FileHistoryTest.suite());
         suite.addTest(jmri.jmrit.roster.PackageTest.suite());
@@ -76,6 +76,15 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.ampmeter.PackageTest.suite());
         suite.addTest(jmri.jmrit.lcdclock.PackageTest.suite());
         suite.addTest(jmri.jmrit.throttle.PackageTest.suite());
+        suite.addTest(jmri.jmrit.audio.PackageTest.suite());
+        suite.addTest(jmri.jmrit.turnoutoperations.PackageTest.suite());
+        suite.addTest(jmri.jmrit.dualdecoder.PackageTest.suite());
+        suite.addTest(jmri.jmrit.nixieclock.PackageTest.suite());
+        suite.addTest(jmri.jmrit.simpleprog.PackageTest.suite());
+        suite.addTest(jmri.jmrit.signalling.PackageTest.suite());
+        suite.addTest(jmri.jmrit.picker.PackageTest.suite());
+        suite.addTest(jmri.jmrit.speedometer.PackageTest.suite());
+        suite.addTest(jmri.jmrit.analogclock.PackageTest.suite());
 
         return suite;
     }
