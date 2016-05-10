@@ -27,8 +27,29 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.withrottle.PackageTest");   // no tests in this class itself
 
         suite.addTest(BundleTest.suite());
+        suite.addTest(ConsistControllerTest.suite());
+        suite.addTest(ConsistFunctionControllerTest.suite());
+        suite.addTest(DeviceServerTest.suite());
+        suite.addTest(FacelessServerTest.suite());
+        suite.addTest(MultiThrottleControllerTest.suite());
+        suite.addTest(MultiThrottleTest.suite());
+        suite.addTest(RouteControllerTest.suite());
+        suite.addTest(ThrottleControllerTest.suite());
+        suite.addTest(TrackPowerControllerTest.suite());
+        suite.addTest(TurnoutControllerTest.suite());
+        suite.addTest(WiFiConsistFileTest.suite());
+        suite.addTest(WiFiConsistTest.suite());
+        suite.addTest(WiFiConsistManagerTest.suite());
+        suite.addTest(WiThrottleManagerTest.suite());
+        suite.addTest(WiThrottlePreferencesTest.suite());
+        suite.addTest(WiThrottlesListModelTest.suite());
+
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+            suite.addTest(ControllerFilterActionTest.suite());
+            suite.addTest(ControllerFilterFrameTest.suite());
+            suite.addTest(UserInterfaceTest.suite());
+            suite.addTest(WiThrottlePrefsPanelTest.suite());
         }
 
         return suite;
