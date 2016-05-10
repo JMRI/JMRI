@@ -1451,6 +1451,7 @@ public class AddSignalMastPanel extends JPanel {
         matrixMastPanel.add(bitNumSpinner);
         // repeat next line 5 x for output turnouts
         // binary matrix outputs go here
+        // sub panl (so we can hide turnouts with option)
         matrixMastPanel.add(turnoutBox1);
         matrixMastPanel.add(turnoutBox2);
         matrixMastPanel.add(turnoutBox3);
@@ -1587,93 +1588,6 @@ public class AddSignalMastPanel extends JPanel {
         }
     }*/
 
-    static class MatrixAspectPanel {
-
-        String aspect = "";
-        JCheckBox disabledCheck = new JCheckBox(Bundle.getMessage("DisableAspect"));
-        //JLabel aspectLabel = new JLabel(Bundle.getMessage("DCCMastSetAspectId"));
-        //JTextField aspectId = new JTextField(5);
-
-        MatrixAspectPanel(String aspect) {
-            this.aspect = aspect;
-        }
-
-        void setAspectDisabled(boolean boo) {
-            disabledCheck.setSelected(boo);
-            if (boo) {
-                //aspectLabel.setEnabled(false);
-
-                //aspectId.setEnabled(false);
-            } else {
-                //aspectLabel.setEnabled(true);
-                //aspectId.setEnabled(true);
-            }
-        }
-
-        boolean isAspectDisabled() {
-            return disabledCheck.isSelected();
-        }
-
-/*        int getAspectId() {
-            try {
-                String value = aspectId.getText();
-                return Integer.parseInt(value);
-
-            } catch (Exception ex) {
-                log.error("failed to convert DCC number");
-            }
-            return -1;
-        }*/
-
-/*        void setAspectId(int i) {
-            aspectId.setText("" + i);
-        }
-
-        void setAspectId(String s) {
-            aspectId.setText(s);
-        }*/
-
-        JPanel panel;
-
-        JPanel getPanel() {
-            if (panel == null) {
-                panel = new JPanel();
-                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-                //JPanel matrixDetails = new JPanel();
-                //matrixDetails.add(aspectLabel);
-                //matrixDetails.add(aspectId);
-                //panel.add(matrixDetails);
-                panel.add(disabledCheck);
-                TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                border.setTitle(aspect);
-                panel.setBorder(border);
-/*
-                aspectId.addFocusListener(new FocusListener() {
-                    public void focusLost(FocusEvent e) {
-                        if (aspectId.getText().equals("")) {
-                            return;
-                        }
-                        if (!validateAspectId(aspectId.getText())) {
-                            aspectId.requestFocusInWindow();
-                        }
-                    }
-
-                    public void focusGained(FocusEvent e) {
-                    }
-
-                });
-*/
-                disabledCheck.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        setAspectDisabled(disabledCheck.isSelected());
-                    }
-                });
-
-            }
-            return panel;
-        }
-    }
-
     void updateMatrixAspectPanel() { // EBR
         if (!Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
             return;
@@ -1705,8 +1619,6 @@ public class AddSignalMastPanel extends JPanel {
         resetPreviousState.setToolTipText(Bundle.getMessage("ResetPreviousToolTip"));
     }
 
-    //ArrayList<JmriBeanComboBox> headList = ArrayList<JmriBeanComboBox>(5); // allready defined heads? EBR
-
     JPanel matrixUnLitPanel = new JPanel();
 
     //String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
@@ -1730,7 +1642,7 @@ public class AddSignalMastPanel extends JPanel {
 
     HashMap<String, MatrixAspectPanel> matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
 
- /*   class MatrixAspectPanel {
+    class MatrixAspectPanel {
 
         JCheckBox disabledCheck = new JCheckBox(Bundle.getMessage("DisableAspect"));
         JCheckBox bitCheck1 = new JCheckBox();
@@ -1876,20 +1788,21 @@ public class AddSignalMastPanel extends JPanel {
             if (panel == null) {
                 panel = new JPanel();
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-                panel.add(disabledCheck); // before checkboxes, not below
+
                 JPanel matrixDetails = new JPanel();
+                matrixDetails.add(disabledCheck); // before checkboxes, not below
+                //matrixDetails.add(aspectLabel);
+                //matrixDetails.add(aspectId);
+                //panel.add(matrixDetails);
                 matrixDetails.add(bitCheck1);
                 matrixDetails.add(bitCheck2);
                 matrixDetails.add(bitCheck3);
                 matrixDetails.add(bitCheck4);
                 matrixDetails.add(bitCheck5);
-                    //ToDo refresh aspectSetting EBR, can be in OK to store/warn for duplicates
-                }
+                //ToDo refresh aspectSetting EBR, can be in OK to store/warn for duplicates
                 matrixDetails.add(aspectBitsField);
-
-                    // set inactive?
+                // set inactive?
                 panel.add(matrixAspectBitsField);
-                // panel.add(disabledCheck); // here in TurnoutSignalMast
                 TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 border.setTitle(aspect);
                 panel.setBorder(border);
@@ -1925,10 +1838,105 @@ public class AddSignalMastPanel extends JPanel {
                         setBit5(bitCheck5.isSelected());
                     }
                 });
+            }
             return panel;
         }
 
-    }*/
+    }
+/* DUPLICATE
+    static class MatrixAspectPanel {
+
+        String aspect = "";
+        JCheckBox disabledCheck = new JCheckBox(Bundle.getMessage("DisableAspect"));
+        //JLabel aspectLabel = new JLabel(Bundle.getMessage("DCCMastSetAspectId"));
+        //JTextField aspectId = new JTextField(5);
+
+        MatrixAspectPanel(String aspect) {
+            this.aspect = aspect;
+        }
+
+        void setAspectDisabled(boolean boo) {
+            disabledCheck.setSelected(boo);
+            if (boo) {
+                //aspectLabel.setEnabled(false);
+
+                //aspectId.setEnabled(false);
+            } else {
+                //aspectLabel.setEnabled(true);
+                //aspectId.setEnabled(true);
+            }
+        }
+
+        boolean isAspectDisabled() {
+            return disabledCheck.isSelected();
+        }
+
+*/
+/*        int getAspectId() {
+            try {
+                String value = aspectId.getText();
+                return Integer.parseInt(value);
+
+            } catch (Exception ex) {
+                log.error("failed to convert DCC number");
+            }
+            return -1;
+        }*//*
+
+
+*/
+/*        void setAspectId(int i) {
+            aspectId.setText("" + i);
+        }
+
+        void setAspectId(String s) {
+            aspectId.setText(s);
+        }*//*
+
+
+        JPanel panel;
+
+        JPanel getPanel() {
+            if (panel == null) {
+                panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                //JPanel matrixDetails = new JPanel();
+                //matrixDetails.add(aspectLabel);
+                //matrixDetails.add(aspectId);
+                //panel.add(matrixDetails);
+                panel.add(disabledCheck);
+                TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+                border.setTitle(aspect);
+                panel.setBorder(border);
+*/
+/*
+                aspectId.addFocusListener(new FocusListener() {
+                    public void focusLost(FocusEvent e) {
+                        if (aspectId.getText().equals("")) {
+                            return;
+                        }
+                        if (!validateAspectId(aspectId.getText())) {
+                            aspectId.requestFocusInWindow();
+                        }
+                    }
+
+                    public void focusGained(FocusEvent e) {
+                    }
+
+                });
+*//*
+
+                disabledCheck.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setAspectDisabled(disabledCheck.isSelected());
+                    }
+                });
+
+            }
+            return panel;
+        }
+    }
+*/
 
     private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class.getName());
 }
