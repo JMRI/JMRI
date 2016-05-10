@@ -1067,7 +1067,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                     checkLockTurnout(now, then, (Turnout) e.getSource());
                 }
             };
-            lockCtl.addPropertyChangeListener(mTurnoutListener, getLockControlTurnout(), "Route " + getDisplayName());
+            lockCtl.addPropertyChangeListener(mLockTurnoutListener, getLockControlTurnout(), "Route " + getDisplayName());
         }
 
         checkTurnoutAlignment();
