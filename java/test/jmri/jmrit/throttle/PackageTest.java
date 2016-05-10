@@ -29,6 +29,32 @@ public class PackageTest extends TestCase {
         suite.addTest(BundleTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+           suite.addTest(AddressPanelTest.suite());
+           suite.addTest(BackgroundPanelTest.suite());
+           suite.addTest(ControlPanelTest.suite());
+           suite.addTest(ControlPanelPropertyEditorTest.suite());
+           suite.addTest(FunctionButtonTest.suite());
+           suite.addTest(FunctionButtonPropertyEditorTest.suite());
+           suite.addTest(FunctionPanelTest.suite());
+           suite.addTest(LargePowerManagerButtonTest.suite());
+           suite.addTest(LoadDefaultXmlThrottlesLayoutActionTest.suite());
+           suite.addTest(LoadXmlThrottlesLayoutActionTest.suite());
+           suite.addTest(SmallPowerManagerButtonTest.suite());
+           suite.addTest(StopAllButtonTest.suite());
+           suite.addTest(StoreDefaultXmlThrottlesLayoutActionTest.suite());
+           suite.addTest(StoreXmlThrottlesLayoutActionTest.suite());
+           suite.addTest(ThrottleCreationActionTest.suite());
+           suite.addTest(ThrottleFrameTest.suite());
+           suite.addTest(ThrottleFrameManagerTest.suite());
+           suite.addTest(ThrottleFramePropertyEditorTest.suite());
+           suite.addTest(ThrottlesListActionTest.suite());
+           suite.addTest(ThrottlesPreferencesActionTest.suite());
+           suite.addTest(ThrottlesPreferencesTest.suite());
+           suite.addTest(ThrottlesPreferencesPaneTest.suite());
+           suite.addTest(ThrottlesListPanelTest.suite());
+           suite.addTest(ThrottlesTableCellRendererTest.suite());
+           suite.addTest(ThrottlesTableModelTest.suite());
+           suite.addTest(ThrottleWindowTest.suite());
         }
 
         return suite;
