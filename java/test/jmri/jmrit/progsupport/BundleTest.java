@@ -9,38 +9,11 @@ import junit.framework.TestSuite;
  * Tests for the Bundle class
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  */
-public class BundleTest extends TestCase {
+public class BundleTest extends jmri.BundleTest{
 
-    public void testGoodKeysMessage() {
-        Assert.assertEquals("Tools", Bundle.getMessage("MenuTools"));
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
-    }
-
-    public void testBadKeyMessage() {
-        try {
-            Bundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
-    }
-
-    public void testGoodKeysMessageArg() {
-        Assert.assertEquals("Tools", Bundle.getMessage("MenuTools", "foo"));
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", "foo"));
-        Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
-    }
-
-    public void testBadKeyMessageArg() {
-        try {
-            Bundle.getMessage("FFFFFTTTTTTT", "foo");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
-    }
+    // this class inherits all of the tests from jmri.BundleTest
+    // local tests should be added here.
 
     // from here down is testing infrastructure
     public BundleTest(String s) {
