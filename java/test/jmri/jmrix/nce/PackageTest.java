@@ -42,6 +42,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.nce.NceMessageTest.suite());
         suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
         suite.addTest(jmri.jmrix.nce.NcePowerManagerTest.suite());
+        suite.addTest(jmri.jmrix.nce.BundleTest.suite());
+        suite.addTest(jmri.jmrix.nce.clockmon.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.nce.ncemon.NceMonPanelTest.suite());

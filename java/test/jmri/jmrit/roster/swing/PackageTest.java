@@ -30,6 +30,8 @@ public class PackageTest extends TestCase {
         suite.addTest(RosterTableModelTest.suite());
 
         suite.addTest(jmri.jmrit.roster.swing.attributetable.PackageTest.suite());
+        suite.addTest(jmri.jmrit.roster.swing.rostergroup.PackageTest.suite());
+        suite.addTest(jmri.jmrit.roster.swing.speedprofile.PackageTest.suite());
 
         return suite;
     }

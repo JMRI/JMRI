@@ -392,7 +392,6 @@ public class NXFrame extends WarrantRoute {
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            warrant = null;
         } else {
             closeFrame();           
             if (log.isDebugEnabled()) log.debug("Close Frame.");
