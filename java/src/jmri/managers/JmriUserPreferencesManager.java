@@ -666,7 +666,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 desc = (String) method.invoke(t);
                 classDesFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                log.debug(ex.toString());
+                log.warn(ex.toString());
                 classDesFound = false;
             }
             if (!classDesFound) {
@@ -674,7 +674,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("getClassDescription");
                     desc = (String) method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug(ex.toString());
+                    log.warn(ex.toString());
                     classDesFound = false;
                 }
             }
@@ -692,7 +692,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 method.invoke(t);
                 classSetFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                log.debug(ex.toString());
+                log.debug(ex.toString()); // *TableAction.setMessagePreferencesDetails() method is routinely not present in multiple classes
                 classSetFound = false;
             }
             if (!classSetFound) {
@@ -700,7 +700,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("setMessagePreferencesDetails");
                     method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug(ex.toString());
+                    log.warn(ex.toString());
                 }
             }
 
@@ -1158,7 +1158,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                         }
                     }
                 }
-                log.debug("Table {} column {} is sorted {}", tableName, sortColumn, sortOrder);
+                log.trace("Table {} column {} is sorted {}", tableName, sortColumn, sortOrder);
                 for (Element column : table.getChild("columns").getChildren()) {
                     String columnName = column.getAttribute("name").getValue();
                     int order = -1;
