@@ -68,12 +68,12 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     protected HashMap<String, String> appearanceToOutput = new HashMap<String, String>();
 
-    public void setOutputForAppearance(String appearance, String bitnum) { // copied from dccmast, store keypair appearance-bitnum
-        if (appearanceToOutput.containsKey(appearance)) {
-            log.debug("Appearance " + appearance + " is already defined as " + appearanceToOutput.get(appearance));
-            appearanceToOutput.remove(appearance);
+    public void setOutputForAppearance(String aspect, String bitstring) { // copied from dccmast, store keypair aspect-bitnum
+        if (appearanceToOutput.containsKey(aspect)) {
+            log.debug("Aspect " + aspect + " is already defined as " + appearanceToOutput.get(aspect));
+            appearanceToOutput.remove(aspect);
         }
-        appearanceToOutput.put(appearance, bitnum); // stores
+        appearanceToOutput.put(appearance, bitstring); // stores
     }
 
     public String getOutputForAppearance(String appearance) { // copied from dccmast, gives "00010"
@@ -126,7 +126,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     public String getUnLitBitstring() {
         if (unLit != null) {
-            return unLit.getBitstring();
+            //return unLit.getBitstring();
         }
         return null;
     }
@@ -173,26 +173,41 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return "";
     }
 
-    public void setBitstring(String appearance, String bitString) {
-        if (outputs.containsKey(appearance)) {
-            log.debug("Appearance " + appearance + " is already defined so will override");
-            bitstrings.remove(appearance);
+    public void setBitstring(String aspect, String bitString) {
+        if (outputs.containsKey(aspect)) {
+            log.debug("Aspect " + aspect + " is already defined so will override");
+            bitstrings.remove(aspect);
         }
-        bitstrings.put(appearance, new MatrixAspect(bitString));
+        bitstrings.put(aspect, new MatrixAspect(bitString));
     }
 
     public String getBitstring(String aspect) {
         return "00100";
-        //ToDo do someting real URGENT
+        //ToDo do something really URGENT EBR
     }
 
 
     public String getOutputs() {
+        return "myturnout";
+    }
+        //ToDo do someting really URGENT
+
+    HashMap<String, MatrixAspect> outputs = new HashMap<String, MatrixAspect>(); //
+
+    public String setOutputs(String colnum, String ) {
+        if (outputs.containsKey(turnout)) {
+            log.debug("Aspect " + aspect + " is already defined so will override");
+            bitstrings.remove(aspect);
+        }
+        bitstrings.put(aspect, new MatrixAspect(bitString));
+    }
+
+
         return "";
     }
-        //ToDo do someting real URGENT
+    //ToDo do someting really URGENT
 
-    HashMap<String, MatrixAspect> outputs = new HashMap<String, MatrixAspect>(); // was turnouts, for unLit?
+
 
     boolean resetPreviousStates = false;
 
