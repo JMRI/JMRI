@@ -754,7 +754,7 @@ public class AddSignalMastPanel extends JPanel {
                         matrixMast.setAspectDisabled(aspect);
                     } else {
                         matrixMast.setAspectEnabled(aspect);
-                        matrixMast.setBitstring(aspect, matrixAspect.get(aspect).getAspectBits());
+                        matrixMast.setBitsForAspect(aspect, matrixAspect.get(aspect).getAspectBits());
                     }
                     bitNum ++;
                 }
@@ -841,7 +841,7 @@ public class AddSignalMastPanel extends JPanel {
                     // make matrix, store , compare with #752
                     // matrixAspect.get(aspect).setReference(name + ":" + aspect); // ToDo: write to bean comment, method is in class Aspectpanel, #1680
                     // remove next line, replace with checkboxes EBR compare with #746
-                    matrixMast.setBitstring(aspect, matrixAspect.get(aspect).getAspectBits());
+                    matrixMast.setBitsForAspect(aspect, matrixAspect.get(aspect).getAspectBits());
                     // from matrixHashtable to matrixMast
                     matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
                     if (matrixAspect.get(aspect).isAspectDisabled()) {
@@ -853,7 +853,7 @@ public class AddSignalMastPanel extends JPanel {
                 matrixMast.resetPreviousStates(resetPreviousState.isSelected());
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
-                    matrixMast.setUnLitBitstring();
+                    matrixMast.setUnlitBits("00000"); // to do: add panel to set this
                 }
             }
         }
