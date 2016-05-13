@@ -353,7 +353,7 @@ public class AddSignalMastPanel extends JPanel {
             if (dmast.allowUnLit()) {
                 unLitAspectField.setText("" + dmast.getUnlitId());
             }
-        } else if (mast instanceof jmri.implementation.MatrixSignalMast) { // EBR, copied from DCC Mast
+        } else if (mast instanceof jmri.implementation.MatrixSignalMast) { // EBR
             signalMastDriver.setSelectedItem(Bundle.getMessage("MatrixCtlMast"));
             updateSelectedDriver();
             SignalAppearanceMap appMap = mast.getAppearanceMap();
@@ -366,7 +366,7 @@ public class AddSignalMastPanel extends JPanel {
                     String key = aspects.nextElement();
                     // select the right checkboxes
                     MatrixAspectPanel matrixPanel = matrixAspect.get(key);
-                    matrixPanel.setMatrixBoxes(xmast.getBits(key));
+                    matrixPanel.setMatrixBoxes(xmast.getBitsForAspect(key)); // char[] 1001
                     // bits 1-5
                     matrixPanel.setAspectDisabled(xmast.isAspectDisabled(key));
                 }
@@ -1781,6 +1781,12 @@ public class AddSignalMastPanel extends JPanel {
             }
             return "nnnnn"; // error flag
         }
+
+        private void setMatrixBoxes (char[] bits){
+            // activate checkboxes
+            // to do
+        }
+
 
         // called in implementation.MatrixSignalMast #145
         public void setAspectBits(String bits) {

@@ -51,6 +51,7 @@ public class MatrixSignalMastXml
         e.addContent(unlit);
 
         List<String> outputs = p.getOutputs();
+        // to do: use hashmap directly (change type + convert char[] to xml-storable simple String
         // max. 5 outputs (either: turnouts (bean names) [ToDo: or DCC addresses (numbers)]
         if (outputs != null) {
             Element outps = new Element("outputs");
@@ -59,7 +60,7 @@ public class MatrixSignalMastXml
                 String key = ("output" + i);
                 Element outp = new Element("output");
                 outp.setAttribute("matrixCol", key);
-                outp.addContent(p.getOutputName(key)); // get beanname (Turnout)
+                outp.addContent(p.getOutputName(i)); // get beanname (Turnout)
                 outps.addContent(outp);
                 i++;
             }
@@ -69,6 +70,7 @@ public class MatrixSignalMastXml
         }
 
         List<String> bitStrings = p.getBitStrings();
+        // to do: use hashmap directly (change type + convert char[] to xml-storable simple String
         // string of max. 5 chars "00101" describing matrix row per aspect
         if (bitStrings != null) {
             Element bss = new Element("bitStrings");
