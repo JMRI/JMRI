@@ -39,8 +39,9 @@ import org.slf4j.LoggerFactory;
 public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
 
     private int broadcast_flags = 0; // holds the value of the broadcast flags.
-    private int serial_no = 0; // holds the serial number of the Z21.
+    private int serial_number = 0; // holds the serial number of the Z21.
     private int software_version = 0; // holds the software version of the Z21.
+    private int hardware_version = 0; // holds the hardware version of the Z21.
 
     /**
      * Roco does use a service mode
@@ -49,6 +50,55 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     public boolean getHasServiceMode() {
         return true;
     }
+
+
+   /**
+    * get the serial number.
+    * @return int serial number of the connected Z21 command station
+    */
+   public int getSerialNumber(){
+      return serial_number;
+   }
+
+   /**
+    * set the serial number associated with this Z21 command station.
+    * @param int sn serial number
+    */
+   public void setSerialNumber(int sn){
+      serial_number = sn;
+   }
+ 
+  /**
+    * get the software version.
+    * @return int software version of the connected Z21 command station
+    */
+   public int getSoftwareVersion(){
+      return software_version;
+   }
+
+   /**
+    * set the software version associated with this Z21 command station.
+    * @param int sv software version
+    */
+   public void setSoftwareVersion(int sv){
+      software_version=sv;
+   }
+
+  /**
+    * get the hardware version.
+    * @return int hardware version of the connected Z21 command station
+    */
+   public int getHardwareVersion(){
+      return hardware_version;
+   }
+
+   /**
+    * set the hardware version associated with this Z21 command station.
+    * @param int hv software version
+    */
+   public void setSoftwareVersion(int hv){
+      hardware_version=hv;
+   }
 
    /**
     * get the current value of the broadcast flags as an int
