@@ -96,7 +96,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     * set the hardware version associated with this Z21 command station.
     * @param int hv software version
     */
-   public void setSoftwareVersion(int hv){
+   public void setHardwareVersion(int hv){
       hardware_version=hv;
    }
 
