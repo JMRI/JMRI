@@ -69,7 +69,7 @@ public class MatrixSignalMastXml
             }
         }
 
-        List<String> bitStrings = p.getBitStrings();
+        List<String> bitStrings = p.getBitstrings();
         // to do: use hashmap directly (change type + convert char[] to xml-storable simple String
         // string of max. 5 chars "00101" describing matrix row per aspect
         if (bitStrings != null) {
@@ -133,7 +133,11 @@ public class MatrixSignalMastXml
         if (outps != null) {
             List<Element> list = outps.getChildren("output"); // singular
             for (Element outp : list) {
-                ((MatrixSignalMast) m).setOutputs(outp.getAttribute("matrixCol").getValue(), outp.getText());
+                String outputname = e.getAttribute("matrixCol").getValue();
+                String turnout = e.getChild("turnout").getText();
+                //m.setTurnout(outputname, turnout, [turnState]);
+                ((MatrixSignalMast) m).setOutput(outp.getAttribute("matrixCol").getValue(), outp.getText());
+                // to do: repeat for i = 1 to 5
             }
         }
 
