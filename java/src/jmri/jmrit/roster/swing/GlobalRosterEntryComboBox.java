@@ -1,4 +1,3 @@
-// RosterEntryComboBox.java
 package jmri.jmrit.roster.swing;
 
 import jmri.jmrit.roster.Roster;
@@ -8,15 +7,9 @@ import jmri.jmrit.roster.Roster;
  * without respect to a roster group.
  *
  * @author Randall Wood Copyright (C) 2011
- * @version $Revision: $
  * @see RosterEntryComboBox
  */
 public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7160579198258524537L;
 
     /**
      * Create a combo box with all roster entries in the default Roster.

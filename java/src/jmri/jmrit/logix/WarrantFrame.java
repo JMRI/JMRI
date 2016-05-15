@@ -978,7 +978,6 @@ public class WarrantFrame extends WarrantRoute {
                 case Warrant.MODE_NONE:
                     _warrant.removePropertyChangeListener(this);
                     int oldMode = ((Integer) e.getOldValue()).intValue();
-                    int newMode = ((Integer) e.getNewValue()).intValue();
                     if (oldMode != Warrant.MODE_NONE) {
                         OBlock block = _warrant.getCurrentBlockOrder().getBlock();
                         int state = block.getState();
@@ -1064,7 +1063,7 @@ public class WarrantFrame extends WarrantRoute {
                                         .getBlock().getDisplayName(), e.getNewValue()), Color.black);
                     } else if (e.getPropertyName().equals("runMode")) {
                         oldMode = ((Integer) e.getOldValue()).intValue();
-                        newMode = ((Integer) e.getNewValue()).intValue();
+                        int newMode = ((Integer) e.getNewValue()).intValue();
                         if (oldMode == Warrant.MODE_NONE) {
                             if (newMode != Warrant.MODE_NONE) {
                                 setStatusText(Bundle.getMessage("warrantStart",

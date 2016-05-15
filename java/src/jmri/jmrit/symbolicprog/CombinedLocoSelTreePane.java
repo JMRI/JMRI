@@ -483,7 +483,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         // get the decoder type, it has to be there (assumption!),
         String modelString = locoEntry.getDecoderModel();
         String familyString = locoEntry.getDecoderFamily();
-        String titleString = DecoderFile.titleString(modelString, familyString);
 
         // close the entire GUI (not currently done, users want left open)
         //collapseAll();

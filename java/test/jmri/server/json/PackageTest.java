@@ -25,6 +25,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.server.JsonTest");
+        suite.addTest(BundleTest.suite());
         suite.addTest(jmri.server.json.light.PackageTest.suite());
         suite.addTest(jmri.server.json.memory.PackageTest.suite());
         suite.addTest(jmri.server.json.power.PackageTest.suite());

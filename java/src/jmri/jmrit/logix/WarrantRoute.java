@@ -306,6 +306,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
     
     @SuppressWarnings("unchecked") // parameter can be any of several types, including JComboBox<String>
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", justification = "checkBlockBox in the internal class RouteLocation is a method with side effects that returns a boolean value. This code basically says try all possibilities until one succeeds.")
     void doAction(Object obj) {
         if (obj instanceof JTextField) {
             JTextField box = (JTextField)obj;

@@ -1,4 +1,3 @@
-// VariableTableModel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -29,14 +28,8 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2007
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
  * speed table
- * @version $Revision$
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6912067927864604835L;
 
     private String headers[] = null;
 
@@ -278,7 +271,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error("CvModel reference is null; cannot add variables");
             return;
         }
-        if (CV != "") // some variables have no CV per se
+        if (!CV.equals("")) // some variables have no CV per se
         {
             _cvModel.addCV(CV, readOnly, infoOnly, writeOnly);
         }

@@ -26,6 +26,7 @@ public class SimpleClockTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.simpleclock.SimpleClockTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.simpleclock.SimpleTimebaseTest.suite());
+        suite.addTest(BundleTest.suite());
         return suite;
     }
 

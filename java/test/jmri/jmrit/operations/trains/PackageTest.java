@@ -30,12 +30,13 @@ public class PackageTest extends TestCase {
         suite.addTest(TrainCommonTest.suite());
         suite.addTest(TrainBuilderTest.suite());
         suite.addTest(XmlTest.suite());
-
+        suite.addTest(BundleTest.suite());
+        suite.addTest(jmri.jmrit.operations.trains.tools.PackageTest.suite());
+        suite.addTest(jmri.jmrit.operations.trains.excel.PackageTest.suite());
+        suite.addTest(jmri.jmrit.operations.trains.timetable.PackageTest.suite());
         // GUI tests start here
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(OperationsTrainsGuiTest.suite());
-            suite.addTest(jmri.jmrit.operations.trains.timetable.OperationsTrainsGuiTest.suite());
-            suite.addTest(jmri.jmrit.operations.trains.tools.OperationsTrainsGuiTest.suite());
         }
 
         return suite;

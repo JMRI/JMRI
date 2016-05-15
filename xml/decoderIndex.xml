@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.5ish-201604182236-heap-R284e81a on Tue Apr 19 08:36:43 AEST 2016 $Id$-->
-  <decoderIndex version="730">
+  <!--Written by JMRI version 4.3.5ish-201605090918-Matt H-R3421497 on Mon May 09 11:19:12 CEST 2016 $Id$-->
+  <decoderIndex version="734">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5710,13 +5710,15 @@
           <output name="6" label="F - Pink" />
         </model>
       </family>
-      <family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="99" lowVersionID="90" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Plus_2010.xml">
+      <family name="Lenz Plus decoders released March 2010, updated April 2016" mfg="Lenz" highVersionID="99" lowVersionID="72" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Plus_2010.xml">
         <model model="Standard+ NEM652 10231-01" numOuts="3" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+          <versionCV highVersionID="93" lowVersionID="93" />
           <output name="1" label="A" maxcurrent="0.3A" />
           <output name="2" label="B" maxcurrent="0.3A" />
           <output name="3" label="C" maxcurrent="0.3A" />
         </model>
         <model model="Standard+ V2 NEM652 10231-02" numOuts="4" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+          <versionCV highVersionID="77" lowVersionID="77" />
           <output name="1" label="A" maxcurrent="0.3A" />
           <output name="2" label="B" maxcurrent="0.3A" />
           <output name="3" label="C" maxcurrent="0.3A" />
@@ -5731,14 +5733,17 @@
           <output name="2" label="B" maxcurrent="0.3A" />
         </model>
         <model model="Silver+ mini wired 10310-02" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+          <versionCV highVersionID="96" lowVersionID="96" />
           <output name="1" label="A - White" maxcurrent="0.3A" />
           <output name="2" label="B - Yellow" maxcurrent="0.3A" />
         </model>
         <model model="Silver+ mini NEM651 10311-02" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+          <versionCV highVersionID="96" lowVersionID="96" />
           <output name="1" label="A" maxcurrent="0.3A" />
           <output name="2" label="B" maxcurrent="0.3A" />
         </model>
         <model model="Silver+ NEM652 10331-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+          <versionCV highVersionID="95" lowVersionID="95" />
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
@@ -5746,6 +5751,7 @@
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
         <model model="Silver+ PluX12 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A">
+          <versionCV highVersionID="97" lowVersionID="97" />
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
@@ -5753,6 +5759,7 @@
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
         <model model="Silver+ Next18 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A" comment="New in 2014">
+          <versionCV highVersionID="94" lowVersionID="94" />
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
@@ -5760,6 +5767,7 @@
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
         <model model="Silver+ 21 10321-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+          <versionCV highVersionID="99" lowVersionID="99" />
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
@@ -5767,6 +5775,7 @@
           <output name="5" label="E" maxcurrent="0.5A" />
         </model>
         <model model="Silver+ direct 10330-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+          <versionCV highVersionID="98" lowVersionID="98" />
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
@@ -5782,6 +5791,7 @@
           <output name="2" label="B" maxcurrent="0.3A" />
         </model>
         <model model="Gold+ NEM652 10433-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+          <versionCV highVersionID="91" lowVersionID="91" />
           <output name="1" label="A" maxcurrent="0.5A" />
           <output name="2" label="B" maxcurrent="0.5A" />
           <output name="3" label="C" maxcurrent="0.5A" />
@@ -10267,6 +10277,68 @@
           </output>
           <output name="7" label="|" />
           <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="EMD GP38-2" numOuts="2" numFns="14" connector="other" productID="EMD_GP382" comment="Diesel Prime Mover EMD645 Non-Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="EMD GP40" numOuts="2" numFns="14" connector="other" productID="EMD_GP40" comment="Diesel Prime Mover EMD645 Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
@@ -19779,8 +19851,9 @@
       <family name="BlocD8" mfg="Team Digital" type="stationary" file="TD_BlocD8.xml">
         <model model="BlocD8" lowVersionID="1" comment="BlocD8 can be programmed in the usual way" />
       </family>
-      <family name="CSC" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way" file="TD_CSC.xml">
-        <model model="CSC" lowVersionID="10" />
+      <family name="CSC Family" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way" file="TD_CSC.xml">
+        <model model="CSC" lowVersionID="10" comment="Original HW" />
+        <model model="CSCe" lowVersionID="10" comment="Later HW" />
       </family>
       <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SC8.xml">
         <model model="SC8" lowVersionID="1" comment="SC8 is a stationary decoder, but it can be programmed in the usual way" />
@@ -19873,6 +19946,42 @@
           <size length="210" width="11" height="3" units="mm" />
         </model>
         <model model="Shine Plus Maxi Digi" lowVersionID="0" highVersionID="255" numOuts="16" numFns="19">
+          <output name="1" label="Out 1" />
+          <output name="2" label="Out 2" />
+          <output name="3" label="Out 3" />
+          <output name="4" label="Out 4" />
+          <output name="5" label="Out 5" />
+          <output name="6" label="Out 6" />
+          <output name="7" label="Out 7" />
+          <output name="8" label="Out 8" />
+          <output name="9" label="Out 9" />
+          <output name="10" label="Out 10" />
+          <output name="11" label="Out 11" />
+          <output name="12" label="Out 12" />
+          <output name="13" label="Out 13" />
+          <output name="14" label="Out 14" />
+          <output name="15" label="Out 15" />
+          <output name="16" label="Out 16" />
+          <size length="275" width="11" height="3" units="mm" />
+        </model>
+        <model model="NMJ B3-Series DCC Lighting" lowVersionID="4" highVersionID="255" numOuts="14" numFns="17">
+          <output name="1" label="Out 1" />
+          <output name="2" label="Out 2" />
+          <output name="3" label="Out 3" />
+          <output name="4" label="Out 4" />
+          <output name="5" label="Out 5" />
+          <output name="6" label="Out 6" />
+          <output name="7" label="Out 7" />
+          <output name="8" label="Out 8" />
+          <output name="9" label="Out 9" />
+          <output name="10" label="Out 10" />
+          <output name="11" label="Out 11" />
+          <output name="12" label="Out 12" />
+          <output name="13" label="Out 13" />
+          <output name="14" label="Out 14" />
+          <size length="236" width="11" height="3" units="mm" />
+        </model>
+        <model model="NMJ B7-Series DCC Lighting" lowVersionID="3" highVersionID="255" numOuts="16" numFns="19">
           <output name="1" label="Out 1" />
           <output name="2" label="Out 2" />
           <output name="3" label="Out 3" />
@@ -20962,6 +21071,29 @@
           <size length="55" width="26" height="18" units="mm" />
         </model>
         <!-- End sound-only models -->
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX600v31.xml">
+        <model model="MX600 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <size length="20.5" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX600R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <size length="20.5" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX600P12 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <size length="20.5" width="15.5" height="4" units="mm" />
+        </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX618v31.xml">
         <model model="MX618N18 version 31" lowVersionID="30" highVersionID="31" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="8" numFns="14" productID="243">
