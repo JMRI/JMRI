@@ -76,7 +76,7 @@ public class MatrixSignalMastXml
             Element bss = new Element("bitStrings");
             int i = 1;
             for (String _bitstring : bitStrings) {
-                String key = "Stop"; // aspect; // build from names?
+                String key = "Stop"; // aspect; // build from names?, copy from dcc mast
                 Element bs = new Element("bitString");
                 bs.setAttribute("aspect", key);
                 bs.addContent(_bitstring);

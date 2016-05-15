@@ -4,7 +4,6 @@ package jmri.jmrit.beantable.signalmast;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.awt.event.EventListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
@@ -18,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -26,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -1409,7 +1411,7 @@ public class AddSignalMastPanel extends JPanel {
     // on = thrown, off = closed, no turnout states asked
     int bitNum; // number of columns in matrix
     // to set number of columns
-    JSpinner bitNumSpinner = new JSpinner(new SpinnerNumberModel(bitNum, 1, 5, bitNum));
+    JSpinner bitNumSpinner = new JSpinner(new SpinnerNumberModel(5, 1, 5, 1));
     // ToDo: add boxes to set DCC Packets (with drop down selection "Output Type": Turnouts/Direct DCC Packets)
 
     void updateMatrixMastPanel() {
@@ -1432,7 +1434,7 @@ public class AddSignalMastPanel extends JPanel {
         }*/
 
         //int bitNum = number of columns in matrix
-        if (bitNum == null || bitNum == -1) {
+        if (bitNum == 0 || bitNum == -1) {
             bitNum = 5; // default to 5 col
         }
 
@@ -1445,7 +1447,7 @@ public class AddSignalMastPanel extends JPanel {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aPanel = new MatrixAspectPanel(aspect);
             matrixAspect.put(aspect, aPanel); // store in Hashmap
-            //aPanel.setAspectBits((String) sigsys.getProperty(aspect, "bitString"));
+            //aPanel.setAspectBits((String) sigsys.getProperty(aspect, "bitString")); to do: load existing values???
         }
         matrixMastPanel.removeAll();
         matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size() + 3, 2));
@@ -1454,15 +1456,11 @@ public class AddSignalMastPanel extends JPanel {
         matrixMastPanel.add(bitNumLabel);
         matrixMastPanel.add(bitNumSpinner);
         bitNumSpinner.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged (ChangeEvent e) {
-                bitNum = bitNumSpinner.getValue();
-                // hide/show last cols in matrix & outputs ToDo EBR
-/*
-                for (int i=0; i<=5; i++){
-                    ("bit" + i).setVisible(i<bitNum);
-                }
-*/
-                // updateMatrixAspectPanel(); // hide/show last cols in matrix (per aspect)
+                Integer currentValue = (Integer)bitNumSpinner.getValue();
+                // hide/show cols in matrix & outputs ToDo
+                bitNumChanged(currentValue);
             }
         });
 
@@ -1524,6 +1522,20 @@ public class AddSignalMastPanel extends JPanel {
         // setReference(name + ":" + output); //write mast name to bean comment?
     }
 
+    /** When user changes the number of columns in matrix:
+     * store new value
+     * show/hide input (turnout) selection boxes
+     * hide/show checkboxes in matrix (per aspect)
+     */
+    void bitNumChanged(Integer newColNum) {
+        bitNum = newColNum;
+        // show/hide column labels (if any)
+            /* for (int i=0; i<=5; i++){
+                    ("bit" + i).setVisible(i<bitNum);
+               }
+            */
+        // updateMatrixAspectPanel();
+    }
 
     //option: write mast name to bean comment?, not on aspect level, called from #1520
     /*  void setReference(String bits) {
@@ -1695,18 +1707,18 @@ public class AddSignalMastPanel extends JPanel {
             // convert to char[] array
             //aspectBits = bitString.toCharArray(); // easy to manipulate by index
             // copy to checkbox states
-            bitCheck1.setSelected(aspectBits[1] == "1");
+            bitCheck1.setSelected(aspectBits[1] == '1');
             if (cols > 1) {
-                bitCheck2.setSelected(aspectBits[2] == "1");
+                bitCheck2.setSelected(aspectBits[2] == '1');
             }
             if (cols > 2) {
-                bitCheck3.setSelected(aspectBits[3] == "1");
+                bitCheck3.setSelected(aspectBits[3] == '1');
             }
             if (cols > 3) {
-                bitCheck4.setSelected(aspectBits[4] == "1");
+                bitCheck4.setSelected(aspectBits[4] == '1');
             }
             if (cols > 4) {
-                bitCheck5.setSelected(aspectBits[5] == "1");
+                bitCheck5.setSelected(aspectBits[5] == '1');
             }
         }
 
@@ -1751,48 +1763,48 @@ public class AddSignalMastPanel extends JPanel {
 
         public void setBit1(boolean state) { //called from checkbox1
             if (state = true) {
-                aspectBits[0] = "1";
+                aspectBits[0] = '1';
             } else {
-                aspectBits[0] = "0";
+                aspectBits[0] = '0';
                 }
             String value = String.valueOf(aspectBits); // convert back from char[] to String
-            aspectBitsField.setValue(value);
+            aspectBitsField.setText(value);
         }
         public void setBit2(boolean state) { //called from checkbox2
             if (state = true) {
-                aspectBits[1] = "1";
+                aspectBits[1] = '1';
             } else {
-                aspectBits[1] = "0";
+                aspectBits[1] = '0';
             }
             String value = String.valueOf(aspectBits); // convert back from char[] to String
-            aspectBitsField.setValue(value);
+            aspectBitsField.setText(value);
         }
         public void setBit3(boolean state) { //called from checkbox3
             if (state = true) {
-                aspectBits[2] = "1";
+                aspectBits[2] = '1';
             } else {
-                aspectBits[2] = "0";
+                aspectBits[2] = '0';
             }
             String value = String.valueOf(aspectBits); // convert back from char[] to String
-            aspectBitsField.setValue(value);
+            aspectBitsField.setText(value);
         }
         public void setBit4(boolean state) { //called from checkbox4
             if (state = true) {
-                aspectBits[3] = "1";
+                aspectBits[3] = '1';
             } else {
-                aspectBits[3] = "0";
+                aspectBits[3] = '0';
             }
             String value = String.valueOf(aspectBits); // convert back from char[] to String
-            aspectBitsField.setValue(value);
+            aspectBitsField.setText(value);
         }
         public void setBit5(boolean state) { //called from checkbox5
             if (state = true) {
-                aspectBits[4] = "1";
+                aspectBits[4] = '1';
             } else {
-                aspectBits[4] = "0";
+                aspectBits[4] = '0';
             }
             String value = String.valueOf(aspectBits); // convert back from char[] to String
-            aspectBitsField.setValue(value);
+            aspectBitsField.setText(value);
         }
 
         String errorChars = "n";
@@ -1813,12 +1825,11 @@ public class AddSignalMastPanel extends JPanel {
             // to do
         }
 
-
-        // called in implementation.MatrixSignalMast #145
+/*        // called in implementation.MatrixSignalMast #145 ??? to do: method to load aspect bits
         public void setAspectBits(String bits) {
             aspectBits.setValue(bits.toCharArray());
             aspectBitsField.setText(bits);
-        }
+        }*/
 
         JPanel panel;
 

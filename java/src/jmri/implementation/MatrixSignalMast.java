@@ -157,15 +157,15 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     public Turnout getOutput(int colnum) { // bean
         if (colnum > 0 && colnum <= 5) {
-            if (colnum = 1) {
+            if (colnum == 1) {
                 return output1.getBean();
-            } else if (colnum = 2) {
+            } else if (colnum == 2) {
                 return output2.getBean();
-            } else if (colnum = 3) {
+            } else if (colnum == 3) {
                 return output3.getBean();
-            } else if (colnum = 4) {
+            } else if (colnum == 4) {
                 return output4.getBean();
-            } else if (colnum = 5) {
+            } else if (colnum == 5) {
                 return output5.getBean();
             } else {
                 log.error("Trying to read output " + colnum + " which has not been configured");
@@ -208,22 +208,21 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     public String getOutputName(int colnum) {
         if (colnum > 0 && colnum <= 5) {
-            if (colnum = 1) {
+            if (colnum == 1) {
                 return output1.getName(); // bean or object? getTurnout(output1).getBean()
-            } else if (colnum = 2) {
+            } else if (colnum == 2) {
                 return output2.getName();
-            } else if (colnum = 3) {
+            } else if (colnum == 3) {
                 return output3.getName();
-            } else if (colnum = 4) {
+            } else if (colnum == 4) {
                 return output4.getName();
-            } else if (colnum = 5) {
+            } else if (colnum == 5) {
                 return output5.getName();
             }
         }
         log.error("Trying to read output " + colnum + " which has not been configured");
         return "";
     }
-
 
     public void setBitstring(String aspect, String bitString) {
         if (aspectToOutput.containsKey(aspect)) {
@@ -245,7 +244,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     public List<String> getBitstrings() {
         // provide to xml
-        List<String> bitlist;
+        ArrayList<String> bitlist = new ArrayList<String>(16);
         for (int i = 1; i <= aspectToOutput.size(); i++) { // number of aspects in hashmap
             // aspect =
             String bits = new String(aspectToOutput.get(aspect)); // convert char[] to string
@@ -258,7 +257,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     public List<String> getOutputs() {
         // to do: use hashmap directly
-        List<String> outputlist;
+        ArrayList<String> outputlist = new ArrayList<String>(5);
         //list = outputsToBeans.keySet();
         outputlist.add(output1.getName()); // convert bean to name
         if (outputsToBeans.containsKey("output2")) { // outputsToBeans hashmap
@@ -285,12 +284,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
     NamedBeanHandle<Turnout> output5;
     HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(5); // output# - bean pairs
 
-/*    copied from TurnoutSignalMast:
-
-            Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-            namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
-*/
-
     public void setOutput(String colname, String turnoutname) { // receive properties from xml, convert name to bean!
         Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutname);
         NamedBeanHandle<Turnout> namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutname, turn);
@@ -304,9 +297,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
     public void UpdateOutputs (char[] bits) {
         // hardware instruction
         for (int i = 1; i <= bits.length; i++) {
-            if (bits[i] == "1") {
+            if (bits[i] == '1') {
                 output1.getBean().setCommandedState(Turnout.CLOSED);
-            } else if (bits[i] == "0") {
+            } else if (bits[i] == '0') {
                 output1.getBean().setCommandedState(Turnout.THROWN);
                 // to do: repeat for remaining < bitNum outputs
             } else {
