@@ -304,7 +304,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 // to do: repeat for remaining < bitNum outputs
             } else {
                 // invalid char
-                log.debug("Unvalid element " + bits[i] + " cannot be converted to state for output #" + i);
+                log.debug("Invalid element " + bits[i] + " cannot be converted to state for output #" + i);
             }
         }
     }
