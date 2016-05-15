@@ -2,6 +2,7 @@
 package jmri.jmrit.beantable.signalmast;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -177,6 +178,7 @@ public class AddSignalMastPanel extends JPanel {
 
         JButton ok;
         JPanel buttonHolder = new JPanel();
+        buttonHolder.setLayout(new FlowLayout(FlowLayout.TRAILING));
         cancel.setVisible(false);
         buttonHolder.add(cancel);
         buttonHolder.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
@@ -1422,9 +1424,9 @@ public class AddSignalMastPanel extends JPanel {
         if ((!Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem()))) {
             return;
         }
+        matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
 
-        //for option dcc packet
-/*        matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
+/*      //for option dcc packet
         //option todo
         java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         systemPrefixBox.removeAllItems();
@@ -1452,9 +1454,9 @@ public class AddSignalMastPanel extends JPanel {
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect);
-            // set diabled? load check box values?
-            //aPanel.setAspectBits((String) sigsys.getProperty(aspect, "bitString")); to do: load existing values???
             matrixAspect.put(aspect, aspectpanel); // store in Hashmap
+            // fill in aspect properties here: set diabled? load check box values? to do: load existing values
+            // aspectpanel.setAspectBits(getBits(aspect, bitString));
         }
         matrixMastPanel.removeAll();
         matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(matrixAspect.size() + 3, 2));
@@ -1522,6 +1524,9 @@ public class AddSignalMastPanel extends JPanel {
             output5panel.setVisible(bitNum > 4);}
 
         matrixMastPanel.add(turnoutpanel);
+        JPanel matrixHeader = new JPanel();
+        JLabel matrixHeaderLabel = new JLabel(Bundle.getMessage("AspectMatrixHeaderLabel", bitNum), JLabel.CENTER);
+        matrixMastPanel.add(matrixHeaderLabel);
 
         // option DCC packet
  /*       if (matrixDCCListener == null) {
