@@ -76,7 +76,7 @@ public class MatrixSignalMastXml
             Element bss = new Element("bitStrings");
             int i = 1;
             for (String _bitstring : bitStrings) {
-                String key = aspect;
+                String key = "Stop"; // aspect; // build from names?
                 Element bs = new Element("bitString");
                 bs.setAttribute("aspect", key);
                 bs.addContent(_bitstring);
@@ -133,8 +133,8 @@ public class MatrixSignalMastXml
         if (outps != null) {
             List<Element> list = outps.getChildren("output"); // singular
             for (Element outp : list) {
-                String outputname = e.getAttribute("matrixCol").getValue();
-                String turnout = e.getChild("turnout").getText();
+                String outputname = outp.getAttribute("matrixCol").getValue();
+                String turnout = outp.getChild("turnout").getText();
                 //m.setTurnout(outputname, turnout, [turnState]);
                 ((MatrixSignalMast) m).setOutput(outp.getAttribute("matrixCol").getValue(), outp.getText());
                 // to do: repeat for i = 1 to 5
