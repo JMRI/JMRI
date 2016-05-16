@@ -185,14 +185,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     private void listLAFfonts() {
-        log.debug("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
+        log.trace("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
         java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
             if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
                 Font f = UIManager.getFont(key);
-                log.debug("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
+                log.trace("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
             }
         }
     }
