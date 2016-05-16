@@ -3,14 +3,15 @@
 package jmri.jmrix.cmri.serial.sim;
 
 import javax.swing.*;
-import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;  //c2
+//import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 
 /**
  * Definition of objects to handle configuring a layout connection
- * via an C/MRI Simulator object.
+ * via an CMRInet Simulator object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision$
+ * @version	$Revision: 20084 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -38,11 +39,12 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
 		details.add(p);
 
 		// add another button
-		JButton b = new JButton("Configure C/MRI nodes");
+		JButton b = new JButton("Configure CMRInet nodes");
 
 		details.add(b);
 						
-		b.addActionListener(new NodeConfigAction());
+		b.addActionListener(new NodeConfigManagerAction());  //c2
+//		b.addActionListener(new NodeConfigAction());
         
     }
     

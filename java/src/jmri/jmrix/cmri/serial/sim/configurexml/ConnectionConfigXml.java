@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
  * it can reuse (and benefit from changes to) that code.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision$
+ * @version $Revision: 17977 $
  */
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS") // OK by convention
 public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.configurexml.ConnectionConfigXml {

@@ -10,14 +10,15 @@ import java.awt.event.ActionEvent;
  *       			NodeConfigFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version	$Revision$
+ * @version	$Revision: 17977 $
  */
+@Deprecated
 public class NodeConfigAction extends AbstractAction {
 
 	public NodeConfigAction(String s) { super(s);}
 
     public NodeConfigAction() {
-        this("Configure C/MRI Nodes");
+        this("Configure CMRInet Nodes");
     }
 
     public void actionPerformed(ActionEvent e) {

@@ -12,7 +12,7 @@ import jmri.JmriException;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
+ * @version	$Revision: 18178 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -155,8 +155,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public int selectNumberOfControlBits() {
 		int iNum = 0;
 		iNum = javax.swing.JOptionPane.showOptionDialog(null,
-				"How many C/MRI output bits should be used to control this turnout?",
-					"C/MRI Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
+				"How many CMRInet output bits should be used to control this turnout?",
+					"CMRInet Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 						javax.swing.JOptionPane.QUESTION_MESSAGE,
 						null,new String[] {"Use 1 bit","Use 2 bits"},"Use 1 bit");
 		return iNum;
@@ -171,8 +171,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public int selectOutputType() {
 		int iType = 0;
 		iType = javax.swing.JOptionPane.showOptionDialog(null,
-				"Should the C/MRI output bit(s) be 'steady state' or 'pulsed'?",
-					"C/MRI Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
+				"Should the CMRInet output bit(s) be 'steady state' or 'pulsed'?",
+					"CMRInet Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 						javax.swing.JOptionPane.QUESTION_MESSAGE,
 						null,new String[] {"Steady State Output","Pulsed Output"},"Steady State Output");
 		return iType;
@@ -185,7 +185,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public void notifySecondBitConflict(String conflict,int bitNum) {
 		javax.swing.JOptionPane.showMessageDialog(null,"The second output bit, "+bitNum+
 			", is currently assigned to "+conflict+". Turnout cannot be created as "+
-					"you specified.","C/MRI Assignment Conflict",
+					"you specified.","CMRInet Assignment Conflict",
 							javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 	}
 

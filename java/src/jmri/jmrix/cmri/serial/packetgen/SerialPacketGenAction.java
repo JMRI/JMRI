@@ -18,7 +18,7 @@ public class SerialPacketGenAction 			extends AbstractAction {
 	public SerialPacketGenAction(String s) { super(s);}
 
     public SerialPacketGenAction() {
-        this("Send C/MRI message");
+        this("Send CMRInet message");
     }
 
     public void actionPerformed(ActionEvent e) {

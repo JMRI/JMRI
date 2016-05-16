@@ -16,7 +16,7 @@ import jmri.jmrix.cmri.serial.*;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision$
+ * @version $Revision: 17977 $
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

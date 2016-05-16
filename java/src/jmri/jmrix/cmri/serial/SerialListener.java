@@ -7,7 +7,7 @@ package jmri.jmrix.cmri.serial;
  * Listener interface to be notified about serial C/MRI traffic
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision$
+ * @version			$Revision: 17977 $
  */
 public interface SerialListener extends jmri.jmrix.AbstractMRListener {
     public void message(SerialMessage m);

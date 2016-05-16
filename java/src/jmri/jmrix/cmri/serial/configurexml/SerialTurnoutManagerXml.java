@@ -12,7 +12,7 @@ import jmri.jmrix.cmri.serial.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
+ * @version $Revision: 17977 $
  */
 public class SerialTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 

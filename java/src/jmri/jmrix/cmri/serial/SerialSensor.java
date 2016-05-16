@@ -8,7 +8,7 @@ import jmri.implementation.AbstractSensor;
  * Extend jmri.AbstractSensor for C/MRI serial systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version     $Revision$
+ * @version     $Revision: 17977 $
  */
 public class SerialSensor extends AbstractSensor {
 

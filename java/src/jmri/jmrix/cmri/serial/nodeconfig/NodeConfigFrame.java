@@ -18,8 +18,9 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision$
+ * @version	$Revision: 17977 $
  */
+@Deprecated
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfig.NodeConfigBundle");
@@ -480,7 +481,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     /**
      * Method to handle delete button 
-     */        
+     */  
     public void deleteButtonActionPerformed() {
         // Find Serial Node address
         int nodeAddress = readNodeAddress();

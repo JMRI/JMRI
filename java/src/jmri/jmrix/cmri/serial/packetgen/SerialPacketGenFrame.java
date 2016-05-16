@@ -18,7 +18,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of CMRI serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003
- * @version	$Revision$
+ * @version	$Revision: 17977 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 

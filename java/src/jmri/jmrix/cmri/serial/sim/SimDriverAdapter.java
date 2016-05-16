@@ -14,7 +14,7 @@ import java.io.InputStream;
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008, 2011
- * @version			$Revision$
+ * @version			$Revision: 20923 $
  */
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                                                   justification="Access to 'self' OK until multiple instance pattern installed")

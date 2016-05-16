@@ -25,7 +25,7 @@ import jmri.jmrix.AbstractNode;
  *              CL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision$
+ * @version     $Revision: 17977 $
  */
 public class SerialAddress {
 

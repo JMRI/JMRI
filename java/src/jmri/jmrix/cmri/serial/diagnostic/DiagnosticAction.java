@@ -10,14 +10,14 @@ import java.awt.event.ActionEvent;
  *       			DiagnosticFrame object
  *
  * @author                  Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
+ * @version	$Revision: 17977 $
  */
 public class DiagnosticAction 	extends AbstractAction {
 
     public DiagnosticAction(String s) { super(s);}
 
     public DiagnosticAction() {
-        this("Run C/MRI Diagnostic");
+        this("Run CMRInet Diagnostic");
     }
 
     public void actionPerformed(ActionEvent e) {

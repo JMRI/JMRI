@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Abstract base for classes representing a CMRI communications port
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version	$Revision$
+ * @version	$Revision: 17977 $
  */
 public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream

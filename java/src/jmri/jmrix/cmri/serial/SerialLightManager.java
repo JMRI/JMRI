@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
+ * @version	$Revision: 17977 $
  */
 public class SerialLightManager extends AbstractLightManager {
 

@@ -45,7 +45,7 @@ import jmri.Turnout;
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author			David Duchamp Copyright (C) 2004, 2007
  * @author			Dan Boudreau Copyright (C) 2007
- * @version			$Revision$
+ * @version			$Revision: 17977 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -118,7 +118,7 @@ public class SerialTurnout extends AbstractTurnout {
 				tNode = (SerialNode) SerialAddress.getNodeFromSystemName(tSystemName);
 				if (tNode == null) {
 					// node does not exist, ignore call
-					log.error("Trying to set a C/MRI turnout that doesn't exist: "+tSystemName+" - ignored");
+					log.error("Trying to set a CMRInet turnout that doesn't exist: "+tSystemName+" - ignored");
 					return;
 				}
 			}

@@ -19,7 +19,7 @@ import jmri.JmriException;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision$
+ * @version			$Revision: 18178 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -55,7 +55,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         String sName = SerialAddress.normalizeSystemName(systemName);
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid C/MRI Sensor system name - "+systemName);
+            log.error("Invalid CMRInet Sensor system name - "+systemName);
             return null;
         }
         // does this Sensor already exist
@@ -104,12 +104,57 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      *  Process a reply to a poll of Sensors of one node
+     *  with CMRI-Extended messages 
      */
     public void reply(SerialReply r) {
         // determine which node
         SerialNode node = (SerialNode)SerialTrafficController.instance().getNodeFromAddress(r.getUA());
         if (node!=null) {
-            node.markChanges(r);
+         // Response 'R'  input bytes
+           if (r.isRcv())
+            { 
+              node.markChanges(r);
+            }
+         // Response 'E'  EOT response Do no processing, none need 
+           if (r.isEOT()) 
+            {
+            }
+         // Response 'Q'  Node query
+           if (r.isQUERY()) 
+            {
+               log.info("QUERY Seen");
+           }
+         // Response 'D'  Datagram Read Data
+           if (r.isDGREAD())  
+            {
+               log.info("Datagram In Data Seen");
+           }
+         // Response 'W'  Datagram Write Data
+           if (r.isDGWRITE()) 
+            {
+               if (true) //(node.validateCRC()) 
+                {
+                    log.info("Datagram ACK Seen");
+                }
+            }
+         // Response 'A'+ACK  Datagram negative acknowledge
+           if (r.isDGACK()) 
+            {
+               if (true) //(node.validateCRC()) 
+                {
+                    log.info("Datagram NAK Seen");
+                           
+                }
+            }
+         // Response 'A'+NAK  Datagram negative acknowledge
+           if (r.isDGNAK()) 
+            {
+               if (true) //(node.validateCRC()) 
+                {
+                    log.info("Datagram NAK Seen");
+                           
+                }
+            }
         }
     }
     

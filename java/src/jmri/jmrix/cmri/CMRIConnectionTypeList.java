@@ -8,7 +8,7 @@ package jmri.jmrix.cmri;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision$
+ * @version	$Revision: 17977 $
  *
  */
 public class CMRIConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
