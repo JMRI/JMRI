@@ -1,4 +1,3 @@
-// Pr1WinExportAction.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -19,14 +18,8 @@ import org.slf4j.LoggerFactory;
  * not clear they will interoperate.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class Pr1WinExportAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7841927026355092178L;
 
     /**
      * Create the action

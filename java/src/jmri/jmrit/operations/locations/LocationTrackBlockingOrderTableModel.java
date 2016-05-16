@@ -98,14 +98,17 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         tcm.getColumn(DOWN_COLUMN).setPreferredWidth(70);
     }
 
+    @Override
     public int getRowCount() {
         return _tracksList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -125,6 +128,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -144,6 +148,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ORDER_COLUMN:
@@ -155,6 +160,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= _tracksList.size()) {
             return "ERROR row " + row; // NOI18N
@@ -181,6 +187,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (row >= _tracksList.size()) {
             return;
@@ -206,6 +213,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     }
 
     // this table listens for changes to a location and it's tracks
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

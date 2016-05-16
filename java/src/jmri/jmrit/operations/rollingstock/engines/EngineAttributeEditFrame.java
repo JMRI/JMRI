@@ -100,6 +100,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
     }
 
     // add, delete or replace button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("edit frame button activated");
         if (ae.getSource() == addButton) {
@@ -321,6 +322,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         }
     }
 
+    @Override
     public void dispose() {
         CarRoads.instance().removePropertyChangeListener(this);
         EngineModels.instance().removePropertyChangeListener(this);
@@ -332,6 +334,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
@@ -359,10 +362,12 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }

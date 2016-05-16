@@ -249,6 +249,7 @@ public class Track {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return _name;
     }

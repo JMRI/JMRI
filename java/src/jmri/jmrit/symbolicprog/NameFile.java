@@ -1,4 +1,3 @@
-// NameFile.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.Hashtable;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class NameFile extends XmlFile {
 

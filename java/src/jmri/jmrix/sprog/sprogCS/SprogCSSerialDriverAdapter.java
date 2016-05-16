@@ -28,30 +28,6 @@ public class SprogCSSerialDriverAdapter
         this.getSystemConnectionMemo().setUserName("SPROG Command Station");
     }
 
-    /**
-     * set up all of the other objects to operate with an Sprog command station
-     * connected to this port
-     */
-    public void configure() {
-        // connect to the traffic controller
-        SprogTrafficController control = SprogTrafficController.instance();
-        control.connectPort(this);
-
-        this.getSystemConnectionMemo().setSprogTrafficController(control);
-        this.getSystemConnectionMemo().configureCommandStation();
-        this.getSystemConnectionMemo().configureManagers();
-        jmri.jmrix.sprog.ActiveFlagCS.setActive();
-        if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals("Powered On")) {
-            try {
-                this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
-            } catch (jmri.JmriException e) {
-                log.error(e.toString());
-            }
-        }
-
-    }
-
-    //private Thread slotThread;
     static public SprogCSSerialDriverAdapter instance() {
         if (mInstance == null) {
             SprogCSSerialDriverAdapter m = new SprogCSSerialDriverAdapter();
@@ -61,14 +37,6 @@ public class SprogCSSerialDriverAdapter
         return mInstance;
     }
     static volatile SprogCSSerialDriverAdapter mInstance = null;
-
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set when disposed")
-    @Override
-    public void dispose() {
-        super.dispose();
-        mInstance = null;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
 

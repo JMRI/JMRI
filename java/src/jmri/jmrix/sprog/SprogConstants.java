@@ -77,7 +77,7 @@ public final class SprogConstants {
     public final static int STEP128_BIT = 0x0800;
     public final static int LONG_ADD = 0x1000;
 
-    public final static int DEFAULT_I = 996;
+    public final static int DEFAULT_I = 996;            /* milliAmps */
 
 }
 

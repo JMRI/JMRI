@@ -1,4 +1,3 @@
-// ProgDefault.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.File;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * {@link CombinedLocoSelPane} class; see comments there for more information.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class ProgDefault {
 

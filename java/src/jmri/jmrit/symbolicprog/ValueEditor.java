@@ -1,4 +1,3 @@
-// ValueEditor.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class ValueEditor extends JComboBox<Object> implements TableCellEditor, FocusListener {
 

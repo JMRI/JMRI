@@ -30,6 +30,7 @@ public class PrintSwitchListAction extends AbstractAction {
     Location location;
     boolean isPreview;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         TrainSwitchLists ts = new TrainSwitchLists();
         ts.buildSwitchList(location);

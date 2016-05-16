@@ -1,4 +1,3 @@
-// PaneSet.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * @see apps.gui3.dp3.DecoderPro3Window
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class PaneSet {
 

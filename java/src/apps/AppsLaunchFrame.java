@@ -207,10 +207,10 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
         d.add(new JSeparator());
         try {
-            d.add(new RunJythonScript("RailDriver Throttle", new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
+            d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
         } catch (URISyntaxException | NullPointerException ex) {
             log.error("Unable to load RailDriver Throttle", ex);
-            JMenuItem i = new JMenuItem("RailDriver Throttle");
+            JMenuItem i = new JMenuItem(Bundle.getMessage("MenuRailDriverThrottle"));
             i.setEnabled(false);
             d.add(i);
         }

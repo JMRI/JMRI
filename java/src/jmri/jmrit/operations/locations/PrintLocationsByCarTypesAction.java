@@ -53,6 +53,7 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
     boolean isPreview;
     HardcopyWriter writer;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // obtain a HardcopyWriter
         try {

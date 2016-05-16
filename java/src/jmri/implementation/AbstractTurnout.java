@@ -802,7 +802,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         String speed = _straightSpeed;
         if (_straightSpeed.equals("Global")) {
             speed = InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed();
-        } else if (speed.equals("Block")) {
+        }
+        if (speed.equals("Block")) {
             return -1;
         }
         try {

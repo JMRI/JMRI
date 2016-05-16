@@ -25,6 +25,7 @@ public class IgnoreUsedTrackAction extends AbstractAction {
         _tef = tef;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (_iutf != null) {
             _iutf.dispose();

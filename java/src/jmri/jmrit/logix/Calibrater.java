@@ -156,7 +156,6 @@ public class Calibrater extends jmri.util.JmriJFrame {
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            _warrant.getRosterEntry();
             if (_speedProfile == null) {
                 _speedProfile = new RosterSpeedProfile(ent);
                 ent.setSpeedProfile(_speedProfile);
@@ -238,6 +237,9 @@ public class Calibrater extends jmri.util.JmriJFrame {
                     speedStep = java.lang.Math.round(speedSetting * 28);
                     break;
                 case DccThrottle.SpeedStepMode128:
+                default:
+                    // 128 speed step mode is the default in the JMRI
+                    // throttle code.
                     speedStep = java.lang.Math.round(speedSetting * 126);
                     break;
             }
