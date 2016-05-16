@@ -210,16 +210,15 @@ public abstract class Apps3 extends AppsBase {
             debugListener = new AWTEventListener() {
 
                 @Override
+                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
                 public void eventDispatched(AWTEvent e) {
                     if (!debugFired) {
                         /*We set the debugmsg flag on the first instance of the user pressing any button
                          and the if the debugFired hasn't been set, this allows us to ensure that we don't
                          miss the user pressing F8, while we are checking*/
                         debugmsg = true;
-                        if (e.getID() == KeyEvent.KEY_PRESSED) {
-                            if (((KeyEvent) e).getKeyCode() == 119) {
-                                startupDebug();
-                            }
+                        if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent)e).getKeyCode() == 119) {
+                            startupDebug();
                         } else {
                             debugmsg = false;
                         }

@@ -1,4 +1,3 @@
-// Pr1ImportAction.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.File;
@@ -11,7 +10,6 @@ import javax.swing.JLabel;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author	Dave Heap Copyright (C) 2015
- * @version $Revision$
  */
 public class Pr1ImportAction extends GenericImportAction {
 

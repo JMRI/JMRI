@@ -1,4 +1,3 @@
-// ShortAddrVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * the correct ones.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007
- * @version $Revision$
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {

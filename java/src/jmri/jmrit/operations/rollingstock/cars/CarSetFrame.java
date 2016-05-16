@@ -34,11 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2645258082248963991L;
-
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
@@ -332,7 +327,16 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
         }
         // return when empty fields
         if (!ignoreRWECheckBox.isSelected()) {
-            car.setReturnWhenEmptyLoadName((String) loadReturnWhenEmptyBox.getSelectedItem());
+            // check that RWE load is valid for this car's type
+            if (CarLoads.instance().getNames(car.getTypeName()).contains(loadReturnWhenEmptyBox.getSelectedItem())) {
+                car.setReturnWhenEmptyLoadName((String) loadReturnWhenEmptyBox.getSelectedItem());
+            } else {
+                log.debug("Car ({}) type ({}) doesn't support RWE load ({})", car.toString(), car.getTypeName(),
+                        loadReturnWhenEmptyBox.getSelectedItem());
+                JOptionPane.showMessageDialog(this, MessageFormat.format(
+                        Bundle.getMessage("carLoadNotValid"), new Object[]{loadReturnWhenEmptyBox.getSelectedItem(), car.getTypeName()}),
+                        Bundle.getMessage("carCanNotChangeRweLoad"), JOptionPane.WARNING_MESSAGE);
+            }
             if (destReturnWhenEmptyBox.getSelectedItem() == null) {
                 car.setReturnWhenEmptyDestination(null);
                 car.setReturnWhenEmptyDestTrack(null);

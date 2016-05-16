@@ -27,6 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.server.json.route.RouteTest");
         suite.addTestSuite(JsonRouteHttpServiceTest.class);
         suite.addTestSuite(JsonRouteSocketServiceTest.class);
+        suite.addTest(BundleTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.

@@ -1,4 +1,3 @@
-// PaneProgAction.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.event.ActionEvent;
@@ -34,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class PaneProgAction extends AbstractAction {
 
@@ -142,5 +140,3 @@ public class PaneProgAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(PaneProgAction.class.getName());
 
 }
-
-/* @(#)PaneProgAction.java */

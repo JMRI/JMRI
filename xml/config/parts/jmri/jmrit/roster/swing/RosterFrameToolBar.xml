@@ -11,14 +11,16 @@
         <name xml:lang="it">Nuova Loco</name>
         <name xml:lang="da">Nyt Loko</name>
         <name xml:lang="de">Neue Lok</name>
+        <name xml:lang="fr">Nouvelle Loco</name>
         <icon>resources/icons/misc/gui3/NewLocoButton.png</icon>
         <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
     </node>
-    
+
     <node name="Identify">
         <name xml:lang="it">Identifica</name>
         <name xml:lang="da">Identificer</name>
         <name xml:lang="de">Identifiziere</name>
+        <name xml:lang="fr">Identifier</name>
         <icon>resources/icons/misc/gui3/IdentifyButton.png</icon>
         <current>identifyloco</current>
     </node>
@@ -26,8 +28,9 @@
         <name xml:lang="it">Aiuto</name>
         <name xml:lang="da">Hjælp</name>
         <name xml:lang="de">Hilfe</name>
+        <name xml:lang="fr">Aide</name>
         <icon>resources/icons/misc/gui3/help-browser.png</icon>
         <help>package.apps.gui3.dp3.DecoderPro3</help>
     </node>
 </nodes>
-  
+

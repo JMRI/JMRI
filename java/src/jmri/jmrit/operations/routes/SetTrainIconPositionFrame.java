@@ -87,7 +87,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // set tool tips
-        placeButton.setToolTipText(Bundle.getMessage("TipPlaceButton") + " " + Setup.getPanelName());
+        placeButton.setToolTipText(Bundle.getMessage("TipPlaceButton") + " \"" + Setup.getPanelName()  + "\"");
         applyButton.setToolTipText(Bundle.getMessage("TipApplyAllButton"));
         saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
 

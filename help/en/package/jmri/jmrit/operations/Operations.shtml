@@ -217,7 +217,7 @@
    <h3>New User Advice</h3>
    
    OperationsPro&trade; has been designed to create car movements that make sense to you and your crew.
-   If you've never used a computer program to generate Manifests and switch lists, we recommend that
+   If you've never used a computer program to generate a train Manifest or switch list, we recommend that
    you load and use the
    <a href="#demo">demo files</a> provided. Please read the <a
     href="#BuildReportDetails">build reports</a> for the demo trains in very detailed mode, even if
@@ -1188,9 +1188,11 @@
    <a name="PrintOptions"></a>
    <h2>Manifest Print Options</h2>
 
-   You can modify the how OperationsPro&trade; prints the train Manifests and the location switch lists. From
-   the "Operations-&gt;Settings-&gt;Tools" menu select "Manifest Print Options" to open the Manifest
-   print option window.
+   You can modify the how OperationsPro&trade; prints the train Manifests and the location switch
+   lists. From the "Operations-&gt;Settings-&gt;Tools" menu select "Manifest Print Options" to open
+   the window. Press the "Save" button located at the bottom of the window to enable your changes.
+   The "Save" button will also cause the program to update the Manifests for all trains that are
+   built. This allows you to modify your Manifests without having to rebuild your trains.
    <p>
     <img src="images/PrintOptions.png">
    </p>
@@ -1256,21 +1258,34 @@
    Number, Type, Length, Color, Load, etc.) select blank. You can also edit and or replace the "[ ]
    Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular prefixes are "Spot" and "Pull" for
    set outs and pick ups respectively. If you want to use the text color options, the set out, pick
-   up, and move prefixes must be unique. 
-   
+   up, and move prefixes must be unique.
+
+   <p>For locomotive or car pick ups, the "Location" or "Track" attribute provides the track
+    name where the rolling stock is currently residing. For set outs, the "Destination" or "Track"
+    attribute specifies the track name where the rolling stock is to be eventually placed. The
+    "Local Move Message Format" requires both the "Location" (where the car is) and "Destination"
+    (where to spot the car) attributes.</p>
+
+   <p>
+    The program allows you to optionally display a pick up (PickUp Msg) or set out (SetOut Msg)
+    message based on the car type and load. See <a href="#EditCarLoads">Edit Car Loads</a> "Optional
+    Load Messages" for more info.
+   </p>
+
    <h3>Switch List Format</h3>
 
-   You can use the same format as your Manifest for your switch lists, or you can customize your
+   You can use the same format for Manifest and switch lists, or you can customize the
    switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
    your switch lists.
    
    <a name="ManifestComments"></a>
    <h3>Manifests and Switch List Options</h3>
 
-   OperationsPro&trade; allows you to customize your train Manifest to your liking. You can change
-   the Manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text"
-   windows found under the <a href="#ManifestPrintOptionsTools">Tools</a> menu. 
-   
+   OperationsPro&trade; allows you to customize the text used in the train Manifest and switch lists
+   to your liking. You can modify the Manifest or switch list text by using the "Edit Manifest Text"
+   or "Edit Switch List Text" windows found under the
+   <a href="#ManifestPrintOptionsTools">Tools</a> menu.
+
    <h4>Switch List Options</h4>
 
    The first option "By Track Summary" when selected, lists all car pick ups, set outs, and holds at
@@ -1373,15 +1388,19 @@
    <a name="ManifestPrintOptionsTools"></a>
    <h3>Manifest Print Options Tools</h3>
 
-   The menu bar of the "Manifest Print Options" provides additional features that can be found under "Tools". The
-   first "More Print Options" allows you to adjust the length of the tab character when using the "Tabular" feature.
-   The next three options "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List
-   Text" allows you to modify any of the text found in a Manifest or switch list. Each text line used
-   by the program is shown along with a text box with the same message. Edit the text box to change
-   the default message to your liking and press "Save" to complete your change. You can always
-   return the text to the original settings by pressing the "Reset" button followed by "Save". 
-   
-   
+   The menu bar of the "Manifest Print Options" provides additional features that can be found under
+   "Tools". The first "More Print Options" allows you to adjust the length of the tab character when
+   using the "Tabular" feature. The next three options "Edit Manifest Header Text", "Edit Manifest
+   Text" and "Edit Switch List Text" allows you to modify any of the text found in a Manifest or
+   switch list. Each text line used by the program is shown along with a text box with the same
+   message. Edit the text box to change the default message to your liking and press "Save" to
+   complete your change. You can always return the text to the original settings by pressing the
+   "Reset" button followed by "Save".
+
+   <p>Some of the text messages allow substitutions using the format "{number}". The program
+    provides a tool tip when hovering over the text box which shows the available substitutions for
+    that particular message.</p>
+
    <a name="BuildReportDetails"></a>
    <h3>Build Report Options</h3>
 
@@ -2612,7 +2631,8 @@
    
    <p>Select the road (reporting mark) for the car. If the desired road doesn't exist, press the "Edit"
     button to the right of the road select menu box. This will allow you to add a new road or delete
-    any that you don't need.</p>
+    any that you don't need. You can use the "hyphen" feature to create unique road names. The program
+    will drop all characters after a hyphen when printing a Manifest or switch list.</p>
 
    <h4>Road Number</h4>
 
@@ -2634,12 +2654,12 @@
 
    <h4>Car subType</h4>
 
-   <p>OperationsPro&trade; supports the ability to add a subType to your car types. Adding a "-subType"
-    to your car type will create a new type of car. The "-subType" is not printed on the Manifest or
-    switch lists. For example you might have coal cars with loads and coal cars that are empty. If
-    you enter the car type as HopCoal-C for your cars with coal, and HopCoal-E for the empties, the
-    program can use this information to assign and deliver cars to their appropriate trains and
-    locations respectively.</p>
+   <p>OperationsPro&trade; supports the ability to add a subType to a car's type field using the
+    "hyphen" feature. Adding a "-subType" to your car type will create a new type of car. The
+    "-subType" is not printed on the Manifest or switch lists. For example you might have coal cars
+    with loads and coal cars that are empty. If you enter the car type as HopCoal-C for your cars
+    with coal, and HopCoal-E for the empties, the program can use this information to assign and
+    deliver cars to their appropriate trains and locations respectively.</p>
 
    <a name="CabooseFredHazardous"></a>
    <h4>Passenger, Caboose, FRED, Utility, and Hazardous Checkboxes</h4>
@@ -2814,9 +2834,12 @@
     
     <h4>Optional Load Messages</h4>
 
-   <p>You can also provide optional messages for your crew based on the type of car and
-    load. The messages can be useful if you have visible car loads that need to be added or removed
-    by your crew.</p>
+   <p>
+    You can also provide optional messages for your crew based on the type of car and load. The
+    messages can be useful if you have visible car loads that need to be added or removed by your
+    crew. You must select the "PickUp Msg" and "SetOut Msg" <a href="#MessageFormats">car
+     attributes</a> if you want these messages on your Manifests and switch lists.
+   </p>
 
    <a name="CarsSet"></a>
    <h3>Set Car</h3>
@@ -3926,15 +3949,16 @@
    
    <a name="Timetable"></a>
    <h4>Timetable</h4>
-   
-   <a href="images/Timetable.png"><img src="images/Timetable.png" alt="Operations Train Timetable"></a>
 
+   The Timetable window allows you to define which trains will run on any given day, and can be
+   found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
+   build. Then select which day you want by selecting the appropriate radio button. Then press the
+   "Apply" button to update the
+   <a href="#Trains">Trains</a> "Build" checkboxes. Use the "Save" button to store any changes you
+   made to the timetable. 
+   
    <p>
-    The Timetable window allows you to define which trains will run on any given day, and can be
-    found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
-    build. Then select which day you want by selecting the appropriate radio button. Then press the
-    "Apply" button to update the <a href="#Trains">Trains</a> "Build" checkboxes. Use the "Save"
-    button to store any changes you made to the timetable.
+   <a href="images/Timetable.png"><img src="images/Timetable.png" alt="Operations Train Timetable"></a>
    </p>
 
    <p>To change which day of the week is active, select the appropriate radio button and then

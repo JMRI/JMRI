@@ -33,6 +33,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.openlcb.swing.hub.PackageTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.tie.PackageTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.monitor.PackageTest.suite());
+        suite.addTest(jmri.jmrix.openlcb.swing.clockmon.PackageTest.suite());
+        suite.addTest(jmri.jmrix.openlcb.swing.downloader.PackageTest.suite());
+        suite.addTest(BundleTest.suite());
 
         return suite;
     }

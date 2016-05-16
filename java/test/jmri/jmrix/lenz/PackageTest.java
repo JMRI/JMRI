@@ -60,9 +60,11 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.liusbethernet.LIUSBEthernetTest.suite());
         suite.addTest(jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest.suite());
         suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
+        suite.addTest(BundleTest.suite());
+
+        suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
         }
 
         return suite;

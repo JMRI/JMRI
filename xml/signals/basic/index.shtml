@@ -39,6 +39,8 @@ Signal Mast definitions:
 <ul>
 <li><a href="appearance-one-searchlight.xml">Single searchlight high signal</a>
 <li><a href="appearance-two-searchlight.xml">Double searchlight high signal</a>
+<li><a href="appearance-one-low.xml">Single searchlight low signal</a>
+<li><a href="appearance-two-low.xml">Double searchlight low signal</a>
 </ul>
     </div>
 </div>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -23,16 +23,16 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>1</revnumber>
-      <date>2009-12-28</date>
-      <authorinitials>RGJ</authorinitials>
-      <revremark>Initial version</revremark>
+      <revnumber>2.2</revnumber>
+      <date>2016-04-01</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add low appearances</revremark>
     </revision>
     <revision>
-      <revnumber>1.1</revnumber>
-      <date>2011-06-13</date>
-      <authorinitials>KWD</authorinitials>
-      <revremark>Add Aspect Mapping and Specific Aspects</revremark>
+      <revnumber>2.3</revnumber>
+      <date>2016-05-05</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add Held and Dark specific appearances</revremark>
     </revision>
   </revhistory>
   <aspecttable>basic</aspecttable>
@@ -55,6 +55,11 @@
       <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-292.gif</imagelink>
     </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/one-low-dark.gif</imagelink>
+    </appearance>
   </appearances>
   <specificappearances>
     <!-- Start of Specific Appearances list -->
@@ -63,7 +68,11 @@
     </danger>
     <held>
       <aspect>Stop</aspect>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/one-low-held.gif</imagelink>
     </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
   </specificappearances>
   <!-- End of Specific Appearances list -->
   <aspectMappings>

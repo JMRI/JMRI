@@ -92,7 +92,7 @@ public class JUnitUtil {
     }
 
     static final int WAITFOR_DELAY_STEP = 5;
-    static final int WAITFOR_MAX_DELAY = 5000; // really long, but only matters when failing
+    static final int WAITFOR_MAX_DELAY = 15000; // really long, but only matters when failing
     
     /** 
      * Wait for a specific condition to be true, without having to wait longer
@@ -304,6 +304,12 @@ public class JUnitUtil {
         if (InstanceManager.getDefault(ShutDownManager.class) == null) {
             InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
         }
+    }
+
+    public static void initStartupActionsManager() {
+        InstanceManager.store(
+                new apps.StartupActionsManager(),
+                apps.StartupActionsManager.class);
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

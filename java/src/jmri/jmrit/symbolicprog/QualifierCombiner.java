@@ -1,4 +1,3 @@
-// QualifierCombiner.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.List;
  * outcome is known.
  *
  * @author	Bob Jacobsen Copyright (C) 2011
- * @version	$Revision: -1$
  *
  */
 public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeListener {
