@@ -1335,7 +1335,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     protected void saveElement(@Nonnull Element element) {
-        log.debug("Saving {} element.", element.getName());
+        log.trace("Saving {} element.", element.getName());
         try {
             ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).putConfigurationFragment(JDOMUtil.toW3CElement(element), false);
         } catch (JDOMException ex) {
