@@ -385,7 +385,7 @@ public class AddSignalMastPanel extends JPanel {
                     matrixPanel.setAspectDisabled(xmast.isAspectDisabled(key));
                     // load aspect sub panel from hashmap value char[] 1001
                     if (!xmast.isAspectDisabled(key)) {
-                        matrixPanel.setMatrixBoxes(xmast.getBitsForAspect(key));
+                        matrixPanel.setAspectBoxes(xmast.getBitsForAspect(key));
                         // bits 1-5
                     }
                 }
@@ -1710,6 +1710,8 @@ public class AddSignalMastPanel extends JPanel {
     /**
      * Build sub panel per aspect with check boxes to set outputs on/off for this aspect
     */
+    HashMap<String, MatrixAspectPanel> matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
+
     void updateMatrixAspectPanel() {
         if (!Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
             return;
@@ -1720,7 +1722,6 @@ public class AddSignalMastPanel extends JPanel {
         }
         // ToDo: make/read from mast(aspect) EBR
 
-        matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
@@ -1758,7 +1759,7 @@ public class AddSignalMastPanel extends JPanel {
         matrixUnLitPanel.setBorder(border);
     }*/
 
-    HashMap<String, MatrixAspectPanel> matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
+    //HashMap<String, MatrixAspectPanel> matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
 
     class MatrixAspectPanel { // static?
 
@@ -1773,8 +1774,14 @@ public class AddSignalMastPanel extends JPanel {
         char[] aspectBits;
         String aspect = "";
         int cols; // number of columns in matrix/pane
+        String emptyChars = "00000";
+        char[] emptyBits = emptyChars.toCharArray();
+
 
         MatrixAspectPanel(String aspect) {
+            if (aspectBits == null) {
+                aspectBits = emptyBits;
+            }
             this.aspect = aspect;
         }
 
@@ -1785,11 +1792,12 @@ public class AddSignalMastPanel extends JPanel {
             this.aspect = aspect;
             // aspectBits is char[] of length(cols) describing state of on/off checkboxes
             // from 1 to 5 chars, i.e. "0101"
-            int cols = aspectBits.length;
+            //int cols = aspectBits.length;
             // provided as char[] array
             // easy to manipulate by index
             // copy to checkbox states:
-            bitCheck1.setSelected(aspectBits[1] == '1');
+            setAspectBoxes(aspectBits);
+/*            bitCheck1.setSelected(aspectBits[1] == '1');
             if (cols > 1) {
                 bitCheck2.setSelected(aspectBits[2] == '1');
             }
@@ -1801,7 +1809,7 @@ public class AddSignalMastPanel extends JPanel {
             }
             if (cols > 4) {
                 bitCheck5.setSelected(aspectBits[5] == '1');
-            }
+            }*/
         }
 
         boolean isAspectDisabled() {
@@ -1889,22 +1897,34 @@ public class AddSignalMastPanel extends JPanel {
             aspectBitsField.setText(value);
         }
 
-        String errorChars = "n";
-        char[] errorBits = errorChars.toCharArray();
-
         char[] getAspectBits() { // array {1},{0} from char[] aspectBits var, cf. getAspectId() in DCCmast
-            // called from OKPressed() #757
+            // called from OKPressed() #794
             try {
                 return aspectBits;
             } catch (Exception ex) {
                 log.error("failed to read aspectBits");
             }
-            return errorBits; // error flag
+            return emptyBits; // error flag
         }
 
-        private void setMatrixBoxes (char[] bits){
+        private void setAspectBoxes (char[] aspectBits){
             // activate checkboxes
-            // to do
+            int cols = aspectBits.length;
+            bitCheck1.setSelected(aspectBits[1] == '1');
+            if (cols > 1) {
+                bitCheck2.setSelected(aspectBits[2] == '1');
+            }
+            if (cols > 2) {
+                bitCheck3.setSelected(aspectBits[3] == '1');
+            }
+            if (cols > 3) {
+                bitCheck4.setSelected(aspectBits[4] == '1');
+            }
+            if (cols > 4) {
+                bitCheck5.setSelected(aspectBits[5] == '1');
+            }
+            String value = String.valueOf(aspectBits); // convert back from char[] to String
+            aspectBitsField.setText(value);
         }
 
 /*        // called in implementation.MatrixSignalMast #145 ??? to do: method to load aspect bits
