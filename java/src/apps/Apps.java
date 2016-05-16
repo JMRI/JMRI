@@ -390,7 +390,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 }
             }
         };
-        Thread thr = new Thread(r, "initialize preferences");
+        Thread thr = new Thread(r, "init prefs");
         thr.start();
         //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
         r = new Runnable() {
