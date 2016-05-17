@@ -378,22 +378,29 @@ public class AddSignalMastPanel extends JPanel {
             if (appMap != null) {
                 java.util.Enumeration<String> aspects = appMap.getAspects();
                 // hashtable/right names?
+                //load outputs and set bitNum
+
                 while (aspects.hasMoreElements()) {
                     String key = aspects.nextElement();
                     // select the right checkboxes
-                    MatrixAspectPanel matrixPanel = matrixAspect.get(key);
-                    matrixPanel.setAspectDisabled(xmast.isAspectDisabled(key));
-                    // load aspect sub panel from hashmap value char[] 1001
+                    MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
+                    matrixPanel.setAspectDisabled(xmast.isAspectDisabled(key)); // method in abstractSignalMast
                     if (!xmast.isAspectDisabled(key)) {
-                        matrixPanel.setAspectBoxes(xmast.getBitsForAspect(key));
-                        // bits 1-5
+                        char[] bits = xmast.getBitsForAspect(key);
+                        while (bits.length < bitNum){
+                            // add extra 0 chars, although it seems char arrays cannot change length
+                            // no need to shorten longer arays, as they're not read by the panel
+                            // bits.add({0});
+                        }
+                        matrixPanel.setAspectBoxes(bits);
+                        // set boxes 1 - 5 on aspect sub panel from values in hashmap char[] 1001
                     }
                 }
             }
 /*            if (xmast.resetPreviousStates()) {
                 resetPreviousState.setSelected(true);
             }
-            if (xmast.allowUnLit()) {
+            if (xmast.allowUnLit()) { // to do, how to store?
                 turnoutUnLitBox.setDefaultNamedBean(xmast.getUnLitTurnout());
                 if (xmast.getUnLitTurnoutState() == Turnout.CLOSED) {
                     turnoutUnLitState.setSelectedItem(stateClosed);
@@ -758,7 +765,7 @@ public class AddSignalMastPanel extends JPanel {
                     dccMast = new DccSignalMast(name);
                 }
                 for (String aspect : dccAspect.keySet()) {
-                    dccMastPanel.add(dccAspect.get(aspect).getPanel());
+                    dccMastPanel.add(dccAspect.get(aspect).getPanel()); // update mast from aspect subpanel panel
                     if (dccAspect.get(aspect).isAspectDisabled()) {
                         dccMast.setAspectDisabled(aspect);
                     } else {
@@ -775,7 +782,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
                 InstanceManager.signalMastManagerInstance().register(dccMast);
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
-                // OK was pressed, create new MatrixMast with default props
+                // OK was pressed, create new MatrixMast with props from panel
                 String name = "IF$xsm:"
                         + sigsysname
                         + ":" + mastname.substring(11, mastname.length() - 4);
@@ -783,10 +790,57 @@ public class AddSignalMastPanel extends JPanel {
                 name += ")_t"; // for "turnout-outputs", add option for direct packets
                 MatrixSignalMast matrixMast = new MatrixSignalMast(name);
 
-                int bitNum = matrixMast.getBitNum(); // number of columns in aspect - outputs matrix
+                matrixMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
+                //store outputs
+                if (turnoutBox1 == null) { //warning dialog
+                    int r = JOptionPane.showConfirmDialog(null, "Output 1 is undefined, please enter all inputs first",
+                            "Empty Input",
+                            JOptionPane.ERROR_MESSAGE);
+                        return;
+                } else {
+                    //matrixMast.setOutput1(nbhm.getNamedBeanHandle(getTurnoutFromPanel(turnoutBox1, "output 1")));
+                    // store choice from turnoutBox1, to do: set reference
+                    // #2420 Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green"); // from signal head
+                    // # method in line 950
+                    // #1440: nbt1 = nbhm.getNamedBeanHandle(to3.getDisplayName(), t1); to3 = Turnout
+                    // copy to other boxes?
+                }
+                if (bitNum > 1 && turnoutBox2 == null) { //warning dialog
+                    int r = JOptionPane.showConfirmDialog(null, "Output 2 is undefined, please enter all inputs first",
+                            "Empty Input",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    //matrixMast.setOutput2(turnoutBox2.getDisplayName()); // store choice from turnoutBox2
+                }
+                if (bitNum > 2 && turnoutBox3 == null) { //warning dialog
+                    int r = JOptionPane.showConfirmDialog(null, "Output 3 is undefined, please enter all inputs first",
+                            "Empty Input",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    //matrixMast.setOutput3(turnoutBox3.getDisplayName()); // store choice from turnoutBox3
+                }
+                if (bitNum > 3 && turnoutBox4 == null) { //warning dialog
+                    int r = JOptionPane.showConfirmDialog(null, "Output 4 is undefined, please enter all inputs first",
+                            "Empty Input",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    //matrixMast.setOutput4(turnoutBox4.getDisplayName()); // store choice from turnoutBox4
+                }
+                if (bitNum > 4 && turnoutBox5 == null) { //warning dialog
+                    int r = JOptionPane.showConfirmDialog(null, "Output 5 is undefined, please enter all inputs first",
+                            "Empty Input",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    //matrixMast.setOutput5(turnoutBox5.getDisplayName()); // store choice from turnoutBox5
+                }
+
                 for (String aspect : matrixAspect.keySet()) {
-                    // make matrix, store , compare with #842
-                    matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // build aspect details panel
+                    // store matrix in mast per aspect, compare with #877
+                    matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // update mast from aspect subpanel panel
                     if (matrixAspect.get(aspect).isAspectDisabled()) {
                         matrixMast.setAspectDisabled(aspect);
                     } else {
@@ -795,18 +849,17 @@ public class AddSignalMastPanel extends JPanel {
                     }
                     //bitNum ++;
                 }
-
-                matrixMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel
+                //matrixMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel, to do
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
                     // to do: build interface how to define unlit: as separate turnout or as extra (Dark) aspect?
-                    //matrixMast.setUnLitBitstring(matrixAspect.get("Dark").getAspectBits());
+                    //matrixMast.setUnLitBits(matrixAspect.get("Dark").getAspectBits()); // copy to line 896
                 }
                 if (!user.equals("")) {
                     matrixMast.setUserName(user);
                 }
-
                 InstanceManager.signalMastManagerInstance().register(matrixMast);
+                // store bitNum in prefs, see line 860?
             }
 
             prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
@@ -889,9 +942,25 @@ public class AddSignalMastPanel extends JPanel {
                 matrixMast.resetPreviousStates(resetPreviousState.isSelected());
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
-                    //matrixMast.setUnlitBits("00000"); // to do: add panel to set this
+                    //matrixMast.setUnLitBits(matrixAspect.get("Dark").getAspectBits()); // copy to line 810
                 }
             }
+        }
+    }
+
+    /**
+     * Copied from SignalHeadTableAction for MatrixMast
+    * */
+    protected Turnout getTurnoutFromPanel(BeanSelectCreatePanel bp, String reference) {
+        if (bp == null) {
+            return null;
+        }
+        //bp.setReference(reference);
+        try {
+            return (Turnout) bp.getNamedBean();
+        } catch (jmri.JmriException ex) {
+            log.warn("skipping creation of turnout not found for " + reference);
+            return null;
         }
     }
 
@@ -1072,6 +1141,9 @@ public class AddSignalMastPanel extends JPanel {
             beanBox.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(turnoutName));
         }
 
+        /**
+         * store mast as comment in turnout
+         * */
         void setReference(String reference) {
             beanBox.setReference(reference);
         }
@@ -1247,10 +1319,10 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         for (String aspect : dccAspect.keySet()) {
-            dccMastPanel.add(dccAspect.get(aspect).getPanel());
+            dccMastPanel.add(dccAspect.get(aspect).getPanel()); // load aspect panels from hashmap
         }
         if ((dccAspect.size() & 1) == 1) {
-            dccMastPanel.add(new JLabel());
+            dccMastPanel.add(new JLabel()); // spacer
         }
         dccMastPanel.add(new JLabel(Bundle.getMessage("DCCMastCopyAspectId") + ":"));
         dccMastPanel.add(copyFromMastSelection());
@@ -1584,7 +1656,7 @@ public class AddSignalMastPanel extends JPanel {
         }
 */
         for (String aspect : matrixAspect.keySet()) {
-            matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
+            matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // load aspect panels from hashmap
             // build aspect sub panels
         }
         if ((matrixAspect.size() & 1) == 1) {
@@ -1598,7 +1670,7 @@ public class AddSignalMastPanel extends JPanel {
 
         // ToDo: for bitNum loop to hide checkboxes and outputs > bitNum
 
-        // setReference(name + ":" + output); //write mast name to bean comment?
+        // setReference(name + ":" + output); //write mast name to bean comment? see line
     }
 
     /** When user changes the number of columns in matrix:
@@ -1619,7 +1691,7 @@ public class AddSignalMastPanel extends JPanel {
 
     //option: write mast name to bean comment?, not on aspect level, called from #1520
     /*  void setReference(String bits) {
-        aspectBitsField.setReference(bits); // EBR was turnout, should be string
+        aspectBitsField.setReference(bits); // was turnout, should be string
     }*/
 
     //FocusListener matrixDCCAddressListener = null;
@@ -1720,7 +1792,7 @@ public class AddSignalMastPanel extends JPanel {
         if (bitString == null) {
             char[] bitString = defaultBits.toCharArray();
         }
-        // ToDo: make/read from mast(aspect) EBR
+        // ToDo: make/read from mast(aspect)
 
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
