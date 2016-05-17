@@ -40,7 +40,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
 
     private int broadcast_flags = 0; // holds the value of the broadcast flags.
     private int serial_number = 0; // holds the serial number of the Z21.
-    private int software_version = 0; // holds the software version of the Z21.
+    private float software_version = 0; // holds the software version of the Z21.
     private int hardware_version = 0; // holds the hardware version of the Z21.
 
     /**
@@ -72,7 +72,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     * get the software version.
     * @return int software version of the connected Z21 command station
     */
-   public int getSoftwareVersion(){
+   public float getSoftwareVersion(){
       return software_version;
    }
 
@@ -80,7 +80,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     * set the software version associated with this Z21 command station.
     * @param int sv software version
     */
-   public void setSoftwareVersion(int sv){
+   public void setSoftwareVersion(float sv){
       software_version=sv;
    }
 
@@ -267,7 +267,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     * Locomotive specific LocoNet data to the client set?
     * @return boolean true if flag is set.
     */
-    public boolean getLocoNetLocomoitveMessagesFlag(){
+    public boolean getLocoNetLocomotiveMessagesFlag(){
         return((broadcast_flags & 0x02000000) == 0x02000000);
     }
 

@@ -1,11 +1,11 @@
-package jmri.jmrix.roco;
+package jmri.jmrix.roco.z21.swing;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.roco package
+ * Tests for the jmri.jmrix.roco.z21.swing package
  *
  * @author	Bob Jacobsen
  */
@@ -25,9 +25,8 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.roco.RocoTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(RocoConnectionTypeListTest.class));
-        suite.addTest(jmri.jmrix.roco.z21.Z21Test.suite());
+        TestSuite suite = new TestSuite("jmri.jmrix.roco.z21.swing");  // no tests in this class itself
+        suite.addTest(jmri.jmrix.roco.z21.swing.configtool.PackageTest.suite());
         suite.addTest(BundleTest.suite());
 
         return suite;
