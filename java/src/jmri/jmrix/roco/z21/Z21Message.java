@@ -116,7 +116,7 @@ public class Z21Message extends AbstractMRMessage {
     /*
      * @return z21 message for serial number request.
      */
-    static Z21Message getSerialNumberRequestMessage() {
+    public static Z21Message getSerialNumberRequestMessage() {
         Z21Message retval = new Z21Message(4);
         retval.setElement(0, 0x04);
         retval.setElement(1, 0x00);
@@ -126,9 +126,21 @@ public class Z21Message extends AbstractMRMessage {
     }
 
     /*
+     * @return z21 message for serial number request.
+     */
+    public static Z21Message getLanGetHardwareInfoRequestMessage() {
+        Z21Message retval = new Z21Message(4);
+        retval.setElement(0, 0x04);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0x1A);
+        retval.setElement(3, 0x00);
+        return retval;
+    }
+
+    /*
      * @return z21 message for LAN_LOGOFF request.
      */
-    static Z21Message getLanLogoffRequestMessage() {
+    public static Z21Message getLanLogoffRequestMessage() {
         Z21Message retval = new Z21Message(4){
            @Override 
            public boolean replyExpected() {
@@ -145,7 +157,7 @@ public class Z21Message extends AbstractMRMessage {
     /**
      * @return z21 message for LAN_GET_BROADCAST_FLAGS request.
      */
-    static Z21Message getLanGetBroadcastFlagsRequestMessage() {
+    public static Z21Message getLanGetBroadcastFlagsRequestMessage() {
         Z21Message retval = new Z21Message(4);
         retval.setElement(0, 0x04);
         retval.setElement(1, 0x00);
@@ -180,7 +192,7 @@ public class Z21Message extends AbstractMRMessage {
      * @param flags integer representing the flags (32 bits).
      * @return z21 message for LAN_SET_BROADCAST_FLAGS request.
      */
-    static Z21Message getLanSetBroadcastFlagsRequestMessage(int flags) {
+    public static Z21Message getLanSetBroadcastFlagsRequestMessage(int flags) {
         Z21Message retval = new Z21Message(8){
            @Override 
            public boolean replyExpected() {

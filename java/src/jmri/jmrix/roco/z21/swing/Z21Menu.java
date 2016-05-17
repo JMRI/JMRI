@@ -29,6 +29,7 @@ public class Z21Menu extends JMenu {
 
         add(new jmri.jmrix.roco.z21.swing.mon.Z21MonAction(rb.getString("jmri.jmrix.roco.z21.swing.mon.Z21MonAction"), memo));
         add(new jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction"), memo));
+        add(new jmri.jmrix.roco.z21.swing.configtool.Z21ConfigAction(rb.getString("jmri.jmrix.roco.z21.swing.configtool.Z21ConfigAction"), memo));
     }
 
 }
