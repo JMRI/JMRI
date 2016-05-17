@@ -1275,6 +1275,14 @@ public class PaneProgPane extends javax.swing.JPanel
                 if (retry == 0) {
                     varListIndex--;
                     retry++;
+                    if(_read) {
+                       _programmingVar.setToRead(true); // set the variable
+                                                        // to read again.
+                    } else {
+                       _programmingVar.setToWrite(true); // set the variable
+                                                         // to attempt another 
+                                                         // write.
+                    }
                 } else {
                     retry = 0;
                 }
