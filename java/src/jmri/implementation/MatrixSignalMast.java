@@ -89,7 +89,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      * extra 0's are added or last elements deleted in the Add Mast panel
     */
     public char[] getBitsForAspect(String aspect) {
-        if (!aspectToOutput.containsKey(aspect) || aspectToOutput.get(aspect) != null) {
+        if (!aspectToOutput.containsKey(aspect) || aspectToOutput.get(aspect) == null) {
             log.error("Trying to get aspect " + aspect + " but it has not been configured");
             return errorBits; // error flag
         }
@@ -107,7 +107,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
             log.warn("attempting to set an Aspect that has been Disabled: " + aspect + " on mast: " + getDisplayName());
             throw new IllegalArgumentException("attempting to set an Aspect that has been Disabled: " + aspect + " on mast: " + getDisplayName());
         }
-        if (getLit()) { //If the signalmast is lit, then send the commands to change the aspect.
+        if (getLit()) {
+            //If the signalmast is lit, then send the commands to change the aspect.
             if (resetPreviousStates) {
                 // Clear all the current states, this will result in the signalmast going blank (RED) for a very short time.
                 // ToDo: pick up drop down choice for DCCPackets or Turnouts outputs
@@ -161,8 +162,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     public Turnout getOutput(int colnum) { // bean
         if (colnum > 0 && colnum <= 5) {
-            if (colnum == 1) {
-                return output1.getBean();
+            return outputsToBeans.get("output" + colnum).getBean();
+            //if (colnum == 1) {
+/*                return output1.getBean();
             } else if (colnum == 2) {
                 return output2.getBean();
             } else if (colnum == 3) {
@@ -170,30 +172,20 @@ public class MatrixSignalMast extends AbstractSignalMast {
             } else if (colnum == 4) {
                 return output4.getBean();
             } else if (colnum == 5) {
-                return output5.getBean();
-            } else {
-                log.error("Trying to read output " + colnum + " which has not been configured");
-            }
+                return output5.getBean();*/
+        } else {
+            log.error("Trying to read output " + colnum + " which has not been configured");
         }
         return null;
     }
 
-    public NamedBeanHandle<Turnout> getOutput1 () {
-        return output1;
-    }
-    public NamedBeanHandle<Turnout> getOutput2 () {
-        return output2;
-    }
-    public NamedBeanHandle<Turnout> getOutput3 () {
-        return output3;
-    }
-    public NamedBeanHandle<Turnout> getOutput4 () {
-        return output4;
-    }
-    public NamedBeanHandle<Turnout> getOutput5 () {
-        return output5;
+    // used?
+    public NamedBeanHandle<Turnout> getOutputHandle (int i) {
+        return outputsToBeans.get("output" + i);
     }
 
+/*
+    // used? is not in hashmap, see setOutput() in line 304
     public void setOutput1 (NamedBeanHandle<Turnout> turn) {
     this.output1 = turn;
     }
@@ -209,20 +201,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
     public void setOutput5 (NamedBeanHandle<Turnout> turn) {
         this.output5 = turn;
     }
+*/
 
     public String getOutputName(int colnum) { // provide to xml
         if (colnum > 0 && colnum <= 5) {
-            if (colnum == 1) {
-                return output1.getName(); // bean or object? getTurnout(output1).getBean()
-            } else if (colnum == 2) {
-                return output2.getName();
-            } else if (colnum == 3) {
-                return output3.getName();
-            } else if (colnum == 4) {
-                return output4.getName();
-            } else if (colnum == 5) {
-                return output5.getName();
-            }
+                return outputsToBeans.get("output" + colnum).getName();
         }
         log.error("Trying to read output " + colnum + " which has not been configured");
         return "";
@@ -262,35 +245,42 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     public List<String> getOutputs() { // provide to xml
-        // to do: use hashmap directly
+        // to do: use hashmap directly & use for loop
         ArrayList<String> outputlist = new ArrayList<String>(5);
         //list = outputsToBeans.keySet();
-        outputlist.add(output1.getName()); // convert bean to name
-        if (outputsToBeans.containsKey("output2")) { // outputsToBeans hashmap
-            outputlist.add(output2.getName());
+        outputlist.add(outputsToBeans.get("output1").getName()); // convert NBH to name (String)
+        if (outputsToBeans.containsKey("output2")) {
+            // outputsToBeans hashmap
+            outputlist.add(outputsToBeans.get("output2").getName());
         }
         if (outputsToBeans.containsKey("output3")) {
-            outputlist.add(output3.getName());
+            outputlist.add(outputsToBeans.get("output3").getName());
         }
         if (outputsToBeans.containsKey("output4")) {
-            outputlist.add(output4.getName());
+            outputlist.add(outputsToBeans.get("output4").getName());
         }
         if (outputsToBeans.containsKey("output5")) {
-            outputlist.add(output5.getName());
+            outputlist.add(outputsToBeans.get("output5").getName());
         }
         //use hashmap  aspectToOutput directly and provide to xml
         return outputlist;
         //hashmap > xml
     }
 
-    NamedBeanHandle<Turnout> output1;
-    NamedBeanHandle<Turnout> output2;
-    NamedBeanHandle<Turnout> output3;
-    NamedBeanHandle<Turnout> output4;
-    NamedBeanHandle<Turnout> output5;
     HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(5); // output# - bean pairs
 
-    public void setOutput(String colname, String turnoutname) { // receive properties from xml, convert name to bean!
+    //looks a lot like the next method, try to remove
+    NamedBeanHandle<Turnout> TurnoutNameToHandle (String turnoutName) {
+        if (turnoutName != null && !turnoutName.equals("")) {
+            Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+            NamedBeanHandle<Turnout> namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
+            return namedTurnout;
+        }
+        log.error("Trying to create an empty output");
+        return null;
+    }
+
+    public void setOutput(String colname, String turnoutname) { // receive properties from xml, convert name to NamedBeanHandle
         Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutname);
         NamedBeanHandle<Turnout> namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutname, turn);
         if (outputsToBeans.containsKey(colname)) {
@@ -304,17 +294,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
         // hardware instruction
         for (int i = 1; i <= bits.length; i++) {
             if (bits[i] == '1') {
-                if (i == 1) {output1.getBean().setCommandedState(Turnout.CLOSED);}
-                else if (i == 2) {output2.getBean().setCommandedState(Turnout.CLOSED);}
-                else if (i == 3) {output3.getBean().setCommandedState(Turnout.CLOSED);}
-                else if (i == 4) {output4.getBean().setCommandedState(Turnout.CLOSED);}
-                else if (i == 5) {output5.getBean().setCommandedState(Turnout.CLOSED);}
+                outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.CLOSED);
             } else if (bits[i] == '0') {
-                if (i == 1) {output1.getBean().setCommandedState(Turnout.THROWN);}
-                else if (i == 2) {output2.getBean().setCommandedState(Turnout.THROWN);}
-                else if (i == 3) {output3.getBean().setCommandedState(Turnout.THROWN);}
-                else if (i == 4) {output4.getBean().setCommandedState(Turnout.THROWN);}
-                else if (i == 5) {output5.getBean().setCommandedState(Turnout.THROWN);}
+                outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.THROWN);
             } else if (bits[i] == 'n') {
                 // let pass, extra chars up to 5 are not in matrix
             } else {
@@ -338,29 +320,19 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return resetPreviousStates;
     }
 
-    Turnout getTurnout(int i) {
+    Turnout getTurnoutBean(int i) {
         if (i < 0 || i >= 5 ) {
             return null;
         }
-        if (i == 1) {return output1.getBean();}
-        if (i == 2) {return output2.getBean();}
-        if (i == 3) {return output3.getBean();}
-        if (i == 4) {return output4.getBean();}
-        if (i == 5) {return output5.getBean();}
-        // to do: loop with i in var name
+        outputsToBeans.get("output" + i).getBean();
         return null;
     }
 
-    String getTurnoutName( int i) {
+    public String getTurnoutName(int i) {
         if (i< 0 || i >= 5 ) {
             return null;
         }
-        if (i == 1) {return output1.getName();}
-        if (i == 2) {return output2.getName();}
-        if (i == 3) {return output3.getName();}
-        if (i == 4) {return output4.getName();}
-        if (i == 5) {return output5.getName();}
-        // to do: loop with i in var name
+        outputsToBeans.get("output" + i).getName();
         return null;
     }
 

@@ -60,7 +60,7 @@ public class MatrixSignalMastXml
                 String key = ("output" + i);
                 Element outp = new Element("output");
                 outp.setAttribute("matrixCol", key);
-                outp.addContent(p.getOutputName(i)); // get beanname (Turnout)
+                outp.addContent(p.getTurnoutName(i)); // get beanname (Turnout)
                 outps.addContent(outp);
                 i++;
             }

@@ -782,7 +782,14 @@ public class AddSignalMastPanel extends JPanel {
                 }
                 InstanceManager.signalMastManagerInstance().register(dccMast);
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
-                // OK was pressed, create new MatrixMast with props from panel
+                // OK was pressed, check boxes are filled
+                if (turnoutBox1 == null || bitNum > 1 && turnoutBox2 == null || bitNum > 2 && turnoutBox3 == null || bitNum > 3 && turnoutBox4 == null || bitNum > 4 && turnoutBox5 == null) { //warning dialog
+                    int r = JOptionPane.showConfirmDialog(null, "At least one of the outputs has not been defined, please enter all inputs first.",
+                            "Empty Input",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                //create new MatrixMast with props from panel
                 String name = "IF$xsm:"
                         + sigsysname
                         + ":" + mastname.substring(11, mastname.length() - 4);
@@ -791,51 +798,22 @@ public class AddSignalMastPanel extends JPanel {
                 MatrixSignalMast matrixMast = new MatrixSignalMast(name);
 
                 matrixMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
-                //store outputs
-                if (turnoutBox1 == null) { //warning dialog
-                    int r = JOptionPane.showConfirmDialog(null, "Output 1 is undefined, please enter all inputs first",
-                            "Empty Input",
-                            JOptionPane.ERROR_MESSAGE);
-                        return;
-                } else {
-                    //matrixMast.setOutput1(nbhm.getNamedBeanHandle(getTurnoutFromPanel(turnoutBox1, "output 1")));
-                    // store choice from turnoutBox1, to do: set reference
-                    // #2420 Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green"); // from signal head
-                    // # method in line 950
-                    // #1440: nbt1 = nbhm.getNamedBeanHandle(to3.getDisplayName(), t1); to3 = Turnout
-                    // copy to other boxes?
+                //store outputs from turnoutBoxes
+                // # method in line 950
+                // copy to other boxes?
+
+                matrixMast.setOutput("output1", turnoutBox1.getDisplayName()); // store choice from turnoutBox1
+                if (bitNum > 1){
+                    matrixMast.setOutput("output2", turnoutBox2.getDisplayName()); // store choice from turnoutBox2
                 }
-                if (bitNum > 1 && turnoutBox2 == null) { //warning dialog
-                    int r = JOptionPane.showConfirmDialog(null, "Output 2 is undefined, please enter all inputs first",
-                            "Empty Input",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    //matrixMast.setOutput2(turnoutBox2.getDisplayName()); // store choice from turnoutBox2
+                if (bitNum > 2) {
+                    matrixMast.setOutput("output3", turnoutBox3.getDisplayName()); // store choice from turnoutBox3
                 }
-                if (bitNum > 2 && turnoutBox3 == null) { //warning dialog
-                    int r = JOptionPane.showConfirmDialog(null, "Output 3 is undefined, please enter all inputs first",
-                            "Empty Input",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    //matrixMast.setOutput3(turnoutBox3.getDisplayName()); // store choice from turnoutBox3
+                if (bitNum > 3){
+                    matrixMast.setOutput("output4", turnoutBox4.getDisplayName()); // store choice from turnoutBox4
                 }
-                if (bitNum > 3 && turnoutBox4 == null) { //warning dialog
-                    int r = JOptionPane.showConfirmDialog(null, "Output 4 is undefined, please enter all inputs first",
-                            "Empty Input",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    //matrixMast.setOutput4(turnoutBox4.getDisplayName()); // store choice from turnoutBox4
-                }
-                if (bitNum > 4 && turnoutBox5 == null) { //warning dialog
-                    int r = JOptionPane.showConfirmDialog(null, "Output 5 is undefined, please enter all inputs first",
-                            "Empty Input",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    //matrixMast.setOutput5(turnoutBox5.getDisplayName()); // store choice from turnoutBox5
+                if (bitNum > 4){
+                    matrixMast.setOutput("output5", turnoutBox5.getDisplayName()); // store choice from turnoutBox5
                 }
 
                 for (String aspect : matrixAspect.keySet()) {
@@ -850,6 +828,7 @@ public class AddSignalMastPanel extends JPanel {
                     //bitNum ++;
                 }
                 //matrixMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel, to do
+
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
                     // to do: build interface how to define unlit: as separate turnout or as extra (Dark) aspect?
@@ -948,6 +927,7 @@ public class AddSignalMastPanel extends JPanel {
         }
     }
 
+    // needed?
     /**
      * Copied from SignalHeadTableAction for MatrixMast
     * */
