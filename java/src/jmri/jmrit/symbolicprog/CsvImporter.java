@@ -31,14 +31,17 @@ public class CsvImporter {
     private final static Logger log = LoggerFactory.getLogger(CsvImporter.class.getName());
 
     public CsvImporter(File file, CvTableModel cvModel) throws IOException {
+        FileReader fileReader=null;
+        BufferedReader bufferedReader=null;
+
         try {
             CvValue cvObject;
             String line = null;
             String name = null;
             int value = 0;
 
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            fileReader = new FileReader(file);
+            bufferedReader = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
                 String[] lineStrings = line.split(" *, *");
@@ -59,10 +62,11 @@ public class CsvImporter {
                     cvObject.setValue(value);
                 }
             }
-            bufferedReader.close();
-            fileReader.close();
         } catch (IOException e) {
             log.error("Error reading file: " + e);
+        } finally {
+            bufferedReader.close();
+            fileReader.close();
         }
     }
 
