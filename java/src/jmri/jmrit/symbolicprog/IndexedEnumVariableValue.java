@@ -280,11 +280,11 @@ public class IndexedEnumVariableValue extends VariableValue
             } else {
                 _value.setBackground(_defaultColor);
             }
-        }
-        if (_value.getBackground() == null) {
-            _value.setOpaque(false);
-        } else {
-            _value.setOpaque(true);
+            if (_value.getBackground() == null) {
+                _value.setOpaque(false);
+            } else {
+                _value.setOpaque(true);
+            }
         }
     }
 

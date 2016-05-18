@@ -574,11 +574,10 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // all the way up now
         _cvMap.get(cvList[1]).setValue((int) Math.round(last));
         // and push each one down (except the first, left as it was)
-        double previous = first;
         double ratio = Math.pow(1. - factor, nValues - 1.);
         double limit = last + (last - first) * ratio;
         for (int i = 1; i < nValues; i++) {
-            previous = limit - (limit - first) * ratio / Math.pow(1. - factor, nValues - 1. - i);
+            double previous = limit - (limit - first) * ratio / Math.pow(1. - factor, nValues - 1. - i);
             int value = (int) (Math.floor(previous));
             _cvMap.get(cvList[i]).setValue(value);
         }
