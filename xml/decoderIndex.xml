@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.5ish-201605090918-Matt H-R3421497 on Mon May 09 11:19:12 CEST 2016 $Id$-->
-  <decoderIndex version="734">
+  <!--Written by JMRI version 4.3.7ish-201605182359-heap-R8dbe509 on Thu May 19 09:59:34 AEST 2016 $Id$-->
+  <decoderIndex version="738">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4075,6 +4075,24 @@
           <size length="25.5" width="15.5" height="4.5" units="mm" />
           <!-- connector="NEM651, 21MTC, Plux12, wires" -->
         </model>
+        <model model="LokPilot Nano Standard V1.0" numOuts="4" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.0 A" formFactor="N" productID="16777352">
+          <output name="1" label="Front|Light" maxcurrent="150 mA" />
+          <output name="2" label="Rear|Light" maxcurrent="150 mA" />
+          <output name="3" label="AUX|1" maxcurrent="150 mA" />
+          <output name="4" label="AUX|2" maxcurrent="150 mA" />
+          <output name="7" label="Shunt|Mode" />
+          <output name="8" label="Acceleration|Deceleration" />
+          <output name="9" label="Grade|Crossing" />
+          <output name="10" label="|Dimmer" />
+          <output name="11" label="Dynamic|Brake" />
+          <output name="12" label="Virtual|Sound" />
+          <output name="13" label="|" />
+          <output name="14" label="|" />
+          <output name="15" label="|" />
+          <output name="16" label="|" />
+          <size length="25.5" width="15.5" height="4.5" units="mm" />
+          <!-- connector="NEM651, 21MTC, Plux12, wires" -->
+        </model>
         <model show="no" model="LokPilot Standard" replacementModel="LokPilot Standard V1.0" replacementFamily="ESU LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="LokPilot Standard V1.0">
           <output name="1" label="Front|Light" maxcurrent="250 mA" />
           <output name="2" label="Rear|Light" maxcurrent="250 mA" />
@@ -4701,7 +4719,7 @@
         </soundlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound_Select.xml">
-        <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527">
+        <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527,33554569">
           <size length="1.41" width=".51" height=".25" units="inches" />
           <functionlabels>
             <functionlabel num="0" lockable="true" />
@@ -4764,7 +4782,7 @@
             <soundlabel num="27">Gear shift sound</soundlabel>
           </soundlabels>
         </model>
-        <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533">
+        <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533,33554570">
           <size length="1.41" width=".51" height=".25" units="inches" />
           <functionlabels>
             <functionlabel num="0" lockable="true" />
