@@ -65,8 +65,12 @@ public class CsvImporter {
         } catch (IOException e) {
             log.error("Error reading file: " + e);
         } finally {
-            bufferedReader.close();
-            fileReader.close();
+            if(bufferedReader!=null) {
+               bufferedReader.close();
+            }
+            if(fileReader!=null) {
+               fileReader.close();
+            }
         }
     }
 

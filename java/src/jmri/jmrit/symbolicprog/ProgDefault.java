@@ -81,11 +81,15 @@ public class ProgDefault {
         // But for now I can live with that.
         String sbox[] = new String[np + nx];
         int n = 0;
-        for (String s : sp) {
-            sbox[n++] = s.substring(0, s.length() - 4);
+        if(np>0) {
+            for (String s : sp) {
+               sbox[n++] = s.substring(0, s.length() - 4);
+            }
         }
-        for (String s : sx) {
-            sbox[n++] = s.substring(0, s.length() - 4);
+        if(nx>0) {
+           for (String s : sx) {
+               sbox[n++] = s.substring(0, s.length() - 4);
+           }
         }
         return sbox;
     }
