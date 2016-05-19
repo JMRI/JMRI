@@ -13,6 +13,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -378,26 +379,40 @@ public class AddSignalMastPanel extends JPanel {
             if (appMap != null) {
                 java.util.Enumeration<String> aspects = appMap.getAspects();
                 // hashtable/right names?
-                //load outputs and set bitNum
-
                 while (aspects.hasMoreElements()) {
                     String key = aspects.nextElement();
                     // select the right checkboxes
                     MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
                     matrixPanel.setAspectDisabled(xmast.isAspectDisabled(key)); // method in abstractSignalMast
                     if (!xmast.isAspectDisabled(key)) {
-                        char[] bits = xmast.getBitsForAspect(key);
-                        while (bits.length < bitNum){
-                            // add extra 0 chars, although it seems char arrays cannot change length
-                            // no need to shorten longer arays, as they're not read by the panel
-                            // bits.add({0});
-                        }
+                        char[] mastBits = xmast.getBitsForAspect(key);
+                        bitNum = mastBits.length;
+                        char[] bits = Arrays.copyOf(mastBits, 5); // store as 5 character array in panel
                         matrixPanel.setAspectBoxes(bits);
+                        //String value = String.valueOf(bits); // convert back from char[] to String
+                        //matrixPanel.setAspectBitsField(value);
                         // set boxes 1 - 5 on aspect sub panel from values in hashmap char[] 1001
                     }
                 }
             }
-/*            if (xmast.resetPreviousStates()) {
+            // to do: load outputs
+            // to do: count them and set bitNum
+            bitNumChanged(bitNum);
+            // fill in the names of the outputs from mast
+            turnoutBox1.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName (1)));
+            if (bitNum > 1){
+                turnoutBox2.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName (2))); // load input into turnoutBox2
+            }
+            if (bitNum > 2) {
+                turnoutBox3.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName (3))); // load input into turnoutBox3
+            }
+            if (bitNum > 3){
+                turnoutBox4.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName (4))); // load input into turnoutBox4
+            }
+            if (bitNum > 4){
+                turnoutBox5.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName (5))); // load input into turnoutBox5
+            }
+/*           if (xmast.resetPreviousStates()) {
                 resetPreviousState.setSelected(true);
             }
             if (xmast.allowUnLit()) { // to do, how to store?
@@ -794,7 +809,7 @@ public class AddSignalMastPanel extends JPanel {
                         + sigsysname
                         + ":" + mastname.substring(11, mastname.length() - 4);
                 name += "($" + (paddedNumber.format(MatrixSignalMast.getLastRef() + 1));
-                name += ")_t"; // for "turnout-outputs", add option for direct packets
+                name += ")" + bitNum +"t"; // for "turnout-outputs", add option for direct packets
                 MatrixSignalMast matrixMast = new MatrixSignalMast(name);
 
                 matrixMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
@@ -905,6 +920,8 @@ public class AddSignalMastPanel extends JPanel {
                 }
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) { // OK was pressed, existing MatrixMast
                 MatrixSignalMast matrixMast = (MatrixSignalMast) mast;
+                matrixMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
+
                 for (String aspect : matrixAspect.keySet()) {
                     // make matrix, store , compare with #750
                     // matrixAspect.get(aspect).setReference(name + ":" + aspect); // ToDo: write to bean comment, method is in class Aspectpanel, #1680
@@ -1843,25 +1860,10 @@ public class AddSignalMastPanel extends JPanel {
             }
             this.aspect = aspect;
             // aspectBits is char[] of length(cols) describing state of on/off checkboxes
-            // from 1 to 5 chars, i.e. "0101"
-            //int cols = aspectBits.length;
-            // provided as char[] array
+            // 5 chars, i.e. "0101n" provided as char[] array
             // easy to manipulate by index
             // copy to checkbox states:
             setAspectBoxes(aspectBits);
-/*            bitCheck1.setSelected(aspectBits[1] == '1');
-            if (cols > 1) {
-                bitCheck2.setSelected(aspectBits[2] == '1');
-            }
-            if (cols > 2) {
-                bitCheck3.setSelected(aspectBits[3] == '1');
-            }
-            if (cols > 3) {
-                bitCheck4.setSelected(aspectBits[4] == '1');
-            }
-            if (cols > 4) {
-                bitCheck5.setSelected(aspectBits[5] == '1');
-            }*/
         }
 
         boolean isAspectDisabled() {
@@ -1949,41 +1951,35 @@ public class AddSignalMastPanel extends JPanel {
             aspectBitsField.setText(value);
         }
 
-        char[] getAspectBits() { // array {1},{0} from char[] aspectBits var, cf. getAspectId() in DCCmast
-            // called from OKPressed() #794
+        char[] getAspectBits() { // array {1},{0} from char[] aspectBits, cf. getAspectId() in DCCmast
+            // called from OKPressed() line #825
             try {
-                return aspectBits;
+                return Arrays.copyOf(aspectBits, bitNum); // copy to new char[] of length bitNum
             } catch (Exception ex) {
-                log.error("failed to read aspectBits");
+                log.error("failed to read and copy aspectBits");
+                return null;
             }
-            return emptyBits; // error flag
         }
 
         private void setAspectBoxes (char[] aspectBits){
             // activate checkboxes
-            int cols = aspectBits.length;
-            bitCheck1.setSelected(aspectBits[1] == '1');
+            int cols = bitNum;
+            bitCheck1.setSelected(aspectBits[0] == '1');
             if (cols > 1) {
-                bitCheck2.setSelected(aspectBits[2] == '1');
+                bitCheck2.setSelected(aspectBits[1] == '1');
             }
             if (cols > 2) {
-                bitCheck3.setSelected(aspectBits[3] == '1');
+                bitCheck3.setSelected(aspectBits[2] == '1');
             }
             if (cols > 3) {
-                bitCheck4.setSelected(aspectBits[4] == '1');
+                bitCheck4.setSelected(aspectBits[3] == '1');
             }
             if (cols > 4) {
-                bitCheck5.setSelected(aspectBits[5] == '1');
+                bitCheck5.setSelected(aspectBits[4] == '1');
             }
             String value = String.valueOf(aspectBits); // convert back from char[] to String
             aspectBitsField.setText(value);
         }
-
-/*        // called in implementation.MatrixSignalMast #145 ??? to do: method to load aspect bits
-        public void setAspectBits(String bits) {
-            aspectBits.setValue(bits.toCharArray());
-            aspectBitsField.setText(bits);
-        }*/
 
         JPanel panel;
 
@@ -1996,16 +1992,16 @@ public class AddSignalMastPanel extends JPanel {
                 JPanel matrixDetails = new JPanel();
                 matrixDetails.add(disabledCheck); // to the left of Bit checkboxes, not below
                 matrixDetails.add(bitCheck1);
-                if (bitNum > 1) {matrixDetails.add(bitCheck2);}
-                if (bitNum > 2) {matrixDetails.add(bitCheck3);}
-                if (bitNum > 3) {matrixDetails.add(bitCheck4);}
-                if (bitNum > 4) {matrixDetails.add(bitCheck5);}
+                matrixDetails.add(bitCheck2);
+                matrixDetails.add(bitCheck3);
+                matrixDetails.add(bitCheck4);
+                matrixDetails.add(bitCheck5);
                 //ToDo refresh aspectSetting, can be in OK to store/warn for duplicates (with button 'Ignore')
-                // hide if > bitNum? // where to get value from?
-                //bitCheck2.setVisible(bitNum > 1); // cols doesn't work, so always hidden
-                //bitCheck3.setVisible(bitNum > 2);
-                //bitCheck4.setVisible(bitNum > 3);
-                //bitCheck5.setVisible(bitNum > 4);
+                // hide if id > bitNum (var in panel)
+                bitCheck2.setVisible(bitNum > 1);
+                bitCheck3.setVisible(bitNum > 2);
+                bitCheck4.setVisible(bitNum > 3);
+                bitCheck5.setVisible(bitNum > 4);
                 matrixDetails.add(aspectBitsField);
                 aspectBitsField.setEnabled(false); // not editable, just for debugging
 

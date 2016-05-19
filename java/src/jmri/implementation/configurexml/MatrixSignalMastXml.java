@@ -4,6 +4,7 @@ package jmri.implementation.configurexml;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.SignalMast;
+import jmri.SignalAppearanceMap;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
 import jmri.implementation.MatrixSignalMast;
@@ -60,7 +61,7 @@ public class MatrixSignalMastXml
                 String key = ("output" + i);
                 Element outp = new Element("output");
                 outp.setAttribute("matrixCol", key);
-                outp.addContent(p.getTurnoutName(i)); // get beanname (Turnout)
+                outp.addContent(p.getOutputName(i)); // get name (Turnout)
                 outps.addContent(outp);
                 i++;
             }
@@ -69,23 +70,36 @@ public class MatrixSignalMastXml
             }
         }
 
-        List<String> bitStrings = p.getBitstrings();
+        //List<String> bitStrings = p.getBitstrings();
+        //if (bitStrings != null) {
         // to do: use hashmap directly (change type + convert char[] to xml-storable simple String
         // string of max. 5 chars "00101" describing matrix row per aspect
-        if (bitStrings != null) {
-            Element bss = new Element("bitStrings");
-            int i = 1;
-            for (String _bitstring : bitStrings) {
-                String key = "aspect" + i; //"Stop"; aspect; // build from names?, copy from dcc mast
-                Element bs = new Element("bitString");
-                bs.setAttribute("aspect", key);
-                bs.addContent(_bitstring);
-                bss.addContent(bs);
-                i++;
+        SignalAppearanceMap appMap = p.getAppearanceMap();
+        if (appMap != null) {
+            java.util.Enumeration<String> aspects = appMap.getAspects();
+            while (aspects.hasMoreElements()) {
+                String key = aspects.nextElement();
+                Element el = new Element("bitString");
+                el.setAttribute("aspect", key);
+                if (p.getBitstring(key) != null) {
+                    el.addContent(p.getBitstring(key));
+                    e.addContent(el);
+                }
             }
-            if (bitStrings.size() != 0) {
-                e.addContent(bss);
-            }
+
+                //Element bss = new Element("bitStrings");
+            //int i = 1;
+            //for (String _bitstring : bitStrings) {
+                //String key = "aspect" + i; //"Stop"; aspect; // build from names?, copy from dcc mast
+                //Element bs = new Element("bitString");
+                //bs.setAttribute("aspect", key);
+                //bs.addContent(_bitstring);
+                //bss.addContent(bs);
+                //i++;
+            //}
+            //if (bitStrings.size() != 0) {
+            //    e.addContent(bss);
+            //}
         }
         List<String> disabledAspects = p.getDisabledAspects();
         if (disabledAspects != null) {
@@ -135,10 +149,10 @@ public class MatrixSignalMastXml
             List<Element> list = outps.getChildren("output"); // singular
             for (Element outp : list) {
                 String outputname = outp.getAttribute("matrixCol").getValue();
-                String turnout = outp.getChild("turnout").getText();
+                String turnout = outp.getChild("output").getText();
                 //m.setTurnout(outputname, turnout, [turnState]);
                 ((MatrixSignalMast) m).setOutput(outp.getAttribute("matrixCol").getValue(), outp.getText());
-                // to do: repeat for i = 1 to 5
+                // to do: repeat for i = 0 to 5
             }
         }
 

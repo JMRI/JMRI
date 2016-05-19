@@ -80,7 +80,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         aspectToOutput.put(aspect, bitstring); // store keypair aspectname-bitstring in hashmap
     }
 
-    String errorChars = "n";
+    String errorChars = "nnnnn";
     char[] errorBits = errorChars.toCharArray();
 
     /**    only called for an already existing mast
@@ -113,14 +113,14 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 // Clear all the current states, this will result in the signalmast going blank (RED) for a very short time.
                 // ToDo: pick up drop down choice for DCCPackets or Turnouts outputs
                 // c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspectToOutput.get(aspect)), packetRepeatCount);
-                this.setBitsForAspect("Dark", unLitBits);
+                this.setBitsForAspect("Stop", unLitBits); // or Dark?
             }
             if (aspectToOutput.containsKey(aspect) && aspectToOutput.get(aspect) != errorBits) {
                 // ToDo: pick up drop down choice for either DCC direct packets or Turnouts as outputs
                 // c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspectToOutput.get(aspect)), packetRepeatCount);
                 char[] bitArray = getBitsForAspect(aspect);
                 // for  MatrixMast nest a loop, using setBitsForAspect(), provides extra check on value
-                this.updateOutputs(bitArray);
+                updateOutputs(bitArray); // NPE ERROR HERE??? try without this.
                 //Set the new Signal Mast state
             } else {
                 log.error("Trying to set an aspect (" + aspect + ") on signal mast " + getDisplayName() + " which has not been configured");
@@ -160,51 +160,22 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return String.valueOf(unLitBits);
     }
 
-    public Turnout getOutput(int colnum) { // bean
-        if (colnum > 0 && colnum <= 5) {
+    public Turnout getOutput(int colnum) { // as bean
+        if (colnum > 0 && colnum <= outputsToBeans.size()) {
             return outputsToBeans.get("output" + colnum).getBean();
-            //if (colnum == 1) {
-/*                return output1.getBean();
-            } else if (colnum == 2) {
-                return output2.getBean();
-            } else if (colnum == 3) {
-                return output3.getBean();
-            } else if (colnum == 4) {
-                return output4.getBean();
-            } else if (colnum == 5) {
-                return output5.getBean();*/
         } else {
             log.error("Trying to read output " + colnum + " which has not been configured");
         }
         return null;
     }
 
-    // used?
+    // used in add mast panel #400
     public NamedBeanHandle<Turnout> getOutputHandle (int i) {
         return outputsToBeans.get("output" + i);
     }
 
-/*
-    // used? is not in hashmap, see setOutput() in line 304
-    public void setOutput1 (NamedBeanHandle<Turnout> turn) {
-    this.output1 = turn;
-    }
-    public void setOutput2 (NamedBeanHandle<Turnout> turn) {
-        this.output2 = turn;
-    }
-    public void setOutput3 (NamedBeanHandle<Turnout> turn) {
-        this.output3 = turn;
-    }
-    public void setOutput4 (NamedBeanHandle<Turnout> turn) {
-        this.output4 = turn;
-    }
-    public void setOutput5 (NamedBeanHandle<Turnout> turn) {
-        this.output5 = turn;
-    }
-*/
-
     public String getOutputName(int colnum) { // provide to xml
-        if (colnum > 0 && colnum <= 5) {
+        if (colnum > 0 && colnum <= outputsToBeans.size()) {
                 return outputsToBeans.get("output" + colnum).getName();
         }
         log.error("Trying to read output " + colnum + " which has not been configured");
@@ -225,10 +196,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
             log.debug("Aspect " + aspect + " is already defined so will override");
             aspectToOutput.remove(aspect);
         }
-        // already supplied as char array
+        // is supplied as char array, no conversion needed
         aspectToOutput.put(aspect, bitArray);
     }
 
+    // used?
     public List<String> getBitstrings() {
         // provide to xml as normal Strings
         ArrayList<String> bitlist = new ArrayList<String>(16);
@@ -244,9 +216,18 @@ public class MatrixSignalMast extends AbstractSignalMast {
         // to do: pick key + char[] array from aspectToOutput
     }
 
+    public String getBitstring(String aspect) {
+        // provide to xml as normal String
+        if (aspectToOutput != null) { // hashtable
+            String bitString = new String(aspectToOutput.get(aspect)); // convert char[] to string
+            return bitString;
+            }
+        return "";
+    }
+
     public List<String> getOutputs() { // provide to xml
         // to do: use hashmap directly & use for loop
-        ArrayList<String> outputlist = new ArrayList<String>(5);
+        ArrayList<String> outputlist = new ArrayList<String>(); // (5) or (bitNum) ?
         //list = outputsToBeans.keySet();
         outputlist.add(outputsToBeans.get("output1").getName()); // convert NBH to name (String)
         if (outputsToBeans.containsKey("output2")) {
@@ -269,7 +250,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(5); // output# - bean pairs
 
-    //looks a lot like the next method, try to remove
+    //looks a lot like the next method, remove?
     NamedBeanHandle<Turnout> TurnoutNameToHandle (String turnoutName) {
         if (turnoutName != null && !turnoutName.equals("")) {
             Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
@@ -292,13 +273,16 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     public void updateOutputs (char[] bits) {
         // hardware instruction
-        for (int i = 1; i <= bits.length; i++) {
+        if (bits == null){
+            log.debug("Empty char[] received");
+        }
+        for (int i = 0; i < 2; i++) {
             if (bits[i] == '1') {
                 outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.CLOSED);
             } else if (bits[i] == '0') {
                 outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.THROWN);
             } else if (bits[i] == 'n') {
-                // let pass, extra chars up to 5 are not in matrix
+                // let pass, extra chars up to 5 are not defined
             } else {
                 // invalid char
                 log.debug("Invalid element " + bits[i] + " cannot be converted to state for output #" + i);
@@ -321,23 +305,23 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     Turnout getTurnoutBean(int i) {
-        if (i < 0 || i >= 5 ) {
+        if (i < 0 || i > outputsToBeans.size() ) {
             return null;
         }
         outputsToBeans.get("output" + i).getBean();
         return null;
     }
 
-    public String getTurnoutName(int i) {
-        if (i< 0 || i >= 5 ) {
+/*    public String getTurnoutName(int i) {
+        if (i < 0 || i > outputsToBeans.size() ) {
             return null;
         }
         outputsToBeans.get("output" + i).getName();
         return null;
-    }
+    }*/
 
     boolean isTurnoutUsed(Turnout t) {
-        for (int i = 1; i<=5; i++) {
+        for (int i = 1; i <= outputsToBeans.size(); i++) {
             if (t.equals(getOutput(i))) {
                 return true;
             }
