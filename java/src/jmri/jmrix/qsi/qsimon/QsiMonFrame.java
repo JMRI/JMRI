@@ -2,6 +2,8 @@
 
 package jmri.jmrix.qsi.qsimon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.qsi.QsiListener;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
@@ -78,6 +80,6 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
 		nextLine(text+"\n", l.toString());
 	}
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiMonFrame.class.getName());
+   static Logger log = LoggerFactory.getLogger(QsiMonFrame.class.getName());
 
 }

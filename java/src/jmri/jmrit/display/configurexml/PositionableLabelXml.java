@@ -1,5 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
@@ -406,6 +408,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         else
             l.setEditable(false);
         
+        a = element.getAttribute("degrees");
+        if ( a!=null && l instanceof PositionableLabel) {
+        	try {
+                int deg = a.getIntValue();
+                ((PositionableLabel)l).setDegrees(deg);
+            } catch (org.jdom.DataConversionException dce) {}
+        }
+        
         Element elem = element.getChild("toolTip");
         if (elem!=null) {
             ToolTip tip = l.getTooltip();
@@ -475,5 +485,5 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         return icon;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabelXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableLabelXml.class.getName());
 }

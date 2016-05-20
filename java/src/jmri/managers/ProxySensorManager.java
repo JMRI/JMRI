@@ -2,6 +2,8 @@
 
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 import jmri.SensorManager;
 
@@ -157,7 +159,7 @@ public class ProxySensorManager extends AbstractProxyManager
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxySensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());
 }
 
 /* @(#)ProxySensorManager.java */

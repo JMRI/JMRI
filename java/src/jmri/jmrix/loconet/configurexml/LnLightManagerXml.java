@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -33,5 +35,5 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
         return loadLights(lights);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnLightManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnLightManagerXml.class.getName());
 }

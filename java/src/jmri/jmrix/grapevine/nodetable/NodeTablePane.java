@@ -2,6 +2,8 @@
 
 package jmri.jmrix.grapevine.nodetable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ResourceBundle;
@@ -286,6 +288,6 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeTableFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(NodeTableFrame.class.getName());
 
 }

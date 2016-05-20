@@ -2,6 +2,7 @@
 
 package jmri.jmrix.grapevine;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -81,6 +82,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     // The minimal setup for log4J
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManagerTest.class.getName());
+	static Logger log = Logger.getLogger(SerialTurnoutManagerTest.class.getName());
 
 }

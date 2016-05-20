@@ -1,6 +1,6 @@
 
 <!-- Ant build.xml file for JMRI development                                -->
-<!-- Bob Jacobsen, Copyright 2002-2012                                      -->
+<!-- Bob Jacobsen, Copyright 2002-2013                                      -->
 
 <!-- Revision $Revision$ -->
 
@@ -26,7 +26,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2012"/>
+    <property name="jmri.copyright.year" value="1997-2013"/>
 
     <property environment="env"/>
 
@@ -128,7 +128,7 @@
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
         <pathelement location="${libdir}/jython.jar"/>
-        <pathelement location="${libdir}/log4j.jar"/>
+        <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/servlet-api-3.0.jar"/>
         <pathelement location="${libdir}/vecmath.jar"/>
         <pathelement location="${libdir}/activation.jar"/>
@@ -150,11 +150,20 @@
         <pathelement location="${libdir}/jetty-util-8.1.0.v20120127.jar"/>
         <pathelement location="${libdir}/jetty-io-8.1.0.v20120127.jar"/>
         <pathelement location="${libdir}/jetty-websocket-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/slf4j-api-1.6.4.jar"/>
-        <pathelement location="${libdir}/slf4j-log4j12-1.6.4.jar"/>
+        <pathelement location="${libdir}/slf4j-api-1.7.2.jar"/>
+        <pathelement location="${libdir}/slf4j-log4j12-1.7.2.jar"/>
     </path>
 
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
+   
+    <!-- jars needed for i18n testing only -->
+    <path id="i18n.class.path">
+        <pathelement location="${ant.home}/lib/ant.jar"/>
+        <pathelement location="${libdir}/antlr-3.4-complete.jar"/>
+        <pathelement location="${libdir}/i18nchecker.jar"/>
+    </path>
+
+    <pathconvert property="i18n.class.jars" refid="i18n.class.path"/>
 
     <!-- jars that are needed at build time -->
     <path id="compile.class.path">
@@ -162,6 +171,7 @@
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/annotations.jar"/> <!-- findbugs build-time only-->
         <pathelement location="${libdir}/jsr305.jar"/>      <!-- findbugs build-time only-->
+        <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
     </path>
 
     <path id="project.class.path">
@@ -170,7 +180,11 @@
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
     </path>
 
-
+    <path id="test.class.path">
+        <path   refid="i18n.class.path"/>
+        <path   refid="project.class.path"/>
+    </path>
+    
     <path id="path.svnant">
       <pathelement location="${svnantdir}/svnant.jar"/>
       <pathelement location="${svnantdir}/svnClientAdapter.jar"/>
@@ -183,20 +197,20 @@
         classpathref="path.svnant"/>
     
     <!-- to use default command link authentification -->
-<!-- 
     <svnSetting
         id="svn.settings"
         javahl="false"
         svnkit="false"/>
- -->
 
     <!-- to use authentification credentials from local.properties file -->
+<!-- 
     <svnSetting
         id="svn.settings"
         username="${sourceforge.userid}"
         password="${sourceforge.password}"
         javahl="true"
         svnkit="true"/>
+ -->
 
     <target name="check-ant-requirements"
             description="check build system requirements">
@@ -205,6 +219,16 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
+    <target name="i18n-consistency-check"  description="Verification of localized strings in source code" depends="jar">
+        <property name="i18n.modulefilter" value=""/>
+        <property name="i18n.logger" value="log" /> <!-- name of logging token to match with logging methods -->
+        <property name="i18n.loggerMethods" value="info,debug,error,warn" /> <!-- logging methods that should not be checked for i18n consistency -->
+        <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
+        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpath="${ant.home}/lib/ant.jar:lib/antlr-3.4-complete.jar:lib/i18nchecker.jar"/>
+        <!-- check includes all .properties files including ones we use for non-translatable files -->
+        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
+    </target>
+    
     <target name="init"
             description="create needed directories">
         <!-- Create the time stamp properties -->
@@ -376,6 +400,7 @@
             <classpath refid="compile.class.path"/>
             <compilerarg value="-Xlint:-serial"/>
             <compilerarg value="-Xlint:-deprecation"/>
+            <compilerarg value="-Xlint:unchecked"/>
         </javac>
     </target>
 
@@ -601,8 +626,7 @@
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
-            <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
-            <!-- for JTune -->
+            <!-- <jvmarg value="-Xloggc:memory.vgc"/> --><!-- for JTune -->
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -754,9 +778,9 @@
 
     <!-- Force false language/country to check I8N -->
     <target name="locale"
-            description="check JmriDemo I8N"
+            description="check DecoderPro I8N"
             depends="debug, runtime-library-selection">
-        <java classname="apps.JmriDemo.JMRIdemo" dir="." fork="yes">
+        <java classname="apps.DecoderPro.DecoderPro" dir="." fork="yes">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
@@ -769,7 +793,7 @@
             <sysproperty key="user.language" value="tlh"/>
             <!-- klingon -->
             <sysproperty key="user.country" value="001"/>
-            <arg line="LocaleTestConfig2.xml"/>
+            <arg line="DecoderProConfig2.xml"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
@@ -798,7 +822,7 @@
         </java>
     </target>
 
-    <target name="headlesstest" depends="runtime-library-selection" description="run headless test suite">
+    <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -809,7 +833,7 @@
             <sysproperty key="java.awt.headless" value="true"/>
             <sysproperty key="jmri.headlesstest" value="true"/>
 
-            <classpath refid="project.class.path"/>
+            <classpath refid="test.class.path"/>
 
             <test name="jmri.HeadLessTest" outfile="junit-results">
                 <formatter type="xml"/>
@@ -824,7 +848,7 @@
         <java classname="apps.tests.AllTest"
           dir="."
           fork="yes" >
-            <classpath refid="project.class.path"/>
+            <classpath refid="test.class.path"/>
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
@@ -874,9 +898,9 @@
             description="create working jar file with current contents"
             depends="debug, rmic, manifest-file">
         <jar jarfile="${jartarget}/jmri.jar"
-            basedir="${target}"
-            manifest="${javadir}/manifest"
-            compress="true"/>  <!-- compress="true" is default -->
+             basedir="${target}"
+             manifest="${javadir}/manifest"
+             compress="true"/>  <!-- compress="true" is default -->
         <!-- Starting with JMRI 1.9, building the JAR index crashes.  -->
         <!-- This appears to be due to a problem with compression in  -->
         <!-- one of the referenced jar files, but we don't know which -->
@@ -885,6 +909,18 @@
         <!-- </exec>                                    -->
     </target>
 
+    <target name="jar-resources"
+            description="package all resources as a jar file"
+            depends="debug, rmic, manifest-file">
+        <jar jarfile="${jartarget}/jmri.jar"
+             basedir="${target}"
+             manifest="${javadir}/manifest"
+             compress="true">
+            <fileset dir="."
+                     includes="xml/,resources/,help/,web/,jython/"
+                     excludes="help/en/manual/**" />
+        </jar>
+    </target>
 
     <target name="javadoc" depends="init, jjdoc, compile-generated-source" description="create JavaDocs">
         <javadoc packagenames="jmri.*, apps.*"
@@ -894,6 +930,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
+           package="yes"
            use="true"
            windowtitle="JMRI API">
             <packageset dir="${source}" defaultexcludes="yes">
@@ -918,7 +955,7 @@
             <classpath refid="compile.class.path"/>
             <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
             </doctitle>
-            <bottom><![CDATA[<i>Copyright &copy; 1997 - 2012 JMRI Community.
+            <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by:
@@ -953,7 +990,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
-           public="yes"
+           package="yes"
            use="true"
            windowtitle="JMRI API">
             <packageset dir="${source}" defaultexcludes="yes">
@@ -987,7 +1024,7 @@
             <classpath refid="compile.class.path"/>
             <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
             </doctitle>
-            <bottom><![CDATA[<i>Copyright &copy; 1997 - 2012 JMRI Community.
+            <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by:
@@ -1019,7 +1056,7 @@
             <arg value="-avz"/>
             <arg value="--delete"/>
             <arg value="${doctarget}"/>
-            <arg value="jacobsen,jmri@web.sourceforge.net:htdocs/JavaDoc/"/>
+            <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/JavaDoc/"/>
         </exec>
     </target>
 
@@ -1034,7 +1071,7 @@
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
         <antcall target="-run-jmri-application">
-             <param name="application.classname" value="jmri.jmrit.decoderdefn.DecoderIndexCreateAction"/>
+             <param name="application.classname" value="jmri.jmrit.decoderdefn.DecoderIndexBuilder"/>
         </antcall>
     </target>
 
@@ -1369,7 +1406,7 @@
 <!-- targets to support revision control repository management -->
 
     <!-- where is the SVN repository -->
-    <property name="repository.base-url" value="https://jmri.svn.sourceforge.net/svnroot/jmri"/>
+    <property name="repository.base-url" value="svn+ssh://${sourceforge.userid}@svn.code.sf.net/p/jmri/code/"/>
 
     <!-- you can set these to alternate values in local.properties
          when you need to test.  Please do not change them here! -->

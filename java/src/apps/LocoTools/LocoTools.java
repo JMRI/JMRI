@@ -2,6 +2,8 @@
 
 package apps.LocoTools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.AppConfigPanel;
 import apps.Apps;
 
@@ -78,7 +80,7 @@ public class LocoTools extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoTools.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoTools.class.getName());
 }
 
 

@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,140 +11,137 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add support for V8 -->
-
 <pane name="BEMF">
-	<column>
-		<row>
-			<column>
-				<label label="JMRI 2.9.5 or later is required for QSI V7"/>
-				<label label="JMRI 2.13.2 or later is required for QSI V8"/>
-				<label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-				<label label=" "/>
-				<display item="CV56.254.6"/>
-				<label label=" "/>
-			</column>
-			<label label="        "/>
-			<column>
-				<row>
-						<display item="CV56.4"/>
-				</row>
-				<label label=" "/>
-				<row>
-					<display item="CV56.5" layout="above" label=""/>
-					<display item="CV56.5" layout="above" format="hslider" />
-				</row>
-				<label label=" "/>
-				<row>
-					<display item="CV56.6" layout="above" label="" />
-					<display item="CV56.6" layout="above" format="hslider"/>
-				</row>
-				<label label=" "/>
-				<row>
-					<column>
-						<display item="CV56.8 Sign" format="offradiobutton" label="" layout="left"/>
-						<display item="CV56.8 Sign" format="onradiobutton"  label="" layout="left"/>
-					</column>
-					<column>
-						<row>
-							<display item="CV56.8 Value" layout="above" label=""/>
-							<display item="CV56.8 Value" layout="above" format="hslider" />
-						</row>
-					</column>
-				</row>
-				<row>
-					<display item="CV56.9" layout="above" label="" />
-					<display item="CV56.9" layout="above" format="hslider"/>
-				</row>
-				<label label=" "/>
-				<display item="SMPH-BEMF Ratio" />
-				<display item="Wheel Diameter" />
-				<display item="Locomotive Scale" />
-				<display item="Scale Wheel Diameter" />
-			</column>
-		</row>
-		<label label=" "/>
-		<row>
-			<column>
-				<row>
-					<display item="CV56.18.0" layout="above" label="" />
-					<display item="CV56.18.0" layout="above" format="hslider" />
-				</row>
-				<label label="BEMF less then (Min_BEMF + 5)"/>
-				<label label=" "/>
-				<row>
-					<display item="CV56.19.0" layout="above" label="" />
-					<display item="CV56.19.0" layout="above" format="hslider" />
-				</row>
-				<label label="BEMF between (Min_BEMF + 5) and 54"/>
-				<label label=" "/>
-				<row>
-					<display item="CV56.20.0" layout="above" label="" />
-					<display item="CV56.20.0" layout="above" format="hslider" />
-				</row>
-				<label label="BEMF between 54 and 108"/>
-				<label label=" "/>
-				<row>
-					<display item="CV56.21.0" layout="above" label="" />
-					<display item="CV56.21.0" layout="above" format="hslider" />
-				</row>
-				<label label="BEMF greater then 108"/>
-			</column>
-			<label label="        "/>
-			<column>
-				<row>
-					<display item="CV56.18.1" layout="above" label="" />
-					<display item="CV56.18.1" layout="above" format="hslider" />
-				</row>
-				<label label=" "/>
-				<label label=" "/>
-				<row>
-					<display item="CV56.19.1" layout="above" label="" />
-					<display item="CV56.19.1" layout="above" format="hslider" />
-				</row>
-				<label label=" "/>
-				<label label=" "/>
-				<row>
-					<display item="CV56.20.1" layout="above" label="" />
-					<display item="CV56.20.1" layout="above" format="hslider" />
-				</row>
-				<label label=" "/>
-				<label label=" "/>
-				<row>
-					<display item="CV56.21.1" layout="above" label="" />
-					<display item="CV56.21.1" layout="above" format="hslider" />
-				</row>
-				<label label=" "/>
-			</column>
-			<label label="        "/>
-			<column>
-				<row>
-					<display item="CV56.18.2" layout="above" label="" />
-					<display item="CV56.18.2" layout="above" format="hslider" />
-				</row>
-				<label label=" "/>
-				<label label=" "/>
-				<row>
-					<display item="CV56.19.2" layout="above" label="" />
-					<display item="CV56.19.2" layout="above" format="hslider" />
-				</row>
-				<label label=" "/>
-				<label label=" "/>
-				<row>
-					<display item="CV56.20.2" layout="above" label="" />
-					<display item="CV56.20.2" layout="above" format="hslider" />
-				</row>
-				<label label=" "/>
-				<label label=" "/>
-				<row>
-					<display item="CV56.21.2" layout="above" label=""/>
-					<display item="CV56.21.2" layout="above" format="hslider" />
-				</row>
-				<label label=" "/>
-			</column>
-		</row>
-	</column>
+  <column>
+    <row>
+      <column>
+        <label label="JMRI 2.9.5 or later is required for QSI V7"/>
+        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+        <label label=" "/>
+        <display item="CV56.254.6"/>
+        <label label=" "/>
+      </column>
+      <label label="        "/>
+      <column>
+        <row>
+          <display item="CV56.4"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV56.5" layout="above" label=""/>
+          <display item="CV56.5" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV56.6" layout="above" label=""/>
+          <display item="CV56.6" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <column>
+            <display item="CV56.8 Sign" format="offradiobutton" label="" layout="left"/>
+            <display item="CV56.8 Sign" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV56.8 Value" layout="above" label=""/>
+              <display item="CV56.8 Value" layout="above" format="hslider"/>
+            </row>
+          </column>
+        </row>
+        <row>
+          <display item="CV56.9" layout="above" label=""/>
+          <display item="CV56.9" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <display item="SMPH-BEMF Ratio"/>
+        <display item="Wheel Diameter"/>
+        <display item="Locomotive Scale"/>
+        <display item="Scale Wheel Diameter"/>
+      </column>
+    </row>
+    <label label=" "/>
+    <row>
+      <column>
+        <row>
+          <display item="CV56.18.0" layout="above" label=""/>
+          <display item="CV56.18.0" layout="above" format="hslider"/>
+        </row>
+        <label label="BEMF less then (Min_BEMF + 5)"/>
+        <label label=" "/>
+        <row>
+          <display item="CV56.19.0" layout="above" label=""/>
+          <display item="CV56.19.0" layout="above" format="hslider"/>
+        </row>
+        <label label="BEMF between (Min_BEMF + 5) and 54"/>
+        <label label=" "/>
+        <row>
+          <display item="CV56.20.0" layout="above" label=""/>
+          <display item="CV56.20.0" layout="above" format="hslider"/>
+        </row>
+        <label label="BEMF between 54 and 108"/>
+        <label label=" "/>
+        <row>
+          <display item="CV56.21.0" layout="above" label=""/>
+          <display item="CV56.21.0" layout="above" format="hslider"/>
+        </row>
+        <label label="BEMF greater then 108"/>
+      </column>
+      <label label="        "/>
+      <column>
+        <row>
+          <display item="CV56.18.1" layout="above" label=""/>
+          <display item="CV56.18.1" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <label label=" "/>
+        <row>
+          <display item="CV56.19.1" layout="above" label=""/>
+          <display item="CV56.19.1" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <label label=" "/>
+        <row>
+          <display item="CV56.20.1" layout="above" label=""/>
+          <display item="CV56.20.1" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <label label=" "/>
+        <row>
+          <display item="CV56.21.1" layout="above" label=""/>
+          <display item="CV56.21.1" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+      </column>
+      <label label="        "/>
+      <column>
+        <row>
+          <display item="CV56.18.2" layout="above" label=""/>
+          <display item="CV56.18.2" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <label label=" "/>
+        <row>
+          <display item="CV56.19.2" layout="above" label=""/>
+          <display item="CV56.19.2" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <label label=" "/>
+        <row>
+          <display item="CV56.20.2" layout="above" label=""/>
+          <display item="CV56.20.2" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <label label=" "/>
+        <row>
+          <display item="CV56.21.2" layout="above" label=""/>
+          <display item="CV56.21.2" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+      </column>
+    </row>
+  </column>
 </pane>

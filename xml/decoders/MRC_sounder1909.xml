@@ -13,15 +13,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Bryan Vianco" version="3" lastUpdated="20120310"/>  
+  <version author="Bryan Vianco" version="3" lastUpdated="20120310"/>
   <version author="Christopher Zurek" version="2" lastUpdated="20081218"/>
   <version author="Pete Cesaro" version="1" lastUpdated="20080307"/>
-<!-- made from the MRC_1645 file by Bill Chown -->
-<!-- added many decoder-specific tool tips -->
-<!-- added CV identities to all tool tips -->
-<!-- Added local panel for Lights since I needed to add some text description for its use -->
-<!-- Version 2 - Changed Horn and Bell choices to drop downs (Christopher Zurek) -->
-<!-- Version 3 - Updated for 1909 specs -->
+  <!-- made from the MRC_1645 file by Bill Chown -->
+  <!-- added many decoder-specific tool tips -->
+  <!-- added CV identities to all tool tips -->
+  <!-- Added local panel for Lights since I needed to add some text description for its use -->
+  <!-- Version 2 - Changed Horn and Bell choices to drop downs (Christopher Zurek) -->
+  <!-- Version 3 - Updated for 1909 specs -->
   <decoder>
     <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Diesel Sound Decoder 1909 EMD 567/645/645E/710 Alco 244/539T" numOuts="2" numFns="28">
@@ -133,7 +133,7 @@
         <label>Master volume control</label>
         <comment>Range 0-63</comment>
       </variable>
-	<variable label="Horn type" CV="50" item="Sound Option 1" default="13" tooltip="CV50" comment="Range 0-22">
+      <variable label="Horn type" CV="50" item="Sound Option 1" default="13" tooltip="CV50" comment="Range 0-22">
         <enumVal>
           <enumChoice choice="Horn 1">
             <choice>Horn 1</choice>
@@ -314,12 +314,12 @@
         <label>Flange squeal volume</label>
         <comment>Range 0-15</comment>
       </variable>
-	<variable label="Back EMF Load Control Proportional Gain Kp" CV="113" item="Sound Setting 19" default="20" tooltip="CV113, range 0-31" comment="Range 0-31">
+      <variable label="Back EMF Load Control Proportional Gain Kp" CV="113" item="Sound Setting 19" default="20" tooltip="CV113, range 0-31" comment="Range 0-31">
         <decVal max="31"/>
         <label>Back EMF Load Control Proportional Gain Kp</label>
         <comment>Range 0-31</comment>
       </variable>
-	<variable label="Back EMF Load Control Integral Gain Ki" CV="114" item="Sound Setting 20" default="10" tooltip="CV114, range 0-31" comment="Range 0-31">
+      <variable label="Back EMF Load Control Integral Gain Ki" CV="114" item="Sound Setting 20" default="10" tooltip="CV114, range 0-31" comment="Range 0-31">
         <decVal max="31"/>
         <label>Back EMF Load Control Integral Gain Kp</label>
         <comment>Range 0-31</comment>
@@ -354,7 +354,7 @@
           <enumChoice choice="EMD 645" value="1">
             <choice>EMD 645</choice>
           </enumChoice>
-	    <enumChoice choice="EMD 710" value="2">
+          <enumChoice choice="EMD 710" value="2">
             <choice>EMD 710</choice>
           </enumChoice>
           <enumChoice choice="Alco 244" value="3">
@@ -363,7 +363,7 @@
           <enumChoice choice="Alco 539T" value="4">
             <choice>Alco 539T</choice>
           </enumChoice>
-	    <enumChoice choice="EMD 567" value="5">
+          <enumChoice choice="EMD 567" value="5">
             <choice>EMD 567</choice>
           </enumChoice>
         </enumVal>

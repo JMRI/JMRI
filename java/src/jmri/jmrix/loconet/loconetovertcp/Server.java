@@ -13,10 +13,11 @@ import java.util.LinkedList;
 import java.util.Properties;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import jmri.util.SocketUtil;
 import jmri.util.zeroconf.ZeroConfService;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
@@ -62,7 +63,7 @@ public class Server {
             settingsLoaded = true;
             Properties settings = new Properties();
 
-            String settingsFileName = XmlFile.prefsDir() + SETTINGS_FILE_NAME;
+            String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
 
             try {
                 java.io.InputStream settingsStream = new FileInputStream(settingsFileName);
@@ -88,7 +89,7 @@ public class Server {
     public void saveSettings() {
         // we can't use the store capabilities of java.util.Properties, as
         // they are not present in Java 1.1.8
-        String settingsFileName = XmlFile.prefsDir() + SETTINGS_FILE_NAME;
+        String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
 
         try {
             OutputStream outStream = new FileOutputStream(settingsFileName);
@@ -253,5 +254,5 @@ public class Server {
             return clients.size();
         }
     }
-    static Logger log = Logger.getLogger(Server.class.getName());
+    static Logger log = LoggerFactory.getLogger(Server.class.getName());
 }

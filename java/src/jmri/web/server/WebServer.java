@@ -1,16 +1,19 @@
 package jmri.web.server;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+import static jmri.jmris.json.JSON.JSON;
+import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
-import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
@@ -19,7 +22,9 @@ import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
-import org.eclipse.jetty.util.thread.ExecutorThreadPool;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An HTTP server that handles requests for HTTPServlets.
@@ -34,12 +39,11 @@ public final class WebServer implements LifeCycle.Listener {
     protected ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
     protected ShutDownTask shutDownTask = null;
-    static Logger log = Logger.getLogger(WebServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     protected WebServer() {
         preferences = WebServerManager.getWebServerPreferences();
-        shutDownTask = new QuietShutDownTask("Stop Web Server") {
-
+        shutDownTask = new QuietShutDownTask("Stop Web Server") { // NOI18N
             @Override
             public boolean execute() {
                 try {
@@ -62,19 +66,35 @@ public final class WebServer implements LifeCycle.Listener {
             connector.setMaxIdleTime(5 * 60 * 1000); // 5 minutes
             connector.setSoLingerTime(-1);
             connector.setPort(preferences.getPort());
-            connector.setThreadPool(new ExecutorThreadPool(10, 1000, 10, TimeUnit.SECONDS));
+            QueuedThreadPool threadPool = new QueuedThreadPool();
+            threadPool.setName("WebServer");
+            threadPool.setMaxThreads(1000);
+            server.setThreadPool(threadPool);
             server.setConnectors(new Connector[]{connector});
 
             ContextHandlerCollection contexts = new ContextHandlerCollection();
-            for (String path : ResourceBundle.getBundle("jmri.web.server.Services").keySet()) {
+            Properties services = new Properties();
+            Properties filePaths = new Properties();
+            try {
+                InputStream in;
+                in = this.getClass().getResourceAsStream("Services.properties"); // NOI18N
+                services.load(in);
+                in.close();
+                in = this.getClass().getResourceAsStream("FilePaths.properties"); // NOI18N
+                filePaths.load(in);
+                in.close();
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
+            for (String path : services.stringPropertyNames()) {
                 ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
                 context.setContextPath(path);
-                if (ResourceBundle.getBundle("jmri.web.server.Services").getString(path).equals("fileHandler")) {
-                    ServletHolder holder = context.addServlet(DefaultServlet.class, "/*");
-                    holder.setInitParameter("resourceBase", FileUtil.getAbsoluteFilename(ResourceBundle.getBundle("jmri.web.server.FilePaths").getString(path)));
-                    holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(ResourceBundle.getBundle("jmri.web.server.FilePaths").getString("/css")) + "/miniServer.css");
+                if (services.getProperty(path).equals("fileHandler")) { // NOI18N
+                    ServletHolder holder = context.addServlet(DefaultServlet.class, "/*"); // NOI18N
+                    holder.setInitParameter("resourceBase", FileUtil.getAbsoluteFilename(filePaths.getProperty(path))); // NOI18N
+                    holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(filePaths.getProperty("/css")) + "/miniServer.css"); // NOI18N
                 } else {
-                    context.addServlet(ResourceBundle.getBundle("jmri.web.server.Services").getString(path), "/*");
+                    context.addServlet(services.getProperty(path), "/*"); // NOI18N
                 }
                 contexts.addHandler(context);
             }
@@ -103,7 +123,7 @@ public final class WebServer implements LifeCycle.Listener {
             hostAddress = ZeroConfService.hostAddress();  //lookup from interfaces
         }
         if (hostAddress == null) {
-            return "(local host not found)";
+            return WebServer.getString("MessageAddressNotFound");
         } else {
             return hostAddress.getHostAddress().toString();
         }
@@ -121,12 +141,17 @@ public final class WebServer implements LifeCycle.Listener {
      */
     public static String URIforPortablePath(String path) {
         if (path.startsWith(FileUtil.PREFERENCES)) {
-            return path.replaceFirst(FileUtil.PREFERENCES, "/prefs/");
+            return path.replaceFirst(FileUtil.PREFERENCES, "/prefs/"); // NOI18N
         } else if (path.startsWith(FileUtil.PROGRAM)) {
-            return path.replaceFirst(FileUtil.PROGRAM, "/dist/");
+            return path.replaceFirst(FileUtil.PROGRAM, "/dist/"); // NOI18N
         } else {
             return null;
         }
+    }
+
+    @SuppressWarnings("FinalStaticMethod")
+    public static final String getString(String message) {
+        return ResourceBundle.getBundle("jmri.web.server.Bundle").getString(message);
     }
 
     public int getPort() {
@@ -143,14 +168,11 @@ public final class WebServer implements LifeCycle.Listener {
 
     @Override
     public void lifeCycleStarted(LifeCycle lc) {
-        zeroConfService = ZeroConfService.create("_http._tcp.local.", preferences.getPort(), new HashMap<String, String>() {
-
-            {
-                put("path", "/index.html");
-            }
-        });
+        HashMap<String, String> properties = new HashMap<String, String>();
+        properties.put("path", "/index.html"); // NOI18N
+        properties.put(JSON, JSON_PROTOCOL_VERSION);
+        zeroConfService = ZeroConfService.create("_http._tcp.local.", preferences.getPort(), properties); // NOI18N
         zeroConfService.publish();
-
         log.info("Starting ZeroConfService _http._tcp.local for Web Server");
         log.debug("Web Server finished starting");
     }

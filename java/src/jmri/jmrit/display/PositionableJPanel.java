@@ -2,8 +2,8 @@
 
 package jmri.jmrit.display;
 
-import java.util.ResourceBundle;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
@@ -17,8 +17,6 @@ import javax.swing.*;
  * @version $Revision$
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
    	protected Editor _editor = null;
     protected boolean debug = false;
@@ -364,5 +362,5 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     
     public jmri.NamedBean getNamedBean() { return null; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableJPanel.class.getName());
 }

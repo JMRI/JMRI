@@ -5,6 +5,8 @@
 
 package jmri.jmrix.openlcb.swing.tie;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.util.ResourceBundle;
 
@@ -76,7 +78,7 @@ public class TieToolFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
-     static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(TieToolFrame.class.getName());
+     static Logger log = LoggerFactory.getLogger(TieToolFrame.class.getName());
 	
 }
 

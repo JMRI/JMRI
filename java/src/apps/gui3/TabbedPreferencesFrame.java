@@ -2,6 +2,9 @@
 
 package apps.gui3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Provide access to the various tables via a 
  * listed pane.
@@ -29,5 +32,5 @@ public class TabbedPreferencesFrame extends jmri.util.JmriJFrame {
         jmri.InstanceManager.tabbedPreferencesInstance().gotoPreferenceItem(item, sub);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferencesFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(TabbedPreferencesFrame.class.getName());
 }

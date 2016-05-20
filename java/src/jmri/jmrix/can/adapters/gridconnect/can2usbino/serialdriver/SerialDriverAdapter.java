@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
@@ -73,6 +75,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

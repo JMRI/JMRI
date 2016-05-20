@@ -93,7 +93,7 @@ use, a request for assignment is placed in the dispatcher's queue. When a Sectio
 is freed, the queue is scanned for the highest priority train requesting it.</p>
 
 <H2>Using the Transit Table to Set Up Transits
-</H2
+</H2>
 <p>Transits are set up in the Transit Table.  When set up, Transits are independent 
 of the trains that use them.  
 <P></P>
@@ -131,6 +131,16 @@ be brought up that will allow you to designate the Sections in the new Transit.
 (Obviously, Sections must be defined before any Transit can be created.) Since a 
 Transit may be used in only one Active Train at a time, the Duplicate option 
 (see above) may save time when creating multiple copies of the same Transit.</p>
+<H3>Using the Layout Editor to Set Up Transits</H3>
+If you are using the Layout Editor to define and generate the Logic for Signal Masts and
+Sections, it is possible to create a basic transit from the Layout Editor.  To do this, 
+bring up the context menu (right-click) of a Signal Mast on the panel, if things have 
+been set up correctly then there be the option to <b>Create Transit From Here</b>, after 
+selecting that option you can then progress along your route and select each facing SignalMast, 
+bringing up the context menu on each and selecting <b>Add to Transit</b>.  When you are at the 
+destination SignalMast on your route select <b>Add to Transit and Complete</b>.  Please note that
+you will have to manually save the transits to disk.
+
 <H2>Setting up for Continuous Running
 </H2>
 <p> A Transit may be set up for continuous running, allowing an Active Train to 

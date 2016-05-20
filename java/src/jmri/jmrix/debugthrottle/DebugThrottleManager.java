@@ -1,5 +1,7 @@
 package jmri.jmrix.debugthrottle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -61,8 +63,20 @@ public class DebugThrottleManager extends AbstractThrottleManager {
         }
         return false;
     }
+    
+        /**
+     * What speed modes are supported by this system?
+     * value should be xor of possible modes specifed by the
+     * DccThrottle interface
+     */
+    public int supportedSpeedModes() {
+        return(DccThrottle.SpeedStepMode128|
+               DccThrottle.SpeedStepMode28|
+               DccThrottle.SpeedStepMode27|
+               DccThrottle.SpeedStepMode14);
+    }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class.getName());
 
 
 }

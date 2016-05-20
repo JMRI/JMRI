@@ -3,6 +3,8 @@
  */
 package jmri.jmrit.turnoutoperations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.TurnoutOperation;
 
 /**
@@ -20,5 +22,5 @@ public class SensorTurnoutOperationConfig extends CommonTurnoutOperationConfig {
 		super(op);
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTurnoutOperationConfig.class.getName());
+	static Logger log = LoggerFactory.getLogger(SensorTurnoutOperationConfig.class.getName());
 }

@@ -41,7 +41,7 @@ public class OperationsCarsTest extends TestCase {
 	// test creation
 	public void testCreate() {
 		Car c1 = new Car("TESTROAD", "TESTNUMBER1");
-		c1.setType("TESTTYPE");
+		c1.setTypeName("TESTTYPE");
 		c1.setLength("TESTLENGTH");
 		c1.setColor("TESTCOLOR");
 		c1.setHazardous(true);
@@ -53,10 +53,10 @@ public class OperationsCarsTest extends TestCase {
 		c1.setComment("TESTCOMMENT");
 		c1.setMoves(5);
 
-		Assert.assertEquals("Car Road", "TESTROAD", c1.getRoad());
+		Assert.assertEquals("Car Road", "TESTROAD", c1.getRoadName());
 		Assert.assertEquals("Car Number", "TESTNUMBER1", c1.getNumber());
 		Assert.assertEquals("Car ID", "TESTROAD"+"TESTNUMBER1", c1.getId());
-		Assert.assertEquals("Car Type", "TESTTYPE", c1.getType());
+		Assert.assertEquals("Car Type", "TESTTYPE", c1.getTypeName());
 		Assert.assertEquals("Car Length", "TESTLENGTH", c1.getLength());
 		Assert.assertEquals("Car Color", "TESTCOLOR", c1.getColor());
 		Assert.assertTrue("Car Hazardous", c1.isHazardous());
@@ -290,31 +290,31 @@ public class OperationsCarsTest extends TestCase {
 		c1.setLength("40");
 		c1.setWeight("1000");
 		c1.setWeightTons("10");
-		c1.setLoad("L");
+		c1.setLoadName("L");
 		Car c2 = new Car("TESTCARROAD", "TESTCARNUMBER2");
 		c2.setLength("60");
 		c2.setWeight("2000");
 		c2.setWeightTons("20");
-		c2.setLoad("L");
+		c2.setLoadName("L");
 		Car c3 = new Car("TESTCARROAD", "TESTCARNUMBER3");
 		c3.setLength("50");
 		c3.setWeight("1500");
 		c3.setWeightTons("15");
-		c3.setLoad("E");
+		c3.setLoadName("E");
 
-		Assert.assertEquals("Kernel Initial Length", 0, k1.getLength());
+		Assert.assertEquals("Kernel Initial Length", 0, k1.getTotalLength());
 		Assert.assertEquals("Kernel Initial Weight Tons", 0, k1.getAdjustedWeightTons());
 
 		k1.add(c1);
-		Assert.assertEquals("Kernel Car 1 Length", 40+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car 1 Length", 40+Car.COUPLER, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car 1 Weight Tons", 10, k1.getAdjustedWeightTons());
 
 		k1.add(c2);
-		Assert.assertEquals("Kernel Car 2 Length", 40+Car.COUPLER+60+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car 2 Length", 40+Car.COUPLER+60+Car.COUPLER, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car 2 Weight Tons", 30, k1.getAdjustedWeightTons());
 
 		k1.add(c3);
-		Assert.assertEquals("Kernel Car 3 Length", 40+Car.COUPLER+60+Car.COUPLER+50+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car 3 Length", 40+Car.COUPLER+60+Car.COUPLER+50+Car.COUPLER, k1.getTotalLength());
 		// car 3 is empty, so only 5 tons, 15/3
 		Assert.assertEquals("Kernel Car 3 Weight Tons", 35, k1.getAdjustedWeightTons());
 
@@ -324,15 +324,15 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertFalse("Kernel Lead Car 3", k1.isLead(c3));
 
 		k1.delete(c2);
-		Assert.assertEquals("Kernel Car Delete 2 Length", 40+Car.COUPLER+50+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car Delete 2 Length", 40+Car.COUPLER+50+Car.COUPLER, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car Delete 2 Weight Tons", 15, k1.getAdjustedWeightTons());
 
 		k1.delete(c1);
-		Assert.assertEquals("Kernel Car Delete 1 Length", 50+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car Delete 1 Length", 50+Car.COUPLER, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car Delete 1 Weight Tons", 5, k1.getAdjustedWeightTons());
 
 		k1.delete(c3);
-		Assert.assertEquals("Kernel Car Delete 3 Length", 0, k1.getLength());
+		Assert.assertEquals("Kernel Car Delete 3 Length", 0, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car Delete 3 Weight Tons", 0, k1.getAdjustedWeightTons());
 
 	}
@@ -361,8 +361,8 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("Kernel Name for car 1 before", "TESTKERNELOLD", c1.getKernelName());
 		Assert.assertEquals("Kernel Name for car 2 before", "TESTKERNELOLD", c2.getKernelName());
 		Assert.assertEquals("Kernel Name for car 3 before", "TESTKERNELOLD", c3.getKernelName());
-		Assert.assertEquals("Kernel old length before", 40+4+60+4+50+4, kold.getLength());
-		Assert.assertEquals("Kernel new length before", 0, knew.getLength());
+		Assert.assertEquals("Kernel old length before", 40+4+60+4+50+4, kold.getTotalLength());
+		Assert.assertEquals("Kernel new length before", 0, knew.getTotalLength());
 		Assert.assertTrue("Kernel old Lead is Car 1 before", kold.isLead(c1));
 		Assert.assertFalse("Kernel old Lead is not Car 2 before", kold.isLead(c2));
 		Assert.assertFalse("Kernel old Lead is not Car 3 before", kold.isLead(c3));
@@ -376,8 +376,8 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("Kernel Name for car 1 after", "TESTKERNELNEW", c1.getKernelName());
 		Assert.assertEquals("Kernel Name for car 2 after", "TESTKERNELOLD", c2.getKernelName());
 		Assert.assertEquals("Kernel Name for car 3 after", "TESTKERNELOLD", c3.getKernelName());
-		Assert.assertEquals("Kernel old length after", 60+4+50+4, kold.getLength());
-		Assert.assertEquals("Kernel new length after", 40+4, knew.getLength());
+		Assert.assertEquals("Kernel old length after", 60+4+50+4, kold.getTotalLength());
+		Assert.assertEquals("Kernel new length after", 40+4, knew.getTotalLength());
 		Assert.assertFalse("Kernel old Lead is not Car 1 after", kold.isLead(c1));
 		Assert.assertTrue("Kernel old Lead is Car 2 after", kold.isLead(c2));
 		Assert.assertFalse("Kernel old Lead is not Car 3 after", kold.isLead(c3));
@@ -390,8 +390,8 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("Kernel Name for car 1 after3", "TESTKERNELNEW", c1.getKernelName());
 		Assert.assertEquals("Kernel Name for car 2 after3", "TESTKERNELOLD", c2.getKernelName());
 		Assert.assertEquals("Kernel Name for car 3 after3", "TESTKERNELNEW", c3.getKernelName());
-		Assert.assertEquals("Kernel old length after3", 60+4, kold.getLength());
-		Assert.assertEquals("Kernel new length after3", 40+4+50+4, knew.getLength());
+		Assert.assertEquals("Kernel old length after3", 60+4, kold.getTotalLength());
+		Assert.assertEquals("Kernel new length after3", 40+4+50+4, knew.getTotalLength());
 		Assert.assertFalse("Kernel old Lead is not Car 1 after3", kold.isLead(c1));
 		Assert.assertTrue("Kernel old Lead is Car 2 after3", kold.isLead(c2));
 		Assert.assertFalse("Kernel old Lead is not Car 3 after3", kold.isLead(c3));
@@ -427,12 +427,12 @@ public class OperationsCarsTest extends TestCase {
         c5.setColor("ROSE");
         c6.setColor("TUSCAN");
         
-        c1.setType("Boxcar");
-        c2.setType("Boxcar");
-        c3.setType("Boxcar");
-        c4.setType("Boxcar");
-        c5.setType("Boxcar");
-        c6.setType("Boxcar");
+        c1.setTypeName("Boxcar");
+        c2.setTypeName("Boxcar");
+        c3.setTypeName("Boxcar");
+        c4.setTypeName("Boxcar");
+        c5.setTypeName("Boxcar");
+        c6.setTypeName("Boxcar");
         
         c1.setLength("13");
         c2.setLength("9");
@@ -442,14 +442,14 @@ public class OperationsCarsTest extends TestCase {
         c6.setLength("14");
         
         Location l1 = new Location("id1", "B");
-        Track l1t1 = l1.addTrack("A",Track.SIDING);
-        Track l1t2 = l1.addTrack("B",Track.SIDING);
+        Track l1t1 = l1.addTrack("A",Track.SPUR);
+        Track l1t2 = l1.addTrack("B",Track.SPUR);
         Location l2 = new Location("id2", "C");
-        Track l2t1 = l2.addTrack("B",Track.SIDING);
-        Track l2t2 = l2.addTrack("A",Track.SIDING);
+        Track l2t1 = l2.addTrack("B",Track.SPUR);
+        Track l2t2 = l2.addTrack("A",Track.SPUR);
         Location l3 = new Location("id3", "A");
-        Track l3t1 = l3.addTrack("B",Track.SIDING);
-        Track l3t2 = l3.addTrack("A",Track.SIDING);
+        Track l3t1 = l3.addTrack("B",Track.SPUR);
+        Track l3t2 = l3.addTrack("A",Track.SPUR);
 
         // add track lengths       
         l1t1.setLength(100);
@@ -517,12 +517,12 @@ public class OperationsCarsTest extends TestCase {
         c5.setRfid("93F");
         c6.setRfid("B12");
         
-        c1.setLoad("Nuts");
-        c2.setLoad("Screws");
-        c3.setLoad("Tools");
-        c4.setLoad("Fuel");
-        c5.setLoad("Bags");
-        c6.setLoad("Nails");
+        c1.setLoadName("Nuts");
+        c2.setLoadName("Screws");
+        c3.setLoadName("Tools");
+        c4.setLoadName("Fuel");
+        c5.setLoadName("Bags");
+        c6.setLoadName("Nails");
 
         c1.setOwner("LAST");
         c2.setOwner("FOOL");
@@ -752,12 +752,12 @@ public class OperationsCarsTest extends TestCase {
         Assert.assertEquals("find c6 by rfid", c6, manager.getByRfid("B12"));
         
         // change car types so sort will work
-        c1.setType("F");
-        c2.setType("D");
-        c3.setType("A");
-        c4.setType("B");
-        c5.setType("C");
-        c6.setType("E");
+        c1.setTypeName("F");
+        c2.setTypeName("D");
+        c3.setTypeName("A");
+        c4.setTypeName("B");
+        c5.setTypeName("C");
+        c6.setTypeName("E");
         
         // now get cars by type
         carList = manager.getByTypeList();
@@ -805,13 +805,13 @@ public class OperationsCarsTest extends TestCase {
 		c1.setColor("black");
 		c1.setComment("no comment");
 		c1.setLength("04");
-		c1.setLoad("FULL");
+		c1.setLoadName("FULL");
 		c1.setMoves(1);
 		c1.setNumber("X Test Number c1");  
 		c1.setOutOfService(false);
 		c1.setRfid("norfidc1");
-		c1.setRoad("OLDRoad");
-		c1.setType("noCaboose");
+		c1.setRoadName("OLDRoad");
+		c1.setTypeName("noCaboose");
 		c1.setWait(6);
 		c1.setWeight("54");
 		c1.setWeightTons("001");
@@ -821,13 +821,13 @@ public class OperationsCarsTest extends TestCase {
 		c2.setColor("red");
 		c2.setComment("c2 comment");
 		c2.setLength("77");
-		c2.setLoad("c2 Load");
+		c2.setLoadName("c2 Load");
 		c2.setMoves(10000);
 		c2.setNumber("X Test Number c2");  
 		c2.setOutOfService(true);
 		c2.setRfid("rfidc2");
-		c2.setRoad("c2 Road");
-		c2.setType("c2 Boxcar");
+		c2.setRoadName("c2 Road");
+		c2.setTypeName("c2 Boxcar");
 		c2.setWait(61);
 		c2.setWeight("33");
 		c2.setWeightTons("798");
@@ -837,13 +837,13 @@ public class OperationsCarsTest extends TestCase {
 		c3.setColor("green");
 		c3.setComment("c3 comment");
 		c3.setLength("453");
-		c3.setLoad("c3 Load");
+		c3.setLoadName("c3 Load");
 		c3.setMoves(243);
 		c3.setNumber("X Test Number c3");  
 		c3.setOutOfService(false);
 		c3.setRfid("rfidc3");
-		c3.setRoad("c3 Road");
-		c3.setType("c3 Boxcar");
+		c3.setRoadName("c3 Road");
+		c3.setTypeName("c3 Boxcar");
 		c3.setWait(0);
 		c3.setWeight("345");
 		c3.setWeightTons("1798");
@@ -869,13 +869,13 @@ public class OperationsCarsTest extends TestCase {
 		c1.setColor("white");
 		c1.setComment("c1 comment");
 		c1.setLength("40");
-		c1.setLoad("Empty");
+		c1.setLoadName("Empty");
 		c1.setMoves(3);
 		c1.setNumber("New Test Number c1");  
 		c1.setOutOfService(true);
 		c1.setRfid("rfidc1");
-		c1.setRoad("newRoad");
-		c1.setType("bigCaboose");
+		c1.setRoadName("newRoad");
+		c1.setTypeName("bigCaboose");
 		c1.setWait(5);
 		c1.setWeight("45");
 		c1.setWeightTons("100");
@@ -885,13 +885,13 @@ public class OperationsCarsTest extends TestCase {
 		c5.setColor("blue");
 		c5.setComment("c5 comment");
 		c5.setLength("44");
-		c5.setLoad("Full");
+		c5.setLoadName("Full");
 		c5.setMoves(5);
 		c5.setNumber("New Test Number c5");  
 		c5.setOutOfService(true);
 		c5.setRfid("rfidc5");
-		c5.setRoad("c5Road");
-		c5.setType("smallCaboose");
+		c5.setRoadName("c5Road");
+		c5.setTypeName("smallCaboose");
 		c5.setWait(55);
 		c5.setWeight("66");
 		c5.setWeightTons("77");      
@@ -936,13 +936,13 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c1 color", "white", c1.getColor());
 		Assert.assertEquals("car c1 comment", "c1 comment", c1.getComment());
 		Assert.assertEquals("car c1 length", "40", c1.getLength());
-		Assert.assertEquals("car c1 load", "Empty", c1.getLoad());
+		Assert.assertEquals("car c1 load", "Empty", c1.getLoadName());
 		Assert.assertEquals("car c1 moves", 3, c1.getMoves());
 		Assert.assertEquals("car c1 number", "New Test Number c1", c1.getNumber());
 		Assert.assertEquals("car c1 out of service", true, c1.isOutOfService());
 		Assert.assertEquals("car c1 rfid", "rfidc1", c1.getRfid());
-		Assert.assertEquals("car c1 road", "newRoad", c1.getRoad());
-		Assert.assertEquals("car c1 type", "bigCaboose", c1.getType());
+		Assert.assertEquals("car c1 road", "newRoad", c1.getRoadName());
+		Assert.assertEquals("car c1 type", "bigCaboose", c1.getTypeName());
 		Assert.assertEquals("car c1 wait", 5, c1.getWait());
 		Assert.assertEquals("car c1 weight", "45", c1.getWeight());
 		Assert.assertEquals("car c1 weight tons", "100", c1.getWeightTons());
@@ -953,13 +953,13 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c2 color", "red", c2.getColor());
 		Assert.assertEquals("car c2 comment", "c2 comment", c2.getComment());
 		Assert.assertEquals("car c2 length", "77", c2.getLength());
-		Assert.assertEquals("car c2 load", "c2 Load", c2.getLoad());
+		Assert.assertEquals("car c2 load", "c2 Load", c2.getLoadName());
 		Assert.assertEquals("car c2 moves", 10000, c2.getMoves());
 		Assert.assertEquals("car c2 number", "X Test Number c2", c2.getNumber());
 		Assert.assertEquals("car c2 out of service", true, c2.isOutOfService());
 		Assert.assertEquals("car c2 rfid", "rfidc2", c2.getRfid());
-		Assert.assertEquals("car c2 road", "c2 Road", c2.getRoad());
-		Assert.assertEquals("car c2 type", "c2 Boxcar", c2.getType());
+		Assert.assertEquals("car c2 road", "c2 Road", c2.getRoadName());
+		Assert.assertEquals("car c2 type", "c2 Boxcar", c2.getTypeName());
 		Assert.assertEquals("car c2 wait", 61, c2.getWait());
 		Assert.assertEquals("car c2 weight", "33", c2.getWeight());
 		Assert.assertEquals("car c2 weight tons", "798", c2.getWeightTons());
@@ -970,13 +970,13 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c3 color", "green", c3.getColor());
 		Assert.assertEquals("car c3 comment", "c3 comment", c3.getComment());
 		Assert.assertEquals("car c3 length", "453", c3.getLength());
-		Assert.assertEquals("car c3 load", "c3 Load", c3.getLoad());
+		Assert.assertEquals("car c3 load", "c3 Load", c3.getLoadName());
 		Assert.assertEquals("car c3 moves", 243, c3.getMoves());
 		Assert.assertEquals("car c3 number", "X Test Number c3", c3.getNumber());
 		Assert.assertEquals("car c3 out of service", false, c3.isOutOfService());
 		Assert.assertEquals("car c3 rfid", "rfidc3", c3.getRfid());
-		Assert.assertEquals("car c3 road", "c3 Road", c3.getRoad());
-		Assert.assertEquals("car c3 type", "c3 Boxcar", c3.getType());
+		Assert.assertEquals("car c3 road", "c3 Road", c3.getRoadName());
+		Assert.assertEquals("car c3 type", "c3 Boxcar", c3.getTypeName());
 		Assert.assertEquals("car c3 wait", 0, c3.getWait());
 		Assert.assertEquals("car c3 weight", "345", c3.getWeight());
 		Assert.assertEquals("car c3 weight tons", "1798", c3.getWeightTons());
@@ -988,13 +988,13 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c4 color", "", c4.getColor());
 		Assert.assertEquals("car c4 comment", "", c4.getComment());
 		Assert.assertEquals("car c4 length", "", c4.getLength());
-		Assert.assertEquals("car c4 load", "E", c4.getLoad());
+		Assert.assertEquals("car c4 load", "E", c4.getLoadName());
 		Assert.assertEquals("car c4 moves", 0, c4.getMoves());
 		Assert.assertEquals("car c4 number", "Test Number 4", c4.getNumber());
 		Assert.assertEquals("car c4 out of service", false, c4.isOutOfService());
 		Assert.assertEquals("car c4 rfid", "", c4.getRfid());
-		Assert.assertEquals("car c4 road", "PC", c4.getRoad());
-		Assert.assertEquals("car c4 type", "", c4.getType());
+		Assert.assertEquals("car c4 road", "PC", c4.getRoadName());
+		Assert.assertEquals("car c4 type", "", c4.getTypeName());
 		Assert.assertEquals("car c4 wait", 0, c4.getWait());
 		Assert.assertEquals("car c4 weight", "0", c4.getWeight());
 		Assert.assertEquals("car c4 weight tons", "0", c4.getWeightTons());
@@ -1004,13 +1004,13 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c5 color", "blue", c5.getColor());
 		Assert.assertEquals("car c5 comment", "c5 comment", c5.getComment());
 		Assert.assertEquals("car c5 length", "44", c5.getLength());
-		Assert.assertEquals("car c5 load", "Full", c5.getLoad());
+		Assert.assertEquals("car c5 load", "Full", c5.getLoadName());
 		Assert.assertEquals("car c5 moves", 5, c5.getMoves());
 		Assert.assertEquals("car c5 number", "New Test Number c5", c5.getNumber());
 		Assert.assertEquals("car c5 out of service", true, c5.isOutOfService());
 		Assert.assertEquals("car c5 rfid", "rfidc5", c5.getRfid());
-		Assert.assertEquals("car c5 road", "c5Road", c5.getRoad());
-		Assert.assertEquals("car c5 type", "smallCaboose", c5.getType());
+		Assert.assertEquals("car c5 road", "c5Road", c5.getRoadName());
+		Assert.assertEquals("car c5 type", "smallCaboose", c5.getTypeName());
 		Assert.assertEquals("car c5 wait", 55, c5.getWait());
 		Assert.assertEquals("car c5 weight", "66", c5.getWeight());
 		Assert.assertEquals("car c5 weight tons", "77", c5.getWeightTons());
@@ -1021,13 +1021,13 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c6 color", "", c6.getColor());
 		Assert.assertEquals("car c6 comment", "", c6.getComment());
 		Assert.assertEquals("car c6 length", "", c6.getLength());
-		Assert.assertEquals("car c6 load", "E", c6.getLoad());
+		Assert.assertEquals("car c6 load", "E", c6.getLoadName());
 		Assert.assertEquals("car c6 moves", 0, c6.getMoves());
 		Assert.assertEquals("car c6 number", "Test Number 6", c6.getNumber());
 		Assert.assertEquals("car c6 out of service", false, c6.isOutOfService());
 		Assert.assertEquals("car c6 rfid", "", c6.getRfid());
-		Assert.assertEquals("car c6 road", "SP", c6.getRoad());
-		Assert.assertEquals("car c6 type", "", c6.getType());
+		Assert.assertEquals("car c6 road", "SP", c6.getRoadName());
+		Assert.assertEquals("car c6 type", "", c6.getTypeName());
 		Assert.assertEquals("car c6 wait", 0, c6.getWait());
 		Assert.assertEquals("car c6 weight", "0", c6.getWeight());
 		Assert.assertEquals("car c6 weight tons", "0", c6.getWeightTons());
@@ -1071,13 +1071,13 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c1 color", "black", c1.getColor());
 		Assert.assertEquals("car c1 comment", "no comment", c1.getComment());
 		Assert.assertEquals("car c1 length", "04", c1.getLength());
-		Assert.assertEquals("car c1 load", "FULL", c1.getLoad());
+		Assert.assertEquals("car c1 load", "FULL", c1.getLoadName());
 		Assert.assertEquals("car c1 moves", 1, c1.getMoves());
 		Assert.assertEquals("car c1 number", "X Test Number c1", c1.getNumber());
 		Assert.assertEquals("car c1 out of service", false, c1.isOutOfService());
 		Assert.assertEquals("car c1 rfid", "norfidc1", c1.getRfid());
-		Assert.assertEquals("car c1 road", "OLDRoad", c1.getRoad());
-		Assert.assertEquals("car c1 type", "noCaboose", c1.getType());
+		Assert.assertEquals("car c1 road", "OLDRoad", c1.getRoadName());
+		Assert.assertEquals("car c1 type", "noCaboose", c1.getTypeName());
 		Assert.assertEquals("car c1 wait", 6, c1.getWait());
 		Assert.assertEquals("car c1 weight", "54", c1.getWeight());
 		Assert.assertEquals("car c1 weight tons", "001", c1.getWeightTons());
@@ -1088,13 +1088,13 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c2 color", "red", c2.getColor());
 		Assert.assertEquals("car c2 comment", "c2 comment", c2.getComment());
 		Assert.assertEquals("car c2 length", "77", c2.getLength());
-		Assert.assertEquals("car c2 load", "c2 Load", c2.getLoad());
+		Assert.assertEquals("car c2 load", "c2 Load", c2.getLoadName());
 		Assert.assertEquals("car c2 moves", 10000, c2.getMoves());
 		Assert.assertEquals("car c2 number", "X Test Number c2", c2.getNumber());
 		Assert.assertEquals("car c2 out of service", true, c2.isOutOfService());
 		Assert.assertEquals("car c2 rfid", "rfidc2", c2.getRfid());
-		Assert.assertEquals("car c2 road", "c2 Road", c2.getRoad());
-		Assert.assertEquals("car c2 type", "c2 Boxcar", c2.getType());
+		Assert.assertEquals("car c2 road", "c2 Road", c2.getRoadName());
+		Assert.assertEquals("car c2 type", "c2 Boxcar", c2.getTypeName());
 		Assert.assertEquals("car c2 wait", 61, c2.getWait());
 		Assert.assertEquals("car c2 weight", "33", c2.getWeight());
 		Assert.assertEquals("car c2 weight tons", "798", c2.getWeightTons());
@@ -1105,13 +1105,13 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c3 color", "green", c3.getColor());
 		Assert.assertEquals("car c3 comment", "c3 comment", c3.getComment());
 		Assert.assertEquals("car c3 length", "453", c3.getLength());
-		Assert.assertEquals("car c3 load", "c3 Load", c3.getLoad());
+		Assert.assertEquals("car c3 load", "c3 Load", c3.getLoadName());
 		Assert.assertEquals("car c3 moves", 243, c3.getMoves());
 		Assert.assertEquals("car c3 number", "X Test Number c3", c3.getNumber());
 		Assert.assertEquals("car c3 out of service", false, c3.isOutOfService());
 		Assert.assertEquals("car c3 rfid", "rfidc3", c3.getRfid());
-		Assert.assertEquals("car c3 road", "c3 Road", c3.getRoad());
-		Assert.assertEquals("car c3 type", "c3 Boxcar", c3.getType());
+		Assert.assertEquals("car c3 road", "c3 Road", c3.getRoadName());
+		Assert.assertEquals("car c3 type", "c3 Boxcar", c3.getTypeName());
 		Assert.assertEquals("car c3 wait", 0, c3.getWait());
 		Assert.assertEquals("car c3 weight", "345", c3.getWeight());
 		Assert.assertEquals("car c3 weight tons", "1798", c3.getWeightTons());

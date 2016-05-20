@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 import java.io.*;
@@ -88,5 +89,5 @@ public class SignalSystemFileCheckTest extends jmri.configurexml.LoadFileTestBas
         apps.tests.Log4JFixture.setUp(); 
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalSystemFileCheckTest.class.getName());
+    static protected Logger log = Logger.getLogger(SignalSystemFileCheckTest.class.getName());
 }

@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrix.loconet.SE8cSignalHead;
@@ -91,5 +93,5 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SE8cSignalHeadXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class.getName());
 }

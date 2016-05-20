@@ -2,12 +2,14 @@
 
 package jmri.configurexml;
 
-import jmri.jmrit.XmlFile;
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URL;
+import jmri.util.FileUtil;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -83,19 +85,18 @@ public class ConfigXmlManagerTest extends TestCase {
                     // suppress warning during testing
                 }
             };
-        File result;
+        URL result;
         result = configxmlmanager.find("foo.biff");
         Assert.assertTrue("dont find foo.biff", result==null);
 
         // make sure no test file exists in "layout"
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"layout");
-        File f = new File(XmlFile.prefsDir()+"layout"+File.separator+"testConfigXmlManagerTest.xml");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"layout");
+        File f = new File(FileUtil.getUserFilesPath()+"layout"+File.separator+"testConfigXmlManagerTest.xml");
         f.delete();  // remove it if its there
 
         // if file is at top level, remove that too
-        result = new File("testConfigXmlManagerTest.xml");
-        if (result.exists()) result.delete();
+        f = new File("testConfigXmlManagerTest.xml");
+        if (f.exists()) f.delete();
 
         // check for not found if doesn't exist
         result = configxmlmanager.find("testConfigXmlManagerTest.xml");
@@ -134,7 +135,7 @@ public class ConfigXmlManagerTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigXmlManagerTest.class.getName());
+    static Logger log = Logger.getLogger(ConfigXmlManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

@@ -62,7 +62,7 @@
 	  to select how the program will look. "Metal" is the native Java
 	  look available on all types. Other choices will vary with your
 	  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
-	  look native on Linux, Windows, MacOS "Classic" and MacOS X
+	  look native on Linux, Windows, MacOS "Classic" and Mac OS X
 	  respectively.</li>
 
 	  <li> In the bottom selection box, you can pick the default

@@ -1,6 +1,8 @@
 // NceConsistEngineAction.java
 
 package jmri.jmrit.operations.rollingstock.engines;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -36,7 +38,7 @@ public class NceConsistEngineAction extends AbstractAction {
 			// find NceConnection that is serial
 			for (int i=0; i<memos.size(); i++){
 				NceSystemConnectionMemo memo = (NceSystemConnectionMemo)memos.get(i);
-				if (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_NONE){
+				if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE){
 					tc = memo.getNceTrafficController();
 				}
 			}
@@ -47,10 +49,10 @@ public class NceConsistEngineAction extends AbstractAction {
 	
 	public void actionPerformed(ActionEvent ae) {
 		Thread mb = new NceConsistEngines(tc);
-		mb.setName("NceConsistSyncEngines");
+		mb.setName("Nce Consist Sync Engines"); // NOI18N
 		mb.start();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(NceConsistEngineAction.class.getName());
 }

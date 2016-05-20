@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id$ -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- $Id: TD_SIC24.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20070709"/>
-<!-- Version 1 inital release 12/13/05-->
-<!-- Version 1.1 release 2/23/06 - correct logic cell 3 -->
-<!-- Version 1.2 release 6/9/07 - added option 5 and input toggle, requires version 17 or later of SIC24-->
+  <!-- Version 1 inital release 12/13/05-->
+  <!-- Version 1.1 release 2/23/06 - correct logic cell 3 -->
+  <!-- Version 1.2 release 6/9/07 - added option 5 and input toggle, requires version 17 or later of SIC24-->
   <decoder>
     <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way">
       <model model="SIC24" lowVersionID="12"/>

@@ -40,7 +40,7 @@
      est une plate-forme idéale pour travailler avec JMRI.
      Le code JMRI est configuré pour travailler avec NetBeans avec presque pas de
      configuration supplémentaire.
-     (La description ci-dessous est exacte pour la version MacOS X de NetBeans 6.8.
+     (La description ci-dessous est exacte pour la version Mac OS X de NetBeans 6.8.
      NetBeans est <i>censé</i> être identique sur toutes les plateformes, mais cela n'a pas
      été vérifiée pour toutes). </ p>
      NetBeans est un environnement très puissant de développement intégré (IDE),

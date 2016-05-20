@@ -19,8 +19,12 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 abstract public class NcePanel extends jmri.util.swing.JmriPanel implements NcePanelInterface {
 
-
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8704964386237089071L;
+	
+	/**
      * make "memo" object available as convenience
      */
     protected NceSystemConnectionMemo memo;

@@ -176,7 +176,7 @@ The "aspectname" needs to be at the start, followed by zero or more
 <p>
 The show element(s) will be used to set the signalheads that
 make up the signal properly to display this aspect. There can be zero or more
-of these, containing "red", "flash red", "yellow", "flash yellow", "green", "flash green", "lunar", "flash lunar" or "dark".
+of these, containing "red", "flashred", "yellow", "flashyellow", "green", "flashgreen", "lunar", "flashlunar" or "dark".
 
 <p>
 You can have as many "reference" elements as you'd like, they're
@@ -188,6 +188,13 @@ a image file (.gif, .png or .jpg) showing what this appearance looks like.<br>
 If you are creating or using custom images then these should be placed in a 
 sub-directory within the user preference area, the image link should then 
 be prefixed with "preference:" followed by the remainder of the path.
+As long as you work locally, use preference:resources/etc paths. 
+If all aspects of your new signal definition are working on your panel/layout 
+and you plan to submit your new signal system as a patch to JMRI, 
+use full URL paths like http://jmri.org/resources/icons/etc in the XML files
+so that they'll work with both the local JMRI program and for 
+people viewing them on the JMRI web site.
+
 <h4>Specific Appearances</h4>
 There are four specific appearances that JMRI will and can refer to, as the appearance names
 are all user defined and can be in any language all are optional and dependant upon the signalmast<br>
@@ -257,6 +264,8 @@ All of the mappings, are contained within the &lt;aspectMappings&gt; tags, withi
 
 You can use the "Check XML File" and "Validate XML File"
 tools under the JMRI "Debug" window to check your files.
+(Note that you have to be connected to the internet to do this, 
+as the files refer to some checking resources that live on the JMRI web site.)
 The first checks the basic format: Are all the &lt; and &gt; 
 characters in the right place? Etc.  The second makes sure that 
 the right elements are in the right places, and is a little more

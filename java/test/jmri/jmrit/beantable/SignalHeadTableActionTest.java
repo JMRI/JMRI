@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import javax.swing.JFrame;
 
 import junit.framework.*;
@@ -96,5 +97,5 @@ public class SignalHeadTableActionTest extends TestCase {
         super.tearDown();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadTableActionTest.class.getName());
+    static Logger log = Logger.getLogger(SignalHeadTableActionTest.class.getName());
 }

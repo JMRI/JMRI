@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.locobufferusb;
 
+import jmri.util.SystemType;
+
 
 /**
  * Definition of objects to handle configuring an LocoBuffer-Usb layout connection
@@ -37,7 +39,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     
     @Override
     protected String[] getPortFriendlyNames() {
-        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+        if(SystemType.isWindows()){
             return new String[]{"LocoBuffer-USB","LocoBuffer"};
         }
         return new String[]{};

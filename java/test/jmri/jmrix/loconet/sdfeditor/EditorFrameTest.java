@@ -1,6 +1,7 @@
 // EditorFrameTest.java
 package jmri.jmrix.loconet.sdfeditor;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -38,7 +39,7 @@ public class EditorFrameTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorFrameTest.class.getName());
+    static Logger log = Logger.getLogger(EditorFrameTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

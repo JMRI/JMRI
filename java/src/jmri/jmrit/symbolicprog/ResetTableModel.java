@@ -1,6 +1,8 @@
 // ResetTableModel.java
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.table.AbstractTableModel;
 import java.util.Vector;
 import java.beans.PropertyChangeEvent;
@@ -259,5 +261,5 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ResetTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(ResetTableModel.class.getName());
 }

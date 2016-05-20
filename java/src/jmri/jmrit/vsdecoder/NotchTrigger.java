@@ -19,6 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -104,7 +106,7 @@ class NotchTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NotchTrigger.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NotchTrigger.class.getName());
 
 
 }

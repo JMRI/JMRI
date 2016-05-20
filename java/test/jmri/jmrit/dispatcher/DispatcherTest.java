@@ -28,9 +28,12 @@ public class DispatcherTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.dispatcher.DispatcherTest"); // no tests in class itself
-		suite.addTest(jmri.jmrit.dispatcher.DispatcherFrameTest.suite());
 		suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoTest.suite());
 		suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoFileTest.suite());
+        // GUI tests start here
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(jmri.jmrit.dispatcher.DispatcherFrameTest.suite());
+        }
 		return suite;
 	}
 

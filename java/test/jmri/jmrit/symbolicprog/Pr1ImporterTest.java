@@ -2,11 +2,12 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.jmrit.XmlFile;
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import jmri.util.FileUtil;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -32,9 +33,8 @@ public class Pr1ImporterTest extends TestCase {
 
     public File makeTempFile(String contents) throws IOException {
         // create a file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        File f = new java.io.File(XmlFile.prefsDir()+"temp"+File.separator+"Pr1Importer.test.xml");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
+        File f = new java.io.File(FileUtil.getUserFilesPath()+"temp"+File.separator+"Pr1Importer.test.xml");
         // recreate it
         if (f.exists()) f.delete();
         PrintStream p = new PrintStream(new FileOutputStream(f));
@@ -110,7 +110,7 @@ public class Pr1ImporterTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( Pr1ImporterTest.class.getName());
+    static Logger log = Logger.getLogger( Pr1ImporterTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

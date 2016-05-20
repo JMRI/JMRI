@@ -110,7 +110,7 @@ public class AudioCommand {
         }
     }
 
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioCommand.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(AudioCommand.class.getName());
 
 }
 

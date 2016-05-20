@@ -4,8 +4,6 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -16,13 +14,18 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class OperationsSetupAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
+    
     public OperationsSetupAction(String s) {
     	super(s);
     }
 
+    public OperationsSetupAction() {
+    	this(Bundle.getMessage("MenuSetup"));	// NOI18N
+    }
+
     static OperationsSetupFrame f = null;
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
     	if (f == null || !f.isVisible()){

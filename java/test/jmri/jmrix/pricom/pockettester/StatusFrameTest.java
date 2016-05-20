@@ -33,6 +33,8 @@ public class StatusFrameTest extends TestCase {
         f.asciiFormattedMessage(PocketTesterTest.status3);
         f.asciiFormattedMessage(PocketTesterTest.status4);
         f.asciiFormattedMessage(PocketTesterTest.status5);
+        
+        f.dispose();
     }
 
     // create and show, with zero address data
@@ -48,6 +50,8 @@ public class StatusFrameTest extends TestCase {
         f.asciiFormattedMessage(PocketTesterTest.idlePacket);
         f.asciiFormattedMessage(PocketTesterTest.status6);
         f.asciiFormattedMessage(PocketTesterTest.status2);
+        
+        f.dispose();
     }
     // from here down is testing infrastructure
     public StatusFrameTest(String s) {

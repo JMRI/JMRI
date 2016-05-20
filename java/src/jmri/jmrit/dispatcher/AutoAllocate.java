@@ -2,6 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Block;
 import jmri.Section;
 import jmri.Transit;
@@ -108,6 +110,7 @@ public class AutoAllocate {
 				log.error("error in allocation request list - AllocationRequest is null");
 				return;
 			}
+            if(DispatcherFrame.instance().getSignalType()==DispatcherFrame.SIGNALMAST && isSignalHeldAtStartOfSection(ar)) return;
 			if (getPlanThisTrain(ar.getActiveTrain())!=null) {
 				// this train is in an active Allocation Plan, anything to do now?
 				if (willAllocatingFollowPlan(ar,getPlanThisTrain(ar.getActiveTrain()))) {
@@ -117,7 +120,10 @@ public class AutoAllocate {
 			else if (!waitingForStartTime(ar)) {
 				// train isn't waiting, continue only if requested Section is currently free and not occupied
 				if ( (ar.getSection().getState()==Section.FREE) && 
-							(ar.getSection().getOccupancy()!=Section.OCCUPIED) ) {
+                        (ar.getSection().getOccupancy()!=Section.OCCUPIED) && 
+                            (_dispatcher.getSignalType()==DispatcherFrame.SIGNALHEAD || 
+                                (_dispatcher.getSignalType()==DispatcherFrame.SIGNALMAST && 
+                                    _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(), ar)==null)) ) {
 					// requested Section is currently free and not occupied
 					ArrayList<ActiveTrain> activeTrainsList = _dispatcher.getActiveTrainsList();
 					if (activeTrainsList.size()==1) {
@@ -155,7 +161,7 @@ public class AutoAllocate {
 								// section is also needed by this active train
 								ActiveTrain nt = neededByTrainList.get(k);
 								// are trains moving in same direction through the requested Section?
-								if (sameDirection(ar,nt)) {					
+								if (sameDirection(ar,nt)) {
 									// trains will move in the same direction thru requested section
 									if (firstTrainLeadsSecond(ar.getActiveTrain(),nt) && 
 										(nt.getPriority()>ar.getActiveTrain().getPriority())) {
@@ -188,7 +194,7 @@ public class AutoAllocate {
 						if (okToAllocate) {
 							if (allocateIfLessThanThreeAhead(ar)) return;
 						}
-					}		
+					}
 				}
 			}
 		}
@@ -211,7 +217,11 @@ public class AutoAllocate {
 		}
 		// no prepared choice, or prepared choice failed, is there an unoccupied Section available
 		for (int i=0; i<sList.size(); i++) {
-			if ( (sList.get(i).getOccupancy()==Section.UNOCCUPIED) && (sList.get(i).getState()==Section.FREE) ) {
+			if ( (sList.get(i).getOccupancy()==Section.UNOCCUPIED) && 
+                    (sList.get(i).getState()==Section.FREE) && 
+                        (_dispatcher.getSignalType()==DispatcherFrame.SIGNALHEAD || 
+                            (_dispatcher.getSignalType()==DispatcherFrame.SIGNALMAST && 
+                                _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(), ar)==null)) ) {
 				return sList.get(i);
 			}
 		}
@@ -340,7 +350,7 @@ public class AutoAllocate {
 				curAS = null;
 				for (int i = aSectionList.size()-1; i>=0; i--) {
 					AllocatedSection as = aSectionList.get(i);
-					if ( (as!=null) && (as.getSequence()==curSeq)) curAS = as;						
+					if ( (as!=null) && (as.getSequence()==curSeq)) curAS = as;
 				}
 				if ( (curAS!=null) && (curAS.getSection().getOccupancy()!=jmri.Section.OCCUPIED) ) {
 					//previous allocated section exists and is not occupied, test previous one
@@ -361,10 +371,11 @@ public class AutoAllocate {
 			}
 		}
 // djd debugging 
-log.info("auto allocating Section "+ar.getSection().getUserName());
+        log.info("auto allocating Section "+ar.getSection().getUserName());
 		_dispatcher.allocateSection(ar,null);
 		return true;
 	}
+    
 	private boolean checkForXingPlan(AllocationRequest ar, ActiveTrain nt,
 						  ArrayList<ActiveTrain> neededByTrainList) {
 		// returns 'true' if an AllocationPlan has been set up, returns 'false' otherwise
@@ -679,7 +690,7 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 		boolean found = false;
 		for (int i = 0; i<aSectionList.size(); i++) {
 			if (!(at.getTransit().containsSection(aSectionList.get(i)))) found = true;
-		}				
+		}
 		if (!found) return false;		
 		else if ( (at.getResetWhenDone()) || (at.getReverseAtEnd() && 
 										(!at.isAllocationReversed()))) return true;
@@ -707,8 +718,32 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 					}
 				}
 			}
-		}		
-		return false;	
+		}
+        if(DispatcherFrame.instance().getSignalType()==DispatcherFrame.SIGNALMAST){
+            if (!at.isAllocationReversed()) {
+                for (int i=0; i<tsList.size(); i++) {
+                    if (tsList.get(i).getSequenceNumber()>curSeq) {
+                        for (int j=0; j<aSectionList.size(); j++) {
+                            if (tsList.get(i).getSection()==aSectionList.get(j)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                for (int i=tsList.size()-1; i>=0; i--) {
+                    if (tsList.get(i).getSequenceNumber()<curSeq) {
+                        for (int j=0; j<aSectionList.size(); j++) {
+                            if (tsList.get(i).getSection()==aSectionList.get(j)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+		return false;
 	}
 	private boolean sameDirection(AllocationRequest ar, ActiveTrain at) {
 		// returns 'true' if both trains will move thru the requested section in the same direction
@@ -1021,7 +1056,7 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 	private boolean waitingForStartTime (AllocationRequest ar) {
 		if (ar!=null) {
 			ActiveTrain at = ar.getActiveTrain();
-			if ( (!at.getStarted()) && at.getDelayedStart() ) return true;
+			if ( (!at.getStarted()) && at.getDelayedStart()!=ActiveTrain.NODELAY ) return true;
 		}
 		return false;
 	}
@@ -1066,8 +1101,55 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 		return false;
 	}
 	ArrayList<LevelXing> _levelXingList = new ArrayList<LevelXing>();
-					
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoAllocate.class.getName());
+	
+    private boolean isSignalHeldAtStartOfSection(AllocationRequest ar){
+        
+        if(ar==null)
+            return false;
+        
+        Section sec = ar.getSection();
+        ActiveTrain mActiveTrain = ar.getActiveTrain();
+        
+        if(sec==null || mActiveTrain==null)
+            return false;
+        
+        Section lastSec = mActiveTrain.getLastAllocatedSection();
+        
+        if(lastSec == null)
+            return false;
+        
+        if(!sec.equals(mActiveTrain.getNextSectionToAllocate())){
+            log.error("Allocation request section does not match active train next section to allocate");
+            log.error("Section to allocate " + sec.getDisplayName());
+            if(mActiveTrain.getNextSectionToAllocate()!=null)
+                log.error("Active Train expected " + mActiveTrain.getNextSectionToAllocate().getDisplayName());
+            return false;
+        }
+
+        Block facingBlock;
+        Block protectingBlock;
+        if(ar.getSectionDirection()==jmri.Section.FORWARD){
+            protectingBlock = sec.getBlockBySequenceNumber(0);
+            facingBlock = lastSec.getBlockBySequenceNumber(lastSec.getNumBlocks()-1);
+        } else {
+            //Reverse
+            protectingBlock = sec.getBlockBySequenceNumber(sec.getNumBlocks()-1);
+            facingBlock = lastSec.getBlockBySequenceNumber(0);
+        }
+        if(protectingBlock == null || facingBlock == null){
+            return false;
+        }
+
+        jmri.SignalMast sm = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingSignalMast(facingBlock,protectingBlock);
+        if(sm!=null && sm.getHeld() && !_dispatcher.isMastHeldByDispatcher(sm, mActiveTrain)){
+            ar.setWaitingForSignalMast(sm);
+            return true;
+        }
+        return false;
+    }
+
+    
+    static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
 }
 
 /* @(#)AutoAllocate.java */

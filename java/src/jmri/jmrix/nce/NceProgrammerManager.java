@@ -10,6 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
+ * @author	Ken Cameron Copyright (C) 2013
  * @version	$Revision$
  */
 public class NceProgrammerManager  extends DefaultProgrammerManager {
@@ -31,12 +32,15 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
 	 * Works with PH command station to provide Service Mode and USB connect to
 	 * PowerCab.
 	 * 
-	 * @return true if not USB connect to SB3
+	 * @return true if not USB connect to SB3,PowerPro,SB5
 	 */
     public boolean isGlobalProgrammerAvailable() {
-		if (tc != null && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3)
-			return false;
-		else
+		if (tc != null && (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)) {
+			if ((tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) == 0)
+				return false;
+			else
+				return true;
+		} else
 			return true;
 	}
 

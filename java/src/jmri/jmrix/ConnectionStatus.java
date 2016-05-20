@@ -2,6 +2,8 @@
 
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /**
@@ -117,5 +119,5 @@ public class ConnectionStatus {
         pcs.removePropertyChangeListener(l);
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionStatus.class.getName());
+	static Logger log = LoggerFactory.getLogger(ConnectionStatus.class.getName());
 }

@@ -2,9 +2,9 @@
 
 package jmri.jmrit.display;
 
-import java.util.ResourceBundle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -28,8 +28,6 @@ import javax.swing.*;
  * @version $I $
  */
 public class PositionablePopupUtil {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     private boolean debug = false;
     protected JComponent _textComponent;    // closest ancestor for JLabel and JTextField
@@ -111,7 +109,7 @@ public class PositionablePopupUtil {
     }
 
     public void setFixedTextMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(rb.getString("EditFixed"));
+        JMenu edit = new JMenu(Bundle.getMessage("EditFixed"));
         if (getFixedWidth()==0)
             edit.add("Width= Auto");
         else
@@ -127,7 +125,7 @@ public class PositionablePopupUtil {
     }
 
     public void setTextMarginMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(rb.getString("EditMargin"));
+        JMenu edit = new JMenu(Bundle.getMessage("EditMargin"));
         if((fixedHeight==0)||(fixedWidth==0)) {
             edit.add("Margin= " + getMargin());
             edit.add(CoordinateEdit.getMarginEditAction(_parent));
@@ -136,27 +134,27 @@ public class PositionablePopupUtil {
     }
     
     public void setBackgroundMenu(JPopupMenu popup){
-        JMenu edit = new JMenu(rb.getString("FontBackgroundColor"));
+        JMenu edit = new JMenu(Bundle.getMessage("FontBackgroundColor"));
         makeColorMenu(edit, BACKGROUND_COLOR);
         popup.add(edit);
     
     }
 
     public void setTextBorderMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(rb.getString("EditBorder"));
+        JMenu edit = new JMenu(Bundle.getMessage("EditBorder"));
         edit.add("Border Size= " + borderSize);
         edit.add(CoordinateEdit.getBorderEditAction(_parent));
-        JMenu colorMenu = new JMenu(rb.getString("BorderColorMenu"));
+        JMenu colorMenu = new JMenu(Bundle.getMessage("BorderColorMenu"));
         makeColorMenu(colorMenu, BORDER_COLOR);
         edit.add(colorMenu);
         popup.add(edit);
     }
 
     public void setTextFontMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(rb.getString("EditFont"));
+        JMenu edit = new JMenu(Bundle.getMessage("EditFont"));
         edit.add(makeFontSizeMenu());
         edit.add(makeFontStyleMenu());
-        JMenu colorMenu = new JMenu(rb.getString("FontColor"));
+        JMenu colorMenu = new JMenu(Bundle.getMessage("FontColor"));
         makeColorMenu(colorMenu, PositionablePopupUtil.FONT_COLOR);
         edit.add(colorMenu);
         popup.add(edit);
@@ -340,8 +338,8 @@ public class PositionablePopupUtil {
     }
 
     protected JMenu makeFontStyleMenu() {
-        JMenu styleMenu = new JMenu(rb.getString("FontStyle"));
-        styleMenu.add(italic = newStyleMenuItem(new AbstractAction(rb.getString("Italic")) {
+        JMenu styleMenu = new JMenu(Bundle.getMessage("FontStyle"));
+        styleMenu.add(italic = newStyleMenuItem(new AbstractAction(Bundle.getMessage("Italic")) {
             public void actionPerformed(ActionEvent e) {
                 if (debug)
                     log.debug("When style item selected "+((String)getValue(NAME))
@@ -351,7 +349,7 @@ public class PositionablePopupUtil {
             }
           }, Font.ITALIC));
 
-        styleMenu.add(bold = newStyleMenuItem(new AbstractAction(rb.getString("Bold")) {
+        styleMenu.add(bold = newStyleMenuItem(new AbstractAction(Bundle.getMessage("Bold")) {
             public void actionPerformed(ActionEvent e) {
                 if (debug)
                     log.debug("When style item selected "+((String)getValue(NAME))
@@ -397,19 +395,19 @@ public class PositionablePopupUtil {
 
     protected void makeColorMenu(JMenu colorMenu, int type) {
         ButtonGroup buttonGrp = new ButtonGroup();
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Black"), Color.black, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("DarkGray"),Color.darkGray, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Gray"),Color.gray, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("LightGray"),Color.lightGray, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("White"),Color.white, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Red"),Color.red, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Orange"),Color.orange, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Yellow"),Color.yellow, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Green"),Color.green, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Blue"),Color.blue, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Magenta"),Color.magenta, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Black"), Color.black, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("DarkGray"),Color.darkGray, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Gray"),Color.gray, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("LightGray"),Color.lightGray, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("White"),Color.white, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Red"),Color.red, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Orange"),Color.orange, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Yellow"),Color.yellow, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Green"),Color.green, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"),Color.blue, type);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"),Color.magenta, type);
         if (type == BACKGROUND_COLOR){
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Clear"), null, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
         }
     }
 
@@ -687,5 +685,5 @@ public class PositionablePopupUtil {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePopupUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class.getName());
 }

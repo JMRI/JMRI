@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz.swing.mon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetMessage;
@@ -172,20 +174,17 @@ import jmri.jmrix.lenz.XNetConstants;
 				text= "Broadcast: Emergency Stop (track power on)";
                 /* Followed by Service Mode responses */
 		} else if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE) {
-		  switch(l.getElement(1)) {
-		  case XNetConstants.CS_SERVICE_DIRECT_RESPONSE:
+		  if(l.isDirectModeResponse()) {
 				text = "Service Mode: Direct Programming Response: CV:" +
-				       l.getElement(2) +
+				       l.getServiceModeCVNumber() +
 				       " Value: " +
-				       l.getElement(3);
-				break;
-		  case XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE:
+				       l.getServiceModeCVValue();
+                  } else if (l.isPagedModeResponse()) {
 				text = "Service Mode: Register or Paged Mode Response: CV:" +
-				       l.getElement(2) +
+				       l.getServiceModeCVNumber() +
 				       " Value: " +
-				       l.getElement(3);
-				break;
-		  case XNetConstants.CS_SOFTWARE_VERSION:
+				       l.getServiceModeCVValue();
+                  } else if (l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION) {
 				text = "Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + " Type: ";
 				switch(l.getElement(3)) {
 				    case 0x00: text = text+ "LZ100/LZV100";
@@ -200,10 +199,10 @@ import jmri.jmrix.lenz.XNetConstants;
 				    default:
 					text = text + l.getElement(3);
 				}
-				break; // GT 2007/11/6 - Added break
-		  default:
-			text = l.toString();
-		  }
+                     } else {
+                        text = l.toString();
+                     }
+		  //}
 		/* We want to look at responses to specific requests made to the Command Station */
 		} else if (l.getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
               	    if (l.getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
@@ -530,6 +529,18 @@ import jmri.jmrix.lenz.XNetConstants;
 		  case XNetConstants.PROG_READ_MODE_PAGED:
 				text = "Service Mode Request: Read CV " + l.getElement(2) + " in Paged Mode";
 				break;
+                  case XNetConstants.PROG_READ_MODE_CV_V36:
+		        text = "Service Mode Request (V3.6): Read CV " + (l.getElement(2)==0?1024:l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case XNetConstants.PROG_READ_MODE_CV_V36+1:
+		        text = "Service Mode Request (V3.6): Read CV " + (256+l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case XNetConstants.PROG_READ_MODE_CV_V36+2:
+		        text = "Service Mode Request (V3.6): Read CV " + (512+l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case XNetConstants.PROG_READ_MODE_CV_V36+3:
+		        text = "Service Mode Request (V3.6): Read CV " + (768+l.getElement(2)) + " in Direct Mode";
+                               break;
 		  default:
 			text = l.toString();
 		  }
@@ -544,6 +555,18 @@ import jmri.jmrix.lenz.XNetConstants;
 		  case XNetConstants.PROG_WRITE_MODE_PAGED:
 				text = "Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Paged Mode";
 				break;
+                  case XNetConstants.PROG_WRITE_MODE_CV_V36:
+				text = "Service Mode Request (V3.6): Write " + l.getElement(3) +" to CV " + (l.getElement(2)==0?1024:l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case (XNetConstants.PROG_WRITE_MODE_CV_V36+1):
+				text = "Service Mode Request (V3.6): Write " + l.getElement(3) +" to CV " + (256+l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case (XNetConstants.PROG_WRITE_MODE_CV_V36+2):
+				text = "Service Mode Request (V3.6): Write " + l.getElement(3) +" to CV " + (512+l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case (XNetConstants.PROG_WRITE_MODE_CV_V36+3):
+				text = "Service Mode Request (V3.6): Write " + l.getElement(3) +" to CV " + (768+l.getElement(2)) + " in Direct Mode";
+                               break;
 		  default:
 			text = l.toString();
 		  }
@@ -1278,6 +1301,6 @@ import jmri.jmrix.lenz.XNetConstants;
 		return(text);
         }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMonFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(XNetMonFrame.class.getName());
 
 }

@@ -35,7 +35,7 @@ Cette page fournit des informations sur les outils fournis avec les
 Distributions JMRI sur:
 <ul>
 <li> <a href="#linux"> Linux </a>
-<li> <a href="#macosx"> MacOS X </a>
+<li> <a href="#macosx"> Mac OS X </a>
 <li> <a href="#windows"> Windows </a>
 </ul>
 
@@ -146,13 +146,13 @@ pour être une liste de noms séparé par des virgules.
 </ dl>
 
 <a name="macosx"> 
-<h2> MacOS X </h2> </a>
-Distributions JMRI pour MacOS X contenant des kits d'applications
+<h2> Mac OS X </h2> </a>
+Distributions JMRI pour Mac OS X contenant des kits d'applications
 pour chacune des applications princpales: DecoderPro, PanelPro, etc
 Ceux-ci fournissent des icônes d'application familières pour l'utilisateur.
 
 <p>
-Pour enregistrer les kits avec MacOS X, ils doivent être copiés
+Pour enregistrer les kits avec Mac OS X, ils doivent être copiés
 depuis l'image disque distribuée sur disque par l'utilisateur.
 <dd>
 <p>
@@ -171,10 +171,10 @@ JMRI a enregistré cinq signatures d'applications:
 
 <h3>Details des Scripts</h3>
 
-Chaque Pack (bundle) a un shell de démarrage (Bash) dans le script dans le répertoire Contents/MacOS X  
+Chaque Pack (bundle) a un shell de démarrage (Bash) dans le script dans le répertoire Contents/Mac OS X  
 qui fait le démarrage actuellement.
 Dans cette section, nous décrivons brièvement ce que chaque section de ce script fait:
-Chaque Pack  des noms(bundle) a un shell de démarrage (Bash) dans le script dans le répertoire ContentsMacOS X  
+Chaque Pack  des noms(bundle) a un shell de démarrage (Bash) dans le script dans le répertoire ContentsMac OS X  
 qui fait le démarrage actuellement.
 <dl>
 <dt>CLASSNAME DecoderProConfig2.xml
@@ -229,7 +229,7 @@ copiant et renommant une application.
 <dd>
 Le programme définit un certain nombre d'options pour le JVM. Cela comprend
 les paramètres nécessaires aux noms des programmes, fixant des limites de la mémoire, divers
- symboles pour contrôler le fonctionnement, et quelques options spécifiques à MacOS X.
+ symboles pour contrôler le fonctionnement, et quelques options spécifiques à Mac OS X.
 
 <dt>  commande Java 
 <dd> Enfin, le script met tout cela ensemble dans une commande java, qui l'exécute.

@@ -32,9 +32,8 @@
       </H1>
 
 
-<P>JMRI can communicate with an 
-Uhlenbrock Intellibox</a>
-via the built-in serial port and the LocoNet protocol. 
+<P>JMRI can communicate with an Uhlenbrock Intellibox via the Intellibox built-in serial 
+    port and the LocoNet&reg; protocol. </p>
 
 <p>
 Configure the options of your Uhlenbrock Intellibox to be:
@@ -58,8 +57,7 @@ Then start the JMRI program and configure it to:
       <H1> 
       JMRI Install Guide: Uhlenbrock Intellibox II and IB-COM via USB Interface
       </H1>
-<P>JMRI can communicate with an 
-Uhlenbrock Intellibox II and IB-COM</a>
+<P>JMRI can communicate with an Uhlenbrock Intellibox II and IB-COM
 via the built-in USB interface using the LocoNet protocol.
 
 <p>
@@ -71,7 +69,9 @@ via the built-in USB interface using the LocoNet protocol.
 <LI>Select your port
 </UL>
 </UL>
-
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

@@ -10,6 +10,8 @@
 
 package jmri.jmrix.marklin.swing.monitor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.marklin.*;
 import jmri.jmrix.marklin.swing.*;
 
@@ -84,7 +86,7 @@ public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements Markli
         }
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinMonPane.class.getName());
+	static Logger log = LoggerFactory.getLogger(MarklinMonPane.class.getName());
 
 }
 

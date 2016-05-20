@@ -2,6 +2,8 @@
 
 package jmri.jmrix.dcc4pc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Hashtable;
 import jmri.implementation.AbstractReporter;
 import jmri.Sensor;
@@ -561,7 +563,7 @@ import java.util.regex.Matcher;
 	ACK_4,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,
 	ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR};
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcReporter.class.getName());
+    static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class.getName());
 
  }
 

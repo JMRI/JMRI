@@ -1,5 +1,7 @@
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -40,17 +42,17 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("AddToPanel")));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("DragIconPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("nullMemoryIcon"), 
+        blurb.add(new JLabel(Bundle.getMessage("nullMemoryIcon"), 
                              NamedIcon.getIconByName("resources/icons/misc/X-red.gif"),
                              javax.swing.SwingConstants.TRAILING));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("emptyMemoryIcon")));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("emptyMemoryFix")));
+        blurb.add(new JLabel(Bundle.getMessage("emptyMemoryIcon")));
+        blurb.add(new JLabel(Bundle.getMessage("emptyMemoryFix")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("comboMemory1")));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("comboMemory2")));
+        blurb.add(new JLabel(Bundle.getMessage("comboMemory1")));
+        blurb.add(new JLabel(Bundle.getMessage("comboMemory2")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -77,7 +79,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         _iconFamilyPanel.add(_dragIconPanel);
     }
 
-    protected void makeDndIconPanel(java.util.Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(java.util.HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
         }
@@ -91,9 +93,8 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         c.anchor = java.awt.GridBagConstraints.CENTER;
         c.weightx = 1.0;
 
-        panel.add(new JLabel(ItemPalette.rbp.getString("ReadWriteMemory")), c);
+        panel.add(new JLabel(Bundle.getMessage("ReadWriteMemory")), c);
 
-        JPanel JPanel = new JPanel();
         _writeMem = new MemoryInputIcon(5, _editor);
         JPanel p0 = makeDragIcon(_writeMem, Type.READWRITE);
         _spinner = new JSpinner(new SpinnerNumberModel(0,0,100,1));
@@ -103,7 +104,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         _spinner.setMaximumSize(_spinner.getPreferredSize());
         _spinner.addChangeListener(this);
         JPanel p1 = new JPanel();
-        p1.add(new JLabel(ItemPalette.rb.getString("NumColsLabel")));
+        p1.add(new JLabel(Bundle.getMessage("NumColsLabel")));
         p1.add(_spinner);
         JPanel p2 =new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
@@ -114,14 +115,14 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         
         c.gridx = 1;
         c.gridy = 0;
-        panel.add(new JLabel(ItemPalette.rbp.getString("ReadMemory")), c);
+        panel.add(new JLabel(Bundle.getMessage("ReadMemory")), c);
         c.gridy = 1;
         _readMem = new MemoryIcon(NamedIcon.getIconByName("resources/icons/misc/X-red.gif"), _editor);
         panel.add(makeDragIcon(_readMem, Type.READONLY), c);
         
         c.gridx = 2;
         c.gridy = 0;
-        panel.add(new JLabel(ItemPalette.rbp.getString("SpinnerMemory")), c);
+        panel.add(new JLabel(Bundle.getMessage("SpinnerMemory")), c);
         c.gridy = 1;
         _spinMem = new MemorySpinnerIcon(_editor);
         panel.add(makeDragIcon(_spinMem, Type.SPINNER), c);
@@ -129,7 +130,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth  = 4;
-        panel.add(new JLabel(ItemPalette.rbp.getString("ComboMemory")), c);
+        panel.add(new JLabel(Bundle.getMessage("ComboMemory")), c);
         c.gridy = 3;
         _comboMem = new MemoryComboIcon(_editor, null);
         panel.add(makeDragIcon(_comboMem, Type.COMBO), c);
@@ -143,7 +144,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         try {
             comp = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), type,
             			mem.getPreferredSize());
-            comp.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+            comp.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
             comp = new JPanel();
@@ -188,7 +189,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         } else {
             if (_updateButton!=null) {
                 _updateButton.setEnabled(false);
-                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+                _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
         }
         validate();
@@ -255,5 +256,5 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryItemPanel.class.getName());
 }

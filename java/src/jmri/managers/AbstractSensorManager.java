@@ -2,6 +2,8 @@
 
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 import java.util.Enumeration;
@@ -151,7 +153,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                    showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         Sensor s = getBySystemName(tmpSName);
@@ -166,7 +168,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         
@@ -216,7 +218,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
 }
 
 /* @(#)AbstractSensorManager.java */

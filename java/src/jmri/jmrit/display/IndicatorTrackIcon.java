@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -12,7 +14,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import jmri.NamedBeanHandle;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -49,11 +51,12 @@ public class IndicatorTrackIcon extends PositionableIcon
         super(editor);
         _pathUtil = new IndicatorTrackPaths();
         _status = "ClearTrack";
-        _iconMap = new Hashtable<String, NamedIcon>();
+        _iconMap = new HashMap<String, NamedIcon>();
     }
 
     public Positionable deepClone() {
-        IndicatorTrackIcon pos = new IndicatorTrackIcon(_editor);        
+        IndicatorTrackIcon pos = new IndicatorTrackIcon(_editor);
+        _namedIcon = _iconMap.get(getStatus());
         return finishClone(pos);
     }
 
@@ -67,7 +70,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         return super.finishClone(pos);
     }
 
-    public Hashtable<String, NamedIcon> getIconMap() {
+    public HashMap<String, NamedIcon> getIconMap() {
         return cloneMap(_iconMap, this);
     }
 
@@ -98,7 +101,7 @@ public class IndicatorTrackIcon extends PositionableIcon
          namedOccSensor = senHandle;
          if (namedOccSensor != null) {
              if (_iconMap==null) {
-                 _iconMap = new Hashtable<String, NamedIcon>();
+                 _iconMap = new HashMap<String, NamedIcon>();
              }
              Sensor sensor = getOccSensor();
              sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Track");
@@ -123,7 +126,7 @@ public class IndicatorTrackIcon extends PositionableIcon
              setOccBlockHandle(null);
              return;
          }
-         OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(pName);
+         OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(pName);
          if (block != null) {
              setOccBlockHandle(new NamedBeanHandle<OBlock>(pName, block));                
          } else {
@@ -137,7 +140,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         namedOccBlock = blockHandle;
         if (namedOccBlock != null) {
             if (_iconMap==null) {
-                _iconMap = new Hashtable<String, NamedIcon>();
+                _iconMap = new HashMap<String, NamedIcon>();
             }
             OBlock block = getOccBlock();
             block.addPropertyChangeListener(this, namedOccBlock.getName(), "Indicator Track");
@@ -213,7 +216,10 @@ public class IndicatorTrackIcon extends PositionableIcon
 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.setStatus(block, state);
-        _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);
+        if ((state & OBlock.OCCUPIED)!=0) {
+            _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);        	
+            repaint();
+        }
         if (_status.equals("DontUseTrack")) {
         	setControlling(false);
         }
@@ -241,15 +247,15 @@ public class IndicatorTrackIcon extends PositionableIcon
 	 */
     void displayState(String status) {
     	if (log.isDebugEnabled()) log.debug(getNameString() +" displayStatus "+_status);
-        NamedIcon icon = getIcon(status);
-        if (icon!=null) {
-            super.setIcon(icon);
+        _namedIcon = getIcon(status);
+        if (_namedIcon!=null) {
+            super.setIcon(_namedIcon);
         }
         updateSize();
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTrack"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTrack"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     editItem();
@@ -259,7 +265,7 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTrack")));
+        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTrack")));
         _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
 
         ActionListener updateAction = new ActionListener() {
@@ -268,7 +274,7 @@ public class IndicatorTrackIcon extends PositionableIcon
             }
         };
         // duplicate _iconMap map with unscaled and unrotated icons
-        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();
+        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();
         Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
@@ -301,9 +307,9 @@ public class IndicatorTrackIcon extends PositionableIcon
         _pathUtil.setShowTrain(_trackPanel.getShowTrainName());
         _iconFamily = _trackPanel.getFamilyName();
         _pathUtil.setPaths(_trackPanel.getPaths());
-        Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
+        HashMap<String, NamedIcon> iconMap = _trackPanel.getIconMap();
         if (iconMap!=null) {
-            Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
+        	HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
@@ -315,7 +321,7 @@ public class IndicatorTrackIcon extends PositionableIcon
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
+//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _trackPanel.dispose();
@@ -338,6 +344,6 @@ public class IndicatorTrackIcon extends PositionableIcon
         super.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTrackIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class.getName());
 }
 

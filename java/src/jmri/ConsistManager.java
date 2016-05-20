@@ -1,87 +1,84 @@
 // ConsistManager.java
-
 package jmri;
 
 import java.util.ArrayList;
 
 /**
- * Interface for Consist Manager objects, which provide access to
- * the existing Consists and allows for creation and destruction.
+ * Interface for Consist Manager objects, which provide access to the existing
+ * Consists and allows for creation and destruction.
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision$      
+ *
+ * @author Paul Bender Copyright (C) 2003
+ * @version $Revision$
  */
-public interface  ConsistManager {
-	
-	/**
-	 *    Find a Consist with this consist address, and return it.
-         *    if the Consist doesn't exit, create it.
-	 **/
-	public Consist getConsist(DccLocoAddress address);
-	
-	/**
-	 *    Remove an old Consist
-	 */
-	public void delConsist(DccLocoAddress address);
+public interface ConsistManager {
 
-	/**
-	 *    Does this implementation support Command Station Consists?
-	 */
-	public boolean isCommandStationConsistPossible();
+    /**
+     * Find a Consist with this consist address, and return it. If the Consist
+     * doesn't exit, create it.
+     */
+    public Consist getConsist(DccLocoAddress address);
 
-	/**
-	 *    Does a CS consist require a seperate consist address?
-	 */
-	public boolean csConsistNeedsSeperateAddress();
+    /**
+     * Remove an old Consist
+     */
+    public void delConsist(DccLocoAddress address);
 
-	/**
-	 *    Get an ArrayList object containning the string representation 
-	 *    of the consist addresses we know about.
-	 */
-	public ArrayList<DccLocoAddress> getConsistList();
+    /**
+     * Does this implementation support Command Station Consists?
+     */
+    public boolean isCommandStationConsistPossible();
 
-	/**
-	 *   Translate Error Codes recieved by a consistListener into
-	 *   Strings
-	 */
-	public String decodeErrorCode(int ErrorCode);
+    /**
+     * Does a CS consist require a separate consist address?
+     */
+    public boolean csConsistNeedsSeperateAddress();
 
-        /* request an update from the layout, loading
-         * Consists from the command station.
-         */
-        public void requestUpdateFromLayout();
+    /**
+     * Get an ArrayList object containing the string representation of the
+     * consist addresses we know about.
+     */
+    public ArrayList<DccLocoAddress> getConsistList();
 
-        /*
-         * register a ConsistListListener object with this Consist 
-         * Manager
-         * @param listener a Consist List Listener object.
-         */
-        public void addConsistListListener(ConsistListListener l);
+    /**
+     * Translate Error Codes relieved by a consistListener into Strings
+     */
+    public String decodeErrorCode(int errorCode);
 
-        /*
-         * remove a ConsistListListener object with this Consist 
-         * Manager
-         * @param listener a Consist List Listener object.
-         */
-        public void removeConsistListListener(ConsistListListener l);
+    /**
+     * Request an update from the layout, loading Consists from the command
+     * station.
+     */
+    public void requestUpdateFromLayout();
 
-        /*
-         * Notify the registered Consist List Listener objects that the
-         * Consist List has changed.
-         */
-        public void notifyConsistListChanged();
+    /**
+     * Register a ConsistListListener object with this ConsistManager
+     *
+     * @param listener a Consist List Listener object.
+     */
+    public void addConsistListListener(ConsistListListener listener);
 
+    /**
+     * Remove a ConsistListListener object with this ConsistManager
+     *
+     * @param listener a Consist List Listener object.
+     */
+    public void removeConsistListListener(ConsistListListener listener);
+
+    /**
+     * Notify the registered ConsistListListener objects that the ConsistList
+     * has changed.
+     */
+    public void notifyConsistListChanged();
 }

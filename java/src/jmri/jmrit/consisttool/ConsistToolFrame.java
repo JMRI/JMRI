@@ -1,6 +1,8 @@
 // ConsistToolFrame.java
 package jmri.jmrit.consisttool;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,7 +58,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
         consistFile = new ConsistFile();
         try {
-            consistFile.ReadFile();
+            consistFile.readFile();
         } catch (Exception e) {
             log.warn("error reading consist file: " + e);
         }
@@ -349,7 +351,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         adrSelector.setEnabled(true);
         initializeConsistBox();
         try {
-            consistFile.WriteFile(ConsistMan.getConsistList());
+            consistFile.writeFile(ConsistMan.getConsistList());
         } catch (Exception ex) {
             log.warn("error writing consist file: " + ex);
         }
@@ -641,7 +643,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         //}
         consistModel.fireTableDataChanged();
         try {
-            consistFile.WriteFile(ConsistMan.getConsistList());
+            consistFile.writeFile(ConsistMan.getConsistList());
         } catch (Exception e) {
             log.warn("error writing consist file: " + e);
         }
@@ -653,11 +655,27 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         ConsistMan.removeConsistListListener(this);
     }
 
+    // want to read the consist file after the consists have been loaded
+    // from the command station.  The _readConsistFile flag tells the 
+    // notifyConsistListChanged routine to do this.  notifyConsistListChanged
+    // sets the value to false after the file is read.
+    private boolean _readConsistFile = true;
+
     // ConsistListListener interface
     public void notifyConsistListChanged(){
+        if(_readConsistFile) {
+        // read the consist file after the consist manager has
+        // finished loading consists on startup.
+        try {
+            consistFile.readFile();
+        } catch (Exception e) {
+            log.warn("error reading consist file: " + e);
+        }
+        _readConsistFile=false;
+       }
        // update the consist list.
        initializeConsistBox();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistToolFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConsistToolFrame.class.getName());
 }

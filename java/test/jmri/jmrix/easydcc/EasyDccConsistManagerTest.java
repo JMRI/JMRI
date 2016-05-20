@@ -12,6 +12,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Vector;
 
@@ -179,6 +181,6 @@ public class EasyDccConsistManagerTest extends TestCase {
     
     
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccConsistManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());
     
 }

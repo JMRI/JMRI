@@ -2,6 +2,8 @@
 
 package jmri.jmrix.bachrus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.font.*;
 import java.awt.geom.*;
@@ -24,6 +26,8 @@ public class GraphPane extends JPanel implements Printable {
     protected DccSpeedProfile [] _sp;
     protected String annotate;
     protected Color [] colors = { Color.RED, Color.BLUE };
+    
+    protected boolean _grid = false;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
@@ -49,6 +53,8 @@ public class GraphPane extends JPanel implements Printable {
 
     public void setXLabel (String s) { xLabel = s; }
     public void setYLabel (String s) { yLabel = s; }
+    
+    public void showGrid (boolean b) { _grid = b; }
 
     int units = Speed.MPH;
 //    String unitString = "Speed (MPH)";
@@ -68,17 +74,25 @@ public class GraphPane extends JPanel implements Printable {
         int w = getWidth();
         int h = getHeight();
         
-        // Draw ordinate.
+        // Draw ordinate (y-axis).
         g2.draw(new Line2D.Double(PAD, PAD, PAD, h-PAD));
-        // Draw abcissa.
+        // Draw abcissa (x-axis).
         g2.draw(new Line2D.Double(PAD, h-PAD, w-PAD, h-PAD));
         
         // Draw labels.
         Font font = g2.getFont();
         FontRenderContext frc = g2.getFontRenderContext();
         LineMetrics lm = font.getLineMetrics("0", frc);
+        
+        float dash1[] = {1.0f};
+        BasicStroke dashed = new BasicStroke(1.0f,
+                                                BasicStroke.CAP_BUTT,
+                                                BasicStroke.JOIN_MITER,
+                                                10.0f, dash1, 0.0f);
+        BasicStroke plain = new BasicStroke(1.0f);
+        
         float sh = lm.getAscent() + lm.getDescent();
-        // Ordinate label.
+        // Ordinate (y-axis) label.
         float sy = PAD + ((h - 2*PAD) - yLabel.length()*sh)/2 + lm.getAscent();
         g2.setPaint(Color.green.darker());
         for(int i = 0; i < yLabel.length(); i++) {
@@ -88,7 +102,7 @@ public class GraphPane extends JPanel implements Printable {
             g2.drawString(letter, sx, sy);
             sy += sh;
         }        
-        // Abcissa label.
+        // Abcissa (x-axis) label.
         sy = h - PAD/2 + (PAD/2 - sh)/2 + lm.getAscent();
         float sw = (float)font.getStringBounds(xLabel, frc).getWidth();
         float sx = (w - sw)/2;
@@ -96,37 +110,61 @@ public class GraphPane extends JPanel implements Printable {
         
         // Used to scale values into drawing area
         float scale = (h - 2*PAD)/_sp[0].getMax();
-        // space between values along the ordinate
-        // start with an increment of 10
-        int valInc = 10;
+        // space between values along the ordinate (y-axis)
+        // start with an increment of 1
+        // Plot a grid line every two
+        // Plot a label every ten
+        int valInc = 1;
         float yInc = scale*valInc;
+        int yMod = 10;
+        int gridMod = 2;
         if (units == Speed.MPH) {
             // need inverse transform here
             yInc = Speed.mphToKph(yInc);
         }
         if (_sp[0].getMax() > 100) {
-            valInc = 20;
-            yInc *=2;
+            valInc = 2;
+            yMod *=2;
+            gridMod *=2;
         }
         String ordString;
         // Draw lines
         for(int i = 0; i <= (h - 2*PAD)/yInc; i++) {
+            g2.setPaint(Color.green.darker());
+            g2.setStroke(plain);
             float y1 = h - PAD - i*yInc;
-            g2.draw(new Line2D.Double(7*PAD/8, y1, PAD, y1));
-            ordString = Integer.toString(i*valInc);
-            sw = (float)font.getStringBounds(ordString, frc).getWidth();
-            sx = 7*PAD/8 - sw;
-            sy = y1 + lm.getAscent()/2;
-            g2.drawString(ordString, sx, sy);
+            if ((i % yMod) == 0) {
+                g2.draw(new Line2D.Double(7*PAD/8, y1, PAD, y1));
+                ordString = Integer.toString(i*valInc);
+                sw = (float)font.getStringBounds(ordString, frc).getWidth();
+                sx = 7*PAD/8 - sw;
+                sy = y1 + lm.getAscent()/2;
+                g2.drawString(ordString, sx, sy);
+            }
+            if (_grid && (i > 0) && ((i % gridMod) == 0)) {
+                // Horizontal grid lines
+                g2.setPaint(Color.LIGHT_GRAY);
+                if ((i % yMod) != 0) {
+                    g2.setStroke(dashed);
+                }
+                g2.draw(new Line2D.Double(PAD, y1, w-PAD, y1));
+            }
+        }
+        if (_grid) {
+            // Close the top
+            g2.setPaint(Color.LIGHT_GRAY);
+            g2.setStroke(dashed);
+            g2.draw(new Line2D.Double(PAD, PAD, w-PAD, PAD));
         }
         
-        // The space between values along the abcissa.
+        // The space between values along the abcissa (x-axis).
         float xInc = (float)(w - 2*PAD)/(_sp[0].getLength()-1);
         String abString;
         // Draw lines between data points.
-        g2.setPaint(Color.green.darker());
         // for each point in a profile
         for(int i = 0; i < _sp[0].getLength(); i++) {
+            g2.setPaint(Color.green.darker());
+            g2.setStroke(plain);
             float x1 = 0.0F;
             // for each profile in the array
             for (int j = 0; j < _sp.length; j++) {
@@ -149,7 +187,16 @@ public class GraphPane extends JPanel implements Printable {
                 sy = h - PAD + (PAD/2 - sh)/2 + lm.getAscent();
                 g2.drawString(abString, sx, sy);
             }
+            if (_grid && (i > 0)) {
+                // Verical grid line
+                g2.setPaint(Color.LIGHT_GRAY);
+                if ((i % 5) != 0) {
+                    g2.setStroke(dashed);
+                }
+                g2.draw(new Line2D.Double(x1, PAD, x1, h-PAD));
+            }
         }
+        g2.setStroke(plain);
         
         // Mark data points.
         // for each point in a profile
@@ -215,5 +262,5 @@ public class GraphPane extends JPanel implements Printable {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GraphPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(GraphPane.class.getName());
 }

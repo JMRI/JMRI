@@ -21,6 +21,8 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -371,9 +373,16 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
         blockTable.getColumnModel().getColumn(OBlockTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockTable.getColumnModel().getColumn(OBlockTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-        blockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellRenderer(new MyBooleanRenderer());
+        blockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellRenderer(
+        									new MyBooleanRenderer(rbo.getString("cm"), rbo.getString("in")));
         JComboBox box = new JComboBox(OBlockTableModel.curveOptions);
         blockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
+        blockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellRenderer(
+        									new MyBooleanRenderer(rbo.getString("Current"), rbo.getString("Last")));
+        box = new JComboBox(jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames());
+        blockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
+        blockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(
+											new MyBooleanRenderer(rbo.getString("Permissive"), rbo.getString("Absolute")));
         for (int i=0; i<_oBlockModel.getColumnCount(); i++) {
             int width = _oBlockModel.getPreferredWidth(i);
             blockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
@@ -678,6 +687,14 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     static class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
+    	
+    	String _trueValue;
+    	String _falseValue;
+    	
+    	MyBooleanRenderer(String trueValue, String falseValue) {
+    		_trueValue = trueValue;
+    		_falseValue = falseValue;
+    	}
 
         public java.awt.Component getTableCellRendererComponent(JTable table, 
                                                        Object value, boolean isSelected, 
@@ -686,9 +703,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             JLabel val;
             if (value instanceof Boolean) {
                 if ( ((Boolean)value).booleanValue()) {
-                    val = new JLabel("cm");
+                    val = new JLabel(_trueValue);
                 } else {
-                    val = new JLabel("in");
+                    val = new JLabel(_falseValue);
                 }
             } else {
                 val = new JLabel("");
@@ -757,6 +774,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         //log.debug("Internal frame deactivated: "+frame.getTitle());
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TableFrames.class.getName());
+    static Logger log = LoggerFactory.getLogger(TableFrames.class.getName());
 }
 

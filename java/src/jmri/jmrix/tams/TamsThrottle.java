@@ -1,7 +1,10 @@
 package jmri.jmrix.tams;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import jmri.Throttle;
 
 import jmri.jmrix.AbstractThrottle;
 
@@ -219,10 +222,10 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
                 Float newSpeed = new Float ( floatSpeed(Integer.parseInt(lines[2]) ) ) ;
                 super.setSpeedSetting(newSpeed);
                 if(lines[3].equals("1") && !this.f0){
-                    notifyPropertyChangeListener("F0", this.f0, true);
+                    notifyPropertyChangeListener(Throttle.F0, this.f0, true);
                     this.f0=true;
                 } else if (lines[3].equals("0") && this.f0){
-                    notifyPropertyChangeListener("F0", this.f0, false);
+                    notifyPropertyChangeListener(Throttle.F0, this.f0, false);
                     this.f0=false;
                 }
                 if(lines[4].equals("r") && isForward){
@@ -233,31 +236,31 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
                     isForward=true;
                 }
                 if(lines[5].equals("1") && !this.f1){
-                    notifyPropertyChangeListener("F1", this.f1, true);
+                    notifyPropertyChangeListener(Throttle.F1, this.f1, true);
                     this.f1=true;
                 } else if (lines[5].equals("0") && this.f1){
-                    notifyPropertyChangeListener("F1", this.f1, false);
+                    notifyPropertyChangeListener(Throttle.F1, this.f1, false);
                     this.f1=false;
                 }
                 if(lines[6].equals("1") && !this.f2){
-                    notifyPropertyChangeListener("F2", this.f2, true);
+                    notifyPropertyChangeListener(Throttle.F2, this.f2, true);
                     this.f2=true;
                 } else if (lines[6].equals("0") && this.f2) {
-                    notifyPropertyChangeListener("F2", this.f2, false);
+                    notifyPropertyChangeListener(Throttle.F2, this.f2, false);
                     this.f2=false;
                 }
                 if(lines[7].equals("1") && !this.f3){
-                    notifyPropertyChangeListener("F3", this.f3, true);
+                    notifyPropertyChangeListener(Throttle.F3, this.f3, true);
                     this.f3=true;
                 } else if (lines[7].equals("0") && this.f3) {
-                    notifyPropertyChangeListener("F3", this.f3, false);
+                    notifyPropertyChangeListener(Throttle.F3, this.f3, false);
                     this.f3=false;
                 }
                 if(lines[8].equals("1") && !this.f4){
-                    notifyPropertyChangeListener("F4", this.f4, true);
+                    notifyPropertyChangeListener(Throttle.F4, this.f4, true);
                     this.f4=true;
                 } else if (lines[8].equals("0") && this.f4) {
-                    notifyPropertyChangeListener("F4", this.f4, false);
+                    notifyPropertyChangeListener(Throttle.F4, this.f4, false);
                     this.f4=false;
                 }
             } catch (Exception ex){
@@ -267,45 +270,45 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
             String[] lines = m.toString().split(" ");
             try{
                 if(lines[2].equals("1") && !this.f9){
-                    notifyPropertyChangeListener("F9", this.f9, true);
+                    notifyPropertyChangeListener(Throttle.F9, this.f9, true);
                     this.f9=true;
                 } else if (lines[2].equals("0") && this.f9){
-                    notifyPropertyChangeListener("F9", this.f9, false);
+                    notifyPropertyChangeListener(Throttle.F9, this.f9, false);
                     this.f9=false;
                 }
                 if(lines[3].equals("1") && !this.f10){
-                    notifyPropertyChangeListener("F10", this.f10, true);
+                    notifyPropertyChangeListener(Throttle.F10, this.f10, true);
                     this.f10=true;
                 } else if (lines[3].equals("0") && this.f10){
-                    notifyPropertyChangeListener("F10", this.f10, false);
+                    notifyPropertyChangeListener(Throttle.F10, this.f10, false);
                     this.f10=false;
                 }
                 if(lines[4].equals("1") && !this.f11){
-                    notifyPropertyChangeListener("F11", this.f11, true);
+                    notifyPropertyChangeListener(Throttle.F11, this.f11, true);
                     this.f11=true;
                 } else if (lines[4].equals("0") && this.f11){
-                    notifyPropertyChangeListener("F11", this.f11, false);
+                    notifyPropertyChangeListener(Throttle.F11, this.f11, false);
                     this.f11=false;
                 }
                 if(lines[5].equals("1") && !this.f12){
-                    notifyPropertyChangeListener("F12", this.f12, true);
+                    notifyPropertyChangeListener(Throttle.F12, this.f12, true);
                     this.f12=true;
                 } else if (lines[5].equals("0") && this.f12){
-                    notifyPropertyChangeListener("F12", this.f12, false);
+                    notifyPropertyChangeListener(Throttle.F12, this.f12, false);
                     this.f12=false;
                 }
                 if(lines[6].equals("1") && !this.f13){
-                    notifyPropertyChangeListener("F13", this.f13, true);
+                    notifyPropertyChangeListener(Throttle.F13, this.f13, true);
                     this.f13=true;
                 } else if (lines[6].equals("0") && this.f13){
-                    notifyPropertyChangeListener("F13", this.f13, false);
+                    notifyPropertyChangeListener(Throttle.F13, this.f13, false);
                     this.f13=false;
                 }
                 if(lines[7].equals("1") && !this.f14){
-                    notifyPropertyChangeListener("F14", this.f14, true);
+                    notifyPropertyChangeListener(Throttle.F14, this.f14, true);
                     this.f14=true;
                 } else if (lines[7].equals("0") && this.f14){
-                    notifyPropertyChangeListener("F14", this.f14, false);
+                    notifyPropertyChangeListener(Throttle.F14, this.f14, false);
                     this.f14=false;
                 }
             } catch (Exception ex){
@@ -315,60 +318,60 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
             String[] lines = m.toString().split(" ");
             try {
                 if(lines[2].equals("1") && !this.f1){
-                    notifyPropertyChangeListener("F1", this.f1, true);
+                    notifyPropertyChangeListener(Throttle.F1, this.f1, true);
                     this.f1=true;
                 } else if (lines[2].equals("0") && this.f1){
-                    notifyPropertyChangeListener("F1", this.f1, false);
+                    notifyPropertyChangeListener(Throttle.F1, this.f1, false);
                     this.f1=false;
                 }
                 if(lines[3].equals("1") && !this.f2){
-                    notifyPropertyChangeListener("F2", this.f2, true);
+                    notifyPropertyChangeListener(Throttle.F2, this.f2, true);
                     this.f2=true;
                 } else if (lines[3].equals("0") && this.f2){
-                    notifyPropertyChangeListener("F2", this.f2, false);
+                    notifyPropertyChangeListener(Throttle.F2, this.f2, false);
                     this.f2=false;
                 }
                 if(lines[4].equals("1") && !this.f3){
-                    notifyPropertyChangeListener("F3", this.f3, true);
+                    notifyPropertyChangeListener(Throttle.F3, this.f3, true);
                     this.f3=true;
                 } else if (lines[4].equals("0") && this.f3){
-                    notifyPropertyChangeListener("F3", this.f3, false);
+                    notifyPropertyChangeListener(Throttle.F3, this.f3, false);
                     this.f3=false;
                 }
                 if(lines[5].equals("1") && !this.f4){
-                    notifyPropertyChangeListener("F4", this.f4, true);
+                    notifyPropertyChangeListener(Throttle.F4, this.f4, true);
                     this.f4=true;
                 } else if (lines[5].equals("0") && this.f4){
-                    notifyPropertyChangeListener("F4", this.f4, false);
+                    notifyPropertyChangeListener(Throttle.F4, this.f4, false);
                     this.f4=false;
                 }
                 
                 if(lines[6].equals("1") && !this.f5){
-                    notifyPropertyChangeListener("F5", this.f5, true);
+                    notifyPropertyChangeListener(Throttle.F5, this.f5, true);
                     this.f5=true;
                 } else if (lines[6].equals("0") && this.f5){
-                    notifyPropertyChangeListener("F5", this.f5, false);
+                    notifyPropertyChangeListener(Throttle.F5, this.f5, false);
                     this.f5=false;
                 }
                 if(lines[7].equals("1") && !this.f6){
-                    notifyPropertyChangeListener("F6", this.f6, true);
+                    notifyPropertyChangeListener(Throttle.F6, this.f6, true);
                     this.f6=true;
                 } else if (lines[7].equals("0") && this.f6){
-                    notifyPropertyChangeListener("F6", this.f6, false);
+                    notifyPropertyChangeListener(Throttle.F6, this.f6, false);
                     this.f6=false;
                 }
                 if(lines[8].equals("1") && !this.f7){
-                    notifyPropertyChangeListener("F7", this.f7, true);
+                    notifyPropertyChangeListener(Throttle.F7, this.f7, true);
                     this.f7=true;
                 } else if (lines[8].equals("0") && this.f7){
-                    notifyPropertyChangeListener("F7", this.f7, false);
+                    notifyPropertyChangeListener(Throttle.F7, this.f7, false);
                     this.f7=false;
                 }
                 if(lines[9].equals("1") && !this.f8){
-                    notifyPropertyChangeListener("F8", this.f8, true);
+                    notifyPropertyChangeListener(Throttle.F8, this.f8, true);
                     this.f8=true;
                 } else if (lines[9].equals("0") && this.f8){
-                    notifyPropertyChangeListener("F8", this.f8, false);
+                    notifyPropertyChangeListener(Throttle.F8, this.f8, false);
                     this.f8=false;
                 }
             } catch (Exception ex){
@@ -380,6 +383,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsThrottle.class.getName());
 
 }

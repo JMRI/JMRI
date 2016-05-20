@@ -2,6 +2,8 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
@@ -51,18 +53,18 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 			element.setAttribute("westboundsignal", p.getWestBoundSignal());
 		}
         
-        if ( (p.getEastBoundSignalMast()!=null) && (p.getEastBoundSignalMast().length()>0) ) {
-			element.setAttribute("eastboundsignalmast", p.getEastBoundSignalMast());
+        if ( (p.getEastBoundSignalMastName()!=null) && (p.getEastBoundSignalMastName().length()>0) ) {
+			element.setAttribute("eastboundsignalmast", p.getEastBoundSignalMastName());
 		}
-		if ( (p.getWestBoundSignalMast()!=null) && (p.getWestBoundSignalMast().length()>0) ) {
-			element.setAttribute("westboundsignalmast", p.getWestBoundSignalMast());
+		if ( (p.getWestBoundSignalMastName()!=null) && (p.getWestBoundSignalMastName().length()>0) ) {
+			element.setAttribute("westboundsignalmast", p.getWestBoundSignalMastName());
 		}
         
-        if ( (p.getEastBoundSensor()!=null) && (p.getEastBoundSensor().length()>0) ) {
-			element.setAttribute("eastboundsensor", p.getEastBoundSensor());
+        if ( (p.getEastBoundSensorName()!=null) && (p.getEastBoundSensorName().length()>0) ) {
+			element.setAttribute("eastboundsensor", p.getEastBoundSensorName());
 		}
-		if ( (p.getWestBoundSensor()!=null) && (p.getWestBoundSensor().length()>0) ) {
-			element.setAttribute("westboundsensor", p.getWestBoundSensor());
+		if ( (p.getWestBoundSensorName()!=null) && (p.getWestBoundSensorName().length()>0) ) {
+			element.setAttribute("westboundsensor", p.getWestBoundSensorName());
 		}
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionablePointXml");
@@ -136,5 +138,5 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 		p.pointList.add(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePointXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionablePointXml.class.getName());
 }

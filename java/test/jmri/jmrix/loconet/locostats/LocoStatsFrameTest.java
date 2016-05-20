@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.locostats;
 
+import org.apache.log4j.Logger;
 import javax.swing.JFrame;
 
 import junit.framework.*;
@@ -101,5 +102,5 @@ public class LocoStatsFrameTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoStatsFrameTest.class.getName());
+    static Logger log = Logger.getLogger(LocoStatsFrameTest.class.getName());
 }

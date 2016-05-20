@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,358 +11,350 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file includes for LNCP files -->
-
 <!-- Panes to show Outputs -->
-
-  <pane name="Output B">
-    <column>
-      <row>
-        <column>
-          <label label="Control Point Output Port Configuration settings. All numbers are entered as">
+<pane name="Output B">
+  <column>
+    <row>
+      <column>
+        <label label="Control Point Output Port Configuration settings. All numbers are entered as">
           </label>
-          <label label="their actual event numbers. For example LT9 is entered as event number 9.">
+        <label label="their actual event numbers. For example LT9 is entered as event number 9.">
           </label>
-          <label label="Paired outputs respond only to the first line's event numbers. The other event numbers are ignored.">
+        <label label="Paired outputs respond only to the first line's event numbers. The other event numbers are ignored.">
           </label>
-        </column>
-      </row>
-      <separator/>
-      <separator/>
-      <row>
-        <column>
-          <display item="OUT5 Paired" label="Output #5  (Pin 4)     Line is" tooltip="Addressing type">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Type" label=" Effect">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Timing" label="Timing">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Timing1" label="Timing">
-          </display>
-        </column>
-        <column>
-          <display item="OP5 Type" label="Type" tooltip="Line #5 is paired with Line #6">
-            <label>Line 5 Type</label>
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT5 Base Address" label="Primary event #" tooltip="CV801-2">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Output Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Transition" label="triggers">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT5 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT5 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="OUT5 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="OUT6 Paired" label="Output #6  (Pin 3)     Line is" tooltip="Addressing type">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Type" label=" Effect">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Timing" label="Timing">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Timing1" label="Timing">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Color" label="4th Aspect">
-          </display>
-        </column>
-        <column>
-          <display item="OP5 Type" label="Type" tooltip="Line #6 is paired with Line #5">
-            <label>Line 6 Type</label>
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT6 Base Address" label="Primary event #" tooltip="CV809-10">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Output Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT6 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT6 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="OUT6 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="OUT7 Paired" label="Output #7  (Pin 2)     Line is" tooltip="Addressing type">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Type" label=" Effect">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Timing" label="Timing">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Timing1" label="Timing">
-          </display>
-        </column>
-        <column>
-          <display item="OP7 Type" label="Type" tooltip="Line #7 is paired with Line #8">
-            <label>Line 7 Type</label>
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT7 Base Address" label="Primary event #" tooltip="CV817-8">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Output Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT7 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT7 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="OUT7 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="OUT8 Paired" label="Output #8  (Pin 1)     Line is" tooltip="Addressing type">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Type" label=" Effect">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Timing" label="Timing">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Timing1" label="Timing">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Color" label="4th Aspect">
-          </display>
-        </column>
-        <column>
-          <display item="OP7 Type" label="Type" tooltip="Line #8 is paired with Line #7">
-            <label>Line 8 Type</label>
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT8 Base Address" label="Primary event #" tooltip="CV825-6">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Output Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT8 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="OUT8 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="OUT8 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <separator/>
-    </column>
-  </pane>
-
-
-      
- 	  	 
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="OUT5 Paired" label="Output #5  (Pin 4)     Line is" tooltip="Addressing type">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Type" label=" Effect">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Timing" label="Timing">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Timing1" label="Timing">
+          </display>
+      </column>
+      <column>
+        <display item="OP5 Type" label="Type" tooltip="Line #5 is paired with Line #6">
+          <label>Line 5 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT5 Base Address" label="Primary event #" tooltip="CV801-2">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Transition" label="triggers">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT5 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="OUT5 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT5 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="OUT5 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="OUT5 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="OUT6 Paired" label="Output #6  (Pin 3)     Line is" tooltip="Addressing type">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Type" label=" Effect">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Timing" label="Timing">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Timing1" label="Timing">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Color" label="4th Aspect">
+          </display>
+      </column>
+      <column>
+        <display item="OP5 Type" label="Type" tooltip="Line #6 is paired with Line #5">
+          <label>Line 6 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT6 Base Address" label="Primary event #" tooltip="CV809-10">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT6 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="OUT6 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT6 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="OUT6 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="OUT6 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="OUT7 Paired" label="Output #7  (Pin 2)     Line is" tooltip="Addressing type">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Type" label=" Effect">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Timing" label="Timing">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Timing1" label="Timing">
+          </display>
+      </column>
+      <column>
+        <display item="OP7 Type" label="Type" tooltip="Line #7 is paired with Line #8">
+          <label>Line 7 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT7 Base Address" label="Primary event #" tooltip="CV817-8">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT7 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="OUT7 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT7 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="OUT7 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="OUT7 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="OUT8 Paired" label="Output #8  (Pin 1)     Line is" tooltip="Addressing type">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Type" label=" Effect">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Timing" label="Timing">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Timing1" label="Timing">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Color" label="4th Aspect">
+          </display>
+      </column>
+      <column>
+        <display item="OP7 Type" label="Type" tooltip="Line #8 is paired with Line #7">
+          <label>Line 8 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT8 Base Address" label="Primary event #" tooltip="CV825-6">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT8 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="OUT8 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="OUT8 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="OUT8 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="OUT8 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+  </column>
+</pane>

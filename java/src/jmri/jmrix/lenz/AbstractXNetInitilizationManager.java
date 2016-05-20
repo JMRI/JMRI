@@ -2,6 +2,9 @@
 
 package jmri.jmrix.lenz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This class provides a base implementation for Command Station/interface 
  * dependent initilization for XPressNet.  
@@ -145,6 +148,6 @@ abstract public class AbstractXNetInitilizationManager {
        }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractXNetInitilizationManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractXNetInitilizationManager.class.getName());
 
 }

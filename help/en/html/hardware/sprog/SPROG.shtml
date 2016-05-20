@@ -82,7 +82,7 @@
 	  select how the program will look. "Metal" is the native Java look
 	  available on all types. Other choices will vary with your computer type.
 	  "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native on Linux,
-	  Windows, MacOS "Classic" and MacOS X respectively.
+	  Windows, MacOS "Classic" and Mac OS X respectively.
 
 	  <li> In the bottom selection box, you can pick the default programmer
 	  format. You can override this each time you open the programmer, so this

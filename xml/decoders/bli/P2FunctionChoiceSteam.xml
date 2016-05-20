@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text-xsl" href="..-XSLT-decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and-or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file for MTH expanded -->
+<enumVal>
+  <enumChoice choice="Nothing" value="0">
+    <choice>Nothing</choice>
+  </enumChoice>
+  <enumChoice choice="Front/Rear Lights">
+    <choice>Front/Rear Lights</choice>
+  </enumChoice>
+  <enumChoice choice="Bell Sound">
+    <choice>Bell Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Horn Sound">
+    <choice>Horn Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Couple/Uncouple Sound">
+    <choice>Couple/Uncouple Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Air Pump sound">
+    <choice>Air Pump sound</choice>
+  </enumChoice>
+  <enumChoice choice="Blow Down/Chuff Increase">
+    <choice>Blow Down/Chuff Increase</choice>
+  </enumChoice>
+  <enumChoice choice="Water Fill/Chuff Increase/Startup">
+    <choice>Water Fill/Chuff Increase/Startup</choice>
+  </enumChoice>
+  <enumChoice choice="L1 Function">
+    <choice>L1 Function</choice>
+  </enumChoice>
+  <enumChoice choice="Mute/Volume Control">
+    <choice>Mute/Volume Control</choice>
+  </enumChoice>
+  <enumChoice choice="Startup/Shutdown Sounds">
+    <choice>Startup/Shutdown Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="Shoveling Coal Sound">
+    <choice>Shoveling Coal Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Water Injector Sound">
+    <choice>Water Injector Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Brake Set/Release/Squeal Sound">
+    <choice>Brake Set/Release/Squeal Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Steam Cock">
+    <choice>Steam Cock</choice>
+  </enumChoice>
+  <enumChoice choice="Pop-Off Sound">
+    <choice>Pop-Off Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Wheel Flange Sound">
+    <choice>Wheel Flange Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Coupler Slack/Couple Sound ">
+    <choice>Coupler Slack/Couple Sound </choice>
+  </enumChoice>
+  <enumChoice choice="Brake Squeal Sound">
+    <choice>Brake Squeal Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Horn2 Toggle">
+    <choice>Horn2 Toggle</choice>
+  </enumChoice>
+  <enumChoice choice="Smoke Control" value="21">
+    <choice>Smoke Control</choice>
+  </enumChoice>
+  <enumChoice choice="Horn Grade Crossing Sound" value="30">
+    <choice>Horn Grade Crossing Sound</choice>
+  </enumChoice>
+  <enumChoice choice="Play Macro" value="40">
+    <choice>Play Macro</choice>
+  </enumChoice>
+  <enumChoice choice="Record Macro">
+    <choice>Record Macro</choice>
+  </enumChoice>
+  <enumChoice choice="Passenger Sounds" value="50">
+    <choice>Passenger Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="Freight Sounds">
+    <choice>Freight Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="Maintenance Sounds">
+    <choice>Maintenance Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="Radio Chatter Sounds">
+    <choice>Radio Chatter Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="City Sounds">
+    <choice>City Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="Farm Sounds">
+    <choice>Farm Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="Industrial Sounds">
+    <choice>Industrial Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="Lumber Yard Sounds">
+    <choice>Lumber Yard Sounds</choice>
+  </enumChoice>
+  <enumChoice choice="Cab Light Toggle" value="60">
+    <choice>Cab Light Toggle</choice>
+  </enumChoice>
+  <enumChoice choice="Rule 17 Dimming Toggle">
+    <choice>Rule 17 Dimming Toggle</choice>
+  </enumChoice>
+</enumVal>

@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
-
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-
-	<!--  TT300 turnout decoder, responds to Programming Track and Ops Mode Accessory Instructions. 
+  <!--  TT300 turnout decoder, responds to Programming Track and Ops Mode Accessory Instructions. 
 	     NB; most command stations cannot do Ops-Mode Accessory Instructions, only Loco Instructions !
 
 		 Note over-loading of standard default naming to get basic features in CV2 onto the Basic pane. 
 
 	-->
-	
   <version author="ncliffe@btinternet.com" version="1" lastUpdated="20101906"/>
   <decoder>
     <family name="Turnouts" mfg="GFB Designs" comment="TT300 is a turnout motor with integral decoder, programmable by service mode or ops-mode for accessories">
@@ -18,11 +15,9 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-	
-	  <variable label="address place holder" CV="1" default="1" />
-
+      <variable label="address place holder" CV="1" default="1"/>
       <variable label="Motor direction" CV="2" comment=" " mask="VXXXXXXX" default="0" item="Locomotive Direction" tooltip="CV2 bit 7">
-		<enumVal>
+        <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
           </enumChoice>
@@ -30,10 +25,9 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
-	  </variable>	  
-
+      </variable>
       <variable label="C input" CV="2" comment="C feature" mask="XXXXXXXV" default="1" item="User Id #1" tooltip="CV2 bit 0">
-		<enumVal>
+        <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
           </enumChoice>
@@ -41,10 +35,9 @@
             <choice>Enable</choice>
           </enumChoice>
         </enumVal>
-	  </variable>
-
+      </variable>
       <variable label="Non-DCC operation" CV="2" comment=" " mask="XXXXXXVX" default="1" item="User Id #2" tooltip="CV2 bit 1">
-		<enumVal>
+        <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
           </enumChoice>
@@ -52,10 +45,7 @@
             <choice>Enable</choice>
           </enumChoice>
         </enumVal>
-	  </variable>
-
-	  
-	  
+      </variable>
       <variable label="Decoder Version" CV="7" readOnly="yes" default="20">
         <decVal/>
         <label>Decoder Version</label>
@@ -64,449 +54,897 @@
         <decVal/>
         <label>Manufacturer</label>
       </variable>
-	  <variable label="highbytes address" CV="9" default="0"><decVal/> </variable>
-
-	  <variable label="Decoder Address" CV="1" mask="VVVVVVVV" comment="Decoder address" item="Short Address" default="1" tooltip="Values from 1 to 2040 for Turnout Address">
-        <splitVal highCV="9" />
-		
+      <variable label="highbytes address" CV="9" default="0">
+        <decVal/>
+      </variable>
+      <variable label="Decoder Address" CV="1" mask="VVVVVVVV" comment="Decoder address" item="Short Address" default="1" tooltip="Values from 1 to 2040 for Turnout Address">
+        <splitVal highCV="9"/>
         <label>Decoder Address</label>
         <comment>Decoder Address</comment>
       </variable>
-
-	  
-	  
       <variable label="Configuration" CV="29" readOnly="yes" default="192">
         <decVal min="0" max="255"/>
         <label>Configuration</label>
       </variable>
-	  
-	  <variable label="Addr 33"  CV="33" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.33.dir" CV="33" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  
-	  <variable label="Addr 34"  CV="34" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.34.dir" CV="34" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  	  <variable label="Addr 35"  CV="35" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.35.dir" CV="35" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  	  <variable label="Addr 36"  CV="36" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.36.dir" CV="36" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 37"  CV="37" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.37.dir" CV="37" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 38"  CV="38" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.38.dir" CV="38" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 39"  CV="39" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.39.dir" CV="39" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 40"  CV="40" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.40.dir" CV="40" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 41"  CV="41" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.41.dir" CV="41" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 42"  CV="42" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.42.dir" CV="42" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 43"  CV="43" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.43.dir" CV="43" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 44"  CV="44" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.44.dir" CV="44" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 45"  CV="45" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.45.dir" CV="45" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 46"  CV="46" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.46.dir" CV="46" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 47"  CV="47" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.47.dir" CV="47" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 48"  CV="48" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.48.dir" CV="48" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-
-	  <variable label="Addr 49"  CV="49" mask="XVVVVVVV" default="0" >
-		<decVal/>	  </variable>
-	  <variable label=" " item="Add.49.dir" CV="49" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 50"  CV="50" mask="XVVVVVVV" default="0" >
-		<decVal/>	  </variable>
-	  <variable label=" " item="Add.50.dir" CV="50" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 51"  CV="51" mask="XVVVVVVV" default="0" >
-		<decVal/>	  </variable>
-	  <variable label=" " item="Add.51.dir" CV="51" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 52"  CV="52" mask="XVVVVVVV" default="0" >
-		<decVal/>	  </variable>
-	  <variable label=" " item="Add.52.dir" CV="52" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 53"  CV="53" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.53.dir" CV="53" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 54"  CV="54" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.54.dir" CV="54" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 55"  CV="55" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.55.dir" CV="55" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 56"  CV="56" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.56.dir" CV="56" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 57"  CV="57" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.57.dir" CV="57" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 58"  CV="58" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.58.dir" CV="58" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 59"  CV="59" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.59.dir" CV="59" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 60"  CV="60" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.60.dir" CV="60" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>	  
-	  <variable label="Addr 61"  CV="61" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.61.dir" CV="61" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>	  
-	  <variable label="Addr 62"  CV="62" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.62.dir" CV="62" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>	  
-	  <variable label="Addr 63"  CV="63" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.63.dir" CV="63" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>	  
-	  <variable label="Addr 64"  CV="64" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.64.dir" CV="64" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>	  
-	  <variable label="Addr 65"  CV="65" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.65.dir" CV="65" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 66"  CV="66" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.66.dir" CV="66" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 67"  CV="67" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.67.dir" CV="67" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 68"  CV="68" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.68.dir" CV="68" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 69"  CV="69" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.69.dir" CV="69" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 70"  CV="70" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.70.dir" CV="70" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 71"  CV="71" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.71.dir" CV="71" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 72"  CV="72" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.72.dir" CV="72" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 73"  CV="73" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.73.dir" CV="73" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 74"  CV="74" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.74.dir" CV="74" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 75"  CV="75" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.75.dir" CV="75" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 76"  CV="76" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.76.dir" CV="76" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 77"  CV="77" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.77.dir" CV="77" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 78"  CV="78" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.78.dir" CV="78" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 79"  CV="79" mask="XVVVVVVV" default="0" ><decVal/></variable>
-	  <variable label=" " item="Add.79.dir" CV="79" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
-	  <variable label="Addr 80"  CV="80" mask="XVVVVVVV" default="0" >
-		<decVal/>
-	  </variable>
-	  <variable label=" " item="Add.80.dir" CV="80" mask="VXXXXXXX" default="0">
-		<enumVal><enumChoice choice="Normal" value="0"/><enumChoice choice="Alt.Sense" value="1"/></enumVal>
-	  </variable>
+      <variable label="Addr 33" CV="33" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.33.dir" CV="33" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 34" CV="34" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.34.dir" CV="34" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 35" CV="35" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.35.dir" CV="35" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 36" CV="36" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.36.dir" CV="36" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 37" CV="37" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.37.dir" CV="37" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 38" CV="38" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.38.dir" CV="38" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 39" CV="39" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.39.dir" CV="39" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 40" CV="40" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.40.dir" CV="40" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 41" CV="41" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.41.dir" CV="41" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 42" CV="42" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.42.dir" CV="42" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 43" CV="43" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.43.dir" CV="43" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 44" CV="44" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.44.dir" CV="44" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 45" CV="45" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.45.dir" CV="45" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 46" CV="46" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.46.dir" CV="46" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 47" CV="47" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.47.dir" CV="47" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 48" CV="48" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.48.dir" CV="48" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 49" CV="49" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.49.dir" CV="49" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 50" CV="50" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.50.dir" CV="50" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 51" CV="51" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.51.dir" CV="51" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 52" CV="52" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.52.dir" CV="52" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 53" CV="53" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.53.dir" CV="53" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 54" CV="54" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.54.dir" CV="54" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 55" CV="55" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.55.dir" CV="55" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 56" CV="56" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.56.dir" CV="56" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 57" CV="57" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.57.dir" CV="57" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 58" CV="58" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.58.dir" CV="58" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 59" CV="59" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.59.dir" CV="59" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 60" CV="60" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.60.dir" CV="60" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 61" CV="61" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.61.dir" CV="61" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 62" CV="62" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.62.dir" CV="62" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 63" CV="63" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.63.dir" CV="63" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 64" CV="64" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.64.dir" CV="64" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 65" CV="65" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.65.dir" CV="65" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 66" CV="66" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.66.dir" CV="66" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 67" CV="67" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.67.dir" CV="67" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 68" CV="68" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.68.dir" CV="68" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 69" CV="69" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.69.dir" CV="69" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 70" CV="70" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.70.dir" CV="70" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 71" CV="71" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.71.dir" CV="71" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 72" CV="72" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.72.dir" CV="72" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 73" CV="73" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.73.dir" CV="73" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 74" CV="74" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.74.dir" CV="74" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 75" CV="75" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.75.dir" CV="75" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 76" CV="76" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.76.dir" CV="76" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 77" CV="77" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.77.dir" CV="77" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 78" CV="78" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.78.dir" CV="78" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 79" CV="79" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.79.dir" CV="79" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Addr 80" CV="80" mask="XVVVVVVV" default="0">
+        <decVal/>
+      </variable>
+      <variable label=" " item="Add.80.dir" CV="80" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Alt.Sense" value="1"/>
+        </enumVal>
+      </variable>
     </variables>
   </decoder>
-
   <pane name="Routes">
     <column>
-	   <label label="In addition to the Primary Address (Basic Tab), the TT300 can respond handle up to 48 Routes. " />
-	   <label label="  " />
-	   <label label="Routes are turnout addresses which take values from 1 to 127.  Optionally, the Route address can cause the " />
-	   <label label="decoder to act in the Alternate Sense to the instruction given (ie, will move the turnout the oposite way). " />
-	   <label label="If any Route Address is set to Zero, then all other after that Route Address are ignored.   " />
-
-	   <label label="  " />
-	   <separator/>
-	  <row>
-	    <column><display item="Addr 33" /></column>
-		<column><display item="Add.33.dir"  format="checkbox" label="Alt Sense" /></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 49" /></column>
-		<column><display item="Add.49.dir" format="checkbox" label="Alt Sense" /></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 65" /></column>
-	    <column><display item="Add.65.dir" format="checkbox" label="Alt Sense" /></column>
-	  </row>
-
-	  <row>
-	    <column><display item="Addr 34" /></column>
-		<column><display item="Add.34.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 50" /></column>
-		<column><display item="Add.50.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 66" /></column>
-	    <column><display item="Add.66.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-
-	  <row>
-	    <column><display item="Addr 35" /></column>
-		<column><display item="Add.35.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 51" /></column>
-		<column><display item="Add.51.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 67" /></column>
-	    <column><display item="Add.67.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-
-	  <row>
-	    <column><display item="Addr 36" /></column>
-		<column><display item="Add.36.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 52" /></column>
-		<column><display item="Add.52.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 68" /></column>
-	    <column><display item="Add.68.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	     <column><label label="     " /></column>
-	  </row>
-	  <row>
-	    <column><display item="Addr 37" /></column>
-		<column><display item="Add.37.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 53" /></column>
-		<column><display item="Add.53.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 69" /></column>
-	    <column><display item="Add.69.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  
-	  <row>
-	    <column><display item="Addr 38" /></column>
-		<column><display item="Add.38.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 54" /></column>
-		<column><display item="Add.54.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 70" /></column>
-	    <column><display item="Add.70.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-
-	  <row>
-	    <column><display item="Addr 39" /></column>
-		<column><display item="Add.39.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 55" /></column>
-		<column><display item="Add.55.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 71" /></column>
-	    <column><display item="Add.71.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  
-	  <row>
-	    <column><display item="Addr 40" /></column>
-		<column><display item="Add.40.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 56" /></column>
-		<column><display item="Add.56.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 72" /></column>
-	    <column><display item="Add.72.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	     <column><label label="         " /></column>
-	  </row>
-	  <row>
-	    <column><display item="Addr 41" /></column>
-		<column><display item="Add.41.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 57" /></column>
-		<column><display item="Add.57.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 73" /></column>
-	    <column><display item="Add.73.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	    <column><display item="Addr 42" /></column>
-		<column><display item="Add.42.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 58" /></column>
-		<column><display item="Add.58.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 74" /></column>
-	    <column><display item="Add.74.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	    <column><display item="Addr 43" /></column>
-		<column><display item="Add.43.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 59" /></column>
-		<column><display item="Add.59.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 75" /></column>
-	    <column><display item="Add.75.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	    <column><display item="Addr 44" /></column>
-		<column><display item="Add.44.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 60" /></column>
-		<column><display item="Add.60.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 76" /></column>
-	    <column><display item="Add.76.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	     <column><label label="         " /></column>
-	  </row>
-	  <row>
-	    <column><display item="Addr 45" /></column>
-		<column><display item="Add.45.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 61" /></column>
-		<column><display item="Add.61.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 77" /></column>
-	    <column><display item="Add.77.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	    <column><display item="Addr 46" /></column>
-		<column><display item="Add.46.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 62" /></column>
-		<column><display item="Add.62.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 78" /></column>
-	    <column><display item="Add.78.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	    <column><display item="Addr 47" /></column>
-		<column><display item="Add.47.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 63" /></column>
-		<column><display item="Add.63.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 79" /></column>
-	    <column><display item="Add.79.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	    <column><display item="Addr 48" /></column>
-		<column><display item="Add.48.dir"  format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 64" /></column>
-		<column><display item="Add.64.dir" format="checkbox" label="Alt Sense"/></column>
-	    <column><label label="              " /></column>
-	    <column><display item="Addr 80" /></column>
-	    <column><display item="Add.80.dir" format="checkbox" label="Alt Sense"/></column>
-	  </row>
-	  <row>
-	     <column><label label="    " /></column>
-	  </row>
-	  
-
+      <label label="In addition to the Primary Address (Basic Tab), the TT300 can respond handle up to 48 Routes. "/>
+      <label label="  "/>
+      <label label="Routes are turnout addresses which take values from 1 to 127.  Optionally, the Route address can cause the "/>
+      <label label="decoder to act in the Alternate Sense to the instruction given (ie, will move the turnout the oposite way). "/>
+      <label label="If any Route Address is set to Zero, then all other after that Route Address are ignored.   "/>
+      <label label="  "/>
+      <separator/>
+      <row>
+        <column>
+          <display item="Addr 33"/>
+        </column>
+        <column>
+          <display item="Add.33.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 49"/>
+        </column>
+        <column>
+          <display item="Add.49.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 65"/>
+        </column>
+        <column>
+          <display item="Add.65.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 34"/>
+        </column>
+        <column>
+          <display item="Add.34.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 50"/>
+        </column>
+        <column>
+          <display item="Add.50.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 66"/>
+        </column>
+        <column>
+          <display item="Add.66.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 35"/>
+        </column>
+        <column>
+          <display item="Add.35.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 51"/>
+        </column>
+        <column>
+          <display item="Add.51.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 67"/>
+        </column>
+        <column>
+          <display item="Add.67.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 36"/>
+        </column>
+        <column>
+          <display item="Add.36.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 52"/>
+        </column>
+        <column>
+          <display item="Add.52.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 68"/>
+        </column>
+        <column>
+          <display item="Add.68.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="     "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 37"/>
+        </column>
+        <column>
+          <display item="Add.37.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 53"/>
+        </column>
+        <column>
+          <display item="Add.53.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 69"/>
+        </column>
+        <column>
+          <display item="Add.69.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 38"/>
+        </column>
+        <column>
+          <display item="Add.38.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 54"/>
+        </column>
+        <column>
+          <display item="Add.54.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 70"/>
+        </column>
+        <column>
+          <display item="Add.70.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 39"/>
+        </column>
+        <column>
+          <display item="Add.39.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 55"/>
+        </column>
+        <column>
+          <display item="Add.55.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 71"/>
+        </column>
+        <column>
+          <display item="Add.71.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 40"/>
+        </column>
+        <column>
+          <display item="Add.40.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 56"/>
+        </column>
+        <column>
+          <display item="Add.56.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 72"/>
+        </column>
+        <column>
+          <display item="Add.72.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="         "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 41"/>
+        </column>
+        <column>
+          <display item="Add.41.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 57"/>
+        </column>
+        <column>
+          <display item="Add.57.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 73"/>
+        </column>
+        <column>
+          <display item="Add.73.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 42"/>
+        </column>
+        <column>
+          <display item="Add.42.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 58"/>
+        </column>
+        <column>
+          <display item="Add.58.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 74"/>
+        </column>
+        <column>
+          <display item="Add.74.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 43"/>
+        </column>
+        <column>
+          <display item="Add.43.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 59"/>
+        </column>
+        <column>
+          <display item="Add.59.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 75"/>
+        </column>
+        <column>
+          <display item="Add.75.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 44"/>
+        </column>
+        <column>
+          <display item="Add.44.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 60"/>
+        </column>
+        <column>
+          <display item="Add.60.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 76"/>
+        </column>
+        <column>
+          <display item="Add.76.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="         "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 45"/>
+        </column>
+        <column>
+          <display item="Add.45.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 61"/>
+        </column>
+        <column>
+          <display item="Add.61.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 77"/>
+        </column>
+        <column>
+          <display item="Add.77.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 46"/>
+        </column>
+        <column>
+          <display item="Add.46.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 62"/>
+        </column>
+        <column>
+          <display item="Add.62.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 78"/>
+        </column>
+        <column>
+          <display item="Add.78.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 47"/>
+        </column>
+        <column>
+          <display item="Add.47.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 63"/>
+        </column>
+        <column>
+          <display item="Add.63.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 79"/>
+        </column>
+        <column>
+          <display item="Add.79.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Addr 48"/>
+        </column>
+        <column>
+          <display item="Add.48.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 64"/>
+        </column>
+        <column>
+          <display item="Add.64.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+        <column>
+          <label label="              "/>
+        </column>
+        <column>
+          <display item="Addr 80"/>
+        </column>
+        <column>
+          <display item="Add.80.dir" format="checkbox" label="Alt Sense"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="    "/>
+        </column>
+      </row>
     </column>
   </pane>
 </decoder-config>
-
- 	  	 

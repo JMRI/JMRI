@@ -2,6 +2,8 @@
 
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Section;
 import jmri.TransitSection;
 import jmri.Block;
@@ -501,9 +503,35 @@ public class Transit extends AbstractNamedBean
 		}
 		return numErrors;
 	}
+    
+    public void removeTemporarySections(){
+        ArrayList<TransitSection> toBeRemoved = new ArrayList<TransitSection>();
+        for(TransitSection ts : mTransitSectionList){
+            if(ts.isTemporary())
+                toBeRemoved.add(ts);
+        }
+        for(TransitSection ts: toBeRemoved){
+            mTransitSectionList.remove(ts);
+        }
+    }
+    
+    public boolean removeLastTemporarySection(Section s){
+        TransitSection last = mTransitSectionList.get(mTransitSectionList.size()-1);
+        if(last.getSection()!=s){
+            log.info("Section asked to be removed is not the last one");
+            return false;
+        }
+        if(!last.isTemporary()){
+            log.info("Section asked to be removed is not a temporary section");
+            return false;
+        }
+        mTransitSectionList.remove(last);
+        return true;
+    
+    }
 		
 	    
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Transit.class.getName());
+    static final Logger log = LoggerFactory.getLogger(Transit.class.getName());
 	
 }
 

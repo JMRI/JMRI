@@ -14,8 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.0" lastUpdated="20101103"/>
-<!-- Version 1 inital release -->
-
+  <!-- Version 1 inital release -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SMD84" lowVersionID="1" comment="SMD84 is a stationary decoder, but it can be programmed in the usual way"/>
@@ -202,9 +201,8 @@
         <splitVal highCV="27" upperMask="XXXXVVVV"/>
         <label>Output 8 Address</label>
       </variable>
-
-<!-- Status Report variable definition -->
-     <variable label="Power On Send Input State" CV="28" mask="XXXXXXXV">
+      <!-- Status Report variable definition -->
+      <variable label="Power On Send Input State" CV="28" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -248,8 +246,7 @@
         </enumVal>
         <label>Interrogate output</label>
       </variable>
-
-<!-- Decoder Configuration variable definition -->
+      <!-- Decoder Configuration variable definition -->
       <variable label="Select Power On Option" CV="29" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="None">
@@ -275,7 +272,7 @@
         </enumVal>
         <label>Option 3</label>
       </variable>
-     <variable label="DCC gateway" CV="29" mask="XXXXVXXX">
+      <variable label="DCC gateway" CV="29" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -308,10 +305,9 @@
         </enumVal>
         <label>DCC control</label>
       </variable>
-      
-      <variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" tooltip="Range 1-99"
-         default="1"> <shortAddressVal/>
-<!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
+      <variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" tooltip="Range 1-99" default="1">
+        <shortAddressVal/>
+        <!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
         <label>Ops Mode Address</label>
       </variable>
       <variable label="" item="OS1" CV="33" mask="XXXXXXVV" default="0">
@@ -426,9 +422,7 @@
         </enumVal>
         <label/>
       </variable>
-      
-<!-- Begin primary input variable definition -->
-
+      <!-- Begin primary input variable definition -->
       <variable label="Address" CV="35" mask="VVVVVVVV" item="PA1" default="1">
         <splitVal highCV="36" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
@@ -917,9 +911,7 @@
         <decVal min="0" max="8"/>
         <label>Route Number</label>
       </variable>
-      
-<!-- Begin secondary input variable definition -->
-
+      <!-- Begin secondary input variable definition -->
       <variable label="Address" CV="59" mask="VVVVVVVV" item="SA1" default="0">
         <splitVal highCV="60" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
@@ -1408,8 +1400,7 @@
         <decVal min="0" max="8"/>
         <label>Route Number</label>
       </variable>
-      
-<!-- Begin auxiliary input variable definition -->
+      <!-- Begin auxiliary input variable definition -->
       <variable label="Address" CV="83" mask="VVVVVVVV" item="AA1" default="0">
         <splitVal highCV="84" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
@@ -1715,23 +1706,20 @@
         <decVal min="0" max="8"/>
         <label>Route Number</label>
       </variable>
-      
-<!-- Output busy timer variable definition -->
-     <variable label="Output busy timer" CV="98" mask="XVVVVVVV" default="19">
-        <decVal min="0" max="127"/>
-      </variable>     
-      
-<!-- Route send delay variable definition -->
-     <variable label="Route send delay" CV="99" mask="XVVVVVVV">
+      <!-- Output busy timer variable definition -->
+      <variable label="Output busy timer" CV="98" mask="XVVVVVVV" default="19">
         <decVal min="0" max="127"/>
       </variable>
-
-<!-- Input Lockout variable definition -->
+      <!-- Route send delay variable definition -->
+      <variable label="Route send delay" CV="99" mask="XVVVVVVV">
+        <decVal min="0" max="127"/>
+      </variable>
+      <!-- Input Lockout variable definition -->
       <variable label="Address" CV="100" mask="VVVVVVVV" item="Lockout">
         <splitVal highCV="101" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
-<!-- Begin route variable definition -->
+      <!-- Begin route variable definition -->
       <variable label="Top Address" CV="112" mask="VVVVVVVV" item="Rt Top1">
         <splitVal highCV="113" upperMask="XXXXVVVV"/>
         <label>Top Address</label>
@@ -1940,7 +1928,7 @@
         </enumVal>
         <label>Sensor Route Execution</label>
       </variable>
-<!-- Route 1 variable definition -->
+      <!-- Route 1 variable definition -->
       <variable label="Cell 1 Address" CV="128" mask="VVVVVVVV" item="Rt Cell 11">
         <splitVal highCV="129" upperMask="XXXXVVVV"/>
         <label>Cell 1 Address</label>
@@ -2942,7 +2930,7 @@
     </column>
     <name>Basic</name>
   </pane>
- <pane name="Options">
+  <pane name="Options">
     <column>
       <row>
         <column>
@@ -3050,8 +3038,8 @@
           <label label="Opt4 Send output state at Digitrax interrogation request">
           </label>
           <label label="- Feedback type messages">
-          </label>          
-           </column>
+          </label>
+        </column>
       </row>
     </column>
     <name>Options</name>
@@ -3066,9 +3054,8 @@
     </column>
     <name>Mfg</name>
   </pane>
-  
   <pane name="Primary Inputs">
-     <column>
+    <column>
       <label label=" ">
         <label> </label>
       </label>
@@ -3405,9 +3392,8 @@
     </column>
     <name>Primary Inputs</name>
   </pane>
-  
   <pane name="Secondary Inputs">
-     <column>
+    <column>
       <label label=" ">
         <label> </label>
       </label>
@@ -3745,7 +3731,7 @@
     <name>Secondary Inputs</name>
   </pane>
   <pane name="Auxiliary Inputs">
-     <column>
+    <column>
       <label label=" ">
         <label> </label>
       </label>
@@ -4119,7 +4105,7 @@
     </column>
     <name>Outputs</name>
   </pane>
-   <pane name="Routes">
+  <pane name="Routes">
     <column>
       <label label=" ">
         <label> </label>

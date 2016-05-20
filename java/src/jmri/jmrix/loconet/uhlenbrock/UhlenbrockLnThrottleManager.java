@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
@@ -110,5 +112,5 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
         super.cancelThrottleRequest(address, isLong, l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UhlenbrockLnThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManager.class.getName());
 }

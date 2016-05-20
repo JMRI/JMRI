@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.SensorManager;
 import junit.framework.Assert;
@@ -132,7 +133,7 @@ public class XNetSensorManagerTest extends TestCase  {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSensorManagerTest.class.getName());
+	 static Logger log = Logger.getLogger(XNetSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

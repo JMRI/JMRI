@@ -2,11 +2,15 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.managers.TurnoutManagerScaffold;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.logix.OBlockManager;
 
 /**
  * Test InstanceManager
@@ -14,7 +18,7 @@ import junit.framework.Assert;
  * @author			Bob Jacobsen
  * @version $Revision$
  */
-public class InstanceManagerTest extends TestCase {
+public class InstanceManagerTest extends TestCase implements InstanceManagerAutoDefault {
 
     public void testDefaultPowerManager() {
         PowerManager m = new PowerManagerScaffold();
@@ -108,6 +112,26 @@ public class InstanceManagerTest extends TestCase {
         Assert.assertEquals("retrieved second PowerManager", m1, m2);
     }
     
+    public static class OkAutoCreate implements InstanceManagerAutoDefault {
+        public OkAutoCreate() { System.out.println(); }
+    }
+
+    public void testAutoCreateOK() {
+    
+        OkAutoCreate obj1 = InstanceManager.getDefault(OkAutoCreate.class);
+        Assert.assertNotNull("Created object 1", obj1);
+        OkAutoCreate obj2 = InstanceManager.getDefault(OkAutoCreate.class);
+        Assert.assertNotNull("Created object 2", obj2);
+        Assert.assertTrue("same object", obj1 == obj2);
+    }
+    
+    public class NoAutoCreate {}
+    
+    public void testAutoCreateNotOK() {
+        NoAutoCreate obj = InstanceManager.getDefault(NoAutoCreate.class);
+        Assert.assertNull(obj);
+    }
+    
     /**
      * Test of types that have defaults, even with
      * no system attached.
@@ -137,6 +161,32 @@ public class InstanceManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.memoryManagerInstance() );
         Assert.assertNotNull(InstanceManager.audioManagerInstance() );
         Assert.assertNotNull(InstanceManager.rosterIconFactoryInstance() ); 
+    }
+    
+    //
+    // Tests of individual types, to make sure they
+    // properly create defaults
+    //
+    public void testLayoutBlockManager() {
+        LayoutBlockManager obj = InstanceManager.layoutBlockManagerInstance();
+        Assert.assertNotNull(obj);
+        Assert.assertEquals(obj, InstanceManager.layoutBlockManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
+        Assert.assertEquals(obj, InstanceManager.layoutBlockManagerInstance());
+    }
+    public void testWarrantManager() {
+        WarrantManager obj = InstanceManager.warrantManagerInstance();
+        Assert.assertNotNull(obj);
+        Assert.assertEquals(obj, InstanceManager.warrantManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
+        Assert.assertEquals(obj, InstanceManager.warrantManagerInstance());
+    }
+    public void testOBlockManager() {
+        OBlockManager obj = InstanceManager.oBlockManagerInstance();
+        Assert.assertNotNull(obj);
+        Assert.assertEquals(obj, InstanceManager.oBlockManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(OBlockManager.class));
+        Assert.assertEquals(obj, InstanceManager.oBlockManagerInstance());
     }
     
 	// from here down is testing infrastructure
@@ -173,6 +223,6 @@ public class InstanceManagerTest extends TestCase {
         };
     }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstanceManagerTest.class.getName());
+	static Logger log = Logger.getLogger(InstanceManagerTest.class.getName());
 
 }

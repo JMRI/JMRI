@@ -1,5 +1,7 @@
 package jmri.jmrix.jmriclient.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -19,7 +21,7 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class","jmri.jmrix.jmriclient.configurexml.JMRIClientSensorConfigXml");
+        sensors.setAttribute("class","jmri.jmrix.jmriclient.configurexml.JMRIClientSensorManagerXml");
     }
 
     public void load(Element element, Object o) {
@@ -32,5 +34,5 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
     }
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(JMRIClientSensorManagerXml.class.getName());
 }

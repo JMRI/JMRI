@@ -2,6 +2,8 @@
 
 package jmri.jmrit.progsupport;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import jmri.*;
 
@@ -39,10 +41,10 @@ public class ProgOpsModePane extends javax.swing.JPanel {
         mModeGroup = group;
 
         // configure items for GUI
-        mOpsByteButton.setText("Ops Byte Mode");
+        mOpsByteButton.setText(Bundle.getMessage("OpsByteMode"));
         mModeGroup.add(mOpsByteButton);
-        mAddrField.setToolTipText("Enter the decoder numeric address");
-        mLongAddrCheck.setToolTipText("If checked, use a long address, otherwise use a short address");
+        mAddrField.setToolTipText(Bundle.getMessage("ToolTipEnterDecoderAddress"));
+        mLongAddrCheck.setToolTipText(Bundle.getMessage("ToolTipCheckedLongAddress"));
 
         // if a programmer is available, disable buttons for unavailable modes
         if (InstanceManager.programmerManagerInstance()!=null) {
@@ -112,6 +114,6 @@ public class ProgOpsModePane extends javax.swing.JPanel {
     public void dispose() {
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgOpsModePane.class.getName());
+    static Logger log = LoggerFactory.getLogger(ProgOpsModePane.class.getName());
 
 }

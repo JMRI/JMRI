@@ -26,7 +26,7 @@
 
 The JMRI library provides a very powerful set of tools for
 automating your layout.  If the tools built into
-<A HREF="../../apps/PanelPro/PanelPro.html">PanelPro</a> or the
+<A HREF="../../apps/PanelPro/PanelPro.shtml">PanelPro</a> or the
 <A HREF="../scripting/index.shtml">scripting capability</a>
 aren't sufficient to do what you want, writing your own
 control program certainly will be.

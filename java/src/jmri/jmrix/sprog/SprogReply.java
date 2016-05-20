@@ -1,6 +1,8 @@
 // SprogReply.java
 package jmri.jmrix.sprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 
@@ -34,8 +36,10 @@ public class SprogReply extends AbstractMRReply {
 	@SuppressWarnings("null")
 	public  SprogReply(SprogReply m) {
           this();
-		if (m == null)
+		if (m == null){
 			log.error("copy ctor of null message");
+                        return;
+                }
 		_nDataChars = m._nDataChars;
                 _isBoot = m._isBoot;
                 if (m.isUnsolicited()) super.setUnsolicited();
@@ -236,7 +240,7 @@ public class SprogReply extends AbstractMRReply {
 
         
     
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogReply.class.getName());
+   static Logger log = LoggerFactory.getLogger(SprogReply.class.getName());
 
 }
 

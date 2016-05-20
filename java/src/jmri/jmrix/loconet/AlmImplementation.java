@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Provide an ALM that lives on the LocoNet.
  * <P>ALMs work in terms of numbered (indexed) Args, each 14 bits
@@ -177,5 +180,5 @@ public class AlmImplementation implements LocoNetListener {
         for (int i=0; i<length; i++) contents[i]=0x3FFF;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AlmImplementation.class.getName());
+    static Logger log = LoggerFactory.getLogger(AlmImplementation.class.getName());
 }

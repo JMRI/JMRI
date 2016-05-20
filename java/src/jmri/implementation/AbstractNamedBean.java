@@ -2,6 +2,8 @@
 
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -147,7 +149,10 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         firePropertyChange("UserName", old, s);
     }
 
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
+								justification="Sync of mUserName protected by ctor invocation") 
     protected String mUserName;
+    
     protected String mSystemName;
 
     protected void firePropertyChange(String p, Object old, Object n) { 
@@ -173,10 +178,16 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         if (parameters == null) return null;
         return parameters.keySet();
     }
+    
+    public void removeProperty(Object key){
+        if(parameters == null || key == null)
+            return;
+        parameters.remove(key);
+    }
 
     HashMap<Object, Object> parameters = null;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNamedBean.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractNamedBean.class.getName());
 }
 
 /* @(#)AbstractNamedBean.java */

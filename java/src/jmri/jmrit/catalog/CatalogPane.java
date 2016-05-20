@@ -3,18 +3,18 @@
 package jmri.jmrit.catalog;
 
 import java.io.File;
-
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.JLabel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Create a JPanel containing a tree of resources.
@@ -62,6 +62,7 @@ public class CatalogPane extends JPanel {
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
         dTree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent e) {
                 if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
                         // somebody has been selected
@@ -73,6 +74,7 @@ public class CatalogPane extends JPanel {
 
         // add a listener for debugging
         if (log.isDebugEnabled()) dTree.addTreeSelectionListener(new TreeSelectionListener() {
+                @Override
                 public void valueChanged(TreeSelectionEvent e) {
                     if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
                         // somebody has been selected
@@ -128,33 +130,6 @@ public class CatalogPane extends JPanel {
 
     JTree dTree;
 
-    // Main entry point
-    public static void main(String s[]) {
-
-    	// initialize log4j - from logging control file (lcf) only
-    	// if can find it!
-    	String logFile = "default.lcf";
-    	try {
-            if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-            } else {
-                org.apache.log4j.BasicConfigurator.configure();
-            }
-        }
-        catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-
-        log.info("CatalogPane starts");
-
-    	// create the demo frame and menus
-        CatalogPane pane = new CatalogPane();
-        JFrame frame = new JFrame("CatalogPane");
-        frame.getContentPane().add(pane);
-        // pack and center this frame
-      	frame.pack();
-
-        frame.setVisible(true);
-    }
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(CatalogPane.class.getName());
 }
 

@@ -3,10 +3,12 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import javax.swing.*;
-
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -34,7 +36,7 @@ public class DrawCircle extends DrawFrame {
 	   
        JPanel p = new JPanel();
 	   p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-       p.add(new JLabel(rbcp.getString("circle")));
+       p.add(new JLabel(Bundle.getMessage("circle")));
        JPanel pp = new JPanel();
        _radiusText = new JTextField(6);
        _radiusText.addKeyListener(new KeyListener() {
@@ -51,27 +53,27 @@ public class DrawCircle extends DrawFrame {
 	   _radiusText.setText(Integer.toString(_radius));
        _radiusText.setHorizontalAlignment(JTextField.RIGHT);
        pp.add(_radiusText);
-       pp.add(new JLabel(rbcp.getString("circleRadius")));
+       pp.add(new JLabel(Bundle.getMessage("circleRadius")));
        p.add(pp);
        panel.add(p);
        panel.add(Box.createVerticalStrut(STRUT_SIZE));
        return panel;
 	}
 	
-	protected void makeFigure() {
+	protected boolean makeFigure(MouseEvent event) {
 		ControlPanelEditor ed = _parent.getEditor();
 		Rectangle r = ed.getSelectRect();
-		if (r==null) {
-			return;
+		if (r!=null) {
+			_radius = Math.max(r.width, r.height);
+			Ellipse2D.Double rr = new Ellipse2D.Double(0, 0, _radius, _radius);
+			PositionableCircle ps = new PositionableCircle(ed, rr);
+			ps.setLocation(r.x, r.y);
+			ps.setDisplayLevel(ControlPanelEditor.MARKERS);
+			setPositionableParams(ps);
+			ps.updateSize();
+			ed.putItem(ps);
 		}
-		_radius = Math.max(r.width, r.height);
-		Ellipse2D.Double rr = new Ellipse2D.Double(0, 0, _radius, _radius);
-		PositionableCircle ps = new PositionableCircle(ed, rr);
-		ps.setLocation(r.x, r.y);
-		ps.setDisplayLevel(ControlPanelEditor.MARKERS);
-		setPositionableParams(ps);
-		ps.updateSize();
-		ed.putItem(ps);
+		return true;
 	}
 	
 	/**
@@ -100,5 +102,5 @@ public class DrawCircle extends DrawFrame {
 //		pos.makeShape();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DrawCircle.class.getName());
+    static Logger log = LoggerFactory.getLogger(DrawCircle.class.getName());
 }

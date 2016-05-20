@@ -2,6 +2,8 @@
 
 package jmri.jmrix.bachrus.serialdriver;
 
+import jmri.util.SystemType;
+
 
 /**
  * Definition of objects to handle configuring a connection
@@ -31,7 +33,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     @Override
     protected String[] getPortFriendlyNames() {
-        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+        if(SystemType.isWindows()){
             return new String[]{"Bachrus Speedo","Bachrus"};
         }
         return new String[]{};

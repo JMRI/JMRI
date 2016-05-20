@@ -1,48 +1,52 @@
 // JsonServer.java
 package jmri.jmris.json;
 
+import com.fasterxml.jackson.core.JsonParser.Feature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
-import java.util.ResourceBundle;
-import java.util.Scanner;
-
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriConnection;
 import jmri.jmris.JmriServer;
-
-import org.apache.log4j.Logger;
+import static jmri.jmris.json.JSON.GOODBYE;
+import static jmri.jmris.json.JSON.JSON;
+import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
+import static jmri.jmris.json.JSON.TYPE;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * This is an implementation of a simple server for JMRI.
- * There is currently no handshaking in this server.  You may just start 
- * sending commands.
+ * This is an implementation of a simple server for JMRI. There is currently no
+ * handshaking in this server. You may just start sending commands.
+ *
  * @author Paul Bender Copyright (C) 2010
  * @version $Revision: 21126 $
  *
  */
 public class JsonServer extends JmriServer {
 
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.json.JsonServer");
-	static Logger log = Logger.getLogger(JsonServer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JsonServer.class);
+    private ObjectMapper mapper;
 
-	// Create a new server using the default port
-	public JsonServer() {
-		this(JsonServerManager.getJsonServerPreferences().getPort(), JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
-	}
+    // Create a new server using the default port
+    public JsonServer() {
+        this(JsonServerManager.getJsonServerPreferences().getPort(), JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+    }
 
-	public JsonServer(int port, int timeout) {
-		super(port, timeout);
-        shutDownTask = new QuietShutDownTask("Stop JSON Server") {
-
+    public JsonServer(int port, int timeout) {
+        super(port, timeout);
+        this.mapper = new ObjectMapper().configure(Feature.AUTO_CLOSE_SOURCE, false);
+        shutDownTask = new QuietShutDownTask("Stop JSON Server") { // NOI18N
             @Override
             public boolean execute() {
                 try {
-                	JsonServerManager.getJsonServer().stop();
+                    JsonServerManager.getJsonServer().stop();
                 } catch (Exception ex) {
-                    log.warn("Error shutting down JSON Server: " + ex.getLocalizedMessage());
+                    log.warn("ERROR shutting down JSON Server: " + ex.getLocalizedMessage());
                     if (log.isDebugEnabled()) {
                         log.debug("Details follow: ", ex);
                     }
@@ -50,55 +54,55 @@ public class JsonServer extends JmriServer {
                 return true;
             }
         };
-	}
+    }
 
-	@Override
-	public void start() {
-		log.info("Starting JSON Server on port " + this.portNo);
-		super.start();
-	}
+    @Override
+    public void start() {
+        log.info("Starting JSON Server on port " + this.portNo);
+        super.start();
+    }
 
-	@Override
-	public void stop() {
-		log.info("Stopping JSON Server.");
-		super.stop();
-	}
+    @Override
+    public void stop() {
+        log.info("Stopping JSON Server.");
+        super.stop();
+    }
 
-	@Override
-	protected void advertise() {
-        this.advertise("_jmri-json._tcp.local.");
-	}
-	
-	// Handle communication to a client through inStream and outStream
-	@Override
-	public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
-		Scanner scanner = new Scanner(new InputStreamReader(inStream));
-		JsonClientHandler handler = new JsonClientHandler(new JmriConnection(outStream));
+    @Override
+    protected void advertise() {
+        HashMap<String, String> properties = new HashMap<String, String>();
+        properties.put(JSON, JSON_PROTOCOL_VERSION);
+        this.advertise("_jmri-json._tcp.local.", properties); // NOI18N
+    }
 
-		// Start by sending a welcome message
-		handler.sendHello(this.timeout);
+    // Handle communication to a client through inStream and outStream
+    @Override
+    public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
+        ObjectReader reader = this.mapper.reader();
+        JsonClientHandler handler = new JsonClientHandler(new JmriConnection(outStream), this.mapper);
 
-		while (true) {
-			scanner.skip("[\r\n]*");// skip any stray end of line characters.
-			// Read the command from the client
-			try {
-				handler.onMessage(scanner.nextLine());
-			} catch (IOException e) {
-				scanner.close();
-				handler.onClose();
-				throw e;
-			} catch (NoSuchElementException nse) {
-				// we get an NSE when we are finished with this client
-				// so break out of the loop
-				break;
-			}
-		}
-		scanner.close();
-		handler.onClose();
-	}
+        // Start by sending a welcome message
+        handler.sendHello(this.timeout);
 
-	@Override
-	public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
-		outStream.writeBytes("{'type':'goodbye'}");
-	}
+        while (true) {
+            try {
+                handler.onMessage(reader.readTree(inStream));
+                // Read the command from the client
+            } catch (IOException e) {
+                // attempt to close the connection and throw the exception
+                handler.onClose();
+                throw e;
+            } catch (NoSuchElementException nse) {
+                // we get an NSE when we are finished with this client
+                // so break out of the loop
+                break;
+            }
+        }
+        handler.onClose();
+    }
+
+    @Override
+    public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
+        outStream.writeBytes(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, GOODBYE)));
+    }
 }

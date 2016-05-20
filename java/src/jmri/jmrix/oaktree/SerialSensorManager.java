@@ -2,6 +2,8 @@
 
 package jmri.jmrix.oaktree;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 
 /**
@@ -150,7 +152,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     static SerialSensorManager _instance = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
 
 /* @(#)SerialSensorManager.java */

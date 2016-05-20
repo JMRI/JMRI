@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.pr3;
 
+import jmri.util.SystemType;
+
 /**
  * Definition of objects to handle configuring a PR3 layout connection
  * via a PR2Adapter object.
@@ -32,7 +34,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     
     @Override
     protected String[] getPortFriendlyNames() {
-        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+        if(SystemType.isWindows()){
             return new String[]{"Communications Port"};
         }
         return new String[]{};

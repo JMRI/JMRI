@@ -2,9 +2,10 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.ResourceBundle;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
@@ -18,14 +19,12 @@ import jmri.jmrit.operations.setup.Setup;
  * @version     $Revision: 18559 $
  */
 public class IgnoreUsedTrackAction extends AbstractAction {
-		
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+			
 	private TrackEditFrame _tef;
 	private IgnoreUsedTrackFrame _iutf;
 	
 	public IgnoreUsedTrackAction(TrackEditFrame tef){
-		super(rb.getString("MenuItemPlannedPickups"));
+		super(Bundle.getMessage("MenuItemPlannedPickups"));
 		_tef = tef;
 	}
 	
@@ -37,18 +36,16 @@ public class IgnoreUsedTrackAction extends AbstractAction {
 }
 
 class IgnoreUsedTrackFrame extends OperationsFrame {
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+		
 	// radio buttons
-	JRadioButton zeroPercent = new JRadioButton(rb.getString("Disabled"));
-	JRadioButton twentyfivePercent = new JRadioButton("25%");
-	JRadioButton fiftyPercent = new JRadioButton("50%");
-	JRadioButton seventyfivePercent = new JRadioButton("75%");
-	JRadioButton hundredPercent = new JRadioButton("100%");
+	JRadioButton zeroPercent = new JRadioButton(Bundle.getMessage("Disabled"));
+	JRadioButton twentyfivePercent = new JRadioButton("25%");	// NOI18N
+	JRadioButton fiftyPercent = new JRadioButton("50%");		// NOI18N
+	JRadioButton seventyfivePercent = new JRadioButton("75%");	// NOI18N
+	JRadioButton hundredPercent = new JRadioButton("100%");		// NOI18N
     
     // major buttons
-    JButton saveButton = new JButton(rb.getString("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("Save"));
     
     private TrackEditFrame _tef;
     protected Track _track;
@@ -56,7 +53,7 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 	public IgnoreUsedTrackFrame(TrackEditFrame tef){
 		super();
 		
-		setTitle(rb.getString("MenuItemPlannedPickups"));
+		setTitle(Bundle.getMessage("MenuItemPlannedPickups"));
 			    
 	    _tef = tef;
 	    _track = _tef._track;
@@ -69,7 +66,7 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 	    
 	    JPanel p1 = new JPanel();
-	    p1.setBorder(BorderFactory.createTitledBorder(rb.getString("PrePlanedPickups")));
+	    p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrePlanedPickups")));
 	    
 	    p1.add(zeroPercent);
 	    p1.add(twentyfivePercent);
@@ -122,5 +119,5 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 		}		
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IgnoreUsedTrackFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(IgnoreUsedTrackFrame.class.getName());
 }

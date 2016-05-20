@@ -3,8 +3,12 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Stroke;
+import java.awt.event.MouseEvent;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -14,12 +18,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
+import jmri.NamedBeanHandle;
+import jmri.Sensor;
 import jmri.jmrit.display.Editor.TargetPane;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //import javax.swing.JRadioButton;
 
@@ -34,7 +41,6 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	
     protected ShapeDrawer _parent;
     
-    public static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
     static Point _loc = new Point(100,100);
     static Dimension _dim = new Dimension(500,500);
@@ -49,11 +55,12 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
     JRadioButton _fillColorButon;
     JSlider 	_lineSlider;
     JSlider		_fillSlider;
+	JTextField	_sensorName = new JTextField(30);
     
 	public DrawFrame(String which, String title, ShapeDrawer parent) {
 		super(title, false, false);
         _parent = parent;
-        setTitle(java.text.MessageFormat.format(rbcp.getString(which), rbcp.getString(title)));       
+        setTitle(Bundle.getMessage(which, Bundle.getMessage(title)));       
  
         _lineWidth = 1;
         _lineColor = Color.black;
@@ -63,22 +70,40 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         panel.setLayout(new java.awt.BorderLayout(10,10));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         if (which.equals("newShape")) {
             panel.add(Box.createVerticalStrut(STRUT_SIZE));
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            JLabel l = new JLabel(rbcp.getString("drawInstructions1"));
+            JLabel l = new JLabel(Bundle.getMessage("drawInstructions1"));
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             p.add(l);
-            l = new JLabel(rbcp.getString("drawInstructions2"));
+            if (title.equals("polygon")) {
+                l = new JLabel(Bundle.getMessage("drawInstructions2a"));            	            	
+                l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+                p.add(l);
+                l = new JLabel(Bundle.getMessage("drawInstructions2b"));            	            	
+            }else {
+                l = new JLabel(Bundle.getMessage("drawInstructions2"));            	
+            }
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             p.add(l);
-            JPanel pp = new JPanel();
-            pp.add(p);
-            panel.add(pp);        	
         }
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        JLabel l = new JLabel(Bundle.getMessage("drawInstructions3a"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        p.add(l);
+        l = new JLabel(Bundle.getMessage("drawInstructions3b"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        p.add(l);
+        
+        JPanel pp = new JPanel();
+        pp.add(p);
+        panel.add(pp);
+        
         panel.add(makePanel());
+        // PositionableShape adds buttons at the bottom
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(makeSensorPanel());
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         setContentPane(panel);
@@ -91,27 +116,28 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         pack();
         setLocation(_loc);
         setVisible(true);
+        setAlwaysOnTop(true);
 	}
-	
+
 	protected JPanel makePanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-	    p.add(new JLabel(rbcp.getString("lineWidth")));
+	    p.add(new JLabel(Bundle.getMessage("lineWidth")));
 	    JPanel pp = new JPanel();
-	    pp.add(new JLabel(rbcp.getString("thin")));
+	    pp.add(new JLabel(Bundle.getMessage("thin")));
 	    _lineSlider = new JSlider(SwingConstants.HORIZONTAL, 1, 30, _lineWidth);
 	    pp.add(_lineSlider);
-	    pp.add(new JLabel(rbcp.getString("thick")));
+	    pp.add(new JLabel(Bundle.getMessage("thick")));
 	    p.add(pp);
 	    panel.add(p);
 	    p = new JPanel();
 	    ButtonGroup bg = new ButtonGroup();
-	    _lineColorButon = new JRadioButton(rbcp.getString("lineColor"));
+	    _lineColorButon = new JRadioButton(Bundle.getMessage("lineColor"));
 	    p.add(_lineColorButon);
 	    bg.add(_lineColorButon);
-	    _fillColorButon = new JRadioButton(rbcp.getString("fillColor"));
+	    _fillColorButon = new JRadioButton(Bundle.getMessage("fillColor"));
 	    p.add(_fillColorButon);
 	    bg.add(_fillColorButon);
 	    _lineColorButon.setSelected(true);
@@ -124,17 +150,25 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	    panel.add(_chooser);
 	    p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-	    p.add(new JLabel(rbcp.getString("transparency")));
+	    p.add(new JLabel(Bundle.getMessage("transparency")));
 	    pp = new JPanel();
-	    pp.add(new JLabel(rbcp.getString("transparent")));
+	    pp.add(new JLabel(Bundle.getMessage("transparent")));
 	    _fillSlider = new JSlider(SwingConstants.HORIZONTAL, 0, 255, _alpha);
 	    pp.add(_fillSlider);
-	    pp.add(new JLabel(rbcp.getString("opaque")));
+	    pp.add(new JLabel(Bundle.getMessage("opaque")));
 	    p.add(pp);
 	    panel.add(p);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
 	    return panel;
 	}
+	
+    protected JPanel makeSensorPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
+        panel.add(new JLabel(Bundle.getMessage("VisibleSensor")));
+        panel.add(_sensorName);
+	    return panel;
+    }
 	
     protected JPanel makeParamsPanel() {
 		JPanel panel = new JPanel();
@@ -153,6 +187,10 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		_lineSlider.setValue(_lineWidth);
 		_lineColor = ps.getLineColor();
 		_fillColor = ps.getFillColor();
+		NamedBeanHandle<Sensor> handle = ps.getControlSensorHandle();
+		if (handle!=null) {
+			_sensorName.setText(handle.getName());			
+		}
 	}
 
 	protected void setPositionableParams(PositionableShape ps) {
@@ -160,6 +198,10 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         ps.setLineColor(_lineColor);
         ps.setFillColor(_fillColor);
         ps.setLineWidth(_lineSlider.getValue());
+        String text = _sensorName.getText().trim();
+        if (text.length()>0) {
+        	ps.setControlSensor(text);
+        }
 	}
 
 	protected void setDrawParams() {
@@ -168,12 +210,18 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		targetPane.setSelectRectStroke(stroke);
 		targetPane.setSelectRectColor(Color.green);
 	}
-	   
+
+	protected void setParent(ShapeDrawer parent) {
+		_parent = parent;		
+	}
 	protected void closingEvent() {
-    	if (_parent!=null) {
-  	      _parent.closeDrawFrame(this);
-  	      _parent.getEditor().resetEditor();    		
+    	if (_parent!=null) {   		
+    		_parent.closeDrawFrame(this);
+    		_parent.getEditor().resetEditor();
     	}
+//    	if (_pShape!=null) {
+//    		_pShape.setVisible(true);
+//    	}
     	_loc = getLocation(_loc);
     	_dim = getSize(_dim);
     	dispose();
@@ -187,8 +235,18 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		}
 	}
 	
-	abstract protected void makeFigure();
+	protected void moveTo(int x, int y) {		
+	}
+	protected void anchorPoint(int x, int y) {
+	}
+	protected void drawShape(Graphics g) {		
+	}
+    protected boolean doHandleMove(MouseEvent event) {
+    	return false;
+    }
+	
+	abstract protected boolean makeFigure(MouseEvent event);
 	abstract protected void updateFigure(PositionableShape pos);
  
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DrawFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(DrawFrame.class.getName());
 }

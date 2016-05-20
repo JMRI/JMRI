@@ -47,7 +47,8 @@ de Decoder Pro a programmées.Elle inclut les informations vu dans l'écran
 ci-dessous:
 
 <p>
-<a href=""> <img src="RosterTab.png"> </a>
+<img src="RosterTab.png">
+</p>
 
 
 
@@ -77,8 +78,9 @@ un CV dans le décodeur, CV8 dans le cas de Digitrax. Tous les décodeurs peuven
 <p>
 <a NAME="Basic"></a><H3>Onglet Basique </H3> </a>
 <p>
+<img src="BasicTab.png">
 
-<a href=""> <img src="BasicTab.png"> </a>
+</p>
 
 <p> Le volet Basique est l'endroit où vous définissez l'adresse du Décodeur, vous pouvez définir une adresse courte et longue , puis sélectionnez celui qui est Actif.
 <p> Les éléments qui s'affichent peuvent être différents pour chaque décodeur. Cela dépend de la façon dont le fichier de définition de décodeur a été écrit et quelles sont les options de fabrication incluses dans le décodeur.
@@ -100,7 +102,8 @@ les volets sont soit grisés ou pas activés.
 <a name="SpeedTable"> </a>
 <H3>Onglet Table de Vitesse </H3>
 <p>
-<a href=""> <img src="SpeedTab.png"> </a>
+<img src="SpeedTab.png">
+</p>
 <p>
 <p>
 Ce panneau peut être différent selon la façon dont le décodeur xml a été construit. Pour utiliser les CVs de la table de vitesse habituellement l'option de vitesse basique doit être éteinte. Les petites cases sous chaque curseur sont très utiles. Pour voir comment ils travaillent cocher une dans le milieu de la table, puis faites glisser le dernier curseur vers le bas . Notez que les valeurs ne changent pas dessous celle que vous avez cochée. Ils ne changent pas pour les crans au-dessus, si un cran inférieur est modifié.

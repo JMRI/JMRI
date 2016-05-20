@@ -26,6 +26,8 @@ package jmri.jmrit.vsdecoder.listener;
  * @version			$Revision: 21510 $
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import jmri.util.PhysicalLocation;
@@ -226,7 +228,10 @@ public class ListeningSpot {
     }
 
     public String toString() {
-	return(new String("ListeningSpot Name: " + _name + " Location: " + _location.toString() + " LookAt: " + _lookAt.toString() + " Up: " + _up.toString()));
+	if ((_location == null) || ( _lookAt == null) || (_up == null))
+	    return("ListeningSpot (undefined)");
+	else
+	    return("ListeningSpot Name: " + _name + " Location: " + _location.toString() + " LookAt: " + _lookAt.toString() + " Up: " + _up.toString());
     }
     
     public Element getXml(String elementName) {
@@ -247,6 +252,6 @@ public class ListeningSpot {
 	    _lookAt = parseVector3d(e.getAttributeValue("look_at"));
 	}
     }
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ListeningSpot.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ListeningSpot.class.getName());
 
 }

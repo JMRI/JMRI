@@ -24,14 +24,14 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 18410 $
  */
 
-import java.util.ResourceBundle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JToggleButton;
 import javax.swing.BorderFactory;
 import java.awt.GridLayout;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -40,8 +40,6 @@ import jmri.jmrit.vsdecoder.EnginePane;
 @SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
     
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
-
     static final int THROTTLE_MIN = 1;
     static final int THROTTLE_MAX = 8;
     static final int THROTTLE_INIT = 1;
@@ -54,7 +52,7 @@ public class DieselPane extends EnginePane {
 
     /** Constructor
      *
-     * @param String n : pane title
+     * @param  n pane title
      */
     public DieselPane(String n) {
 	super(n);
@@ -81,15 +79,15 @@ public class DieselPane extends EnginePane {
 	
 	//Set up the throttle spinner
 	throttle_spinner = new JSpinner(new SpinnerNumberModel(THROTTLE_INIT, THROTTLE_MIN, THROTTLE_MAX, 1));
-	throttle_spinner.setToolTipText(rb.getString("DP_ThrottleSpinnerToolTip"));
+	throttle_spinner.setToolTipText(Bundle.getMessage("ToolTipDP_ThrottleSpinner"));
 	throttle_spinner.setEnabled(false);
 
 	this.add(throttle_spinner);
 
 	// Setup the start button
 	start_button = new JToggleButton();
-	start_button.setText("Engine Start");
-	start_button.setToolTipText(rb.getString("DP_StartButtonToolTip"));
+	start_button.setText(Bundle.getMessage("ButtonEngineStart"));
+	start_button.setToolTipText(Bundle.getMessage("ToolTipDP_StartButton"));
 	start_button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    startButtonChange(e);
@@ -100,17 +98,16 @@ public class DieselPane extends EnginePane {
 	this.setVisible(true);
     }
 
-    /** Respond to a throttle change.  Basically, doesn't do anything */
-    public void throttleChange(ChangeEvent e) {
-	firePropertyChangeEvent(new PropertyChangeEvent(this, "throttle",
-						        throttle_setting,
-							(Integer)throttle_spinner.getModel().getValue()));
-	throttle_setting = (Integer)throttle_spinner.getModel().getValue();
-    }
+	/** Respond to a throttle change. Basically, doesn't do anything */
+	public void throttleChange(ChangeEvent e) {
+	    firePropertyChangeEvent(new PropertyChangeEvent(this, "throttle", throttle_setting, // NOI18N
+							    throttle_spinner.getModel().getValue()));
+	    throttle_setting = (Integer) throttle_spinner.getModel().getValue();
+	}
 
     /** Respond to a start button press */
     public void startButtonChange(ActionEvent e) {
-	firePropertyChangeEvent(new PropertyChangeEvent(this, "start",
+	firePropertyChangeEvent(new PropertyChangeEvent(this, "start",  // NOI18N
 							engine_started, 
 							start_button.isSelected()));
 	engine_started = start_button.isSelected();
@@ -131,6 +128,6 @@ public class DieselPane extends EnginePane {
 	throttle_spinner.setValue(t);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DieselPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(DieselPane.class.getName());
 
 }

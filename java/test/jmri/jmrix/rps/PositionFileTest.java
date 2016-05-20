@@ -4,6 +4,7 @@ package jmri.jmrix.rps;
 
 import java.io.*;
 import javax.vecmath.Point3d;
+import jmri.util.FileUtil;
 import org.jdom.*;
 
 import junit.framework.Assert;
@@ -70,7 +71,7 @@ public class PositionFileTest extends TestCase {
         Reading rout = new Reading("21", new double[]{11,12,13,14});
         fout.setCalibrationPoint(new Point3d(-1.0f,-2.0f,-3.0f), rout);
         
-        jmri.jmrit.XmlFile.ensurePrefsPresent("temp");
+        FileUtil.createDirectory("temp");
         fout.store(new File("temp"+File.separator+"PositionFileTest.xml"));
         
         PositionFile fin = new PositionFile();

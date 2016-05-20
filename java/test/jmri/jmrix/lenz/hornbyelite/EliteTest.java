@@ -3,6 +3,7 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -41,7 +42,7 @@ public class EliteTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteTest.class.getName());
+    static Logger log = Logger.getLogger(EliteTest.class.getName());
 
 }
 

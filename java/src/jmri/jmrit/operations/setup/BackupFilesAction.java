@@ -2,10 +2,10 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -21,11 +21,8 @@ import jmri.jmrit.operations.OperationsXml;
  */
 public class BackupFilesAction extends AbstractAction {
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(BackupFilesAction.class.getName());
-
-	static final ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
 	public BackupFilesAction(String s) {
 		super(s);
@@ -39,8 +36,8 @@ public class BackupFilesAction extends AbstractAction {
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
 			if (JOptionPane.showConfirmDialog(null,
-					rb.getString("OperationsFilesModified"),
-					rb.getString("SaveOperationFiles"),
+					Bundle.getMessage("OperationsFilesModified"),
+					Bundle.getMessage("SaveOperationFiles"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
@@ -75,14 +72,14 @@ public class BackupFilesAction extends AbstractAction {
 			if (f.isDirectory())
 				return true;
 			String name = f.getName();
-			if (name.matches(".*\\.xml"))
+			if (name.matches(".*\\.xml")) // NOI18N
 				return true;
 			else
 				return false;
 		}
 
 		public String getDescription() {
-			return rb.getString("BackupFolders");
+			return Bundle.getMessage("BackupFolders");
 		}
 	}
 

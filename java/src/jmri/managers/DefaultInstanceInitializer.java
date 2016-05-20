@@ -6,9 +6,6 @@ import jmri.*;
 
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
 
 /**
@@ -58,14 +55,6 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return new BlockManager();
         }
 
-        if (type == OBlockManager.class) {
-            return new OBlockManager();
-        }
-
-        if (type == WarrantManager.class) {
-            return new WarrantManager();
-        }
-
         if (type == SectionManager.class) {
             return new SectionManager();
         }
@@ -76,10 +65,6 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == RouteManager.class) {
             return new DefaultRouteManager();
-        }
-
-        if (type == LayoutBlockManager.class) {
-            return new LayoutBlockManager();
         }
 
         if (type == LogixManager.class) {

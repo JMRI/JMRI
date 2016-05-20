@@ -85,6 +85,14 @@
             <xs:attribute name="rstopsensorname" type="xs:string">
                 <xs:annotation><xs:documentation>Will be Deprecated after 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
             </xs:attribute>
+            <xs:attribute name="creationtype" default="userdefined">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="userdefined"/>
+                  <xs:enumeration value="signalmastlogic"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
           </xs:complexType>
         </xs:element>
             

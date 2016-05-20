@@ -1,6 +1,8 @@
 
 package jmri.jmrit.logix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 //import java.util.Enumeration;
 //import java.util.HashMap;
@@ -11,7 +13,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 public class RouteFinder implements Runnable {
-    WarrantFrame _caller;
+	WarrantRoute _caller;
     BlockOrder _originBlockOrder;
     BlockOrder _destBlockOrder;
     BlockOrder _viaBlockOrder;
@@ -29,12 +31,12 @@ public class RouteFinder implements Runnable {
 
     int _maxBlocks;
     boolean _quit = false;
-    java.beans.PropertyChangeSupport _pcs = new java.beans.PropertyChangeSupport(this);
+//    java.beans.PropertyChangeSupport _pcs = new java.beans.PropertyChangeSupport(this);
 
-    protected RouteFinder(WarrantFrame f, BlockOrder origin, BlockOrder dest, 
+    protected RouteFinder(WarrantRoute f, BlockOrder origin, BlockOrder dest, 
                           BlockOrder via, BlockOrder avoid, int maxB) {
         _caller = f;
-        _pcs.addPropertyChangeListener(_caller);
+//        _pcs.addPropertyChangeListener(_caller);
         _originBlockOrder = origin;
         _destBlockOrder = dest;
         _viaBlockOrder = via;
@@ -96,14 +98,14 @@ public class RouteFinder implements Runnable {
         while (level < _maxBlocks && !_quit) {
             nodes = makeLevel(nodes, level);
             level++;
-            _pcs.firePropertyChange("RouteSearch", Integer.valueOf(level), Integer.valueOf(_destNodes.size()));
+//            _pcs.firePropertyChange("RouteSearch", Integer.valueOf(level), Integer.valueOf(_destNodes.size()));
         }
         if (_destNodes.size()==0) {
-            _caller.debugRoute(_tree);
+            _caller.debugRoute(_tree, _originBlockOrder, _destBlockOrder);
         } else {
             _caller.pickRoute(_destNodes, _tree);
         }
-        _pcs.removePropertyChangeListener(_caller);
+//        _pcs.removePropertyChangeListener(_caller);
     }
 
     /**
@@ -125,8 +127,8 @@ public class RouteFinder implements Runnable {
                 if (log.isDebugEnabled()) log.debug("makeLevel "+level+" block= "+pBlock.getDisplayName()
                                                 +", path= "+pOrder.getPathName()+" meets "+paths.size()+" portal paths");
                 if (paths.size()==0) {
-                    log.error("Portal \""+pName+"\" does not have any exit paths into the next block! (\""+
-                              exitPortal.getOpposingBlock(pBlock).getDisplayName()+"\").");
+                    log.error("Portal \""+pName+"\" "+(exitPortal.getOpposingBlock(pBlock)==null ? 
+                    		"is malformed! Only one block!" : "does not have any paths into the next block!"));
                 }
                 // walk all paths
                 for (int k=0; k<paths.size(); k++) {
@@ -156,7 +158,7 @@ public class RouteFinder implements Runnable {
                         children.add(child);
                     }
                 }
-                _pcs.firePropertyChange("RouteSearch", Integer.valueOf(level), Integer.valueOf(_destNodes.size()));
+//                _pcs.firePropertyChange("RouteSearch", Integer.valueOf(level), Integer.valueOf(_destNodes.size()));
             } else {
                 if (log.isDebugEnabled()) log.debug("Dead branch: block= "+pBlock.getDisplayName()+
                                                     " has no exit portal");
@@ -166,5 +168,5 @@ public class RouteFinder implements Runnable {
         return children;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteFinder.class.getName());
+    static Logger log = LoggerFactory.getLogger(RouteFinder.class.getName());
 }

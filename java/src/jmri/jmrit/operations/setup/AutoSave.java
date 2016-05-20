@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsXml;
 
 /**
@@ -24,7 +26,7 @@ public class AutoSave {
 						saveFiles();
 					}
 				});
-				autoSave.setName("Auto Save");
+				autoSave.setName("Operations Auto Save"); // NOI18N
 				autoSave.start();
 			}
 		}
@@ -51,5 +53,5 @@ public class AutoSave {
 		autoSave = null;	// done
 	}	
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoSave.class.getName());
+	static Logger log = LoggerFactory.getLogger(AutoSave.class.getName());
 }

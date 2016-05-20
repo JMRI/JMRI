@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.net.Socket;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetListener;
@@ -91,8 +93,10 @@ public void run(){
                 msg = new LocoNetMessage(byte2);
                 break;
             }
-            if (msg == null)
+            if (msg == null) {
             	log.error("msg is null!");
+            	return;
+            }
             // message exists, now fill it
             msg.setOpCode(opCode);
             msg.setElement(1, byte2);
@@ -207,5 +211,5 @@ public void run(){
     }
   }
 
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClientRxHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(ClientRxHandler.class.getName());
 }

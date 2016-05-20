@@ -1,5 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -88,7 +90,7 @@ public class CircuitBuilder  {
     private JDialog _dialog;
     protected ControlPanelEditor _editor;
 
-    public final static ResourceBundle rbcp = ControlPanelEditor.rbcp;
+//    public final static ResourceBundle rbcp = ControlPanelEditor.rbcp;
     public final static Color _editGroupColor = new Color(150, 150, 255);
     public final static Color _pathColor = Color.green;
     public final static Color _highlightColor = new Color(255, 100, 200);
@@ -106,7 +108,7 @@ public class CircuitBuilder  {
 
     protected JMenu makeMenu() {
         _circuitMap = new Hashtable<OBlock, ArrayList<Positionable>>();
-        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         for (int i = 0; i < sysNames.length; i++) {
             OBlock block = manager.getBySystemName(sysNames[i]);
@@ -115,9 +117,9 @@ public class CircuitBuilder  {
 
         // make menus
         checkCircuits();
-        _todoMenu =  new JMenu(rbcp.getString("circuitErrorsItem"));
+        _todoMenu =  new JMenu(Bundle.getMessage("circuitErrorsItem"));
         makeToDoMenu();
-        _circuitMenu = new JMenu(rbcp.getString("CircuitBuilder"));
+        _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));
         makeCircuitMenu();
         return _circuitMenu;
     }
@@ -145,7 +147,7 @@ public class CircuitBuilder  {
     private void makeToDoMenu() {
         _todoMenu.removeAll();
 
-        JMenu blockNeeds = new JMenu(rbcp.getString("blockNeedsIconsItem"));
+        JMenu blockNeeds = new JMenu(Bundle.getMessage("blockNeedsIconsItem"));
         _todoMenu.add(blockNeeds);
         ActionListener editCircuitAction = new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -157,40 +159,40 @@ public class CircuitBuilder  {
             for (int i=0; i<_bareBlock.size(); i++) {
                 OBlock block = _bareBlock.get(i);
                 JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
-                        rbcp.getString("OpenCircuitItem"), block.getDisplayName()));
+                        Bundle.getMessage("OpenCircuitItem"), block.getDisplayName()));
                 mi.setActionCommand(block.getSystemName());
                 mi.addActionListener(editCircuitAction);
                 blockNeeds.add(mi);                                                  
             }
         } else {
         	if (hasOBlocks) {
-        		blockNeeds.add(new JMenuItem(rbcp.getString("circuitsHaveIcons")));
+        		blockNeeds.add(new JMenuItem(Bundle.getMessage("circuitsHaveIcons")));
         	} else {
-        		blockNeeds.add(new JMenuItem(rbcp.getString("noTrackCircuits")));        		
+        		blockNeeds.add(new JMenuItem(Bundle.getMessage("noTrackCircuits")));        		
         	}
         }
 
-        blockNeeds = new JMenu(rbcp.getString("blocksNeedConversionItem"));
+        blockNeeds = new JMenu(Bundle.getMessage("blocksNeedConversionItem"));
         _todoMenu.add(blockNeeds);
         if (_convertBlock.size()>0) {
             for (int i=0; i<_convertBlock.size(); i++) {
                 OBlock block = _convertBlock.get(i);
                 JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
-                        rbcp.getString("OpenCircuitItem"), block.getDisplayName()));
+                        Bundle.getMessage("OpenCircuitItem"), block.getDisplayName()));
                 mi.setActionCommand(block.getSystemName());
                 mi.addActionListener(editCircuitAction);
                 blockNeeds.add(mi);                                                  
             }
         } else {
         	if (hasOBlocks) {
-                blockNeeds.add(new JMenuItem(rbcp.getString("circuitIconsConverted")));
+                blockNeeds.add(new JMenuItem(Bundle.getMessage("circuitIconsConverted")));
         	} else {
-        		blockNeeds.add(new JMenuItem(rbcp.getString("noTrackCircuits")));        		
+        		blockNeeds.add(new JMenuItem(Bundle.getMessage("noTrackCircuits")));        		
         	}
         }
         JMenuItem iconNeeds;
         if (_unconvertedTrack.size()>0) {
-            iconNeeds = new JMenuItem(rbcp.getString("iconsNeedConversionItem"));
+            iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedConversionItem"));
             iconNeeds.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                 	ArrayList<Positionable> group = new ArrayList<Positionable>();
@@ -201,12 +203,12 @@ public class CircuitBuilder  {
                 }
              });
         } else {
-            iconNeeds = new JMenuItem(rbcp.getString("IconsConverted"));
+            iconNeeds = new JMenuItem(Bundle.getMessage("IconsConverted"));
         }
         _todoMenu.add(iconNeeds);
 
         if (_darkTrack.size()>0) {
-            iconNeeds = new JMenuItem(rbcp.getString("iconsNeedsBlocksItem"));
+            iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedsBlocksItem"));
             iconNeeds.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                 	ArrayList<Positionable> group = new ArrayList<Positionable>();
@@ -218,14 +220,14 @@ public class CircuitBuilder  {
              });
         } else {
         	if (hasOBlocks) {
-                iconNeeds = new JMenuItem(rbcp.getString("IconsHaveCircuits"));
+                iconNeeds = new JMenuItem(Bundle.getMessage("IconsHaveCircuits"));
         	} else {
-        		iconNeeds = new JMenuItem(rbcp.getString("noTrackCircuits"));        		
+        		iconNeeds = new JMenuItem(Bundle.getMessage("noTrackCircuits"));        		
         	}
         }
         _todoMenu.add(iconNeeds);
 
-        blockNeeds = new JMenu(rbcp.getString("portalsMisplaced"));
+        blockNeeds = new JMenu(Bundle.getMessage("portalsMisplaced"));
         _todoMenu.add(blockNeeds);
         ActionListener portalCircuitAction = new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -237,20 +239,20 @@ public class CircuitBuilder  {
             for (int i=0; i<_portalMisplacedBlock.size(); i++) {
                 OBlock block = _portalMisplacedBlock.get(i);
                 JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
-                        rbcp.getString("OpenPortalTitle"), block.getDisplayName()));
+                        Bundle.getMessage("OpenPortalTitle"), block.getDisplayName()));
                 mi.setActionCommand(block.getSystemName());
                 mi.addActionListener(portalCircuitAction);
                 blockNeeds.add(mi);                                                  
             }
         } else {
         	if (hasOBlocks) {
-                blockNeeds.add(new JMenuItem(rbcp.getString("portalsInPlace")));
+                blockNeeds.add(new JMenuItem(Bundle.getMessage("portalsInPlace")));
         	} else {
-        		blockNeeds.add(new JMenuItem(rbcp.getString("noTrackCircuits")));        		
+        		blockNeeds.add(new JMenuItem(Bundle.getMessage("noTrackCircuits")));        		
         	}
         }
 
-        JMenuItem pError = new JMenuItem(rbcp.getString("CheckPortalPaths"));
+        JMenuItem pError = new JMenuItem(Bundle.getMessage("CheckPortalPaths"));
         _todoMenu.add(pError);
         pError.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -262,14 +264,14 @@ public class CircuitBuilder  {
 
     private void errorCheck() {
         WarrantTableAction.initPathPortalCheck();
-        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         for (int i = 0; i < sysNames.length; i++) {
             WarrantTableAction.checkPathPortals(manager.getBySystemName(sysNames[i]));
         }
         if (!WarrantTableAction.showPathPortalErrors()) {
 	        JOptionPane.showMessageDialog(_editCircuitFrame,
-                    rbcp.getString("blocksEtcOK"), Editor.rb.getString("OK"),
+                    Bundle.getMessage("blocksEtcOK"), Bundle.getMessage("OK"),
 					javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -278,7 +280,7 @@ public class CircuitBuilder  {
     private void makeCircuitMenu() {
         _circuitMenu.removeAll();
 
-        JMenuItem circuitItem = new JMenuItem(rbcp.getString("newCircuitItem"));
+        JMenuItem circuitItem = new JMenuItem(Bundle.getMessage("newCircuitItem"));
         _circuitMenu.add(circuitItem);
         circuitItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -286,11 +288,11 @@ public class CircuitBuilder  {
                 }
             });
 
-        JMenuItem editCircuitItem = new JMenuItem(rbcp.getString("editCircuitItem"));
+        JMenuItem editCircuitItem = new JMenuItem(Bundle.getMessage("editCircuitItem"));
         _circuitMenu.add(editCircuitItem);
-        JMenuItem editPortalsItem = new JMenuItem(rbcp.getString("editPortalsItem"));
+        JMenuItem editPortalsItem = new JMenuItem(Bundle.getMessage("editPortalsItem"));
         _circuitMenu.add(editPortalsItem);
-        JMenuItem editCircuitPathsItem = new JMenuItem(rbcp.getString("editCircuitPathsItem"));
+        JMenuItem editCircuitPathsItem = new JMenuItem(Bundle.getMessage("editCircuitPathsItem"));
         _circuitMenu.add(editCircuitPathsItem);
 
         if ( _circuitMap.keySet().size()>0) {
@@ -310,9 +312,9 @@ public class CircuitBuilder  {
                     }
                 });
         } else {
-            editCircuitItem.add(new JMenuItem(rbcp.getString("noCircuitsItem")));
-            editPortalsItem.add(new JMenuItem(rbcp.getString("noCircuitsItem")));
-            editCircuitPathsItem.add(new JMenuItem(rbcp.getString("noCircuitsItem")));
+            editCircuitItem.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
+            editPortalsItem.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
+            editCircuitPathsItem.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
         }
         
         _circuitMenu.add(_todoMenu);
@@ -331,7 +333,7 @@ public class CircuitBuilder  {
                     TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
                     targetPane.setSelectGroupColor(_editGroupColor);
                     targetPane.setHighlightColor(_editGroupColor);
-                    _editCircuitFrame = new EditCircuitFrame(rbcp.getString("newCircuitItem"), this, _currentBlock);
+                    _editCircuitFrame = new EditCircuitFrame(Bundle.getMessage("newCircuitItem"), this, _currentBlock);
                 }
             }
         }
@@ -347,19 +349,19 @@ public class CircuitBuilder  {
                 TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
                 targetPane.setSelectGroupColor(_editGroupColor);
                 targetPane.setHighlightColor(_editGroupColor);
-                _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
+                _editCircuitFrame = new EditCircuitFrame(Bundle.getMessage("OpenCircuitItem"), this, _currentBlock);
             }
         }
     }
 
     private void editCircuitError(String sysName) {
         if (editingOK()) {
-            _currentBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
+            _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysName);
             if (_currentBlock!=null) {
                 checkCircuits();
                 makeSelectionGroup(_currentBlock, null);
                 _editor.disableMenus();
-                _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
+                _editCircuitFrame = new EditCircuitFrame(Bundle.getMessage("OpenCircuitItem"), this, _currentBlock);
             }
         }
     }
@@ -376,7 +378,7 @@ public class CircuitBuilder  {
                     TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
                     targetPane.setSelectGroupColor(_editGroupColor);
                     targetPane.setHighlightColor(_highlightColor);
-                   _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
+                   _editPortalFrame = new EditPortalFrame(Bundle.getMessage("OpenPortalTitle"), this, _currentBlock);
                 }
             }
 
@@ -385,7 +387,7 @@ public class CircuitBuilder  {
 
     private void portalCircuitError(String sysName) {
         if (editingOK()) {
-            _currentBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
+            _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysName);
             if (_currentBlock!=null) {
                 checkCircuits();
                 // check icons to be indicator type
@@ -396,7 +398,7 @@ public class CircuitBuilder  {
                     TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
                     targetPane.setSelectGroupColor(_editGroupColor);
                     targetPane.setHighlightColor(_highlightColor);
-                   _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
+                   _editPortalFrame = new EditPortalFrame(Bundle.getMessage("OpenPortalTitle"), this, _currentBlock);
                 }
             }
         }
@@ -418,7 +420,7 @@ public class CircuitBuilder  {
                     TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
                     targetPane.setSelectGroupColor(_editGroupColor);
                     targetPane.setHighlightColor(_editGroupColor);
-                    _editPathsFrame = new EditCircuitPaths(rbcp.getString("OpenPathTitle"), this, _currentBlock);
+                    _editPathsFrame = new EditCircuitPaths(Bundle.getMessage("OpenPathTitle"), this, _currentBlock);
                 }
             }
         }
@@ -446,7 +448,7 @@ public class CircuitBuilder  {
         if (_editCircuitFrame!=null || _editPathsFrame!=null || _editPortalFrame!=null) {
 			// Already editing a circuit, ask for completion of that edit
 	        JOptionPane.showMessageDialog(_editCircuitFrame,
-                    rbcp.getString("AlreadyEditing"), Editor.rb.getString("errorTitle"),
+                    Bundle.getMessage("AlreadyEditing"), Bundle.getMessage("errorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
             if (_editPathsFrame!=null) {
                 _editPathsFrame.toFront();
@@ -469,7 +471,7 @@ public class CircuitBuilder  {
     * Sets _currentBlock to created new OBlock
     */
     private void addCircuitDialog() {
-        _dialog = new JDialog(_editor, rbcp.getString("TitleCircuitDialog"), true);
+        _dialog = new JDialog(_editor, Bundle.getMessage("TitleCircuitDialog"), true);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10,10));
         JPanel mainPanel = new JPanel();
@@ -477,7 +479,7 @@ public class CircuitBuilder  {
 
         mainPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         JPanel p = new JPanel();
-        p.add(new JLabel(rbcp.getString("createOBlock")));
+        p.add(new JLabel(Bundle.getMessage("createOBlock")));
         mainPanel.add(p);
 
         mainPanel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -497,7 +499,7 @@ public class CircuitBuilder  {
     * Sets _currentBlock to chosen OBlock or null if none selected
     */
     private void editCircuitDialog(String title) {
-        _dialog = new JDialog(_editor, rbcp.getString(title), true);
+        _dialog = new JDialog(_editor, Bundle.getMessage(title), true);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10,10));
         JPanel mainPanel = new JPanel();
@@ -505,7 +507,7 @@ public class CircuitBuilder  {
 
         mainPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         JPanel p = new JPanel();
-        p.add(new JLabel(rbcp.getString("selectOBlock")));
+        p.add(new JLabel(Bundle.getMessage("selectOBlock")));
         mainPanel.add(p);
 
         _oblockModel = PickListModel.oBlockPickModelInstance();
@@ -533,9 +535,9 @@ public class CircuitBuilder  {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(new JLabel(Editor.rb.getString("SystemName")), c);
+        p.add(new JLabel(Bundle.getMessage("SystemName")), c);
         c.gridy = 1;
-        p.add(new JLabel(Editor.rb.getString("UserName")),c);
+        p.add(new JLabel(Bundle.getMessage("UserName")),c);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -554,7 +556,7 @@ public class CircuitBuilder  {
         panel0.setLayout(new FlowLayout());
         JButton doneButton;
         if (add) {
-            doneButton = new JButton(rbcp.getString("ButtonAddCircuit"));
+            doneButton = new JButton(Bundle.getMessage("ButtonAddCircuit"));
             doneButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         if (doAddAction()) {
@@ -563,7 +565,7 @@ public class CircuitBuilder  {
                     }
             });
         } else {
-            doneButton = new JButton(rbcp.getString("ButtonOpenCircuit"));
+            doneButton = new JButton(Bundle.getMessage("ButtonOpenCircuit"));
             doneButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         if (doOpenAction()) {
@@ -574,7 +576,7 @@ public class CircuitBuilder  {
         }
         panel0.add(doneButton);
 
-        JButton cancelButton = new JButton(rbcp.getString("ButtonCancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     _sysNameBox.setText("");
@@ -595,29 +597,28 @@ public class CircuitBuilder  {
             if (uname!=null && uname.trim().length()==0) {
                 uname = null;
             }
-            _currentBlock = InstanceManager.oBlockManagerInstance().createNewOBlock(sysname, uname);
+            _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).createNewOBlock(sysname, uname);
             if (_currentBlock!=null) {
             	retOK = true;
             } else {
                 int result = JOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
-                                rbcp.getString("blockExists"), sysname), 
-                                rbcp.getString("AskTitle"), JOptionPane.YES_NO_OPTION, 
+                                Bundle.getMessage("blockExists"), sysname), 
+                                Bundle.getMessage("AskTitle"), JOptionPane.YES_NO_OPTION, 
                                 JOptionPane.QUESTION_MESSAGE);
                 if (result==JOptionPane.YES_OPTION) {
-                    _currentBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysname);
+                    _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysname);
                     if (_currentBlock==null) {
                     	retOK = false;
                     }
                     checkCircuits();
                     _editor.setSelectionGroup(_circuitMap.get(_currentBlock));
-                    _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
+                    _editCircuitFrame = new EditCircuitFrame(Bundle.getMessage("OpenCircuitItem"), this, _currentBlock);
                     retOK = true;
                 }            }
         }
-        _currentBlock = null;
         if (!retOK) {
-            JOptionPane.showMessageDialog(_editor, rbcp.getString("createOBlock"), 
-                    rbcp.getString("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(_editor, Bundle.getMessage("createOBlock"), 
+                    Bundle.getMessage("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
         }
         return retOK;
     }
@@ -628,8 +629,8 @@ public class CircuitBuilder  {
            _currentBlock = (OBlock)_oblockModel.getBeanAt(row);
            return true;
         } else {
-            JOptionPane.showMessageDialog(_editor, rbcp.getString("selectOBlock"), 
-                            rbcp.getString("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(_editor, Bundle.getMessage("selectOBlock"), 
+                            Bundle.getMessage("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
         }
         _currentBlock = null;
         return false;
@@ -765,7 +766,7 @@ public class CircuitBuilder  {
         _bareBlock = new ArrayList<OBlock>();
         _convertBlock = new ArrayList<OBlock>();
         _portalMap = new Hashtable<String, Portal>();
-        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         hasOBlocks = (sysNames.length>0);
         for (int i = 0; i < sysNames.length; i++) {
@@ -941,8 +942,8 @@ public class CircuitBuilder  {
             for (int i=0; i<list.size(); i++) {
                 Positionable pos = list.get(i);
                 if (!(pos instanceof IndicatorTrack) && !(pos instanceof PortalIcon) ) {
-                    int result = JOptionPane.showConfirmDialog(_editor, rbcp.getString("notIndicatorIcon"), 
-                                    rbcp.getString("incompleteCircuit"), JOptionPane.YES_NO_OPTION, 
+                    int result = JOptionPane.showConfirmDialog(_editor, Bundle.getMessage("notIndicatorIcon"), 
+                                    Bundle.getMessage("incompleteCircuit"), JOptionPane.YES_NO_OPTION, 
                                     JOptionPane.QUESTION_MESSAGE);
                     if (result==JOptionPane.YES_OPTION) {
                         convertIcons();
@@ -954,8 +955,8 @@ public class CircuitBuilder  {
             }
             return true;
         } else {
-            JOptionPane.showMessageDialog(_editor, rbcp.getString("needIcons"), 
-                            rbcp.getString("noIcons"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(_editor, Bundle.getMessage("needIcons"), 
+                            Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
     }
@@ -1019,7 +1020,7 @@ public class CircuitBuilder  {
     private void makePalettteFrame(String title) {
     	jmri.jmrit.display.palette.ItemPalette.loadIcons();
     	_convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
-        		Editor.rb.getString("EditItem"), Editor.rb.getString(title)), true);
+        		Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
     	_convertFrame = new convertFrame(_convertDialog);
 
         _convertDialog.setLocationRelativeTo(_editor);
@@ -1047,10 +1048,10 @@ public class CircuitBuilder  {
         t.setTurnout( ((TurnoutIcon)_oldIcon).getNamedTurnout());
         t.setFamily(_trackTOPanel.getFamilyName());
 
-        Hashtable <String, Hashtable <String, NamedIcon>> iconMap = _trackTOPanel.getIconMaps();
-        Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
+        HashMap <String, HashMap <String, NamedIcon>> iconMap = _trackTOPanel.getIconMaps();
+        Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
-            Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
+            Entry<String, HashMap<String, NamedIcon>> entry = it.next();
             String status = entry.getKey();
             Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
             while (iter.hasNext()) {
@@ -1068,7 +1069,7 @@ public class CircuitBuilder  {
         t.setOccBlockHandle(new NamedBeanHandle<OBlock>(_currentBlock.getSystemName(), _currentBlock));       
         t.setFamily(_trackPanel.getFamilyName());
 
-        Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
+        HashMap<String, NamedIcon> iconMap = _trackPanel.getIconMap();
         if (iconMap!=null) {
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -1190,14 +1191,14 @@ public class CircuitBuilder  {
                 }
             }
             JOptionPane.showMessageDialog(_editor, java.text.MessageFormat.format(
-                                rbcp.getString("portalNotInCircuit"),block.getDisplayName()), 
-                            rbcp.getString("badPath"), JOptionPane.WARNING_MESSAGE);
+                                Bundle.getMessage("portalNotInCircuit"),block.getDisplayName()), 
+                            Bundle.getMessage("badPath"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         if (!icons.contains(pos)) {
             JOptionPane.showMessageDialog(_editor, java.text.MessageFormat.format(
-                                rbcp.getString("iconNotInCircuit"),block.getDisplayName()), 
-                            rbcp.getString("badPath"), JOptionPane.WARNING_MESSAGE);
+                                Bundle.getMessage("iconNotInCircuit"),block.getDisplayName()), 
+                            Bundle.getMessage("badPath"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -1213,9 +1214,9 @@ public class CircuitBuilder  {
             if (block!=null) {
                 if (!block.equals(editBlock)) {
                     int result = JOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
-                                        rbcp.getString("iconBlockConflict"), 
+                                        Bundle.getMessage("iconBlockConflict"), 
                                         block.getDisplayName(), editBlock.getDisplayName()),
-                                    rbcp.getString("whichCircuit"), JOptionPane.YES_NO_OPTION, 
+                                    Bundle.getMessage("whichCircuit"), JOptionPane.YES_NO_OPTION, 
                                     JOptionPane.QUESTION_MESSAGE);
                     if (result==JOptionPane.YES_OPTION) {
                         // move icon from block to editBlock 
@@ -1396,7 +1397,7 @@ public class CircuitBuilder  {
         c.gridx = 0;
         c.gridy = 0;
         c.weightx = 1.0;
-        JLabel l = new JLabel(rbcp.getString(label));
+        JLabel l = new JLabel(Bundle.getMessage(label));
         if (vertical) {
             c.anchor = java.awt.GridBagConstraints.SOUTH;
             l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -1418,13 +1419,13 @@ public class CircuitBuilder  {
         doSize(textField, 9000, 200);    // default
         panel.add(textField, c);
         if (tooltip!=null) {
-            textField.setToolTipText(rbcp.getString(tooltip));
-            l.setToolTipText(rbcp.getString(tooltip));
-            panel.setToolTipText(rbcp.getString(tooltip));
+            textField.setToolTipText(Bundle.getMessage(tooltip));
+            l.setToolTipText(Bundle.getMessage(tooltip));
+            panel.setToolTipText(Bundle.getMessage(tooltip));
         }
         return panel;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CircuitBuilder.class.getName());
+    static Logger log = LoggerFactory.getLogger(CircuitBuilder.class.getName());
 }
 

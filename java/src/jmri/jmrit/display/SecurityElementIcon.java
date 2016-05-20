@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.SecurityElement;
 
 import java.awt.Container;
@@ -133,7 +135,7 @@ public class SecurityElementIcon extends PositionableJPanel
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SecurityElementIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(SecurityElementIcon.class.getName());
 
     /**
      * Pop-up displays the config

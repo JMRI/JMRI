@@ -2,6 +2,8 @@
 
 package jmri.jmris.simpleserver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -26,7 +28,7 @@ import java.awt.event.ActionEvent;
 		// f.setVisible(true);
                 SimpleServer.instance().start();
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleServerAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(SimpleServerAction.class.getName());
 }
 
 

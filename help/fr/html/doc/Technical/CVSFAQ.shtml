@@ -42,7 +42,7 @@ pour plus d'informations sur la maintenance du code JMRI.
 
 <A name="cvstool"><h3>Comment puis - je obtenir une copie de CVS?</h3></a>
 
-De nombreux ordinateurs sont livrés avec CVS installé, y compris Linux et MacOS X.
+De nombreux ordinateurs sont livrés avec CVS installé, y compris Linux et Mac OS X.
 Si vous utilisez Windows, vous aurez besoin d'installer un  programme CVS "client" comme
 <A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467"> WinCVS </a>.
 Une version récente peut être téléchargée à partir de:
@@ -126,7 +126,7 @@ L'option "-q" supprime un grand nombre de messages d'information pour CVS entre 
 <h3>Quels sont ces messages sur .DS_Store files?</h3>
 </a>
 
-Si vous utilisez MacOS X, CVS peut vous donner des messages à propos de ". DS_Store ".Ils sont utilisés pour garder une trace de la disposition des fenêtres, etc. Pour supprimer ces messages, il suffit de créer un fichier dans votre répertoire appelé ". cvsignore" et ajouter une ligne
+Si vous utilisez Mac OS X, CVS peut vous donner des messages à propos de ". DS_Store ".Ils sont utilisés pour garder une trace de la disposition des fenêtres, etc. Pour supprimer ces messages, il suffit de créer un fichier dans votre répertoire appelé ". cvsignore" et ajouter une ligne
 de ". DS_Store"  (sans les guillemets). CVS va ignorer tous les . DS_Store dans tous les arbres extrait de votre répertoire extrait.
 
 <A name="tags">

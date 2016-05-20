@@ -1,5 +1,7 @@
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
@@ -352,6 +354,6 @@ public class NceThrottle extends AbstractThrottle{
     protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceThrottle.class.getName());
 
 }

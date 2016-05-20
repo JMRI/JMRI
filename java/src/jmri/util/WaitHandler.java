@@ -92,7 +92,7 @@ public class WaitHandler {
      * Define interrupt processing.
      * 
      * By default, just records and leaves the wait early.
-     * @returns true if should break out of wait
+     * @return true if should break out of wait
      */
     boolean handleInterruptedException(InterruptedException e) {
         Thread.currentThread().interrupt(); // retain if needed later

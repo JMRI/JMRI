@@ -1,8 +1,12 @@
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.SignalMastLogic;
 import jmri.implementation.DefaultSignalMastLogic;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -35,7 +39,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     public DefaultSignalMastLogicManager(){
         registerSelf();
-        InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(propertyBlockManagerListener);
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
         //_speedMap = jmri.implementation.SignalSpeedMap.getMap();
     }
     
@@ -119,10 +123,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                 list.add(source);
         }
         return list;
-        /*isDestinationValid(SignalMast dest)
-        if(!destLocationList.contains(destination))
-            return new ArrayList<SignalMastLogic>();
-        return destLocationList.get(destination);*/
     }
     
     /**
@@ -260,6 +260,11 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public List<String> getSystemNameList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    public List<NamedBean> getNamedBeanList() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
@@ -316,7 +321,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         firePropertyChange("autoSignalMastGenerateStart", null, source.getDisplayName());
 
         Hashtable<NamedBean, List<NamedBean>> validPaths = new Hashtable<NamedBean, List<NamedBean>>();
-        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         if(!lbm.isAdvancedRoutingEnabled()){
             //log.debug("advanced routing not enabled");
             throw new JmriException("advanced routing not enabled");
@@ -324,9 +329,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         if(!lbm.routingStablised()){
             throw new JmriException("routing not stablised");
         }
-        
         try{
-            validPaths.put(source, lbm.getLayoutBlockConnectivityTools().discoverPairDest(source, layout, SignalMast.class));
+            validPaths.put(source, lbm.getLayoutBlockConnectivityTools().discoverPairDest(source, layout, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST));
         } catch (JmriException e){
             throw e;
         }
@@ -347,12 +351,18 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                         sml.useLayoutEditor(true, (SignalMast)validDestMast.get(i));
                     } catch (JmriException e){
                         //log.debug("We shouldn't get an exception here");
-                        log.error("Exception found " + e);
-                        throw e;
+                        log.error("Exception found when adding pair " + source.getDisplayName() + " to destination " + validDestMast.get(i).getDisplayName()+ "\n" + e.toString());
+                        //throw e;
                     }
                 }
             }
+            if(sml.getDestinationList().size()==1 && sml.getAutoTurnouts(sml.getDestinationList().get(0)).size()==0){
+                key.setProperty("intermediateSignal", true);
+            } else {
+                key.removeProperty("intermediateSignal");
+            }
         }
+        initialise();
         firePropertyChange("autoSignalMastGenerateComplete", null, source.getDisplayName());
     }
     
@@ -363,19 +373,20 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     
     public void automaticallyDiscoverSignallingPairs() throws JmriException{
         runWhenStablised=false;
-        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         if(!lbm.isAdvancedRoutingEnabled()){
             throw new JmriException("advanced routing not enabled");
         }
         if(!lbm.routingStablised()){
             runWhenStablised=true;
-            log.info("Layout block routing has not yet stabilsed discovery will happen once it has");
             return;
         }
-
-        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class);
+        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
         Enumeration<NamedBean> en = validPaths.keys();
-
+        firePropertyChange("autoGenerateUpdate", null, ("Found " + validPaths.size() +" masts as sources for logic"));
+        for(NamedBean nb:InstanceManager.signalMastManagerInstance().getNamedBeanList()){
+            nb.removeProperty("intermediateSignal");
+        }
         while (en.hasMoreElements()) {
             SignalMast key = (SignalMast)en.nextElement();
             SignalMastLogic sml = getSignalMastLogic(key);
@@ -391,14 +402,72 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                         sml.useLayoutEditor(true, (SignalMast)validDestMast.get(i));
                     } catch (jmri.JmriException ex){
                         //log.debug("we shouldn't get an exception here!");
-                        log.debug(ex);
+                        log.debug(ex.getLocalizedMessage(), ex);
                     }
                 }
             }
+            if(sml.getDestinationList().size()==1 && sml.getAutoTurnouts(sml.getDestinationList().get(0)).size()==0){
+                key.setProperty("intermediateSignal", true);
+            }
         }
-        
+        initialise();
         firePropertyChange("autoGenerateComplete", null, null);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastLogicManager.class.getName());
+    public void generateSection(){
+        SectionManager sm = InstanceManager.sectionManagerInstance();
+        for(NamedBean nb:sm.getNamedBeanList()){
+            if(((Section) nb).getSectionType()==Section.SIGNALMASTLOGIC)
+                nb.removeProperty("intermediateSection");
+            nb.removeProperty("forwardMast");
+        }
+        for(SignalMastLogic sml : getSignalMastLogicList()){
+            jmri.jmrit.display.layoutEditor.LayoutBlock faceLBlock=sml.getFacingBlock();
+            if(faceLBlock!=null){
+                boolean sourceIntermediate = false;
+                if(sml.getSourceMast().getProperty("intermediateSignal")!=null){
+                    sourceIntermediate = ((Boolean)sml.getSourceMast().getProperty("intermediateSignal")).booleanValue();
+                }
+                for(SignalMast destMast: sml.getDestinationList()){
+                    if(sml.getAutoBlocksBetweenMasts(destMast).size()!=0){
+                        Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName()+":"+destMast.getDisplayName());
+                        if(sec==null){
+                            //A Section already exists, lets grab it and check that it is one used with the SML, if so carry on using that.
+                            sec = sm.getSection(sml.getSourceMast().getDisplayName()+":"+destMast.getDisplayName());
+                            if(sec.getSectionType()!=Section.SIGNALMASTLOGIC){
+                                break;
+                            }
+                        } else {
+                            sec.setSectionType(Section.SIGNALMASTLOGIC);
+                            //Auto running requires forward/reverse sensors, but at this stage SML does not support that, so just create dummy internal ones for now.
+                            Sensor sen = InstanceManager.sensorManagerInstance().provideSensor("IS:"+sec.getSystemName()+":forward");
+                            sen.setUserName(sec.getSystemName()+":forward");
+                            
+                            sen = InstanceManager.sensorManagerInstance().provideSensor("IS:"+sec.getSystemName()+":reverse");
+                            sen.setUserName(sec.getSystemName()+":reverse");
+                            sec.setForwardBlockingSensorName(sec.getSystemName()+":forward");
+                            sec.setReverseBlockingSensorName(sec.getSystemName()+":reverse");
+                        }
+                        sml.setAssociatedSection(sec, destMast);
+                        sec.setProperty("forwardMast", destMast.getDisplayName());
+                        boolean destIntermediate = false;
+                        if(destMast.getProperty("intermediateSignal")!=null){
+                            destIntermediate = ((Boolean)destMast.getProperty("intermediateSignal")).booleanValue();
+                        }
+                        if(sourceIntermediate || destIntermediate){
+                            sec.setProperty("intermediateSection", true);
+                        } else {
+                            sec.setProperty("intermediateSection", false);
+                        }
+                        //Not 100% sure about this for now so will comment out
+                        //sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
+                    }
+                }
+            } else {
+                log.info("No facing block found " + sml.getSourceMast().getDisplayName());
+            }
+        }
+    }
+    
+    static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class.getName());
 }

@@ -1,5 +1,7 @@
 package jmri.jmrix.ecos.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -33,5 +35,5 @@ public class EcosSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         return loadSensors(sensors);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosSensorManagerXml.class.getName());
 }

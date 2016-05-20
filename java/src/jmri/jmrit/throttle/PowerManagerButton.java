@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -14,7 +16,6 @@ import jmri.jmrit.powerpanel.PowerPane;
 
 public abstract class PowerManagerButton extends JButton implements PropertyChangeListener {
 
-    static final ResourceBundle trb = ThrottleBundle.bundle();
     static final ResourceBundle pprb = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
     private PowerPane powerControl = new PowerPane();
     private PowerManager powerMgr = null;
@@ -76,25 +77,25 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
         try {
             if (powerMgr.getPower() == PowerManager.ON) {
                 setIcon(powerOnIcon);
-                setToolTipText(trb.getString("LayoutPowerOn"));
+                setToolTipText(Bundle.getMessage("LayoutPowerOn"));
                 if (fullText) {
                     setText(pprb.getString("StatusOn"));
                 }
             } else if (powerMgr.getPower() == PowerManager.OFF) {
                 setIcon(powerOffIcon);
-                setToolTipText(trb.getString("LayoutPowerOff"));
+                setToolTipText(Bundle.getMessage("LayoutPowerOff"));
                 if (fullText) {
                     setText(pprb.getString("StatusOff"));
                 }
             } else if (powerMgr.getPower() == PowerManager.UNKNOWN) {
                 setIcon(powerXIcon);
-                setToolTipText(trb.getString("LayoutPowerUnknown"));
+                setToolTipText(Bundle.getMessage("LayoutPowerUnknown"));
                 if (fullText) {
                     setText(pprb.getString("StatusUnknown"));
                 }
             } else {
                 setIcon(powerXIcon);
-                setToolTipText(trb.getString("LayoutPowerUnknown"));
+                setToolTipText(Bundle.getMessage("LayoutPowerUnknown"));
                 log.error("Unexpected state value: +" + powerMgr.getPower());
                 if (fullText) {
                     setText(pprb.getString("StatusUnknown"));
@@ -102,11 +103,11 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
             }
         } catch (JmriException ex) {
             setIcon(powerXIcon);
-            setToolTipText(trb.getString("LayoutPowerUnknown"));
+            setToolTipText(Bundle.getMessage("LayoutPowerUnknown"));
                 if (fullText) {
                     setText(pprb.getString("StatusUnknown"));
                 }
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PowerManagerButton.class.getName());
+    static Logger log = LoggerFactory.getLogger(PowerManagerButton.class.getName());
 }

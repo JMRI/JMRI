@@ -2,6 +2,8 @@
 
 package jmri.jmrix.qsi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 
@@ -241,7 +243,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         return _controller;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(QsiProgrammer.class.getName());
 
 }
 

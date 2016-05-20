@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog.serialdriver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -207,6 +209,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         mInstance = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

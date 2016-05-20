@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet via JMRI LocoNet Server
+      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet&reg; via JMRI LocoNet Server
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -26,10 +26,10 @@
     <div id="mainContent">
 
       <h1> 
-      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet via JMRI LocoNet Server
+      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet&reg; via JMRI LocoNet Server
       </h1>
 
-This page describes how to use the inbuilt LocoNet Client/Server 
+This page describes how to use the inbuilt LocoNet&reg; Client/Server 
 capability of JMRI to connect multiple computers to a single LocoNet-equpped layout.
 <P>
 Briefly, one computer is physically connected to the LocoNet, and acts as a "Server"
@@ -88,7 +88,9 @@ in the LocoNet communications.  This doesn't cause any additional communications
 It does cost a little more for the extra adapters, and doesn't permit you to
 put a computer remote from the layout.
 </UL>
-
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

@@ -2,21 +2,23 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import jmri.InstanceManager;
-import jmri.Programmer;
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.KnownLocoSelPane;
-import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.KnownLocoSelPane;
+import jmri.jmrit.symbolicprog.SymbolicProgBundle;
+import jmri.util.JmriJFrame;
 
 /**
  * Swing action to create and register a
@@ -39,8 +41,6 @@ public class PaneOpsProgAction 	extends AbstractAction {
     Object o1, o2, o3, o4;
     JLabel statusLabel;
 
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
-
     public PaneOpsProgAction() {
         this("DecoderPro ops-mode programmer");
     }
@@ -48,7 +48,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
     public PaneOpsProgAction(String s) {
         super(s);
 
-        statusLabel = new JLabel(rbt.getString("StateIdle"));
+        statusLabel = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
 
         // disable ourself if ops programming is not possible
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
@@ -65,13 +65,13 @@ public class PaneOpsProgAction 	extends AbstractAction {
         if (log.isDebugEnabled()) log.debug("Pane programmer requested");
 
         // create the initial frame that steers
-        final JmriJFrame f = new JmriJFrame(rbt.getString("FrameOpsProgrammerSetup"));
+        final JmriJFrame f = new JmriJFrame(SymbolicProgBundle.getMessage("FrameOpsProgrammerSetup"));
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
-        menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(rbt.getString("MenuRoster"),
+        menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(SymbolicProgBundle.getMessage("MenuRoster"),
                              jmri.jmrit.roster.swing.RosterMenu.MAINMENU, f));
         f.setJMenuBar(menuBar);
 
@@ -80,7 +80,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
-                String title = java.text.MessageFormat.format(rbt.getString("FrameOpsProgrammerTitle"),
+                String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameOpsProgrammerTitle"),
                                                         new Object[]{re.getId()});
                 // find the ops-mode programmer
                 int address = Integer.parseInt(re.getDccAddress());
@@ -108,7 +108,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
         f.setVisible(true);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneOpsProgAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class.getName());
 
 }
 

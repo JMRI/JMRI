@@ -3,7 +3,7 @@
 # define constants
 
 directoryname = "javaone"+java.io.File.separator
-fileprefix = jmri.jmrit.XmlFile.prefsDir()+directoryname
+fileprefix = jmri.util.FileUtil.getUserFilesPath()+directoryname
 
 addressA = 4802
 longA = True

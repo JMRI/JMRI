@@ -57,7 +57,7 @@ public class PortNameMapper {
            so if the OS is not windows, we make the portsRetrieved as completed
            and exit out.
         */
-        if(!System.getProperty("os.name").toLowerCase().contains("windows")){
+        if(!SystemType.isWindows()){
             portsRetrieved = true;
             return;
         }

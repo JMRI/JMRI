@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
-<!-- $Id$ -->
+<!-- $Id: MRC_soundbrilliance1812.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                         -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->
 <!-- the terms of version 2 of the GNU General Public License as published   -->
@@ -14,10 +15,9 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jim Wolters" version="2" lastUpdated="20111115"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20100227"/>
-<!--   version 1 created from MRC 1800 ver. 2 definition-->
-    <version author="Steve Todd" version="3" lastUpdated="20120522" />
-    <!-- added function label defaults, corrected default for CV21 -->
-  
+  <!--   version 1 created from MRC 1800 ver. 2 definition-->
+  <version author="Steve Todd" version="3" lastUpdated="20120522"/>
+  <!-- added function label defaults, corrected default for CV21 -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="60">
       <model model="Synch Diesel Sound 1812 - N Scale Atlas Short Board Dropin" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">

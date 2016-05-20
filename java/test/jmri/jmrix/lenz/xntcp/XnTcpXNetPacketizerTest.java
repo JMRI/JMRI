@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.xntcp;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -33,6 +34,6 @@ public class XnTcpXNetPacketizerTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XnTcpXNetPacketizerTest.class.getName());
+    static Logger log = Logger.getLogger(XnTcpXNetPacketizerTest.class.getName());
 
 }

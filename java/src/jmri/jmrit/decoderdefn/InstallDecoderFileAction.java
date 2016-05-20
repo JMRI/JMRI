@@ -2,6 +2,8 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 
 import javax.swing.*;
@@ -66,6 +68,6 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstallDecoderFileAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(InstallDecoderFileAction.class.getName());
     
 }

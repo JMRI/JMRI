@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTest;
 
@@ -134,6 +135,6 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePowerManagerTest.class.getName());
+    static Logger log = Logger.getLogger(NcePowerManagerTest.class.getName());
 
 }

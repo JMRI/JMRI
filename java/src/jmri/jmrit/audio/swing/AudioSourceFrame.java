@@ -51,6 +51,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     private static int counter = 1;
 
     private boolean _newSource;
+    
+    private final Object lock = new Object();
 
     // UI components for Add/Edit Source
     JLabel assignedBufferLabel = new JLabel(rba.getString("LabelAssignedBuffer"));
@@ -86,6 +88,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     JLabel fadeTimeUnitsLabel = new JLabel(rba.getString("UnitMS"));
 
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioSourceFrame(String title, AudioTableDataModel model) {
         super(title, model);
         layoutFrame();
@@ -109,6 +112,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         loopMin.setPreferredSize(new JTextField(8).getPreferredSize());
         loopMin.setModel(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
         loopMin.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 loopMax.setValue(
                         ((Integer)loopMin.getValue()
@@ -122,6 +126,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         loopMax.setPreferredSize(new JTextField(8).getPreferredSize());
         loopMax.setModel(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
         loopMax.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 loopMin.setValue(
                         ((Integer)loopMax.getValue()
@@ -132,6 +137,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         });
         p.add(loopMax);
         loopInfinite.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 loopMin.setEnabled(!loopInfinite.isSelected());
                 loopMax.setEnabled(!loopInfinite.isSelected());
@@ -198,6 +204,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
                 new SpinnerNumberModel(new Float(0f), new Float(0f), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
         refDistance.setEditor(new JSpinner.NumberEditor(refDistance, "0.00"));
         refDistance.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 maxDistance.setValue(
                         ((Float)refDistance.getValue()
@@ -214,6 +221,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
                 new SpinnerNumberModel(new Float(0f), new Float(0f), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
         maxDistance.setEditor(new JSpinner.NumberEditor(maxDistance, "0.00"));
         maxDistance.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 refDistance.setValue(
                         ((Float)maxDistance.getValue()
@@ -258,6 +266,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         JButton ok;
         frame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
         ok.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             }
@@ -267,8 +276,11 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     /**
      * Method to populate the Edit Source frame with default values
      */
+    @Override
     public void resetFrame() {
-        sysName.setText("IAS"+counter++);
+        synchronized(lock) {
+            sysName.setText("IAS"+counter++);
+        }
         userName.setText(null);
         assignedBuffer.setSelectedIndex(0);
         loopInfinite.setSelected(false);
@@ -377,7 +389,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         }
     }
 
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioSourceFrame.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class.getName());
 
 }
 

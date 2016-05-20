@@ -2,9 +2,9 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
@@ -24,8 +24,6 @@ import apps.Apps;
  * @version $Revision$
  */
 public class ResetAction extends AbstractAction {
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
 	public ResetAction(String s) {
 		super(s);
@@ -34,17 +32,14 @@ public class ResetAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
-			if (JOptionPane.showConfirmDialog(null,
-					rb.getString("OperationsFilesModified"),
-					rb.getString("SaveOperationFiles"),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("OperationsFilesModified"),
+					Bundle.getMessage("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
 		}
 
-		int results = JOptionPane.showConfirmDialog(null,
-				rb.getString("AreYouSureDeleteAll"),
-				rb.getString("ResetOperations"), JOptionPane.OK_CANCEL_OPTION);
+		int results = JOptionPane.showConfirmDialog(null, Bundle.getMessage("AreYouSureDeleteAll"),
+				Bundle.getMessage("ResetOperations"), JOptionPane.OK_CANCEL_OPTION);
 		if (results != JOptionPane.OK_OPTION)
 			return;
 
@@ -52,7 +47,7 @@ public class ResetAction extends AbstractAction {
 
 		try {
 			backup.autoBackup();
-			
+
 			// now delete the operations files
 			backup.deleteOperationsFiles();
 
@@ -68,22 +63,20 @@ public class ResetAction extends AbstractAction {
 				log.debug("Unable to deregister Train Dirty Task");
 			}
 
-			JOptionPane.showMessageDialog(null,
-					rb.getString("YouMustRestartAfterReset"),
-					rb.getString("ResetSuccessful"),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterReset"),
+					Bundle.getMessage("ResetSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
 			Apps.handleRestart();
 
 		} catch (Exception ex) {
-			UnexpectedExceptionContext context = new UnexpectedExceptionContext(
-					ex, "Deleting Operations files");
+			UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
+					"Deleting Operations files"); // NOI18N
 			new ExceptionDisplayFrame(context);
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-			.getLogger(ResetAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(ResetAction.class
+			.getName());
 }
 
 /* @(#)ResetAction.java */

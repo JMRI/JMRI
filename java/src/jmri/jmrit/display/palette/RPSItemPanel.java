@@ -1,12 +1,14 @@
 package jmri.jmrit.display.palette;
 
 //import java.awt.datatransfer.Transferable; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 //import java.awt.dnd.*;
 import java.io.IOException;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 //import javax.swing.JOptionPane;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -36,11 +38,10 @@ public class RPSItemPanel extends FamilyItemPanel {
             JPanel blurb = new JPanel();
             blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(ItemPalette.rbp.getString("AddToPanel")));
-            blurb.add(new JLabel(ItemPalette.rbp.getString("DragIconPanel")));
+            blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
+            blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("ToAddDeleteModify"), 
-                                                           ItemPalette.rbp.getString("ButtonEditIcons"))));
+            blurb.add(new JLabel(Bundle.getMessage("ToAddDeleteModify", "ButtonEditIcons")));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
             JPanel panel = new JPanel();
             panel.add(blurb);
@@ -49,21 +50,21 @@ public class RPSItemPanel extends FamilyItemPanel {
     	}
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "active");
     }
     
     /*******************************************************/
 
-    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        Hashtable <String, NamedIcon> iconMap;
+        HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
         }
@@ -85,5 +86,5 @@ public class RPSItemPanel extends FamilyItemPanel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RPSItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(RPSItemPanel.class.getName());
 }

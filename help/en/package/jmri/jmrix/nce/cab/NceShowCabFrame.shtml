@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+<!-- $Id: NceShowCabFrame.shtml 23363 2013-05-05 12:52:03Z ken_c $ -->
 <HTML LANG="en">
 <HEAD>
-<TITLE>JMRI: Edit NCE Macro</TITLE>
+<TITLE>JMRI: NCE Cab Monitor</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Dan Boudreau" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI Help NCE Show Cabs ">
+<META CONTENT="Ken Cameron" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI Help NCE Cab Monitor ">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -23,35 +23,25 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Show NCE Cabs</H1>
+<H1>NCE Cab Monitor</H1>
 <P>
-	This tool provides a list of the NCE cabs connected to your NCE command station.
-	Up to 63 cabs can be connected, the type of cabs are ProCab, Cab04, USB, and AIU.
-	The tool also provides each cab's active locomotive address, speed, consist number,
-	and which locomotive functions are active.
+	This tool will show what each cab device is doing.
+	It can identify the type of cab, AIU, and other device.
 </P>
 <P>
-    The display has three lines for each cab.
-    The functions display as check marks in three rows, F0 through F9 on the first row,
-    F10 through F19 on the second row and F20 through F28 on the third row.
-    The two lines of the cab display text are also shown.
+	You must press the refresh button for it to pull the status from the command station.
+	It takes about 10 seconds to poll all 64 addresses in the CS02, this lower speed is to
+	insure it doesn't interfere with other commands being processed.
 </P>
 <P>
-	The monitor will read the current cab information when the tool is first selected.
-	It will then update the list when the "Refresh" button is pressed or if a cab address
-	is purged. It does take a number of seconds to request all the information for an
-	active cab. On layouts with lots of active cabs it will take a number of seconds
-	to update.
-</P> 
-<P>
-	To help manage cabs on very large layouts the display will show the last time a cab
-	was seen as active and changed settings.
-	Hitting the "Purge" button on a line for a cab address will mark it as in-active
-	and remove it from the active list.
-	This is expected to improve the keystroke response on the remaining cabs
-	as the command station will not have to timeout waiting for a response from
-	the purged cab address.
+	The purge button will remove a cab id from the 'active' polling list.
+	This will reduce the frequency that the cab is polled which will improve the response
+	speed of the other active cabs.
+	Generally this only helps larger club type layouts with many active cabs.
 </P>
+<!--#include virtual="/Footer" -->
+	</div>
+  </div>
 </BODY>
 </HTML>
 

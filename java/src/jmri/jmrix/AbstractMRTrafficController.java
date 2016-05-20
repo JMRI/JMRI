@@ -2,6 +2,8 @@
 
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
@@ -503,14 +505,13 @@ abstract public class AbstractMRTrafficController {
         return len+cr;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
-    // String + only used for debug, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     protected boolean xmtException = false;
     /**
      * Actually transmits the next message to the port
      */
-     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"TLW_TWO_LOCK_WAIT", "SBSC_USE_STRINGBUFFER_CONCATENATION"},
+            justification="Two locks needed for synchronization here, this is OK; String + only used for debug, so inefficient String processing not really a problem") 
+    synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
         // remember who sent this
         mLastSender = reply;
@@ -626,7 +627,7 @@ abstract public class AbstractMRTrafficController {
                                         try {
                                             transmitLoop(); 
                                             } catch (Throwable e) {
-                                                log.fatal("Transmit thread terminated prematurely by: "+e, e);
+                                                log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
                                             }
                                       }
                 });
@@ -1041,7 +1042,7 @@ abstract public class AbstractMRTrafficController {
         }
     } // end cleanUpHook
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMRTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class.getName());
 }
 
 

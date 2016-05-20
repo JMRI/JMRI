@@ -135,7 +135,7 @@ public class DefaultXmlIOServerTest extends TestCase {
         Assert.assertTrue("forward exists", item != null);
         if (item!=null) Assert.assertEquals("forward correct", "true", item.getText());
 
-        item = e.getChild("F0");
+        item = e.getChild(Throttle.F0);
         Assert.assertTrue("F0 exists", item != null);
         if (item!=null) Assert.assertEquals("F0 correct", "false", item.getText());
 

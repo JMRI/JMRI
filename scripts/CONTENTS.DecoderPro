@@ -5,7 +5,7 @@ Contents of this folder:
 	CONTENTS			This file
 	
 	Decoder Pro			Macintosh Classic Application
-	Decoder Pro X		MacOS X Application (some systems will show as Decoder Pro X.app)
+	Decoder Pro X		Mac OS X Application (some systems will show as Decoder Pro X.app)
 	DecoderPro.bat		Application start script for Windows
 	DecoderProDebug.bat	Application start script for Windows with debug window
 	DecoderPro.csh		Application start script for Linux

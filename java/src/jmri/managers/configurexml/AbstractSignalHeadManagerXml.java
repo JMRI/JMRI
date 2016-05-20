@@ -1,5 +1,7 @@
 package jmri.managers.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractSignalHeadManager;
 import jmri.InstanceManager;
 import jmri.SignalHead;
@@ -154,6 +156,6 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         return InstanceManager.signalHeadManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSignalHeadManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXml.class.getName());
 
 }

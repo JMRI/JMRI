@@ -1,5 +1,7 @@
 package jmri.util.datatransfer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -40,7 +42,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
 
     public static final DataFlavor rosterEntryFlavor = new DataFlavor(ArrayList.class, "RosterEntryIDs");
 
-    public static final DataFlavor[] flavors = {
+    static final DataFlavor[] flavors = {
         RosterEntrySelection.rosterEntryFlavor
     };
     
@@ -71,7 +73,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
     }
 
     public synchronized DataFlavor[] getTransferDataFlavors() {
-        return flavors;
+        return java.util.Arrays.copyOf(flavors, flavors.length);
     }
 
     public boolean isDataFlavorSupported(DataFlavor df) {
@@ -115,6 +117,6 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntrySelection.class.getName());
+    static Logger log = LoggerFactory.getLogger(RosterEntrySelection.class.getName());
 
 }

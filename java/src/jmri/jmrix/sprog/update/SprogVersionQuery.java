@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog.update;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Vector;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogListener;
@@ -276,5 +278,5 @@ public class SprogVersionQuery implements SprogListener {
         timer.start();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogVersionQuery.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class.getName());
 }

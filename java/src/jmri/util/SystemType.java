@@ -2,21 +2,27 @@
 
 package jmri.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Common utility methods for determining which type
  * of operating system is in use.
  *
  * @author Bob Jacobsen  Copyright 2006
+ * @author Daniel Boudreau Copyright 2012 (add Unix)
+ * @author Randall Wood Copyright 2013
  * @version $Revision$
  */
 
 public class SystemType {
 
-    static final public int MACCLASSIC = 1; // no longer supported - latest JVM is 1.1.8
-    static final public int MACOSX     = 2;
-    static final public int WINDOWS    = 4;
-    static final public int LINUX      = 5;
-    static final public int OS2        = 6;
+    static final public int MACCLASSIC	= 1; // no longer supported - latest JVM is 1.1.8
+    static final public int MACOSX		= 2;
+    static final public int WINDOWS		= 4;
+    static final public int LINUX		= 5;
+    static final public int OS2			= 6;
+    static final public int UNIX		= 7;
     
     
     static int type = 0;
@@ -87,25 +93,42 @@ public class SystemType {
         setType();
         return (type == OS2);
     }
+    
+    /**
+     * Convenience method to determine if OS is Unix. Useful if an exception
+     * needs to be made for Unix.
+     * 
+     * @return true if on Unix
+     */
+    public static boolean isUnix() {
+        setType();
+        return (type == UNIX);
+    }
 
     static void setType() {
-        if (isSet) return;
+        if (isSet) {
+            return;
+        }
         isSet = true;
         
-        osName = System.getProperty("os.name", "<unknown>");
+        osName = System.getProperty("os.name");
+        String lowerCaseName = osName.toLowerCase();
 
-        if (osName.startsWith("Mac OS X")) { // Prefered test per http://developer.apple.com/library/mac/#technotes/tn2002/tn2110.html
+        if (lowerCaseName.contains("os x")) { // Prefered test per http://developer.apple.com/library/mac/#technotes/tn2002/tn2110.html
             // Mac OS X
             type = MACOSX;
-        } else if (osName.equals("Linux")) {
+        } else if (lowerCaseName.contains("linux")) {
             // Linux
             type = LINUX;
-        } else if (osName.equals("OS/2")) {
+        } else if (lowerCaseName.contains("os/2")) {
             // OS/2
             type = OS2;
-        } else if (osName.startsWith("Windows")) {  // usually a suffix indicates flavor
+        } else if (lowerCaseName.contains("windows")) {  // usually a suffix indicates flavor
             // Windows
             type = WINDOWS;
+        } else if (lowerCaseName.contains("nix") || lowerCaseName.contains("nux") || lowerCaseName.contains("aix") || lowerCaseName.contains("solaris")) {
+        	// Unix
+        	type = UNIX;
         } else {
             // No match
             type = 0;
@@ -114,5 +137,5 @@ public class SystemType {
     }
     
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemType.class.getName());
+    static private Logger log = LoggerFactory.getLogger(SystemType.class.getName());
 }

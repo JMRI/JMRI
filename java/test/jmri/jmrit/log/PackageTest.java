@@ -3,6 +3,7 @@
 package jmri.jmrit.log;
 
 import junit.framework.*;
+import org.apache.log4j.Logger;
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.log tree
@@ -13,9 +14,9 @@ import junit.framework.*;
 public class PackageTest extends TestCase {
     
     public void testShow() {
-        org.apache.log4j.Logger.getLogger("jmri.jmrix");
-        org.apache.log4j.Logger.getLogger("apps.foo");
-        org.apache.log4j.Logger.getLogger("jmri.util");
+        Logger.getLogger("jmri.jmrix");
+        Logger.getLogger("apps.foo");
+        Logger.getLogger("jmri.util");
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
     

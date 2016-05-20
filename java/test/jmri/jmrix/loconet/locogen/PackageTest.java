@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.locogen;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -56,6 +57,6 @@ public class PackageTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PackageTest.class.getName());
+    static Logger log = Logger.getLogger(PackageTest.class.getName());
 
 }

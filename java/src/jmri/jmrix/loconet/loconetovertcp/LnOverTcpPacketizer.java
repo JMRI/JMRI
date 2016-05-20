@@ -2,11 +2,14 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnNetworkPortController;
 import jmri.jmrix.loconet.LocoNetMessageException;
 
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer ;
 /**
@@ -125,6 +128,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
 
                             // Decide length
               switch((opCode & 0x60) >> 5) {
+              default:  // not really possible, but this closes selection for FindBugs  
               case 0:     /* 2 byte message */
                   msg = new LocoNetMessage(2);
                   break;
@@ -143,8 +147,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                   msg = new LocoNetMessage(byte2);
                   break;
               }
-              if (msg == null)
-              	log.error("msg is null!");
+
               // message exists, now fill it
               msg.setOpCode(opCode);
               msg.setElement(1, byte2);
@@ -179,7 +182,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                 LocoNetMessage msgForLater = thisMsg;
                 LnPacketizer myTC = thisTC;
                 public void run() {
-                    myTC.notify(msgForLater);
+                    myTC.notifyRcv(new Date(), msgForLater);
                 }
               };
               javax.swing.SwingUtilities.invokeLater(r);
@@ -269,7 +272,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
       }
   }
 
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnOverTcpPacketizer.class.getName());
+  static Logger log = LoggerFactory.getLogger(LnOverTcpPacketizer.class.getName());
 }
 
 /* @(#)LnOverTcpPacketizer.java */

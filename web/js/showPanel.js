@@ -3,44 +3,42 @@
  *    Retrieves panel xml from JMRI and builds panel client-side from that xml, including
  *    click functions.  Sends and listens for changes to panel elements using the xmlio server.
  *    If no parm passed, page will list links to available panels.
- *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.  There are 
- *    3 "widgetFamily"s: text, icon and drawn.  States are handled by storing members 
+ *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.   
+ *    There are 3 "widgetFamily"s: text, icon and drawn.  States are handled by storing members 
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The xmlio element name is used to send changes to xmlio server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
+ *    An internal (to JMRI) heartbeat sensor is used to avoid one browser holding multiple server connections (refresh, links, etc.)
  *  Loop: 	1) request panel and process the returned panel xml, placing/drawing widgets on panel, and saving info as needed
  *  		2) send list of current states to server and wait for changes
  *  		3) receive change? set related widget(s) states, redraw widget(s), and go back to 2)
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
  *  
- *  TODO: handle turnoutdrawunselectedleg = "yes" for crossovers
+ *  TODO: "grey-out" screen to indicate loss of server connection
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
- *  TODO: research movement of locoicons
- *  TODO: finish layoutturntable (draw rays) (see Mtn RR)
- *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
- *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
+ *  TODO: research movement of locoicons (will require "promoting" locoicon to system entity)
+ *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: diagnose and correct the small position issues visible with footscray
- *  TODO: diagnose and correct the hover dislocation on images (or turn it off)
- *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
+ *  TODO: diagnose and correct the hover dislocation on rotated images (or turn it off)
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
- *  TODO: handle remaining drawn widgets, such as double-crossovers
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
- *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images
  *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: improve visual of multisensorclick by sending all state changes in one message
+ *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
  *   
  **********************************************************************************************/
 
 //persistent (global) variables
 var $gTimeout = 45; //heartbeat timeout in seconds
 var $gWidgets = {}; //array of all widget objects, key=CSSId
+var $gPanelList = {}; 	//store list of available panels
 var $gPanel = {}; 	//store overall panel info
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
@@ -158,13 +156,24 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 					case "positionablelabel" :
 						$widget['icon1'] = 		$(this).find('icon').attr('url');
 						var $rotation = 		$(this).find('icon').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('icon').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('icon').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icon').attr('scale');
+						break;
+					case "linkinglabel" :
+						$widget['icon1'] = 		$(this).find('icon').attr('url');
+						var $rotation = 		$(this).find('icon').find('rotation').text();
+						$widget['degrees'] = 	($(this).find('icon').attr('degrees') * 1) - ($rotation * 90);
+						$widget['scale'] = 		$(this).find('icon').attr('scale');
+						$url = $(this).find('url').text();
+						$widget['url'] = $url; //default to using url value as is 		
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
 						break;
 					case "indicatortrackicon" :
 						$widget['icon1'] = 		$(this).find('iconmap').find('ClearTrack').attr('url');
 						var $rotation = 		$(this).find('iconmap').find('ClearTrack').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('iconmap').find('ClearTrack').attr('scale');
 						break;
 					case "indicatorturnouticon" :
@@ -175,7 +184,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon4'] = 		$(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
 						$widget['icon8'] = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
 						var $rotation = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
@@ -189,7 +198,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon4'] =  	$(this).find('icons').find('thrown').attr('url');
 						$widget['icon8'] =		$(this).find('icons').find('inconsistent').attr('url');
 						var $rotation = 		$(this).find('icons').find('unknown').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('icons').find('unknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('icons').find('unknown').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icons').find('unknown').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
@@ -203,7 +212,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon4'] =  	$(this).find('inactive').attr('url');
 						$widget['icon8'] =		$(this).find('inconsistent').attr('url');
 						var $rotation = 		$(this).find('unknown').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('unknown').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
@@ -211,7 +220,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "signalheadicon" :
 						$widget['name']  =		$widget.signalhead; //normalize name
-						$widget['element']  =	"signalhead"; //what xmlio server calls this
+						$widget['element']  =	"signalHead"; //what xmlio server calls this
 						$widget['icon' + HELD] =  	$(this).find('icons').find('held').attr('url');
 						$widget['icon' + DARK] 	=	$(this).find('icons').find('dark').attr('url');
 						$widget['icon' + RED] =  	$(this).find('icons').find('red').attr('url');
@@ -226,7 +235,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon' + LUNAR] 	=	$(this).find('icons').find('lunar').attr('url');
 						$widget['icon' + FLASHLUNAR] =	$(this).find('icons').find('lunar').attr('url');
 						var $rotation = 		$(this).find('icons').find('dark').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('icons').find('dark').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('icons').find('dark').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icons').find('dark').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
@@ -234,7 +243,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "signalmasticon" :
 						$widget['name']  =		$widget.signalmast; //normalize name
-						$widget['element']  =	"signalmast"; //what xmlio server calls this
+						$widget['element']  =	"signalMast"; //what xmlio server calls this
 						var icons = $(this).find('icons').children(); //get array of icons
 						icons.each(function(i, item) {  //loop thru icons array and set all iconXX urls for widget
 							$widget['icon'+item.nodeName] = $(item).attr('url'); 
@@ -254,7 +263,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon4'] =  	$(this).find('inactive').attr('url');
 						$widget['icon8'] =		$(this).find('inconsistent').attr('url');
 						var $rotation = 		$(this).find('unknown').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('unknown').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
@@ -346,6 +355,13 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['element']  =	"memory"; //what xmlio server calls this
 						$widget['text']  =		$widget.memory; //use name for initial text
 						$widget.styles['border']	= "1px solid black" //add border for looks (temporary)
+						break;
+					case "linkinglabel" :
+						$url = $(this).find('url').text();
+						$widget['url'] = $url; //just store url value in widget, for use in click handler 		
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
 						break;
 					}
 					$widget['safeName'] = $safeName($widget.name);
@@ -451,11 +467,14 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 			}  //end of function
 	);  //end of each
 
-	//hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor
-	$('.clickable:not(.momentary):not(.multisensoricon)').bind(UPEVENT, $handleClick);
+	//hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor and linkinglabel
+	$('.clickable:not(.momentary):not(.multisensoricon):not(.linkinglabel)').bind(UPEVENT, $handleClick);
 	
 	//hook up mouseup state change function to multisensor (special handling)
 	$('.clickable.multisensoricon').bind(UPEVENT, $handleMultiClick);
+	
+	//hook up mouseup function to linkinglabel (special handling)
+	$('.clickable.linkinglabel').bind(UPEVENT, $handleLinkingLabelClick);
 	
 	//momentary widgets always go active on mousedown, and inactive on mouseup, current state is ignored
 	$('.clickable.momentary').bind(DOWNEVENT, function(e) {
@@ -464,17 +483,18 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, INACTIVE);  //send inactive on up
 	});
 	
-	$drawAllDrawnWidgets(); //draw all the widgets once more, to address some bidrectional dependencies in the xml
+	$drawAllDrawnWidgets(); //draw all the drawn widgets once more, to address some bidirectional dependencies in the xml
 	$('div#workingMessage').hide();
 	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>'); //send initial states to xmlio server
 	endAndStartTimer(); //initiate the heartbeat timer
+
 //	window.setTimeout(function(){  //wait three seconds and then redraw icon widgets, to (hopefully) give them a chance to load
 //		$drawAllIconWidgets();  //TODO: not working, as non-FF browsers will scale objects _again_
 //	}, 3000);
 
 };    	
 
-//perform regular click-handling, bound to click event for clickable, non-momentary widgets.
+//perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
 	var $widget = $gWidgets[this.id];
     var $newState = $getNextState($widget);  //determine next state from current state
@@ -522,6 +542,23 @@ function $handleMultiClick(e) {
 		}
 	};
 };
+
+//perform click-handling of linkinglabel widgets (3 cases: complete url or frame:<name> where name is a panel or a frame)
+function $handleLinkingLabelClick(e) {
+	var $widget = $gWidgets[this.id];
+	var $url = $widget.url; 
+	if ($url.toLowerCase().indexOf("frame:") == 0) {
+		$frameName = $url.substring(6); //if "frame" found, remove it
+		$frameType = $gPanelList[$frameName];  //find panel type in panel list
+		if ($frameType == undefined) {  
+			$url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver  
+		} else {  
+			$url = "?name=" + $frameType + "/" + $frameName; //format for panel server  
+		}
+	}
+	window.location = $url;  //navigate to the specified url
+};
+
 
 //draw a Circle (color and width are optional)
 function $drawCircle($ptx, $pty, $radius, $color, $width) {
@@ -660,17 +697,19 @@ function $drawIcon($widget) {
 
 	//add the image to the panel area, with appropriate css classes and id (skip any unsupported)
 	if ($widget['icon'+$widget.state] != undefined) {
-		$("div#panelArea").append("<img id=" + $widget.id +
-				" class='" + $widget.classes +
-				"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>");
+		$imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
+		"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>"
 
-		//also add in overlay text if specified  (append "overlay" to id to keep them unique)
+		$("div#panelArea").append($imgHtml);  //put the html in the panel
+
+		//add in overlay text if specified  (append "overlay" to id to keep them unique)
 		if ($widget.text != undefined) {
 			$("div#panelArea").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
 			$("div#panelArea>#"+$widget.id+"overlay").css({position:'absolute',left:$widget.x+'px',top:$widget.y+'px',zIndex:($widget.level-1)});
-		} 
+		}
 	}
-	$setWidgetPosition($("div#panelArea>#"+$widget.id));
+	$setWidgetPosition($("div#panelArea #"+$widget.id));
+
 };
 
 //draw a LevelXing (pass in widget)
@@ -795,18 +834,23 @@ function $drawTurnout($widget) {
 		}
 		$drawLine(ax, ay, cenx, ceny, $color, $width); //A to center (incoming)
 	// xover A--B
-	//       D--C
-	} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER) {
+	//         D--C
+	} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==DOUBLE_XOVER) {
 		if ($widget.state == CLOSED || $widget.state == THROWN) {
 			$drawLine(ax, ay, bx, by, erase, $width); //erase A to B
 			$drawLine(dx, dy, cx, cy, erase, $width); //erase D to C
 			$drawLine(abx, aby, dcx, dcy, erase, $width); //erase midAB to midDC
 			$drawLine(abx, aby, dcx, dcy, erase, $width); //erase midAB to midDC
+			$drawLine(ax, ay, cx, cy, erase, $width); //erase A to C
+			$drawLine(dx, dy, bx, by, erase, $width); //erase D to B
 			if ($widget.state == $widget.continuing) {
 				$drawLine(ax, ay, bx, by, $color, $width); //A to B
 				$drawLine(dx, dy, cx, cy, $color, $width); //D to C
 			} else {
-				if ($widget.type==RH_XOVER) {
+				if ($widget.type==DOUBLE_XOVER) {
+					$drawLine(ax, ay, cx, cy, $color, $width); //A to C
+					$drawLine(dx, dy, bx, by, $color, $width); //D to B
+				} else if ($widget.type==RH_XOVER) {
 					$drawLine(ax, ay, abx, aby, $color, $width); //A to midAB
 					$drawLine(abx, aby, dcx, dcy, $color, $width); //midAB to midDC
 					$drawLine(dcx, dcy, cx, cy, $color, $width); //midDC to C
@@ -842,7 +886,7 @@ if ($widget.type==LH_TURNOUT||$widget.type==RH_TURNOUT||$widget.type==WYE_TURNOU
 	$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
 	$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
 	$gPts[$t.ident] = $t;
-} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==WYE_XOVER) {
+} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==DOUBLE_XOVER) {
 	$t = [];
 	$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of C for these)
 	$t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);
@@ -966,6 +1010,18 @@ var $getTextCSSFromObj = function($widget){
 		$retCSS['border-color'] = "rgb(" + $widget.redBorder + "," + $widget.greenBorder + "," + $widget.blueBorder + ") ";;
 		$retCSS['border-style'] = 'solid';
 	}
+	if ($widget.fixedWidth != undefined) {
+		$adj = 0;
+		if ($widget.margin != undefined) { $adj = $widget.margin * 2; }  //margins are subtracted from JMRI fixedwidth 
+		$retCSS['width'] = ($widget.fixedWidth - $adj) + "px ";
+	}
+	if ($widget.justification != undefined) {
+		if ($widget.justification == "centre") {
+			$retCSS['text-align'] = "center";
+		} else {
+			$retCSS['text-align'] = $widget.justification;
+		}
+	}
 	if ($widget.style != undefined) {
 		switch ($widget.style) { //set font based on style attrib from xml
 		case "1":
@@ -996,8 +1052,7 @@ var $setWidgetPosition = function(e) {
 		var $width =  e.width()  * $widget.scale;
 
 		//if image needs rotating or scaling, but is not loaded yet, set callback to do this again when it is loaded
-		//TODO: firefox returns a height for the alt text, so this doesn't work right
-		if (e.is("img") && $height == 0 && ($widget.degrees != 0 || $widget.scale != 1.0)) {
+		if (e.is("img") && ($widget.degrees != 0 || $widget.scale != 1.0) && $(e).get(0).complete == false ) {
 			e.load(function(){
 				$setWidgetPosition($(this));
 				e.unbind('load');  //only do this once
@@ -1172,7 +1227,7 @@ var $sendXMLIOList = function($commandstr){
 			$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
 		},
 		async: true,
-		timeout: $gTimeout * 3 * 1000,  //triple the time timeout
+		timeout: $gTimeout * 3 * 1000,  //triple the heartbeat timeout
 		dataType: 'xml' //<--dataType
 	});
 };
@@ -1199,13 +1254,20 @@ var $sendXMLIOChg = function($commandstr){
 	});
 };
 
-//show all ajax errors except for abort (this is expected)
+//show unexpected ajax errors
 $(document).ajaxError(function(event,xhr,opt, exception){
-	if (xhr.statusText !="abort") {
+	if (xhr.statusText !="abort" && xhr.status != 0) {
 		var $msg = "AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText;
 		$('div#messageText').text($msg);
 		$('div#workingMessage').show();
 		if (window.console) console.log($msg);
+		return;
+	}
+	if (xhr.statusText =="timeout") {
+		var $msg = "AJAX timeout " + opt.url + ", status= " + xhr.status + " " + xhr.statusText + " resending list....";
+		if (window.console) console.log($msg);
+		//try to resend current xml states to xmlio server, will "stall" and wait for changes if matched
+		$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
 	}
 });
 
@@ -1292,23 +1354,24 @@ function getParameterByName(name) {
 	return match && match[1];
 }
 
-//request and show a list of available panels from the server (used when no panel passed in)
-var $showPanelList = function($panelName){
+//request and show a list of available panels from the server, and store in persistent var for later checks
+var $getPanelList = function(){
 	$.ajax({
 		url:  '/xmlio/list', //request proper url
 		data: {type: "panel"},
 		success: function($r, $s, $x){
-			$(document).attr('title', 'Client-side panels');
 			var $h = "<h1>Client-side panels:</h1>";
-			$h += "<table><tr><th>View Panel</th><th>Type</th><th>XML</th></tr>";
+			$h += "<table><tr><th>View Panel</th><th>Type</th></tr>";
             $($r).find("panel").each(function(){
             	var $t = $(this).attr("name").split("/");
-            	$h += "<tr><td><a href='?name=" + $(this).attr("name") + "'>" + $(this).attr("userName") + "</a></td>";
-            	$h += "<td>" + $t[0] + "</td>";
-            	$h += "<td><a href='/panel/" + $(this).attr("name") + "' target=_new >XML</a></td></tr>";
+            	var $panelType = $t[0];
+            	var $panelName = $(this).attr("userName");
+            	$gPanelList[$panelName] = $panelType; //store the type for each panel
+            	$h += "<tr><td><a href='?name=" + $(this).attr("name") + "'>" + $panelName + "</a></td>";
+            	$h += "<td>" + $panelType + "</td>";
             });
             $h += "</table>";
-            $('div#panelArea').html($h); //put table on page
+            $('div#panelList').html($h); //put table on page
 		},
 		dataType: 'xml' //<--dataType
 	});
@@ -1334,7 +1397,7 @@ var $requestPanelXML = function($panelName){
 //preload all images referred to by the widget
 var $preloadWidgetImages = function($widget) {
 	for (k in $widget) {
-		if (k.indexOf('icon') == 0 && $widget[k] != undefined) { //if attribute names starts with 'icon', it's an image, so preload it
+		if (k.indexOf('icon') == 0 && $widget[k] != undefined && $widget[k] != "yes") { //if attribute names starts with 'icon', it's an image, so preload it
 			$("<img src='" + $widget[k]  + "'/>");		}
 	};
 };    	
@@ -1343,7 +1406,7 @@ var $preloadWidgetImages = function($widget) {
 //note: not-yet-supported widgets are commented out here so as to return undefined
 var $getWidgetFamily = function($widget) {
 
-	if ($widget.widgetType== "positionablelabel" && $widget.text != undefined) {
+	if (($widget.widgetType== "positionablelabel" || $widget.widgetType== "linkinglabel") && $widget.text != undefined) {
 		return "text";  //special case to distinguish text vs. icon labels
 	}
 	if ($widget.widgetType== "sensoricon" && $widget.icon == "no") {
@@ -1360,6 +1423,7 @@ var $getWidgetFamily = function($widget) {
 		return "text";
 		break;
 	case "positionablelabel" :
+	case "linkinglabel" :
 	case "turnouticon" :
 	case "sensoricon" :
 	case "multisensoricon" :
@@ -1383,7 +1447,7 @@ var $getWidgetFamily = function($widget) {
 	return; //unrecognized widget returns undefined
 };    	
 
-var timer;  //persistent var used by this function
+var timer;  //persistent timer object used by this function
 function endAndStartTimer() {
 	window.clearTimeout(timer);
 	if ($gWidgets["ISXMLIOHEARTBEAT"] != undefined) { //don't bother if widgets not loaded
@@ -1429,11 +1493,15 @@ var $drawAllIconWidgets = function() {
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
 
+	//always request a list of panels from server
+	$getPanelList();
 	//if panelname not passed in, show list of available panels
 	var $panelName = getParameterByName('name');
 	if ($panelName == undefined) {
-        $showPanelList();
+		$('div#panelList').show();  //show the list of available panels if none passed in
+		$(document).attr('title', 'List Available JMRI Panels');
 	} else {
+		$('div#panelList').hide();
 		//set up events based on browser's support for touch events
 		var $is_touch_device = 'ontouchstart' in document.documentElement;
 		if ($is_touch_device) {
@@ -1459,7 +1527,7 @@ $(document).ready(function() {
 		$widget['safeName']	= $widget['name'];
 		$widget['state'] = UNKNOWN;
 		$gWidgets[$widget.id] = $widget;
-
+		
 		//add a widget to retrieve current fastclock rate
 		$widget = new Array();
 		$widget['element'] = "memory";
@@ -1470,8 +1538,19 @@ $(document).ready(function() {
 		$gWidgets[$widget.id] = $widget;
 
 		//request actual xml of panel, and process it on return
-		$requestPanelXML($panelName);
+		// NOTE: uses settimeout simply to release control and allow panel list to populate
+		setTimeout(function() {
+			$requestPanelXML($panelName);
+		},
+		100);
 		
+		//queue a change to the heartbeat sensor, to insure previous instances of this page are not left hanging
+		setTimeout(function() {
+			var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"]);
+			$gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
+			$sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
+		},
+		1000);  //one second
 	}
 	
 });

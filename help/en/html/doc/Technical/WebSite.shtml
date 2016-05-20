@@ -35,11 +35,11 @@ This page discusses technical aspects of the JMRI web site.
 <p>
 If you just want to know how to make a small change to a web or
 help page, please see the separate
-<a href="webupdate/UpdatingDocs.shtml">page of instructions</a>.
+<a href="webupdate/UpdatingDocs.shtml">page of instructions</a>.</p>
 
 <h2>Structure of Information</h2>
 
-We distinguish between three types of information on the main web site:
+<p>We distinguish between three types of information on the main web site:</p>
 <ol>
 <li>User information which is useful at run time.  
 This is made available both via our <A HREF="Help.shtml">JavaHelp</a>,
@@ -51,7 +51,7 @@ in releases, e.g. video clinics.
 JavaDocs, etc.
 </ol>
 
-We provide these separately:
+<p>We provide these separately:</p>
 <ol>
 <li>Run-time user information is made available by putting the help system
 on the web site.
@@ -63,34 +63,33 @@ or created by automated Ant scripts during release builds.
 </ol>
 
 <h2>Technology</h2>
-Page formatting is done using CSS, originally set up by John Plocher.
+<p>Page formatting is done using CSS, originally set up by John Plocher.
 All pages should reference the CSS files for screen and printing
 from the "/css" directory. This also means that you should leave the
 formatting to the style sheets, and minimize the explicit formatting
-that you do in HTML directly.
+that you do in HTML directly.</p>
 
 <p>
 Because we use our web pages in JavaHelp, there are some restrictions
-on use of tags.  See our
-<a href="Help.shtml">JavaHelp web page</a> for more on this.
+on use of tags.  See our <a href="Help.shtml">JavaHelp web page</a> for more on this.</p>
 
-<P>
-We are moving toward using
-<A HREF="http://httpd.apache.org/docs/1.3/howto/ssi.html">server-side includes</a>
+<p>
+We are using
+<a href="http://httpd.apache.org/docs/2.2/howto/ssi.html">server-side includes</a>
 to provide consistent headers, sidebars and footers.
-This will also allow us to share HTML
+This allows us to share HTML
 content between the web and the JavaHelp system
 used by the program itself. Each page will contain just content,
 plus includes for files named "Header", "Sidebar" and "Footer"
 which contain the navigation information.
 Eventually, all but a few index pages will have
 ".shtml" extensions. (The remaining index.html pages keep that name
-so that people who request just a directory URL will be served something useful)
+so that people who request just a directory URL will be served something useful).</p>
 
 <h2>Directory Organization</h2>
 
-The web site contains several separate areas, which translate to different 
-SVN directories:
+<p>The web site contains several separate areas, which translate to different 
+SVN directories:</p>
 <UL>
 <LI>jython, resources, xml, web - these are taken directly from the
 directories of the same name under <tt>trunk/jmri/</tt>. They are only occasionally referenced
@@ -100,8 +99,8 @@ structure described below and on our
 <A HREF="Help.shtml">JavaHelp</a>
 page.
 </ul>
-The rest are from the <tt>trunk/jmri-website</tt>, and are checked out at 
-the root of the web server.
+<p>The rest are from the <tt>trunk/jmri-website</tt>, and are checked out at 
+the root of the web server.</p>
 <ul>
 <LI>releasenotes - Specific information on each test and production release
 <LI>install - Information on how to install the JMRI software on various kinds of computers
@@ -109,31 +108,34 @@ the root of the web server.
 <li>images - (Images used by web pages)
 <li>contact - 
 </ul>
-The following directories still contain content in site.new, but are
-in the process of being moved into the JavaHelp pages for use
-both on the web and in the program:
-<ul>
-<LI>apps - 
-<li>doc - 
-<li>hardware - 
-<LI>tools - 
-</ul>
-As part of the migration, a number of directories remain that contain
-only redirects and/or obsolete files:
-<ul>
-</ul>
-<H2>Local Web Site: MacOS X</H2>
+<h2>Updating the jmri.org site</h2>
 
-If you want to host a copy of the JMRI web site on your local
-MacOS X machine, follow these instructions to first configure
+<p>Most of the web site contents is updated every 15 minutes from a job running on one of the
+project's Jenkins build servers.  The directories listed above constitute most of the site,
+and this content is updated from the SVN server without any additional work.</p>
+
+<p>Some of the site is generated from the JMRI source itself, as opposed to being contained in 
+the source.  The <a href="/JavaDoc/doc">JavaDoc</a> is one section, along with some of the 
+information about the decoders available for use.  These updates, especially the JavaDoc, involve
+significantly more work than merely updating a directory, and so they are performed nightly.</p>
+
+<p>These steps are based upon checkins to the SVN repository -- the act of checking in modified
+files is sufficient to trigger a web site update if it is necessary.</p>
+
+<p>The status of the web site updates is available <a href="https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/">on this JMRI CI server</a>.</p>
+
+<h2>Local Web Site: Mac OS X</h2>
+
+<p>If you want to host a copy of the JMRI web site on your local
+Mac OS X machine, follow these instructions to first configure
 the Apache server to do server-side includes, and then make
-a copy of the web site files available to the server.
+a copy of the web site files available to the server.</p>
 
 <OL>
 <LI>You need to edit the Apache web server's configuration file. 
 <ul>
-<li>On MacOS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
-<li>On MacOS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file
+<li>On Mac OS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
+<li>On Mac OS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file
 </UL>
 Once you've located the file, open it with your favorite
 editor (You'll need to authenticate with the administrator password to 

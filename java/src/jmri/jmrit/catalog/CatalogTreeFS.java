@@ -2,6 +2,8 @@
 
 package jmri.jmrit.catalog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import java.util.HashMap;
@@ -99,11 +101,18 @@ public class CatalogTreeFS extends AbstractCatalogTree {
     }
 
     public java.util.Set<Object> getPropertyKeys() {
+        if (parameters == null) return null;
         return parameters.keySet();
+    }
+    
+    public void removeProperty(Object key){
+        if(parameters == null || key == null)
+            return;
+        parameters.remove(key);
     }
 
     HashMap<Object, Object> parameters = null;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogTreeFS.class.getName());
+    static Logger log = LoggerFactory.getLogger(CatalogTreeFS.class.getName());
 }
 

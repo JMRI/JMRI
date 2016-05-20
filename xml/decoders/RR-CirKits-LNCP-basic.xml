@@ -4279,7 +4279,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <!-- End Outputs -->
-      <constant label="PICV" default="32" comment="CV used for Primary Index"/>
+      <constant item="PICV" default="32" comment="CV used for Primary Index"/>
 
       <!-- NMRA CV.PI formatted items -->
 

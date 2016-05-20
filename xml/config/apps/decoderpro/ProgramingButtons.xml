@@ -6,16 +6,25 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
 >
-  <name>DecoderPro</name>
-
-  <node><name>Read All</name>
+  <node>
+    <name>DecoderPro</name>
+    <name xml:lang="it">DecoderPro</name>
+  <node>
+    <name>Read All</name>
+    <name xml:lang="it">Leggi Tutto</name>
   </node>
-  <node><name>Write All</name>
+  <node>
+    <name>Write All</name>
+    <name xml:lang="it">Scrivi Tutto</name>
   </node>
-  <node><name>Read Changes</name>
+  <node>
+    <name>Read Changes</name>
+    <name xml:lang="it">Leggi Modifiche</name>
   </node>
-  <node><name>Write Changes</name>
+  <node>
+    <name>Write Changes</name>
+    <name xml:lang="it">Scrivi Modifiche</name>
   </node>
-
+ </node>
 </nodes>
   

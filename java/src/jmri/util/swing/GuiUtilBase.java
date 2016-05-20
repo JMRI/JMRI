@@ -2,11 +2,13 @@
 
 package jmri.util.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.util.HashMap;
-import java.io.File;
 import org.jdom.*;
 import java.util.Map;
+import jmri.util.FileUtil;
 import jmri.util.jdom.LocaleSelector;
 
 /**
@@ -35,7 +37,7 @@ public class GuiUtilBase {
         }
 
         if (child.getChild("icon") != null) {
-            icon = new ImageIcon(child.getChild("icon").getText());
+            icon = new ImageIcon(FileUtil.findURL(child.getChild("icon").getText()));
         }
         //This bit does not size very well, but it works for now.
         if(child.getChild("option") !=null){
@@ -202,14 +204,15 @@ public class GuiUtilBase {
      * Get root element from XML file, handling errors locally.
      *
      */
-    static protected Element rootFromFile(File file) {
+    static protected Element rootFromName(String name) {
         try {
-            return new jmri.jmrit.XmlFile(){}.rootFromFile(file);
+            return new jmri.jmrit.XmlFile() {
+            }.rootFromName(name);
         } catch (Exception e) {
-            log.error("Could not parse file \""+file.getName()+"\" due to: "+e);
+            log.error("Could not parse file \"" + name + "\" due to: " + e);
             return null;
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiUtilBase.class.getName());
+    static Logger log = LoggerFactory.getLogger(GuiUtilBase.class.getName());
 }

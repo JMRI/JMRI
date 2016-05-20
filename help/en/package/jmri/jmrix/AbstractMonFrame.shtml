@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI: Monitor Window
+      JMRI: Communications Monitor Window
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -31,7 +31,7 @@ on the communications link between the program and the layout hardware.
 
 <p>
 Once you open a monitor window, it will automatically
-display all traffic on the link.
+display all traffic on the link as long as "Filter Bytes" is blank.
 
 <h2>Controls</h2>
 
@@ -48,7 +48,7 @@ display all traffic on the link.
   </dd>
 <dt>Show timestamps</dt>
   <dd>Normally, the program just displays the data from the communication link.
-  If you'd like each message to be preceeded by the time it was sent or
+  If you'd like each message to be preceded by the time it was sent or
   received, check this box.
   </dd>
 <dt>Add message</dt>
@@ -59,6 +59,14 @@ display all traffic on the link.
   useful when you're logging to a file (see below)
   and want to make a note for later about what's happening.
   </dd>
+ <dt>Filter Bytes</dt>
+  <dd> You can filter unwanted messages from the window 
+by entering each message's first hex value into the "Filter Bytes" field. 
+This can be especially helpful when there is a lot of routine comm traffic.  
+Separate multiple values by spaces.  e.g. "B0 D0 CC".  This example will
+suppress any messages whose raw data starts with "B0", "D0" or "CC"   
+You can determine the available hex values by turning on "Show raw data."
+ </dd>
 </dl>
 
 

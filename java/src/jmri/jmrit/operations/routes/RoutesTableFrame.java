@@ -1,11 +1,11 @@
 // RoutesTableFrame.java
 
 package jmri.jmrit.operations.routes;
- 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
-
 import javax.swing.BoxLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -23,122 +23,117 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.com.sun.TableSorter;
 
-
-
 /**
  * Frame for adding and editing the route roster for operations.
- *
- * @author		Bob Jacobsen   Copyright (C) 2001
+ * 
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version             $Revision$
+ * @version $Revision$
  */
 public class RoutesTableFrame extends OperationsFrame {
-	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 
 	RoutesTableModel routesModel = new RoutesTableModel();
 
-	
 	// labels
-	JLabel textSort = new JLabel(rb.getString("SortBy"));
+	JLabel textSort = new JLabel(Bundle.getMessage("SortBy"));
 	JLabel textSep = new javax.swing.JLabel("          ");
-	
+
 	// radio buttons
-    JRadioButton sortByName = new JRadioButton(rb.getString("Name"));
-    JRadioButton sortById = new JRadioButton(rb.getString("Id"));
+	JRadioButton sortByName = new JRadioButton(Bundle.getMessage("Name"));
+	JRadioButton sortById = new JRadioButton(Bundle.getMessage("Id"));
 
 	// major buttons
-	JButton addButton = new JButton(rb.getString("Add"));
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
 
-    public RoutesTableFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString("TitleRoutesTable"));
-        // general GUI config
+	public RoutesTableFrame() {
+		super(Bundle.getMessage("TitleRoutesTable"));
+		// general GUI config
 
-        getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-    	// Set up the jtable in a Scroll Pane..
-        TableSorter sorter = new TableSorter(routesModel);
-    	JTable routesTable = new JTable(sorter);
-    	sorter.setTableHeader(routesTable.getTableHeader());
-    	JScrollPane routesPane = new JScrollPane(routesTable);
-    	routesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-       	routesModel.initTable(routesTable);
-     	getContentPane().add(routesPane);
-     	
-     	// Set up the control panel
-    	JPanel controlPanel = new JPanel();
-    	controlPanel.setLayout(new FlowLayout());
-    	
-    	controlPanel.add(textSort);
-    	controlPanel.add(sortByName);
-    	controlPanel.add(sortById);
-    	controlPanel.add(textSep);
-    	controlPanel.add (addButton);
-    	controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
-			    
-	   	getContentPane().add(controlPanel);
-	   	
-       	sortByName.setSelected(true);
-	   	
+		// Set up the jtable in a Scroll Pane..
+		TableSorter sorter = new TableSorter(routesModel);
+		JTable routesTable = new JTable(sorter);
+		sorter.setTableHeader(routesTable.getTableHeader());
+		JScrollPane routesPane = new JScrollPane(routesTable);
+		routesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		routesModel.initTable(routesTable);
+		getContentPane().add(routesPane);
+
+		// Set up the control panel
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new FlowLayout());
+
+		controlPanel.add(textSort);
+		controlPanel.add(sortByName);
+		controlPanel.add(sortById);
+		controlPanel.add(textSep);
+		controlPanel.add(addButton);
+		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
+
+		getContentPane().add(controlPanel);
+
+		sortByName.setSelected(true);
+
 		// setup buttons
 		addButtonAction(addButton);
-		
-		addRadioButtonAction (sortByName);
-		addRadioButtonAction (sortById);
-    	
-		//	build menu
+
+		addRadioButtonAction(sortByName);
+		addRadioButtonAction(sortById);
+
+		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new RouteCopyAction(rb.getString("MenuItemCopy")));
-		toolMenu.add(new SetTrainIconPositionAction(rb.getString("MenuSetTrainIcon")));
-		toolMenu.add(new PrintRoutesAction(rb.getString("MenuItemPrint"), false));
-		toolMenu.add(new PrintRoutesAction(rb.getString("MenuItemPreview"), true));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy")));
+		toolMenu.add(new SetTrainIconPositionAction(Bundle.getMessage("MenuSetTrainIcon")));
+		toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPrint"), false));
+		toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPreview"), true));
 
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
- 
+
 		// add help menu to window
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
-    	
-    	pack();
-    	setSize(730, getHeight());  
-    	
-    	// now load the cars and engines
-    	CarManagerXml.instance();
-    	EngineManagerXml.instance();
-    }
-    
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true); // NOI18N
+
+		pack();
+		setSize(730, getHeight());
+
+		// now load the cars and engines
+		CarManagerXml.instance();
+		EngineManagerXml.instance();
+	}
+
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
-		if (ae.getSource() == sortByName){
+		if (ae.getSource() == sortByName) {
 			sortByName.setSelected(true);
 			sortById.setSelected(false);
 			routesModel.setSort(routesModel.SORTBYNAME);
 		}
-		if (ae.getSource() == sortById){
+		if (ae.getSource() == sortById) {
 			sortByName.setSelected(false);
 			sortById.setSelected(true);
 			routesModel.setSort(routesModel.SORTBYID);
 		}
 	}
-    
+
 	// add button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//		log.debug("route button activated");
-		if (ae.getSource() == addButton){
+		// log.debug("route button activated");
+		if (ae.getSource() == addButton) {
 			RouteEditFrame f = new RouteEditFrame();
 			f.initComponents(null);
-			f.setTitle(rb.getString("TitleRouteAdd"));
+			f.setTitle(Bundle.getMessage("TitleRouteAdd"));
 			f.setVisible(true);
 		}
 	}
 
-    public void dispose() {
-    	routesModel.dispose();
-        super.dispose();
-    }
-    
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(RoutesTableFrame.class.getName());
+	public void dispose() {
+		routesModel.dispose();
+		super.dispose();
+	}
+
+	static Logger log = LoggerFactory.getLogger(RoutesTableFrame.class
+			.getName());
 }

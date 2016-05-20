@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog.sprogmon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -30,7 +32,7 @@ public class SprogMonAction 			extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogMonAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(SprogMonAction.class.getName());
 
 }
 

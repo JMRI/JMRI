@@ -30,7 +30,7 @@ public class OperationsLoggerTest extends TestCase {
 		// load a car
 		CarManager manager = CarManager.instance();
 		Car c1 = manager.newCar("CP", "1");
-		c1.setType("Boxcar");
+		c1.setTypeName("Boxcar");
 		c1.setLength("40");
 		// turn on logging
 		Setup.setCarLoggerEnabled(true);
@@ -39,7 +39,7 @@ public class OperationsLoggerTest extends TestCase {
 		Assert.assertFalse("file exists", file.exists());
 		// place car
 		Location l1 = new Location("id1", "Logger location B");
-        Track l1t1 = l1.addTrack("Logger track A",Track.SIDING);
+        Track l1t1 = l1.addTrack("Logger track A",Track.SPUR);
         l1t1.setLength(100);
 		Assert.assertEquals("place c1", Track.OKAY, c1.setLocation(l1, l1t1));
 				

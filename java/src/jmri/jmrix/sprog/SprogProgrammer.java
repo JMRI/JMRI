@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.PowerManager;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
@@ -298,7 +300,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         return _controller;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogProgrammer.class.getName());
 
 }
 

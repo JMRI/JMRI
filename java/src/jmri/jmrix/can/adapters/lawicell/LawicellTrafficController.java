@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can.adapters.lawicell;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.*;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -134,7 +136,7 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
     
     private int gcState;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LawicellTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(LawicellTrafficController.class.getName());
 }
 
 

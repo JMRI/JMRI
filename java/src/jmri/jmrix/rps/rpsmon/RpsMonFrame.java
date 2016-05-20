@@ -8,6 +8,8 @@
 
 package jmri.jmrix.rps.rpsmon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.*;
 
 public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame 
@@ -43,5 +45,5 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         nextLine(m.toString()+"\n", raw);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsMonFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(RpsMonFrame.class.getName());
 }

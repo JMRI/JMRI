@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce.consist;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -428,6 +430,6 @@ public class NceConsistRoster extends XmlFile {
         firePropertyChange("change", null, r);
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceConsistRoster.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceConsistRoster.class.getName());
 
 }

@@ -30,7 +30,9 @@ the GE/RT8000 - S1 Rule Book as described in the
 June 2003 version of the "Signals and indicators controlling train movements", 
 Module S1.
 <p>
-These masts do not cover Junction(Feathers) and route (Theatre) indicators, They should be created via signal heads and controlled via logixs.
+These masts do not cover route (Theatre) indicators. They should be created via signal heads and controlled via logixs.
+Support for Junction (Feather) indicators is limited, and whilst a Feather can be described using a Signal Mast, its behaviour needs to be set up manually, 
+using either Routes or Logix. 
 <p>
 See the 
 <a href="aspects.xml">aspect page</a>.
@@ -54,6 +56,12 @@ Colour Light Signal Mast definitions:
 <li><a href="appearance-4-c.xml">4 Aspect Signal With Call On</a>
 <li><a href="appearance-4-i.xml">4 Aspect Signal - Built using individual heads for each aspect</a>
 <li><a href="appearance-4-i-c.xml">4 Aspect Signal With Call On  - Built using individual heads for each aspect</a>
+</ul>
+
+<p>
+Junction (Feather) indicator definitions:
+<ul>
+<li><a href="appearance-feather.xml">Feather with up to 6 positions</a>
 </ul>
 <p>
 

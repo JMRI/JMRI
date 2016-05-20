@@ -27,12 +27,10 @@
 <!ELEMENT definitiongroup (definition*)>
 <!ATTLIST definitiongroup name CDATA #IMPLIED>
 
-<!-- The following are very similar to the definitions in decoder-config.dtd, -->
-<!-- and should be kept consistent -->
-
 <!ELEMENT definition EMPTY >
 <!ATTLIST definition item CDATA #REQUIRED>  <!-- item name used for identification -->
 <!ATTLIST definition comment   CDATA #IMPLIED>
+
 <!-- The CV and mask attributes are still under consideration. They are not used in the  -->
 <!-- programs, and are currently here just for mapping to the definitions elsewhere -->
 <!ATTLIST definition CV CDATA #IMPLIED>    <!-- CV number containing value -->

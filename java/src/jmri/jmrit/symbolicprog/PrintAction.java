@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
 import java.awt.event.*;
 
@@ -38,5 +40,5 @@ public class PrintAction  extends AbstractAction {
         mFrame.printPanes(isPreview);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(PrintAction.class.getName());
 }

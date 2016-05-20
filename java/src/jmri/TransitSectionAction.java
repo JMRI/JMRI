@@ -2,6 +2,9 @@
 
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This class holds information and options for a Action to be applied when an automated train 
  *		enters, exits, or is inside of a Section in a Transit. 
@@ -171,7 +174,7 @@ public class TransitSectionAction {
 		disposeSensorListener();
 	}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitSectionAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(TransitSectionAction.class.getName());
 }
 
 /* @(#)TransitSectionAction.java */

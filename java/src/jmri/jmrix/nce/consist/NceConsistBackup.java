@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce.consist;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import java.io.*;
@@ -9,9 +11,11 @@ import java.io.*;
 import jmri.util.StringUtil;
 
 import jmri.jmrix.nce.NceBinaryCommand;
+import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
+import jmri.util.FileUtil;
 
 
 /**
@@ -45,11 +49,7 @@ import jmri.jmrix.nce.NceTrafficController;
 
 public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListener{
 	
-	private static final int CS_CONSIST_MEM = 0xF500;	// start of NCE CS Consist memory
-	private static final int NUM_CONSIST = 96;			// number of lines in the file
-	
 	private static final int CONSIST_LNTH = 16;		// 16 bytes per line
-	private static final int REPLY_16 = 16;			// reply length of 16 byte expected
 	private int replyLen = 0;					// expected byte length
 	private int waiting = 0;					// to catch responses not intended for this module
 	private boolean fileValid = false;			// used to flag backup status messages
@@ -60,15 +60,20 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	JLabel consistNumber = new JLabel();
 	
 	private NceTrafficController tc = null ;
+	private int workingNumConsists = -1;
 	
 	public NceConsistBackup(NceTrafficController t) {
 		tc = t;
+		workingNumConsists = NceCmdStationMemory.CabMemorySerial.NUM_CONSIST;
+		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
+			workingNumConsists = NceCmdStationMemory.CabMemoryUsb.NUM_CONSIST;
+		}
 	}
 	
 	public void run() {
 
 		// get file to write to
-		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+		JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
 		fc.addChoosableFileFilter(new textFilter());
 		
 		File fs = new File ("NCE consist backup.txt");
@@ -135,7 +140,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	// output string to file
 
 
-		for (int consistNum = 0; consistNum < NUM_CONSIST; consistNum++) {
+		for (int consistNum = 0; consistNum < workingNumConsists; consistNum++) {
 			
 			consistNumber.setText(Integer.toString(consistNum));
 			fstatus.setVisible (true);
@@ -143,11 +148,11 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 			getNceConsist(consistNum);
 			
 			if (!fileValid)
-				consistNum = NUM_CONSIST;  // break out of for loop
+				consistNum = workingNumConsists;  // break out of for loop
 
 			if (fileValid) {
 				StringBuffer buf = new StringBuffer();
-				buf.append(":" + Integer.toHexString(CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
+				buf.append(":" + Integer.toHexString(NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
 
 				for (int i = 0; i < CONSIST_LNTH; i++) {
 					buf.append(" " + StringUtil.twoHexFromInt(nceConsistData[i++]));
@@ -215,11 +220,11 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	// Reads 16 bytes of NCE consist memory
 	private NceMessage readConsistMemory(int consistNum) {
 
-		int nceConsistAddr = (consistNum * CONSIST_LNTH) + CS_CONSIST_MEM;
-		replyLen = REPLY_16; 			// Expect 16 byte response
+		int nceConsistAddr = (consistNum * CONSIST_LNTH) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+		replyLen = NceMessage.REPLY_16; 			// Expect 16 byte response
 		waiting++;
 		byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);
-		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_16);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_16);
 		return m;
 	}
 
@@ -240,7 +245,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		}
 
 		// load data buffer
-		for (int i = 0; i < REPLY_16; i++) {
+		for (int i = 0; i < NceMessage.REPLY_16; i++) {
 			nceConsistData[i] = (byte) r.getElement(i);
 		}
 		waiting--;
@@ -268,6 +273,6 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(NceConsistBackup.class.getName());
 }

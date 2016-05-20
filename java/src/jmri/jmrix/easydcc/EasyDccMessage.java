@@ -2,6 +2,9 @@
 
 package jmri.jmrix.easydcc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Encodes a message to an EasyDCC command station.  The EasyDccReply
  * class handles the response from the command station.
@@ -213,7 +216,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 
     static protected final int LONG_TIMEOUT=180000;  // e.g. for programming options
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccMessage.class.getName());
 
 }
 

@@ -19,15 +19,14 @@ public class BareBonesBrowserLaunch {
    private static final String errMsg = "Error attempting to launch web browser";
 
    public static void openURL(String url) {
-      String osName = System.getProperty("os.name");
       try {
-         if (osName.startsWith("Mac OS")) {
+         if (SystemType.getOSName().startsWith("Mac OS")) {
             Class<?> fileMgr = Class.forName("com.apple.eio.FileManager");
             Method openURL = fileMgr.getDeclaredMethod("openURL",
                new Class[] {String.class});
             openURL.invoke(null, new Object[] {url});
             }
-         else if (osName.startsWith("Windows"))
+         else if (SystemType.isWindows())
             Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
          else { //assume Unix or Linux
             String[] browsers = {

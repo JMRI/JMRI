@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz.li100;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -261,7 +263,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     }
     static volatile LI100Adapter mInstance = null;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100Adapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(LI100Adapter.class.getName());
     
 }
 

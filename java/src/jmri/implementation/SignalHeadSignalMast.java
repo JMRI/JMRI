@@ -1,5 +1,7 @@
 // SignalHeadSignalMast.javaa
 package jmri.implementation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.*;
 
 import jmri.*;
@@ -149,7 +151,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             log.error("No appearance map defined, unable to set appearance " + getDisplayName());
             return;
         }
-        if (map != null && map.getSignalSystem() !=null &&  map.getSignalSystem().checkAspect(aspect) && map.getAspectSettings(aspect)!=null)
+        if (map.getSignalSystem() !=null &&  map.getSignalSystem().checkAspect(aspect) && map.getAspectSettings(aspect)!=null)
             log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
         else if ((map.getAspectSettings(aspect)!=null) && (heads.size() > map.getAspectSettings(aspect).length))
             log.warn("setAppearance to \""+aspect+"\" finds "+heads.size()+" heads but only "+map.getAspectSettings(aspect).length+" settings");
@@ -271,7 +273,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         return null;
     }
     
-    static final protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMast.class.getName());
+    static final protected Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class.getName());
 }
 
 /* @(#)SignalHeadSignalMast.java */

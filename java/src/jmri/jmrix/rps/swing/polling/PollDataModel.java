@@ -2,6 +2,8 @@
 
 package jmri.jmrix.rps.swing.polling;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
@@ -175,6 +177,6 @@ public class PollDataModel extends AbstractTableModel
         Distributor.instance().removeMeasurementListener(this);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PollDataModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(PollDataModel.class.getName());
 
 }

@@ -1,7 +1,10 @@
 package jmri.jmrix.marklin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccThrottle;
+import jmri.Throttle;
 
 import jmri.jmrix.AbstractThrottle;
 
@@ -235,147 +238,147 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
                 if (state == 0) functionresult = false;
                 switch (function) {
                     case 0: if (this.f0!=functionresult) {
-                                notifyPropertyChangeListener("F0", this.f0, functionresult);
+                                notifyPropertyChangeListener(Throttle.F0, this.f0, functionresult);
                                 this.f0 = functionresult;
                              }
                              break;
                     case 1: if (this.f1!=functionresult) {
-                                notifyPropertyChangeListener("F1", this.f1, functionresult);
+                                notifyPropertyChangeListener(Throttle.F1, this.f1, functionresult);
                                 this.f1 = functionresult;
                              }
                              break;
                     case 2: if (this.f2!=functionresult) {
-                                notifyPropertyChangeListener("F2", this.f2, functionresult);
+                                notifyPropertyChangeListener(Throttle.F2, this.f2, functionresult);
                                 this.f2 = functionresult;
                              }
                              break;
                     case 3: if (this.f3!=functionresult) {
-                                notifyPropertyChangeListener("F3", this.f3, functionresult);
+                                notifyPropertyChangeListener(Throttle.F3, this.f3, functionresult);
                                 this.f3 = functionresult;
                              }
                              break;
                     case 4: if (this.f4!=functionresult) {
-                                notifyPropertyChangeListener("F4", this.f4, functionresult);
+                                notifyPropertyChangeListener(Throttle.F4, this.f4, functionresult);
                                 this.f4 = functionresult;
                              }
                              break;
                     case 5: if (this.f5!=functionresult) {
-                                notifyPropertyChangeListener("F5", this.f5, functionresult);
+                                notifyPropertyChangeListener(Throttle.F5, this.f5, functionresult);
                                 this.f5 = functionresult;
                              }
                              break;
                     case 6: if (this.f6!=functionresult) {
-                                notifyPropertyChangeListener("F6", this.f6, functionresult);
+                                notifyPropertyChangeListener(Throttle.F6, this.f6, functionresult);
                                 this.f6 = functionresult;
                              }
                              break;
                     case 7: if (this.f7!=functionresult) {
-                                notifyPropertyChangeListener("F7", this.f7, functionresult);
+                                notifyPropertyChangeListener(Throttle.F7, this.f7, functionresult);
                                 this.f7 = functionresult;
                              }
                              break;
                     case 8: if (this.f8!=functionresult) {
-                                notifyPropertyChangeListener("F8", this.f8, functionresult);
+                                notifyPropertyChangeListener(Throttle.F8, this.f8, functionresult);
                                 this.f8 = functionresult;
                              }
                              break;
                     case 9: if (this.f9!=functionresult) {
-                                notifyPropertyChangeListener("F9", this.f9, functionresult);
+                                notifyPropertyChangeListener(Throttle.F9, this.f9, functionresult);
                                 this.f9 = functionresult;
                              }
                              break;
                     case 10: if (this.f10!=functionresult) {
-                                notifyPropertyChangeListener("F10", this.f10, functionresult);
+                                notifyPropertyChangeListener(Throttle.F10, this.f10, functionresult);
                                 this.f10 = functionresult;
                              }
                              break;
                     case 11: if (this.f11!=functionresult) {
-                                notifyPropertyChangeListener("F11", this.f11, functionresult);
+                                notifyPropertyChangeListener(Throttle.F11, this.f11, functionresult);
                                 this.f11 = functionresult;
                              }
                              break;
                     case 12: if (this.f12!=functionresult) {
-                                notifyPropertyChangeListener("F12", this.f12, functionresult);
+                                notifyPropertyChangeListener(Throttle.F12, this.f12, functionresult);
                                 this.f12 = functionresult;
                              }
                              break;
                     case 13: if (this.f13!=functionresult) {
-                                notifyPropertyChangeListener("F13", this.f13, functionresult);
+                                notifyPropertyChangeListener(Throttle.F13, this.f13, functionresult);
                                 this.f13 = functionresult;
                              }
                              break;
                     case 14: if (this.f14!=functionresult) {
-                                notifyPropertyChangeListener("F14", this.f14, functionresult);
+                                notifyPropertyChangeListener(Throttle.F14, this.f14, functionresult);
                                 this.f14 = functionresult;
                              }
                              break;
                     case 15: if (this.f15!=functionresult) {
-                                notifyPropertyChangeListener("F15", this.f15, functionresult);
+                                notifyPropertyChangeListener(Throttle.F15, this.f15, functionresult);
                                 this.f15 = functionresult;
                              }
                              break;
                     case 16: if (this.f16!=functionresult) {
-                                notifyPropertyChangeListener("F16", this.f16, functionresult);
+                                notifyPropertyChangeListener(Throttle.F16, this.f16, functionresult);
                                 this.f16 = functionresult;
                              }
                              break;
                     case 17: if (this.f17!=functionresult) {
-                                notifyPropertyChangeListener("F17", this.f17, functionresult);
+                                notifyPropertyChangeListener(Throttle.F17, this.f17, functionresult);
                                 this.f17 = functionresult;
                              }
                              break;
                     case 18: if (this.f18!=functionresult) {
-                                notifyPropertyChangeListener("F18", this.f18, functionresult);
+                                notifyPropertyChangeListener(Throttle.F18, this.f18, functionresult);
                                 this.f18 = functionresult;
                              }
                              break;
                     case 19: if (this.f19!=functionresult) {
-                                notifyPropertyChangeListener("F19", this.f19, functionresult);
+                                notifyPropertyChangeListener(Throttle.F19, this.f19, functionresult);
                                 this.f19 = functionresult;
                              }
                              break;
                     case 20: if (this.f20!=functionresult) {
-                                notifyPropertyChangeListener("F20", this.f20, functionresult);
+                                notifyPropertyChangeListener(Throttle.F20, this.f20, functionresult);
                                 this.f20 = functionresult;
                              }
                              break;
                     case 21: if (this.f21!=functionresult) {
-                                notifyPropertyChangeListener("F21", this.f21, functionresult);
+                                notifyPropertyChangeListener(Throttle.F21, this.f21, functionresult);
                                 this.f21 = functionresult;
                              }
                              break;
                     case 22: if (this.f22!=functionresult) {
-                                notifyPropertyChangeListener("F22", this.f22, functionresult);
+                                notifyPropertyChangeListener(Throttle.F22, this.f22, functionresult);
                                 this.f22 = functionresult;
                             }
                             break;
                     case 23: if (this.f23!=functionresult) {
-                                notifyPropertyChangeListener("F23", this.f23, functionresult);
+                                notifyPropertyChangeListener(Throttle.F23, this.f23, functionresult);
                                 this.f23 = functionresult;
                              }
                              break;
                     case 24: if (this.f24!=functionresult) {
-                                notifyPropertyChangeListener("F24", this.f24, functionresult);
+                                notifyPropertyChangeListener(Throttle.F24, this.f24, functionresult);
                                 this.f24 = functionresult;
                              }
                              break;
                     case 25: if (this.f25!=functionresult) {
-                                notifyPropertyChangeListener("F25", this.f25, functionresult);
+                                notifyPropertyChangeListener(Throttle.F25, this.f25, functionresult);
                                 this.f25 = functionresult;
                              }
                              break;
                     case 26: if (this.f26!=functionresult) {
-                                notifyPropertyChangeListener("F26", this.f26, functionresult);
+                                notifyPropertyChangeListener(Throttle.F26, this.f26, functionresult);
                                 this.f26 = functionresult;
                              }
                              break;
                     case 27: if (this.f27!=functionresult) {
-                                notifyPropertyChangeListener("F27", this.f27, functionresult);
+                                notifyPropertyChangeListener(Throttle.F27, this.f27, functionresult);
                                 this.f27 = functionresult;
                              }
                              break;
                     case 28: if (this.f28!=functionresult) {
-                                notifyPropertyChangeListener("F28", this.f28, functionresult);
+                                notifyPropertyChangeListener(Throttle.F28, this.f28, functionresult);
                                 this.f28 = functionresult;
                              }
                              break;
@@ -397,6 +400,6 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(MarklinThrottle.class.getName());
 
 }

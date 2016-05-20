@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.duplexgroup.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.duplexgroup.*;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnConstants;
@@ -982,6 +984,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     public void countUr92sAndQueryDuplexIdentityInfo() {
         if (thisone == null) {
             log.error("called countUR92sAndQueryDuplexInfo before thisone is initialized");
+            return;
         }
         if ((waitingForIplReply == true) ||
                 (swingTmrIplQuery == null) ||
@@ -1182,6 +1185,6 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnDplxGrpInfoImpl.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImpl.class.getName());
 
 }

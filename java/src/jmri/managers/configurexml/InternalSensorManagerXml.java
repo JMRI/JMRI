@@ -1,6 +1,9 @@
 package jmri.managers.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
+import jmri.managers.InternalSensorManager;
 
 /**
  * Provides load and store functionality for
@@ -25,11 +28,42 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
+    
+    public Element store(Object o) {
+        Element sensors = new Element("sensors");
+        
+        String defaultState;
+        switch(InternalSensorManager.getDefaultStateForNewSensors()){
+            case jmri.Sensor.ACTIVE : defaultState = "active"; break;
+            case jmri.Sensor.INACTIVE : defaultState = "inactive"; break;
+            case jmri.Sensor.INCONSISTENT : defaultState = "inconsistent"; break;
+            default : defaultState = "unknown";
+        }
+        
+        sensors.addContent(new Element("defaultInitialState").addContent(defaultState));
+        
+        return store(o, sensors);
+    
+    }
 
     public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         // load individual sensors
-        return loadSensors(sensors);
+        if (sensors.getChild("defaultInitialState")!=null){
+            int defaultState = jmri.Sensor.UNKNOWN;
+            String state = sensors.getChild("defaultInitialState").getText();
+            if(state.equals("active")){
+                defaultState = jmri.Sensor.ACTIVE;
+            } else if (state.equals("inactive")){
+                defaultState = jmri.Sensor.INACTIVE;
+            } else if (state.equals("inconsistent")){
+                defaultState  = jmri.Sensor.INCONSISTENT;
+            }
+            InternalSensorManager.setDefaultStateForNewSensors(defaultState);
+        }
+        boolean load = loadSensors(sensors);
+        
+        return load;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(InternalSensorManagerXml.class.getName());
 }

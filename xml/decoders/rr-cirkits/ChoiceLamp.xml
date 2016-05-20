@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
-<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!-- Copyright (C) JMRI 2005, 2013 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,12 +14,12 @@
 <!-- for more details.                                                      -->
 
 
-<!-- version 1 - new file includes for LNCP files -->
+<!-- version 1 - new file includes for Signalman files -->
 
 <!-- Lamp choice for aspects -->
 
 <enumVal>
-  <enumChoice choice="H1-R"/>
+  <enumChoice choice="H1-R "/>
   <enumChoice choice="H1-Y"/>
   <enumChoice choice="H1-G"/>
   <enumChoice choice="H1-L"/>

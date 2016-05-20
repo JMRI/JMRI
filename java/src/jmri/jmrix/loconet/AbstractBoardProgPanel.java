@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -49,7 +51,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         implements LocoNetListener {
 
     JPanel contents = new JPanel();
-    java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.AbstractBoardProgPanel");
+    java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetBundle");
 
     public JToggleButton readAllButton  = null;
     public JToggleButton writeAllButton = null;
@@ -617,6 +619,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     // first attempt to access a given OpSw
     private final int MAX_OPSW_ACCESS_RETRIES = 2;
     
-    org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractBoardProgPanel.class.getName());
+    Logger log = LoggerFactory.getLogger(AbstractBoardProgPanel.class.getName());
 
 }

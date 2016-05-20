@@ -2,6 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.*;
 
 import java.awt.*;
@@ -51,44 +53,147 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	private ArrayList<AutoActiveTrain> _autoTrainsList = new ArrayList<AutoActiveTrain>();
 	private ArrayList<java.beans.PropertyChangeListener> _listeners = 
 							new ArrayList<java.beans.PropertyChangeListener>();
+    //Keep track of throttle and listeners to update frame with their current state.
+    private ArrayList<jmri.Throttle> _throttles = new ArrayList<jmri.Throttle>();
+	private ArrayList<java.beans.PropertyChangeListener> _throttleListeners = 
+							new ArrayList<java.beans.PropertyChangeListener>();
 	
 	// accessor functions
 	public ArrayList<AutoActiveTrain> getAutoTrainsList(){return _autoTrainsList;}
 	public void addAutoActiveTrain(AutoActiveTrain aat) {
 		if (aat!=null) {
 			_autoTrainsList.add(aat);
+            java.beans.PropertyChangeListener throttleListener = new java.beans.PropertyChangeListener() {
+				public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    handleThrottleChange(e);
+				}
+			};
+            _throttleListeners.add(throttleListener);
+            
+            _throttles.add(null); //adds a place holder
+            //set up the throttle prior to attaching the listener to the ActiveTrain
+            setupThrottle(aat);
+            
 			ActiveTrain at = aat.getActiveTrain();
 			java.beans.PropertyChangeListener listener = null;
 			at.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
 				public void propertyChange(java.beans.PropertyChangeEvent e) {
-					handleActiveTrainChange(e);
+                    handleActiveTrainChange(e);
 				}
 			});
 			_listeners.add(listener);
+            
+            
 			displayAutoTrains();
 		}
 	}
 	public void removeAutoActiveTrain(AutoActiveTrain aat) {
 		for (int i=0; i<_autoTrainsList.size(); i++) {
 			if (_autoTrainsList.get(i) == aat) {
+                removeThrottleListener(aat);
 				_autoTrainsList.remove(i);
 				ActiveTrain at = aat.getActiveTrain();
 				at.removePropertyChangeListener(_listeners.get(i));
+                _throttles.remove(i);
 				_listeners.remove(i);
+                _throttleListeners.remove(i);
 				displayAutoTrains();
 				return;
 			}
 		}		
 	}
 	private void handleActiveTrainChange(java.beans.PropertyChangeEvent e) {
-		displayAutoTrains();
+		if(e.getPropertyName().equals("mode")){
+            handleChangeOfMode(e);
+        }
+        displayAutoTrains();
 	}
+    
+    private void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
+        for(AutoActiveTrain aat:_autoTrainsList){
+            if(aat.getActiveTrain()==e.getSource()){
+                int newValue = ((Integer) e.getNewValue()).intValue();
+                int oldValue = ((Integer) e.getOldValue()).intValue();
+                if(newValue==ActiveTrain.DISPATCHED){
+                    removeThrottleListener((AutoActiveTrain)e.getSource());
+                } else if (oldValue==ActiveTrain.DISPATCHED && newValue!=ActiveTrain.DISPATCHED){
+                    setupThrottle(aat);
+                }
+            }
+        }
+    }
+    
+    private void setupThrottle(AutoActiveTrain aat){
+        if(aat.getThrottle()!=null){
+            int index = _autoTrainsList.indexOf(aat);
+            if(_throttles.get(index)==null){
+                _throttles.add(index, aat.getThrottle());
+                addThrottleListener(aat);
+            }
+        }
+    }
+    
+    private void handleThrottleChange(java.beans.PropertyChangeEvent e) {
+        int index = _throttles.indexOf(e.getSource());
+        if(index==-1){
+            return;
+        }
+        JLabel status = _throttleStatus.get(index);
+        if(!status.isVisible()){
+            return;
+        }
+        jmri.DccLocoAddress addy = (jmri.DccLocoAddress)_throttles.get(index).getLocoAddress();
+        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+	}
+    
+    private void updateStatusLabel(JLabel status, Object speed, Object forward){
+        StringBuilder sb = new StringBuilder();
+        int spd = Math.round(((Float)speed).floatValue()*100);
+        sb.append(""+spd);
+        sb.append("% ");
+        if(((Boolean)forward).booleanValue())
+            sb.append("(fwd)");
+        else
+            sb.append("(rev)");
+        //Only repack if the test size has increased.
+        if(status.getText().length() < sb.toString().length()){
+            status.setText(sb.toString());
+            autoTrainsFrame.pack();
+        } else {
+            status.setText(sb.toString());
+        }
+    }
+    
+    private void addThrottleListener(AutoActiveTrain aat){
+        int index = _autoTrainsList.indexOf(aat);
+        if(index==-1){
+            return;
+        }
+        if(_throttles.get(index)!=null){
+            jmri.DccLocoAddress addy = (jmri.DccLocoAddress)_throttles.get(index).getLocoAddress();
+            jmri.InstanceManager.throttleManagerInstance().attachListener(addy, _throttleListeners.get(index));
+            JLabel status = _throttleStatus.get(index);
+            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+        }
+    }
+    
+    private void removeThrottleListener(AutoActiveTrain aat){
+        int index = _autoTrainsList.indexOf(aat);
+        if(index==-1){
+            return;
+        }
+        if(_throttles.get(index)!=null){
+            jmri.InstanceManager.throttleManagerInstance().removeListener((jmri.DccLocoAddress)_throttles.get(index).getLocoAddress(), _throttleListeners.get(index));
+        }
+    }
 	
 	// variables for AutoTrains window
 	protected JmriJFrame autoTrainsFrame = null;
 	private Container contentPane = null;
+    //This would be better refactored this all into a sub-class, rather than multiple arraylists.
 	// note: the following array lists are synchronized with _autoTrainsList
 	private ArrayList<JPanel> _JPanels = new ArrayList<JPanel>();
+	private ArrayList<JLabel> _throttleStatus = new ArrayList<JLabel>();
 	private ArrayList<JLabel> _trainLabels = new ArrayList<JLabel>();
 	private ArrayList<JButton> _stopButtons = new ArrayList<JButton>();
 	private ArrayList<JButton> _manualButtons = new ArrayList<JButton>();
@@ -143,6 +248,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 		px.setLayout(new FlowLayout());
 		_JPanels.add(px);
 		JLabel tLabel = new JLabel("      ");
+		px.add(tLabel);
 		px.add(tLabel);
 		_trainLabels.add(tLabel);
 		JButton tStop = new JButton(rb.getString("ResumeButton"));
@@ -200,12 +306,21 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 			}
 		});
 		
+        JLabel _throttle = new JLabel();
+        _throttle.setText("Speed Unknown");
+        _throttleStatus.add(_throttle);
+        px.add(_throttle);
 		contentPane.add(px);
 	}						
 	private void placeWindow() {
 		// get size and placement of Dispatcher Window, screen size, and window size
-		Point dispPt = _dispatcher.getLocationOnScreen();
-		Dimension dispDim = _dispatcher.getSize();
+        Point dispPt = new Point (0,0);
+        Dimension dispDim = new Dimension(0,0);
+        
+        if(_dispatcher.isShowing()){
+            dispPt = _dispatcher.getLocationOnScreen();
+            dispDim = _dispatcher.getSize();
+        }
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         int screenHeight = screenDim.height-120;
         int screenWidth = screenDim.width-20;
@@ -397,6 +512,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 					_forwardButtons.get(i).setVisible(false);
 					_reverseButtons.get(i).setVisible(false);
 					_speedSliders.get(i).setVisible(false);
+                    _throttleStatus.get(i).setVisible(true);
 				}
 				else if ( (at.getMode()==ActiveTrain.MANUAL) && ( (at.getStatus()==ActiveTrain.WORKING) ||
 										(at.getStatus()==ActiveTrain.READY)	) ) {
@@ -404,7 +520,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 					_resumeAutoRunningButtons.get(i).setVisible(true);
 					_forwardButtons.get(i).setVisible(false);
 					_reverseButtons.get(i).setVisible(false);
-					_speedSliders.get(i).setVisible(false);
+					_speedSliders.get(i).setVisible(true);
 				}	
 				else {
 					manualButton.setText(rb.getString("ToAutoButton"));
@@ -412,6 +528,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 					_forwardButtons.get(i).setVisible(true);
 					_reverseButtons.get(i).setVisible(true);
 					_speedSliders.get(i).setVisible(true);
+                    _throttleStatus.get(i).setVisible(false);
 					_forwardButtons.get(i).setSelected(aat.getForward());
 					_reverseButtons.get(i).setSelected(!aat.getForward());
 					int speedValue = (int)(aat.getTargetSpeed()*100.0f);
@@ -431,7 +548,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	}	
 	
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoTrainsFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class.getName());
 
 }
 

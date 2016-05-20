@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz.swing.stackmon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetTrafficController;
 
@@ -141,8 +143,7 @@ JButton());
        _typeList=new java.util.Hashtable<Integer,String>();
        fireTableDataChanged();
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger
-(StackMonDataModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(StackMonDataModel.class.getName());
 
 }
 

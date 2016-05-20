@@ -32,7 +32,7 @@ Il utilise les installations de la classe jmri.util.JmriJFrame
 pour localiser les fenêtres et créer une image de leur apparence actuelle.
 La fenêtre n'a pas à être maximisée, mais elle doit être ouverte;
 c'est OK pour la fenêtre d'avoir été minimisée dans la barre de démarrage (Windows)
-ou convertie en une icône (MacOS X et Linux).
+ou convertie en une icône (Mac OS X et Linux).
 
 <p>
 Les préférences MiniServer peuvent être utilisées pour régler le délai par défaut après

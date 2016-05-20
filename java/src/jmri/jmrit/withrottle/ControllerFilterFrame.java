@@ -1,5 +1,7 @@
 package jmri.jmrit.withrottle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -385,6 +387,6 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControllerFilterFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(ControllerFilterFrame.class.getName());
 
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.maple.nodeconfig;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 
 import java.util.ResourceBundle;
@@ -746,6 +748,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //        return true;
 //    }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeConfigFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
 
 }

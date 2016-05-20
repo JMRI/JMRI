@@ -1,5 +1,7 @@
 package jmri.jmrit.operations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.util.FileUtil;
 
 /**
  * Loads and stores the operation setup using xml files. 
@@ -46,7 +49,7 @@ public class OperationsXml extends XmlFile {
 		File file = null;
 		try {
 			if (!checkFile(fullPathName)) {
-				log.debug("File "+fullPathName+ " does not exist, creating it");
+//				log.debug("File "+fullPathName+ " does not exist, creating it");
 				// The file does not exist, create it before writing
 				file = new File(fullPathName);
 				File parentDir = file.getParentFile();
@@ -55,7 +58,7 @@ public class OperationsXml extends XmlFile {
 						log.error("Directory wasn't created");
 				}
 				if (file.createNewFile())
-					log.debug("File created");
+					log.debug("File created "+fullPathName);
 			} else {
 				file = new File(fullPathName);
 			}
@@ -95,23 +98,23 @@ public class OperationsXml extends XmlFile {
 	public static String getOperationsDirectoryName(){
 		return operationsDirectoryName;
 	}
-	private static String operationsDirectoryName = "operations";
+	private static String operationsDirectoryName = "operations";	// NOI18N
 
 	public void setOperationsFileName(String name) { operationsFileName = name; }
 	public String getOperationsFileName(){
 		return operationsFileName;
 	}
 	
-	private String operationsFileName = "DefaultOperations.xml";	// should be overridden
+	private String operationsFileName = "DefaultOperations.xml";	// NOI18N should be overridden
 	
     /**
      * Absolute path to location of Operations files.
      * <P>
-     * Default is in the prefsDir, but can be set to anything.
-     * @see XmlFile#prefsDir()
+     * Default is in the user's files path, but can be set to anything.
+     * @see jmri.util.FileUtil#getUserFilesPath() 
      */
     public static String getFileLocation() { return fileLocation; }
-    private static String fileLocation = XmlFile.prefsDir();
+    private static String fileLocation = FileUtil.getUserFilesPath();
     
 	/**
 	 * Convert standard string to xml string one character at a time expect when
@@ -120,11 +123,12 @@ public class OperationsXml extends XmlFile {
 	 * @param comment standard string
 	 * @return string converted to xml format.
 	 */
-    public String convertToXmlComment(String comment){
+    @Deprecated
+    public static String convertToXmlComment(String comment){
     	StringBuffer buf = new StringBuffer();
         for (int k = 0; k < comment.length(); k++) {
-            if (comment.startsWith("\n", k)) {
-                buf.append("<?p?>");
+            if (comment.startsWith("\n", k)) {	// NOI18N
+                buf.append("<?p?>");			// NOI18N
             }
             else {
             	buf.append(comment.substring(k, k + 1));
@@ -142,11 +146,12 @@ public class OperationsXml extends XmlFile {
 	 * @param comment input xml comment string
 	 * @return output string converted to standard format
 	 */
-    public String convertFromXmlComment(String comment){
+    @Deprecated
+    public static String convertFromXmlComment(String comment){
     	StringBuffer buf = new StringBuffer();
     	for (int k = 0; k < comment.length(); k++) {
-    		if (comment.startsWith("<?p?>", k)) {
-    			buf.append("\n");
+    		if (comment.startsWith("<?p?>", k)) {	// NOI18N
+    			buf.append("\n");					// NOI18N
     			k = k + 4;
     		}
     		else {
@@ -183,6 +188,6 @@ public class OperationsXml extends XmlFile {
 		return false;
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsXml.class.getName());
+	static Logger log = LoggerFactory.getLogger(OperationsXml.class.getName());
 
 }

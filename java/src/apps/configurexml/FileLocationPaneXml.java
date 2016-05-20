@@ -1,8 +1,11 @@
 package apps.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.FileLocationPane;
 import org.jdom.Element;
 import java.util.List;
+import jmri.util.FileUtil;
 
 /**
  * Handle XML persistance of directory locations.
@@ -23,11 +26,11 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      */
     public Element store(Object o) {
         Element e = new Element("fileLocations");
-        /*e.setAttribute("defaultScriptLocation", jmri.jmrit.XmlFile.scriptsDir());
-        e.setAttribute("defaultUserLocation", jmri.jmrit.XmlFile.userFileLocationDefault());
+        /*e.setAttribute("defaultScriptLocation", FileUtil.getPythonScriptsPath());
+        e.setAttribute("defaultUserLocation", FileUtil.getUserFilesPath());
         e.setAttribute("defaultThrottleLocation", jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());*/
-        storeLocation(e, "defaultScriptLocation", jmri.jmrit.XmlFile.scriptsDir());
-        storeLocation(e, "defaultUserLocation", jmri.jmrit.XmlFile.userFileLocationDefault());
+        storeLocation(e, "defaultScriptLocation", FileUtil.getScriptsPath());
+        storeLocation(e, "defaultUserLocation", FileUtil.getUserFilesPath());
         storeLocation(e, "defaultThrottleLocation", jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());
         e.setAttribute("class", this.getClass().getName());
         return e;
@@ -47,17 +50,18 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     public boolean load(Element e) {
     	boolean result = true;
         String value = loadUserLocations(e, "defaultScriptLocation");
-        if (value!=null)
-            jmri.jmrit.XmlFile.setScriptsFileLocationDefault(value);
+        if (value!=null) {
+            FileUtil.setScriptsPath(value);
+        }
         //Attribute scriptLocation = e.getAttribute("defaultScriptLocation");
         //if (scriptLocation!=null)
-        //jmri.jmrit.XmlFile.setScriptsFileLocationDefault(scriptLocation.getValue());
+        //FileUtil.setPythonScriptsPath(scriptLocation.getValue());
         /*Attribute userLocation = e.getAttribute("defaultUserLocation");
         if (userLocation!=null)
-            jmri.jmrit.XmlFile.setUserFileLocationDefault(userLocation.getValue());*/
+            FileUtil.setUserFilesPath(userLocation.getValue());*/
         value = loadUserLocations(e, "defaultUserLocation");
         if (value!=null)
-            jmri.jmrit.XmlFile.setUserFileLocationDefault(value);
+            FileUtil.setUserFilesPath(value);
         /*Attribute throttleLocation = e.getAttribute("defaultThrottleLocation");
         if (throttleLocation!=null)
             jmri.jmrit.throttle.ThrottleFrame.setDefaultThrottleLocation(userLocation.getValue());*/
@@ -89,6 +93,6 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FileLocationPaneXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(FileLocationPaneXml.class.getName());
 
 }

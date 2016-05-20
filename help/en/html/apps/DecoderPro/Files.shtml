@@ -55,7 +55,7 @@ Normally, it's located
 <li>On a Linux machine, look for a .jmri directory in your home
 directory.
 
-<li>On MacOS X, preferences are stored in a "JMRI" directory
+<li>On Mac OS X, preferences are stored in a "JMRI" directory
 in the
 Library/Preferences folder in your user directory.
 

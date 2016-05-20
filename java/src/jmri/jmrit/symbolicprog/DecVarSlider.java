@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JSlider;
@@ -59,6 +61,6 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 	}
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecVarSlider.class.getName());
+    static Logger log = LoggerFactory.getLogger(DecVarSlider.class.getName());
 
 }

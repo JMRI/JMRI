@@ -2,7 +2,6 @@
 
 package jmri.implementation.swing;
 
-//import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -95,5 +94,5 @@ public class SwingShutDownTaskTest extends TestCase {
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 //    don't want log defined here, as makes the "log" references above ambiguous
-//    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SwingShutDownTaskTest.class.getName());
+//    static protected Logger log = Logger.getLogger(SwingShutDownTaskTest.class.getName());
 }

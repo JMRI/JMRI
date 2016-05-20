@@ -1,5 +1,7 @@
 package jmri.jmrix.rps.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.RpsReporterManager;
 
 import org.jdom.Element;
@@ -36,5 +38,5 @@ public class RpsReporterManagerXml extends jmri.managers.configurexml.AbstractRe
         return loadReporters(reporters);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsReporterManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(RpsReporterManagerXml.class.getName());
 }

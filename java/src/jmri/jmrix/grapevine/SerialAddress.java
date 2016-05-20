@@ -2,6 +2,8 @@
 
 package jmri.jmrix.grapevine;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -479,7 +481,7 @@ public class SerialAddress {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAddress.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
 
 /* @(#)SerialAddress.java */

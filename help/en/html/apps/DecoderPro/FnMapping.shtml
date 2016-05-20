@@ -63,7 +63,7 @@ a fixed map is displayed below.
 </ul>
 <h2>Mapping Example</h2>
 These examples are taken from the 
-<A HREF="../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>
+<A HREF="../../../../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>
 decoder definition file.
 <P>
 The block of definitions for function zero in the forward direction look like this:

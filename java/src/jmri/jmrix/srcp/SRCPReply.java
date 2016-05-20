@@ -2,6 +2,8 @@
 
 package jmri.jmrix.srcp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.srcp.parser.SimpleNode;
 
 /**
@@ -102,7 +104,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 	} catch(Exception e){ return false;}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(SRCPReply.class.getName());
 
 }
 

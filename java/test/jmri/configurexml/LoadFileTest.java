@@ -2,7 +2,7 @@
 
 package jmri.configurexml;
 
-import jmri.jmrit.XmlFile;
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import junit.framework.Assert;
@@ -10,6 +10,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import jmri.InstanceManager;
+import jmri.util.FileUtil;
 
 /**
  * Test upper level loading of a file
@@ -80,8 +81,8 @@ public class LoadFileTest extends LoadFileTestBase {
             .load(inFile);
     
         // store file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        java.io.File outFile = new java.io.File(XmlFile.prefsDir()+"temp/LoadFileTest.xml");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
+        File outFile = new File(FileUtil.getUserFilesPath()+"temp/LoadFileTest.xml");
         InstanceManager.configureManagerInstance()
             .storeConfig(outFile);
         
@@ -141,5 +142,5 @@ public class LoadFileTest extends LoadFileTestBase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadFileTest.class.getName());
+    static Logger log = Logger.getLogger(LoadFileTest.class.getName());
 }

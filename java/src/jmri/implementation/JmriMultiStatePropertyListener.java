@@ -3,6 +3,8 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.beans.PropertyChangeEvent;
 import jmri.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A service base class for monitoring a bound property
@@ -61,8 +63,7 @@ public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener
             }
         }
     }
-    static final org.apache.log4j.Logger
-    log = org.apache.log4j.Logger.getLogger(JmriMultiStatePropertyListener.class.getName());
+    static final Logger log = LoggerFactory.getLogger(JmriMultiStatePropertyListener.class.getName());
 }
 
 

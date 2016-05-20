@@ -11,7 +11,8 @@ import java.util.Scanner;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmris.JmriServer;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is an implementation of a simple server for JMRI.
@@ -127,5 +128,5 @@ public class SimpleServer extends JmriServer {
         }
         inputScanner.close();
     }
-    static Logger log = Logger.getLogger(SimpleServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(SimpleServer.class.getName());
 }

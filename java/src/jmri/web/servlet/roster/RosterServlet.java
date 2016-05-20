@@ -18,7 +18,8 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -40,7 +41,7 @@ import org.jdom.output.XMLOutputter;
  */
 public class RosterServlet extends HttpServlet {
 
-    static Logger log = Logger.getLogger(RosterServlet.class.getName());
+    static Logger log = LoggerFactory.getLogger(RosterServlet.class.getName());
 
     /**
      * Parse all HTTP GET requests and pass to appropriate method
@@ -214,7 +215,7 @@ public class RosterServlet extends HttpServlet {
     }
 
     /**
-     * Generate the XML output specified by {@link #doList(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * Generate the XML output specified by {@link #doList(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, Boolean)
      * }
      * and {@link #doEntry(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      * }.

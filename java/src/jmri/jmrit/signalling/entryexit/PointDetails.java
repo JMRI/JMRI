@@ -1,5 +1,8 @@
 package jmri.jmrit.signalling.entryexit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.List;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
@@ -26,7 +29,7 @@ public class PointDetails {
     //May want to look at putting a listener on the refLoc to listen to updates to blocks, signals and sensors attached to it
     LayoutEditor panel = null;
     LayoutBlock facing;
-    LayoutBlock protecting;
+    List<LayoutBlock> protectingBlocks;
     private NamedBean refObj;
     private Object refLoc;
     private Sensor sensor;
@@ -38,14 +41,14 @@ public class PointDetails {
     Source sourceRoute;
     transient Hashtable<DestinationPoints, Source> destinations = new Hashtable<DestinationPoints, Source>(5);
     
-    public PointDetails(LayoutBlock facing, LayoutBlock protecting){
+    public PointDetails(LayoutBlock facing, List<LayoutBlock> protecting){
         this.facing=facing;
-        this.protecting = protecting;
+        this.protectingBlocks = protecting;
     }
     
-    LayoutBlock getFacing(){ return facing; }
-    LayoutBlock getProtecting(){ return protecting; }
-    
+    public LayoutBlock getFacing(){ return facing; }
+    public List<LayoutBlock> getProtecting(){ return protectingBlocks; }
+
     //This might be better off a ref to the source pointdetail.
     boolean routeToSet = false;
     void setRouteTo(boolean boo){
@@ -67,8 +70,9 @@ public class PointDetails {
         if(sensor!=null)
             sensor.removePropertyChangeListener(nxButtonListener);
         sensor = sen;
-        if(sensor!=null)
+        if(sensor!=null){
             sensor.addPropertyChangeListener(nxButtonListener);
+        }
     }
     
     void addSensorList(){
@@ -84,70 +88,75 @@ public class PointDetails {
     protected PropertyChangeListener nxButtonListener = new PropertyChangeListener() {
     //First off if we were inactive, and now active
         public void propertyChange(PropertyChangeEvent e) {
-            if(!e.getPropertyName().equals("KnownState"))
-                return;
-            int now = ((Integer) e.getNewValue()).intValue();
-            int old = ((Integer) e.getOldValue()).intValue();
-            
-            if((old==Sensor.UNKNOWN) || (old==Sensor.INCONSISTENT)){
-                setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                return;
-            }
-            
-            DestinationPoints destPoint = null;
-            
-            for(Entry<DestinationPoints, Source> dp: destinations.entrySet()){
-                destPoint = dp.getKey();
-                if(destPoint.isEnabled() && dp.getValue().getPoint().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                    destPoint.activeBean(false);
-                    return;
-                }
-            }
-            
-            if(sourceRoute!=null){
-                if(now==Sensor.ACTIVE && getNXState()==EntryExitPairs.NXBUTTONINACTIVE){
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                    for(Entry<PointDetails, DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
-                        //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
-                        //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
-                        if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
-                            if(en.getKey().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                                sourceRoute.activeBean(en.getValue(), true);
-                            }
-                        }
-                    }
-                } else if (now==Sensor.INACTIVE && getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                    //sensor inactive, nxbutton state was selected, going to set back to inactive - ie user cancelled button
-                    setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                } else if (now==Sensor.INACTIVE && getNXState()==EntryExitPairs.NXBUTTONACTIVE){
-                    //Sensor gone inactive, while nxbutton was selected - potential start of user either clear route or setting another
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                    for(Entry<PointDetails, DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
-                        //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
-                        //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
-                        if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
-                            if(en.getKey().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                                sourceRoute.activeBean(en.getValue(), false);
-                            }
-                        }
-                    }
-                }
-            } else if (destPoint!=null){
-                //Button set as a destination but has no source, it has had a change in state
-                if(now==Sensor.ACTIVE){
-                    //State now is Active will set flashing
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                } else if(getNXState()==EntryExitPairs.NXBUTTONACTIVE){
-                    //Sensor gone inactive while it was previosly active
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                } else if(getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                    //Sensor gone inactive while it was previously selected therefore will cancel
-                    setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                }
-            }
+            nxButtonStateChange(e);
         }
     };
+    
+    private void nxButtonStateChange(PropertyChangeEvent e){
+        if(!e.getPropertyName().equals("KnownState"))
+            return;
+        int now = ((Integer) e.getNewValue()).intValue();
+        int old = ((Integer) e.getOldValue()).intValue();
+        
+        if((old==Sensor.UNKNOWN) || (old==Sensor.INCONSISTENT)){
+            setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+            return;
+        }
+        
+        DestinationPoints destPoint = null;
+        
+        for(Entry<DestinationPoints, Source> dp: destinations.entrySet()){
+            destPoint = dp.getKey();
+            if(destPoint.isEnabled() && dp.getValue().getPoint().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+                destPoint.activeBean(false);
+                return;
+            }
+        }
+        
+        if(sourceRoute!=null){
+            if(now==Sensor.ACTIVE && getNXState()==EntryExitPairs.NXBUTTONINACTIVE){
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+                for(Entry<PointDetails, DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
+                    //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
+                    //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
+                    if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
+                        if(en.getKey().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                            sourceRoute.activeBean(en.getValue(), true);
+                        }
+                    }
+                }
+            } else if (now==Sensor.INACTIVE && getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                //sensor inactive, nxbutton state was selected, going to set back to inactive - ie user cancelled button
+                setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+            } else if (now==Sensor.INACTIVE && getNXState()==EntryExitPairs.NXBUTTONACTIVE){
+                //Sensor gone inactive, while nxbutton was selected - potential start of user either clear route or setting another
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+                for(Entry<PointDetails, DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
+                    //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
+                    //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
+                    if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
+                        if(en.getKey().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                            sourceRoute.activeBean(en.getValue(), false);
+                        }
+                    }
+                }
+            }
+        } else if (destPoint!=null){
+            //Button set as a destination but has no source, it has had a change in state
+            if(now==Sensor.ACTIVE){
+                //State now is Active will set flashing
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+            } else if(getNXState()==EntryExitPairs.NXBUTTONACTIVE){
+                //Sensor gone inactive while it was previosly active
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+            } else if(getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                //Sensor gone inactive while it was previously selected therefore will cancel
+                setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+            }
+        }
+        jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).setMultiPointRoute(this, panel);
+    }
     
     void setSignalMast(SignalMast mast) {
         signalmast = mast;
@@ -178,7 +187,6 @@ public class PointDetails {
         sourceRoute=null;
         if(destinations.size()==0) {
             stopFlashSensor();
-            sensor.removePropertyChangeListener(nxButtonListener);
             setSensor(null);
         }
     }
@@ -202,7 +210,7 @@ public class PointDetails {
         nxButtonState=state;
     }
     
-    int getNXState(){
+    public int getNXState(){
         return nxButtonState;
     }
     
@@ -219,52 +227,19 @@ public class PointDetails {
     public void setRefObject(NamedBean refObs){
         refObj = refObs;
         if (panel!=null && refObj!=null){
-            if (refObj instanceof SignalMast){
-                String mast = ((SignalMast)refObj).getUserName();
-                refLoc = panel.findPositionablePointByEastBoundSignalMast(mast);
+            if (refObj instanceof SignalMast || refObj instanceof Sensor){
+                //String mast = ((SignalMast)refObj).getUserName();
+                refLoc = panel.findPositionablePointByEastBoundBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findPositionablePointByWestBoundSignalMast(mast);
+                    refLoc = panel.findPositionablePointByWestBoundBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findLayoutTurnoutBySignalMast(mast);
+                    refLoc = panel.findLayoutTurnoutByBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findLevelXingBySignalMast(mast);
+                    refLoc = panel.findLevelXingByBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findLayoutSlipBySignalMast(mast);
-                if(refLoc==null){
-                    mast = ((SignalMast)refObj).getSystemName();
-                    if(refLoc==null)
-                        refLoc = panel.findPositionablePointByWestBoundSignalMast(mast);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutTurnoutBySignalMast(mast);
-                    if(refLoc==null)
-                        refLoc = panel.findLevelXingBySignalMast(mast);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutSlipBySignalMast(mast);
-                }
-            } else if (refObj instanceof Sensor) {
-                String sourceSensor = ((Sensor)refObj).getSystemName();
-                refLoc = panel.findPositionablePointByEastBoundSensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findPositionablePointByWestBoundSensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findLayoutTurnoutBySensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findLevelXingBySensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findLayoutSlipBySensor(sourceSensor);
-                if(refLoc==null){
-                    sourceSensor = ((Sensor)refObj).getUserName();
-                    refLoc = panel.findPositionablePointByEastBoundSensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findPositionablePointByWestBoundSensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutTurnoutBySensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findLevelXingBySensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutSlipBySensor(sourceSensor);
-                }
-                setSensor((Sensor)refObj);
+                    refLoc = panel.findLayoutSlipByBean(refObj);
+                if(refObj instanceof Sensor)
+                    setSensor((Sensor)refObj);
             } else if (refObj instanceof SignalHead){
                 String signal = ((SignalHead)refObj).getDisplayName();
                 refLoc = panel.findPositionablePointByEastBoundSignal(signal);
@@ -292,8 +267,8 @@ public class PointDetails {
     
     //LayoutEditor getLayoutEditor() { return panel; }
     
-    boolean isRouteToPointSet() { return routeToSet; }
-    boolean isRouteFromPointSet() { return routeFromSet; }
+    public boolean isRouteToPointSet() { return routeToSet; }
+    public boolean isRouteFromPointSet() { return routeFromSet; }
     
     public String getDisplayName(){
         if(sensor!=null){
@@ -398,7 +373,7 @@ public class PointDetails {
             try {
                 getSensor().setKnownState(sensorState);
             } catch (jmri.JmriException ex){
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
             }
             addSensorList();
         }
@@ -410,20 +385,19 @@ public class PointDetails {
         if((getPanel()!=null) && (!getPanel().isEditable()) && (sensor!=null))
             return sensor;
         
-        if (getRefObject() instanceof Sensor)
+        if (getRefObject() instanceof Sensor){
+            setSensor((Sensor)getRefObject());
             return (Sensor)getRefObject();
+        }
         Object objLoc = getRefLocation();
         Object objRef = getRefObject();
-        SignalMast mast=null;
         SignalHead head=null;
+        SignalMast mast=null;
         String username = "";
         String systemname = "";
-        Sensor sensor = null;
-        if(objRef instanceof SignalMast){
+        Sensor foundSensor = null;
+        if(objRef instanceof SignalMast)
             mast = (SignalMast)objRef;
-            username = mast.getUserName();
-            systemname = mast.getSystemName();
-        }
         if(objRef instanceof SignalHead){
             head = (SignalHead)objRef;
             username = head.getUserName();
@@ -433,100 +407,98 @@ public class PointDetails {
         if (objLoc instanceof PositionablePoint){
             PositionablePoint p = (PositionablePoint)objLoc;
             if(mast!=null) {
-                if((p.getEastBoundSignalMast().equals(username)) || 
-                        p.getEastBoundSignalMast().equals(systemname))
-                    sensor = sm.getSensor(p.getEastBoundSensor());
-                else if((p.getWestBoundSignalMast().equals(username)) || 
-                        p.getWestBoundSignalMast().equals(systemname))
-                    sensor = sm.getSensor(p.getWestBoundSensor());
+                if(p.getEastBoundSignalMast()==objRef)
+                    foundSensor = p.getEastBoundSensor();
+                else if(p.getWestBoundSignalMast()==objRef)
+                    foundSensor =  p.getWestBoundSensor();
             }
             else if(head!=null) {
                 if((p.getEastBoundSignal().equals(username)) || 
                         p.getEastBoundSignal().equals(systemname))
-                    sensor = sm.getSensor(p.getEastBoundSensor());
+                    foundSensor = p.getEastBoundSensor();
                 else if((p.getWestBoundSignal().equals(username)) || 
                         p.getWestBoundSignal().equals(systemname))
-                    sensor = sm.getSensor(p.getWestBoundSensor());
+                    foundSensor =  p.getWestBoundSensor();
             }
         } else if (objLoc instanceof LayoutTurnout) {
             LayoutTurnout t = (LayoutTurnout)objLoc;
             if(mast!=null){
-                if((t.getSignalAMast().equals(username)) || (t.getSignalAMast().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorA());
-                else if((t.getSignalBMast().equals(username)) || (t.getSignalBMast().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorB());
-                else if((t.getSignalCMast().equals(username)) || (t.getSignalCMast().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorC());
-                else if((t.getSignalDMast().equals(username)) || (t.getSignalDMast().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorD());
+                if(t.getSignalAMast()==objRef)
+                    foundSensor = t.getSensorA();
+                else if(t.getSignalBMast()==objRef)
+                    foundSensor = t.getSensorB();
+                else if(t.getSignalCMast()==objRef)
+                    foundSensor = t.getSensorC();
+                else if(t.getSignalDMast()==objRef)
+                    foundSensor = t.getSensorD();
             }
             if(head!=null){
                 if((t.getSignalA1Name().equals(username)) || (t.getSignalA1Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorA());
+                    foundSensor = t.getSensorA();
                 else if((t.getSignalA2Name().equals(username)) || (t.getSignalA2Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorA());
+                    foundSensor = t.getSensorA();
                 else if((t.getSignalA3Name().equals(username)) || (t.getSignalA3Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorA());
+                    foundSensor = t.getSensorA();
                 else if((t.getSignalB1Name().equals(username)) || (t.getSignalB1Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorB());
+                   foundSensor = t.getSensorB();
                 else if((t.getSignalB2Name().equals(username)) || (t.getSignalB2Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorB());
+                    foundSensor = t.getSensorB();
                 else if((t.getSignalC1Name().equals(username)) || (t.getSignalC1Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorC());
+                    foundSensor = t.getSensorC();
                 else if((t.getSignalC2Name().equals(username)) || (t.getSignalC2Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorC());
+                    foundSensor = t.getSensorC();
                 else if((t.getSignalD1Name().equals(username)) || (t.getSignalD1Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorD());
+                    foundSensor = t.getSensorD();
                 else if((t.getSignalD2Name().equals(username)) || (t.getSignalD2Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorD());
+                    foundSensor = t.getSensorD();
             }
         } else if (objLoc instanceof LevelXing){
             LevelXing x = (LevelXing)objLoc;
             if(mast!=null){
-                if((x.getSignalAMastName().equals(username)) || (x.getSignalAMastName().equals(systemname)))
-                    sensor = sm.getSensor(x.getSensorAName());
-                else if((x.getSignalBMastName().equals(username)) || (x.getSignalBMastName().equals(systemname)))
-                    sensor = sm.getSensor(x.getSensorBName());
-                else if((x.getSignalCMastName().equals(username)) || (x.getSignalCMastName().equals(systemname)))
-                    sensor = sm.getSensor(x.getSensorCName());
-                else if((x.getSignalDMastName().equals(username)) || (x.getSignalDMastName().equals(systemname)))
-                    sensor = sm.getSensor(x.getSensorDName());
+                if(x.getSignalAMast()==objRef)
+                    foundSensor = x.getSensorA();
+                else if(x.getSignalBMast()==objRef)
+                    foundSensor = x.getSensorB();
+                else if(x.getSignalCMast()==objRef)
+                    foundSensor = x.getSensorC();
+                else if(x.getSignalDMast()==objRef)
+                    foundSensor = x.getSensorD();
             }
             if(head!=null){
                 if((x.getSignalAName().equals(username)) || (x.getSignalAName().equals(systemname)))
-                    sensor = sm.getSensor(x.getSensorAName());
+                    foundSensor = x.getSensorA();
                 else if((x.getSignalBName().equals(username)) || (x.getSignalBName().equals(systemname)))
-                    sensor = sm.getSensor(x.getSensorBName());
+                    foundSensor = x.getSensorB();
                 else if((x.getSignalCName().equals(username)) || (x.getSignalCName().equals(systemname)))
-                    sensor = sm.getSensor(x.getSensorCName());
+                    foundSensor = x.getSensorC();
                 else if((x.getSignalDName().equals(username)) || (x.getSignalDName().equals(systemname)))
-                    sensor = sm.getSensor(x.getSensorDName());
+                    foundSensor = x.getSensorD();
             }
         } else if (objLoc instanceof LayoutSlip) {
             LayoutSlip sl = (LayoutSlip)objLoc;
             if(mast!=null){
-                if((sl.getSignalAMast().equals(username)) || (sl.getSignalAMast().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorA());
-                else if((sl.getSignalBMast().equals(username)) || (sl.getSignalBMast().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorB());
-                else if((sl.getSignalCMast().equals(username)) || (sl.getSignalCMast().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorC());
-                else if((sl.getSignalDMast().equals(username)) || (sl.getSignalDMast().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorD());
+                if(sl.getSignalAMast()==objRef)
+                    foundSensor = sl.getSensorA();
+                else if(sl.getSignalBMast()==objRef)
+                    foundSensor = sl.getSensorB();
+                else if(sl.getSignalCMast()==objRef)
+                    foundSensor = sl.getSensorC();
+                else if(sl.getSignalDMast()==objRef)
+                    foundSensor = sl.getSensorD();
             }
             if(head!=null){
                 if((sl.getSignalA1Name().equals(username)) || (sl.getSignalA1Name().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorA());
+                    foundSensor = sm.getSensor(sl.getSensorAName());
                 else if((sl.getSignalB1Name().equals(username)) || (sl.getSignalB1Name().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorB());
+                    foundSensor = sm.getSensor(sl.getSensorBName());
                 else if((sl.getSignalC1Name().equals(username)) || (sl.getSignalC1Name().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorC());
+                    foundSensor = sm.getSensor(sl.getSensorCName());
                 else if((sl.getSignalD1Name().equals(username)) || (sl.getSignalD1Name().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorD());
+                    foundSensor = sm.getSensor(sl.getSensorDName());
             }
         }
-        setSensor(sensor);
-        return sensor;
+        setSensor(foundSensor);
+        return foundSensor;
     }
     
     NamedBean getSignal(){
@@ -534,7 +506,6 @@ public class PointDetails {
             return getSignalMast();
         if((getPanel()!=null) && (!getPanel().isEditable()) && (getSignalHead()!=null))
             return getSignalHead();
-        jmri.SignalMastManager sm = InstanceManager.signalMastManagerInstance();
         jmri.SignalHeadManager sh = InstanceManager.signalHeadManagerInstance();
         NamedBean signal = null;
         
@@ -554,24 +525,18 @@ public class PointDetails {
         
         Sensor sen = (Sensor) getRefObject();
         log.debug("looking at Sensor " + sen.getDisplayName());
-        String username = sen.getUserName();
-        String systemname = sen.getSystemName();
         if(getRefLocation() instanceof PositionablePoint){
             PositionablePoint p = (PositionablePoint)getRefLocation();
-            if((p.getEastBoundSensor().equals(username)) || 
-                    p.getEastBoundSensor().equals(systemname)){
-                    
-                if(!p.getEastBoundSignalMast().equals(""))
-                    signal =  sm.getSignalMast(p.getEastBoundSignalMast());
+            if(p.getEastBoundSensor()==sen){
+                if(p.getEastBoundSignalMast()!=null)
+                    signal =  p.getEastBoundSignalMast();
                     
                 else if(!p.getEastBoundSignal().equals(""))
                     signal =  sh.getSignalHead(p.getEastBoundSignal());
             }
-            else if((p.getWestBoundSensor().equals(username)) || 
-                    p.getWestBoundSensor().equals(systemname)){
-                    
-                if(!p.getWestBoundSignalMast().equals(""))
-                    signal =  sm.getSignalMast(p.getWestBoundSignalMast());
+            else if(p.getWestBoundSensor()==sen){
+                if(p.getWestBoundSignalMast()!=null)
+                    signal =  p.getWestBoundSignalMast();
                     
                 else if(!p.getWestBoundSignal().equals(""))
                     signal =  sh.getSignalHead(p.getWestBoundSignal());
@@ -579,82 +544,85 @@ public class PointDetails {
         }
         else if(getRefLocation() instanceof LayoutTurnout){
             LayoutTurnout t = (LayoutTurnout)getRefLocation();
-            if(t.getSensorA().equals(username) || t.getSensorA().equals(systemname))
-                if(!t.getSignalAMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalAMast());
+            if(t.getSensorA()==sen){
+                if(t.getSignalAMast()!=null)
+                    signal =  t.getSignalAMast();
                 else if(!t.getSignalA1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalA1Name());
-                    
-            else if(t.getSensorB().equals(username) || t.getSensorB().equals(systemname))
-                if(!t.getSignalBMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalBMast());
+            }
+            else if(t.getSensorB()==sen){
+                if(t.getSignalBMast()!=null)
+                    signal =  t.getSignalBMast();
                 else if(!t.getSignalB1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalB1Name());
-                    
-            else if(t.getSensorC().equals(username) || t.getSensorC().equals(systemname))
-                if(!t.getSignalCMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalCMast());
+            }
+            else if(t.getSensorC()==sen){
+                if(t.getSignalCMast()!=null)
+                    signal =  t.getSignalCMast();
                 else if(!t.getSignalC1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalC1Name());
-                    
-            else if(t.getSensorD().equals(username) || t.getSensorD().equals(systemname))
-                if(!t.getSignalDMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalDMast());
+            }
+            else if(t.getSensorD()==sen){
+                if(t.getSignalDMast()!=null)
+                    signal =  t.getSignalDMast();
                 else if(!t.getSignalD1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalD1Name());
+            }
         }
         
         else if(getRefLocation() instanceof LevelXing){
             LevelXing x = (LevelXing)getRefLocation();
-            if(x.getSensorAName().equals(username) || x.getSensorAName().equals(systemname))
-                if(!x.getSignalAMastName().equals(""))
-                    signal =  sm.getSignalMast(x.getSignalAMastName());
+            if(x.getSensorA()==sen){
+                if(x.getSignalAMast()!=null)
+                    signal =   x.getSignalAMast();
                 else if(!x.getSignalAName().equals(""))
                     signal =  sh.getSignalHead(x.getSignalAName());
-                    
-            else if(x.getSensorBName().equals(username) || x.getSensorBName().equals(systemname))
-                if(!x.getSignalBMastName().equals(""))
-                    signal =  sm.getSignalMast(x.getSignalBMastName());
+            }
+            else if(x.getSensorB()==sen){
+                if(x.getSignalBMast()!=null)
+                    signal =  x.getSignalBMast();
                 else if(!x.getSignalBName().equals(""))
                     signal =  sh.getSignalHead(x.getSignalBName());
-                    
-            else if(x.getSensorCName().equals(username) || x.getSensorCName().equals(systemname))
-                if(!x.getSignalCMastName().equals(""))
-                    signal =  sm.getSignalMast(x.getSignalCMastName());
+            }
+            else if(x.getSensorC()==sen){
+                if(x.getSignalCMast()!=null)
+                    signal =  x.getSignalCMast();
                 else if(!x.getSignalCName().equals(""))
                     signal =  sh.getSignalHead(x.getSignalCName());
-                    
-            else if(x.getSensorDName().equals(username) || x.getSensorDName().equals(systemname))
-                if(!x.getSignalDMastName().equals(""))
-                    signal =  sm.getSignalMast(x.getSignalDMastName());
+            }
+            else if(x.getSensorD()==sen){
+                if(x.getSignalDMast()!=null)
+                    signal =  x.getSignalDMast();
                 else if(!x.getSignalDName().equals(""))
                     signal =  sh.getSignalHead(x.getSignalDName());
+            }
         }
         else if(getRefLocation() instanceof LayoutSlip){
             LayoutSlip t = (LayoutSlip)getRefLocation();
-            if(t.getSensorA().equals(username) || t.getSensorA().equals(systemname))
-                if(!t.getSignalAMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalAMast());
+            if(t.getSensorA()==sen){
+                if(t.getSignalAMast()!=null)
+                    signal =  t.getSignalAMast();
                 else if(!t.getSignalA1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalA1Name());
-                    
-            else if(t.getSensorB().equals(username) || t.getSensorB().equals(systemname))
-                if(!t.getSignalBMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalBMast());
+            }
+            else if(t.getSensorB()==sen){
+                if(t.getSignalBMast()!=null)
+                    signal =  t.getSignalBMast();
                 else if(!t.getSignalB1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalB1Name());
-                    
-            else if(t.getSensorC().equals(username) || t.getSensorC().equals(systemname))
-                if(!t.getSignalCMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalCMast());
+            }
+            else if(t.getSensorC()==sen){
+                if(t.getSignalCMast()!=null)
+                    signal =  t.getSignalCMast();
                 else if(!t.getSignalC1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalC1Name());
-                    
-            else if(t.getSensorD().equals(username) || t.getSensorD().equals(systemname))
-                if(!t.getSignalDMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalDMast());
+            }
+            else if(t.getSensorD()==sen){
+                if(t.getSignalDMast()!=null)
+                    signal =  t.getSignalDMast();
                 else if(!t.getSignalD1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalD1Name());
+            }
         }
         if(signal instanceof SignalMast)
             setSignalMast(((SignalMast)signal));
@@ -675,7 +643,7 @@ public class PointDetails {
                 PointDetails tmp = (PointDetails)obj;
                 if(tmp.getFacing()!=this.facing)
                     return false;
-                if(tmp.getProtecting()!=this.protecting)
+                if(!tmp.getProtecting().equals(this.protectingBlocks))
                     return false;
                 if(tmp.getPanel()!=this.panel)
                     return false;
@@ -688,7 +656,7 @@ public class PointDetails {
         int hash = 7;
         hash = 37 * hash + (this.panel != null ? this.panel.hashCode() : 0);
         hash = 37 * hash + (this.facing != null ? this.facing.hashCode() : 0);
-        hash = 37 * hash + (this.protecting != null ? this.protecting.hashCode() : 0);
+        hash = 37 * hash + (this.protectingBlocks != null ? this.protectingBlocks.hashCode() : 0);
         return hash;
     }
     
@@ -701,5 +669,5 @@ public class PointDetails {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PointDetails.class.getName());
+    static Logger log = LoggerFactory.getLogger(PointDetails.class.getName());
 }

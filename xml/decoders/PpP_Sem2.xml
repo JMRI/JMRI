@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- $Id: PpP_Sem2.xml 19243 2012-11-29 23:10:10Z fmco $ -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="http://www.ppp-digital.es" version="1" lastUpdated="20121212"/>
+  <decoder>
+    <family name="PpP Decoders" mfg="PpP" lowVersionID="52" highVersionID="53" comment="PpP-Sem2 decoder.">
+      <model model="PpP-Sem2"/>
+    </family>
+    <programming direct="yes" paged="yes" register="no" ops="no"/>
+    <variables>
+      <variable label="Red light bright" CV="3" mask="XXXXVVVV" default="15" comment="Red light bright" item="pCV3">
+        <decVal min="1" max="15"/>
+      </variable>
+      <variable label="Green/White light bright" CV="4" mask="XXXXVVVV" default="15" comment="Green/White light bright" item="pCV4">
+        <decVal min="1" max="15"/>
+      </variable>
+      <variable label="Decoder Version" CV="7" readOnly="yes" default="52">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Manufacturer" CV="8" readOnly="yes" default="74">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="On/Off time" CV="33" default="15" comment="On/Off time" item="pCV33">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Flash rate" CV="34" default="5" comment="Flash rate" item="pCV34">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Signal type" CV="35" mask="XXXXVVVV" default="0" comment="Signal type" item="pCV35">
+        <enumVal>
+          <enumChoice choice="4 red/green signals" value="0"/>
+          <enumChoice choice="1 red/white and 3 green/red signals" value="1"/>
+          <enumChoice choice="2 red/white and 2 green/red signals" value="3"/>
+          <enumChoice choice="3 red/white and 1 green/red signals" value="7"/>
+          <enumChoice choice="4 red/white signals" value="15"/>
+        </enumVal>
+      </variable>
+    </variables>
+  </decoder>
+  <pane name="PpP">
+    <column>
+      <display item="pCV3"/>
+      <display item="pCV4"/>
+      <display item="pCV33"/>
+      <display item="pCV34"/>
+      <display item="pCV35"/>
+    </column>
+    <name>PpP Panel</name>
+  </pane>
+</decoder-config>

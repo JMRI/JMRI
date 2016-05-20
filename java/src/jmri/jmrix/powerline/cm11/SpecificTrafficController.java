@@ -2,6 +2,8 @@
 
 package jmri.jmrix.powerline.cm11;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -163,7 +165,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         return true;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
 }
 
 

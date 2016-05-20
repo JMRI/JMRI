@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz.liusb;
 
+import jmri.util.SystemType;
+
 
 /**
  * Handle configuring an XPressNet layout connection
@@ -35,7 +37,7 @@ public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnect
     
     @Override
     protected String[] getPortFriendlyNames() {
-        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+        if(SystemType.isWindows()){
             return new String[]{"LI-USB Serial Port","LI-USB"};
         }
         return new String[]{};

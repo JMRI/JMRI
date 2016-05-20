@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.ShutDownTask;
 import jmri.implementation.swing.SwingShutDownTask;
@@ -27,6 +29,7 @@ import java.awt.Cursor;
 import java.awt.Rectangle;
 
 import java.awt.event.ItemEvent;
+import jmri.util.FileUtil;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
@@ -38,10 +41,8 @@ import java.awt.event.ItemEvent;
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener, PaneContainer  {
 
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
-
     // members to contain working variable, CV values, Indexed CV values
-    JLabel              progStatus   = new JLabel(rbt.getString("StateIdle"));
+    JLabel              progStatus   = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
     CvTableModel        cvModel      = null;
     IndexedCvTableModel iCvModel     = null;
     VariableTableModel  variableModel;
@@ -68,10 +69,10 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     // GUI member declarations
     JTabbedPane tabPane = new JTabbedPane();
-    JToggleButton readChangesButton = new JToggleButton(rbt.getString("ButtonReadChangesAllSheets"));
-    JToggleButton writeChangesButton = new JToggleButton(rbt.getString("ButtonWriteChangesAllSheets"));
-    JToggleButton readAllButton = new JToggleButton(rbt.getString("ButtonReadAllSheets"));
-    JToggleButton writeAllButton = new JToggleButton(rbt.getString("ButtonWriteAllSheets"));
+    JToggleButton readChangesButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonReadChangesAllSheets"));
+    JToggleButton writeChangesButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonWriteChangesAllSheets"));
+    JToggleButton readAllButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonReadAllSheets"));
+    JToggleButton writeAllButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonWriteAllSheets"));
 
     ItemListener l1;
     ItemListener l2;
@@ -94,7 +95,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             //if (getModePane()!=null && decoderDirtyTask == null) decoderDirtyTask =
             if (decoderDirtyTask == null) decoderDirtyTask =
                                             new SwingShutDownTask("DecoderPro Decoder Window Check", 
-                                                                  rbt.getString("PromptQuitWindowNotWrittenDecoder"), 
+                                                                  SymbolicProgBundle.getMessage("PromptQuitWindowNotWrittenDecoder"), 
                                                                   (String)null, this
                                                                    ){
                                                 public boolean checkPromptNeeded() {
@@ -104,8 +105,8 @@ abstract public class PaneProgFrame extends JmriJFrame
             jmri.InstanceManager.shutDownManagerInstance().register(decoderDirtyTask);
             if (fileDirtyTask == null) fileDirtyTask = 
                                             new SwingShutDownTask("DecoderPro Decoder Window Check", 
-                                                                  rbt.getString("PromptQuitWindowNotWrittenConfig"), 
-                                                                  rbt.getString("PromptSaveQuit"), this
+                                                                  SymbolicProgBundle.getMessage("PromptQuitWindowNotWrittenConfig"), 
+                                                                  SymbolicProgBundle.getMessage("PromptSaveQuit"), this
                                                                    ){
                                                 public boolean checkPromptNeeded() {
                                                     return !checkDirtyFile();
@@ -123,46 +124,46 @@ abstract public class PaneProgFrame extends JmriJFrame
         setJMenuBar(menuBar);
 
         // add a "File" menu
-        JMenu fileMenu = new JMenu(rbt.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(SymbolicProgBundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
 
         // add a "Factory Reset" menu
         if (!_opsMode) {
-            resetMenu = new JMenu(rbt.getString("MenuReset"));
+            resetMenu = new JMenu(SymbolicProgBundle.getMessage("MenuReset"));
             menuBar.add(resetMenu);
-            resetMenu.add(new FactoryResetAction(rbt.getString("MenuFactoryReset"), resetModel, this));
+            resetMenu.add(new FactoryResetAction(SymbolicProgBundle.getMessage("MenuFactoryReset"), resetModel, this));
             resetMenu.setEnabled(false);
         }
         // Add a save item
-        fileMenu.add(new AbstractAction(rbt.getString("MenuSave")) {
+        fileMenu.add(new AbstractAction(SymbolicProgBundle.getMessage("MenuSave")) {
             public void actionPerformed(ActionEvent e) {
                 storeFile();
             }
         });
 
-        JMenu printSubMenu = new JMenu(rbt.getString("MenuPrint"));
-        printSubMenu.add(new PrintAction(rbt.getString("MenuPrintAll"), this, false));
-        printSubMenu.add(new PrintCvAction(rbt.getString("MenuPrintCVs"), cvModel, this, false, _rosterEntry));
+        JMenu printSubMenu = new JMenu(SymbolicProgBundle.getMessage("MenuPrint"));
+        printSubMenu.add(new PrintAction(SymbolicProgBundle.getMessage("MenuPrintAll"), this, false));
+        printSubMenu.add(new PrintCvAction(SymbolicProgBundle.getMessage("MenuPrintCVs"), cvModel, this, false, _rosterEntry));
         fileMenu.add(printSubMenu);
         
-        JMenu printPreviewSubMenu = new JMenu(rbt.getString("MenuPrintPreview"));
-        printPreviewSubMenu.add(new PrintAction(rbt.getString("MenuPrintPreviewAll"), this, true));
-        printPreviewSubMenu.add(new PrintCvAction(rbt.getString("MenuPrintPreviewCVs"), cvModel, this, true, _rosterEntry));
+        JMenu printPreviewSubMenu = new JMenu(SymbolicProgBundle.getMessage("MenuPrintPreview"));
+        printPreviewSubMenu.add(new PrintAction(SymbolicProgBundle.getMessage("MenuPrintPreviewAll"), this, true));
+        printPreviewSubMenu.add(new PrintCvAction(SymbolicProgBundle.getMessage("MenuPrintPreviewCVs"), cvModel, this, true, _rosterEntry));
         fileMenu.add(printPreviewSubMenu);
 
         // add "Import" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
-        JMenu importSubMenu = new JMenu(rbt.getString("MenuImport"));
+        JMenu importSubMenu = new JMenu(SymbolicProgBundle.getMessage("MenuImport"));
         fileMenu.add(importSubMenu);
-        importSubMenu.add(new Pr1ImportAction(rbt.getString("MenuImportPr1"), cvModel, this));
+        importSubMenu.add(new Pr1ImportAction(SymbolicProgBundle.getMessage("MenuImportPr1"), cvModel, this));
 
         // add "Export" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
-        JMenu exportSubMenu = new JMenu(rbt.getString("MenuExport"));
+        JMenu exportSubMenu = new JMenu(SymbolicProgBundle.getMessage("MenuExport"));
         fileMenu.add(exportSubMenu);
-        exportSubMenu.add(new CsvExportAction(rbt.getString("MenuExportCSV"), cvModel, this));
-        exportSubMenu.add(new Pr1ExportAction(rbt.getString("MenuExportPr1DOS"), cvModel, this));
-        exportSubMenu.add(new Pr1WinExportAction(rbt.getString("MenuExportPr1WIN"), cvModel, this));
+        exportSubMenu.add(new CsvExportAction(SymbolicProgBundle.getMessage("MenuExportCSV"), cvModel, this));
+        exportSubMenu.add(new Pr1ExportAction(SymbolicProgBundle.getMessage("MenuExportPr1DOS"), cvModel, this));
+        exportSubMenu.add(new Pr1WinExportAction(SymbolicProgBundle.getMessage("MenuExportPr1WIN"), cvModel, this));
 
         // to control size, we need to insert a single
         // JPanel, then have it laid out with BoxLayout
@@ -180,14 +181,14 @@ abstract public class PaneProgFrame extends JmriJFrame
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(readChangesButton);
-                    readChangesButton.setText(rbt.getString("ButtonStopReadChangesAll"));
+                    readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadChangesAll"));
                     readChanges();
                 } else {
                     if (_programmingPane != null) {
                         _programmingPane.stopProgramming();
                     }
                     paneListIndex = paneList.size();
-                    readChangesButton.setText(rbt.getString("ButtonReadChangesAllSheets"));
+                    readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonReadChangesAllSheets"));
                 }
             }
         });
@@ -196,48 +197,48 @@ abstract public class PaneProgFrame extends JmriJFrame
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(readAllButton);
-                    readAllButton.setText(rbt.getString("ButtonStopReadAll"));
+                    readAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadAll"));
                     readAll();
                 } else {
                     if (_programmingPane != null) {
                         _programmingPane.stopProgramming();
                     }
                     paneListIndex = paneList.size();
-                    readAllButton.setText(rbt.getString("ButtonReadAllSheets"));
+                    readAllButton.setText(SymbolicProgBundle.getMessage("ButtonReadAllSheets"));
                 }
             }
         });
 
-        writeChangesButton.setToolTipText(rbt.getString("TipWriteHighlightedValues"));
+        writeChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipWriteHighlightedValues"));
         writeChangesButton.addItemListener(l2 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(writeChangesButton);
-                    writeChangesButton.setText(rbt.getString("ButtonStopWriteChangesAll"));
+                    writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteChangesAll"));
                     writeChanges();
                 } else {
                     if (_programmingPane != null) {
                         _programmingPane.stopProgramming();
                     }
                     paneListIndex = paneList.size();
-                    writeChangesButton.setText(rbt.getString("ButtonWriteChangesAllSheets"));
+                    writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonWriteChangesAllSheets"));
                 }
             }
         });
 
-        writeAllButton.setToolTipText(rbt.getString("TipWriteAllValues"));
+        writeAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipWriteAllValues"));
         writeAllButton.addItemListener(l4 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(writeAllButton);
-                    writeAllButton.setText(rbt.getString("ButtonStopWriteAll"));
+                    writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteAll"));
                     writeAll();
                 } else {
                     if (_programmingPane != null) {
                         _programmingPane.stopProgramming();
                     }
                     paneListIndex = paneList.size();
-                    writeAllButton.setText(rbt.getString("ButtonWriteAllSheets"));
+                    writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWriteAllSheets"));
                 }
             }
         });
@@ -306,16 +307,16 @@ abstract public class PaneProgFrame extends JmriJFrame
      * the attached programmer's capability.
      */
     void enableReadButtons() {
-        readChangesButton.setToolTipText(rbt.getString("TipReadChanges"));
-        readAllButton.setToolTipText(rbt.getString("TipReadAll"));
+        readChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipReadChanges"));
+        readAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipReadAll"));
         // check with CVTable programmer to see if read is possible
         if (cvModel!= null && cvModel.getProgrammer()!= null
             && !cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the button
             readChangesButton.setEnabled(false);
             readAllButton.setEnabled(false);
-            readChangesButton.setToolTipText(rbt.getString("TipNoRead"));
-            readAllButton.setToolTipText(rbt.getString("TipNoRead"));
+            readChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
+            readAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
         } else {
             readChangesButton.setEnabled(true);
             readAllButton.setEnabled(true);
@@ -551,16 +552,16 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (log.isDebugEnabled()) log.debug("Checking decoder dirty status. CV: "+cvModel.decoderDirty()+" variables:"+variableModel.decoderDirty());
         if (checkDirtyDecoder()) {
             if (JOptionPane.showConfirmDialog(null,
-                                              rbt.getString("PromptCloseWindowNotWrittenDecoder"),
-                                              rbt.getString("PromptChooseOne"), 
+                                              SymbolicProgBundle.getMessage("PromptCloseWindowNotWrittenDecoder"),
+                                              SymbolicProgBundle.getMessage("PromptChooseOne"), 
                                               JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
         }
         if (checkDirtyFile()) {
-            int option = JOptionPane.showOptionDialog(null,rbt.getString("PromptCloseWindowNotWrittenConfig"),
-                        rbt.getString("PromptChooseOne"),
+            int option = JOptionPane.showOptionDialog(null,SymbolicProgBundle.getMessage("PromptCloseWindowNotWrittenConfig"),
+                        SymbolicProgBundle.getMessage("PromptChooseOne"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
-                        new String[]{rbt.getString("PromptSaveAndClose"), rbt.getString("PromptClose"), rbt.getString("PromptCancel")}, 
-                                rbt.getString("PromptSaveAndClose"));
+                        new String[]{SymbolicProgBundle.getMessage("PromptSaveAndClose"), SymbolicProgBundle.getMessage("PromptClose"), SymbolicProgBundle.getMessage("PromptCancel")}, 
+                                SymbolicProgBundle.getMessage("PromptSaveAndClose"));
             if (option==0) {
                 // save requested
                 if (!storeFile()) return;   // don't close if failed
@@ -570,12 +571,12 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
         // Check for a "<new loco>" roster entry; if found, remove it
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, rbt.getString("LabelNewDecoder"));
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
         if (l.size() > 0 && log.isDebugEnabled()) log.debug("Removing "+l.size()+" <new loco> entries");
         int x = l.size()+1;
         while (l.size() > 0 ) {
             Roster.instance().removeEntry(l.get(0));
-            l = Roster.instance().matchingList(null, null, null, null, null, null, rbt.getString("LabelNewDecoder"));
+            l = Roster.instance().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
             x--;
             if (x==0){
                 log.error("We have tried to remove all the entries, however an error has occured which has result in the entries not being deleted correctly");
@@ -612,15 +613,15 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (root.getChild("programmer").getAttribute("showRosterPane").getValue().equals("no")){
                 makeInfoPane(r);
             } else {
-                tabPane.addTab(rbt.getString("ROSTER ENTRY"), makeInfoPane(r));
+                tabPane.addTab(SymbolicProgBundle.getMessage("ROSTER ENTRY"), makeInfoPane(r));
             }
         } else {
-            tabPane.addTab(rbt.getString("ROSTER ENTRY"), makeInfoPane(r));
+            tabPane.addTab(SymbolicProgBundle.getMessage("ROSTER ENTRY"), makeInfoPane(r));
         }
 
         // add the Function Label tab
         if (root.getChild("programmer").getAttribute("showFnLanelPane").getValue().equals("yes")) {
-            tabPane.addTab(rbt.getString("FUNCTION LABELS"), makeFunctionLabelPane(r));
+            tabPane.addTab(SymbolicProgBundle.getMessage("FUNCTION LABELS"), makeFunctionLabelPane(r));
         } else {
             // make it, just don't make it visible
             makeFunctionLabelPane(r);
@@ -628,7 +629,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         
         // add the Media tab
         if (root.getChild("programmer").getAttribute("showRosterMediaPane").getValue().equals("yes")) {
-            tabPane.addTab(rbt.getString("ROSTER MEDIA"), makeMediaPane(r));
+            tabPane.addTab(SymbolicProgBundle.getMessage("ROSTER MEDIA"), makeMediaPane(r));
         } else {
             // make it, just don't make it visible
             makeMediaPane(r);
@@ -708,7 +709,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         body.add(_rPane);
         
         // add the store button
-        JButton store = new JButton(rbt.getString("ButtonSave"));
+        JButton store = new JButton(SymbolicProgBundle.getMessage("ButtonSave"));
         store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         store.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -717,7 +718,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             });
 
         // add the reset button
-        JButton reset = new JButton(rbt.getString("ButtonResetDefaults"));
+        JButton reset = new JButton(SymbolicProgBundle.getMessage("ButtonResetDefaults"));
         reset.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         store.setPreferredSize(reset.getPreferredSize());
         reset.addActionListener( new ActionListener() {
@@ -764,7 +765,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JScrollPane scrollPane = new JScrollPane(body);
         
         // add tab description
-        JLabel title = new JLabel(rbt.getString("UseThisTabCustomize"));
+        JLabel title = new JLabel(SymbolicProgBundle.getMessage("UseThisTabCustomize"));
         title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         body.add(title);
         body.add(new JLabel(" "));	// some padding
@@ -775,7 +776,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         body.add(_flPane);
 
         // add the store button
-        JButton store = new JButton(rbt.getString("ButtonSave"));
+        JButton store = new JButton(SymbolicProgBundle.getMessage("ButtonSave"));
         store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         store.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -803,7 +804,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JScrollPane scrollPane = new JScrollPane(body);
 
         // add tab description
-        JLabel title = new JLabel(rbt.getString("UseThisTabMedia"));
+        JLabel title = new JLabel(SymbolicProgBundle.getMessage("UseThisTabMedia"));
         title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         body.add(title);
         body.add(new JLabel(" "));	// some padding
@@ -814,7 +815,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         body.add(_rMPane);
 
         // add the store button
-        JButton store = new JButton(rbt.getString("ButtonSave"));
+        JButton store = new JButton(SymbolicProgBundle.getMessage("ButtonSave"));
         store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         store.addActionListener(new ActionListener() {
 
@@ -879,7 +880,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             int index = tabPane.indexOfTab(name);
             tabPane.setEnabledAt(index, false);
             tabPane.setToolTipTextAt(index, 
-                rbt.getString("TipTabDisabledNoCategory"));
+                SymbolicProgBundle.getMessage("TipTabDisabledNoCategory"));
         } else {
             // here not showing tab at all
         }
@@ -1206,7 +1207,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         log.debug("storeFile starts");
 
         if (_rPane.checkDuplicate()){
-            JOptionPane.showMessageDialog(this, rbt.getString("ErrorDuplicateID"));
+            JOptionPane.showMessageDialog(this, SymbolicProgBundle.getMessage("ErrorDuplicateID"));
             return false;
         }
         
@@ -1217,9 +1218,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         _rMPane.update(_rosterEntry);
 
         // id has to be set!
-        if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals(rbt.getString("LabelNewDecoder"))) {
+        if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))) {
             log.debug("storeFile without a filename; issued dialog");
-            JOptionPane.showMessageDialog(this, rbt.getString("PromptFillInID"));
+            JOptionPane.showMessageDialog(this, SymbolicProgBundle.getMessage("PromptFillInID"));
             return false;
         }
         
@@ -1234,7 +1235,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         Roster.writeRosterFile();
 
         // save date changed, update
@@ -1242,7 +1243,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // show OK status
         progStatus.setText(java.text.MessageFormat.format(
-                                rbt.getString("StateSaveOK"),
+                                SymbolicProgBundle.getMessage("StateSaveOK"),
                                 new Object[]{filename}));
         return true;
     }
@@ -1320,7 +1321,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     public RosterEntry getRosterEntry() { return _rosterEntry; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(PaneProgFrame.class.getName());
 
 }
 

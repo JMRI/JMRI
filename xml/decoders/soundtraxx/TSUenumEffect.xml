@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami -->
+<enumVal>
+  <enumChoice choice="On/Off">
+    <choice>On/Off</choice>
+  </enumChoice>
+  <enumChoice choice="Dimmable light">
+    <choice>Dimmable headlight</choice>
+  </enumChoice>
+  <enumChoice choice="Mars light">
+    <choice>Mars light</choice>
+  </enumChoice>
+  <enumChoice choice="Pyle Gyralite">
+    <choice>Pyle Gyralite</choice>
+  </enumChoice>
+  <enumChoice choice="Oscillating light">
+    <choice>Oscillating headlight</choice>
+  </enumChoice>
+  <enumChoice choice="Single flash strobe">
+    <choice>Single flash strobe</choice>
+  </enumChoice>
+  <enumChoice choice="Double flash strobe">
+    <choice>Double flash strobe</choice>
+  </enumChoice>
+  <enumChoice choice="D312 rotary beacon">
+    <choice>D312 rotary beacon</choice>
+  </enumChoice>
+  <enumChoice choice="Prime Stratolite">
+    <choice>Prime Stratolite</choice>
+  </enumChoice>
+  <enumChoice choice="Type I ditch light">
+    <choice>Type I ditch light</choice>
+  </enumChoice>
+  <enumChoice choice="Type II ditch light">
+    <choice>Type II ditch light</choice>
+  </enumChoice>
+  <enumChoice choice="FRED (end of train flasher)">
+    <choice>FRED (end of train flasher)</choice>
+  </enumChoice>
+  <enumChoice choice="Engine exhaust flicker">
+    <choice>Engine exhaust flicker</choice>
+  </enumChoice>
+  <enumChoice choice="Firebox flicker">
+    <choice>Firebox flicker</choice>
+  </enumChoice>
+  <enumChoice choice="Smart firebox flicker">
+    <choice>Smart firebox flicker</choice>
+  </enumChoice>
+  <enumChoice choice="Dyno-light">
+    <choice>Dyno-light</choice>
+  </enumChoice>
+</enumVal>

@@ -6,8 +6,8 @@
         <fail unless="files">Must set property 'files'</fail>
         <!-- TODO decide on and define some value for ${build.classes.dir} -->
         <mkdir dir="classes"/>
-        <javac includeantruntime="false" destdir="classes" includes="${files}" source="1.5" srcdir="src/jmri">
-            <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;jlfgr-1_0.jar;lib/junit.jar;lib/jython.jar;lib/log4j.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/activation.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/WinRegistry-4.4.jar"/>
+        <javac includeantruntime="false" destdir="classes" includes="${files}" source="1.6" srcdir="src/jmri">
+            <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;jlfgr-1_0.jar;lib/junit.jar;lib/jython.jar;lib/log4j-1.2.17.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/activation.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/WinRegistry-4.4.jar"/>
         </javac>
     </target>
     <!-- TODO: edit the following target according to your needs -->
@@ -15,8 +15,8 @@
     <target name="compile-selected-files-in-src">
         <fail unless="files">Must set property 'files'</fail>
         <mkdir dir="classes"/>
-        <javac destdir="classes" includes="${files}" source="1.5" srcdir="src">
-            <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;jlfgr-1_0.jar;lib/junit.jar;lib/jython.jar;lib/log4j.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/activation.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/WinRegistry-4.4.jar"/>
+        <javac destdir="classes" includes="${files}" source="1.6" srcdir="src">
+            <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;jlfgr-1_0.jar;lib/junit.jar;lib/jython.jar;lib/log4j-1.2.17.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/activation.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/WinRegistry-4.4.jar"/>
         </javac>
     </target>
     <!-- TODO: edit the following target according to your needs -->
@@ -24,8 +24,8 @@
     <target name="compile-selected-files-in-test">
         <fail unless="files">Must set property 'files'</fail>
         <mkdir dir="classes"/>
-        <javac destdir="classes" includes="${files}" source="1.5" srcdir="test">
-            <classpath path="tmp;classes;lib/junit.jar;lib/activation.jar;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/jakarta-regexp-1.5.jar;lib/javacsv.jar;lib/jdom.jar;lib/jfcunit.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;jlfgr-1_0.jar;lib/junit.jar;lib/jython.jar;lib/log4j.jar;lib/mailapi.jar;lib/jython.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/annotations.jar;lib/jsr305.jar;lib/WinRegistry-4.4.jar"/>
+        <javac destdir="classes" includes="${files}" source="1.6" srcdir="test">
+            <classpath path="tmp;classes;lib/junit.jar;lib/activation.jar;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/jakarta-regexp-1.5.jar;lib/javacsv.jar;lib/jdom.jar;lib/jfcunit.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;jlfgr-1_0.jar;lib/junit.jar;lib/jython.jar;lib/log4j-1.2.17.jar;lib/mailapi.jar;lib/jython.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/annotations.jar;lib/jsr305.jar;lib/WinRegistry-4.4.jar"/>
         </javac>
     </target>
     <!-- TODO: edit the following target according to your needs -->
@@ -34,8 +34,8 @@
         <fail unless="files">Must set property 'files'</fail>
         <!-- TODO decide on and define some value for ${build.classes.dir} -->
         <mkdir dir="${build.classes.dir}"/>
-        <javac destdir="${build.classes.dir}" includes="${files}" source="1.5" srcdir="java/tmp">
-            <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;jlfgr-1_0.jar;lib/junit.jar;lib/jython.jar;lib/log4j.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/activation.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/WinRegistry-4.4.jar"/>
+        <javac destdir="${build.classes.dir}" includes="${files}" source="1.6" srcdir="java/tmp">
+            <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;jlfgr-1_0.jar;lib/junit.jar;lib/jython.jar;lib/log4j-1.2.17.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/activation.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/WinRegistry-4.4.jar"/>
         </javac>
     </target>
 </project>

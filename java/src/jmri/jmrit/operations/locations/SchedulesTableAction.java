@@ -4,8 +4,6 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -16,21 +14,21 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class SchedulesTableAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 
-    public SchedulesTableAction(String s) {
-    	super(s);
-    }
+	public SchedulesTableAction(String s) {
+		super(s);
+	}
 
-    SchedulesTableFrame f = null;
-    public void actionPerformed(ActionEvent e) {
-        // create a schedule table frame
-    	if (f == null || !f.isVisible()){
-    		f = new SchedulesTableFrame();
-     	}
-    	f.setExtendedState(Frame.NORMAL);
-   		f.setVisible(true);
-    }
+	SchedulesTableFrame f = null;
+
+	public void actionPerformed(ActionEvent e) {
+		// create a schedule table frame
+		if (f == null || !f.isVisible()) {
+			f = new SchedulesTableFrame();
+		}
+		f.setExtendedState(Frame.NORMAL);
+		f.setVisible(true);
+	}
 }
 
 /* @(#)SchedulesTableAction.java */

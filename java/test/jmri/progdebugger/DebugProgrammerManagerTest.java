@@ -2,6 +2,7 @@
 
 package jmri.progdebugger;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import junit.framework.Assert;
@@ -101,6 +102,6 @@ public class DebugProgrammerManagerTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugProgrammerManagerTest.class.getName());
+	static Logger log = Logger.getLogger(DebugProgrammerManagerTest.class.getName());
 
 }

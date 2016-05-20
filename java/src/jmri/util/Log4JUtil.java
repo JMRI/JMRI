@@ -2,6 +2,8 @@
 
 package jmri.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Enumeration;
 
 /**
@@ -64,6 +66,6 @@ public class Log4JUtil {
 
     private static final String jmriLog ="****** JMRI log *******";
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Log4JUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(Log4JUtil.class.getName());
 
 }

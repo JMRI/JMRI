@@ -1,32 +1,29 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
-<variables>
-      <variable label="Maximum volume of Turbocharger" CV="366" default="48" tooltip="CV366">
-        <decVal min="0" max="255"/>
-        <label>Maximum volume of Turbocharger</label>
-      </variable>
-      <variable label="Turbocharger dependence on speed" CV="367" default="150" tooltip="Frequency is dependant on speed. CV367">
-        <decVal min="0" max="255"/>
-        <label>Turbocharger dependence on speed</label>
-      </variable>
-      <variable label="Turbocharger dependence on acceleration" CV="368" default="100" tooltip="Frequency is dependant on the difference between selected speed step and the actual speed. CV368">
-        <decVal min="0" max="255"/>
-        <label>Turbocharger dependence on acceleration</label>
-      </variable>
-      <variable label="Minimum load on the Turbocharger" CV="369" default="30" tooltip="Threshold of audible sound of the turbocharger, the load is determined by CV367 and 368. CV369">
-        <decVal min="0" max="255"/>
-        <label>Minimum load on the Turbocharger</label>
-      </variable>
-      <variable label="Increase in frequency of the Turbocharger" CV="370" default="25" tooltip="The rate of change of an increase in the frequency of the turbocharger. CV370">
-        <decVal min="0" max="255"/>
-        <label>Increase in frequency of the Turbocharger</label>
-      </variable>
-      <variable label="Decrease in frequency of the Turbocharger" CV="371" default="15" tooltip="The rate of change of a decrease in the frequency of the turbocharger. CV371">
-        <decVal min="0" max="255"/>
-        <label>Decrease in frequency of the Turbocharger</label>
-      </variable>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+  <variable label="Maximum volume of Turbocharger" CV="366" default="48" tooltip="CV366">
+    <decVal min="0" max="255"/>
+    <label>Maximum volume of Turbocharger</label>
+  </variable>
+  <variable label="Turbocharger dependence on speed" CV="367" default="150" tooltip="Frequency is dependant on speed. CV367">
+    <decVal min="0" max="255"/>
+    <label>Turbocharger dependence on speed</label>
+  </variable>
+  <variable label="Turbocharger dependence on acceleration" CV="368" default="100" tooltip="Frequency is dependant on the difference between selected speed step and the actual speed. CV368">
+    <decVal min="0" max="255"/>
+    <label>Turbocharger dependence on acceleration</label>
+  </variable>
+  <variable label="Minimum load on the Turbocharger" CV="369" default="30" tooltip="Threshold of audible sound of the turbocharger, the load is determined by CV367 and 368. CV369">
+    <decVal min="0" max="255"/>
+    <label>Minimum load on the Turbocharger</label>
+  </variable>
+  <variable label="Increase in frequency of the Turbocharger" CV="370" default="25" tooltip="The rate of change of an increase in the frequency of the turbocharger. CV370">
+    <decVal min="0" max="255"/>
+    <label>Increase in frequency of the Turbocharger</label>
+  </variable>
+  <variable label="Decrease in frequency of the Turbocharger" CV="371" default="15" tooltip="The rate of change of a decrease in the frequency of the turbocharger. CV371">
+    <decVal min="0" max="255"/>
+    <label>Decrease in frequency of the Turbocharger</label>
+  </variable>
 </variables>

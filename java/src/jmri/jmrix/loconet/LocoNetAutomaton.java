@@ -2,6 +2,9 @@
 
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Extend the Automat support to include convenient access to LocoNet messages.
  *
@@ -21,7 +24,7 @@ abstract public class LocoNetAutomaton extends jmri.jmrit.automat.AbstractAutoma
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetAutomaton.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoNetAutomaton.class.getName());
 }
 
 /* @(#)LocoNetAutomaton.java */

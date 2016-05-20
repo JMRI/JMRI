@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
@@ -184,7 +186,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     public String getNameString() {
         String name;
-        if (namedMemory == null) name = rb.getString("NotConnected");
+        if (namedMemory == null) name = Bundle.getMessage("NotConnected");
         else if (getMemory().getUserName()!=null)
             name = getMemory().getUserName()+" ("+getMemory().getSystemName()+")";
         else
@@ -222,6 +224,46 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     tf.getAddressPanel().setRosterEntry(re);
                 }
             });
+            //don't like the idea of refering specifically to the layout block manager for this, but it has to be done if we are to allow the panel editor to also assign trains to block, when used with a layouteditor
+            if((InstanceManager.sectionManagerInstance().getSystemNameList().size()) > 0 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory())!=null){
+                final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+                if(df!=null){
+                    final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
+                    if(at!=null){
+                        popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
+                            public void actionPerformed(ActionEvent e) {
+                                df.terminateActiveTrain(at);
+                            }
+                        });
+                        popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
+                            public void actionPerformed(ActionEvent e) {
+                                //Just brings up the standard allocate extra frame, this could be expanded in the future 
+                                //As a point and click operation.
+                                df.allocateExtraSection(e, at);
+                            }
+                        });
+                        if(at.getStatus()==jmri.jmrit.dispatcher.ActiveTrain.DONE){
+                            popup.add(new AbstractAction("Restart") {
+                                public void actionPerformed(ActionEvent e) {
+                                    at.allocateAFresh();
+                                }
+                            });
+                        }
+                    } else {
+                        popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
+                            public void actionPerformed(ActionEvent e) {
+                                if (!df.getNewTrainActive()) {
+                                    df.getActiveTrainFrame().initiateTrain(e, re, jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()).getBlock());
+                                    df.setNewTrainActive(true);
+                                } else {
+                                    df.getActiveTrainFrame().showActivateFrame(re);
+                                }
+                            }
+                        
+                        });
+                    }
+                }
+            }
             return true;
         }
         return false;
@@ -231,7 +273,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     * Text edits cannot be done to Memory text - override
     */    
     public boolean setTextEditMenu(JPopupMenu popup) {
-        popup.add(new AbstractAction(rb.getString("EditMemoryValue")) {
+        popup.add(new AbstractAction(Bundle.getMessage("EditMemoryValue")) {
             public void actionPerformed(ActionEvent e) {
                 editMemoryValue();
             }
@@ -415,7 +457,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
     
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
         popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -540,14 +582,14 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     addRosterToMemory(roster);
                 }
             } catch(java.awt.datatransfer.UnsupportedFlavorException e){
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             } catch (java.io.IOException e){
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
             return true;
         }
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
 }

@@ -1,8 +1,11 @@
 // MS100Adapter.java
 
 package jmri.jmrix.loconet.ms100;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.*;
+import jmri.util.SystemType;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -50,7 +53,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             // running on Windows XP or earlier, we use that
             // else we revert to gnu.io
             try {
-                if (System.getProperty("os.name","<unknown>").toLowerCase().contains("windows") && Double.valueOf(System.getProperty("os.version")) >= 6 )
+                if (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6 )
                     throw new Exception("MS100 interface not compatible.");
                 Class.forName("Serialio.SerialConfig");
                 log.debug("openPort using SerialIO");
@@ -319,6 +322,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MS100Adapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(MS100Adapter.class.getName());
 
 }

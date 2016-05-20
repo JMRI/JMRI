@@ -2,6 +2,8 @@
 
 package jmri.jmrix.openlcb;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 
 import jmri.jmrix.can.*;
@@ -99,7 +101,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
     
 	protected void turnoutPushbuttonLockout(boolean locked) {}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbTurnout.class.getName());
+	static Logger log = LoggerFactory.getLogger(OlcbTurnout.class.getName());
 }
 
 /* @(#)OlcbTurnout.java */

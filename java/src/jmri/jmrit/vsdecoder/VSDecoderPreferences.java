@@ -36,9 +36,13 @@ import org.jdom.Element;
 
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VSDecoderPreferences {
 
+    public final static String VSDPreferencesFileName = "VSDecoderPreferences.xml";
+    
     static public enum AudioMode { ROOM_AMBIENT, HEADPHONES } 
     static public final Map<AudioMode, String> AudioModeMap;
     static {
@@ -300,5 +304,5 @@ public class VSDecoderPreferences {
 	    listeners.remove(l);		
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPreferences.class.getName());
+    static Logger log = LoggerFactory.getLogger(VSDecoderPreferences.class.getName());
 }

@@ -2,11 +2,12 @@
 
 package jmri.jmrit.display.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
-import jmri.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import java.util.List;
@@ -136,7 +137,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(name);
 
         if (sh != null) {
-            l.setSignalHead(new NamedBeanHandle<SignalHead>(name, sh));
+            l.setSignalHead(name);
         } else {
             log.error("SignalHead named '"+attr.getValue()+"' not found.");
         //    ed.loadFailed();
@@ -270,5 +271,5 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         return icon;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalHeadIconXml.class.getName());
 }

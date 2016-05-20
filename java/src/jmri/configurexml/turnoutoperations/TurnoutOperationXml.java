@@ -3,6 +3,8 @@
  */
 package jmri.configurexml.turnoutoperations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 import jmri.TurnoutOperation;
@@ -106,5 +108,5 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
     	return adapter;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(TurnoutOperationXml.class.getName());
 }

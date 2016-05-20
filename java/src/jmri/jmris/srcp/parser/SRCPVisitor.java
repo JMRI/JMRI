@@ -2,6 +2,8 @@
 
 package jmri.jmris.srcp.parser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 
 /* This class provides an interface between the JavaTree/JavaCC 
@@ -72,8 +74,6 @@ public class SRCPVisitor implements SRCPParserVisitor {
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM"))
     {
       // This is a Service Mode read request.
-      int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
-      int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
       int modeno=jmri.Programmer.REGISTERMODE;
       if(node.jjtGetChild(3).getClass()==ASTcv.class)
          modeno=jmri.Programmer.DIRECTBYTEMODE;
@@ -113,10 +113,11 @@ public class SRCPVisitor implements SRCPParserVisitor {
     {
        int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
        int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
-       int port = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
+       //int port = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
+       int value = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue()));
 
        try {
-       ((jmri.jmris.srcp.JmriSRCPTurnoutServer)((jmri.jmris.ServiceHandler)data).getTurnoutServer()).parseStatus(bus,address,port);
+       ((jmri.jmris.srcp.JmriSRCPTurnoutServer)((jmri.jmris.ServiceHandler)data).getTurnoutServer()).parseStatus(bus,address,value);
        } catch(jmri.JmriException je) {
              // We shouldn't have any errors here.
              // If we do, something is horibly wrong.
@@ -139,8 +140,6 @@ public class SRCPVisitor implements SRCPParserVisitor {
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM"))
     {
       // This is a Service Mode write request
-      int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
-      int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
       int modeno=jmri.Programmer.REGISTERMODE;
       if(node.jjtGetChild(3).getClass()==ASTcv.class)
          modeno=jmri.Programmer.DIRECTBYTEMODE;
@@ -186,7 +185,44 @@ public class SRCPVisitor implements SRCPParserVisitor {
   public Object visit(ASTinit node,java.lang.Object data)
   {
     log.debug("INIT " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
-    return node.childrenAccept(this,data);
+    if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("POWER")) {
+        /* Power really has nothing to do in JMRI */
+    } 
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("GA")) {
+        /* Initilize a new accessory */
+       int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+       int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+       try {
+       ((jmri.jmris.srcp.JmriSRCPTurnoutServer)((jmri.jmris.ServiceHandler)data).getTurnoutServer()).initTurnout(bus,address,((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
+       } catch(jmri.JmriException je) {
+             // We shouldn't have any errors here.
+             // If we do, something is horibly wrong.
+       } catch(java.io.IOException ie) {
+       }
+       
+    } 
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("GL")) {
+        /* Initilize a new locomotive */
+       //int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+       //int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+    } 
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
+        /* Initilize fast clock ratio */
+       //int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+        /* the two parameters form a ration of modeltime:realtime */
+       //int modeltime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+       //int realtime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
+    } 
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM")) {
+        /* Initilize service mode */
+       //int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+    } 
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("FB")) {
+        /* Initilize feedback on a particular bus */
+       //int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+    } 
+
+    return data;
   }
   public Object visit(ASTcomment node,java.lang.Object data)
   {
@@ -338,7 +374,14 @@ public class SRCPVisitor implements SRCPParserVisitor {
     log.debug("REG Programming Mode " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
+  
+  public Object visit(ASTprotocol node, Object data)
+  {
+    log.debug("Protocol Production " +node.jjtGetValue() );
+    //return node.childrenAccept(this,data);
+    return data;
+  }
 
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPVisitor.class.getName());
+  static Logger log = LoggerFactory.getLogger(SRCPVisitor.class.getName());
 
 }

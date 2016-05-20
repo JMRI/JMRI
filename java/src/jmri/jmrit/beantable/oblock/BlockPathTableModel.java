@@ -21,6 +21,8 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 import java.beans.PropertyChangeEvent;
@@ -220,10 +222,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     if (_block.getPathByName(strValue)!=null) {
                         msg = java.text.MessageFormat.format(
                                 rbo.getString("DuplPathName"), strValue); 
-                    } else {
-                        path.setName(strValue);
-                        fireTableRowsUpdated(row,row);
-                    }
+                     }
+                    path.setName(strValue);
+                    fireTableRowsUpdated(row,row);
                 }
                 break;
             case TO_PORTAL_COLUMN:
@@ -337,5 +338,5 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
        }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockPathTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockPathTableModel.class.getName());
 }

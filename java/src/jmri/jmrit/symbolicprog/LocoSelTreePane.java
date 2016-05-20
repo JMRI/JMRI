@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JToggleButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,11 +36,17 @@ public class LocoSelTreePane extends CombinedLocoSelTreePane  {
     // don't show the select-roster-entry box
     protected JPanel layoutRosterSelection() { return null; }
     
+    protected JPanel layoutDecoderSelection() { 
+        JPanel pan = super.layoutDecoderSelection();
+        viewButtons.setVisible(false);
+        return pan;
+    }
+    
     // don't show the Ident button
     JToggleButton addDecoderIdentButton() {
         return null;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoSelTreePane.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoSelTreePane.class.getName());
 
 }

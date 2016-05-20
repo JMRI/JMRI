@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can.swing.monitor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -91,6 +93,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitorPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(MonitorPane.class.getName());
 
 }

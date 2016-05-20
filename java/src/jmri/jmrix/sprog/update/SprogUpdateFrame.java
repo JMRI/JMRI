@@ -2,10 +2,13 @@
 
 package jmri.jmrix.sprog.update;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.sprog.*;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 
 import javax.swing.*;
+import jmri.util.FileUtil;
 
 /**
  * Frame for SPROG firmware update utility. 
@@ -29,7 +32,7 @@ abstract public class SprogUpdateFrame
   protected SprogVersion sv;
 
   // to find and remember the hex file
-  final javax.swing.JFileChooser hexFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+  final javax.swing.JFileChooser hexFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
   JLabel statusBar = new JLabel();
 
@@ -240,7 +243,7 @@ abstract public class SprogUpdateFrame
     protected void stateV4Reset() {
     }
 
-    protected void stateDefault() {
+    synchronized protected void stateDefault() {
         // Houston, we have a problem
         if (log.isDebugEnabled()) { log.debug("Reply in unknown state"); }
         bootState = BootState.IDLE;
@@ -345,21 +348,21 @@ abstract public class SprogUpdateFrame
   /**
    * Internal routine to restart timer with a long delay
    */
-  protected void startLongTimer() {
+  synchronized protected void startLongTimer() {
       restartTimer(LONG_TIMEOUT);
   }
 
   /**
    * Internal routine to stop timer, as all is well
    */
-  protected void stopTimer() {
+  synchronized protected void stopTimer() {
       if (timer!=null) timer.stop();
   }
 
   /**
    * Internal routine to handle timer starts & restarts
    */
-  protected void restartTimer(int delay) {
+  synchronized protected void restartTimer(int delay) {
       if (timer==null) {
           timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
               public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -373,6 +376,6 @@ abstract public class SprogUpdateFrame
       timer.start();
   }
 
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger
+  static Logger log = LoggerFactory
   .getLogger(SprogUpdateFrame.class.getName());
 }

@@ -1,0 +1,93 @@
+  <pane name="ESU Extra">
+    <column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="Automatic Speed Step Detection">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="Marklin delta Mode" layout="left">
+      </display>
+      <display item="Marklin second address" layout="left">
+      </display>
+      <label label=" ">
+        <label xml:lang="fr"> </label>
+      </label>
+      <display item="LGB function button mode" layout="left">
+      </display>
+      <label label=" ">
+        <label xml:lang="fr"> </label>
+      </label>
+      <display item="Zimo manual function" layout="left">
+      </display>
+      <display item="Function Key Toggle Mode" layout="left">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="Brakemode">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="Store Direction">
+      </display>
+      <display item="Store Function State">
+      </display>
+      <display item="Store Current Speed Setting">
+      </display>
+      <display item="Start Again with Acceleration Ramp">
+      </display>
+      <display item="Deactivate Load Dependent Sound">
+      </display>
+    </column>
+    <column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <label label="                                                  Range 0 - 127 ">
+        <label xml:lang="it">                                                  Valori  0- 127</label>
+        <label xml:lang="fr">                                                  Valeure 0 - 127</label>
+      </label>
+      <display item="DCstart">
+      </display>
+      <display item="DCmax">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <separator/>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="ACstart">
+      </display>
+      <display item="ACmax">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <separator/>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="Minimum Distance of Steam Puff">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <separator/>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="Steam Shift Cycle Time for One" format="hslider">
+      </display>
+      <display item="Steam Shift Cycle Earliest Start Position" format="hslider">
+      </display>
+      <display item="Steam Shift Cycle Latest Start Poition" format="hslider">
+      </display>
+    </column>
+    <name>ESU Extra</name>
+  </pane>

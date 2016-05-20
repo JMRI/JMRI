@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable.sensor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.jmrit.beantable.AddNewHardwareDevicePanel;
@@ -163,7 +165,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to Sensors to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Number to Sensors to Add must be a number!",""+ex, "",true, false);
                 return;
             }
         } 
@@ -183,7 +185,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
                 curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
             }  catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false);
                 return;
             }
             if (curAddress==null){
@@ -208,7 +210,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
                     s.setUserName(user);
                 } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(AddSensorPanel.class.getName(), "duplicateUserName")) {
                     jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", AddSensorPanel.class.getName(), "duplicateUserName", false, true, org.apache.log4j.Level.ERROR);
+                        showErrorMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", AddSensorPanel.class.getName(), "duplicateUserName", false, true);
                 }
             }
         }
@@ -226,7 +228,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
     }
     
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddSensorPanel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
 }
 
 

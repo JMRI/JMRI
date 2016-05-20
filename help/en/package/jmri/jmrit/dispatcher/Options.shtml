@@ -55,7 +55,12 @@ Layout Editor panel with full connectivity is available. If this item is checked
 Dispatcher will automatically check if turnouts are set correctly when allocating 
 a Section, and will inform the dispatcher if the turnouts are not set correctly. 
 This item must be checked if Dispatcher is to set turnouts when a Section is 
-allocated (see below), and if trains are to be run automatically.</p>
+allocated (see below), and if trains are to be run automatically.</p></li>
+<li><p>Select from the drop down the type of Signalling control that is use on the panel
+<ul>
+    <li><b>SignalHeads/SSL</b> - Uses the traditional Signal Heads and Simple Signal Logic</li>
+    <li><b>SignalMasts </b>- Uses the more advanced Signal Masts and associated Logic, including Sections based up the logic</li>
+</ul>
 </li>
 <li><p>Select one of the three options for Dispatcher to select trains from 
 when creating Active Trains. The three possibilities are:</p></li>
@@ -123,6 +128,10 @@ scale is used in conjunction with Block length in automatic running of trains.</
 <li><p>Select the preferred <b>Units</b>, either <b>Scale Feet</b> or 
 <b>Scale Meters</b> for referencing train length and block length in 
 Dispatcher.</p>
+</li>
+<li><p>Check the <b>Open Dispatcher with Panel</b> to open up the Dispatcher 
+window when the panel file is loaded.  Please note that this option is saved when the panel 
+file itself and is saved and not when the "Save Options" is selected.
 </li>
 </ul>
 <p><b>Important Note: Remember to save your Options</b> (see Below). If new 

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.ecos;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractReporter;
 import jmri.IdTag;
 
@@ -138,7 +140,7 @@ import java.util.regex.Matcher;
 	 return(PhysicalLocation.getBeanPhysicalLocation(this));
      }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosReporter.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosReporter.class.getName());
 
  }
 

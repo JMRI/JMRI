@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Support Tools for LocoNet Devices
+      JMRI Support Tools for LocoNet&reg; Devices
  </TITLE>
 
 <!-- Style -->
@@ -28,12 +28,12 @@
     <div id="mainContent">
 
       <h1> 
-      JMRI Tools which support LocoNet Devices
+      JMRI Tools which support LocoNet&reg; Devices
       </h1>
 
 
 <p>JMRI software can provide a variety of tools to support hardware connected
-    to the LocoNet bus.  These tools provide a variety of features, such as
+    to the LocoNet&reg; bus.  These tools provide a variety of features, such as
     monitoring status, reading and writing configuration.  Each of the tools
     provides a set of features which is appropriate to the type of device it
     supports, as summarized in the table below.</p>
@@ -153,7 +153,7 @@
         <td>&bull;</td>
         <td></td>
         <td></td>
-        <td>UR90, UR91(Infrared &amp Simplex), UR92(Infrared)</td>
+        <td>UR90, UR91(Infrared &amp; Simplex), UR92(Infrared)</td>
     </tr>
     <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configure Duplex Group</a></td>
         <td>(limited)</td>
@@ -176,7 +176,7 @@
     <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml">Send LocoNet Packet</a></td>
 
         <td></td>
-        <td>&bull</td>
+        <td>&bull;</td>
         <td></td>
         <td></td>
         <td></td>
@@ -210,6 +210,7 @@
         <td>Digitrax Mobile Sound Decoders</td>
     </tr>    
 </table>
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
   </div>
 

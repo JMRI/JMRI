@@ -71,7 +71,6 @@ public interface XmlAdapter {
      *         should be propagated upward to higher-level error handling
      */
     public void creationErrorEncountered (
-                org.apache.log4j.Level level,
                 String description, 
                 String systemName, 
                 String userName, 

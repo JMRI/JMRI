@@ -21,6 +21,8 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 import java.beans.PropertyChangeEvent;
@@ -45,12 +47,12 @@ public class PathTurnoutTableModel extends AbstractTableModel {
     public static final int DELETE_COL = 2;
     public static final int NUMCOLS = 3;
 
-    static final String unknown = jmri.jmrit.beantable.AbstractTableAction.rbean.getString("BeanStateUnknown");
-    static final String inconsistent = jmri.jmrit.beantable.AbstractTableAction.rbean.getString("BeanStateInconsistent");
+//    static final String unknown = jmri.jmrit.beantable.AbstractTableAction.rbean.getString("BeanStateUnknown");
+//    static final String inconsistent = jmri.jmrit.beantable.AbstractTableAction.rbean.getString("BeanStateInconsistent");
     static final String closed = InstanceManager.turnoutManagerInstance().getClosedText();
     static final String thrown = InstanceManager.turnoutManagerInstance().getThrownText();
     
-    static final String[] turnoutStates = {closed, thrown, unknown, inconsistent};
+    static final String[] turnoutStates = {closed, thrown};//, unknown, inconsistent};
     
 	public static final ResourceBundle rbo = ResourceBundle.getBundle("jmri.jmrit.beantable.OBlockTableBundle");
     
@@ -116,12 +118,10 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                         return closed;
                     case Turnout.THROWN:
                         return thrown;
-                    case Turnout.UNKNOWN:
-                        return unknown;
-                    case Turnout.INCONSISTENT:
-                        return inconsistent;
+                    default:
+                    	return "";
+                        	
                 }
-                return  unknown;
             case DELETE_COL:
                 return rbo.getString("ButtonDelete");
         }
@@ -132,39 +132,45 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         if (_path.getSettings().size() == row) {
             switch(col) {
                 case TURNOUT_NAME_COL:
-                    String name = (String)value;
-                    Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(name);
-                    if (t != null) {
-                        int s = Turnout.UNKNOWN;
-                        if (tempRow[SETTINGCOLUMN] == null) {
-                            s = Turnout.UNKNOWN;
-                        } else if (tempRow[SETTINGCOLUMN].equals(closed)) {
-                            s = Turnout.CLOSED;
-                        } else if (tempRow[SETTINGCOLUMN].equals(thrown)) {
-                            s = Turnout.THROWN; 
-                        } else if (tempRow[SETTINGCOLUMN].equals(unknown)) {
-                            s = Turnout.UNKNOWN;
-                        } else if (tempRow[SETTINGCOLUMN].equals(inconsistent)) {
-                            s = Turnout.INCONSISTENT; 
-                        }
-                        BeanSetting bs = new BeanSetting(t, name, s);
-                        _path.addSetting(bs);
-                        fireTableRowsUpdated(row,row);
-                    } else {
-                        JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                                rbo.getString("NoSuchTurnout"), name),
-                                rbo.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    tempRow[TURNOUT_NAME_COL] = (String)value;
+                	if (tempRow[SETTINGCOLUMN] == null) {
                         return;
-                    }
-                    break;           
+                	}
+                	break;
                 case SETTINGCOLUMN:
-                    tempRow[col] = (String)value;
-                    break;
+                    tempRow[SETTINGCOLUMN] = (String)value;
+                	if (tempRow[TURNOUT_NAME_COL] == null) {
+                        return;
+                	}
+                	break;
                 case DELETE_COL:
                 	initTempRow();
                 	fireTableRowsUpdated(row,row);
-                	break;
+                	return;
             }
+            Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(tempRow[TURNOUT_NAME_COL]);
+            if (t != null) {
+                int s = Turnout.UNKNOWN;
+                if (tempRow[SETTINGCOLUMN].equals(closed)) {
+                    s = Turnout.CLOSED;
+                } else if (tempRow[SETTINGCOLUMN].equals(thrown)) {
+                    s = Turnout.THROWN; 
+                } else {
+                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                            rbo.getString("TurnoutMustBeSet"), closed, thrown),
+                            rbo.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    return;                       	
+                }
+                BeanSetting bs = new BeanSetting(t, tempRow[TURNOUT_NAME_COL], s);
+                _path.addSetting(bs);
+                fireTableRowsUpdated(row,row);
+            } else {
+                JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                        rbo.getString("NoSuchTurnout"), tempRow[TURNOUT_NAME_COL]),
+                        rbo.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        	initTempRow();
             return;
         }
 
@@ -194,12 +200,11 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 } else if (setting.equals(thrown)) {
                     //bs.setSetting(Turnout.THROWN); 
                     _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.THROWN));
-                } else if (setting.equals(unknown)) {
-                    //bs.setSetting(Turnout.UNKNOWN);
-                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.UNKNOWN));
-                } else if (setting.equals(inconsistent)) {
-                    //bs.setSetting(Turnout.INCONSISTENT);
-                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.INCONSISTENT));
+                } else {
+                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                            rbo.getString("TurnoutMustBeSet"), closed, thrown),
+                            rbo.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    return;
                 }
                 fireTableRowsUpdated(row,row);
                 break;
@@ -242,6 +247,6 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PathTurnoutTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(PathTurnoutTableModel.class.getName());
 }
 

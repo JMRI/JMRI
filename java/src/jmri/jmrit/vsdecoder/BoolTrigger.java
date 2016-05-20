@@ -19,6 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -54,19 +56,19 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
 	// then just return quickly.
 	// Careful: Takes advantage of "lazy OR" behavior
 	if (target == null) {
-	    log.debug("Quit.  No target.");
+	    //log.debug("Quit.  No target.");
 	    return;
 	}
 	if (event.getPropertyName().equals(this.getEventName()) != true) {
-	    log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
+	    //log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
 	    return;
 	}
 	if (this.getTriggerType() == TriggerType.NONE) {
-	    log.debug("Quit.  TriggerType = NONE");
+	    //log.debug("Quit.  TriggerType = NONE");
 	    return;
 	}
 	if (this.getTargetAction() == TargetAction.NOTHING) {
-	    log.debug("Quit.  TargetAction = NOTHING");
+	    //log.debug("Quit.  TargetAction = NOTHING");
 	    return;
 	}
 
@@ -107,6 +109,6 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BoolTrigger.class.getName());
+    static Logger log = LoggerFactory.getLogger(BoolTrigger.class.getName());
 
 }

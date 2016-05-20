@@ -80,11 +80,11 @@ ne sera pas disponible jusqu'à Java 1.4 dans une version ultérieure de JMRI)
 </UL>
 
 <P>
-JMRI 1.9 et 2.0 fonctionnera sur Windows 95 et versions ultérieures, toutes les versions de MacOS X, et
+JMRI 1.9 et 2.0 fonctionnera sur Windows 95 et versions ultérieures, toutes les versions de Mac OS X, et
 toutes les versions de Linux.
 <P>
 Pour construire JMRI 1,9 et 2,0, vous aurez besoin de Windows 98 1ère édition ou plus tard, n'importe quelle version de
-MacOS X, ou (presque tous?) version de Linux..
+Mac OS X, ou (presque tous?) version de Linux..
 
 <h4>JMRI 2.1, 2.2</h4>
 
@@ -105,11 +105,11 @@ Cela permet d'utiliser
 
 <P>
 JMRI 2.1 et 2.2 qui seront exécutées sur Windows 98 1ère édition ou version ultérieure,
-n'importe quelle version de MacOS X,
+n'importe quelle version de Mac OS X,
 ou la version de Linux.
 <P>
 Pour construire JMRI 2.1 et 2.2, vous aurez besoin de Windows 98 2nd Ed ou  version ultérieure,
-MacOS X 10.4 ou  version ultérieur,
+Mac OS X 10.4 ou  version ultérieur,
 ou (presque tous?) version de Linux.
 
 
@@ -128,11 +128,11 @@ Cela permet d'utiliser
 
 <P>
 JMRI 2.3 et 2.4 fonctionne sur Windows 98 2nd Ed ou ultérieur,
-MacOS X 10.4 ou ultérieur,
+Mac OS X 10.4 ou ultérieur,
 ou (presque tous?) version de Linux.
 <P>
 Pour construire JMRI 2.1 et 2.2, vous aurez besoin de Windows 98 2nd Ed ou ultérieur,
-MacOS X 10.3 ou ultérieur,
+Mac OS X 10.3 ou ultérieur,
 ou (presque tous?) version de Linux
 <h4>JMRI 2.5, 2.6, 2.7, 2.8</h4>
 

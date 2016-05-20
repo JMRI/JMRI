@@ -2,6 +2,8 @@
 
 package jmri.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.net.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -30,36 +32,57 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
     }
 
     public void hyperlinkUpdate(HyperlinkEvent he){
+        if (log.isDebugEnabled()) log.debug("event has type "+he.getEventType());
         if(he.getEventType()==HyperlinkEvent.EventType.ACTIVATED){
             try{
+                if (log.isDebugEnabled()) log.debug("event has URL  "+he.getURL());
                 URL u = he.getURL();
-                if(u.getProtocol().equalsIgnoreCase("mailto")||u.getProtocol().equalsIgnoreCase("http")
-                        ||u.getProtocol().equalsIgnoreCase("ftp")
-                     ){
-                    java.awt.Desktop.getDesktop().browse(new URI(u.toString()));
-                    return;
-                } else if ( u.getProtocol().equalsIgnoreCase("file") && (
-                        u.getFile().endsWith("jpg")
-                        ||u.getFile().endsWith("png")
-                        ||u.getFile().endsWith("xml")
-                        ||u.getFile().endsWith("gif")) ) {
-                    
-                    URI uri = new URI("file:"+System.getProperty("user.dir")+"/"+u.getFile());
-                    java.awt.Desktop.getDesktop().browse(uri);
-                    return;
-                } else if ( u.getProtocol().equalsIgnoreCase("file") ) {
-                    // if file not present, fall back to web browser
-                    // first, get file name
-                    java.io.File file = new java.io.File(u.getFile());
-                    if (!file.exists()) {
-                        URI uri = new URI("http://jmri.org/"+u.getFile());
-                        java.awt.Desktop.getDesktop().browse(uri);                  
-                    }
-                }
-            }
-            catch(Throwable t){}
+                activateURL(u);
+            } catch(Throwable t){log.error("Error processing request", t);}
         }
         super.hyperlinkUpdate(he);
     }
+    
+    public static void activateURL(URL u) throws java.io.IOException, java.net.URISyntaxException {
+        if(u.getProtocol().equalsIgnoreCase("mailto")||u.getProtocol().equalsIgnoreCase("http")
+                ||u.getProtocol().equalsIgnoreCase("ftp")
+             ){
+            URI uri = new URI(u.toString());
+            log.debug("defer protocol "+u.getProtocol()+" to browser via "+uri);
+            java.awt.Desktop.getDesktop().browse(uri);
+            return;
+        } else if ( u.getProtocol().equalsIgnoreCase("file") && (
+                u.getFile().endsWith("jpg")
+                ||u.getFile().endsWith("png")
+                ||u.getFile().endsWith("xml")
+                ||u.getFile().endsWith("gif")) ) {
+        
+            // following was 
+            // ("file:"+System.getProperty("user.dir")+"/"+u.getFile()) 
+            // but that duplicated the path information; JavaHelp seems to provide
+            // full pathnames here.
+            URI uri = new URI(u.toString());
+            log.debug("defer content of "+u.getFile()+" to browser with "+uri);
+            java.awt.Desktop.getDesktop().browse(uri);
+            return;
+        } else if ( u.getProtocol().equalsIgnoreCase("file") ) {
+            // if file not present, fall back to web browser
+            // first, get file name
+    		String pathName = u.getFile();
+        	if (pathName.contains("%20") && SystemType.isWindows()) { 
+        		log.debug("Windows machine with space in path name! "+pathName);
+        		// need to have the actual space in the path name for get file to work properly
+        		pathName = pathName.replace("%20", " ");
+        	}
+        	java.io.File file = new java.io.File(pathName);
+            if (!file.exists()) {
+                URI uri = new URI("http://jmri.org/"+u.getFile());
+                log.debug("fallback to browser with "+uri);
+                java.awt.Desktop.getDesktop().browse(uri);                  
+            }
+        }
+    }
+    
+    static private Logger log = LoggerFactory.getLogger(ExternalLinkContentViewerUI.class.getName());
 }
 

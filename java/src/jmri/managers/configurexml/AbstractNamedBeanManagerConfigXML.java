@@ -2,6 +2,8 @@
 
 package jmri.managers.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.NamedBean;
 
 import java.util.List;
@@ -256,5 +258,5 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNamedBeanManagerConfigXML.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractNamedBeanManagerConfigXML.class.getName());
 }

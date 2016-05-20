@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 15 Aug 11 JES
                  - added different includes for CV 133 depending on decoder
@@ -9,1745 +7,1744 @@
                  - tweaked some "minOut"s in CVs 114,118,119,120,130,131,152
 -->
 <!-- version 1.2 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
-
-<variables>
-      <variable label="User Data #1" CV="105" item="User Id #1">
-        <decVal/>
-        <label>User Data #1</label>
-      </variable>
-      <variable label="User Data #2" CV="106" item="User Id #2">
-        <decVal/>
-        <label>User Data #2</label>
-      </variable><!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
-      <variable label="Loco front lights off" CV="107" mask="XXXVVVVV" item="Function F0F option 1" tooltip="CV 107">
-        <enumVal>
-          <enumChoice choice="Not active">
-            <choice>Not active</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F1 key">
-            <choice>Controlled by F1 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F2 key">
-            <choice>Controlled by F2 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F3 key">
-            <choice>Controlled by F3 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F4 key">
-            <choice>Controlled by F4 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F5 key">
-            <choice>Controlled by F5 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F6 key">
-            <choice>Controlled by F6 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F7 key">
-            <choice>Controlled by F7 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F8 key">
-            <choice>Controlled by F8 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F9 key">
-            <choice>Controlled by F9 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F10 key">
-            <choice>Controlled by F10 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F11 key">
-            <choice>Controlled by F11 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F12 key">
-            <choice>Controlled by F12 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F13 key">
-            <choice>Controlled by F13 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F14 key">
-            <choice>Controlled by F14 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F15 key">
-            <choice>Controlled by F15 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F16 key">
-            <choice>Controlled by F16 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F17 key">
-            <choice>Controlled by F17 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F18 key">
-            <choice>Controlled by F18 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F19 key">
-            <choice>Controlled by F19 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F20 key">
-            <choice>Controlled by F20 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F21 key">
-            <choice>Controlled by F21 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F22 key">
-            <choice>Controlled by F22 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F23 key">
-            <choice>Controlled by F23 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F24 key">
-            <choice>Controlled by F24 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F25 key">
-            <choice>Controlled by F25 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F26 key">
-            <choice>Controlled by F26 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F27 key">
-            <choice>Controlled by F27 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F28 key">
-            <choice>Controlled by F28 key</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco front lights off</label>
-      </variable>
-      <variable label="Loco front additional function off" CV="107" mask="VVVXXXXX" item="Function F0F option 2" tooltip="CV 107">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 1">
-            <choice>Function output 1</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 2">
-            <choice>Function output 2</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 3">
-            <choice>Function output 3</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 4">
-            <choice>Function output 4</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 5">
-            <choice>Function output 5</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 6">
-            <choice>Function output 6</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 7">
-            <choice>Function output 7</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco front additional function off</label>
-      </variable>
-      <variable label="Loco rear lights off" CV="108" mask="XXXVVVVV" item="Function F0F option 3" tooltip="CV 108">
-        <enumVal>
-          <enumChoice choice="Not active">
-            <choice>Not active</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F1 key">
-            <choice>Controlled by F1 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F2 key">
-            <choice>Controlled by F2 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F3 key">
-            <choice>Controlled by F3 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F4 key">
-            <choice>Controlled by F4 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F5 key">
-            <choice>Controlled by F5 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F6 key">
-            <choice>Controlled by F6 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F7 key">
-            <choice>Controlled by F7 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F8 key">
-            <choice>Controlled by F8 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F9 key">
-            <choice>Controlled by F9 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F10 key">
-            <choice>Controlled by F10 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F11 key">
-            <choice>Controlled by F11 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F12 key">
-            <choice>Controlled by F12 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F13 key">
-            <choice>Controlled by F13 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F14 key">
-            <choice>Controlled by F14 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F15 key">
-            <choice>Controlled by F15 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F16 key">
-            <choice>Controlled by F16 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F17 key">
-            <choice>Controlled by F17 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F18 key">
-            <choice>Controlled by F18 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F19 key">
-            <choice>Controlled by F19 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F20 key">
-            <choice>Controlled by F20 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F21 key">
-            <choice>Controlled by F21 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F22 key">
-            <choice>Controlled by F22 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F23 key">
-            <choice>Controlled by F23 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F24 key">
-            <choice>Controlled by F24 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F25 key">
-            <choice>Controlled by F25 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F26 key">
-            <choice>Controlled by F26 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F27 key">
-            <choice>Controlled by F27 key</choice>
-          </enumChoice>
-          <enumChoice choice="Controlled by F28 key">
-            <choice>Controlled by F28 key</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco rear lights off</label>
-      </variable>
-      <variable label="Loco rear additional function off" CV="108" mask="VVVXXXXX" item="Function F0F option 4" tooltip="CV 108">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 1">
-            <choice>Function output 1</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 2">
-            <choice>Function output 2</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 3">
-            <choice>Function output 3</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 4">
-            <choice>Function output 4</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 5">
-            <choice>Function output 5</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 6">
-            <choice>Function output 6</choice>
-          </enumChoice>
-          <enumChoice choice="Function output 7">
-            <choice>Function output 7</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco rear additional function off</label>
-      </variable>
-      <variable label="Smoke Characteristic" CV="112" tooltip="CV 112 bit 0" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Speed dependent">
-            <choice>Speed dependent</choice>
-          </enumChoice>
-          <enumChoice choice="Load dependent">
-            <choice>Load dependent</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Smoke Characteristic</label>
-      </variable>
-      <variable label="ACKnowledgement" item="Advanced Ack" CV="112" tooltip="CV 112 bit 1" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="High Frequency - High Power">
-            <choice>High Frequency - High Power</choice>
-          </enumChoice>
-        </enumVal>
-        <label>ACKnowledgement</label>
-      </variable>
-      <variable label="Loco Number Recognition" CV="112" tooltip="CV 112 bit 2" mask="XXXXXVXX" default="1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Number Recognition</label>
-      </variable>
-      <variable label="NMRA" CV="112" tooltip="CV 112 bit 3" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="NMRA/MAN">
-            <choice>NMRA/MAN</choice>
-          </enumChoice>
-          <enumChoice choice="MAN">
-            <choice>MAN</choice>
-          </enumChoice>
-        </enumVal>
-        <label>NMRA</label>
-      </variable>
-      <variable label="Pulse Chain Recognition (LGB)" CV="112" tooltip="CV 112 bit 4" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Pulse Chain Recognition (LGB)</label>
-      </variable>
-      <variable label="PWM Frequency" CV="112" item="DC Brake Momentum" tooltip="CV 112 bit 5, Active if CV9=0" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="20kHz">
-            <choice>20kHz</choice>
-          </enumChoice>
-          <enumChoice choice="40kHz">
-            <choice>40kHz</choice>
-          </enumChoice>
-        </enumVal>
-        <label>PWM Frequency</label>
-      </variable>
-      <variable label="Non directional DC braking" CV="112" tooltip="CV 112 bit 6" mask="XVXXXXXX" default="0" item="Radio Power Conversion">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Non directional DC braking</label>
-      </variable>
-      <variable label="Pulse Chain Generation" CV="112" tooltip="CV 112 bit 7" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Pulse Chain Generation</label>
-      </variable>
-      <variable label="EMF Feedback Cutoff Intensity" CV="113" default="0" item="EMF Feedback Cutout" tooltip="CV 113, Controls how much Feedback Cutoff">
-        <decVal min="0" max="255"/>
-        <label>EMF Feedback Cutoff Intensity</label>
-      </variable>
-      <variable label="Dim Front Light" CV="114" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim Front Light</label>
-      </variable>
-      <variable label="Dim Rear Light" CV="114" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="0ff" value="1">
-            <choice>0ff</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim Rear Light</label>
-      </variable>
-      <variable label="Dim function output 1" CV="114" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 1</label>
-      </variable>
-      <variable label="Dim function output 2" CV="114" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 2</label>
-      </variable>
-      <variable label="Dim function output 3" CV="114" mask="XXXVXXXX" default="0" minOut="5">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 3</label>
-      </variable>
-      <variable label="Dim function output 4" CV="114" mask="XXVXXXXX" default="0" minOut="6">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 4</label>
-      </variable>
-      <variable label="Dim function output 5" CV="114" mask="XVXXXXXX" default="0" minOut="7">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 5</label>
-      </variable>
-      <variable label="Dim function output 6" CV="114" mask="VXXXXXXX" default="0" minOut="8">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 6</label>
-      </variable>
-      <variable label="Uncoupler" CV="115" default="0" tooltip="CV 115">
-        <decVal max="99"/>
-        <label>Uncoupler</label>
-      </variable>
-      <variable label="Auto Uncouple" CV="116" default="0" tooltip="CV 116">
-        <decVal max="199"/>
-        <label>Auto Uncouple</label>
-      </variable>
-      <variable label="Flash Rate" CV="117" default="0">
-        <decVal max="99"/>
-        <label>Flash Rate</label>
-      </variable>
-      <variable label="Flash front light" CV="118" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Flash front light</label>
-      </variable>
-      <variable label="Flash rear light" CV="118" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Flash rear light</label>
-      </variable>
-      <variable label="Flash function output 1" CV="118" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Flash function output 1</label>
-      </variable>
-      <variable label="Flash function output 2" CV="118" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Flash function output 2</label>
-      </variable>
-      <variable label="Flash function output 3" CV="118" mask="XXXVXXXX" default="0" minOut="5">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Flash function output 3</label>
-      </variable>
-      <variable label="Flash function output 4" CV="118" mask="XXVXXXXX" default="0" minOut="6">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Flash function output 4</label>
-      </variable>
-      <variable label="Inverse Flash Output 2" CV="118" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Inverse Flash Output 2</label>
-      </variable>
-      <variable label="Inverse Flash Output 4" CV="118" mask="VXXXXXXX" default="0" minOut="6">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Inverse Flash Output 4</label>
-      </variable>
-      <variable label="F6 dims front light" CV="119" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6 dims front light</label>
-      </variable>
-      <variable label="F6 dims rear light" CV="119" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6 dims rear light</label>
-      </variable>
-      <variable label="F6 dims function output 1" CV="119" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6 dims function output 1</label>
-      </variable>
-      <variable label="F6 dims function output 2" CV="119" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6 dims function output 2</label>
-      </variable>
-      <variable label="F6 dims function output 3" CV="119" mask="XXXVXXXX" default="0" minOut="5">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6 dims function output 3</label>
-      </variable>
-      <variable label="F6 dims function output 4" CV="119" mask="XXVXXXXX" default="0" minOut="6">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6 dims function output 4</label>
-      </variable>
-      <variable label="F6 inverted" CV="119" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6 inverted</label>
-      </variable>
-      <variable label="F7 dims front light" CV="120" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7 dims front light</label>
-      </variable>
-      <variable label="F7 dims rear light" CV="120" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7 dims rear light</label>
-      </variable>
-      <variable label="F7 dims function output 1" CV="120" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7 dims function output 1</label>
-      </variable>
-      <variable label="F7 dims function output 2" CV="120" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7 dims function output 2</label>
-      </variable>
-      <variable label="F7 dims function output 3" CV="120" mask="XXXVXXXX" default="0" minOut="5">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7 dims function output 3</label>
-      </variable>
-      <variable label="F7 dims function output 4" CV="120" mask="XXVXXXXX" default="0" minOut="6">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7 dims function output 4</label>
-      </variable>
-      <variable label="F7 inverted" CV="120" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7 inverted</label>
-      </variable>
-      <variable label="Exponential Acceleration" CV="121" default="0" comment="Adds an exponential acceleration">
-        <decVal max="99"/>
-        <label>Exponential Acceleration</label>
-        <comment>Adds an exponential acceleration</comment>
-      </variable>
-      <variable label="Exponential Deceleration" CV="122" default="0" comment="Adds an exponential deceleration">
-        <decVal max="99"/>
-        <label>Exponential Deceleration</label>
-        <comment>Adds an exponential deceleration</comment>
-      </variable>
-      <variable label="Adaptive Acceleration/Deceleration" CV="123" default="0">
-        <decVal max="99"/>
-        <label>Adaptive Acceleration/Deceleration</label>
-      </variable>
-      <variable label="Shunting" CV="124" default="0" mask="XXXXXXVV" item="Shunting Usage">
-        <enumVal>
-          <enumChoice choice="no shunting">
-            <choice>no shunting</choice>
-          </enumChoice>
-          <enumChoice choice="no exponential and adaptive influence">
-            <choice>no exponential and adaptive influence</choice>
-          </enumChoice>
-          <enumChoice choice="1/4 acceleration/deceleration">
-            <choice>1/4 acceleration/deceleration</choice>
-          </enumChoice>
-          <enumChoice choice="no acceleration/deceleration">
-            <choice>no acceleration/deceleration</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Shunting</label>
-      </variable>
-      <variable label="Half Speed Key" CV="124" mask="XXXVVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="not set">
-            <choice>not set</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Half Speed Key</label>
-      </variable>
-      <variable label="Shunt Function Key" CV="124" mask="XVXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="Man (Zimo)">
-            <choice>Man (Zimo)</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Shunt Function Key</label>
-      </variable>
-      <variable item="Analog Power Conversion" label="Polarity Dependent DC stopping method" CV="124" mask="XXVXXXXX" default="0" tooltip="CV124 bit 5">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Polarity Dependent DC stopping method</label>
-      </variable>
-      <variable label="SUSI" CV="124" mask="VXXXXXXX" default="0" tooltip="CV 124 bit 7" minOut="6">
-	  <!-- value 0 => Susi,  value 1 => normal function outputs -->
-        <enumVal>
-          <enumChoice choice="SUSI Serial interface for sound board">
-            <choice>SUSI Serial interface for sound board</choice>
-          </enumChoice>
-        <enumChoice choice="Output as additional Function Pads">
-            <choice>Output as additional Function Pads</choice>
-          </enumChoice>
-        </enumVal>
-        <label>SUSI</label>
-      </variable>
-      <variable label="Front light effect generated" CV="125" mask="VVVVVVXX" tooltip="CV 125" item="Output 1 effect generated">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Front light effect generated</label>
-      </variable>
-      <variable label="Front light behavior" CV="125" mask="XXXXXXVV" tooltip="CV 125" item="Output 1 behavior">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Front light behavior</label>
-      </variable>
-      <variable label="Rear light effect generated" CV="126" mask="VVVVVVXX" tooltip="CV 126" item="Output 2 effect generated">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Rear light effect generated</label>
-      </variable>
-      <variable label="Rear light behavior" CV="126" mask="XXXXXXVV" tooltip="CV 126" item="Output 2 behavior">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Rear light behavior</label>
-      </variable>
-      <variable label="Function output 1 effect generated" CV="127" mask="VVVVVVXX" tooltip="CV 127" item="Output 3 effect generated">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 1 effect generated</label>
-      </variable>
-      <variable label="Function output 1 behavior" CV="127" mask="XXXXXXVV" tooltip="CV 127" item="Output 3 behavior">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 1 behavior</label>
-      </variable>
-      <variable label="Function output 2 effect generated" CV="128" mask="VVVVVVXX" tooltip="CV 128" item="Output 4 effect generated">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 2 effect generated</label>
-      </variable>
-      <variable label="Function output 2 behavior" CV="128" mask="XXXXXXVV" tooltip="CV 128" item="Output 4 behavior">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 2 behavior</label>
-      </variable>
-      <variable label="Function output 3 effect generated" CV="129" mask="VVVVVVXX" tooltip="CV 129" item="Output 5 effect generated" minOut="5">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 3 effect generated</label>
-      </variable>
-      <variable label="Function output 3 behavior" CV="129" mask="XXXXXXVV" tooltip="CV 129" item="Output 5 behavior" minOut="5">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 3 behavior</label>
-      </variable>
-      <variable label="Function output 4 effect generated" CV="130" mask="VVVVVVXX" tooltip="CV 130" item="Output 6 effect generated" minOut="6">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 4 effect generated</label>
-      </variable>
-      <variable label="Function output 4 behavior" CV="130" mask="XXXXXXVV" tooltip="CV 130" item="Output 6 behavior" minOut="6">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 4 behavior</label>
-      </variable>
-      <variable label="Function 0utput 5 effect generated" CV="131" mask="VVVVVVXX" minOut="7" tooltip="CV 131" item="Output 7 effect generated">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 5 effect generated</label>
-      </variable>
-      <variable label="Function output 5 behavior" CV="131" mask="XXXXXXVV" minOut="7" tooltip="CV 131" item="Output 7 behavior" >
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 5 behavior</label>
-      </variable>
-      <variable label="Function output 6 effect generated" CV="132" mask="VVVVVVXX" minOut="8" tooltip="CV 132" item="Output 8 effect generated">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Functin output 6 effect generated</label>
-      </variable>
-      <variable label="Function output 6 behavior" CV="132" mask="XXXXXXVV" minOut="8" tooltip="CV 132" item="Output 8 behavior" >
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 6 behavior</label>
-      </variable>
-      <variable label="Function Output 2 as virtual Cam or Smoke Fan" CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="4" include="217">
-        <enumVal>
-          <enumChoice choice="Function Output 2 Normal Output">
-            <choice>Function Ouptput 2 Normal Output</choice>
-          </enumChoice>
-          <enumChoice choice="Function Output 2 Cam Pulses or Smoke Fan">
-            <choice>Function Ouptput 2 Cam Pulses or Smoke Fan</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function Output 2 as virtual Cam or Smoke Fan</label>
-      </variable>
-      <variable label="Function Output 4 as virtual Cam or Smoke Fan" CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="201,203,211,212,213">
-        <enumVal>
-          <enumChoice choice="Function Output 4 Normal Output">
-            <choice>Function Ouptput 4 Normal Output</choice>
-          </enumChoice>
-          <enumChoice choice="Function Output 4 Cam Pulses or Smoke Fan">
-            <choice>Function Ouptput 4 Cam Pulses or Smoke Fan</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function Output 4 as virtual Cam or Smoke Fan</label>
-      </variable>
-      <variable label="Function Output 10 as virtual Cam or Smoke Fan" CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="12" include="208,209">
-        <enumVal>
-          <enumChoice choice="Function Output 10 Normal Output">
-            <choice>Function Ouptput 10 Normal Output</choice>
-          </enumChoice>
-          <enumChoice choice="Function Output 10 Cam Pulses or Smoke Fan">
-            <choice>Function Ouptput 10 Cam Pulses or Smoke Fan</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function Output 10 as virtual Cam or Smoke Fan</label>
-      </variable>
-      <variable label="Asymmetrical DCC Threshold" CV="134" default="106">
-        <decVal max="214"/>
-        <label>Asymmetrical DCC Threshold</label>
-      </variable>
-      <variable label="km/h speed regulation control and range" CV="135" opsOnly="yes" default="0">
-        <enumVal>
-          <enumChoice choice="Not Active">
-            <choice>Not Active</choice>
-          </enumChoice>
-          <enumChoice choice="0.2" value="2">
-            <choice>0.2</choice>
-          </enumChoice>
-          <enumChoice choice="0.3" value="3">
-            <choice>0.3</choice>
-          </enumChoice>
-          <enumChoice choice="0.4" value="4">
-            <choice>0.4</choice>
-          </enumChoice>
-          <enumChoice choice="0.5" value="5">
-            <choice>0.5</choice>
-          </enumChoice>
-          <enumChoice choice="0.6" value="6">
-            <choice>0.6</choice>
-          </enumChoice>
-          <enumChoice choice="0.7" value="7">
-            <choice>0.7</choice>
-          </enumChoice>
-          <enumChoice choice="0.8" value="8">
-            <choice>0.8</choice>
-          </enumChoice>
-          <enumChoice choice="0.9" value="9">
-            <choice>0.9</choice>
-          </enumChoice>
-          <enumChoice choice="1" value="10">
-            <choice>1</choice>
-          </enumChoice>
-          <enumChoice choice="1.1" value="11">
-            <choice>1.1</choice>
-          </enumChoice>
-          <enumChoice choice="1.2" value="12">
-            <choice>1.2</choice>
-          </enumChoice>
-          <enumChoice choice="1.3" value="13">
-            <choice>1.3</choice>
-          </enumChoice>
-          <enumChoice choice="1.4" value="14">
-            <choice>1.4</choice>
-          </enumChoice>
-          <enumChoice choice="1.5" value="15">
-            <choice>1.5</choice>
-          </enumChoice>
-          <enumChoice choice="1.6" value="16">
-            <choice>1.6</choice>
-          </enumChoice>
-          <enumChoice choice="1.7" value="17">
-            <choice>1.7</choice>
-          </enumChoice>
-          <enumChoice choice="1.8" value="18">
-            <choice>1.8</choice>
-          </enumChoice>
-          <enumChoice choice="1.9" value="19">
-            <choice>1.9</choice>
-          </enumChoice>
-          <enumChoice choice="2" value="20">
-            <choice>2</choice>
-          </enumChoice>
-        </enumVal>
-        <label>km/h speed regulation control and range</label>
-      </variable>
-      <variable label="km/h speed regulation control number readout" CV="136" readOnly="yes">
-        <decVal/>
-        <label>km/h speed regulation control number readout</label>
-      </variable>
-      <variable label="Smoke PWM at standstill" CV="137">
-        <decVal/>
-        <label>Smoke PWM at standstill</label>
-      </variable>
-      <variable label="Smoke PWM at minimum speed" CV="138">
-        <decVal/>
-        <label>Smoke PWM at minimum speed</label>
-      </variable>
-      <variable label="Smoke PWM at max speed" CV="139">
-        <decVal/>
-        <label>Smoke PWM at max speed</label>
-      </variable>
-      <variable label="Distance controlled stopping" CV="140" default="0">
-        <enumVal>
-          <enumChoice choice="not active">
-            <choice>not active</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
-            <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
-          </enumChoice>
-          <enumChoice choice="Manual stops using cab">
-            <choice>Manual stops using cab</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic and Manual stops">
-            <choice>Automatic and Manual stops</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic stops with immediate braking" value="11">
-            <choice>Automatic stops with immediate braking</choice>
-          </enumChoice>
-          <enumChoice choice="Manual stops with immediate braking">
-            <choice>Manual stops with immediate braking</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic and Manual stops with immediate braking">
-            <choice>Automatic and Manual stops with immediate braking</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Distance controlled stopping</label>
-      </variable>
-      <variable label="Distance controlled stopping Distance" CV="141" default="0">
-        <decVal min="0" max="255"/>
-        <label>Distance controlled stopping Distance</label>
-      </variable>
-      <variable label="Distance controlled stopping speed correction (ABC)" CV="142" default="12">
-        <decVal min="0" max="255"/>
-        <label>Distance controlled stopping speed correction (ABC)</label>
-      </variable>
-      <variable label="Distance controlled stopping speed correction (HLU)" CV="143" default="0">
-        <decVal min="0" max="255"/>
-        <label>Distance controlled stopping speed correction (HLU)</label>
-      </variable>
-      <variable label="Service Mode Programming Locked" CV="144" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes" value="1">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Service Mode Programming Locked</label>
-      </variable>
-      <variable label="Software Update Locked" CV="144" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes" value="1">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Software Update Locked</label>
-      </variable>
-      <variable label="Motor Control Method" CV="145" item="Kick Start" default="0" tooltip="CV145">
-        <enumVal>
-          <enumChoice choice="Normal (DC and Coreless)" value="0">
-            <choice>Normal (DC and Coreless)</choice>
-          </enumChoice>
-          <enumChoice choice="Low Impedance DC (with added capacitor see manual)" value="1">
-            <choice>Low Impedance DC (with added capacitor see manual)</choice>
-          </enumChoice>
-          <enumChoice choice="C or Softdrive-Sinus (FO4 not useable)" value="10">
-            <choice>C or Softdrive-Sinus (FO4 not useable)</choice>
-          </enumChoice>
-          <enumChoice choice="alternative C or Softdrive-Sinus (FO4 useable)" value="11">
-            <choice>alternative C or Softdrive-Sinus (FO4 useable)</choice>
-          </enumChoice>
-          <enumChoice choice="Special C or Softdrive-Sinus requiring normal output (FO4 not useable)" value="12">
-            <choice>Special C or Softdrive-Sinus requiring normal output (FO4 not useable)</choice>
-          </enumChoice>
-          <enumChoice choice="Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)" value="13">
-            <choice>Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Motor Control Method</label>
-      </variable>
-      <variable label="Motor Backlash Control" CV="146" default="0" item="Load Control" tooltip="CV 146, Motor Backlash Control">
-        <decVal min="0" max="255"/>
-        <label>Motor Backlash Control</label>
-      </variable>
-      <variable label="EMK measure timeout" CV="147" default="0" item="Total PWM Period" tooltip="CV147">
-        <decVal min="0" max="255"/>
-        <label>EMK measure timeout</label>
-      </variable>
-      <variable label="Differential value" CV="148" default="0" item="EMF Control Reference" tooltip="CV148">
-        <decVal min="0" max="255"/>
-        <label>Differential value</label>
-      </variable>
-      <variable label="Adaptive proportional value" CV="149" mask="VVVVVVVX" default="0" item="EMF Enable" tooltip="CV149">
-        <enumVal>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Adaptive proportional value</label>
-      </variable>
-      <variable label="Regulation at full speed" CV="150" default="0" item="EMF Static Config" tooltip="CV150">
-        <decVal min="0" max="255"/>
-        <label>Regulation at full speed</label>
-      </variable>
-
-      <variable label="Motor Brake" CV="151" item="Advanced Group 1 Option 1" default="0" tooltip="Motor braked by shorting output. CV151">
-        <enumVal>
-          <enumChoice choice="No Braking">
-            <choice>No Braking</choice>
-          </enumChoice>
-          <enumChoice choice="Gradual brake application over 1sec from Stop" value="1">
-            <choice>Gradual brake application over 1sec from Stop</choice>
-          </enumChoice>
-          <enumChoice choice="Gradual brake application over 2sec from Stop" value="2">
-            <choice>Gradual brake application over 2sec from Stop</choice>
-          </enumChoice>
-          <enumChoice choice="Gradual brake application over 3sec from Stop" value="3">
-            <choice>Gradual brake application over 3sec from Stop</choice>
-          </enumChoice>
-          <enumChoice choice="Gradual brake application over 4sec from Stop" value="4">
-            <choice>Gradual brake application over 4sec from Stop</choice>
-          </enumChoice>
-          <enumChoice choice="Gradual brake application over 5sec from Stop" value="5">
-            <choice>Gradual brake application over 5sec from Stop</choice>
-          </enumChoice>
-          <enumChoice choice="Gradual brake application over 6sec from Stop" value="6">
-            <choice>Gradual brake application over 6sec from Stop</choice>
-          </enumChoice>
-          <enumChoice choice="Gradual brake application over 7sec from Stop" value="7">
-            <choice>Gradual brake application over 7sec from Stop</choice>
-          </enumChoice>
-          <enumChoice choice="Gradual brake application over 8sec from Stop" value="8">
-            <choice>Gradual brake application over 8sec from Stop</choice>
-          </enumChoice>
-          <enumChoice choice="Full brake application at Stop" value="2">
-            <choice>Gradual brake application over 2sec from Stop</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Motor brake</label>
-      </variable>
-      <variable label="Dim function output 7" CV="152" mask="XXXXXXXV" default="0" minOut="9">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 7</label>
-      </variable>
-      <variable label="Dim function output 8" CV="152" mask="XXXXXXVX" default="0" minOut="10">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 8</label>
-      </variable>
-      <variable label="Dim function output 9" CV="152" mask="XXXXXVXX" default="0" minOut="11">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 9</label>
-      </variable>
-      <variable label="Dim function output 10" CV="152" mask="XXXXVXXX" default="0" minOut="12">
-        <enumVal>
-          <enumChoice choice="0ff" value="1">
-            <choice>0ff</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 10</label>
-      </variable>
-      <variable label="Dim function output 11" CV="152" mask="XXXVXXXX" default="0" minOut="13">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 11</label>
-      </variable>
-      <variable label="Dim function output 12" CV="152" mask="XXVXXXXX" default="0" minOut="14">
-        <enumVal>
-          <enumChoice choice="Off" value="1">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="0">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dim function output 12</label>
-      </variable>
-      <variable label="FO3 + FO4 directional setting" CV="152" mask="XVXXXXXX" default="0" minOut="6">
-        <enumVal>
-          <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
-            <choice>Non Directional, normal NMRA mapping</choice>
-          </enumChoice>
-          <enumChoice choice="FO3 on in reverse, FO4 on in forward" value="1">
-            <choice>FO3 on in reverse, FO4 on in forward</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FO3 + FO4 directional setting</label>
-      </variable>
-  </variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+  <variable label="User Data #1" CV="105" item="User Id #1">
+    <decVal/>
+    <label>User Data #1</label>
+  </variable>
+  <variable label="User Data #2" CV="106" item="User Id #2">
+    <decVal/>
+    <label>User Data #2</label>
+  </variable>
+  <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
+  <variable label="Loco front lights off" CV="107" mask="XXXVVVVV" item="Function F0F option 1" tooltip="CV 107">
+    <enumVal>
+      <enumChoice choice="Not active">
+        <choice>Not active</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F1 key">
+        <choice>Controlled by F1 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F2 key">
+        <choice>Controlled by F2 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F3 key">
+        <choice>Controlled by F3 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F4 key">
+        <choice>Controlled by F4 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F5 key">
+        <choice>Controlled by F5 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F6 key">
+        <choice>Controlled by F6 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F7 key">
+        <choice>Controlled by F7 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F8 key">
+        <choice>Controlled by F8 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F9 key">
+        <choice>Controlled by F9 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F10 key">
+        <choice>Controlled by F10 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F11 key">
+        <choice>Controlled by F11 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F12 key">
+        <choice>Controlled by F12 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F13 key">
+        <choice>Controlled by F13 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F14 key">
+        <choice>Controlled by F14 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F15 key">
+        <choice>Controlled by F15 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F16 key">
+        <choice>Controlled by F16 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F17 key">
+        <choice>Controlled by F17 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F18 key">
+        <choice>Controlled by F18 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F19 key">
+        <choice>Controlled by F19 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F20 key">
+        <choice>Controlled by F20 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F21 key">
+        <choice>Controlled by F21 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F22 key">
+        <choice>Controlled by F22 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F23 key">
+        <choice>Controlled by F23 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F24 key">
+        <choice>Controlled by F24 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F25 key">
+        <choice>Controlled by F25 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F26 key">
+        <choice>Controlled by F26 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F27 key">
+        <choice>Controlled by F27 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F28 key">
+        <choice>Controlled by F28 key</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco front lights off</label>
+  </variable>
+  <variable label="Loco front additional function off" CV="107" mask="VVVXXXXX" item="Function F0F option 2" tooltip="CV 107">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 7">
+        <choice>Function output 7</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco front additional function off</label>
+  </variable>
+  <variable label="Loco rear lights off" CV="108" mask="XXXVVVVV" item="Function F0F option 3" tooltip="CV 108">
+    <enumVal>
+      <enumChoice choice="Not active">
+        <choice>Not active</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F1 key">
+        <choice>Controlled by F1 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F2 key">
+        <choice>Controlled by F2 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F3 key">
+        <choice>Controlled by F3 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F4 key">
+        <choice>Controlled by F4 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F5 key">
+        <choice>Controlled by F5 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F6 key">
+        <choice>Controlled by F6 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F7 key">
+        <choice>Controlled by F7 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F8 key">
+        <choice>Controlled by F8 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F9 key">
+        <choice>Controlled by F9 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F10 key">
+        <choice>Controlled by F10 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F11 key">
+        <choice>Controlled by F11 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F12 key">
+        <choice>Controlled by F12 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F13 key">
+        <choice>Controlled by F13 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F14 key">
+        <choice>Controlled by F14 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F15 key">
+        <choice>Controlled by F15 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F16 key">
+        <choice>Controlled by F16 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F17 key">
+        <choice>Controlled by F17 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F18 key">
+        <choice>Controlled by F18 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F19 key">
+        <choice>Controlled by F19 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F20 key">
+        <choice>Controlled by F20 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F21 key">
+        <choice>Controlled by F21 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F22 key">
+        <choice>Controlled by F22 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F23 key">
+        <choice>Controlled by F23 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F24 key">
+        <choice>Controlled by F24 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F25 key">
+        <choice>Controlled by F25 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F26 key">
+        <choice>Controlled by F26 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F27 key">
+        <choice>Controlled by F27 key</choice>
+      </enumChoice>
+      <enumChoice choice="Controlled by F28 key">
+        <choice>Controlled by F28 key</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco rear lights off</label>
+  </variable>
+  <variable label="Loco rear additional function off" CV="108" mask="VVVXXXXX" item="Function F0F option 4" tooltip="CV 108">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 7">
+        <choice>Function output 7</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco rear additional function off</label>
+  </variable>
+  <variable label="Smoke Characteristic" CV="112" tooltip="CV 112 bit 0" mask="XXXXXXXV">
+    <enumVal>
+      <enumChoice choice="Speed dependent">
+        <choice>Speed dependent</choice>
+      </enumChoice>
+      <enumChoice choice="Load dependent">
+        <choice>Load dependent</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Smoke Characteristic</label>
+  </variable>
+  <variable label="ACKnowledgement" item="Advanced Ack" CV="112" tooltip="CV 112 bit 1" mask="XXXXXXVX">
+    <enumVal>
+      <enumChoice choice="Normal">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="High Frequency - High Power">
+        <choice>High Frequency - High Power</choice>
+      </enumChoice>
+    </enumVal>
+    <label>ACKnowledgement</label>
+  </variable>
+  <variable label="Loco Number Recognition" CV="112" tooltip="CV 112 bit 2" mask="XXXXXVXX" default="1">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco Number Recognition</label>
+  </variable>
+  <variable label="NMRA" CV="112" tooltip="CV 112 bit 3" mask="XXXXVXXX" default="0">
+    <enumVal>
+      <enumChoice choice="NMRA/MAN">
+        <choice>NMRA/MAN</choice>
+      </enumChoice>
+      <enumChoice choice="MAN">
+        <choice>MAN</choice>
+      </enumChoice>
+    </enumVal>
+    <label>NMRA</label>
+  </variable>
+  <variable label="Pulse Chain Recognition (LGB)" CV="112" tooltip="CV 112 bit 4" mask="XXXVXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Pulse Chain Recognition (LGB)</label>
+  </variable>
+  <variable label="PWM Frequency" CV="112" item="DC Brake Momentum" tooltip="CV 112 bit 5, Active if CV9=0" mask="XXVXXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="20kHz">
+        <choice>20kHz</choice>
+      </enumChoice>
+      <enumChoice choice="40kHz">
+        <choice>40kHz</choice>
+      </enumChoice>
+    </enumVal>
+    <label>PWM Frequency</label>
+  </variable>
+  <variable label="Non directional DC braking" CV="112" tooltip="CV 112 bit 6" mask="XVXXXXXX" default="0" item="Radio Power Conversion">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Non directional DC braking</label>
+  </variable>
+  <variable label="Pulse Chain Generation" CV="112" tooltip="CV 112 bit 7" mask="VXXXXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Pulse Chain Generation</label>
+  </variable>
+  <variable label="EMF Feedback Cutoff Intensity" CV="113" default="0" item="EMF Feedback Cutout" tooltip="CV 113, Controls how much Feedback Cutoff">
+    <decVal min="0" max="255"/>
+    <label>EMF Feedback Cutoff Intensity</label>
+  </variable>
+  <variable label="Dim Front Light" CV="114" mask="XXXXXXXV" default="0">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim Front Light</label>
+  </variable>
+  <variable label="Dim Rear Light" CV="114" mask="XXXXXXVX" default="0">
+    <enumVal>
+      <enumChoice choice="0ff" value="1">
+        <choice>0ff</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim Rear Light</label>
+  </variable>
+  <variable label="Dim function output 1" CV="114" mask="XXXXXVXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 1</label>
+  </variable>
+  <variable label="Dim function output 2" CV="114" mask="XXXXVXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 2</label>
+  </variable>
+  <variable label="Dim function output 3" CV="114" mask="XXXVXXXX" default="0" minOut="5">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 3</label>
+  </variable>
+  <variable label="Dim function output 4" CV="114" mask="XXVXXXXX" default="0" minOut="6">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 4</label>
+  </variable>
+  <variable label="Dim function output 5" CV="114" mask="XVXXXXXX" default="0" minOut="7">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 5</label>
+  </variable>
+  <variable label="Dim function output 6" CV="114" mask="VXXXXXXX" default="0" minOut="8">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 6</label>
+  </variable>
+  <variable label="Uncoupler" CV="115" default="0" tooltip="CV 115">
+    <decVal max="99"/>
+    <label>Uncoupler</label>
+  </variable>
+  <variable label="Auto Uncouple" CV="116" default="0" tooltip="CV 116">
+    <decVal max="199"/>
+    <label>Auto Uncouple</label>
+  </variable>
+  <variable label="Flash Rate" CV="117" default="0">
+    <decVal max="99"/>
+    <label>Flash Rate</label>
+  </variable>
+  <variable label="Flash front light" CV="118" mask="XXXXXXXV" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Flash front light</label>
+  </variable>
+  <variable label="Flash rear light" CV="118" mask="XXXXXXVX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Flash rear light</label>
+  </variable>
+  <variable label="Flash function output 1" CV="118" mask="XXXXXVXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Flash function output 1</label>
+  </variable>
+  <variable label="Flash function output 2" CV="118" mask="XXXXVXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Flash function output 2</label>
+  </variable>
+  <variable label="Flash function output 3" CV="118" mask="XXXVXXXX" default="0" minOut="5">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Flash function output 3</label>
+  </variable>
+  <variable label="Flash function output 4" CV="118" mask="XXVXXXXX" default="0" minOut="6">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Flash function output 4</label>
+  </variable>
+  <variable label="Inverse Flash Output 2" CV="118" mask="XVXXXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Inverse Flash Output 2</label>
+  </variable>
+  <variable label="Inverse Flash Output 4" CV="118" mask="VXXXXXXX" default="0" minOut="6">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Inverse Flash Output 4</label>
+  </variable>
+  <variable label="F6 dims front light" CV="119" mask="XXXXXXXV" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F6 dims front light</label>
+  </variable>
+  <variable label="F6 dims rear light" CV="119" mask="XXXXXXVX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F6 dims rear light</label>
+  </variable>
+  <variable label="F6 dims function output 1" CV="119" mask="XXXXXVXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F6 dims function output 1</label>
+  </variable>
+  <variable label="F6 dims function output 2" CV="119" mask="XXXXVXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F6 dims function output 2</label>
+  </variable>
+  <variable label="F6 dims function output 3" CV="119" mask="XXXVXXXX" default="0" minOut="5">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F6 dims function output 3</label>
+  </variable>
+  <variable label="F6 dims function output 4" CV="119" mask="XXVXXXXX" default="0" minOut="6">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F6 dims function output 4</label>
+  </variable>
+  <variable label="F6 inverted" CV="119" mask="VXXXXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F6 inverted</label>
+  </variable>
+  <variable label="F7 dims front light" CV="120" mask="XXXXXXXV" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F7 dims front light</label>
+  </variable>
+  <variable label="F7 dims rear light" CV="120" mask="XXXXXXVX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F7 dims rear light</label>
+  </variable>
+  <variable label="F7 dims function output 1" CV="120" mask="XXXXXVXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F7 dims function output 1</label>
+  </variable>
+  <variable label="F7 dims function output 2" CV="120" mask="XXXXVXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F7 dims function output 2</label>
+  </variable>
+  <variable label="F7 dims function output 3" CV="120" mask="XXXVXXXX" default="0" minOut="5">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F7 dims function output 3</label>
+  </variable>
+  <variable label="F7 dims function output 4" CV="120" mask="XXVXXXXX" default="0" minOut="6">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F7 dims function output 4</label>
+  </variable>
+  <variable label="F7 inverted" CV="120" mask="VXXXXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>F7 inverted</label>
+  </variable>
+  <variable label="Exponential Acceleration" CV="121" default="0" comment="Adds an exponential acceleration">
+    <decVal max="99"/>
+    <label>Exponential Acceleration</label>
+    <comment>Adds an exponential acceleration</comment>
+  </variable>
+  <variable label="Exponential Deceleration" CV="122" default="0" comment="Adds an exponential deceleration">
+    <decVal max="99"/>
+    <label>Exponential Deceleration</label>
+    <comment>Adds an exponential deceleration</comment>
+  </variable>
+  <variable label="Adaptive Acceleration/Deceleration" CV="123" default="0">
+    <decVal max="99"/>
+    <label>Adaptive Acceleration/Deceleration</label>
+  </variable>
+  <variable label="Shunting" CV="124" default="0" mask="XXXXXXVV" item="Shunting Usage">
+    <enumVal>
+      <enumChoice choice="no shunting">
+        <choice>no shunting</choice>
+      </enumChoice>
+      <enumChoice choice="no exponential and adaptive influence">
+        <choice>no exponential and adaptive influence</choice>
+      </enumChoice>
+      <enumChoice choice="1/4 acceleration/deceleration">
+        <choice>1/4 acceleration/deceleration</choice>
+      </enumChoice>
+      <enumChoice choice="no acceleration/deceleration">
+        <choice>no acceleration/deceleration</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Shunting</label>
+  </variable>
+  <variable label="Half Speed Key" CV="124" mask="XXXVVXXX" default="0">
+    <enumVal>
+      <enumChoice choice="not set">
+        <choice>not set</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Half Speed Key</label>
+  </variable>
+  <variable label="Shunt Function Key" CV="124" mask="XVXXXVXX" default="0">
+    <enumVal>
+      <enumChoice choice="Man (Zimo)">
+        <choice>Man (Zimo)</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Shunt Function Key</label>
+  </variable>
+  <variable item="Analog Power Conversion" label="Polarity Dependent DC stopping method" CV="124" mask="XXVXXXXX" default="0" tooltip="CV124 bit 5">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Polarity Dependent DC stopping method</label>
+  </variable>
+  <variable label="SUSI" CV="124" mask="VXXXXXXX" default="0" tooltip="CV 124 bit 7" minOut="6">
+    <!-- value 0 => Susi,  value 1 => normal function outputs -->
+    <enumVal>
+      <enumChoice choice="SUSI Serial interface for sound board">
+        <choice>SUSI Serial interface for sound board</choice>
+      </enumChoice>
+      <enumChoice choice="Output as additional Function Pads">
+        <choice>Output as additional Function Pads</choice>
+      </enumChoice>
+    </enumVal>
+    <label>SUSI</label>
+  </variable>
+  <variable label="Front light effect generated" CV="125" mask="VVVVVVXX" tooltip="CV 125" item="Output 1 effect generated">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Front light effect generated</label>
+  </variable>
+  <variable label="Front light behavior" CV="125" mask="XXXXXXVV" tooltip="CV 125" item="Output 1 behavior">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Front light behavior</label>
+  </variable>
+  <variable label="Rear light effect generated" CV="126" mask="VVVVVVXX" tooltip="CV 126" item="Output 2 effect generated">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Rear light effect generated</label>
+  </variable>
+  <variable label="Rear light behavior" CV="126" mask="XXXXXXVV" tooltip="CV 126" item="Output 2 behavior">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Rear light behavior</label>
+  </variable>
+  <variable label="Function output 1 effect generated" CV="127" mask="VVVVVVXX" tooltip="CV 127" item="Output 3 effect generated">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 1 effect generated</label>
+  </variable>
+  <variable label="Function output 1 behavior" CV="127" mask="XXXXXXVV" tooltip="CV 127" item="Output 3 behavior">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 1 behavior</label>
+  </variable>
+  <variable label="Function output 2 effect generated" CV="128" mask="VVVVVVXX" tooltip="CV 128" item="Output 4 effect generated">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 2 effect generated</label>
+  </variable>
+  <variable label="Function output 2 behavior" CV="128" mask="XXXXXXVV" tooltip="CV 128" item="Output 4 behavior">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 2 behavior</label>
+  </variable>
+  <variable label="Function output 3 effect generated" CV="129" mask="VVVVVVXX" tooltip="CV 129" item="Output 5 effect generated" minOut="5">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 3 effect generated</label>
+  </variable>
+  <variable label="Function output 3 behavior" CV="129" mask="XXXXXXVV" tooltip="CV 129" item="Output 5 behavior" minOut="5">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 3 behavior</label>
+  </variable>
+  <variable label="Function output 4 effect generated" CV="130" mask="VVVVVVXX" tooltip="CV 130" item="Output 6 effect generated" minOut="6">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 4 effect generated</label>
+  </variable>
+  <variable label="Function output 4 behavior" CV="130" mask="XXXXXXVV" tooltip="CV 130" item="Output 6 behavior" minOut="6">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 4 behavior</label>
+  </variable>
+  <variable label="Function 0utput 5 effect generated" CV="131" mask="VVVVVVXX" minOut="7" tooltip="CV 131" item="Output 7 effect generated">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 5 effect generated</label>
+  </variable>
+  <variable label="Function output 5 behavior" CV="131" mask="XXXXXXVV" minOut="7" tooltip="CV 131" item="Output 7 behavior">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 5 behavior</label>
+  </variable>
+  <variable label="Function output 6 effect generated" CV="132" mask="VVVVVVXX" minOut="8" tooltip="CV 132" item="Output 8 effect generated">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Functin output 6 effect generated</label>
+  </variable>
+  <variable label="Function output 6 behavior" CV="132" mask="XXXXXXVV" minOut="8" tooltip="CV 132" item="Output 8 behavior">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 6 behavior</label>
+  </variable>
+  <variable label="Function Output 2 as virtual Cam or Smoke Fan" CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="4" include="217">
+    <enumVal>
+      <enumChoice choice="Function Output 2 Normal Output">
+        <choice>Function Ouptput 2 Normal Output</choice>
+      </enumChoice>
+      <enumChoice choice="Function Output 2 Cam Pulses or Smoke Fan">
+        <choice>Function Ouptput 2 Cam Pulses or Smoke Fan</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function Output 2 as virtual Cam or Smoke Fan</label>
+  </variable>
+  <variable label="Function Output 4 as virtual Cam or Smoke Fan" CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="201,203,211,212,213">
+    <enumVal>
+      <enumChoice choice="Function Output 4 Normal Output">
+        <choice>Function Ouptput 4 Normal Output</choice>
+      </enumChoice>
+      <enumChoice choice="Function Output 4 Cam Pulses or Smoke Fan">
+        <choice>Function Ouptput 4 Cam Pulses or Smoke Fan</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function Output 4 as virtual Cam or Smoke Fan</label>
+  </variable>
+  <variable label="Function Output 10 as virtual Cam or Smoke Fan" CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="12" include="208,209">
+    <enumVal>
+      <enumChoice choice="Function Output 10 Normal Output">
+        <choice>Function Ouptput 10 Normal Output</choice>
+      </enumChoice>
+      <enumChoice choice="Function Output 10 Cam Pulses or Smoke Fan">
+        <choice>Function Ouptput 10 Cam Pulses or Smoke Fan</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function Output 10 as virtual Cam or Smoke Fan</label>
+  </variable>
+  <variable label="Asymmetrical DCC Threshold" CV="134" default="106">
+    <decVal max="214"/>
+    <label>Asymmetrical DCC Threshold</label>
+  </variable>
+  <variable label="km/h speed regulation control and range" CV="135" opsOnly="yes" default="0">
+    <enumVal>
+      <enumChoice choice="Not Active">
+        <choice>Not Active</choice>
+      </enumChoice>
+      <enumChoice choice="0.2" value="2">
+        <choice>0.2</choice>
+      </enumChoice>
+      <enumChoice choice="0.3" value="3">
+        <choice>0.3</choice>
+      </enumChoice>
+      <enumChoice choice="0.4" value="4">
+        <choice>0.4</choice>
+      </enumChoice>
+      <enumChoice choice="0.5" value="5">
+        <choice>0.5</choice>
+      </enumChoice>
+      <enumChoice choice="0.6" value="6">
+        <choice>0.6</choice>
+      </enumChoice>
+      <enumChoice choice="0.7" value="7">
+        <choice>0.7</choice>
+      </enumChoice>
+      <enumChoice choice="0.8" value="8">
+        <choice>0.8</choice>
+      </enumChoice>
+      <enumChoice choice="0.9" value="9">
+        <choice>0.9</choice>
+      </enumChoice>
+      <enumChoice choice="1" value="10">
+        <choice>1</choice>
+      </enumChoice>
+      <enumChoice choice="1.1" value="11">
+        <choice>1.1</choice>
+      </enumChoice>
+      <enumChoice choice="1.2" value="12">
+        <choice>1.2</choice>
+      </enumChoice>
+      <enumChoice choice="1.3" value="13">
+        <choice>1.3</choice>
+      </enumChoice>
+      <enumChoice choice="1.4" value="14">
+        <choice>1.4</choice>
+      </enumChoice>
+      <enumChoice choice="1.5" value="15">
+        <choice>1.5</choice>
+      </enumChoice>
+      <enumChoice choice="1.6" value="16">
+        <choice>1.6</choice>
+      </enumChoice>
+      <enumChoice choice="1.7" value="17">
+        <choice>1.7</choice>
+      </enumChoice>
+      <enumChoice choice="1.8" value="18">
+        <choice>1.8</choice>
+      </enumChoice>
+      <enumChoice choice="1.9" value="19">
+        <choice>1.9</choice>
+      </enumChoice>
+      <enumChoice choice="2" value="20">
+        <choice>2</choice>
+      </enumChoice>
+    </enumVal>
+    <label>km/h speed regulation control and range</label>
+  </variable>
+  <variable label="km/h speed regulation control number readout" CV="136" readOnly="yes">
+    <decVal/>
+    <label>km/h speed regulation control number readout</label>
+  </variable>
+  <variable label="Smoke PWM at standstill" CV="137">
+    <decVal/>
+    <label>Smoke PWM at standstill</label>
+  </variable>
+  <variable label="Smoke PWM at minimum speed" CV="138">
+    <decVal/>
+    <label>Smoke PWM at minimum speed</label>
+  </variable>
+  <variable label="Smoke PWM at max speed" CV="139">
+    <decVal/>
+    <label>Smoke PWM at max speed</label>
+  </variable>
+  <variable label="Distance controlled stopping" CV="140" default="0">
+    <enumVal>
+      <enumChoice choice="not active">
+        <choice>not active</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
+        <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
+      </enumChoice>
+      <enumChoice choice="Manual stops using cab">
+        <choice>Manual stops using cab</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic and Manual stops">
+        <choice>Automatic and Manual stops</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic stops with immediate braking" value="11">
+        <choice>Automatic stops with immediate braking</choice>
+      </enumChoice>
+      <enumChoice choice="Manual stops with immediate braking">
+        <choice>Manual stops with immediate braking</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic and Manual stops with immediate braking">
+        <choice>Automatic and Manual stops with immediate braking</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Distance controlled stopping</label>
+  </variable>
+  <variable label="Distance controlled stopping Distance" CV="141" default="0">
+    <decVal min="0" max="255"/>
+    <label>Distance controlled stopping Distance</label>
+  </variable>
+  <variable label="Distance controlled stopping speed correction (ABC)" CV="142" default="12">
+    <decVal min="0" max="255"/>
+    <label>Distance controlled stopping speed correction (ABC)</label>
+  </variable>
+  <variable label="Distance controlled stopping speed correction (HLU)" CV="143" default="0">
+    <decVal min="0" max="255"/>
+    <label>Distance controlled stopping speed correction (HLU)</label>
+  </variable>
+  <variable label="Service Mode Programming Locked" CV="144" mask="XVXXXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="No" value="0">
+        <choice>No</choice>
+      </enumChoice>
+      <enumChoice choice="Yes" value="1">
+        <choice>Yes</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Service Mode Programming Locked</label>
+  </variable>
+  <variable label="Software Update Locked" CV="144" mask="VXXXXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="No" value="0">
+        <choice>No</choice>
+      </enumChoice>
+      <enumChoice choice="Yes" value="1">
+        <choice>Yes</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Software Update Locked</label>
+  </variable>
+  <variable label="Motor Control Method" CV="145" item="Kick Start" default="0" tooltip="CV145">
+    <enumVal>
+      <enumChoice choice="Normal (DC and Coreless)" value="0">
+        <choice>Normal (DC and Coreless)</choice>
+      </enumChoice>
+      <enumChoice choice="Low Impedance DC (with added capacitor see manual)" value="1">
+        <choice>Low Impedance DC (with added capacitor see manual)</choice>
+      </enumChoice>
+      <enumChoice choice="C or Softdrive-Sinus (FO4 not useable)" value="10">
+        <choice>C or Softdrive-Sinus (FO4 not useable)</choice>
+      </enumChoice>
+      <enumChoice choice="alternative C or Softdrive-Sinus (FO4 useable)" value="11">
+        <choice>alternative C or Softdrive-Sinus (FO4 useable)</choice>
+      </enumChoice>
+      <enumChoice choice="Special C or Softdrive-Sinus requiring normal output (FO4 not useable)" value="12">
+        <choice>Special C or Softdrive-Sinus requiring normal output (FO4 not useable)</choice>
+      </enumChoice>
+      <enumChoice choice="Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)" value="13">
+        <choice>Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Motor Control Method</label>
+  </variable>
+  <variable label="Motor Backlash Control" CV="146" default="0" item="Load Control" tooltip="CV 146, Motor Backlash Control">
+    <decVal min="0" max="255"/>
+    <label>Motor Backlash Control</label>
+  </variable>
+  <variable label="EMK measure timeout" CV="147" default="0" item="Total PWM Period" tooltip="CV147">
+    <decVal min="0" max="255"/>
+    <label>EMK measure timeout</label>
+  </variable>
+  <variable label="Differential value" CV="148" default="0" item="EMF Control Reference" tooltip="CV148">
+    <decVal min="0" max="255"/>
+    <label>Differential value</label>
+  </variable>
+  <variable label="Adaptive proportional value" CV="149" mask="VVVVVVVX" default="0" item="EMF Enable" tooltip="CV149">
+    <enumVal>
+      <enumChoice choice="On">
+        <choice>On</choice>
+      </enumChoice>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Adaptive proportional value</label>
+  </variable>
+  <variable label="Regulation at full speed" CV="150" default="0" item="EMF Static Config" tooltip="CV150">
+    <decVal min="0" max="255"/>
+    <label>Regulation at full speed</label>
+  </variable>
+  <variable label="Motor Brake" CV="151" item="Advanced Group 1 Option 1" default="0" tooltip="Motor braked by shorting output. CV151">
+    <enumVal>
+      <enumChoice choice="No Braking">
+        <choice>No Braking</choice>
+      </enumChoice>
+      <enumChoice choice="Gradual brake application over 1sec from Stop" value="1">
+        <choice>Gradual brake application over 1sec from Stop</choice>
+      </enumChoice>
+      <enumChoice choice="Gradual brake application over 2sec from Stop" value="2">
+        <choice>Gradual brake application over 2sec from Stop</choice>
+      </enumChoice>
+      <enumChoice choice="Gradual brake application over 3sec from Stop" value="3">
+        <choice>Gradual brake application over 3sec from Stop</choice>
+      </enumChoice>
+      <enumChoice choice="Gradual brake application over 4sec from Stop" value="4">
+        <choice>Gradual brake application over 4sec from Stop</choice>
+      </enumChoice>
+      <enumChoice choice="Gradual brake application over 5sec from Stop" value="5">
+        <choice>Gradual brake application over 5sec from Stop</choice>
+      </enumChoice>
+      <enumChoice choice="Gradual brake application over 6sec from Stop" value="6">
+        <choice>Gradual brake application over 6sec from Stop</choice>
+      </enumChoice>
+      <enumChoice choice="Gradual brake application over 7sec from Stop" value="7">
+        <choice>Gradual brake application over 7sec from Stop</choice>
+      </enumChoice>
+      <enumChoice choice="Gradual brake application over 8sec from Stop" value="8">
+        <choice>Gradual brake application over 8sec from Stop</choice>
+      </enumChoice>
+      <enumChoice choice="Full brake application at Stop" value="2">
+        <choice>Gradual brake application over 2sec from Stop</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Motor brake</label>
+  </variable>
+  <variable label="Dim function output 7" CV="152" mask="XXXXXXXV" default="0" minOut="9">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 7</label>
+  </variable>
+  <variable label="Dim function output 8" CV="152" mask="XXXXXXVX" default="0" minOut="10">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 8</label>
+  </variable>
+  <variable label="Dim function output 9" CV="152" mask="XXXXXVXX" default="0" minOut="11">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 9</label>
+  </variable>
+  <variable label="Dim function output 10" CV="152" mask="XXXXVXXX" default="0" minOut="12">
+    <enumVal>
+      <enumChoice choice="0ff" value="1">
+        <choice>0ff</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 10</label>
+  </variable>
+  <variable label="Dim function output 11" CV="152" mask="XXXVXXXX" default="0" minOut="13">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 11</label>
+  </variable>
+  <variable label="Dim function output 12" CV="152" mask="XXVXXXXX" default="0" minOut="14">
+    <enumVal>
+      <enumChoice choice="Off" value="1">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="0">
+        <choice>On</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Dim function output 12</label>
+  </variable>
+  <variable label="FO3 + FO4 directional setting" CV="152" mask="XVXXXXXX" default="0" minOut="6">
+    <enumVal>
+      <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
+        <choice>Non Directional, normal NMRA mapping</choice>
+      </enumChoice>
+      <enumChoice choice="FO3 on in reverse, FO4 on in forward" value="1">
+        <choice>FO3 on in reverse, FO4 on in forward</choice>
+      </enumChoice>
+    </enumVal>
+    <label>FO3 + FO4 directional setting</label>
+  </variable>
+</variables>

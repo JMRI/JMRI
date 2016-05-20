@@ -1,6 +1,8 @@
 // LI100XNetInitilizationManager.java
 
 package jmri.jmrix.lenz.li100;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.AbstractXNetInitilizationManager;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
@@ -132,6 +134,6 @@ public class LI100XNetInitilizationManager extends AbstractXNetInitilizationMana
 	if(log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100XNetInitilizationManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(LI100XNetInitilizationManager.class.getName());
 
 }

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: BLI_Blueline_Paragon2_Diesel.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1" lastUpdated="20130204"/>
+  <!-- Version 1 New file from 0.8 manual -->
+  <decoder>
+    <family name="Light Unit" mfg="Broadway Limited Imports, LLC">
+      <model model="Light Unit" numOuts="5" numFns="15" >
+        <versionCV lowVersionID="1" highVersionID="1"/>
+        <output name="L1" />
+        <output name="L2" />
+        <output name="L3" />
+        <output name="L4" />
+        <output name="L5" />
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">L1-L4</functionlabel>
+        <functionlabel num="7" lockable="true">L5</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="1" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F1</label>
+      </variable>
+      <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="1" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F2</label>
+      </variable>
+      <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="1" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F3</label>
+      </variable>
+      <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="1" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F4</label>
+      </variable>
+      <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="1" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F5</label>
+      </variable>
+      <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="1" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F6</label>
+      </variable>
+      <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="1" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F7</label>
+      </variable>
+      <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="1" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F8</label>
+      </variable>
+      <variable label="Consist Address Active For F0" CV="22" mask="XXXXXXXV" default="1" item="Consist Address Active For FL in Reverse">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F0</label>
+      </variable>
+      <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="1" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F9</label>
+      </variable>
+      <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="1" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F10</label>
+      </variable>
+      <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="1" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F11</label>
+      </variable>
+      <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="1" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F12</label>
+      </variable>
+      <variable label="Front and Rear Lights" CV="29" mask="XXXXXXXV" item="Directional Headlights" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label>Front and Rear Lights</label>
+      </variable>
+      <variable label="L1 Function Button" CV="33" mask="XXXXVVVV" default="0" minFn="1" item="Function F0F effect generated">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightFunction.xml"/>
+        <label>L1 Function Button</label>
+      </variable>
+      <variable label="L1 Direction" CV="33" mask="VVXXXXXX" default="2" minFn="1" item="Function F0F options">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightDirection.xml"/>
+        <label>L1 Direction</label>
+      </variable>
+      <variable label="L2 Function Button" CV="34" mask="XXXXVVVV" default="0" minFn="2" item="Function F0R effect generated">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightFunction.xml"/>
+        <label>L2 Function Button</label>
+      </variable>
+      <variable label="L2 Direction" CV="34" mask="VVXXXXXX" default="3" minFn="2" item="Function F0R options">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightDirection.xml"/>
+        <label>L2 Direction</label>
+      </variable>
+      <variable label="L3 Function Button" CV="35" mask="XXXXVVVV" default="0" minFn="3" item="Function 1 effect generated">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightFunction.xml"/>
+        <label>L3  Function Button</label>
+      </variable>
+      <variable label="L3 Direction" CV="35" mask="VVXXXXXX" default="0" minFn="3" item="Function 1 options">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightDirection.xml"/>
+        <label>L3 Direction</label>
+      </variable>
+      <variable label="L4 Function Button" CV="36" mask="XXXXVVVV" default="0" minFn="4" item="Function 2 effect generated">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightFunction.xml"/>
+        <label>L4 Function Button</label>
+      </variable>
+      <variable label="L4 Direction" CV="36" mask="VVXXXXXX" default="0" minFn="4" item="Function 2 options">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightDirection.xml"/>
+        <label>L4 Direction</label>
+      </variable>
+      <variable label="L5 Function Button" CV="37" mask="XXXXVVVV" default="7" minFn="5" item="Function 3 effect generated">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightFunction.xml"/>
+        <label>L5 Function Button</label>
+      </variable>
+      <variable label="L5 Direction" CV="37" mask="VVXXXXXX" default="0" minFn="5" item="Function 3 options">
+		<xi:include href="http://jmri.org/xml/decoders/bli/enumLightDirection.xml"/>
+        <label>L5 Direction</label>
+      </variable>
+      <variable label="L1 On at Power Up" CV="63" mask="XXXXXXXV" default="1" minFn="1" item="Function F0F check 1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L1 On at Power Up</label>
+      </variable>
+      <variable label="L2 On at Power Up" CV="63" mask="XXXXXXVX" default="1" minFn="2" item="Function F0R check 1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L2 On at Power Up</label>
+      </variable>
+      <variable label="L3 On at Power Up" CV="63" mask="XXXXXVXX" default="1" minFn="3" item="Function 1 check 1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L3 On at Power Up</label>
+      </variable>
+      <variable label="L4 On at Power Up" CV="63" mask="XXXXVXXX" default="1" minFn="4" item="Function 2 check 1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L4 On at Power Up</label>
+      </variable>
+      <variable label="L5 On at Power Up" CV="63" mask="XXXVXXXX" default="1" minFn="5" item="Function 3 check 1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L5 On at Power Up</label>
+      </variable>
+      <variable label="L1 Toggled by DCMaster AUX" CV="64" mask="XXXXXXXV" default="0" minFn="1" item="Function F0F check 2">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L1 Toggled by DCMaster AUX</label>
+      </variable>
+      <variable label="L2 Toggled by DCMaster AUX" CV="64" mask="XXXXXXVX" default="0" minFn="2" item="Function F0R check 2">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L2 Toggled by DCMaster AUX</label>
+      </variable>
+      <variable label="L3 Toggled by DCMaster AUX" CV="64" mask="XXXXXVXX" default="0" minFn="3" item="Function 1 check 2">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L3 Toggled by DCMaster AUX</label>
+      </variable>
+      <variable label="L4 Toggled by DCMaster AUX" CV="64" mask="XXXXVXXX" default="0" minFn="4" item="Function 2 check 2">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L4 Toggled by DCMaster AUX</label>
+      </variable>
+      <variable label="L5 Toggled by DCMaster AUX" CV="64" mask="XXXVXXXX" default="1" minFn="5" item="Function 3 check 2">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>L5 Toggled by DCMaster AUX</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+    </resets>
+  </decoder>
+</decoder-config>

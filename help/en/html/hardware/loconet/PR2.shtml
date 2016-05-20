@@ -31,7 +31,7 @@ JMRI Hardware Guide: Connecting to a Digitrax PR2
 
 
 <a href="http://digitrax.com/prd_compint_pr2.php">
-<img src="images/PR2.jpg" align="right" width="200" height="179" alt="PR2 picture"/>
+<img src="images/PR2.jpg" alt="PR2 picture"/>
 </a><br>
 The PR2 is a standalone programmer that can be used
 to set CVs in all decoders that DecoderPro supports.
@@ -49,7 +49,7 @@ now have a 9 pin RS232 connector, and there are simple adapters
 available to convert the wiring.)
 
 <p>
-The PR2 is not a LocoNet interface, and
+The PR2 is not a LocoNet&reg; interface, and
 does not connect to the LocoNet on your layout in any way.
 It cannot attach to a command station like the
 MS100, PR3, LocoBuffer, LocoBuffer-II, and LocoBuffer-USB do. 
@@ -110,6 +110,7 @@ Other decoders, including decoders from other manufacturers, may
 draw enough motor current to trip the PR2 internal circuit breakers.
 This will cause JMRI to mark track power as "off". Just wait a couple
 seconds and turn the track power back on to recover.
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 	  
     </div>
   </div>

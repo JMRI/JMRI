@@ -1,5 +1,7 @@
 package apps.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.PerformActionPanel;
 
 import jmri.InstanceManager;
@@ -55,6 +57,6 @@ public class PerformActionPanelXml extends jmri.configurexml.AbstractXmlAdapter 
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PerformActionPanelXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PerformActionPanelXml.class.getName());
 
 }

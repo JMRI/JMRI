@@ -3,6 +3,7 @@
 package jmri;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -135,6 +136,14 @@ public interface ConfigureManager {
     /**
      * Create the objects defined in a particular configuration
      * file
+     * @param file Input URL
+     * @return true if succeeded
+     */
+    public boolean load(URL file) throws JmriException;
+
+    /**
+     * Create the objects defined in a particular configuration
+     * file
      * @param file Input file
      * @param registerDeferred true to register actions for deferred load
      * @return true if succeeded
@@ -142,6 +151,17 @@ public interface ConfigureManager {
      * @since 2.11.2
      */
     public boolean load(File file, boolean registerDeferred) throws JmriException;
+
+    /**
+     * Create the objects defined in a particular configuration
+     * file
+     * @param file Input URL
+     * @param registerDeferred true to register actions for deferred load
+     * @return true if succeeded
+     * @throws JmriException
+     * @since 2.11.2
+     */
+    public boolean load(URL file, boolean registerDeferred) throws JmriException;
 
     /**
      * Create the objects defined in a particular configuration
@@ -156,12 +176,24 @@ public interface ConfigureManager {
     public boolean loadDeferred(File file) throws JmriException;
 
     /**
+     * Create the objects defined in a particular configuration
+     * file that have been deferred until after basic GUI construction
+     * completed
+     * @param file Input URL
+     * @return true if succeeded
+     * @throws JmriException
+     * @see jmri.configurexml.XmlAdapter#loadDeferred()
+     * @since 2.11.2
+     */
+    public boolean loadDeferred(URL file) throws JmriException;
+
+    /**
      * Provide a method-specific way of locating a file to be
      * loaded from a name.
      * @param filename Local filename, perhaps without path information
-     * @return Corresponding File object
+     * @return Corresponding {@link java.net.URL}
      */
-    public File find(String filename);
+    public URL find(String filename);
     
     /**
      * Make a backup file.

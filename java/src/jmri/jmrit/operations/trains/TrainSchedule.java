@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.trains;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +13,12 @@ import org.jdom.Element;
  * Represents a schedule for trains
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision$
+ * @version $Revision$
  */
 public class TrainSchedule {
-	
-	public static final String NAME_CHANGED_PROPERTY = "trainScheduleName";
-	public static final String SCHEDULE_CHANGED_PROPERTY = "trainScheduleChanged";
+
+	public static final String NAME_CHANGED_PROPERTY = "trainScheduleName"; // NOI18N
+	public static final String SCHEDULE_CHANGED_PROPERTY = "trainScheduleChanged"; // NOI18N
 
 	protected String _id = "";
 	protected String _name = "";
@@ -36,13 +38,13 @@ public class TrainSchedule {
 	public void setName(String name) {
 		String old = _name;
 		_name = name;
-		if (!old.equals(name)){
+		if (!old.equals(name)) {
 			firePropertyChange(NAME_CHANGED_PROPERTY, old, name);
 		}
 	}
 
 	// for combo boxes
-	public String toString(){
+	public String toString() {
 		return _name;
 	}
 
@@ -54,88 +56,93 @@ public class TrainSchedule {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment))
-			firePropertyChange("AddTrainScheduleComment", old, comment);
+			firePropertyChange("AddTrainScheduleComment", old, comment); // NOI18N
 	}
 
 	public String getComment() {
 		return _comment;
 	}
-	
-	public void addTrainId(String id){
-		if (!_trainIds.contains(id)){
+
+	public void addTrainId(String id) {
+		if (!_trainIds.contains(id)) {
 			_trainIds.add(id);
 			firePropertyChange(SCHEDULE_CHANGED_PROPERTY, null, id);
 		}
 	}
-	
-	public void removeTrainId(String id){
+
+	public void removeTrainId(String id) {
 		_trainIds.remove(id);
 		firePropertyChange(SCHEDULE_CHANGED_PROPERTY, id, null);
 	}
-	
-	public boolean containsTrainId(String id){
+
+	public boolean containsTrainId(String id) {
 		return _trainIds.contains(id);
 	}
-	
+
 	/**
-	* Construct this Entry from XML. This member has to remain synchronized with the
-	* detailed DTD in operations-trains.xml
-	*
-	* @param e  Consist XML element
-	*/
+	 * Construct this Entry from XML. This member has to remain synchronized with the detailed DTD in
+	 * operations-trains.xml
+	 * 
+	 * @param e
+	 *            Consist XML element
+	 */
 	public TrainSchedule(Element e) {
-		//       if (log.isDebugEnabled()) log.debug("ctor from element "+e);
+		// if (log.isDebugEnabled()) log.debug("ctor from element "+e);
 		org.jdom.Attribute a;
-		if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
-		else log.warn("no id attribute in schedule element when reading operations");
-		if ((a = e.getAttribute("name")) != null )  _name = a.getValue();
-		if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
-		if ((a = e.getAttribute("trainIds")) != null ){
+		if ((a = e.getAttribute(Xml.ID)) != null)
+			_id = a.getValue();
+		else
+			log.warn("no id attribute in schedule element when reading operations");
+		if ((a = e.getAttribute(Xml.NAME)) != null)
+			_name = a.getValue();
+		if ((a = e.getAttribute(Xml.COMMENT)) != null)
+			_comment = a.getValue();
+		if ((a = e.getAttribute(Xml.TRAIN_IDS)) != null) {
 			String ids = a.getValue();
-	      	String[] trainIds = ids.split(",");
-	      	for (int i=0; i<trainIds.length; i++){
-	      		_trainIds.add(trainIds[i]);
-	      	}
-        	if (log.isDebugEnabled()) log.debug("Train schedule "+getName()+" trainIds: "+ids);
+			String[] trainIds = ids.split(",");
+			for (int i = 0; i < trainIds.length; i++) {
+				_trainIds.add(trainIds[i]);
+			}
+			if (log.isDebugEnabled())
+				log.debug("Train schedule " + getName() + " trainIds: " + ids);
 		}
 	}
 
 	/**
-	 * Create an XML element to represent this Entry. This member has to remain synchronized with the
-	 * detailed DTD in operations-config.xml.
+	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
+	 * operations-config.xml.
+	 * 
 	 * @return Contents in a JDOM Element
 	 */
 	public Element store() {
-		Element e = new org.jdom.Element("schedule");
-		e.setAttribute("id", getId());
-		e.setAttribute("name", getName());
+		Element e = new org.jdom.Element(Xml.SCHEDULE);
+		e.setAttribute(Xml.ID, getId());
+		e.setAttribute(Xml.NAME, getName());
 		if (!getComment().equals(""))
-			e.setAttribute("comment", getComment());
+			e.setAttribute(Xml.COMMENT, getComment());
 		// store train ids
 		StringBuilder buf = new StringBuilder();
-		for (int i=0; i<_trainIds.size(); i++){
-			buf.append(_trainIds.get(i)+",");
+		for (int i = 0; i < _trainIds.size(); i++) {
+			buf.append(_trainIds.get(i) + ",");
 		}
-		e.setAttribute("trainIds", buf.toString());
+		e.setAttribute(Xml.TRAIN_IDS, buf.toString());
 		return e;
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if(Control.showProperty && log.isDebugEnabled())
-			log.debug("schedule (" + getName() + ") sees property change: "
-					+ e.getPropertyName() + " from (" +e.getSource()+ ") old: " + e.getOldValue() + " new: "
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("schedule (" + getName() + ") sees property change: " + e.getPropertyName()
+					+ " from (" + e.getSource() + ") old: " + e.getOldValue() + " new: " // NOI18N
 					+ e.getNewValue());
 	}
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
-	public synchronized void addPropertyChangeListener(
-			java.beans.PropertyChangeListener l) {
+	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
 		pcs.addPropertyChangeListener(l);
 	}
 
-	public synchronized void removePropertyChangeListener(
-			java.beans.PropertyChangeListener l) {
+	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
 		pcs.removePropertyChangeListener(l);
 	}
 
@@ -144,6 +151,7 @@ public class TrainSchedule {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainSchedule.class.getName());
+	static Logger log = LoggerFactory.getLogger(TrainSchedule.class
+			.getName());
 
 }

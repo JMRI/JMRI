@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import jmri.progdebugger.ProgDebugger;
 import java.util.Vector;
 
@@ -308,7 +309,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( CompositeVariableValueTest.class.getName());
+    static Logger log = Logger.getLogger( CompositeVariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

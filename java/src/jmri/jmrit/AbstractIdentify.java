@@ -2,6 +2,9 @@
 
 package jmri.jmrit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Abstract base for common code of IdentifyLoco and IdentifyDecoder, the
@@ -161,6 +164,6 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractIdentify.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractIdentify.class.getName());
 
 }

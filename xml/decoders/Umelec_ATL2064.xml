@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Umelec_ATL2064.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jefflaw@datamasta.co.nz" version="1.00" lastUpdated="20040809"/>
-<!-- version 1.00 - initial version             -->
+  <!-- version 1.00 - initial version             -->
   <decoder>
     <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero">
       <model model="ATL2064" lowVersionID="12" highVersionID="12" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="8">
@@ -1069,7 +1069,7 @@
         <label>Slow Speed</label>
         <comment>Range 20-127</comment>
       </variable>
-<!-- Lights section -->
+      <!-- Lights section -->
       <variable label="Headlights A/B" CV="57" mask="XXXXXXVV" item="Output 1 effect generated">
         <enumVal>
           <enumChoice choice="Normal">
@@ -1149,7 +1149,7 @@
         <label>Gyrolight Generator</label>
         <comment>Range 0-63</comment>
       </variable>
-<!-- Sound section -->
+      <!-- Sound section -->
       <variable label="Exhaust Divider - High" CV="61" default="50" comment="Range 0-100" item="Sound Group 1 Option 1">
         <decVal min="0" max="100"/>
         <label>Exhaust Divider - High</label>

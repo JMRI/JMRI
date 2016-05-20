@@ -3,6 +3,7 @@
 package jmri.jmrix.nce;
 
 
+import org.apache.log4j.Logger;
 import java.util.Vector;
 
 /** 
@@ -57,6 +58,6 @@ import java.util.Vector;
         }
 
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceInterfaceScaffold.class.getName());
+	static Logger log = Logger.getLogger(NceInterfaceScaffold.class.getName());
 
 }

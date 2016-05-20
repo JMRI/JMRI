@@ -2,6 +2,8 @@
 
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -343,7 +345,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNetworkConnectionConfig.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfig.class.getName());
 
 }
 

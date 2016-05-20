@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: CT_Elektronik_Sound_SL_v40.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,33 +14,33 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="ncliffe@btinternet.com" version="3.3" lastUpdated="2011/02/28"/>
-<!--  v3.3: -->
-<!--  Added "alternative" sound slots to function mapping, allowing access to slots 9-16,  -->
-<!--  also adjusted labelling of panes, and minor function changes associated with these changes -->
-<!--  Thanks to John Gymer for the clues to use of the "Alt" feature in CT Function Mapping -->
-<!--  v3.2: -->
-<!--  extended version numbering to 112.    --> 
-<!--  Volume control (CV121) appears to now be 64 step for some versions of firmware --> 
-<!--  v3.1:  -->  
-<!--  major revision by Nigel Cliffe, many thanks to John Clutterbuck for assistance and notes -->
-<!--  re-structured "sound slots and repetition" pane -->
-<!--  re-structured "sound config" pane, including "include" statements for difference between SL74 and SL75 -->
-<!--  added Lenz ABC (diode braking), tested on SL75 -->
-<!--  function mapping according to http://www.tran.at/Dokumentation/mapping.pdf -->
-<!--  -->
-<!--  outstanding issue - relationship between CV110 and CV137 and Function Mapping.  Cannot decypher documentation on matter -->
-<!-- <version author="Peter.Brandenburg@t-online.de"
+  <!--  v3.3: -->
+  <!--  Added "alternative" sound slots to function mapping, allowing access to slots 9-16,  -->
+  <!--  also adjusted labelling of panes, and minor function changes associated with these changes -->
+  <!--  Thanks to John Gymer for the clues to use of the "Alt" feature in CT Function Mapping -->
+  <!--  v3.2: -->
+  <!--  extended version numbering to 112.    -->
+  <!--  Volume control (CV121) appears to now be 64 step for some versions of firmware -->
+  <!--  v3.1:  -->
+  <!--  major revision by Nigel Cliffe, many thanks to John Clutterbuck for assistance and notes -->
+  <!--  re-structured "sound slots and repetition" pane -->
+  <!--  re-structured "sound config" pane, including "include" statements for difference between SL74 and SL75 -->
+  <!--  added Lenz ABC (diode braking), tested on SL75 -->
+  <!--  function mapping according to http://www.tran.at/Dokumentation/mapping.pdf -->
+  <!--  -->
+  <!--  outstanding issue - relationship between CV110 and CV137 and Function Mapping.  Cannot decypher documentation on matter -->
+  <!-- <version author="Peter.Brandenburg@t-online.de"
 			version="2" lastUpdated="2006/11/20" />   -->
-<!--	version 1 - recreated from CT_Elektronik_Sound_SL_51.xml by "mark.kasprowicz@traindecoder.com"
+  <!--	version 1 - recreated from CT_Elektronik_Sound_SL_51.xml by "mark.kasprowicz@traindecoder.com"
 			version="1.0 beta" lastUpdated="20040818" - Peter 06/10/28 -->
-<!--	version 2 - added new CVs: Auto Uncoupling and Light Effects - Peter -->
+  <!--	version 2 - added new CVs: Auto Uncoupling and Light Effects - Peter -->
   <decoder>
     <family name="Sound Decoder SL (v.40 up)" mfg="CT Elektronik">
       <model model="SL 51" numOuts="8" numFns="15" productID="SL51">
         <versionCV lowVersionID="40"/>
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>
-		<output name="3" label="Green"/>
+        <output name="3" label="Green"/>
         <output name="4" label="Purple"/>
         <output name="5" label="Pad 5"/>
         <output name="6" label="Pad 6"/>
@@ -48,7 +48,7 @@
         <output name="8" label="Pad 8"/>
         <output name="Ra" label="Yard Mode"/>
         <output name="Se" label="Sound"/>
-		<output name="Alt" label="Alt Snds" />  
+        <output name="Alt" label="Alt Snds"/>
         <output name="G1" label="Snd Slot 1/9"/>
         <output name="G2" label="Snd Slot 2/10"/>
         <output name="G3" label="Snd Slot 3/11"/>
@@ -64,8 +64,8 @@
         <output name="4" label="Purple"/>
         <output name="Ra" label="Yard Mode"/>
         <output name="Se" label="Sound"/>
-		<output name="Alt" label="Alt Snds" />  
-       <output name="G1" label="Snd Slot 1/9"/>
+        <output name="Alt" label="Alt Snds"/>
+        <output name="G1" label="Snd Slot 1/9"/>
         <output name="G2" label="Snd Slot 2/10"/>
         <output name="G3" label="Snd Slot 3/11"/>
         <output name="G4" label="Snd Slot 4/12"/>
@@ -80,8 +80,8 @@
         <output name="4" label="Purple"/>
         <output name="Ra" label="Yard Mode"/>
         <output name="Se" label="Sound"/>
-		<output name="Alt" label="Alt Snds" />  
-       <output name="G1" label="Snd Slot 1/9"/>
+        <output name="Alt" label="Alt Snds"/>
+        <output name="G1" label="Snd Slot 1/9"/>
         <output name="G2" label="Snd Slot 2/10"/>
         <output name="G3" label="Snd Slot 3/11"/>
         <output name="G4" label="Snd Slot 4/12"/>
@@ -303,7 +303,7 @@
         <decVal min="0" max="3"/>
         <label>Error Diagnosis</label>
       </variable>
-<!--	NMRA Function Mapping	-->
+      <!--	NMRA Function Mapping	-->
       <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1536,7 +1536,7 @@
         </enumVal>
         <label>F12 controls output G3</label>
       </variable>
-<!--  commented out options, instead drop downs below
+      <!--  commented out options, instead drop downs below
 		<variable label="Decoder Properties/Synchropulses" CV="49" mask="XXXXXXXV" 
 			include="SL51,SL74"	default="0" >
 			<enumVal><enumChoice choice="Off"/><enumChoice choice="On"/></enumVal>
@@ -2154,7 +2154,7 @@
         </enumVal>
         <label>Switching 3</label>
       </variable>
-<!-- CV116 = 8 brakes with diode 4-1 is active 
+      <!-- CV116 = 8 brakes with diode 4-1 is active 
 CV116 = 16 brakes with Diode NOT richtungsabhangig 
 CV116 = 0 is not used, must always be 0 (when using the brake module also allows for low speed) 
 CV116 = 64 means that the Rangierfunktion acts as a command button that is, that the ATC has (or braking diode and HLU) NOT! (equivalent to the MAN key = manual) 
@@ -2335,7 +2335,6 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
       </variable>
       <variable label="Main Running Sound Level" CV="121" default="3">
         <decVal/>
-        
         <label>Main Running Sound Level</label>
       </variable>
       <variable label="Sound slot 1 volume" CV="122" mask="XXXXXXVV" default="0">
@@ -2863,7 +2862,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 7 function repetition</label>
       </variable>
-<!-- CV129 changed in V40, see also CV146 -->
+      <!-- CV129 changed in V40, see also CV146 -->
       <variable label="Sound slot 8 volume" CV="129" mask="XXXXXXVV" include="SL75" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
@@ -2939,13 +2938,13 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 8 function repetition</label>
       </variable>
-<!-- CV129 moved to CV146 SL75 from V40 upwards !! -->
+      <!-- CV129 moved to CV146 SL75 from V40 upwards !! -->
       <variable label="Strong Time" CV="129" default="4" include="SL51,SL74" comment="Position 00-03 in Filelist" tooltip="CV129 Strong reduction of sound after acceleration, Position 00-03 in Filelist">
         <decVal/>
         <label>Strong Time</label>
         <comment>Position 00-03 in Filelist</comment>
       </variable>
-<!-- See also CV129/146 for matching CV for "strong" time -->
+      <!-- See also CV129/146 for matching CV for "strong" time -->
       <variable label="Weak Time" CV="130" default="4" comment="Position 08-11 in Filelist" tooltip="CV130 Slightly reduction of sound after breaking, Position 08-11 in Filelist">
         <decVal/>
         <label>Weak Time</label>
@@ -3203,7 +3202,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 8</label>
       </variable>
-<!--  
+      <!--  
 CV146 = 1 bedeutet: Z3 (Schaltfunktion) wird mit F7 geschaltet, 0 bedeutet Z3 inaktiv (gilt bis Version 39)
 CV146 = 2 bedeutet: Z4 (Schaltfunktion) wird mit F8 geschaltet, 0 bedeutet Z4 inaktiv (gilt bis Version 39)
 CV146 = 4 bedeutet: Gerausch3 wird mit F7 geschaltet, 0 bedeutet Gerausch3 inaktiv (gilt bis Version 39)
@@ -3236,13 +3235,13 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
 		<variable label="Sound Slot G5 with function F10" CV="146"  mask="VXXXXXXX" default="0">
 		   <enumVal><enumChoice choice="Off"/><enumChoice choice="Yes"/></enumVal></variable>
 -->
-<!-- SL75 manual implies CV146 is replacement for CV129 from V40 onwards -->
+      <!-- SL75 manual implies CV146 is replacement for CV129 from V40 onwards -->
       <variable label="Strong Time" CV="146" default="4" include="SL75" comment="Position 00-03 in Filelist" tooltip="CV146 Strong reduction of sound after acceleration, Position 00-03 in Filelist">
         <decVal/>
         <label>Strong Time</label>
         <comment>Position 00-03 in Filelist</comment>
       </variable>
-<!-- Special CVs for automatically uncoupling, available from version 33 -->
+      <!-- Special CVs for automatically uncoupling, available from version 33 -->
       <variable label="Speed Step Coupling Release" CV="147" default="20" tooltip="CV147">
         <decVal max="127"/>
         <label>Speed Step Coupling Release</label>
@@ -3271,7 +3270,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         <decVal/>
         <label>Engine BWD, Uncoupling FWD</label>
       </variable>
-<!-- Tran Light Effects  -->
+      <!-- Tran Light Effects  -->
       <variable label="Light Effects FL(f)" CV="154" default="0" tooltip="CV154, Light Effects FL(f), see manual">
         <decVal/>
         <label>Light Effects FL(f)</label>
@@ -3528,7 +3527,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         <decVal max="255"/>
         <label>Diode Sensitivity</label>
       </variable>
-<!--  remainder of Tran Function Mapping -->
+      <!--  remainder of Tran Function Mapping -->
       <variable label="FL(f) controls output Ra" CV="163" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -4585,7 +4584,6 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output Z9</label>
       </variable>
-
       <variable label="F11 controls output G4" CV="175" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -4641,7 +4639,6 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F11 controls output G8</label>
       </variable>
-	  
       <variable label="F12 controls output G4" CV="176" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -4697,14 +4694,12 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F12 controls output G8</label>
       </variable>
-
-	  <variable label="Acceleration Sound Trigger" CV="177" default="00" tooltip="CV177 rate of speed change to trigger accel noise slots 123-125">
+      <variable label="Acceleration Sound Trigger" CV="177" default="00" tooltip="CV177 rate of speed change to trigger accel noise slots 123-125">
         <decVal max="255"/>
         <label>Acceleration Sound Trigger</label>
       </variable>
     </variables>
   </decoder>
-  
   <pane name="Sound Config">
     <column>
       <row>
@@ -4737,7 +4732,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <display item="Steam/Diesel sound types" label="Sound type ">
             <label>Sound type </label>
           </display>
-<!-- new drop-down -->
+          <!-- new drop-down -->
           <label label="  ">
             <label>  </label>
           </label>
@@ -4748,7 +4743,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
             <label>divider for number of chuff pulses per wheel revolution</label>
           </label>
           <display item="Full Speed Exhaust Interval" tooltip="CV132"/>
-<!-- <display item="Full Speed Exhaust Interval" format="hslider" label="" />  -->
+          <!-- <display item="Full Speed Exhaust Interval" format="hslider" label="" />  -->
           <label label="  ">
             <label>  </label>
           </label>
@@ -4759,11 +4754,11 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <display item="Logical Exhaust Interval" tooltip="lowbytes CV133" label="lowbytes of above">
             <label>lowbytes of above</label>
           </display>
-<!-- <display item="Logical Exhaust Interval" tooltip="lowbytes CV133" format="hslider" label="" /> -->
+          <!-- <display item="Logical Exhaust Interval" tooltip="lowbytes CV133" format="hslider" label="" /> -->
           <display item="Time Between Beats" tooltip="highbytes CV134" label="highbytes of above">
             <label>highbytes of above</label>
           </display>
-<!-- <display item="Time Between Beats" tooltip="highbytes CV134" format="hslider" label="" />  -->
+          <!-- <display item="Time Between Beats" tooltip="highbytes CV134" format="hslider" label="" />  -->
           <label label="  ">
             <label>  </label>
           </label>
@@ -4774,10 +4769,10 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
             <label>and decelleration sounds to be heard  </label>
           </label>
           <display item="Strong Time" tooltip="CV53, acceleration noise triggered by this setting"/>
-<!-- <display item="Strong Time" format="hslider" label="" tooltip="CV53, Sets the switch ON dimming of F1" /> -->
-<!-- <label label="  "/>  -->
+          <!-- <display item="Strong Time" format="hslider" label="" tooltip="CV53, Sets the switch ON dimming of F1" /> -->
+          <!-- <label label="  "/>  -->
           <display item="Weak Time" tooltip="CV56, coasting noise triggered by this setting"/>
-<!-- <display item="Weak Time" format="hslider" label="" tooltip="CV56, Sets the symmetry of F1" /> -->
+          <!-- <display item="Weak Time" format="hslider" label="" tooltip="CV56, Sets the symmetry of F1" /> -->
           <label label="  ">
             <label>  </label>
           </label>
@@ -4801,7 +4796,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </label>
         </column>
         <column>
-<!-- 
+          <!-- 
 				<display item="Decoder Properties/Synchropulses" label="Wheel Synch Pulse input" 
 							tooltip="CV 49 Bit 0: pulses OFF/ON, set pulses per rev in CV133"  format="checkbox" />
 				<display item="Diesel and E Locosound" tooltip="CV 49 Bit 1:OFF/ON"  format="checkbox" />
@@ -4863,9 +4858,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
             <label>  </label>
           </label>
           <display item="Main Running Sound Level"/>
-          <label label="Values 0(max) to 3 for older firmware, 0 to 64 for newer firmware  " />
-            <label label="  "/>
-          
+          <label label="Values 0(max) to 3 for older firmware, 0 to 64 for newer firmware  "/>
+          <label label="  "/>
           <label label="Set function keys to turn on/off main sound and sound slots in Function Map">
             <label>Set function keys to turn on/off main sound and sound slots in Function Map</label>
           </label>
@@ -4888,10 +4882,10 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <label label="is made of five components can be made to loop for continuous sounds (see CT manuals)">
             <label>is made of five components can be made to loop for continuous sounds (see CT manuals)</label>
           </label>
-		  <label label="The Alt key (see Function Map) acts as a 'shift'; when the Alt is active, sound slots 9-16">
+          <label label="The Alt key (see Function Map) acts as a 'shift'; when the Alt is active, sound slots 9-16">
             <label>The Alt key (see Function Map) acts as a 'shift'; when the Alt is active, sound slots 9-16</label>
           </label>
-		  <label label="are played in place of slots 1-8, with the same key and repetition options for each bank of slots">
+          <label label="are played in place of slots 1-8, with the same key and repetition options for each bank of slots">
             <label>are played in place of slots 1-8, with the same key and repetition options for each bank of slots</label>
           </label>
           <label label="  ">
@@ -5327,7 +5321,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         <label>CV 114/115 and CV 154-157</label>
       </label>
       <separator/>
-<!--  NC replaces text entry with drop-downs, v1.5
+      <!--  NC replaces text entry with drop-downs, v1.5
 			<display item="Light Effects FL(f)" />
 			<display item="Light Effects FL(r)" />
 			<display item="Light Effects F 1" />
@@ -5391,7 +5385,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         <label>  </label>
       </label>
     </column>
-<!--		<column>			
+    <!--		<column>			
 				<label label="  "/>
 				<display item="PWM Light Effects Outputs"/>
 				<label label="  "/>
@@ -5489,5 +5483,3 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
     <name>Lock and Shortcircuit Threshholds</name>
   </pane>
 </decoder-config>
-
- 	  	 

@@ -1,5 +1,7 @@
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -9,7 +11,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import javax.swing.table.TableColumn;
 import javax.swing.*;
@@ -31,7 +33,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
     public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
-        setToolTipText(ItemPalette.rbp.getString("ToolTipDragSelection"));
+        setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
     }
 
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
@@ -49,43 +51,43 @@ public class MultiSensorItemPanel extends TableItemPanel {
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
         _scrollPane = new JScrollPane(_table);
         topPanel.add(_scrollPane, BorderLayout.CENTER);
-        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
 
         JPanel panel = new JPanel();
-        _addTableButton = new JButton(ItemPalette.rbp.getString("CreateNewItem"));
+        _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
         _addTableButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     makeAddToTableWindow();
                 }
         });
-        _addTableButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddToTable"));
+        _addTableButton.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
         panel.add(_addTableButton);
 
         int size = 6;
         if (_family!=null) {
-            Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+            HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
             size = map.size();
         }
         _selectionModel.setPositionRange(size-3);
-        JButton clearSelectionButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
+        JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                 	clearSelections();
                 }
         });
-        clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
+        clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
-        _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        _table.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        _scrollPane.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         return topPanel;
     }
     public void clearSelections() {
         _selectionModel.clearSelection();
         int size = 6;
 //        if (_family!=null) {
-//            Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+//            HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
 //            size = map.size();
 //        }
         if (_currentIconMap!=null) {
@@ -94,7 +96,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _selectionModel.setPositionRange(size-3);
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "second");
     }
 
@@ -109,7 +111,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _multiSensorPanel.setLayout(new BoxLayout(_multiSensorPanel, BoxLayout.Y_AXIS));
         JPanel panel2 = new JPanel();
         ButtonGroup group2 = new ButtonGroup();
-        JRadioButton button = new JRadioButton(ItemPalette.rbp.getString("LeftRight"));
+        JRadioButton button = new JRadioButton(Bundle.getMessage("LeftRight"));
         button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     _upDown = false;
@@ -118,7 +120,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         group2.add(button);
         panel2.add(button);
         button.setSelected(true);
-        button = new JRadioButton(ItemPalette.rbp.getString("UpDown"));
+        button = new JRadioButton(Bundle.getMessage("UpDown"));
         button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     _upDown = true;
@@ -153,13 +155,13 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     protected void openEditDialog() {
-        IconDialog dialog = new MultiSensorIconDialog(_itemType, _family, this, _currentIconMap);
-        dialog.sizeLocate();
+    	_dialog = new MultiSensorIconDialog(_itemType, _family, this, _currentIconMap);
+    	_dialog.sizeLocate();
     }
 
     protected void createNewFamily(String type) {
-        IconDialog dialog = new MultiSensorIconDialog(_itemType, null, this, null);
-        dialog.sizeLocate();
+    	_newFamilyDialog = new MultiSensorIconDialog(_itemType, null, this, null);
+    	_newFamilyDialog.sizeLocate();
     }
     
     /**
@@ -192,9 +194,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
     	_upDown = upDown;
     }
     
-    public static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
+    static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
                                          "sixth", "seventh", "eighth", "nineth", "tenth" };
 
+    static public String getPositionName(int index) { return POSITION[index]; }
+    
     protected class MultiSensorSelectionModel extends DefaultListSelectionModel {
 
         ArrayList<NamedBean> _selections;
@@ -275,9 +279,8 @@ public class MultiSensorItemPanel extends TableItemPanel {
         public void setSelectionInterval(int row, int index1) {
             if (_nextPosition>=_positions.length) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(
-                            ItemPalette.rbp.getString("NeedIcon"), _selectionModel.getPositions().length), 
-                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("NeedIcon", _selectionModel.getPositions().length), 
+                            Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (log.isDebugEnabled()) log.debug("setSelectionInterval("+row+", "+index1+")");
@@ -285,11 +288,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
             String position = (String)_tableModel.getValueAt(row, PickListModel.POSITION_COL);
             if (position!=null && position.length()>0) {
                 JOptionPane.showMessageDialog(_paletteFrame,
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicatePosition"), 
+                        Bundle.getMessage("DuplicatePosition", 
                             new Object[]{bean.getDisplayName(), position}),
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
-                _tableModel.setValueAt(ItemPalette.rbp.getString(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
+                _tableModel.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
                 _selections.add(_nextPosition, bean);
                 _positions[_nextPosition] = row;
                 _nextPosition++;
@@ -298,15 +301,15 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }
     }
 
-    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        Hashtable <String, NamedIcon> iconMap;
+        HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
+        public IconDragJLabel(DataFlavor flavor, HashMap <String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
         }
@@ -330,9 +333,8 @@ public class MultiSensorItemPanel extends TableItemPanel {
             ArrayList<NamedBean> selections = _selectionModel.getSelections();
             if (selections==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(
-                            ItemPalette.rbp.getString("NeedPosition"), _selectionModel.getPositions().length), 
-                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length), 
+                            Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
             for (int i=0; i<selections.size(); i++) {
@@ -346,5 +348,5 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(MultiSensorItemPanel.class.getName());
 }

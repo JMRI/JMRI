@@ -1,6 +1,8 @@
 // TamsSystemConnectionMemo.java
 
 package jmri.jmrix.tams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
@@ -166,7 +168,7 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsSystemConnectionMemo.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsSystemConnectionMemo.class.getName());
 }
 
 

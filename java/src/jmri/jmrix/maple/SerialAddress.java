@@ -2,6 +2,9 @@
 
 package jmri.jmrix.maple;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Utility Class supporting parsing and testing of addresses
  * <P>
@@ -283,7 +286,7 @@ public class SerialAddress {
 		return ("");
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAddress.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
 
 /* @(#)SerialAddress.java */

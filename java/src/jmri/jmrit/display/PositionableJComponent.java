@@ -4,9 +4,9 @@ package jmri.jmrit.display;
 
 //import java.awt.event.MouseListener;
 //import java.awt.event.MouseMotionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.MouseEvent;
-
-import java.util.ResourceBundle;
 
 import javax.swing.*;
 
@@ -17,8 +17,6 @@ import javax.swing.*;
  * @version $Revision$
  */
 public class PositionableJComponent extends JComponent implements Positionable {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
    	protected Editor _editor = null;
     protected boolean debug = false;
@@ -67,11 +65,13 @@ public class PositionableJComponent extends JComponent implements Positionable {
 
     public void setPositionable(boolean enabled) {
         _positionable = enabled;
-        showHidden();
     }
     public boolean isPositionable() { return _positionable; }
 
-    public void setEditable(boolean enabled) {_editable = enabled;}
+    public void setEditable(boolean enabled) {
+    	_editable = enabled;
+        showHidden();
+    }
     public boolean isEditable() { return _editable; }
      
     public void setViewCoordinates(boolean enabled) { _viewCoordinates = enabled; }
@@ -229,5 +229,5 @@ public class PositionableJComponent extends JComponent implements Positionable {
     
     public jmri.NamedBean getNamedBean() { return null; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJComponent.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableJComponent.class.getName());
 }

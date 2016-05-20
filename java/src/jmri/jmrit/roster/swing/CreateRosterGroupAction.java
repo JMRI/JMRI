@@ -2,12 +2,15 @@
 
 package jmri.jmrit.roster.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
+import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
@@ -59,8 +62,8 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent event) {
 
         String entry = (String)JOptionPane.showInputDialog(_who,
-                                     "<html><b>Create new roster group</b></html>",
-                                     "New Roster Group",
+                                     "<html><b>"+ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate")+"</b></html>",
+                                     ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate"),
                                      JOptionPane.INFORMATION_MESSAGE,
                                      null, // icon
                                      null, // initial values
@@ -104,5 +107,5 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CreateRosterGroupAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class.getName());
 }

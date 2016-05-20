@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,453 +11,445 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file includes for LNCP files -->
-
 <!-- Panes to show Masts -->
-
-  <pane name="Detectors">
-    <column>
-      <row>
-        <column>
-          <label label="Control Point Block Occupancy Detector Configuration settings. All numbers are entered as">
+<pane name="Detectors">
+  <column>
+    <row>
+      <column>
+        <label label="Control Point Block Occupancy Detector Configuration settings. All numbers are entered as">
           </label>
-          <label label="their actual event numbers. For example LS9 is entered as event number 9.">
+        <label label="their actual event numbers. For example LS9 is entered as event number 9.">
           </label>
-        </column>
-      </row>
-      <separator/>
-      <separator/>
-      <row>
-        <column>
-          <display item="BOD1 Paired" label="BOD #1                           Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Effect" label="      Effect">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD1 Base Address" label="Primary event #" tooltip="CV193-4">
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD1 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD1 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD1 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="BOD2 Paired" label="BOD #2                           Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Effect" label="      Effect">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD2 Base Address" label="Primary event #" tooltip="CV201-2">
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD2 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD2 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD2 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="BOD3 Paired" label="BOD #3                           Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Effect" label="      Effect">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD3 Base Address" label="Primary event #" tooltip="CV209-10">
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD3 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD3 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD3 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="BOD4 Paired" label="BOD #4                           Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Effect" label="      Effect">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD4 Base Address" label="Primary event #" tooltip="CV217-8">
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD4 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD4 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD4 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="BOD5 Paired" label="BOD #5                           Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Effect" label="      Effect">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD5 Base Address" label="Primary event #" tooltip="CV225-6">
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD5 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD5 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD5 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="BOD6 Paired" label="BOD #6                           Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Effect" label="      Effect">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD6 Base Address" label="Primary event #" tooltip="CV233-4">
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD6 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="BOD6 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="BOD6 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-    </column>
-  </pane>
-
-
-      
- 	  	 
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="BOD1 Paired" label="BOD #1                           Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="BOD1 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="BOD1 Effect" label="      Effect">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD1 Base Address" label="Primary event #" tooltip="CV193-4">
+          </display>
+      </column>
+      <column>
+        <display item="BOD1 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="BOD1 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="BOD1 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD1 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD1 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD1 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD1 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD1 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD1 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD1 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD1 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="BOD2 Paired" label="BOD #2                           Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="BOD2 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="BOD2 Effect" label="      Effect">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD2 Base Address" label="Primary event #" tooltip="CV201-2">
+          </display>
+      </column>
+      <column>
+        <display item="BOD2 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="BOD2 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="BOD2 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD2 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD2 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD2 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD2 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD2 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD2 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD2 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD2 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="BOD3 Paired" label="BOD #3                           Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="BOD3 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="BOD3 Effect" label="      Effect">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD3 Base Address" label="Primary event #" tooltip="CV209-10">
+          </display>
+      </column>
+      <column>
+        <display item="BOD3 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="BOD3 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="BOD3 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD3 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD3 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD3 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD3 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD3 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD3 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD3 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD3 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="BOD4 Paired" label="BOD #4                           Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="BOD4 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="BOD4 Effect" label="      Effect">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD4 Base Address" label="Primary event #" tooltip="CV217-8">
+          </display>
+      </column>
+      <column>
+        <display item="BOD4 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="BOD4 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="BOD4 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD4 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD4 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD4 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD4 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD4 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD4 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD4 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD4 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="BOD5 Paired" label="BOD #5                           Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="BOD5 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="BOD5 Effect" label="      Effect">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD5 Base Address" label="Primary event #" tooltip="CV225-6">
+          </display>
+      </column>
+      <column>
+        <display item="BOD5 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="BOD5 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="BOD5 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD5 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD5 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD5 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD5 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD5 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD5 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD5 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD5 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="BOD6 Paired" label="BOD #6                           Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="BOD6 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="BOD6 Effect" label="      Effect">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD6 Base Address" label="Primary event #" tooltip="CV233-4">
+          </display>
+      </column>
+      <column>
+        <display item="BOD6 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="BOD6 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="BOD6 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD6 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD6 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD6 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD6 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="BOD6 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="BOD6 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="BOD6 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="BOD6 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+  </column>
+</pane>

@@ -48,7 +48,7 @@
   <li>Select "TMCC (Lionel)" from the top selection box.</li>
   <li>In the second selection box, pick the name of the serial port that you have connected to the TMCC system.</li>
   <li>If the baud rate doesn't show a fixed value, set it to 9600 baud.</li>
-  <li>The series of radio buttons labelled "GUI style" allows you to select how the program will look. "Metal" is the native Java look available on all types. Other choices will vary with your computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native on Linux, Windows, MacOS "Classic" and MacOS X respectively.</li>
+  <li>The series of radio buttons labelled "GUI style" allows you to select how the program will look. "Metal" is the native Java look available on all types. Other choices will vary with your computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native on Linux, Windows, MacOS "Classic" and Mac OS X respectively.</li>
   <li>In the bottom selection box, you can pick the default programmer format. You can override this each time you open the programmer, so this is here just for convenience.</li>
   <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
   <li>Restart the program. You should be up and running.</li>

@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<pane name="Advanced">
+<pane name="Advanced" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name xml:lang="ca">Avançat</name>
     <column>
         <display item="Advanced Ack" tooltip="Enable advanced acknowledgment"/>
         <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it"/>
     </column>
     <column>
-    <label label="      "/>
-</column>
+        <label label="      "/>
+    </column>
     <column>
         <display item="Advanced Group 1 Option 1"/>
         <display item="Advanced Group 1 Option 2"/>
@@ -23,8 +23,8 @@
         <display item="Advanced Group 1 Option 12"/>
     </column>
     <column>
-    <label label="      "/>
-</column>
+        <label label="      "/>
+    </column>
     <column>
         <display item="Advanced Group 2 Option 1" format="checkbox"/>
         <display item="Advanced Group 2 Option 2" format="checkbox"/>
@@ -36,7 +36,7 @@
         <display item="Advanced Group 2 Option 8" format="checkbox"/>
         <display item="Advanced Group 2 Option 9" format="checkbox"/>
         <display item="Advanced Group 2 Option 10" format="checkbox"/>
-    <label label="      "/>
+        <label label="      "/>
         <display item="Advanced Group 2 Option 11" format="checkbox"/>
         <display item="Advanced Group 2 Option 12" format="checkbox"/>
         <display item="Advanced Group 2 Option 13" format="checkbox"/>

@@ -2,6 +2,8 @@
 
 package jmri.managers.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Audio;
 import jmri.AudioException;
@@ -58,6 +60,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      * @param o Object to store, of type AudioManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element audio = new Element("audio");
         setStoreElementClass(audio);
@@ -271,6 +274,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      */
     abstract public void setStoreElementClass(Element audio);
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -281,6 +285,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      * @param audio Top level Element to unpack.
      * @return true if successful
      */
+    @Override
     abstract public boolean load(Element audio);
 
     /**
@@ -522,7 +527,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         return InstanceManager.audioManagerInstance().getXMLOrder();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioManagerConfigXML.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioManagerConfigXML.class.getName());
 }
 
 /* $(#)AbstractAudioManagerConfigXML.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import jmri.progdebugger.*;
@@ -258,7 +259,7 @@ public class VariableTableModelTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VariableTableModelTest.class.getName());
+    static Logger log = Logger.getLogger(VariableTableModelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

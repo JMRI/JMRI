@@ -4,6 +4,8 @@
 
 package jmri.jmris.srcp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.util.*;
 
@@ -31,7 +33,7 @@ public class JmriSRCPServerMenu extends JMenu {
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSRCPServerMenu.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriSRCPServerMenu.class.getName());
 }
 
 

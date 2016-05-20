@@ -2,6 +2,8 @@
 
 package jmri.jmrit.ussctc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -112,6 +114,6 @@ public class FollowerPanel extends BasePanel {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FollowerPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(FollowerPanel.class.getName());
 
 }

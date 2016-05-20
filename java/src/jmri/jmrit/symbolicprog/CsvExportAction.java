@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import java.io.*;
 
@@ -65,5 +67,5 @@ public class CsvExportAction  extends AbstractAction {
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CsvExportAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(CsvExportAction.class.getName());
 }

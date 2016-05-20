@@ -2,10 +2,13 @@
 
 package jmri.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import jmri.util.FileUtil;
 
 /**
  * Base implementation for the load and store actions.
@@ -31,9 +34,9 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
             InstanceManager.setConfigureManager(new ConfigXmlManager());
     }
 
-    static JFileChooser allFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
-    static JFileChooser configFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
-    static JFileChooser userFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    static JFileChooser allFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    static JFileChooser configFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    static JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
     static {  // static class initialization
         jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("XML files");
@@ -44,6 +47,6 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadStoreBaseAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(LoadStoreBaseAction.class.getName());
 
 }

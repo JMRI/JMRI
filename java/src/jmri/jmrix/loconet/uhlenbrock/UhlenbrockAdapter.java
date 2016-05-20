@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.uhlenbrock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import jmri.jmrix.loconet.*;
 import gnu.io.SerialPort;
@@ -93,6 +95,6 @@ public void configure() {
                   +" RTSCTS_IN= "+SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UhlenbrockAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(UhlenbrockAdapter.class.getName());
 
 }

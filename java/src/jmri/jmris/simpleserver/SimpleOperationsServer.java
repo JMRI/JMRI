@@ -11,7 +11,8 @@ import javax.management.Attribute;
 import jmri.JmriException;
 import jmri.jmris.AbstractOperationsServer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jetty.websocket.WebSocket.Connection;
 
 /**
@@ -318,6 +319,6 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
 		}
 	}
 
-	static Logger log = Logger.getLogger(SimpleOperationsServer.class.getName());
+	static Logger log = LoggerFactory.getLogger(SimpleOperationsServer.class.getName());
 
 }

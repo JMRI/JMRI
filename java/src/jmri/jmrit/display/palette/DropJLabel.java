@@ -1,5 +1,7 @@
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -11,7 +13,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -27,7 +29,7 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class DropJLabel extends JLabel implements DropTargetListener {
 	private DataFlavor 				_dataFlavor;
-    private Hashtable <String, NamedIcon>   _iconMap;
+    private HashMap <String, NamedIcon>   _iconMap;
     private boolean 				_update;
     
     
@@ -41,7 +43,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
         //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
     }
-    DropJLabel (Icon icon,  Hashtable <String, NamedIcon> iconMap, boolean update) {
+    DropJLabel (Icon icon,  HashMap <String, NamedIcon> iconMap, boolean update) {
     	this(icon);
     	_iconMap = iconMap;
     	_update = update;
@@ -89,7 +91,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         if (log.isDebugEnabled()) log.debug("accept drop for "+label.getName()+
                                              ", "+newIcon.getURL());
         if (newIcon==null || newIcon.getIconWidth()<1 || newIcon.getIconHeight()<1) {
-            label.setText(ItemPalette.rbp.getString("invisibleIcon"));
+            label.setText(Bundle.getMessage("invisibleIcon"));
             label.setForeground(Color.lightGray);
         } else {
             newIcon.reduceTo(100, 100, 0.2);
@@ -106,5 +108,5 @@ public class DropJLabel extends JLabel implements DropTargetListener {
                                              ", "+(newIcon!=null ? newIcon.getURL().toString():" newIcon==null "));
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DropJLabel.class.getName());
+    static Logger log = LoggerFactory.getLogger(DropJLabel.class.getName());
 }

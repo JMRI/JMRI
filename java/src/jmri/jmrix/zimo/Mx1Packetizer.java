@@ -4,6 +4,8 @@
 
 package jmri.jmrix.zimo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.LinkedList;
@@ -270,7 +272,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
 
 	}
 
-      	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1Packetizer.class.getName());
+      	static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class.getName());
 }
 
 

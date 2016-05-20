@@ -2,13 +2,13 @@
 
 package apps.cornwall;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.Apps;
 
 import java.text.MessageFormat;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import jmri.util.swing.WindowInterface;
 
 /**
  * Nick Kulp's Cornwall Railroad.
@@ -80,7 +80,7 @@ public class CornwallRR extends Apps {
         loadFile("CornwallMain.xml");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CornwallRR.class.getName());
+    static Logger log = LoggerFactory.getLogger(CornwallRR.class.getName());
 }
 
 

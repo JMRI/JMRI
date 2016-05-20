@@ -2,6 +2,7 @@
 
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.XmlFile;
 import java.io.*;
 
@@ -53,6 +54,15 @@ public class SchemaTest extends LoadFileTestBase {
         }
     }
 
+    public void testSampleDisplayFiles() {
+        java.io.File dir = new java.io.File("java/test/jmri/jmrit/display/configurexml/");
+        java.io.File[] files = dir.listFiles();
+        for (int i=0; i<files.length; i++) {
+            if (files[i].getName().endsWith("xml")) {
+                validate(files[i]);
+            }
+        }
+    }
 
     void validateFail(File file) {
         boolean original = XmlFile.getVerify();
@@ -89,5 +99,5 @@ public class SchemaTest extends LoadFileTestBase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SchemaTest.class.getName());
+    static Logger log = Logger.getLogger(SchemaTest.class.getName());
 }

@@ -26,5 +26,5 @@ public class WiThrottlePrefsFrame extends JmriJFrame{
         this.setVisible(true);
     }
 
-    //private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiThrottlePrefsFrame.class.getName());
+    //private static Logger log = LoggerFactory.getLogger(WiThrottlePrefsFrame.class.getName());
 }

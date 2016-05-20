@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -52,5 +53,5 @@ public class SRCPCommandStationTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPCommandStationTest.class.getName());
+    static Logger log = Logger.getLogger(SRCPCommandStationTest.class.getName());
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.tmcc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -236,7 +238,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
 }
 
 /* @(#)SerialTrafficController.java */

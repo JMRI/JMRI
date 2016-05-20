@@ -19,7 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import java.awt.BorderLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -35,7 +36,6 @@ import jmri.util.swing.JmriPanel;
 import javax.swing.SwingWorker;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
-import jmri.LocoAddress;
 import java.text.MessageFormat;
 import javax.swing.JOptionPane;
 
@@ -45,7 +45,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.XmlFile;
 
 
 @SuppressWarnings("serial")
@@ -450,7 +449,6 @@ public class VSDConfigPanel extends JmriPanel {
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         Roster.writeRosterFile();
 
         return true;
@@ -541,6 +539,6 @@ public class VSDConfigPanel extends JmriPanel {
 	updateAddress();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDConfigPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDConfigPanel.class.getName());
     
 }

@@ -2,6 +2,8 @@
 
 package apps.cornwall;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -258,7 +260,7 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static Turnout[] si = null;
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CrrSection.class.getName());
+    static Logger log = LoggerFactory.getLogger(CrrSection.class.getName());
 
 }
 

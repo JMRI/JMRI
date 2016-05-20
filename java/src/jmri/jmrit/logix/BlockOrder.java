@@ -1,6 +1,9 @@
 
 package jmri.jmrit.logix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 //import jmri.Path;
 //import jmri.SignalHead;
 
@@ -151,5 +154,5 @@ public class BlockOrder  {
                 "\" with Portals \""+_entryName+"\" and \""+_exitName+"\"");
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockOrder.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockOrder.class.getName());
 }

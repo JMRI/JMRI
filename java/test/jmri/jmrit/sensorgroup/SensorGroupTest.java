@@ -2,6 +2,7 @@
 
 package jmri.jmrit.sensorgroup;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 /**
@@ -52,6 +53,6 @@ public class SensorGroupTest extends TestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorGroupTest.class.getName());
+    static Logger log = Logger.getLogger(SensorGroupTest.class.getName());
 
 }

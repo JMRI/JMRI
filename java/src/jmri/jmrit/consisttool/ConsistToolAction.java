@@ -2,6 +2,8 @@
 
 package jmri.jmrit.consisttool;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
@@ -57,7 +59,7 @@ import java.awt.event.ActionEvent;
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistToolAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(ConsistToolAction.class.getName());
 }
 
 

@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
@@ -38,6 +40,6 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
      }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(EliteXNetThrottleManager.class.getName());
 }
 

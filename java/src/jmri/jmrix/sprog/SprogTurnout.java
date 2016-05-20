@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractTurnout;
 import jmri.NmraPacket;
 import jmri.Turnout;
@@ -105,7 +107,7 @@ public class SprogTurnout extends AbstractTurnout {
 		return true;
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogTurnout.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogTurnout.class.getName());
 
 }
 

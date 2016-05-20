@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.slotmon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.loconet.LnConstants;
@@ -13,13 +15,12 @@ import jmri.util.StringUtil;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import javax.swing.JOptionPane;
+import jmri.Throttle;
 
 /**
  * Table data model for display of slot manager contents
@@ -108,15 +109,15 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case CONSCOLUMN: return "Consisted";
         case DIRCOLUMN: return "Dir";
         case DISPCOLUMN: return "";     // no heading, as button is clear
-        case F0COLUMN: return "F0";
-        case F1COLUMN: return "F1";
-        case F2COLUMN: return "F2";
-        case F3COLUMN: return "F3";
-        case F4COLUMN: return "F4";
-        case F5COLUMN: return "F5";
-        case F6COLUMN: return "F6";
-        case F7COLUMN: return "F7";
-        case F8COLUMN: return "F8";
+        case F0COLUMN: return Throttle.F0;
+        case F1COLUMN: return Throttle.F1;
+        case F2COLUMN: return Throttle.F2;
+        case F3COLUMN: return Throttle.F3;
+        case F4COLUMN: return Throttle.F4;
+        case F5COLUMN: return Throttle.F5;
+        case F6COLUMN: return Throttle.F6;
+        case F7COLUMN: return Throttle.F7;
+        case F8COLUMN: return Throttle.F8;
         case THROTCOLUMN: return "Throttle ID";
         default: return "unknown";
         }
@@ -372,7 +373,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 Thread.sleep(100);
             } 
             catch (InterruptedException ex) {
-                Logger.getLogger(SlotMonDataModel.class.getName()).log(Level.SEVERE, null, ex);
+                log.error(null, ex);
             }
             // reset status to original value if not previously 'in use'
             if(status != LnConstants.LOCO_IN_USE)
@@ -421,7 +422,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 Thread.sleep(100);
             } 
             catch (InterruptedException ex) {
-                Logger.getLogger(SlotMonDataModel.class.getName()).log(Level.SEVERE, null, ex);
+                log.error(null, ex);
             }
             
             // reset status to original value if not previously 'in use'
@@ -630,6 +631,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // table = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SlotMonDataModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class.getName());
 
 }

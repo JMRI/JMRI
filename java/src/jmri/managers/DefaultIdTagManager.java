@@ -2,6 +2,8 @@
 
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
@@ -38,14 +41,17 @@ public class DefaultIdTagManager extends AbstractManager
         super();
     }
     
+    @Override
     public int getXMLOrder(){
         return jmri.Manager.IDTAGS;
     }
 
+    @Override
     public boolean isInitialised() {
         return _initialised;
     }
 
+    @Override
     public void init() {
         log.debug("init called");
         if (!_initialised && !_loading ) {
@@ -58,7 +64,8 @@ public class DefaultIdTagManager extends AbstractManager
             // Create shutdown task to save
             log.debug("Register ShutDown task");
             InstanceManager.shutDownManagerInstance().
-                register(new jmri.implementation.AbstractShutDownTask("Writing IdTags"){
+                register(new jmri.implementation.AbstractShutDownTask("Writing IdTags"){ // NOI18N
+                    @Override
                     public boolean execute() {
                         // Save IdTag details prior to exit, if necessary
                         log.debug("Start writing IdTag details...");
@@ -82,10 +89,13 @@ public class DefaultIdTagManager extends AbstractManager
     @Override
     protected void registerSelf() {}
 
+    @Override
     public char typeLetter() { return 'D'; }
 
+    @Override
     public String getSystemPrefix() { return "I"; }
 
+    @Override
     public IdTag provideIdTag(String name) {
         if (!_initialised && !_loading) init();
         IdTag t = getIdTag(name);
@@ -96,6 +106,7 @@ public class DefaultIdTagManager extends AbstractManager
             return newIdTag(makeSystemName(name), null);
     }
 
+    @Override
     public IdTag getIdTag(String name) {
         if (!_initialised && !_loading) init();
 
@@ -108,16 +119,19 @@ public class DefaultIdTagManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public IdTag getBySystemName(String name) {
         if (!_initialised && !_loading) init();
         return (IdTag)_tsys.get(name);
     }
 
+    @Override
     public IdTag getByUserName(String key) {
         if (!_initialised && !_loading) init();
         return (IdTag)_tuser.get(key);
     }
 
+    @Override
     public IdTag getByTagID(String tagID) {
         if (!_initialised && !_loading) init();
         return getBySystemName(makeSystemName(tagID));
@@ -126,19 +140,20 @@ public class DefaultIdTagManager extends AbstractManager
     protected IdTag createNewIdTag(String systemName, String userName) {
         // we've decided to enforce that IdTag system
         // names start with ID by prepending if not present
-        if (!systemName.startsWith("ID"))
-            systemName = "ID"+systemName;
+        if (!systemName.startsWith("ID")) // NOI18N
+            systemName = "ID"+systemName; // NOI18N
         return new DefaultIdTag(systemName, userName);
     }
 
+    @Override
     public IdTag newIdTag(String systemName, String userName) {
         if (!_initialised && !_loading) init();
         if (log.isDebugEnabled()) log.debug("new IdTag:"
-                                            +( (systemName==null) ? "null" : systemName)
-                                            +";"+( (userName==null) ? "null" : userName));
+                                            +( (systemName==null) ? "null" : systemName)   // NOI18N
+                                            +";"+( (userName==null) ? "null" : userName)); // NOI18N
         if (systemName == null){
             log.error("SystemName cannot be null. UserName was "
-                     +( (userName==null) ? "null" : userName));
+                     +( (userName==null) ? "null" : userName)); // NOI18N
             throw new IllegalArgumentException("SystemName cannot be null. UserName was "
                     +( (userName==null) ? "null" : userName));
         }
@@ -153,7 +168,7 @@ public class DefaultIdTagManager extends AbstractManager
             if ((s.getUserName() == null) && (userName != null))
                 s.setUserName(userName);
             else if (userName != null) log.warn("Found IdTag via system name ("+systemName
-                                    +") with non-null user name ("+userName+")");
+                                    +") with non-null user name ("+userName+")"); // NOI18N
             return s;
         }
 
@@ -192,6 +207,7 @@ public class DefaultIdTagManager extends AbstractManager
         log.debug("...done writing IdTag details");
     }
 
+    @Override
     public void setStateStored(boolean state) {
         if (state!=_storeState) {
             IdTagManagerXml.instance().setDirty(true);
@@ -199,10 +215,12 @@ public class DefaultIdTagManager extends AbstractManager
         _storeState = state;
     }
 
+    @Override
     public boolean isStateStored() {
         return _storeState;
     }
 
+    @Override
     public void setFastClockUsed(boolean fastClock) {
         if (fastClock != _useFastClock) {
             IdTagManagerXml.instance().setDirty(true);
@@ -210,10 +228,12 @@ public class DefaultIdTagManager extends AbstractManager
         _useFastClock = fastClock;
     }
 
+    @Override
     public boolean isFastClockUsed() {
         return _useFastClock;
     }
 
+    @Override
     public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
         List<IdTag> out = new ArrayList<IdTag>();
         Date lastWhenLastSeen = new Date(0);
@@ -335,18 +355,18 @@ public class DefaultIdTagManager extends AbstractManager
                 file = new File(fileName);
             }
             // Create root element
-            Element root = new Element("idtagtable");
-            root.setAttribute("noNamespaceSchemaLocation",
-                    "http://jmri.org/xml/schema/idtags.xsd",
-                    org.jdom.Namespace.getNamespace("xsi",
-                    "http://www.w3.org/2001/XMLSchema-instance"));
+            Element root = new Element("idtagtable");              // NOI18N
+            root.setAttribute("noNamespaceSchemaLocation",         // NOI18N
+                    "http://jmri.org/xml/schema/idtags.xsd",       // NOI18N
+                    org.jdom.Namespace.getNamespace("xsi",         // NOI18N
+                    "http://www.w3.org/2001/XMLSchema-instance")); // NOI18N
             Document doc = newDocument(root);
 
-	    // add XSLT processing instruction
+            // add XSLT processing instruction
             java.util.Map<String, String> m = new java.util.HashMap<String, String>();
-            m.put("type", "text/xsl");
-            m.put("href", xsltLocation+"idtags.xsl");
-            ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+            m.put("type", "text/xsl");                                                // NOI18N
+            m.put("href", xsltLocation+"idtags.xsl");                                 // NOI18N
+            ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
             doc.addContent(0,p);
             
             IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
@@ -354,12 +374,12 @@ public class DefaultIdTagManager extends AbstractManager
             Element values;
 
             // Store configuration
-            root.addContent(values = new Element("configuration"));
-            values.addContent(new Element("storeState").addContent(manager.isStateStored()?"yes":"no"));
-            values.addContent(new Element("useFastClock").addContent(manager.isFastClockUsed()?"yes":"no"));
+            root.addContent(values = new Element("configuration"));                                          // NOI18N
+            values.addContent(new Element("storeState").addContent(manager.isStateStored()?"yes":"no"));     // NOI18N
+            values.addContent(new Element("useFastClock").addContent(manager.isFastClockUsed()?"yes":"no")); // NOI18N
 
             // Loop through RfidTags
-            root.addContent(values = new Element("idtags"));
+            root.addContent(values = new Element("idtags")); // NOI18N
             List<String> idTagList = manager.getSystemNameList();
             for (int i=0; i<idTagList.size(); i++) {
                 IdTag t = manager.getBySystemName(idTagList.get(i));
@@ -386,30 +406,30 @@ public class DefaultIdTagManager extends AbstractManager
             IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
 
             // First read configuration
-            if (root.getChild("configuration") != null) {
+            if (root.getChild("configuration") != null) { // NOI18N
                 @SuppressWarnings("unchecked")
-                List<Element> l = root.getChild("configuration").getChildren();
+                List<Element> l = root.getChild("configuration").getChildren(); // NOI18N
                 if (log.isDebugEnabled()) log.debug("readFile sees " + l.size() + " configurations");
                 for (int i=0; i<l.size(); i++) {
                     Element e = l.get(i);
                     if (log.isDebugEnabled()) log.debug("Configuration " + e.getName() + " value " + e.getValue());
-                    if (e.getName().equals("storeState")) {
-                        manager.setStateStored(e.getValue().equals("yes")?true:false);
+                    if (e.getName().equals("storeState")) { // NOI18N
+                        manager.setStateStored(e.getValue().equals("yes")?true:false); // NOI18N
                     }
-                    if (e.getName().equals("useFastClock")) {
-                        manager.setFastClockUsed(e.getValue().equals("yes")?true:false);
+                    if (e.getName().equals("useFastClock")) { // NOI18N
+                        manager.setFastClockUsed(e.getValue().equals("yes")?true:false); // NOI18N
                     }
                 }
             }
 
             // Now read tag information
-            if (root.getChild("idtags") != null) {
+            if (root.getChild("idtags") != null) { // NOI18N
                 @SuppressWarnings("unchecked")
-                List<Element> l = root.getChild("idtags").getChildren("idtag");
+                List<Element> l = root.getChild("idtags").getChildren("idtag"); // NOI18N
                 if (log.isDebugEnabled()) log.debug("readFile sees " + l.size() + " idtags");
                 for (int i=0; i<l.size(); i++) {
                     Element e = l.get(i);
-                    String systemName = e.getChild("systemName").getText();
+                    String systemName = e.getChild("systemName").getText(); // NOI18N
                     IdTag t = manager.provideIdTag(systemName);
                     t.load(e);
                 }
@@ -420,13 +440,13 @@ public class DefaultIdTagManager extends AbstractManager
             return getFileLocation()+getIdTagDirectoryName()+File.separator+getIdTagFileName();
         }
 
-        private static String idTagDirectoryName = "idtags";
+        private static String idTagDirectoryName = "idtags"; // NOI18N
 
         public String getIdTagDirectoryName() {
             return idTagDirectoryName;
         }
 
-        private String idTagBaseFileName = "IdTags.xml";
+        private String idTagBaseFileName = "IdTags.xml"; // NOI18N
 
         public String getIdTagFileName() {
             return Application.getApplicationName()+idTagBaseFileName;
@@ -440,13 +460,13 @@ public class DefaultIdTagManager extends AbstractManager
             return fileLocation;
         }
 
-        private static String fileLocation = XmlFile.prefsDir();
+        private static String fileLocation = FileUtil.getUserFilesPath();
 
-        private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultIdTagManager.IdTagManagerXml.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.IdTagManagerXml.class.getName());
 
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultIdTagManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class.getName());
 
 }
 

@@ -43,11 +43,11 @@
         <column>
           <label label="check box in the last Conditional of each block. For each Variable and Action">
           </label>
-          <label label="entry you may select either a 'LN' (LocoNet - Closed/Thrown) OR a 'DCC' (A mast">
+          <label label="entry you may select either a 'LN' (Serial - Closed/Thrown) OR a 'DCC' (A mast">
           </label>
           <label label="Address plus its Aspect) command. Any Variable with 'True' selected always">
           </label>
-          <label label="evaluates as 'True'. All commands are entered as their actual LocoNet or DCC ">
+          <label label="evaluates as 'True'. All commands are entered as their actual Serial or DCC ">
           </label>
           <label label="address numbers. Eg. to send LT9 Closed enter 'Switch Request' '9' 'C'.">
           </label>
@@ -77,7 +77,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT1 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT1 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT1 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -86,7 +86,7 @@
           <display item="LT1 Var1 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT1 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT1 Var1 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT1 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -120,7 +120,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT1 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT1 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT1 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -129,7 +129,7 @@
           <display item="LT1 Var2 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT1 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT1 Var2 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT1 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -167,16 +167,16 @@
         <separator/>
         <separator/>
         <column>
-          <display item="LT1 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+          <display item="LT1 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
         </column>
         <column>
           <display item="LT1 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
         </column>
         <column>
-          <display item="LT1 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+          <display item="LT1 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
         </column>
         <column>
-          <display item="LT1 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+          <display item="LT1 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT1 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -214,7 +214,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT2 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT2 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT2 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -223,7 +223,7 @@
           <display item="LT2 Var1 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT2 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT2 Var1 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT2 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -257,7 +257,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT2 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT2 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT2 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -266,7 +266,7 @@
           <display item="LT2 Var2 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT2 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT2 Var2 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT2 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -304,16 +304,16 @@
         <separator/>
         <separator/>
         <column>
-          <display item="LT2 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+          <display item="LT2 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
         </column>
         <column>
           <display item="LT2 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
         </column>
         <column>
-          <display item="LT2 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+          <display item="LT2 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
         </column>
         <column>
-          <display item="LT2 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+          <display item="LT2 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT2 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -352,7 +352,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT3 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT3 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT3 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -361,7 +361,7 @@
           <display item="LT3 Var1 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT3 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT3 Var1 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT3 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -395,7 +395,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT3 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT3 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT3 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -404,7 +404,7 @@
           <display item="LT3 Var2 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT3 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT3 Var2 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT3 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -442,16 +442,16 @@
         <separator/>
         <separator/>
         <column>
-          <display item="LT3 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+          <display item="LT3 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
         </column>
         <column>
           <display item="LT3 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
         </column>
         <column>
-          <display item="LT3 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+          <display item="LT3 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
         </column>
         <column>
-          <display item="LT3 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+          <display item="LT3 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT3 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -489,7 +489,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT4 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT4 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT4 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -498,7 +498,7 @@
           <display item="LT4 Var1 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT4 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT4 Var1 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT4 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -532,7 +532,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT4 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT4 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT4 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -541,7 +541,7 @@
           <display item="LT4 Var2 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT4 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT4 Var2 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT4 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -579,16 +579,16 @@
         <separator/>
         <separator/>
         <column>
-          <display item="LT4 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+          <display item="LT4 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
         </column>
         <column>
           <display item="LT4 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
         </column>
         <column>
-          <display item="LT4 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+          <display item="LT4 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
         </column>
         <column>
-          <display item="LT4 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+          <display item="LT4 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT4 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -626,7 +626,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT5 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT5 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT5 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -635,7 +635,7 @@
           <display item="LT5 Var1 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT5 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT5 Var1 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT5 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -669,7 +669,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT5 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT5 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT5 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -678,7 +678,7 @@
           <display item="LT5 Var2 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT5 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT5 Var2 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT5 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -716,16 +716,16 @@
         <separator/>
         <separator/>
         <column>
-          <display item="LT5 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+          <display item="LT5 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
         </column>
         <column>
           <display item="LT5 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
         </column>
         <column>
-          <display item="LT5 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+          <display item="LT5 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
         </column>
         <column>
-          <display item="LT5 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+          <display item="LT5 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT5 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -763,7 +763,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT6 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT6 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT6 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -772,7 +772,7 @@
           <display item="LT6 Var1 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT6 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT6 Var1 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT6 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -806,7 +806,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT6 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT6 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT6 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -815,7 +815,7 @@
           <display item="LT6 Var2 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT6 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT6 Var2 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT6 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -853,16 +853,16 @@
         <separator/>
         <separator/>
         <column>
-          <display item="LT6 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+          <display item="LT6 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
         </column>
         <column>
           <display item="LT6 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
         </column>
         <column>
-          <display item="LT6 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+          <display item="LT6 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
         </column>
         <column>
-          <display item="LT6 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+          <display item="LT6 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT6 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -901,7 +901,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT7 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT7 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT7 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -910,7 +910,7 @@
           <display item="LT7 Var1 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT7 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT7 Var1 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT7 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -944,7 +944,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT7 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT7 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT7 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -953,7 +953,7 @@
           <display item="LT7 Var2 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT7 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT7 Var2 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT7 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -991,16 +991,16 @@
         <separator/>
         <separator/>
         <column>
-          <display item="LT7 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+          <display item="LT7 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
         </column>
         <column>
           <display item="LT7 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
         </column>
         <column>
-          <display item="LT7 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+          <display item="LT7 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
         </column>
         <column>
-          <display item="LT7 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+          <display item="LT7 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT7 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -1038,7 +1038,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT8 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT8 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT8 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -1047,7 +1047,7 @@
           <display item="LT8 Var1 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT8 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT8 Var1 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT8 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -1081,7 +1081,7 @@
           <label label=""/>
         </column>
         <column>
-          <display item="LT8 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+          <display item="LT8 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
         </column>
         <column>
           <display item="LT8 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
@@ -1090,7 +1090,7 @@
           <display item="LT8 Var2 Type" tooltip="Select Message Type" label=" Type"/>
         </column>
         <column>
-          <display item="LT8 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+          <display item="LT8 Var2 Address" tooltip="Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT8 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
@@ -1128,16 +1128,16 @@
         <separator/>
         <separator/>
         <column>
-          <display item="LT8 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+          <display item="LT8 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
         </column>
         <column>
           <display item="LT8 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
         </column>
         <column>
-          <display item="LT8 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+          <display item="LT8 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
         </column>
         <column>
-          <display item="LT8 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+          <display item="LT8 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
         </column>
         <column>
           <display item="LT8 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: TCS_Tx_v28.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,13 +14,14 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="3" lastUpdated="20060131"/>
-<!-- Version 1 - made from TCS_Tx_V27 -->
-<!-- Version 2 - Fixed bug in CV64 -->
-<!-- Version 3 - Added ver to 35 -->
-<!-- Version 3.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 1 - made from TCS_Tx_V27 -->
+  <!-- Version 2 - Fixed bug in CV64 -->
+  <!-- Version 3 - Added ver to 35 -->
+  <!-- Version 3.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Tx series decoders" mfg="Train Control Systems">
-      <model model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35">
+      <model show="no" model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35"
+          replacementModel="T1" replacementFamily="Jan 2000">
 			</model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -84,10 +85,7 @@
         <decVal/>
         <label>Decoder Lock</label>
       </variable>
-      <variable label="Lock Mode" CV="16" default="1" tooltip="Unlocked when CV16 = CV15">
-        <decVal/>
-        <label>Lock Mode</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <variable label="Long Address" CV="17" item="Extended Address">
         <longAddressVal/>
         <label>Long Address</label>
@@ -500,7 +498,6 @@
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-  
   <pane name="Misc">
     <column>
       <display item="Decoder Lock"/>

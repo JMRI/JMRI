@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.SensorManager;
 import junit.framework.Assert;
@@ -130,7 +131,7 @@ public class LnSensorManagerTest extends TestCase  {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorManagerTest.class.getName());
+	 static Logger log = Logger.getLogger(LnSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

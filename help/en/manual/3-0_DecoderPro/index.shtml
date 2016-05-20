@@ -22,9 +22,7 @@
 
 <a NAME="Top"></a>
 <h1>JMRI&reg; v3.0 Manual</h1>
-<h1>&nbsp;</h1>
-<h3>In work 8/4/2012</h3>
-<p>&nbsp;</p>
+<h3>12/28/2012</h3>
 <p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
 <p><strong>The programming of Digital
   Command Control (DCC) decoders, (DecoderPro&reg;).<br>
@@ -46,12 +44,6 @@
 <p>Note: All screen shots in this manual are from a Windows machine using the   "Metal" User Interface option   . While your screens will probably differ  in some layout details, they will be essentially the same. All   programming examples shown are with Digitrax PR3(MS100 mode) connected   to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive   samples will be Digitrax, except for sound examples.
 <p>Note: This entire manual has been updated to   correspond to DecoderPro 2.12, and the HTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
 <p>
-<div align="right">
-<h2>Download Print version of Manual (pdf format)
-</h2>
-<p>
-<p><a href="http://sourceforge.net/apps/trac/jmri/browser/trunk/jmri/help/en/manual/pdf/jmri_Man_3_0.pdf" target="_blank"><strong>manual version 3.0</strong></a></div>
-
 <h1>Table of Contents</h1>
 <h4><a name="Installing"></a>Installing JMRI</h4>
 <ul>
@@ -79,7 +71,7 @@
 </ul>
 
 <h4>
-<a NAME="Setting up"></a>Using DecoderPro&reg;</h4>
+<a name="Settingup" id="Settingup"></a>Using DecoderPro&reg;</h4>
 <ul>
   <li><a href="Programmer_Setup.shtml">How do I set up to program
     a decoder?</a></li>
@@ -209,22 +201,13 @@ The Basic Programmer</h4>
       <li>Dispatcher... (not covered in this manual)</li>
       <li>Send DCC Packet...(not covered in this manual)</li>
       <li>USS CTC Tools <img src="images/arrow.gif" width="20" height="9" alt="arrow">(not covered in this manual)</li>
-      <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
-        <ul>
-          <li><a href="Ops_Settings.shtml">Settings</a> </li>
-          <li><a href="Ops_Locations.shtml">Locations</a> </li>
-          <li><a href="Ops_Cars.shtml">Cars</a></li>
-          <li><a href="Ops_Engines.shtml">locomotives</a></li>
-          <li><a href="Ops_Routes.shtml">Routes</a></li>
-          <li><a href="Ops_Trains.shtml">Trains</a></li>
-        </ul>
-      </li>
+      <li>Operations<img src="images/arrow.gif" width="20" height="9" alt="arrow"> (Covered in Operations Program User's Guide)</li>
       <li><strong>Start JMRI Web Server</strong></li>
     </ul>
   </li>
   <li><a href="Main_Roster.shtml">Roster Menu</a>
     <ul>
-      <li>Roster (DecoderPro3)</li>
+      <li><a href="Main_Roster_DP3.shtml">Roster (DecoderPro3)</a></li>
       <li><a href="Main_Roster.shtml#CreateRoster">Create Entry...</a></li>
       <li><a href="Main_Roster.shtml#EditRoster">Edit Entry...</a></li>
       <li>Copy Entry...</li>
@@ -279,104 +262,7 @@ The Basic Programmer</h4>
       <li>Script Entry</li>
     </ul>
   </li>
-  <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
-    <ul>
-      <li><a href="Ops_Settings.shtml">Settings</a>
-        <ul>
-          <li><strong>Tools</strong>
-            <ul>
-              <li><strong><a href="Ops_Settings.shtml#Options">Options</a></strong></li>
-              <li><strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong></li>
-              <li>Backup</li>
-              <li>Restore</li>
-              <li>Load Demo Files</li>
-              <li>Reset Database</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="Ops_Locations.shtml">Locations</a>
-        <ul>
-          <li><strong>Tools</strong>
-            <ul>
-              <li><a href="Ops_schedule.shtml">Schedules</a></li>
-              <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
-              <li><a href="Ops_Cars.shtml">Show Cars</a>          </li>
-              <li>Print</li>
-              <li>Preview</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="Ops_Cars.shtml">Cars</a>
-        <ul>
-          <li><strong>Tools</strong>
-            <ul>
-              <li>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow">
-                <ul>
-                  <li>Import from file</li>
-                  <li>Export to file</li>
-                  <li>Delete All Cars</li>
-                  <li>Print</li>
-                  <li>Preview</li>
-                </ul>
-              </li>
-              <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
-              <li><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></li>
-              <li><a href="Ops_Locations_setCars.shtml">Set Cars</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="Ops_Engines.shtml">Locomotives</a>
-        <ul>
-          <li><strong>Tools</strong>
-<ul>
-              <li>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow">
-                <ul>
-                  <li>Import from JMRI Roster</li>
-                  <li>Import from file</li>
-                  <li>Export to file</li>
-                  <li>Delete All Locomotives</li>
-                  <li>Print</li>
-                  <li>Preview</li>
-                </ul>
-              </li>
-              <li>Synchonize with NCE Consists</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="Ops_Routes.shtml">Routes</a>
-        <ul>
-          <li><strong>Tools</strong>
-            <ul>
-              <li>Copy Routes</li>
-              <li>Set Train Icon Coordinates</li>
-              <li>Print</li>
-              <li>Preview</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="Ops_Trains.shtml">Trains</a>
-        <ul>
-          <li><strong>Tools</strong>
-            <ul>
-              <li><a href="Ops_Trains_BuildOptions.shtml">Build Options</a></li>
-              <li><a href="Ops_PrintOptions.shtml">Print Options</a></li>
-              <li><a href="Ops_TrainsModify.shtml">Modify Trains by Car Type</a></li>
-              <li>Timetable</li>
-              <li>Copy Train</li>
-              <li>Scripts</li>
-              <li>Print</li>
-              <li>Preview</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
+  <li>Operations<img src="images/arrow.gif" width="20" height="9" alt="arrow">(Covered in Operations Program User's Guide) </li>
   <li><a href="Main_Menu.shtml#System">System dependent menu </a>
     <ul>
       <li><a href="Main_acela.shtml">Acela</a></li>
@@ -462,37 +348,9 @@ The Basic Programmer</h4>
           <li>Context....</li>
           <li>System Console...</li>
           <li>Upload Debugging info...</li>
-          <li>About DecoderPro</li>
-    </ul>
-</li>
-</ul>
-<h4><a name="Operations"></a>JMRI&reg; Operations Program</h4>
-<ul>
-  <li><a href="Ops_Start.shtml">What does Operations do?</a></li>
-  <li><a href="Ops_Settings.shtml">Settings</a>
-    <ul>
-      <li><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></li>
+          <li>About DecoderPro  </li>
     </ul>
   </li>
-  <li><a href="Ops_Locations.shtml">Locations</a>
-    <ul>
-      <li><a href="Ops_AddSiding.shtml">Add Spurs Track</a></li>
-      <li><a href="Ops_AddYard.shtml">Add Yard Track</a></li>
-      <li><a href="Ops_AddInterchange.shtml">Add Interchange Track</a></li>
-      <li><a href="Ops_AddStaging.shtml">Add Staging Track</a></li>
-      <li><a href="Ops_Locations_byCar.shtml">Modify Location by Car Type</a></li>
-      <li><a href="Ops_Locations_setCars.shtml">Set Cars</a></li>
-    </ul>
-  </li>
-  <li><a href="Ops_Cars.shtml">Cars</a></li>
-  <li><a href="Ops_Engines.shtml">Locomotives</a></li>
-  <li><a href="Ops_Routes.shtml">Routes</a></li>
-  <li><a href="Ops_Trains.shtml">Trains</a>
-    <ul>
-      <li><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></li>
-    </ul>
-  </li>
-  <li><a href="Ops_TripThruOperations.shtml">A Trip Through Operations</a></li>
 </ul>
 <h4><a NAME="DecoderDefinition"></a>Creating a Decoder Definition </h4>
 <ul>
@@ -506,7 +364,7 @@ The Basic Programmer</h4>
   <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>
 </ul>
 <hr>
-<p>The <a href="http://jmri.org/Download/index.html">JMRI download page</a>
+<p>The <a href="http://jmri.org/download/index.shtml">JMRI download page</a>
 is hosted by <A href="http://sourceforge.net">
 <img src="images/sflogo.png" width="88" height="31" border="0" alt="SourceForge Logo" align="middle" hspace="10">sourceforge.net</A>.</p>
 <p>
@@ -583,10 +441,10 @@ are best submitted to the
   </tr>
   <tr>
     <td align="left" valign="top">3.0</td>
-    <td align="left" valign="top">x/x/2012</td>
+    <td align="left" valign="top">12/28/2012</td>
     <td align="left" valign="top">Dale A. Tripp<br>
       Bruce Shanks</td>
-    <td align="left" valign="top">Updated from JMRI 2.14.1</td>
+    <td align="left" valign="top">Updated from JMRI 2.14.1 and JMRI Operations Program separated into separate user's guide</td>
   </tr>
 </table>
 <p>

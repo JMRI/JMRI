@@ -2,6 +2,8 @@
 
 package jmri.jmrix.tams.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
@@ -49,7 +51,7 @@ public class TamsNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsNamedPaneAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsNamedPaneAction.class.getName());
 }
 
 /* @(#)TamsNamedPaneAction.java */

@@ -1,5 +1,7 @@
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -38,31 +40,31 @@ public class BackgroundItemPanel extends IconItemPanel {
     public void init() {
     	if (!_initialized) {
     		Thread.yield();
-    		super.init();
+    		super.init(true);
     		add(initBottomPanel(), 2);
     		setSize(getPreferredSize());
+        	_initialized = true;
     	}
     }
 
-    protected JPanel instructions() {
-        JPanel panel = super.instructions();
+    protected JPanel instructions(boolean isBackGround) {
+        JPanel panel = super.instructions(isBackGround);
         JPanel blurb = (JPanel)panel.getComponent(0);
-        blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("ToColorBackground"), 
-                                                       ItemPalette.rbp.getString("ButtonBackgroundColor"))));
+        blurb.add(new JLabel(Bundle.getMessage("ToColorBackground","ButtonBackgroundColor")));
         blurb.add(javax.swing.Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         return panel;
     }
 
     private JPanel initBottomPanel() {
         JPanel bottomPanel = new JPanel();
-        JButton backgroundButton = new JButton(ItemPalette.rbp.getString("ButtonBackgroundColor"));
+        JButton backgroundButton = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
         backgroundButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     hideCatalog();
                     new ColorDialog(_editor);
                 }
         });
-        backgroundButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditColor"));
+        backgroundButton.setToolTipText(Bundle.getMessage("ToolTipEditColor"));
         bottomPanel.add(backgroundButton);
         return bottomPanel;
     }
@@ -74,7 +76,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         JPanel        _preview;
 
         ColorDialog(Editor editor) {
-            super(_paletteFrame, ItemPalette.rbp.getString("ColorChooser"), true);
+            super(_paletteFrame, Bundle.getMessage("ColorChooser"), true);
             _editor = editor;
 
             JPanel panel = new JPanel();
@@ -84,7 +86,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             _chooser.getSelectionModel().addChangeListener(this);
             _preview = new JPanel();
             _preview.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 4), 
-                                                             ItemPalette.rbp.getString("PanelColor")));
+                                                             Bundle.getMessage("PanelColor")));
             _preview.add (new JLabel(new NamedIcon("resources/logo.gif", "resources/logo.gif")), BorderLayout.CENTER);
             _chooser.setPreviewPanel(_preview);
             panel.add(_chooser, BorderLayout.CENTER);
@@ -102,7 +104,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         protected JPanel makeDoneButtonPanel() {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
-            JButton doneButton = new JButton(ItemPalette.rbp.getString("doneButton"));
+            JButton doneButton = new JButton(Bundle.getMessage("doneButton"));
             doneButton.addActionListener(new ActionListener() {
                     ColorDialog dialog;
                     public void actionPerformed(ActionEvent a) {
@@ -116,7 +118,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             }.init(this));
             panel.add(doneButton);
 
-            JButton cancelButton = new JButton(ItemPalette.rbp.getString("cancelButton"));
+            JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
             cancelButton.addActionListener(new ActionListener() {
                     ColorDialog dialog;
                     public void actionPerformed(ActionEvent a) {
@@ -137,5 +139,5 @@ public class BackgroundItemPanel extends IconItemPanel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BackgroundItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(BackgroundItemPanel.class.getName());
 }

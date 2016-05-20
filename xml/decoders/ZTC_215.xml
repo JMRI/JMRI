@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: ZTC_215.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Ian Birchenough(ian@birchenough.demon.co.uk)" version="2" lastUpdated="20060521"/>
   <version author="Phil Grainger (phil.grainger@ca.com)" version="1" lastUpdated="20030805"/>
-<!-- ZTC 215 and 215B decoders -->
+  <!-- ZTC 215 and 215B decoders -->
   <decoder>
     <family name="ZTC215/215B" mfg="ZTC" lowVersionID="0" highVersionID="255">
       <model model="ZTC215" numOuts="2">

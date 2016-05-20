@@ -43,7 +43,7 @@
   <li>Development Version: The version that is under development for testing and is used to validate new features and changes to existing features. If you are familiar with JMRI and want to help in the validation and testing process, then use this version.</li>
 </ul>
 <p>Supported systems(check<a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank"> supported hardware</a> systems.)</p>
-<p>Prior to installing JMRI, you must <a href="http://www.jmri.org/download/" target="_blank">download</a> the correct version for your computer system. </p>
+<p>Prior to installing JMRI, you must <a href="http://www.jmri.org/download/index.shtml" target="_blank">download</a> the correct version for your computer system. </p>
 <ul>
   <li>Windows</li>
   <li>Mac OS X</li>

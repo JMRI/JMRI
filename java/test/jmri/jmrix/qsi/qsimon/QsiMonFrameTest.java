@@ -8,6 +8,7 @@
 
 package jmri.jmrix.qsi.qsimon;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 
 import junit.framework.Assert;
@@ -125,6 +126,6 @@ public class QsiMonFrameTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiMonFrameTest.class.getName());
+	static Logger log = Logger.getLogger(QsiMonFrameTest.class.getName());
 
 }

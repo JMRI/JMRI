@@ -13,6 +13,8 @@
 
 package jmri.jmrix.zimo.mx1;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
@@ -275,6 +277,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1Adapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(Mx1Adapter.class.getName());
 
 }

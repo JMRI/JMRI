@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractLight;
 
 /**
@@ -200,7 +202,7 @@ l);
             }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLight.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetLight.class.getName());
 }
 
 /* @(#)XNetLight.java */

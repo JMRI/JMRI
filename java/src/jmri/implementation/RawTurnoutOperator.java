@@ -9,6 +9,8 @@
  */
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 public class RawTurnoutOperator extends TurnoutOperator {
@@ -70,5 +72,5 @@ public class RawTurnoutOperator extends TurnoutOperator {
 		} catch (TurnoutOperatorException e) { }
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RawTurnoutOperator.class.getName());
+    static Logger log = LoggerFactory.getLogger(RawTurnoutOperator.class.getName());
 }

@@ -2,6 +2,8 @@
 
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -219,7 +221,7 @@ public class ManagerDefaultSelector {
     // data members to hold contact with the property listeners
     final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ManagerDefaultSelector.class.getName());
+    static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class.getName());
 }
 
 /* @(#)ManagerDefaultSelector.java */

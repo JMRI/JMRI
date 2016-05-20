@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,18 +11,15 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file panes for QSi V8 files -->
-
 <pane name="Sound Select">
   <column>
     <row>
       <column>
-       	<label label="JMRI 2.13.2 or later is required for QSI V8"/>
+        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
-    	<display item="CV56.254.6"/>
+        <display item="CV56.254.6"/>
         <label label=" "/>
       </column>
     </row>
@@ -31,70 +27,70 @@
     <separator/>
     <row>
       <column>
-        	<display item="CV117.0.0"  />
-        	<display item="CV117.8.0"  />
-        	<display item="CV117.10.0"  />
-        	<display item="CV117.16.0"  />
-        	<display item="CV117.19.0"  />
-        	<display item="CV117.26.0"  />
-        	<display item="CV117.28.0"  />
-        	<display item="CV117.40.0"  />
+        <display item="CV117.0.0"/>
+        <display item="CV117.8.0"/>
+        <display item="CV117.10.0"/>
+        <display item="CV117.16.0"/>
+        <display item="CV117.19.0"/>
+        <display item="CV117.26.0"/>
+        <display item="CV117.28.0"/>
+        <display item="CV117.40.0"/>
       </column>
       <column>
-        	<display item="CV117.0.1"  />
-        	<display item="CV117.8.1"  />
-        	<display item="CV117.10.1"  />
-        	<display item="CV117.16.1"  />
-        	<display item="CV117.19.1"  />
-        	<display item="CV117.26.1"  />
-        	<display item="CV117.28.1"  />
-        	<display item="CV117.40.1"  />
+        <display item="CV117.0.1"/>
+        <display item="CV117.8.1"/>
+        <display item="CV117.10.1"/>
+        <display item="CV117.16.1"/>
+        <display item="CV117.19.1"/>
+        <display item="CV117.26.1"/>
+        <display item="CV117.28.1"/>
+        <display item="CV117.40.1"/>
       </column>
     </row>
     <label label=" "/>
     <separator/>
     <row>
       <column>
-		<row>
-				<column>
-					<display item="CV51.15 Sign" format="offradiobutton"  label="" layout="left"/>
-					<display item="CV51.15 Sign" format="onradiobutton" label="" layout="left"/>
-				</column>
-				<column>
-					<row>
-						<display item="CV51.15 Value" layout="above" label="" />
-						<display item="CV51.15 Value" layout="above" format="hslider" />
-					</row>
-				</column>
-		</row>
+        <row>
+          <column>
+            <display item="CV51.15 Sign" format="offradiobutton" label="" layout="left"/>
+            <display item="CV51.15 Sign" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV51.15 Value" layout="above" label=""/>
+              <display item="CV51.15 Value" layout="above" format="hslider"/>
+            </row>
+          </column>
+        </row>
       </column>
-        <label label="        "/>
+      <label label="        "/>
       <column>
-		<row>
-				<column>
-					<display item="CV118.10 Sign" format="offradiobutton"  label="" layout="left"/>
-					<display item="CV118.10 Sign" format="onradiobutton" label="" layout="left"/>
-				</column>
-				<column>
-					<row>
-						<display item="CV118.10 Value" layout="above" label="" />
-						<display item="CV118.10 Value" layout="above" format="hslider" />
-					</row>
-				</column>
-		</row>
-		<label label=" "/>
-		<row>
-				<column>
-					<display item="CV118.11 Sign" format="offradiobutton"  label="" layout="left"/>
-					<display item="CV118.11 Sign" format="onradiobutton" label="" layout="left"/>
-				</column>
-				<column>
-					<row>
-						<display item="CV118.11 Value" layout="above" label="" />
-						<display item="CV118.11 Value" layout="above" format="hslider" />
-					</row>
-				</column>
-		</row>
+        <row>
+          <column>
+            <display item="CV118.10 Sign" format="offradiobutton" label="" layout="left"/>
+            <display item="CV118.10 Sign" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV118.10 Value" layout="above" label=""/>
+              <display item="CV118.10 Value" layout="above" format="hslider"/>
+            </row>
+          </column>
+        </row>
+        <label label=" "/>
+        <row>
+          <column>
+            <display item="CV118.11 Sign" format="offradiobutton" label="" layout="left"/>
+            <display item="CV118.11 Sign" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV118.11 Value" layout="above" label=""/>
+              <display item="CV118.11 Value" layout="above" format="hslider"/>
+            </row>
+          </column>
+        </row>
       </column>
     </row>
   </column>

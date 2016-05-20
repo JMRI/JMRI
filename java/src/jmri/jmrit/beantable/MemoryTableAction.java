@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -159,7 +161,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
 
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to memory items to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Number to memory items to Add must be a number!",""+ex, "",true, false);
                 return;
             }
         
@@ -219,7 +221,7 @@ public class MemoryTableAction extends AbstractTableAction {
     
     protected String getClassName() { return MemoryTableAction.class.getName(); }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(MemoryTableAction.class.getName());
 }
 
 /* @(#)MemoryTableAction.java */

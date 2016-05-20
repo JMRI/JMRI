@@ -3,7 +3,6 @@ package jmri.jmrit.throttle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ResourceBundle;
 
 /**
  * A very specific dialog for editing the properties of a FunctionButton
@@ -14,7 +13,6 @@ import java.util.ResourceBundle;
  */
 public class ControlPanelPropertyEditor extends JDialog
 {
-	static final ResourceBundle rb = ThrottleBundle.bundle();
 	private ControlPanel control;
 
 	private JRadioButton displaySlider; // display slider from 0 to 100
@@ -41,7 +39,7 @@ public class ControlPanelPropertyEditor extends JDialog
 	private void initGUI()
 	{
 		this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-		this.setTitle(rb.getString("TitleEditSpeedControlPanel"));
+		this.setTitle(Bundle.getMessage("TitleEditSpeedControlPanel"));
 		JPanel mainPanel = new JPanel();
 		this.setContentPane(mainPanel);
 		mainPanel.setLayout(new BorderLayout());
@@ -64,9 +62,9 @@ public class ControlPanelPropertyEditor extends JDialog
 
 		ButtonGroup modeSelectionButtons = new ButtonGroup();
 
-		displaySlider=new JRadioButton(rb.getString("ButtonDisplaySpeedSlider"));
-		displaySliderContinuous=new JRadioButton(rb.getString("ButtonDisplaySpeedSliderContinuous"));
-		displaySteps=new JRadioButton(rb.getString("ButtonDisplaySpeedSteps"));
+		displaySlider=new JRadioButton(Bundle.getMessage("ButtonDisplaySpeedSlider"));
+		displaySliderContinuous=new JRadioButton(Bundle.getMessage("ButtonDisplaySpeedSliderContinuous"));
+		displaySteps=new JRadioButton(Bundle.getMessage("ButtonDisplaySpeedSteps"));
 
 		modeSelectionButtons.add(displaySlider);
 		modeSelectionButtons.add(displaySteps);
@@ -84,12 +82,12 @@ public class ControlPanelPropertyEditor extends JDialog
 		constraints.gridy = 3;
 		propertyPanel.add(displaySliderContinuous, constraints);
 
-		trackBox = new JCheckBox(rb.getString("CheckBoxTrackSliderInRealTime"));
+		trackBox = new JCheckBox(Bundle.getMessage("CheckBoxTrackSliderInRealTime"));
 		constraints.gridy = 4;
 		trackBox.setSelected( control.getTrackSlider() );
 		propertyPanel.add(trackBox, constraints);
 		
-		JLabel functionSwitchLabel = new JLabel(rb.getString("SwitchSliderOnFunction"));
+		JLabel functionSwitchLabel = new JLabel(Bundle.getMessage("SwitchSliderOnFunction"));
 		functionSwitchSlider = new JTextField(4);
 		functionSwitchSlider.setText(control.getSwitchSliderFunction());
 		constraints.gridy = 5;
@@ -150,7 +148,7 @@ public class ControlPanelPropertyEditor extends JDialog
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
-		JButton saveButton = new JButton(rb.getString("ButtonOk"));
+		JButton saveButton = new JButton(Bundle.getMessage("ButtonOk"));
 		saveButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -159,7 +157,7 @@ public class ControlPanelPropertyEditor extends JDialog
 			}
 		});
 
-		JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
+		JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 		cancelButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

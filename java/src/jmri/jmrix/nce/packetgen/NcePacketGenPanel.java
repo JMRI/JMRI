@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce.packetgen;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.*;
 import jmri.jmrix.nce.*;
 
@@ -194,10 +196,12 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 		case 0x8F:
 			replyLen = 16;
 			break;
+		default:
+			replyLen = 1;
 		}
 		return replyLen;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketGenPanel.class.getName());
+	static Logger log = LoggerFactory.getLogger(NcePacketGenPanel.class.getName());
 }
 

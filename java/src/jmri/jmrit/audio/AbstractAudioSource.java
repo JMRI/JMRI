@@ -2,14 +2,16 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Random;
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import javax.vecmath.Vector3f;
 import jmri.implementation.AbstractAudio;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
 
 /**
  * Base implementation of the AudioSource class.
@@ -62,9 +64,9 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private boolean _queued           = false;
     private AudioBuffer _buffer;
 //    private AudioSourceDelayThread asdt = null;
-    private List<AudioBuffer> pendingBufferQueue = new ArrayList<AudioBuffer>();
+    private LinkedList<AudioBuffer> pendingBufferQueue = new LinkedList<AudioBuffer>();
 
-    private static AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
+    private static final AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
 
     private static float metersPerUnit = activeAudioFactory.getActiveAudioListener().getMetersPerUnit();
 
@@ -87,28 +89,31 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         super(systemName, userName);
     }
 
+    @Override
     public char getSubType() {
         return SOURCE;
     }
 
-    public boolean queueBuffers(List<AudioBuffer> audioBuffers) {
+    @Override
+    public boolean queueBuffers(Queue<AudioBuffer> audioBuffers) {
 	// Note: Cannot queue buffers to a Source that has a bound buffer.
 	if (!_bound) {
-	    this.pendingBufferQueue = audioBuffers;
+	    this.pendingBufferQueue = new LinkedList<AudioBuffer>(audioBuffers);
 	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
 	    activeAudioFactory.getCommandThread().interrupt();
 	    if (log.isDebugEnabled())
-		log.debug("Queued Buffer " + audioBuffers.get(0).getSystemName() + " to Source " + this.getSystemName());
+		log.debug("Queued Buffer " + audioBuffers.peek().getSystemName() + " to Source " + this.getSystemName());
 	    return(true);
 	} else {
-	    log.error("Attempted to queue buffers " + audioBuffers.get(0).getSystemName() + " (etc) to Bound Source " + this.getSystemName());
+	    log.error("Attempted to queue buffers " + audioBuffers.peek().getSystemName() + " (etc) to Bound Source " + this.getSystemName());
 	    return(false);
 	}
     }
 
+    @Override
     public boolean queueBuffer(AudioBuffer audioBuffer) {
 	if (!_bound) {
-	    this.pendingBufferQueue.clear();
+	    //this.pendingBufferQueue.clear();
 	    this.pendingBufferQueue.add(audioBuffer);
 	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
 	    activeAudioFactory.getCommandThread().interrupt();
@@ -121,6 +126,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 	}
     }
 
+    @Override
     public boolean unqueueBuffers() {
 	if (_bound) {
 	    log.error("Attempted to unqueue buffers on Bound Source " + this.getSystemName());
@@ -137,10 +143,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 	}
     }
 
-    public List<AudioBuffer> getQueuedBuffers() {
+    public Queue<AudioBuffer> getQueuedBuffers() {
 	return(this.pendingBufferQueue);
     }
 
+    @Override
     public void setAssignedBuffer(AudioBuffer audioBuffer) {
 	if (!_queued) {
 	    this._buffer = audioBuffer;
@@ -155,6 +162,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 	}
     }
 
+    @Override
     public void setAssignedBuffer(String bufferSystemName) {
 	if (!_queued) {
 	    AudioManager am = InstanceManager.audioManagerInstance();
@@ -172,14 +180,17 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 	}
     }
     
+    @Override
     public AudioBuffer getAssignedBuffer() {
         return this._buffer;
     }
 
+    @Override
     public String getAssignedBufferName() {
         return (_buffer!=null)?_buffer.getSystemName():"[none]";
     }
 
+    @Override
     public void setPosition(Vector3f pos) {
         this._position = pos;
         this._currentPosition = pos;
@@ -188,36 +199,44 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             log.debug("Set position of Source " + this.getSystemName() + " to " + pos);
     }
 
+    @Override
     public void setPosition(float x, float y, float z) {
         this.setPosition(new Vector3f(x, y, z));
     }
 
+    @Override
     public void setPosition(float x, float y) {
         this.setPosition(new Vector3f(x, y, 0.0f));
     }
 
+    @Override
     public Vector3f getPosition() {
         return this._position;
     }
 
+    @Override
     public Vector3f getCurrentPosition() {
         return this._currentPosition;
     }
 
+    @Override
     public void setPositionRelative(boolean relative) {
         this._positionRelative = relative;
     }
 
+    @Override
     public boolean isPositionRelative() {
         return this._positionRelative;
     }
 
+    @Override
     public void setVelocity(Vector3f vel) {
         this._velocity = vel;
         if (log.isDebugEnabled())
             log.debug("Set velocity of Source " + this.getSystemName() + " to " + vel);
     }
 
+    @Override
     public Vector3f getVelocity() {
         return this._velocity;
     }
@@ -247,6 +266,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         }
     }
 
+    @Override
     public void resetCurrentPosition() {
         activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
         activeAudioFactory.getCommandThread().interrupt();
@@ -265,12 +285,14 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     abstract protected void changePosition(Vector3f pos);
 
+    @Override
     public void setGain(float gain) {
         this._gain = gain;
         if (log.isDebugEnabled())
             log.debug("Set gain of Source " + this.getSystemName() + " to " + gain);
     }
 
+    @Override
     public float getGain() {
         return this._gain;
     }
@@ -281,6 +303,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     abstract protected void calculateGain();
 
+    @Override
     public void setPitch(float pitch) {
         if (pitch < 0.5f) {
             pitch = 0.5f;
@@ -293,10 +316,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             log.debug("Set pitch of Source " + this.getSystemName() + " to " + pitch);
     }
 
+    @Override
     public float getPitch() {
         return this._pitch;
     }
 
+    @Override
     public void setReferenceDistance(float referenceDistance) {
         if (referenceDistance < 0.0f) {
             referenceDistance = 0.0f;
@@ -306,10 +331,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             log.debug("Set reference distance of Source " + this.getSystemName() + " to " + referenceDistance);
     }
 
+    @Override
     public float getReferenceDistance() {
         return this._referenceDistance;
     }
 
+    @Override
     public void setMaximumDistance(float maximumDistance) {
         if (maximumDistance < 0.0f) {
             maximumDistance = 0.0f;
@@ -319,20 +346,24 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             log.debug("Set maximum distance of Source " + this.getSystemName() + " to " + maximumDistance);
     }
 
+    @Override
     public float getMaximumDistance() {
         return this._maximumDistance;
     }
 
+    @Override
     public void setRollOffFactor(float rollOffFactor) {
         this._rollOffFactor = rollOffFactor;
         if (log.isDebugEnabled())
             log.debug("Set roll-off factor of Source " + this.getSystemName() + " to " + rollOffFactor);
     }
 
+    @Override
     public float getRollOffFactor() {
         return this._rollOffFactor;
     }
 
+    @Override
     public void setLooped(boolean loop) {
         if (loop) {
             this._minLoops = LOOP_CONTINUOUS;
@@ -344,10 +375,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         calculateLoops();
     }
 
+    @Override
     public boolean isLooped() {
         return (this._minLoops != LOOP_NONE || this._maxLoops != LOOP_NONE);
     }
 
+    @Override
     public void setMinLoops(int loops) {
         if (this._maxLoops < loops) {
             this._maxLoops = loops;
@@ -356,10 +389,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         calculateLoops();
     }
 
+    @Override
     public int getMinLoops() {
         return this._minLoops;
     }
 
+    @Override
     public void setMaxLoops(int loops) {
         if (this._minLoops > loops) {
             this._minLoops = loops;
@@ -380,10 +415,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         }
     }
 
+    @Override
     public int getMaxLoops() {
         return this._maxLoops;
     }
 
+    @Override
     public int getNumLoops() {
         // Call the calculate method each time so as to ensure
         // randomness when min and max are not equal
@@ -434,26 +471,32 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //        }
 //    }
 
+    @Override
     public void setFadeIn(int fadeInTime) {
         this._fadeInTime = fadeInTime;
     }
 
+    @Override
     public int getFadeIn() {
         return this._fadeInTime;
     }
 
+    @Override
     public void setFadeOut(int fadeOutTime) {
         this._fadeOutTime = fadeOutTime;
     }
 
+    @Override
     public int getFadeOut() {
         return this._fadeOutTime;
     }
 
+    @Override
     public void setDopplerFactor(float dopplerFactor) {
         this._dopplerFactor = dopplerFactor;
     }
 
+    @Override
     public float getDopplerFactor() {
         return this._dopplerFactor;
     }
@@ -512,12 +555,14 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                     log.debug("Set fade in gain of AudioSource "
                             + this.getSystemName() + " to " + this._fadeGain);
                 break;
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
     // Probably aught to be abstract, but I don't want to force the non-JOAL Source
     // types to implement this (yet).  So default to failing.
-    public boolean queueAudioBuffers(List<AudioBuffer> audioBuffers) {
+    public boolean queueAudioBuffers(Queue<AudioBuffer> audioBuffers) {
 	log.debug("Abstract queueAudioBuffers() called.");
 	return(false);
     }
@@ -534,6 +579,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
     // Probably aught to be abstract, but I don't want to force the non-JOAL Source
     // types to implement this (yet).  So default to failing.
+    @Override
     public int numQueuedBuffers() { return(0); }
 
     // Probably aught to be abstract, but I don't want to force the non-JOAL Source
@@ -547,7 +593,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      * <ul>
      * <li>Source
      * </ul>
-     * @param audioBuffer the AudioBuffer to bind to this AudioSource
+     * @param buffer The AudioBuffer to bind to this AudioSource
      * @return true if successful
      */
     abstract boolean bindAudioBuffer(AudioBuffer buffer);
@@ -565,14 +611,17 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 	this._queued = queued;
     }
 
+    @Override
     public boolean isBound() {
         return this._bound;
     }
 
+    @Override
     public boolean isQueued() {
 	return this._queued;
     }
 
+    @Override
     public void stateChanged(int oldState) {
         // Get the current state
         int i = this.getState();
@@ -601,6 +650,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //        }
     }
 
+    @Override
     public void play() {
         this._fading = Audio.FADE_NONE;
 //        if (asdt!=null) {
@@ -619,6 +669,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     abstract protected void doPlay();
 
+    @Override
     public void stop() {
         stop(true);
     }
@@ -637,6 +688,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     abstract protected void doStop();
 
+    @Override
     public void togglePlay() {
         this._fading = Audio.FADE_NONE;
         activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY_TOGGLE));
@@ -655,6 +707,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         }
     }
 
+    @Override
     public void pause() {
         this._fading = Audio.FADE_NONE;
         this.setState(STATE_STOPPED);
@@ -667,6 +720,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     abstract protected void doPause();
 
+    @Override
     public void resume() {
         this._fading = Audio.FADE_NONE;
         this.setState(STATE_PLAYING);
@@ -679,6 +733,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     abstract protected void doResume();
 
+    @Override
     public void togglePause() {
         this._fading = Audio.FADE_NONE;
         activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PAUSE_TOGGLE));
@@ -697,6 +752,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         }
     }
 
+    @Override
     public void rewind() {
         this._fading = Audio.FADE_NONE;
         this.setState(STATE_STOPPED);
@@ -709,6 +765,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     abstract protected void doRewind();
 
+    @Override
     public void fadeIn() {
         if (this.getState()!=STATE_PLAYING && this._fading!=Audio.FADE_IN) {
             this._fading = Audio.FADE_IN;
@@ -725,6 +782,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     abstract protected void doFadeIn();
 
+    @Override
     public void fadeOut() {
         if (this.getState()==STATE_PLAYING && this._fading!=Audio.FADE_OUT) {
             this._fading = Audio.FADE_OUT;
@@ -760,7 +818,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                             "(min=" + this.getMinLoops() + " max=" + this.getMaxLoops() + ")"));
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioSource.class.getName());
 
     /**
      * An internal class used to create a new thread to monitor and maintain

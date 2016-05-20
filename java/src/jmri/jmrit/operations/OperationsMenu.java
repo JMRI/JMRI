@@ -4,42 +4,37 @@
 
 package jmri.jmrit.operations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.util.*;
 
 /**
- * Create a "Operations" menu 
- *
- * @author	Bob Jacobsen   Copyright 2003
+ * Create a "Operations" menu
+ * 
+ * @author Bob Jacobsen Copyright 2003
  * @author Daniel Boudreau Copyright 2008
- * @version     $Revision$
+ * @version $Revision$
  */
 public class OperationsMenu extends JMenu {
-    public OperationsMenu(String name) {
-        this();
-        setText(name);
-    }
+	
+	public OperationsMenu(String name) {
+		this();
+		setText(name);
+	}
 
-    public OperationsMenu() {
+	public OperationsMenu() {
+		super();
 
-        super();
+		setText(Bundle.getMessage("MenuOperations"));
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
+		add(new jmri.jmrit.operations.setup.OperationsSetupAction());
+		add(new jmri.jmrit.operations.locations.LocationsTableAction());
+		add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction());
+		add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction());
+		add(new jmri.jmrit.operations.routes.RoutesTableAction());
+		add(new jmri.jmrit.operations.trains.TrainsTableAction());
 
-        setText(rb.getString("MenuOperations"));
-        
-        add(new jmri.jmrit.operations.setup.OperationsSetupAction(rb.getString("MenuSetup")));
-        add(new jmri.jmrit.operations.locations.LocationsTableAction(rb.getString("MenuLocations")));
-        add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction(rb.getString("MenuCars")));
-        add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction(rb.getString("MenuEngines")));
-        add(new jmri.jmrit.operations.routes.RoutesTableAction(rb.getString("MenuRoutes")));
-        add(new jmri.jmrit.operations.trains.TrainsTableAction(rb.getString("MenuTrains")));
-        //add(new JSeparator());
-        //add(new jmri.jmrit.powerpanel.PowerPanelAction(rb.getString("MenuCalendar")));
-            
-    }
+	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsMenu.class.getName());
+	static Logger log = LoggerFactory.getLogger(OperationsMenu.class.getName());
 }
-
-

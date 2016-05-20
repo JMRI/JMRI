@@ -1,6 +1,7 @@
 // MakePacketTest.java
 
 package jmri.jmrix.direct;
+import org.apache.log4j.Logger;
 import jmri.NmraPacket;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -217,7 +218,7 @@ public class MakePacketTest extends TestCase {
         TestSuite suite = new TestSuite(MakePacketTest.class);
         return suite;
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MakePacketTest.class.getName());
+    static Logger log = Logger.getLogger(MakePacketTest.class.getName());
     
 }
 

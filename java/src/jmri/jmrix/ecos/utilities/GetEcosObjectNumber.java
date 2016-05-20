@@ -2,6 +2,9 @@
 
 package jmri.jmrix.ecos.utilities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This method, simply returns a integer value from a string, that is between
  * two given characters.
@@ -42,5 +45,5 @@ public class GetEcosObjectNumber {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GetEcosObjectNumber.class.getName());
+    static Logger log = LoggerFactory.getLogger(GetEcosObjectNumber.class.getName());
 }

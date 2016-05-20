@@ -2,6 +2,8 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -47,6 +49,15 @@ public class DecoderFile extends XmlFile {
 
         // store the default range of version id's
         setVersionRange(lowVersionID, highVersionID);
+    }
+    public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
+                       String highVersionID, String family, String filename,
+                       int numFns, int numOuts, Element decoder, String replacementModel, String replacementFamily) {
+        this(mfg, mfgID, model, lowVersionID,
+                highVersionID, family, filename,
+                numFns, numOuts, decoder);
+        _replacementModel = replacementModel;
+        _replacementFamily = replacementFamily;
     }
 
     // store acceptable version numbers
@@ -141,6 +152,9 @@ public class DecoderFile extends XmlFile {
     String _family    = null;
     String _filename  = null;
     String _productID = null;
+    String _replacementModel = null;
+    String _replacementFamily = null;
+    
     int _numFns  = -1;
     int _numOuts  = -1;
     Element _element = null;
@@ -149,9 +163,22 @@ public class DecoderFile extends XmlFile {
     public String getMfgID()     { return _mfgID; }
     public String getModel()     { return _model; }
     public String getFamily()    { return _family; }
+    public String getReplacementModel()     { return _replacementModel; }
+    public String getReplacementFamily()    { return _replacementFamily; }
     public String getFilename()  { return _filename; }
     public int getNumFunctions() { return _numFns; }
     public int getNumOutputs()   { return _numOuts; }
+    public Showable getShowable() { 
+        if (_element.getAttribute("show") == null) return Showable.YES; // default
+        else if (_element.getAttributeValue("show").equals("no")) return Showable.NO;
+        else if (_element.getAttributeValue("show").equals("maybe")) return Showable.MAYBE;
+        else {
+            log.error("unexpected value for show attribute: "+_element.getAttributeValue("show"));
+            return Showable.YES; // default again
+        }
+    }
+
+    public enum Showable { YES, NO, MAYBE }
 
     public String getModelComment() { return _element.getAttributeValue("comment"); }
     public String getFamilyComment() { return ((Element)_element.getParent()).getAttributeValue("comment"); }
@@ -346,6 +373,6 @@ public class DecoderFile extends XmlFile {
     static public String fileLocation = "decoders"+File.separator;
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderFile.class.getName());
+    static Logger log = LoggerFactory.getLogger(DecoderFile.class.getName());
 
 }

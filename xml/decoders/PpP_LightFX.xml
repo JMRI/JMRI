@@ -1,0 +1,1425 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- $Id: PpP_LightFX.xml 19243 2012-11-29 23:10:10Z fmco $ -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="http://www.ppp-digital.es" version="1" lastUpdated="20121212"/>
+  <decoder>
+    <family name="PpP Decoders" mfg="PpP" lowVersionID="10" highVersionID="11" comment="PpP-LightFX decoder.">
+      <model model="PpP-LightFX"/>
+    </family>
+    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <variables>
+      <variable label="Address" CV="1" mask="XXVVVVVV" default="1" comment="Decoder address">
+        <decVal min="0" max="63"/>
+      </variable>
+      <variable label="Decoder Version" CV="7" readOnly="yes" default="10">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Manufacturer" CV="8" readOnly="yes" default="74">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="High Address" CV="9" mask="XXXXXVVV" default="0" comment="Decoder address high part">
+        <decVal min="0" max="7"/>
+      </variable>
+      <variable label="Turnout Address of Output 1 (1-2033)" CV="1" mask="XXVVVVVV" default="1" item="Short Address" tooltip="Range 1-2033">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3"/>
+      </variable>
+      <variable label="Decoder Address (1-509)" CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-509" item="Long Address">
+        <splitVal highCV="9" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Extended Address" CV="17" default="9999" comment="4 digit address (Range 0-9999)">
+        <longAddressVal/>
+      </variable>
+      <variable label="Extended Address PoM (0-9999)" CV="17" default="9999" comment="4 digit address (Range 100-9999)" item="PoM address">
+        <longAddressVal/>
+      </variable>
+      <variable label="Configuration" CV="29" readOnly="yes" default="128">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Group 1-6. Output 1" CV="33" mask="XXXXXXXV" default="0" item="pCV33_1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 1-6. Output 2" CV="33" mask="XXXXXXVX" default="0" item="pCV33_2">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 1-6. Output 3" CV="33" mask="XXXXXVXX" default="0" item="pCV33_3">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 1-6. Output 4" CV="33" mask="XXXXVXXX" default="0" item="pCV33_4">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 1-6. Output 5" CV="33" mask="XXXVXXXX" default="0" item="pCV33_5">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 1-6. Output 6" CV="33" mask="XXVXXXXX" default="0" item="pCV33_6">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 7-12. Output 7" CV="34" mask="XXXXXXXV" default="0" item="pCV34_1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 7-12. Output 8" CV="34" mask="XXXXXXVX" default="0" item="pCV34_2">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 7-12. Output 9" CV="34" mask="XXXXXVXX" default="0" item="pCV34_3">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 7-12. Output 10" CV="34" mask="XXXXVXXX" default="0" item="pCV34_4">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 7-12. Output 11" CV="34" mask="XXXVXXXX" default="0" item="pCV34_5">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Group 7-12. Output 12" CV="34" mask="XXVXXXXX" default="0" item="pCV34_6">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Flash A (period in 8ms)" CV="35" item="pCV35" default="32" comment="Flash A">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Flash B (period in 128ms)" CV="36" item="pCV36" default="8" comment="Flash B">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Semaphore time (period in 128ms)" CV="37" item="pCV37" default="117" comment="Semaphore time">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Automatic sequence duration. Day (in minutes x 2)" CV="38" item="pCV38" default="30" comment="Automatic sequence duration">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Output 1: Effect " CV="41" item="pCV41" default="0" comment="Output 1: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 2: Effect " CV="42" item="pCV42" default="0" comment="Output 2: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 3: Effect " CV="43" item="pCV43" default="0" comment="Output 3: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 4: Effect " CV="44" item="pCV44" default="0" comment="Output 4: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 5: Effect " CV="45" item="pCV45" default="0" comment="Output 5: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 6: Effect " CV="46" item="pCV46" default="0" comment="Output 6: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 7: Effect " CV="47" item="pCV47" default="0" comment="Output 7: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 8: Effect " CV="48" item="pCV48" default="0" comment="Output 8: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 9: Effect " CV="49" item="pCV49" default="0" comment="Output 9: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 10: Effect " CV="50" item="pCV50" default="0" comment="Output 10: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 11: Effect " CV="51" item="pCV51" default="0" comment="Output 11: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Output 12: Effect " CV="52" item="pCV52" default="0" comment="Output 12: Effect ">
+        <enumVal>
+          <enumChoice choice="0 - Incandescent"/>
+          <enumChoice choice="1 - Fire"/>
+          <enumChoice choice="2 - TV"/>
+          <enumChoice choice="3 - Candle"/>
+          <enumChoice choice="4 - Dimmer"/>
+          <enumChoice choice="5 - UpDown"/>
+          <enumChoice choice="6 - GasStreet"/>
+          <enumChoice choice="7 - NeonStreet"/>
+          <enumChoice choice="8 - NeonBroken"/>
+          <enumChoice choice="9 - Fluorescent"/>
+          <enumChoice choice="10 - FluorBroken"/>
+          <enumChoice choice="11 - FluorBrokenOff"/>
+          <enumChoice choice="12 - FlashA"/>
+          <enumChoice choice="13 - FlashAInverted"/>
+          <enumChoice choice="14 - FlashB"/>
+          <enumChoice choice="15 - FlashBInverted"/>
+          <enumChoice choice="16 - FlashDouble"/>
+          <enumChoice choice="17 - FlashDoubleInverted"/>
+          <enumChoice choice="18 - FlashBDouble"/>
+          <enumChoice choice="19 - FlashBDoubleInverted"/>
+          <enumChoice choice="20 - RunLight1"/>
+          <enumChoice choice="21 - RunLight2"/>
+          <enumChoice choice="22 - RunLight3"/>
+          <enumChoice choice="23 - RunLight4"/>
+          <enumChoice choice="24 - RunLight1-2"/>
+          <enumChoice choice="25 - RunLight2-3"/>
+          <enumChoice choice="26 - RunLight3-4"/>
+          <enumChoice choice="27 - RunLight4-1"/>
+          <enumChoice choice="28 - Welding"/>
+          <enumChoice choice="29 - WeldingFast"/>
+          <enumChoice choice="30 - PhotoFlash"/>
+          <enumChoice choice="31 - Semaphore1Red"/>
+          <enumChoice choice="32 - Semaphore1Yellow"/>
+          <enumChoice choice="33 - Semaphore1Green"/>
+          <enumChoice choice="34 - Semaphore2Red"/>
+          <enumChoice choice="35 - Semaphore2Yellow"/>
+          <enumChoice choice="36 - Semaphore2Green"/>
+          <enumChoice choice="37 - SemaphPed1Red"/>
+          <enumChoice choice="38 - SemaphPed1Green"/>
+          <enumChoice choice="39 - SemaphPed2Red"/>
+          <enumChoice choice="40 - SemaphPed2Green"/>
+          <enumChoice choice="41 - Fusee"/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="61" item="pCV61s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="61" item="pCV61d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="62" item="pCV62s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="62" item="pCV62d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="63" item="pCV63s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="63" item="pCV63d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="64" item="pCV64s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="64" item="pCV64d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="65" item="pCV65s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="65" item="pCV65d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="66" item="pCV66s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="66" item="pCV66d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="67" item="pCV67s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="67" item="pCV67d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="68" item="pCV68s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="68" item="pCV68d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="69" item="pCV69s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="69" item="pCV69d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="70" item="pCV70s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="70" item="pCV70d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="71" item="pCV71s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="71" item="pCV71d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+      <variable label="Sequence " CV="72" item="pCV72s" mask="XXXXVVVV">
+        <enumVal>
+          <enumChoice choice="Manual"/>
+          <enumChoice choice="Sequence 1"/>
+          <enumChoice choice="Sequence 2"/>
+          <enumChoice choice="Sequence 3"/>
+          <enumChoice choice="Sequence 4"/>
+          <enumChoice choice="Sequence 5"/>
+          <enumChoice choice="Sequence 6"/>
+          <enumChoice choice="Sequence 7"/>
+          <enumChoice choice="Sequence 8"/>
+          <enumChoice choice="Sequence 9"/>
+          <enumChoice choice="Sequence 10"/>
+          <enumChoice choice="Sequence 11"/>
+          <enumChoice choice="Sequence 12"/>
+          <enumChoice choice="Sequence 13"/>
+          <enumChoice choice="Sequence 14"/>
+          <enumChoice choice="Sequence 15"/>
+        </enumVal>
+      </variable>
+      <variable label="Delay " CV="72" item="pCV72d" mask="VVVVXXXX">
+        <enumVal>
+          <enumChoice choice="None"/>
+          <enumChoice choice="5 scale minutes "/>
+          <enumChoice choice="10 scale minutes "/>
+          <enumChoice choice="15 scale minutes "/>
+          <enumChoice choice="20 scale minutes "/>
+          <enumChoice choice="25 scale minutes "/>
+          <enumChoice choice="30 scale minutes "/>
+          <enumChoice choice="35 scale minutes "/>
+          <enumChoice choice="40 scale minutes "/>
+          <enumChoice choice="45 scale minutes "/>
+          <enumChoice choice="50 scale minutes "/>
+          <enumChoice choice="55 scale minutes "/>
+          <enumChoice choice="60 scale minutes "/>
+          <enumChoice choice="65 scale minutes "/>
+          <enumChoice choice="70 scale minutes "/>
+          <enumChoice choice="75 scale minutes "/>
+          <enumChoice choice="80 scale minutes "/>
+        </enumVal>
+      </variable>
+    </variables>
+  </decoder>
+  <pane name="PpP">
+    <column>
+      <label label="Address"/>
+      <separator/>
+      <label label=" "/>
+      <display item="Long Address" label="Decoder Address (1-509)"/>
+      <display item="Short Address" label="Output 1, address in blocks of 4 (1-2033)"/>
+      <display item="PoM address" label="Loco address for PoM (100-9999) "/>
+      <label label=" "/>
+      <label label="Time"/>
+      <separator/>
+      <label label=" "/>
+      <display item="pCV35"/>
+      <display item="pCV36"/>
+      <display item="pCV37"/>
+      <display item="pCV38"/>
+      <label label=" "/>
+      <label label="Group 1-6."/>
+      <separator/>
+      <label label=" "/>
+      <row>
+        <column>
+          <display item="pCV33_1" format="checkbox" label="1"/>
+        </column>
+        <column>
+          <display item="pCV33_2" format="checkbox" label="2"/>
+        </column>
+        <column>
+          <display item="pCV33_3" format="checkbox" label="3"/>
+        </column>
+        <column>
+          <display item="pCV33_4" format="checkbox" label="4"/>
+        </column>
+        <column>
+          <display item="pCV33_5" format="checkbox" label="5"/>
+        </column>
+        <column>
+          <display item="pCV33_6" format="checkbox" label="6"/>
+        </column>
+      </row>
+      <label label=" "/>
+      <label label="Group 7-12."/>
+      <separator/>
+      <label label=" "/>
+      <row>
+        <column>
+          <display item="pCV34_1" format="checkbox" label="7"/>
+        </column>
+        <column>
+          <display item="pCV34_2" format="checkbox" label="8"/>
+        </column>
+        <column>
+          <display item="pCV34_3" format="checkbox" label="9"/>
+        </column>
+        <column>
+          <display item="pCV34_4" format="checkbox" label="10"/>
+        </column>
+        <column>
+          <display item="pCV34_5" format="checkbox" label="11"/>
+        </column>
+        <column>
+          <display item="pCV34_6" format="checkbox" label="12"/>
+        </column>
+      </row>
+    </column>
+    <name>PpP Panel</name>
+  </pane>
+  <pane name="PpP Effects">
+    <column>
+      <row>
+        <column>
+          <label label="                            "/>
+        </column>
+        <column>
+          <label label="Effect                      "/>
+        </column>
+        <column>
+          <label label="Sequence                    "/>
+        </column>
+        <column>
+          <label label="Delay                       "/>
+        </column>
+      </row>
+      <separator/>
+      <label label=" "/>
+      <row>
+        <column>
+          <label label="Output 1 "/>
+        </column>
+        <column>
+          <display item="pCV41" label=" "/>
+        </column>
+        <column>
+          <display item="pCV61s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV61d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 2 "/>
+        </column>
+        <column>
+          <display item="pCV42" label=" "/>
+        </column>
+        <column>
+          <display item="pCV62s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV62d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 3 "/>
+        </column>
+        <column>
+          <display item="pCV43" label=" "/>
+        </column>
+        <column>
+          <display item="pCV63s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV63d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 4 "/>
+        </column>
+        <column>
+          <display item="pCV44" label=" "/>
+        </column>
+        <column>
+          <display item="pCV64s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV64d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 5 "/>
+        </column>
+        <column>
+          <display item="pCV45" label=" "/>
+        </column>
+        <column>
+          <display item="pCV65s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV65d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 6 "/>
+        </column>
+        <column>
+          <display item="pCV46" label=" "/>
+        </column>
+        <column>
+          <display item="pCV66s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV66d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 7 "/>
+        </column>
+        <column>
+          <display item="pCV47" label=" "/>
+        </column>
+        <column>
+          <display item="pCV67s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV67d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 8 "/>
+        </column>
+        <column>
+          <display item="pCV48" label=" "/>
+        </column>
+        <column>
+          <display item="pCV68s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV68d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 9 "/>
+        </column>
+        <column>
+          <display item="pCV49" label=" "/>
+        </column>
+        <column>
+          <display item="pCV69s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV69d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 10"/>
+        </column>
+        <column>
+          <display item="pCV50" label=" "/>
+        </column>
+        <column>
+          <display item="pCV70s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV70d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 11"/>
+        </column>
+        <column>
+          <display item="pCV51" label=" "/>
+        </column>
+        <column>
+          <display item="pCV71s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV71d" label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label="Output 12"/>
+        </column>
+        <column>
+          <display item="pCV52" label=" "/>
+        </column>
+        <column>
+          <display item="pCV72s" label=" "/>
+        </column>
+        <column>
+          <display item="pCV72d" label=" "/>
+        </column>
+      </row>
+    </column>
+    <name>PpP Panel Outputs</name>
+  </pane>
+</decoder-config>

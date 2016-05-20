@@ -1,5 +1,7 @@
 package jmri.jmrix.ecos.swing.locodatabase;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -93,5 +95,5 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
         
     public String getClassDescription() { return "Ecos Loco Table"; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoTableTabAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosLocoTableTabAction.class.getName());
 }

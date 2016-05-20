@@ -1,6 +1,8 @@
 // IconAdder.java
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalHead;
@@ -70,7 +72,6 @@ import javax.swing.table.TableColumn;
 
 public class IconAdder extends JPanel implements ListSelectionListener {
 
-    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     int ROW_HEIGHT;
@@ -204,7 +205,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (log.isDebugEnabled()) log.debug("setIcon at order= "+order+", key= "+label);
         JToggleButton button = new IconButton(label, icon);
         if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
-            button.setText(rb.getString("invisibleIcon"));
+            button.setText(Bundle.getMessage("invisibleIcon"));
             button.setForeground(Color.lightGray);
         } else {
             icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
@@ -373,7 +374,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
         } else {
             _addButton.setEnabled(false);
-            _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
+            _addButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         }
         validate();
     }
@@ -428,7 +429,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             int nextWidth = but.getIcon().getIconWidth();
             int nextHeight = but.getIcon().getIconHeight();
             if ((Math.abs(lastWidth - nextWidth) > 3 || Math.abs(lastHeight - nextHeight) > 3)) {
-                JOptionPane.showMessageDialog(this, rb.getString("IconSizeDiff"), rb.getString("warnTitle"),
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("IconSizeDiff"), Bundle.getMessage("warnTitle"),
                                                      JOptionPane.WARNING_MESSAGE);
                 return;
             }
@@ -512,14 +513,14 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _sysNametext = new JTextField();
             _sysNametext.setPreferredSize(
                 new Dimension(150, _sysNametext.getPreferredSize().height+2));
-            _addTableButton = new JButton(rb.getString("addToTable"));
+            _addTableButton = new JButton(Bundle.getMessage("addToTable"));
             _addTableButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         addToTable();
                     }
             });
             _addTableButton.setEnabled(false);
-            _addTableButton.setToolTipText(rb.getString("ToolTipWillActivate"));
+            _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
             p.add(_sysNametext);
             _sysNametext.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
@@ -537,21 +538,21 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             p.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
         }
         if (update) {
-            _addButton = new JButton(rb.getString("ButtonUpdateIcon"));
+            _addButton = new JButton(Bundle.getMessage("ButtonUpdateIcon"));
         } else {
-            _addButton = new JButton(rb.getString("ButtonAddIcon"));
+            _addButton = new JButton(Bundle.getMessage("ButtonAddIcon"));
         }
         _addButton.addActionListener(addIconAction);
         _addButton.setEnabled(true);
         if (changeIcon) {
-            _changeButton = new JButton(rb.getString("ButtonChangeIcon"));
+            _changeButton = new JButton(Bundle.getMessage("ButtonChangeIcon"));
             _changeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addCatalog();
                 }
             });
             p.add(_changeButton);
-            _closeButton = new JButton(rb.getString("ButtonCloseCatalog"));
+            _closeButton = new JButton(Bundle.getMessage("ButtonCloseCatalog"));
             _closeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     closeCatalog();
@@ -563,7 +564,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _buttonPanel.add(p);
         if (_table != null) {
             _addButton.setEnabled(false);
-            _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
+            _addButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         }
         addAdditionalButtons(_buttonPanel);
         p = new JPanel();
@@ -577,7 +578,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (changeIcon) {
             _catalog = CatalogPanel.makeDefaultCatalog();
             _catalog.setVisible(false);
-            _catalog.setToolTipText(rb.getString("ToolTipDragIcon"));
+            _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
             this.add(_catalog);
         }
         if (_type != null /*&& _defaultIcons == null*/) {
@@ -607,7 +608,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
         _sysNametext.setText("");
         _addTableButton.setEnabled(false);
-        _addTableButton.setToolTipText(rb.getString("ToolTipWillActivate"));
+        _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
     }
 
     /*
@@ -618,7 +619,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         // add the catalog, so icons can be selected
         if (_catalog == null)  {
             _catalog = CatalogPanel.makeDefaultCatalog();
-            _catalog.setToolTipText(rb.getString("ToolTipDragIcon"));
+            _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         }
         _catalog.setVisible(true);
         /*
@@ -661,11 +662,32 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.pack();
     }
 
-    public void addTreeToCatalog(CatalogTree tree) {
-        if (_catalog != null) {
-            _catalog.addTree(tree);
+    /**
+     * If icons are changed, update global tree
+     */
+    private void updateCatalogTree() {
+        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        // unfiltered, xml-stored, default icon tree
+        CatalogTree tree = manager.getBySystemName("NXDI");
+        if (tree == null) {	// build a new Default Icons tree
+            tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
+        CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
+        @SuppressWarnings("unchecked")
+		Enumeration<CatalogTreeNode> e = root.children();
+        String name = _defaultIcons.toString();
+        while (e.hasMoreElements()) {
+            CatalogTreeNode nChild = e.nextElement();
+            if (name.equals(nChild.toString())) {
+                if (log.isDebugEnabled()) log.debug("Remove node "+nChild);
+                root.remove(nChild);
+                break;
+            }
+        }
+        root.add(_defaultIcons);
+        ImageIndexEditor.indexChanged(true);
     }
+
     private class IconButton extends DropButton {
         String key;
         IconButton(String label, Icon icon) {  // init icon passed to avoid ref before ctor complete
@@ -723,7 +745,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         NamedIcon oldIcon = (NamedIcon)button.getIcon();
                         button.setIcon(newIcon);
                         if (newIcon.getIconWidth()<1 || newIcon.getIconHeight()<1) {
-                            button.setText(rb.getString("invisibleIcon"));
+                            button.setText(Bundle.getMessage("invisibleIcon"));
                             button.setForeground(Color.lightGray);
                         } else {
                             button.setText(null);
@@ -731,8 +753,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         _iconMap.put(key, button);
                         if (!_update){
                             _defaultIcons.deleteLeaf(key, oldIcon.getURL());
-                            _defaultIcons.addLeaf(key, newIcon.getURL());                        	
-                            ImageIndexEditor.indexChanged(true);
+                            _defaultIcons.addLeaf(key, newIcon.getURL());
+                            updateCatalogTree();
                         }
                         e.dropComplete(true);                       
                         if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+key+
@@ -752,5 +774,5 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IconAdder.class.getName());
+    static Logger log = LoggerFactory.getLogger(IconAdder.class.getName());
 }

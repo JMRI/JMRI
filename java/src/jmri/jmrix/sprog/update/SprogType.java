@@ -2,6 +2,9 @@
 
 package jmri.jmrix.sprog.update;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class to hold SPROG type 
  *
@@ -31,7 +34,7 @@ public class SprogType  {
     /**
      * Construct a new SPROG type of a given type
      * 
-     * @param t int, one of SprogType.xxx constants
+     * @param type int, one of SprogType.xxx constants
      */
     public SprogType(int type) {
         if (log.isDebugEnabled()) { log.debug("SprogType(int) ctor, type: " + type); }
@@ -87,7 +90,7 @@ public class SprogType  {
      * Get the Flash memory block Length for bootloader
      *
      * @param bootVer the bootloader version
-     * @return
+     * @return length in bytes
      */
     static public int getBlockLen(int bootVer) {
         switch (bootVer) {
@@ -189,7 +192,7 @@ public class SprogType  {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogType.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogType.class.getName());
 }
 
 /* @(#)SprogType.java */

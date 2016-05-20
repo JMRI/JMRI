@@ -219,7 +219,9 @@ choices for how the signal head is connected:
   This is a special protocol defined for driving signal heads, and is different from how
   "accessory decoders" (e.g. turnout outputs) are controlled. 
   <p>
-  Enter the DCC address as a number.
+  Enter the DCC address as a number.  The offset check box uses an alternative interpretation of the addressing scheme that might be in use.
+  <p>
+  Each aspect is assigned a different number; from here you can assign different numbers for each aspect to suit the hardware being used.
   </dd>
 
 <dt>Grapevine</dt>

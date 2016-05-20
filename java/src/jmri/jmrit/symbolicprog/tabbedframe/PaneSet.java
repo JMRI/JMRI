@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.*;
 
 import java.util.ArrayList;
@@ -35,7 +37,6 @@ import jmri.jmrit.symbolicprog.*;
  */
 public class PaneSet {
 
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
     List<PaneProgPane>  paneList     = new ArrayList<PaneProgPane>();
     PaneContainer       container;
     Programmer          mProgrammer;
@@ -43,7 +44,7 @@ public class PaneSet {
     IndexedCvTableModel iCvModel     = null;
     VariableTableModel  variableModel;
     ResetTableModel     resetModel   = null;
-    JLabel              progStatus   = new JLabel(rbt.getString("StateIdle"));
+    JLabel              progStatus   = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
 
     /**
      * The 'model' element representing the decoder type
@@ -194,6 +195,6 @@ public class PaneSet {
         re.writeFile(cvModel, iCvModel, variableModel );
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneSet.class.getName());
+    static Logger log = LoggerFactory.getLogger(PaneSet.class.getName());
 }
 

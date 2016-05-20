@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractSensor;
 
 /**
@@ -12,7 +14,12 @@ import jmri.implementation.AbstractSensor;
  */
 public class NceSensor extends AbstractSensor {
 
-    public NceSensor(String systemName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4481645243243035759L;
+
+	public NceSensor(String systemName) {
         super(systemName);
     }
 
@@ -31,7 +38,7 @@ public class NceSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceSensor.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceSensor.class.getName());
 
 }
 

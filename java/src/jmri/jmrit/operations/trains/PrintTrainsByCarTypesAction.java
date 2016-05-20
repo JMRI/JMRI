@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 
 import jmri.util.davidflanagan.*;
@@ -12,7 +14,6 @@ import java.io.IOException;
 import javax.swing.*;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 /**
@@ -28,9 +29,9 @@ import java.util.ResourceBundle;
  * @version     $Revision$
  */
 public class PrintTrainsByCarTypesAction  extends AbstractAction {
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	String newLine = "\n";
+
+	static final String NEW_LINE = "\n";	// NOI18N
+	static final String TAB = "\t"; // NOI18N
 	TrainManager trainManager = TrainManager.instance();
 
     public PrintTrainsByCarTypesAction(String actionName, Frame frame, boolean preview, Component pWho) {
@@ -53,7 +54,7 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// obtain a HardcopyWriter
 		try {
-			writer = new HardcopyWriter(mFrame, rb.getString("TitleTrainsByType"), 10, .5, .5, .5, .5,
+			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleTrainsByType"), 10, .5, .5, .5, .5,
 					isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -65,15 +66,15 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 		String carTypes[] = CarTypes.instance().getNames();
 
 		List<String> trains = trainManager.getTrainsByNameList();
-
+		
 		try {
 			// title line
-			String s = rb.getString("Type") + "\t" + rb.getString("Trains")
-					+ "\t\t\t  " + rb.getString("Description") + newLine;
+			String s = Bundle.getMessage("Type") + TAB + Bundle.getMessage("Trains")
+					+ TAB + TAB +TAB + Bundle.getMessage("Description") + NEW_LINE;
 			writer.write(s);
 			// car types
 			for (int t = 0; t < carTypes.length; t++) {
-				s = carTypes[t] + newLine;
+				s = carTypes[t] + NEW_LINE;
 				writer.write(s);
 				// trains
 				for (int i = 0; i < trains.size(); i++) {
@@ -81,13 +82,13 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 					if (train.acceptsTypeName(carTypes[t])) {
 						StringBuilder sb = new StringBuilder();
 						String name = train.getName();
-						sb.append("\t" + name + " ");
+						sb.append(TAB + name + " ");
 						int j = MAX_NAME_LENGTH - name.length();
 						while (j>0){
 							j--;
 							sb.append(" ");
 						}
-						sb.append(train.getDescription() + newLine);
+						sb.append(train.getDescription() + NEW_LINE);
 						writer.write(sb.toString());
 					}
 				}
@@ -99,5 +100,5 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 		}
 	}        	
  
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintTrainsByCarTypesAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(PrintTrainsByCarTypesAction.class.getName());
 }

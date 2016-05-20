@@ -2,6 +2,8 @@
 
 package jmri.jmrit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.util.JmriJFrame;
@@ -19,7 +21,7 @@ import javax.swing.JTextField;
 /**
  * Display memory usage on request
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2008
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2008, 2012
  * @version			$Revision$
  */
 public class MemoryFrameAction extends AbstractAction {
@@ -28,7 +30,7 @@ public class MemoryFrameAction extends AbstractAction {
         super(s);
     }
     public MemoryFrameAction() {
-        this(java.util.ResourceBundle.getBundle("jmri.jmrit.MemoryFrameActionBundle").getString("Memory_Usage_Monitor"));
+        this(Bundle.getMessage("Memory_Usage_Monitor"));
     }
 
 	JTextField used1 = new JTextField(15);
@@ -43,9 +45,9 @@ public class MemoryFrameAction extends AbstractAction {
 	JTextField total2 = new JTextField(15);
 	JTextField total3 = new JTextField(15);
 
-	JButton updateButton = new JButton(java.util.ResourceBundle.getBundle("jmri.jmrit.MemoryFrameActionBundle").getString("Update"));
-	JButton gcButton = new JButton(java.util.ResourceBundle.getBundle("jmri.jmrit.MemoryFrameActionBundle").getString("Collect_Memory"));
-	JButton testButton = new JButton(java.util.ResourceBundle.getBundle("jmri.jmrit.MemoryFrameActionBundle").getString("Test"));
+	JButton updateButton = new JButton(Bundle.getMessage("Update"));
+	JButton gcButton = new JButton(Bundle.getMessage("Collect_Memory"));
+	JButton testButton = new JButton(Bundle.getMessage("Test"));
 
     java.text.NumberFormat nf;
 
@@ -56,14 +58,14 @@ public class MemoryFrameAction extends AbstractAction {
         nf.setMaximumFractionDigits(3);
         nf.setGroupingUsed(false);
 
-		JmriJFrame f = new JmriJFrame(java.util.ResourceBundle.getBundle("jmri.jmrit.MemoryFrameActionBundle").getString("Memory_Usage_Monitor"));
+		JmriJFrame f = new JmriJFrame(Bundle.getMessage("Memory_Usage_Monitor"));
 
 		Container p = f.getContentPane();
 		p.setLayout(new GridLayout(5,3));
 
-		p.add(new JLabel(java.util.ResourceBundle.getBundle("jmri.jmrit.MemoryFrameActionBundle").getString("used_(MB)")));
-		p.add(new JLabel(java.util.ResourceBundle.getBundle("jmri.jmrit.MemoryFrameActionBundle").getString("free_(MB)")));
-		p.add(new JLabel(java.util.ResourceBundle.getBundle("jmri.jmrit.MemoryFrameActionBundle").getString("total_(MB,_of_")+nf.format(Runtime.getRuntime().maxMemory()/(1024.*1024.))+"Mb)"));
+		p.add(new JLabel(Bundle.getMessage("used_(MB)")));
+		p.add(new JLabel(Bundle.getMessage("free_(MB)")));
+		p.add(new JLabel(Bundle.getMessage("total_(MB,_of_")+nf.format(Runtime.getRuntime().maxMemory()/(1024.*1024.))+"Mb)"));
 
 		p.add(used3);
 		p.add(free3);
@@ -124,6 +126,6 @@ public class MemoryFrameAction extends AbstractAction {
 	}
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryFrameAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryFrameAction.class.getName());
 
 }

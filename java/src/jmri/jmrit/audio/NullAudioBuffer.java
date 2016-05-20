@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 
 /**
@@ -59,38 +61,46 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
         }
     }
 
+    @Override
     protected boolean loadBuffer(InputStream stream) {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
         return true;        
     }
     
+    @Override
     protected boolean loadBuffer() {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
         return true;
     }
 
+    @Override
     protected void generateLoopBuffers(int which) {
         // No need to do anything for the NullAudioBuffer
     }
 
+    @Override
     protected boolean generateStreamingBuffers() {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
         return true;
     }
 
+    @Override
     protected void removeStreamingBuffers() {
         // No need to do anything for the NullAudioBuffer
     }
 
+    @Override
     public int getFormat() {
         return FORMAT_UNKNOWN;
     }
     
+    @Override
     public long getLength() {
         // Nothing stored for the NullAudioBuffer - always zero
         return 0;
     }
 
+    @Override
     public int getFrequency() {
         // Nothing stored for the NullAudioBuffer - always zero
         return 0;
@@ -104,12 +114,13 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
         return "unknown format";
     }
 
+    @Override
     protected void cleanUp() {
         if (log.isDebugEnabled()) log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
         this.dispose();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NullAudioBuffer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NullAudioBuffer.class.getName());
 
 }
 

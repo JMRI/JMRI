@@ -80,7 +80,7 @@ sélectionnez le port série approprié dans la seconde  boîte de sélection.</
 de sélectionner la façon dontse fait l'affichage. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix sont possiblev en fonction de votre type d'
 ordinateur . "Motif", "Windows", "MacOS"et "MacOS Adaptive"
-apparence native sous Linux, Windows, MacOS "Classic" et MacOS X
+apparence native sous Linux, Windows, MacOS "Classic" et Mac OS X
 respectivement. </li>
 
 <li> Dans la boîte de sélection en bas, vous pouvez choisir la valeur par défaut du

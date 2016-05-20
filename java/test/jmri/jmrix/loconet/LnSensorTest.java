@@ -1,5 +1,6 @@
 // LnSensorTest.java
 package jmri.jmrix.loconet;
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -95,7 +96,7 @@ public class LnSensorTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorTest.class.getName());
+    static Logger log = Logger.getLogger(LnSensorTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

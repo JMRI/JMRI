@@ -2,6 +2,8 @@
 
 package jmri.jmrix.pricom.downloader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 
 import gnu.io.CommPortIdentifier;
@@ -651,6 +653,6 @@ public class LoaderPane extends javax.swing.JPanel {
         return buffer;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoaderPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
 
 }

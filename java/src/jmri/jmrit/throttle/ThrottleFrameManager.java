@@ -1,9 +1,10 @@
 package jmri.jmrit.throttle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 
@@ -17,9 +18,7 @@ import jmri.util.JmriJFrame;
  * @version    $Revision$
  */
 public class ThrottleFrameManager
-{
-	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
-	
+{	
     /** record the single instance of Roster **/
     private static ThrottleFrameManager instance = null;
 
@@ -94,12 +93,15 @@ public class ThrottleFrameManager
 		if (frame != null)
 		{
 			destroyThrottleWindow(frame);
-            throttleWindows.remove(throttleWindows.indexOf(frame));
+            try {
+                throttleWindows.remove(throttleWindows.indexOf(frame));
+            } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+                log.debug(ex.toString());
+            }
 			if (throttleWindows.size() > 0)
 			{
 				requestFocusForNextFrame();
 			}
-            
 		}
 	}
 
@@ -191,7 +193,7 @@ public class ThrottleFrameManager
 	}
 	
 	private void buildThrottlePreferencesFrame() {
-		throttlePreferencesFrame = new JmriJFrame(throttleBundle.getString("ThrottlePreferencesFrameTitle"));
+		throttlePreferencesFrame = new JmriJFrame(Bundle.getMessage("ThrottlePreferencesFrameTitle"));
 		ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane();
 		throttlePreferencesFrame.add(tpP);
 		tpP.setContainer(throttlePreferencesFrame);
@@ -200,7 +202,7 @@ public class ThrottleFrameManager
 	}
 	
 	private void buildThrottleListFrame() {
-		throttlesListFrame = new JmriJFrame(throttleBundle.getString("ThrottleListFrameTile"));
+		throttlesListFrame = new JmriJFrame(Bundle.getMessage("ThrottleListFrameTile"));
 		throttlesListPanel = new ThrottlesListPanel();
 		throttlesListFrame.setContentPane(throttlesListPanel);
 		throttlesListFrame.pack();
@@ -219,7 +221,7 @@ public class ThrottleFrameManager
 		throttlePreferencesFrame.requestFocus();
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrameManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class.getName());
 }
 
 

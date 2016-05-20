@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -1321,6 +1323,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     
     public String getClassDescription() { return rb.getString("TitleSignalGroupTable"); }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalGroupTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SignalGroupTableAction.class.getName());
 }
 

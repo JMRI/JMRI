@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.hexfile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -32,7 +34,7 @@ public class LnHexFileAction 			extends AbstractAction {
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnHexFileAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnHexFileAction.class.getName());
 
 }
 

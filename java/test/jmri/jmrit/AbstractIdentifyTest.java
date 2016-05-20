@@ -165,6 +165,6 @@ public class AbstractIdentifyTest extends TestCase {
 		return suite;
 	}
 
-	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractIdentifyTest.class.getName());
+	// static private Logger log = Logger.getLogger(AbstractIdentifyTest.class.getName());
 
 }

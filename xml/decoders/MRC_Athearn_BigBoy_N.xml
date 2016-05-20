@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: MRC_Athearn_BigBoy_N.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,16 +17,16 @@
   <version author="Bill Chown" version="2" lastUpdated="20080430"/>
   <version author="Bill Chown" version="3" lastUpdated="20090109"/>
   <version author="Marc Fournier forfoum@videotron.ca" version="4" lastUpdated="20090624"/>
-<!-- made from the MRC_1656 file (Pete Cesaro) pdsteam@aol.com -->
-<!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
-<!-- works for both loco types, despite apparent differences in the documentation -->
-<!-- works for both Athearn N scale loco types, small errors corrected -->
-<!-- works for both Athearn N scale loco types, comments and tooltips expanded -->
-<!-- Grouped in Athearn, mild cleanup, added comments in MRC TAB -->
+  <!-- made from the MRC_1656 file (Pete Cesaro) pdsteam@aol.com -->
+  <!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
+  <!-- works for both loco types, despite apparent differences in the documentation -->
+  <!-- works for both Athearn N scale loco types, small errors corrected -->
+  <!-- works for both Athearn N scale loco types, comments and tooltips expanded -->
+  <!-- Grouped in Athearn, mild cleanup, added comments in MRC TAB -->
   <decoder>
     <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Athearn Big Boy and Challenger NScale" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note All 28 functions are NMRA compatible -->
+        <!-- note All 28 functions are NMRA compatible -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

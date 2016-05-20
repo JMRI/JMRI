@@ -2,6 +2,7 @@
 
 package jmri.jmrit.ussctc;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 /**
@@ -38,6 +39,6 @@ public class FollowerActionTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FollowerActionTest.class.getName());
+    static Logger log = Logger.getLogger(FollowerActionTest.class.getName());
 
 }

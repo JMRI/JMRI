@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.se8;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 
 import javax.swing.*;
@@ -216,6 +218,6 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     JCheckBox setdefault          = new JCheckBox("Restore factory default, including address");  // opsw 20
     JCheckBox exercise            = new JCheckBox("Show LED exercise pattern");  // opsw 21
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SE8Panel.class.getName());
+    static Logger log = LoggerFactory.getLogger(SE8Panel.class.getName());
 
 }

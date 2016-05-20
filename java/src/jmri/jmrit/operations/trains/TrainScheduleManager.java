@@ -2,13 +2,13 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.JComboBox;
 
 import org.jdom.Element;
@@ -24,9 +24,7 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; 
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "trainScheduleListLength";  // NOI18N
     
 	public TrainScheduleManager() {
 		
@@ -34,7 +32,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     
 	/** record the single instance **/
 	private static TrainScheduleManager _instance = null;
-	private static int _id = 0;
+	private int _id = 0;
 
 	public static synchronized TrainScheduleManager instance() {
 		if (_instance == null) {
@@ -68,7 +66,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     public TrainSchedule getScheduleByName(String name) {
     	TrainSchedule s;
     	Enumeration<TrainSchedule> en =_scheduleHashTable.elements();
-    	for (int i = 0; i < _scheduleHashTable.size(); i++){
+    	while (en.hasMoreElements()) {
     		s = en.nextElement();
     		if (s.getName().equals(name))
     			return s;
@@ -257,10 +255,10 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
      * detailed DTD in operations-trains.dtd.
-     * @return Contents in a JDOM Element
+     *
      */
-    public Element store() {
-    	Element values = new Element("schedules");
+    public void store(Element root) {
+    	Element values = new Element(Xml.SCHEDULES);
 		// add entries
     	List<String> schedules = getSchedulesByIdList();
 		for (int i=0; i<schedules.size(); i++) {
@@ -268,15 +266,14 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 			TrainSchedule sch = getScheduleById(id);
 			values.addContent(sch.store());
 		}
-    	return values;
+    	root.addContent(values);
     }
     
-    public void load (Element values) {
-    	if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-    	Element e = values.getChild("schedules");
+    public void load (Element root) {
+    	Element e = root.getChild(Xml.SCHEDULES);
     	if (e != null){
            	@SuppressWarnings("unchecked")
-            List<Element> l = values.getChild("schedules").getChildren("schedule");
+            List<Element> l = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
             if (log.isDebugEnabled()) log.debug("TrainScheduleManager sees "+l.size()+" train schedules");
             for (int i=0; i<l.size(); i++) {
                 register(new TrainSchedule(l.get(i)));
@@ -286,13 +283,13 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     
     private void createDefaultSchedules(){
     	log.debug("creating default schedules");
-    	newSchedule(rb.getString("Sunday"));
-    	newSchedule(rb.getString("Monday"));
-    	newSchedule(rb.getString("Tuesday"));
-    	newSchedule(rb.getString("Wednesday"));
-    	newSchedule(rb.getString("Thursday"));
-    	newSchedule(rb.getString("Friday"));
-    	newSchedule(rb.getString("Saturday"));
+    	newSchedule(Bundle.getMessage("Sunday"));
+    	newSchedule(Bundle.getMessage("Monday"));
+    	newSchedule(Bundle.getMessage("Tuesday"));
+    	newSchedule(Bundle.getMessage("Wednesday"));
+    	newSchedule(Bundle.getMessage("Thursday"));
+    	newSchedule(Bundle.getMessage("Friday"));
+		newSchedule(Bundle.getMessage("Saturday"));
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -312,7 +309,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     	pcs.firePropertyChange(p,old,n);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainScheduleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrainScheduleManager.class.getName());
 
 }
 

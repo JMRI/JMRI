@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.decoderdefn.DecoderFile;
 
 import java.awt.event.*;
@@ -23,6 +25,7 @@ import jmri.util.jdom.LocaleSelector;
  * @author      Bob Jacobsen        Copyright (C) 2001, 2006, 2010
  * @author      Howard G. Penny     Copyright (C) 2005
  * @author      Daniel Boudreau     Copyright (C) 2007
+ * @author      Dave Heap           Copyright (C) 2012 Added support for Marklin mfx style speed table
  * @version     $Revision$
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
@@ -317,6 +320,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     
             // find the variable
             int index = findVarIndex(variableRef);
+            
             if (index >= 0) {
                 // found, attach the qualifier object by creating it
                 if (log.isDebugEnabled()) log.debug("Attached "+variableRef+" variable qualifying "+v.label());
@@ -623,7 +627,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         // ensure highCVnumber exists
         int highCVrow = _indxCvModel.addIndxCV(row, highCVname, _piCv, highCVpiVal, _siCv, highCVsiVal, highCVnumber, readOnly, infoOnly, writeOnly);
-        iv = new IndexedPairVariableValue(row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(), _status, item, highCVrow, highCVname, factor, offset, uppermask);
+        
+        // order
+        boolean upperFirst = false;
+        if ((a = child.getAttribute("order")) != null) {
+            if (a.getValue().equals("highFirst")) upperFirst = true;
+        }
+        
+        iv = new IndexedPairVariableValue(row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(), _status, item, highCVrow, highCVname, factor, offset, uppermask, upperFirst);
         return iv;
     }
 
@@ -687,11 +698,23 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             }
         } catch (org.jdom.DataConversionException e1) {
         }
+        Attribute ESUAttr = child.getAttribute("mfx");
+		boolean mfxFlag = false;
+        try {
+            if (ESUAttr != null) {
+                mfxFlag = ESUAttr.getBooleanValue();
+            }
+        } catch (org.jdom.DataConversionException e1) {
+        }
         // ensure all CVs exist
         for (int i = 0; i < entries; i++) {
             _cvModel.addCV("" + (CV + i), readOnly, infoOnly, writeOnly);
         }
-        v = new SpeedTableVarValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries);
+        if (mfxFlag) {
+            _cvModel.addCV("" + (2), readOnly, infoOnly, writeOnly);
+            _cvModel.addCV("" + (5), readOnly, infoOnly, writeOnly);
+		}
+        v = new SpeedTableVarValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries, mfxFlag);
         return v;
     }
 
@@ -777,14 +800,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor
+        String stdname = e.getAttribute("item").getValue();
+        if (log.isDebugEnabled()) log.debug("Starting to setConstant \""+stdname+"\"");
+ 
         String name = LocaleSelector.getAttribute(e, "label");
-        if (log.isDebugEnabled()) log.debug("Starting to setConstant \""+name+"\"");
-        String stdname = ( e.getAttribute("item")!=null ?
-                           e.getAttribute("item").getValue() :
-                           null);
-        String comment = null;
-        if (e.getAttribute("comment") != null)
-            comment = e.getAttribute("comment").getValue();
+        if (name == null || name.equals("")) name = stdname;
+        
+        String comment = LocaleSelector.getAttribute(e, "comment");
+
         String mask = null;
 
         // intrinsically readOnly, so use just that branch
@@ -804,11 +827,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int defaultVal = 0;
         if ( (a = e.getAttribute("default")) != null) {
             String val = a.getValue();
-            if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
+            if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+stdname);
             defaultVal = Integer.valueOf(val).intValue();
-            if ( name.compareTo("PICV") == 0 ) {
+            if ( stdname.compareTo("PICV") == 0 ) {
                 _piCv = Integer.valueOf(val).intValue();
-            } else if ( name.compareTo("SICV") == 0 ) {
+            } else if ( stdname.compareTo("SICV") == 0 ) {
                 _siCv = Integer.valueOf(val).intValue();
             }
         }
@@ -998,6 +1021,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _status = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VariableTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(VariableTableModel.class.getName());
 
 }

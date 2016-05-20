@@ -56,6 +56,21 @@ public class CbusOpCodes {
     }
 
     /**
+     * Return a string representation of a decoded CBUS Message
+     *
+     * @param msg CbusMessage to be decoded
+     * @param ext flag for extended message
+     * Return String decoded message
+     */
+    public static String decode(AbstractMessage msg, Boolean ext, int header) {
+        if (ext == false) {
+            return decode(msg);
+        }
+        
+        return "Bootloader Message Type: " + header;
+    }
+
+    /**
      * Hashmap for decoding CBUS opcodes <opc, string description>
      */
     public static final Map<Integer, String> opcodeMap = createMap();

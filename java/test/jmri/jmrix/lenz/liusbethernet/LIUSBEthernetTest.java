@@ -3,6 +3,7 @@
 
 package jmri.jmrix.lenz.liusbethernet;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -34,7 +35,7 @@ public class LIUSBEthernetTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBEthernetTest.class.getName());
+    static Logger log = Logger.getLogger(LIUSBEthernetTest.class.getName());
 
 }
 

@@ -27,11 +27,13 @@ package jmri.jmrit.vsdecoder;
  */
 
 import jmri.LocoAddress;
+import jmri.DccLocoAddress;
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 
 public class VSDConfig {
+
+    private float DEFAULT_VOLUME = 0.8f;
     
     private String my_id;
     private String vsd_path;
@@ -47,7 +49,7 @@ public class VSDConfig {
 	vsd_path = "";
 	profile_name = "";
 	address = null;
-	volume = 0.0f;
+	volume = DEFAULT_VOLUME;
 	location = null;
 	roster = null;
     }
@@ -66,6 +68,10 @@ public class VSDConfig {
 
     public LocoAddress getLocoAddress() {
 	return(address);
+    }
+
+    public DccLocoAddress getDccAddress() {
+	return(new DccLocoAddress(address.getNumber(), address.getProtocol()));
     }
 
     public float getVolume() {

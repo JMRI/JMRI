@@ -30,14 +30,14 @@ actual code might be ahead or behind the documentation
 on any given day.</em><p>
 
 JMRI provides support for general JMRI
-<a href="../../../tools/Sensors.shtml">Sensors</a>
+<a href="../../tools/Sensors.shtml">Sensors</a>
 and
-<a href="../../../tools/Reporters.shtml">Reporters</a>
+<a href="../../tools/Reporters.shtml">Reporters</a>
 in terms of RFID Reader "events". 
 
 <h2>Naming</h2>
 
-The <a href="../../../doc/Technical/Names.shtml">system letter</a> 
+The <a href="../../doc/Technical/Names.shtml">system letter</a> 
 for RFID connections is "F". Details of RFID 
 event and object names are described below.
 <!-- , with technical details on a <a href="Names.shtml">separate page</a> -->
@@ -87,10 +87,10 @@ seen.  This then enables other JMRI tools to react to this information.
 
 <h2>Reporter Table</h2>
 The 
-<a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
+<a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
 provides easy access to the contents of all Reporters that JMRI knows about.
 There's also an 
-<a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a> 
+<a href="../../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a> 
 for creating your own internal Reporters; JMRI automatically creates
 Reporter objects for devices on the layout.
 

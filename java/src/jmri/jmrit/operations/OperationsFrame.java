@@ -2,10 +2,10 @@
 
 package jmri.jmrit.operations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import java.util.ResourceBundle;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -18,7 +18,7 @@ import javax.swing.JTable;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
-import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 
@@ -31,18 +31,18 @@ import jmri.util.swing.XTableColumnModel;
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
 	public static SwingShutDownTask trainDirtyTask;
 
 	public OperationsFrame(String s) {
 		super(s);
+		setEscapeKeyClosesWindow(true);
 	}
 	
 	public OperationsFrame() {
 		super();
+		setEscapeKeyClosesWindow(true);
 	}
 
 	protected void addItem(JComponent c, int x, int y) {
@@ -92,6 +92,16 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		p.add(c, gc);
 	}
 	
+	protected void addItemTop(JPanel p, JComponent c, int x, int y) {
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = x;
+		gc.gridy = y;
+		gc.weightx = 100;
+		gc.weighty = 100;
+		gc.anchor = GridBagConstraints.NORTH;
+		p.add(c, gc);
+	}
+	
 	protected void addItemWidth(JPanel p, JComponent c, int width, int x, int y) {
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = x;
@@ -108,6 +118,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	/**
 	 * Gets the number of checkboxes(+1) that can fix in one row
+	 * see OperationsFrame.minCheckboxes and OperationsFrame.maxCheckboxes
 	 * @return the number of checkboxes, minimum is 5 (6 checkboxes)
 	 */
 	protected int getNumberOfCheckboxes(){
@@ -118,7 +129,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		if (size== null)
 			return minCheckboxes;	// default is 6 checkboxes per row
 		StringBuffer pad = new StringBuffer("X");
-		for (int i=0; i<Control.max_len_string_attibute; i++)
+		for (int i=0; i<CarTypes.instance().getMaxNameSubTypeLength(); i++)
 			pad.append("X");
 		
 		JCheckBox box = new JCheckBox(pad.toString());
@@ -205,7 +216,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		if (p == null)
 			return;
 		TableSorter sorter = null;
-		String tableref = getWindowFrameRef() + ":table";
+		String tableref = getWindowFrameRef() + ":table";	// NOI18N
 		try {
 			sorter = (TableSorter) table.getModel();
 		} catch (Exception e) {
@@ -246,7 +257,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	public boolean loadTableDetails(JTable table) {
 		UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
 		TableSorter sorter = null;
-		String tableref = getWindowFrameRef() + ":table";
+		String tableref = getWindowFrameRef() + ":table";	// NOI18N
 		if (p == null || p.getTablesColumnList(tableref).size() == 0)
 			return false;
 		try {
@@ -316,8 +327,8 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	protected synchronized void createShutDownTask(){
 		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
 			trainDirtyTask = new SwingShutDownTask(
-					"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
-					rb.getString("PromptSaveQuit"), this) {
+					"Operations Train Window Check", Bundle.getMessage("PromptQuitWindowNotWritten"),	// NOI18N
+					Bundle.getMessage("PromptSaveQuit"), this) {
 				public boolean checkPromptNeeded() {
 					return !OperationsXml.areFilesDirty();
 				}
@@ -340,5 +351,5 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		OperationsXml.save();
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
 }

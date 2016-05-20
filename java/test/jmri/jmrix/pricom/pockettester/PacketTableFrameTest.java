@@ -26,6 +26,9 @@ public class PacketTableFrameTest extends TestCase {
         f.asciiFormattedMessage(PocketTesterTest.speed0123A);
         f.asciiFormattedMessage(PocketTesterTest.speed012A);
         f.asciiFormattedMessage(PocketTesterTest.acc0222A);
+        
+        // close frame
+        f.dispose();
     }
 
     // from here down is testing infrastructure

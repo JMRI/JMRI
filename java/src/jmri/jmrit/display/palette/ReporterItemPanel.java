@@ -1,10 +1,12 @@
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -38,8 +40,8 @@ public class ReporterItemPanel extends TableItemPanel {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("AddToPanel")));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("DragIconPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -57,7 +59,7 @@ public class ReporterItemPanel extends TableItemPanel {
         _iconFamilyPanel.add(_dragIconPanel);
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
          if (_update) {
              return;
          }
@@ -66,7 +68,7 @@ public class ReporterItemPanel extends TableItemPanel {
          JPanel comp;
          try {
              comp = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-             comp.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+             comp.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
          } catch (java.lang.ClassNotFoundException cnfe) {
              cnfe.printStackTrace();
              comp = new JPanel();
@@ -76,9 +78,9 @@ public class ReporterItemPanel extends TableItemPanel {
          panel.validate();
          int width = Math.max(100, panel.getPreferredSize().width);
          panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
-         panel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+         panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
          _dragIconPanel = panel;
-         _dragIconPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+         _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
      }
 
     /**
@@ -100,7 +102,7 @@ public class ReporterItemPanel extends TableItemPanel {
         } else {
             if (_updateButton!=null) {
                 _updateButton.setEnabled(false);
-                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+                _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
         }
         validate();
@@ -132,5 +134,5 @@ public class ReporterItemPanel extends TableItemPanel {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(ReporterItemPanel.class.getName());
 }

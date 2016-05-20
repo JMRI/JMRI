@@ -12,6 +12,8 @@
 
 package jmri.jmrix.powerline.swing.serialmon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 import jmri.jmrix.powerline.SerialListener;
@@ -87,7 +89,7 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
         
     }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonPane.class.getName());
+	static Logger log = LoggerFactory.getLogger(SerialMonPane.class.getName());
 
 }
 

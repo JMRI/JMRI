@@ -2,6 +2,8 @@
 
 package jmri.jmrix.openlcb.swing.tie;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 import java.awt.*;
@@ -195,7 +197,7 @@ public class TieTableModel extends AbstractTableModel {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(TieTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(TieTableModel.class.getName());
 	
 }
 

@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 import junit.framework.Assert;
@@ -175,5 +176,5 @@ public class DefaultSignalSystemTest extends TestCase {
         apps.tests.Log4JFixture.setUp(); 
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalSystemTest.class.getName());
+    static protected Logger log = Logger.getLogger(DefaultSignalSystemTest.class.getName());
 }

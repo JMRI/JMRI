@@ -19,6 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.jdom.Element;
@@ -112,7 +114,7 @@ class IntTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IntTrigger.class.getName());
+    static Logger log = LoggerFactory.getLogger(IntTrigger.class.getName());
 
 
 }

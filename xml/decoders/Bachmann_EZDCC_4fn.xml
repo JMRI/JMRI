@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004. 2007 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Bachmann_EZDCC_4fn.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,9 +15,9 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="3" lastUpdated="20090725"/>
   <version author="Bob Jacobsen" version="2" lastUpdated="20050621"/>
-<!-- Made from the Lenz_DriveSelect.xml file version 5 -->
-<!-- Version 2 adds lowVersionID from Ian Birchenough -->
-<!-- Version 3 - added max value for CV2, changed Lenz tab name to Bachmann, updated dimensions and default values, added factory reset menu items (Peter Ulvestad) -->
+  <!-- Made from the Lenz_DriveSelect.xml file version 5 -->
+  <!-- Version 2 adds lowVersionID from Ian Birchenough -->
+  <!-- Version 3 - added max value for CV2, changed Lenz tab name to Bachmann, updated dimensions and default values, added factory reset menu items (Peter Ulvestad) -->
   <decoder>
     <family name="E-Z Command decoders" mfg="Bachmann Trains" lowVersionID="46">
       <model model="4 function decoder (36-550)" numOuts="4" numFns="8" maxMotorCurrent="1A" formFactor="HO" connector="NMRAmedium">
@@ -50,7 +50,7 @@
         <label>Decel</label>
         <comment>Range 0-31</comment>
       </variable>
-<!-- deleted max and mid voltage-->
+      <!-- deleted max and mid voltage-->
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -59,7 +59,7 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-<!-- Deleted all CV 13 references-->
+      <!-- Deleted all CV 13 references-->
       <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
         <longAddressVal/>
         <label>Long Address</label>
@@ -528,7 +528,7 @@
         </enumVal>
         <label>F8 controls output D</label>
       </variable>
-<!-- User private ID CV's are not documented by Bachamann, but appear to work -->
+      <!-- User private ID CV's are not documented by Bachamann, but appear to work -->
       <variable label="User Private ID #1" CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
@@ -541,9 +541,9 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
-      <constant label="FL(f) controls output 1" minOut="1" default="1"/>
-      <constant label="FL(r) controls output 2" minOut="2" default="1"/>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33"/>

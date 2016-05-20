@@ -2,6 +2,8 @@
 
 package jmri.jmrit.jython;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,6 +21,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.util.PythonInterp;
 import javax.swing.event.*;
+import jmri.util.FileUtil;
 
 /**
  * This Action runs creates a JFrame for sending input to the
@@ -224,7 +227,7 @@ public class InputWindow extends JPanel {
 
 
     void loadButtonPressed() {
-        JFileChooser userFileChooser = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
+        JFileChooser userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
 
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemLoad"));
@@ -241,7 +244,7 @@ public class InputWindow extends JPanel {
     }
 
     void storeButtonPressed() {
-        JFileChooser userFileChooser = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
+        JFileChooser userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
 
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemStore"));
@@ -278,7 +281,7 @@ public class InputWindow extends JPanel {
         PythonInterp.execCommand(cmd);
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InputWindow.class.getName());
+    static Logger log = LoggerFactory.getLogger(InputWindow.class.getName());
 }
 
 /* @(#)InputWindow.java */

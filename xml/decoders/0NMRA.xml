@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: 0NMRA.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,9 +15,9 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="6" lastUpdated="20100312"/>
   <version author="Bob Jacobsen" version="5" lastUpdated="20031205"/>
-<!-- version 3 - add consist direction - jake -->
-<!-- version 4 - Minor formatting changes - Jack Shall -->
-<!-- version 6 - Start of I8N -->
+  <!-- version 3 - add consist direction - jake -->
+  <!-- version 4 - Minor formatting changes - Jack Shall -->
+  <!-- version 6 - Start of I8N -->
   <decoder>
     <family name="NMRA standard CV definitions" mfg="NMRA">
       <model model="NMRA standard CV definitions"/>
@@ -31,163 +31,94 @@
       <variable label="Total PWM Period" item="Total PWM Period" CV="9">
         <decVal/>
         <label xml:lang="fr">Total PWM Period(fr)</label>
+        <label xml:lang="it">Periodo Totale PWM</label>
       </variable>
       <variable label="EMF Feedback Cutout" item="EMF Feedback Cutout" CV="10">
         <decVal/>
         <label xml:lang="fr">EMF Feedback Cutout(fr)</label>
+        <label xml:lang="it">Limitazione Retroazione EMF</label>
       </variable>
       <variable label="Packet Time-out Value" item="Packet Time-out Value" CV="11">
         <decVal/>
         <label xml:lang="fr">Packet Time-out Value(fr)</label>
+        <label xml:lang="it">Valore Time-out Packet</label>
       </variable>
       <variable label="Analog Power Conversion" item="Analog Power Conversion" CV="12" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice xml:lang="fr">off(fr)</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice xml:lang="fr">on(fr)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="fr">Analog Power Conversion(fr)</label>
+        <label xml:lang="it">Conversione Alimentazione Analogica</label>
       </variable>
       <variable label="Radio Power Conversion" item="Radio Power Conversion" CV="12" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice xml:lang="fr">disabled(fr)</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice xml:lang="fr">enabled(fr)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="fr">Radio Power Conversion(fr)</label>
       </variable>
       <variable label="Zero-1 Power Conversion" item="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice xml:lang="fr">disabled(fr)</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice xml:lang="fr">enabled(fr)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="fr">Zero-1 Power Conversion(fr)</label>
       </variable>
       <variable label="Trix Power Conversion" item="Trix Power Conversion" CV="12" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice xml:lang="fr">disabled(fr)</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice xml:lang="fr">enabled(fr)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="fr">Trix Power Conversion(fr)</label>
+        <label xml:lang="it">Trix Conversione Alimentazione</label>
       </variable>
       <variable label="CTC/Railcommand Power Conversion" item="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice xml:lang="fr">disabled(fr)</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice xml:lang="fr">enabled(fr)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="fr">CTC/Railcommand Power Conversion(fr)</label>
+        <label xml:lang="it">CTC/Railcommand Conversione Alimentazione</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
-      <variable label="Decoder Lock ID number" item="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
-        <decVal/>
-        <label xml:lang="fr">Decoder Lock ID number(fr)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
       <variable label="Speed Table/Mid Range Cab Speed Step" CV="25" comment="See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied">
         <decVal/>
         <label xml:lang="fr">Speed Table/Mid Range Cab Speed Step(fr)</label>
+        <label xml:lang="it">Tabella Velocità/Comando Palmare a metà velocità</label>
         <comment>See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied</comment>
       </variable>
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label xml:lang="fr">Locomotive Direction(fr)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode">
         <enumVal>
           <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
+            <choice xml:lang="it">Formato 14 step</choice>
           </enumChoice>
           <enumChoice choice="28 speed step format">
-            <choice>28 speed step format</choice>
+            <choice xml:lang="it">Formato 28 step</choice>
           </enumChoice>
         </enumVal>
         <label xml:lang="fr">FL Location(fr)</label>
+        <label xml:lang="it">Località FL</label>
       </variable>
-      <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice>NMRA Digital only</choice>
-            <choice xml:lang="fr">NMRA Digital only (fr)</choice>
-            <choice xml:lang="ca">NMRA Digital only (ca)</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice>DC conversion enabled</choice>
-            <choice xml:lang="fr">DC conversion enabled (fr)</choice>
-            <choice xml:lang="ca">DC conversion enabled (ca)</choice>
-          </enumChoice>
-        </enumVal>
-        <label xml:lang="fr">Power Source Conversion(fr)</label>
-        <label xml:lang="ca">Power Source Conversion(ca)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX" item="Advanced Ack">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice xml:lang="fr">disabled(fr)</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice xml:lang="fr">enabled(fr)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="fr">Advanced Decoder Acknowledgement(fr)</label>
+        <label xml:lang="it">Riconoscimento Decoder Avanzato(fr)</label>
       </variable>
       <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
+            <choice xml:lang="it">Usare Vstart, Vmid, Vhigh</choice>
           </enumChoice>
           <enumChoice choice="Use table in CVs 66 through 95">
-            <choice>Use table in CVs 66 through 95</choice>
+            <choice xml:lang="it">Usare tabella con CV dalla 66 alla 95</choice>
           </enumChoice>
         </enumVal>
         <label xml:lang="fr">Speed Table Definition(fr)</label>
+        <label xml:lang="it">Definizioni Tabella Velocità</label>
       </variable>
-<!-- this next large group forms a table, so doesn't need translation -->
+      <!-- this next large group forms a table, so doesn't need translation -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>
-<!-- end of table that doesn't need translation -->
-      <variable label="Kick Start" item="Kick Start" CV="65">
-        <decVal/>
-        <label xml:lang="fr">Kick Start(fr)</label>
-        <label xml:lang="ca">Kick Start(ca)</label>
-      </variable>
-      <variable label="Forward Trim" item="Forward Trim" CV="66">
-        <decVal/>
-        <label xml:lang="fr">Forward Trim(fr)</label>
-      </variable>
+      <!-- end of table that doesn't need translation -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" item="Speed Table" CV="67">
         <speedTableVal/>
         <label xml:lang="fr">Speed Table(fr)</label>
+        <label xml:lang="it">Tabella Velocità</label>
       </variable>
-      <variable label="Reverse Trim" item="Reverse Trim" CV="95">
-        <decVal/>
-        <label xml:lang="fr">Reverse Trim(fr)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>
   </decoder>

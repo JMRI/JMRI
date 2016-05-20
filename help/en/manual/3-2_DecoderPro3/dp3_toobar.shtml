@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009 -->
+<!-- $Id: Main_Speedometer.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<TITLE>
+DecoderPro&reg; Main Window
+</TITLE>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>DecoderPro3&reg; Main Window</h1>
+<h1>Toolbar</h1>
+
+<div align=right>
+  <p><a href="dp3_Main_Main.shtml">Back </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p><img src="images/dp3_toolbar.png" width="900" height="115" alt="toolbar"></p>
+<table width="90%" border="1" cellspacing="1" cellpadding="2">
+  <tr>
+    <td width="35%"><img src="images/dp3_toolbar_newloco.png" width="105" height="43" alt="new loco button"></td>
+    <td width="65%">Opens the <strong><a href="Programmer_Setup.shtml">create new loco</a></strong> window</td>
+  </tr>
+  <tr>
+    <td><img src="images/dp3_toolbar_identify.png" width="91" height="48" alt="identify button"></td>
+    <td>Attempts to Identify the locomotive if it is in the roster.</td>
+  </tr>
+  <tr>
+    <td><img src="images/dp3_toolbar_help.png" width="71" height="47" alt="help button"></td>
+    <td>Dispays the Help file for the DecoderPro&reg; window</td>
+  </tr>
+  <tr>
+    <td><strong><a href="dp3_Main_Throttle.shtml"><img src="images/dp3_toolbar_newThrottle.png" width="120" height="30" alt="throttle"></a></strong></td>
+    <td>Opens new <strong><a href="dp3_Main_Throttle.shtml">Throttle </a>or other buttons added by<a href="Start_Preferences.shtml"> preferences.</a></strong></td>
+  </tr>
+  <tr>
+    <td><img src="images/dp3_toolbar_Power.png" width="69" height="49" alt="power control"></td>
+    <td>Controls Track power if your command station supports this feature.</td>
+  </tr>
+  <tr>
+    <td><img src="images/dp3_toolbar_programMode.png" width="232" height="28" alt="programming mode"></td>
+    <td>Drop down list allows you to select Progamming Mode</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<hr>
+
+<div align=right>
+<p><a href="dp3_Main_Main.shtml">Back </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

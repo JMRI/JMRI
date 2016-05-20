@@ -47,7 +47,7 @@ mécanismes de ce qui sera inclus dans JMRI 2.4 et ultérieures.
 <P>
 DecoderPro et les autres sont gérés via une commande java qui fixe le CLASSPATH et diverses options. Comment c'est fait réellement, 
 varie en fonction de la plate-forme: csh ,scripts sur Unix, un <a href="StartUpScripts.shtml#windows"> lanceur d'applications </a>
-sous Windows, des kits d'applications sous MacOS X, etc
+sous Windows, des kits d'applications sous Mac OS X, etc
 <P>
 Pour  rendre facile l'ajout des plug-ins, ils englobent tous les fichiers. jar dans le répertoire de l'application, et dans son 
 sous-répertoire "lib/", dans le CLASSPATH.

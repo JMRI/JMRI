@@ -4,12 +4,12 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
-import org.eclipse.jetty.websocket.WebSocket.Connection;
-
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
+import org.eclipse.jetty.websocket.WebSocket.Connection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI turnout manager and a network
@@ -63,11 +63,15 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Turnout THROWN");
             }
+             // create turnout if it does not exist since throwTurnout() no longer does so
+            this.initTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
             throwTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         } else if (statusString.contains("CLOSED")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Turnout CLOSED");
             }
+             // create turnout if it does not exist since closeTurnout() no longer does so
+            this.initTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
             closeTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         } else {
             // default case, return status for this turnout
@@ -84,5 +88,5 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     	}
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTurnoutServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class.getName());
 }

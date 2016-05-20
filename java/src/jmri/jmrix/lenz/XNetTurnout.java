@@ -105,6 +105,8 @@
 
 package jmri.jmrix.lenz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractTurnout;
 
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
@@ -763,7 +765,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected int mNumber;   // XPressNet turnout number
     XNetTurnoutStateListener _stateListener;  // Internal class object
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTurnout.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetTurnout.class.getName());
 
 }
 

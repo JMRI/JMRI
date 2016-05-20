@@ -19,6 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeListener;
 
 import org.jdom.Element;
@@ -83,8 +85,10 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	log.debug("new ButtonTrigger " + bt + " name " + bt.getName() + " type " + this.getButtonType());
 	if (bt != null)
 	    log.debug("name " + bt.getName() + " type " + this.getButtonType().toString());
-	if (button == null)
+	if (button == null) {
 	    log.error("BUTTON SHOULD NOT BE NULL");
+	    return bt;
+	}
 	button.addActionListener(bt);
 	return(bt);
     }
@@ -132,6 +136,6 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	*/
     }  // end setXml()
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ToggleSoundEvent.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ToggleSoundEvent.class.getName());
     
 }

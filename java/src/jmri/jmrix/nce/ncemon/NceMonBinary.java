@@ -179,13 +179,13 @@ public class NceMonBinary {
 							new Object[] {getLocoAddress(m), m.getElement(4)});
 				case (7):
 					return MessageFormat.format(rb.getString("LOCO_CMD_Op1_07"),
-							new Object[] {getLocoAddress(m), m.getElement(4)});
+							new Object[] {getLocoAddress(m), m.getElement(4), getFunctionNumber(m)});
 				case (8):
 					return MessageFormat.format(rb.getString("LOCO_CMD_Op1_08"),
-							new Object[] {getLocoAddress(m), m.getElement(4)});
+							new Object[] {getLocoAddress(m), m.getElement(4), getFunctionNumber(m)});
 				case (9):
 					return MessageFormat.format(rb.getString("LOCO_CMD_Op1_09"),
-							new Object[] {getLocoAddress(m), m.getElement(4)});
+							new Object[] {getLocoAddress(m), m.getElement(4), getFunctionNumber(m)});
 				case (0x0A):
 					return MessageFormat.format(rb.getString("LOCO_CMD_Op1_0A"),
 							new Object[] {getLocoAddress(m), m.getElement(4)});
@@ -277,6 +277,34 @@ public class NceMonBinary {
 			}
 			break;	
 		}
+		case (NceBinaryCommand.USB_SET_CAB_CMD): {
+			if (m.getNumDataElements() == 2){
+				return MessageFormat.format(rb.getString("Usb_Set_Cab_Op1"),
+						new Object[] {m.getElement(1)});
+			}
+			break;
+		}
+		case (NceBinaryCommand.USB_MEM_POINTER_CMD): {
+			if (m.getNumDataElements() == 3){
+				return MessageFormat.format(rb.getString("Usb_Set_Mem_Ptr_Cmd"),
+						new Object[] {m.getElement(1), m.getElement(2)});
+			}
+			break;
+		}
+		case (NceBinaryCommand.USB_MEM_WRITE_CMD): {
+			if (m.getNumDataElements() == 2){
+				return MessageFormat.format(rb.getString("Usb_Mem_Write_Cmd"),
+						new Object[] {m.getElement(1)});
+			}
+			break;
+		}
+		case (NceBinaryCommand.USB_MEM_READ_CMD): {
+			if (m.getNumDataElements() == 2){
+				return MessageFormat.format(rb.getString("Usb_Mem_Read_Cmd"),
+						new Object[] {m.getElement(1)});
+			}
+			break;
+		}
 		}	
 		// 2nd pass, check for messages that have a data reply
 		replyType = REPLY_DATA;
@@ -295,6 +323,12 @@ public class NceMonBinary {
 			if (m.getNumDataElements() == 3)
 				return MessageFormat.format(rb.getString("READ16_CMD"),
 						new Object[] {getAddress(m)});
+			break;
+		}
+		case (NceBinaryCommand.READ_AUI2_CMD):{
+			if (m.getNumDataElements() == 2)
+				return MessageFormat.format(rb.getString("READ_AUI2_CMD"),
+						new Object[] {m.getElement(1)});
 			break;
 		}
 		case (NceBinaryCommand.READ1_CMD):{
@@ -351,6 +385,77 @@ public class NceMonBinary {
 		if ((m.getElement(1) & 0xE0) > 0)
 			appendix = " (long)";
 		return Integer.toString((m.getElement(1) & 0x3F)*256 + m.getElement(2)) + appendix;
+	}
+	
+	private String getFunctionNumber(NceMessage m) {
+		// byte three is the Op_1
+		switch (m.getElement(3)) {
+		case (7): {
+			StringBuffer buf = new StringBuffer();
+			if ((m.getElement(4) & 0x10) > 0)
+				buf.append(rb.getString("F0_ON")+", ");
+			else
+				buf.append(rb.getString("F0_OFF")+", ");
+			if ((m.getElement(4) & 0x01) > 0)
+				buf.append(rb.getString("F1_ON")+", ");
+			else
+				buf.append(rb.getString("F1_OFF")+", ");
+			if ((m.getElement(4) & 0x02) > 0)
+				buf.append(rb.getString("F2_ON")+", ");
+			else
+				buf.append(rb.getString("F2_OFF")+", ");
+			if ((m.getElement(4) & 0x04) > 0)
+				buf.append(rb.getString("F3_ON")+", ");
+			else
+				buf.append(rb.getString("F3_OFF")+", ");
+			if ((m.getElement(4) & 0x08) > 0)
+				buf.append(rb.getString("F4_ON"));
+			else
+				buf.append(rb.getString("F4_OFF"));
+			return buf.toString();
+		}
+		case (8): {
+			StringBuffer buf = new StringBuffer();
+			if ((m.getElement(4) & 0x01) > 0)
+				buf.append(rb.getString("F5_ON")+", ");
+			else
+				buf.append(rb.getString("F5_OFF")+", ");
+			if ((m.getElement(4) & 0x02) > 0)
+				buf.append(rb.getString("F6_ON")+", ");
+			else
+				buf.append(rb.getString("F6_OFF")+", ");
+			if ((m.getElement(4) & 0x04) > 0)
+				buf.append(rb.getString("F7_ON")+", ");
+			else
+				buf.append(rb.getString("F7_OFF")+", ");
+			if ((m.getElement(4) & 0x08) > 0)
+				buf.append(rb.getString("F8_ON"));
+			else
+				buf.append(rb.getString("F8_OFF"));
+			return buf.toString();
+		}
+		case (9): {
+			StringBuffer buf = new StringBuffer();
+			if ((m.getElement(4) & 0x01) > 0)
+				buf.append(rb.getString("F9_ON")+", ");
+			else
+				buf.append(rb.getString("F9_OFF")+", ");
+			if ((m.getElement(4) & 0x02) > 0)
+				buf.append(rb.getString("F10_ON")+", ");
+			else
+				buf.append(rb.getString("F10_OFF")+", ");
+			if ((m.getElement(4) & 0x04) > 0)
+				buf.append(rb.getString("F11_ON")+", ");
+			else
+				buf.append(rb.getString("F11_OFF")+", ");
+			if ((m.getElement(4) & 0x08) > 0)
+				buf.append(rb.getString("F12_ON"));
+			else
+				buf.append(rb.getString("F12_OFF"));
+			return buf.toString();
+		}
+			default: return("Error");
+		}
 	}
 	
 	public String displayReply(NceReply r){

@@ -2,12 +2,14 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.JmriException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
+import jmri.JmriException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Import CV values from a "PR1" file written by PR1DOS or PR1WIN.
@@ -30,7 +32,7 @@ import java.util.Properties;
  * @version			$Revision$
  */
 public class Pr1Importer {
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1Importer.class.getName());
+  static Logger log = LoggerFactory.getLogger(Pr1Importer.class.getName());
   private static final String VERSION_KEY = "Version" ;
   private static final String CV_PREFIX = "CV" ;
   private static final int    CV_INDEX_OFFSET = 2 ;
@@ -148,53 +150,4 @@ public class Pr1Importer {
     return result ;
   }
 
-
-  /**
-   * Standalone version
-   */
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
-  public static void main(String[] args) {
-    try {
-      String logFile = "default.lcf";
-      try {
-        if (new java.io.File(logFile).canRead()) {
-          org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-        } else {
-          org.apache.log4j.BasicConfigurator.configure();
-        }
-      }
-      catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-
-//      String fileName = "E:/ModelRail/pr1dos/alex.dec" ;
-      String fileName = "E:/ModelRail/pr1dos/840B8601.dec" ;
-
-      if( args.length > 0 )
-        fileName = args[ 0 ] ;
-
-      Pr1Importer cvList = new Pr1Importer( new File( fileName ) );
-      CvTableModel model = new CvTableModel( null, null ) ;
-      cvList.setCvTable( model );
-
-      System.out.println( "File: " + fileName ) ;
-      System.out.println( "CV#, Hex Int, Dec Int, Hex Byte, Dec Byte" ) ;
-      for( int cvIndex = 1; cvIndex <= 512; cvIndex++ ){
-        try {
-          int cvValue = cvList.getCV(cvIndex);
-          System.out.println("CV" + cvIndex + " " + Integer.toHexString(cvValue) +
-                             ", " + cvValue);
-        }
-        catch (JmriException ex1) {
-          log.debug( "CV Not Found: " + cvIndex );
-        }
-      }
-    }
-    catch (IOException ex) {
-      log.debug( "IOException: ", ex );
-    }
-    catch (Exception ex) {
-      log.debug( "Exception: ", ex );
-    }
-
-    System.exit( 0 );
-  }
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.setup.Control;
@@ -30,7 +33,7 @@ public class EngineManager extends RollingStockManager{
 
 	protected Hashtable<String, Consist> _consistHashTable = new Hashtable<String, Consist>();   	// stores Consists by number
 
-	public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength";
+	public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength"; // NOI18N
 
     public EngineManager() {
     }
@@ -209,8 +212,8 @@ public class EngineManager extends RollingStockManager{
     	while (en.hasMoreElements()) { 
     		Engine engine = getById(en.nextElement());
     		if ((engine.getModel().equals(model) || model.equals(""))
-    				&& !names.contains(engine.getRoad())){
-    			names.add(engine.getRoad());
+    				&& !names.contains(engine.getRoadName())){
+    			names.add(engine.getRoadName());
     		}
     	}
     	return sortList(names);
@@ -224,35 +227,95 @@ public class EngineManager extends RollingStockManager{
    	return _enginesTableColumnWidths.clone();
    }
 
-	public void options (org.jdom.Element values) {
-		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-		// get Engines Table Frame attributes
-		Element e = values.getChild("enginesOptions");
-		if (e != null){
-			//TODO this code is here for backwards compatibility, remove after next major release
-			org.jdom.Attribute a;
-	  		if ((a = e.getAttribute("columnWidths")) != null){
-             	String[] widths = a.getValue().split(" ");
-             	for (int i=0; i<widths.length; i++){
-             		try{
-             			_enginesTableColumnWidths[i] = Integer.parseInt(widths[i]);
-             		} catch (NumberFormatException ee){
-             			log.error("Number format exception when reading trains column widths");
-             		}
-             	}
-    		}
+	public void load(Element root) {
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.NEW_CONSISTS)!= null) {
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.NEW_CONSISTS).getChildren(Xml.CONSIST);
+			if (log.isDebugEnabled()) log.debug("Engine manager sees "+l.size()+" consists");
+			Attribute a;
+			for (int i=0; i<l.size(); i++) {
+				Element kernel = l.get(i);
+				if ((a = kernel.getAttribute(Xml.NAME)) != null) {
+					newConsist(a.getValue());
+				}
+			}
 		}
+		// old format
+		else if (root.getChild(Xml.CONSISTS)!= null){
+        	String names = root.getChildText(Xml.CONSISTS);
+        	if(!names.equals("")){
+        		String[] consistNames = names.split("%%"); // NOI18N
+        		if (log.isDebugEnabled()) log.debug("consists: "+names);
+        		for (int i=0; i<consistNames.length; i++){
+        			newConsist(consistNames[i]);
+        		}
+        	}
+        }
+         
+		if (root.getChild(Xml.OPTIONS) != null) {
+			Element values = root.getChild(Xml.OPTIONS);
+			// get Engines Table Frame attributes
+			Element e = values.getChild(Xml.ENGINES_OPTIONS);
+			if (e != null){
+				//TODO this code is here for backwards compatibility, remove after next major release
+				org.jdom.Attribute a;
+				if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null){
+					String[] widths = a.getValue().split(" ");
+					for (int i=0; i<widths.length; i++){
+						try{
+							_enginesTableColumnWidths[i] = Integer.parseInt(widths[i]);
+						} catch (NumberFormatException ee){
+							log.error("Number format exception when reading trains column widths");
+						}
+					}
+				}
+			}
+		}
+		
+        if (root.getChild(Xml.ENGINES) != null) {
+        	@SuppressWarnings("unchecked")
+            List<Element> l = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
+            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" engines");
+            for (int i=0; i<l.size(); i++) {
+                register(new Engine(l.get(i)));
+            }
+        }
 	}
 
 	   /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
      * detailed DTD in operations-engines.dtd.
-     * @return Contents in a JDOM Element
+     *
      */
-    public org.jdom.Element store() {
-    	Element values = new Element("options");
-    	// nothing to store!
-        return values;
+    public void store(Element root) {
+    	root.addContent(new Element(Xml.OPTIONS));	// nothing to store under options
+    	
+    	Element values;	
+		List<String> names = getConsistNameList();
+		if (Control.backwardCompatible) {
+			root.addContent(values = new Element(Xml.CONSISTS));
+			for (int i=0; i<names.size(); i++){
+				String consistNames = names.get(i)+"%%"; // NOI18N
+				values.addContent(consistNames);
+			}
+		}
+        // new format using elements
+        Element consists = new Element(Xml.NEW_CONSISTS);
+        for (int i=0; i<names.size(); i++){
+        	Element consist = new Element(Xml.CONSIST);
+        	consist.setAttribute(new Attribute(Xml.NAME, names.get(i)));
+        	consists.addContent(consist);
+        }
+        root.addContent(consists);
+        
+		root.addContent(values = new Element(Xml.ENGINES));
+		// add entries
+		List<String> engineList = getByRoadNameList();
+		for (int i=0; i<engineList.size(); i++) {
+			Engine eng = getById(engineList.get(i));
+			values.addContent(eng.store());
+		}		
     }
     
     protected void firePropertyChange(String p, Object old, Object n){
@@ -261,6 +324,6 @@ public class EngineManager extends RollingStockManager{
     	super.firePropertyChange(p, old, n);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(EngineManager.class.getName());
 }
 

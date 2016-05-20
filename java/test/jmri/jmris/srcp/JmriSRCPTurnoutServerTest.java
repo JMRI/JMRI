@@ -2,6 +2,7 @@
 
 package jmri.jmris.srcp;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -15,7 +16,13 @@ import junit.framework.TestSuite;
 public class JmriSRCPTurnoutServerTest extends TestCase {
 
     public void testCtor() {
-	java.io.DataOutputStream output=new java.io.DataOutputStream(System.out);
+	    java.io.DataOutputStream output=new java.io.DataOutputStream(
+	        new java.io.OutputStream() {
+	        // null output string drops characters
+	        // could be replaced by one that checks for specific outputs
+            @Override
+            public void write(int b) throws java.io.IOException {}
+	    });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         JmriSRCPTurnoutServer a = new JmriSRCPTurnoutServer(input,output);
         Assert.assertNotNull(a);
@@ -40,7 +47,7 @@ public class JmriSRCPTurnoutServerTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSRCPTurnoutServerTest.class.getName());
+    static Logger log = Logger.getLogger(JmriSRCPTurnoutServerTest.class.getName());
 
 }
 

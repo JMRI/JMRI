@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: TD_SMC4.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,8 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.1" lastUpdated="20090622"/>
-<!-- Version 1 inital release -->
-<!-- Version 1.1 corrected CV29 2009/06/22 -->
+  <!-- Version 1 inital release -->
+  <!-- Version 1.1 corrected CV29 2009/06/22 -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SMC4" lowVersionID="1" comment="SMC4 is a stationary decoder, but it can be programmed in the usual way"/>
@@ -176,7 +176,7 @@
       </variable>
       <variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
         <shortAddressVal/>
-<!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
+        <!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
         <label>Ops Mode Address</label>
       </variable>
       <variable label="" item="OS1" CV="33" mask="XXXXXXVV" default="3">
@@ -279,7 +279,7 @@
         </enumVal>
         <label/>
       </variable>
-<!-- Begin primary input variable definition -->
+      <!-- Begin primary input variable definition -->
       <variable label="Route Number" item="Rte Num P1" CV="35" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
@@ -436,7 +436,7 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-<!-- Begin secondary input variable definition -->
+      <!-- Begin secondary input variable definition -->
       <variable label="Route Number" item="Rte Num S1" CV="43" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
@@ -593,7 +593,7 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-<!-- Begin servo speed variable definition -->
+      <!-- Begin servo speed variable definition -->
       <variable label="Servo 1 Move Speed" CV="67" mask="XVVVVVVV" default="18">
         <decVal min="1" max="127"/>
         <label>Servo 1 Move Speed</label>
@@ -757,7 +757,7 @@
         </enumVal>
         <label>Output 8</label>
       </variable>
-<!-- Begin route variable definition -->
+      <!-- Begin route variable definition -->
       <variable label="Route Group 1-8 Address" CV="77" mask="VVVVVVVV" default="101" tooltip="Range 1-2040">
         <splitVal highCV="78" upperMask="XXXXVVVV"/>
         <label>Route Group 1-8 Address</label>

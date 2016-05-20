@@ -2,6 +2,8 @@
 
 package jmri.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.AboutAction;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
@@ -14,7 +16,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.util.Locale;
 
 import java.net.URL;
@@ -48,14 +49,12 @@ public class HelpUtil {
         return helpMenu;
     }
     
-    static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
-    
     static public JMenu makeHelpMenu(String ref, boolean direct) {
         if (!initOK()) {
             log.warn("help initialization not completed");
             return null;  // initialization failed
         }
-        JMenu helpMenu = new JMenu(java.util.ResourceBundle.getBundle("jmri/util/UtilBundle").getString("HELP"));
+        JMenu helpMenu = new JMenu(Bundle.getMessage("HELP"));
         JMenuItem item = makeHelpMenuItem(ref);
         if (item == null) {
             log.error("Can't make help menu item for "+ref);
@@ -64,24 +63,24 @@ public class HelpUtil {
         helpMenu.add(item);
         
         if (direct) {
-            item = new JMenuItem(rb.getString("MenuItemHelp"));
+            item = new JMenuItem(Bundle.getMessage("MenuItemHelp"));
             globalHelpBroker.enableHelpOnButton(item, "index", null);
             helpMenu.add(item);
             
             // add standard items
-            JMenuItem license = new JMenuItem(rb.getString("MenuItemLicense"));
+            JMenuItem license = new JMenuItem(Bundle.getMessage("MenuItemLicense"));
             helpMenu.add(license);
             license.addActionListener(new apps.LicenseAction());
 
-            JMenuItem directories = new JMenuItem(rb.getString("MenuItemLocations"));
+            JMenuItem directories = new JMenuItem(Bundle.getMessage("MenuItemLocations"));
             helpMenu.add(directories);
             directories.addActionListener(new jmri.jmrit.XmlFileLocationAction());
     
-            JMenuItem context = new JMenuItem(rb.getString("MenuItemContext"));
+            JMenuItem context = new JMenuItem(Bundle.getMessage("MenuItemContext"));
             helpMenu.add(context);
             context.addActionListener(new apps.ReportContextAction());
 
-            JMenuItem console = new JMenuItem(rb.getString("MenuItemConsole"));
+            JMenuItem console = new JMenuItem(Bundle.getMessage("MenuItemConsole"));
             helpMenu.add(console);
             console.addActionListener(new apps.SystemConsoleAction());
 
@@ -89,18 +88,22 @@ public class HelpUtil {
 
             // Put about dialog in Apple's prefered area on Mac OS X
             if (SystemType.isMacOSX()) {
-                Application.getApplication().setAboutHandler(new AboutHandler() {
+                try {
+                    Application.getApplication().setAboutHandler(new AboutHandler() {
 
-                    @Override
-                    public void handleAbout(EventObject eo) {
-                        new AboutDialog(null, true).setVisible(true);
-                    }
-                });
+                        @Override
+                        public void handleAbout(EventObject eo) {
+                            new AboutDialog(null, true).setVisible(true);
+                        }
+                    });
+                } catch (java.lang.RuntimeException re) {
+                    log.error("Unable to put About handler in default location", re);
+                }
             }
             // Include About in Help menu if not on Mac OS X or not using Aqua Look and Feel
             if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
                 helpMenu.addSeparator();
-                JMenuItem about = new JMenuItem(rb.getString("MenuItemAbout") + " " + jmri.Application.getApplicationName());
+                JMenuItem about = new JMenuItem(Bundle.getMessage("MenuItemAbout") + " " + jmri.Application.getApplicationName());
                 helpMenu.add(about);
                 about.addActionListener(new AboutAction());
             }
@@ -111,7 +114,7 @@ public class HelpUtil {
     static public JMenuItem makeHelpMenuItem(String ref) {
         if (!initOK()) return null;  // initialization failed
         
-        JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemWindowHelp"));
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemWindowHelp"));
         globalHelpBroker.enableHelpOnButton(menuItem, ref, null);
 
         // start help to see what happend
@@ -149,17 +152,16 @@ public class HelpUtil {
                 Locale locale = Locale.getDefault();
                 String language = locale.getLanguage();
                 String helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
-                File file = new File(helpsetName);
-                if (file.isFile()) {
+                URL hsURL = FileUtil.findURL(helpsetName);
+                if (hsURL != null) {
                     log.debug("JavaHelp using "+helpsetName);
                 } else {
-                    System.out.println("JavaHelp: File "+helpsetName+" not found, dropping to default");
+                    log.warn("JavaHelp: File "+helpsetName+" not found, dropping to default");
                     language = "en";
                     helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
+                    hsURL = FileUtil.findURL(helpsetName);
                 }
-                URL hsURL;
                 try {
-                    hsURL = new URL("file:"+helpsetName);
                     globalHelpSet = new HelpSet(null, hsURL);
                 } catch (java.lang.NoClassDefFoundError ee) {
                     log.debug("classpath="+System.getProperty("java.class.path","<unknown>"));
@@ -198,5 +200,5 @@ public class HelpUtil {
     static HelpBroker globalHelpBroker;
     
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HelpUtil.class.getName());
+    static private Logger log = LoggerFactory.getLogger(HelpUtil.class.getName());
 }

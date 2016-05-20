@@ -2,13 +2,14 @@
 
 package jmri.jmrit.roster;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -17,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.EditableResizableImagePanel;
 
@@ -31,8 +32,6 @@ import jmri.util.swing.EditableResizableImagePanel;
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
     
-    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-
     JTextField[] labels;
     JCheckBox[] lockable;
     JRadioButton[] shunterMode;
@@ -69,30 +68,30 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         int nextx = 0;
         
         // first column
-        add(new JLabel(rb.getString("FunctionButtonN")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonN")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonLabel")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonLabel")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonLockable")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonLockable")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonImageOff")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonImageOff")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonImageOn")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonImageOn")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonShunterFn")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonShunterFn")), cL);
         cL.gridx++;
         // second column
-        add(new JLabel(rb.getString("FunctionButtonN")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonN")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonLabel")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonLabel")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonLockable")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonLockable")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonImageOff")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonImageOff")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonImageOn")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonImageOn")), cL);
         cL.gridx++;
-        add(new JLabel(rb.getString("FunctionButtonShunterFn")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonShunterFn")), cL);
         cL.gridx++;
         
         cL.gridx = 0;
@@ -116,17 +115,17 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             
             // add the function buttons
     		_imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
-    		_imageFilePath[i].setDropFolder(XmlFile.resourcesDir());
+    		_imageFilePath[i].setDropFolder(FileUtil.getUserResourcePath());
     		_imageFilePath[i].setBackground(new Color(0,0,0,0));
-    		_imageFilePath[i].setToolTipText(rb.getString("FunctionButtonRosterImageToolTip"));
+    		_imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
     		_imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
             add(_imageFilePath[i], cL);
             cL.gridx++;
             
     		_imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
-    		_imagePressedFilePath[i].setDropFolder(XmlFile.resourcesDir());
+    		_imagePressedFilePath[i].setDropFolder(FileUtil.getUserResourcePath());
     		_imagePressedFilePath[i].setBackground(new Color(0,0,0,0));
-    		_imagePressedFilePath[i].setToolTipText(rb.getString("FunctionButtonPressedRosterImageToolTip"));
+    		_imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
     		_imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
     		add(_imagePressedFilePath[i], cL);    		
             cL.gridx++;
@@ -360,6 +359,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionLabelPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(FunctionLabelPane.class.getName());
 
 }

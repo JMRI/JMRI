@@ -3,6 +3,8 @@
 
 package jmri.jmrix.loconet.sdfeditor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 
 import java.awt.*;
@@ -189,6 +191,6 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(EditorPane.class.getName());
 
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -57,8 +59,8 @@ public class BlockTableAction extends AbstractTableAction {
         }
 		inchBox.setSelected(true);
 		centimeterBox.setSelected(false);
-        
-        if(jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getPreferenceState(getClassName(), "LengthUnitMetric")){
+
+        if(jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getSimplePreferenceState(getClassName()+ ":LengthUnitMetric")){
             inchBox.setSelected(false);
             centimeterBox.setSelected(true);
         }
@@ -92,8 +94,8 @@ public class BlockTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-
-        	static public final int DIRECTIONCOL = NUMCOLUMN;
+            static public final int EDITCOL = NUMCOLUMN;
+        	static public final int DIRECTIONCOL = EDITCOL+1;
 			static public final int LENGTHCOL = DIRECTIONCOL+1;
 			static public final int CURVECOL = LENGTHCOL+1;
             static public final int STATECOL = CURVECOL+1;
@@ -202,6 +204,8 @@ public class BlockTableAction extends AbstractTableAction {
                 }
                 else if (col==CURRENTREPCOL){
                     return Boolean.valueOf(b.isReportingCurrent());
+                } else if (col==EDITCOL){  //
+                    return AbstractTableAction.rb.getString("ButtonEdit");
                 }
                 else return super.getValueAt(row, col);
 			}    		
@@ -258,21 +262,25 @@ public class BlockTableAction extends AbstractTableAction {
                 else if (col==SENSORCOL){
                     String strSensor = (String)((JComboBox)value).getSelectedItem();
                     b.setSensor(strSensor);
-                    if(b.getSensor()!=null && b.getSensor().getReporter()!=null){
-                        String msg = java.text.MessageFormat.format(rb
-                                .getString("BlockAssignReporter"), new Object[] { b.getSensor().getDisplayName(), b.getSensor().getReporter().getDisplayName() });
-                        if(JOptionPane.showConfirmDialog(addFrame,
-                                                             msg,rb.getString("BlockAssignReporterTitle"),
-                                                             JOptionPane.YES_NO_OPTION)==0)
-                            b.setReporter(b.getSensor().getReporter());
-                    }
-                    fireTableRowsUpdated(row,row);
                     return;
                 }
                 else if (col==CURRENTREPCOL){
                     boolean boo = ((Boolean) value).booleanValue();
                     b.setReportingCurrent(boo);
                     fireTableRowsUpdated(row,row);
+                } else if (col==EDITCOL){
+                        class WindowMaker implements Runnable {
+                        Block b;
+                        WindowMaker(Block b){
+                            this.b = b;
+                        }
+                        public void run() {
+                                editButton(b); // don't really want to stop Route w/o user action
+                            }
+                        }
+                    WindowMaker t = new WindowMaker(b);
+					javax.swing.SwingUtilities.invokeLater(t);
+                    //editButton(b);
                 }
 				else super.setValueAt(value, row, col);					
     		}
@@ -288,6 +296,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==REPORTERCOL) return rb.getString("BlockReporter");
                 if (col==SENSORCOL) return rb.getString("BlockSensor");
                 if (col==CURRENTREPCOL) return rb.getString("BlockReporterCurrent");
+                if (col==EDITCOL) return Bundle.getMessage("ButtonEdit");
         		return super.getColumnName(col);
         	}
 
@@ -302,6 +311,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==REPORTERCOL) return String.class;
                 if (col==SENSORCOL) return JComboBox.class;
                 if (col==CURRENTREPCOL) return Boolean.class;
+                if(col==EDITCOL) return JButton.class;
     			else return super.getColumnClass(col);
 		    }
 
@@ -315,6 +325,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==REPORTERCOL) return new JTextField(8).getPreferredSize().width;
                 if (col==SENSORCOL) return new JTextField(8).getPreferredSize().width;
                 if (col==CURRENTREPCOL) return new JTextField(7).getPreferredSize().width;
+                if (col==EDITCOL) return new JTextField(7).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
 
@@ -331,6 +342,7 @@ public class BlockTableAction extends AbstractTableAction {
                 else if (col==REPORTERCOL) return true;
                 else if (col==SENSORCOL) return true;
                 else if (col==CURRENTREPCOL) return true;
+                else if (col==EDITCOL) return true;
 				else return super.isCellEditable(row,col);
 			}
 			
@@ -374,6 +386,12 @@ public class BlockTableAction extends AbstractTableAction {
                 jmri.InstanceManager.sensorManagerInstance().removePropertyChangeListener(this);
             }
         };
+    }
+    
+    void editButton(Block b){
+        jmri.jmrit.beantable.beanedit.BlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.BlockEditAction();
+        beanEdit.setBean(b);
+        beanEdit.actionPerformed(null);
     }
     
     private void updateSensorList(){
@@ -519,7 +537,7 @@ public class BlockTableAction extends AbstractTableAction {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddBlock"), false, true);
-            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true);
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //IN18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener listener = new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -568,7 +586,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (!validateNumericalInput(text)){
                     String msg = java.text.MessageFormat.format(rb
                         .getString("ShouldBeNumber"), new Object[] { rb.getString("BlockLengthColName") });
-                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(rb.getString("ErrorTitle"), msg, getClassName(), "length", false, false, org.apache.log4j.Level.WARN);
+                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showWarningMessage(rb.getString("ErrorTitle"), msg, getClassName(), "length", false, false);
                 }
             }
             public void keyTyped(KeyEvent keyEvent) {
@@ -601,7 +619,7 @@ public class BlockTableAction extends AbstractTableAction {
                 String msg = java.text.MessageFormat.format(rb
                     .getString("ShouldBeNumber"), new Object[] { rb.getString("LabelNumberToAdd") });
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage(rb.getString("ErrorTitle"),msg,""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage(rb.getString("ErrorTitle"),msg,""+ex, "",true, false);
                 return;
             }
         }
@@ -696,7 +714,7 @@ public class BlockTableAction extends AbstractTableAction {
     
     @Override
     public void dispose() {
-    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceState(getClassName(), "LengthUnitMetric",centimeterBox.isSelected());
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setSimplePreferenceState(getClassName() + ":LengthUnitMetric",centimeterBox.isSelected());
         super.dispose();
     }
 
@@ -704,7 +722,7 @@ public class BlockTableAction extends AbstractTableAction {
     
     protected String getClassName() { return BlockTableAction.class.getName(); }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
 }
 
 /* @(#)BlockTableAction.java */

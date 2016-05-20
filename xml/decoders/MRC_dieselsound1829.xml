@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008, 2009 All rights reserved    -->
-<!-- $Id$ -->
+<!-- $Id: MRC_dieselsound1829.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,9 +16,9 @@
   <version author="Paul Fraker" version="1.2" lastUpdated="20090921"/>
   <version author="Peter Ulvestad" version="1.1" lastUpdated="200900904"/>
   <version author="Paul Fraker" version="1.0" lastUpdated="20090731"/>
-<!-- used MRC_soundbrilliance1638 file as a starting point-->
-<!-- Version 1.1 Added speed table, corrected CV6-->
-<!-- Version 1.2 Added CV118 & CV119 parameters -->
+  <!-- used MRC_soundbrilliance1638 file as a starting point-->
+  <!-- Version 1.1 Added speed table, corrected CV6-->
+  <!-- Version 1.2 Added CV118 & CV119 parameters -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="29" highVersionID="29">
       <model model="Synch Diesel Sound 1829" numOuts="4" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -68,7 +68,7 @@
         </enumVal>
         <label>Back EMF Load Control on/off</label>
       </variable>
-<!-- Version 1.1 Modified CV6-->
+      <!-- Version 1.1 Modified CV6-->
       <variable label="Speed Curve Select" CV="6" item="Speed Table/Mid Range Cab Speed Step" tooltip="CV6 sets Speed Curve when using CVs 2 and 5 (Set CV2 and CV5 first)">
         <enumVal>
           <enumChoice choice="Linear">
@@ -198,7 +198,7 @@
         <label>Bell Type</label>
         <comment>Range 0-7</comment>
       </variable>
-<!-- Version 1.1 Added speed table-->
+      <!-- Version 1.1 Added speed table-->
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
@@ -251,7 +251,7 @@
         </enumVal>
         <label>Notch Mode</label>
       </variable>
-<!-- Version 1.2 Changed "Sound Group 3 Option 3" to "Sound Setting 15" -->
+      <!-- Version 1.2 Changed "Sound Group 3 Option 3" to "Sound Setting 15" -->
       <variable label="Bell Ring Rate" CV="54" item="Sound Setting 15" default="3" tooltip="CV54, Bell Ring Rate, Range 0-50, lower is faster" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
@@ -358,7 +358,7 @@
         </enumVal>
         <label>Ditch Lights</label>
       </variable>
-<!-- Version 1.2  Added CV118 -->
+      <!-- Version 1.2  Added CV118 -->
       <variable label="ACC#1 Light Effect" CV="118" item="Global lighting option 4" default="0" tooltip="CV118, Lighting effects for ACC #1">
         <enumVal>
           <enumChoice choice="Ditch Light">
@@ -385,7 +385,7 @@
         </enumVal>
         <label>ACC#1 Light Effect</label>
       </variable>
-<!-- Version 1.2  Added CV119 -->
+      <!-- Version 1.2  Added CV119 -->
       <variable label="ACC#2 Light Effect" CV="119" item="Global lighting option 5" default="0" tooltip="CV119, Lighting effects for ACC #2">
         <enumVal>
           <enumChoice choice="Ditch Light">

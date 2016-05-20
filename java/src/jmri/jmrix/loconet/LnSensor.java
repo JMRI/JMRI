@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
@@ -122,7 +124,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensor.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnSensor.class.getName());
 
 }
 

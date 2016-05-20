@@ -2,12 +2,13 @@
 
 package apps;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
@@ -34,9 +35,15 @@ import java.util.ArrayList;
 
 import java.util.EventObject;
 import javax.swing.*;
+import java.awt.AWTEvent;
+import java.awt.Toolkit;
+import java.net.URL;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.JTextComponent;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
+import jmri.util.FileUtil;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
 
@@ -120,7 +127,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         jmri.InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
 
         // find preference file and set location in configuration manager
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        FileUtil.createDirectory(FileUtil.getPreferencesPath());
         // Needs to be declared final as we might need to
         // refer to this on the Swing thread
         final File file;
@@ -128,7 +135,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         if (!new File(configFilename).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
+            file = new File(FileUtil.getUserFilesPath()+configFilename);
         } else {
             file = new File(configFilename);
         }
@@ -184,6 +191,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                 e.printStackTrace();
             }
         }
+
+        FileUtil.logFilePaths();
         
         splash(false);
         splash(true, false);
@@ -271,7 +280,35 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
         add(_jynstrumentSpace);
+        long eventMask = AWTEvent.MOUSE_EVENT_MASK;
 
+        Toolkit.getDefaultToolkit().addAWTEventListener( new AWTEventListener()
+        {
+            public void eventDispatched(AWTEvent e)
+            {
+              if (e instanceof MouseEvent) {
+                MouseEvent  me=(MouseEvent)e;
+                if(me.isPopupTrigger() && me.getComponent() instanceof JTextComponent){
+                    final JTextComponent component = (JTextComponent)me.getComponent();  
+                    final JPopupMenu menu = new JPopupMenu();
+                    JMenuItem item;  
+                    item = new JMenuItem(new DefaultEditorKit.CopyAction());  
+                    item.setText("Copy");  
+                    item.setEnabled(component.getSelectionStart() != component.getSelectionEnd());  
+                    menu.add(item);  
+                    item = new JMenuItem(new DefaultEditorKit.CutAction());  
+                    item.setText("Cut");  
+                    item.setEnabled(component.isEditable() && component.getSelectionStart() != component.getSelectionEnd());  
+                    menu.add(item);  
+                    item = new JMenuItem(new DefaultEditorKit.PasteAction());  
+                    item.setText("Paste");  
+                    item.setEnabled(component.isEditable());  
+                    menu.add(item);  
+                    menu.show(me.getComponent(), me.getX(), me.getY());
+                }
+              } 
+            }
+        }, eventMask);
         log.debug("End constructor");
     }
     
@@ -456,7 +493,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     
     protected void operationsMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new jmri.jmrit.operations.OperationsMenu(rb.getString("MenuOperations")));
+        menuBar.add(new jmri.jmrit.operations.OperationsMenu());
     }
 
     protected void rosterMenu(JMenuBar menuBar, WindowInterface wi) {
@@ -553,8 +590,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("DefaultVersionCredit"),
-                                new Object[]{jmri.Version.name()});
+        return Bundle.getMessage("DefaultVersionCredit", jmri.Version.name());
     }
     protected String line2() {
         return "http://jmri.org/";
@@ -610,13 +646,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         	name = conn.getManufacturer();
     	if (ConnectionStatus.instance().isConnectionOk(conn.getInfo())){
     		cs.setForeground(Color.black);
-    		String cf = MessageFormat.format(rb.getString("ConnectionSucceeded"),
-					new Object[] {name, conn.name(), conn.getInfo()});
+    		String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
 			cs.setText(cf);
 		} else {
 			cs.setForeground(Color.red);
-			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] {name, conn.name(), conn.getInfo()});
+			String cf = Bundle.getMessage("ConnectionFailed", name, conn.name(), conn.getInfo());
 			cf = cf.toUpperCase();
 			cs.setText(cf);
 		}
@@ -629,9 +663,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         return " ";
     }
     protected String line9() {
-        return MessageFormat.format(rb.getString("JavaVersionCredit"),
-                                new Object[]{System.getProperty("java.version","<unknown>"),
-                                            Locale.getDefault().toString()});
+        return Bundle.getMessage("JavaVersionCredit", 
+                System.getProperty("java.version","<unknown>"),
+                Locale.getDefault().toString());
     }
 
     protected String logo() {
@@ -982,15 +1016,16 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
 
     static protected void loadFile(String name){
-        File pFile = InstanceManager.configureManagerInstance().find(name);
-        if (pFile!=null)
+        URL pFile = InstanceManager.configureManagerInstance().find(name);
+        if (pFile!=null) {
             try {
                 InstanceManager.configureManagerInstance().load(pFile);
             } catch (JmriException e) {
                 log.error("Unhandled problem in loadFile: "+e);
             }
-        else
+        } else {
             log.warn("Could not find "+name+" config file");
+        }
 
     }
 
@@ -1058,7 +1093,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     private static final String jmriLog ="****** JMRI log *******";
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Apps.class.getName());
+    static Logger log = LoggerFactory.getLogger(Apps.class.getName());
     
 }
 

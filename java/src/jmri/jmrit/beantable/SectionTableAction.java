@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Section;
@@ -270,6 +272,7 @@ public class SectionTableAction extends AbstractTableAction {
 	JRadioButton automatic = new JRadioButton(rbx.getString("UseConnectivity"),false);
 	ButtonGroup entryPointOptions = null;
     String systemNameAuto = this.getClass().getName()+".AutoSystemName";
+    JLabel generationStateLabel = new JLabel();
     /**
 	 * Responds to the Add... button and the Edit buttons in Section Table 
 	 */
@@ -300,7 +303,7 @@ public class SectionTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame(rb.getString("TitleAddSection"));   
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SectionAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            JPanel p = new JPanel(); 
+            JPanel p = new JPanel();
 			p.setLayout(new FlowLayout());
             p.add(sysNameLabel);
 			p.add(sysNameFixed);
@@ -319,6 +322,10 @@ public class SectionTableAction extends AbstractTableAction {
             p.add(userName);
 			userName.setToolTipText(rbx.getString("SectionUserNameHint"));
             addFrame.getContentPane().add(p);
+            JPanel pa = new JPanel();
+            pa.setLayout(new FlowLayout());
+            pa.add(generationStateLabel);
+            addFrame.getContentPane().add(pa);
 			addFrame.getContentPane().add(new JSeparator());
 			JPanel p1 = new JPanel();
 			p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
@@ -532,6 +539,13 @@ public class SectionTableAction extends AbstractTableAction {
     }
 	private void initializeEditInformation() {
 		userName.setText(curSection.getUserName());
+        switch(curSection.getSectionType()){
+            case Section.USERDEFINED : generationStateLabel.setText(""); break;
+            case Section.SIGNALMASTLOGIC : generationStateLabel.setText(rbx.getString("SectionTypeSMLLabel")); break;
+            case Section.DYNAMICADHOC : generationStateLabel.setText(rbx.getString("SectionTypeDynLabel")); break;
+            default : generationStateLabel.setText(""); break;
+        }
+        
 		deleteBlocksPressed(null);
 		int i = 0;
 		while (curSection.getBlockBySequenceNumber(i)!=null) {
@@ -567,6 +581,7 @@ public class SectionTableAction extends AbstractTableAction {
 		reverseSensorField.setText("");
 		forwardStopSensorField.setText("");
 		reverseStopSensorField.setText("");
+        generationStateLabel.setText("");
 	}
     void createPressed(ActionEvent e) {
 		if (!checkSectionInformation()) {
@@ -1356,7 +1371,7 @@ public class SectionTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleSectionTable"); }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SectionTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SectionTableAction.class.getName());
 }
 
 /* @(#)SectionTableAction.java */

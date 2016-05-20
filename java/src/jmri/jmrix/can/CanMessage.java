@@ -2,7 +2,11 @@
 
 package jmri.jmrix.can;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRMessage;
+
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 /**
  * Base class for messages in a CANbus based message/reply protocol.
@@ -69,9 +73,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     
     // copy one
     @SuppressWarnings("null")
-	public  CanMessage(CanMessage m) {
-        if (m == null)
-            log.error("copy ctor of null message");
+	public  CanMessage(@NonNull CanMessage m) {
         _header = m._header;
         _isExtended = m._isExtended;
         _isRtr = m._isRtr;
@@ -83,9 +85,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     
     // copy type
     @SuppressWarnings("null")
-	public  CanMessage(CanReply m) {
-        if (m == null)
-            log.error("copy ctor of null message");
+	public  CanMessage(@NonNull CanReply m) {
         _header = m._header;
         _isExtended = m._isExtended;
         _isRtr = m._isRtr;
@@ -155,7 +155,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     boolean _isExtended;
     boolean _isRtr;
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(CanMessage.class.getName());
 }
 
 /* @(#)CanMessage.java */

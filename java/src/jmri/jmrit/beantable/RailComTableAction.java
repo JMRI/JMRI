@@ -1,6 +1,8 @@
 // RailCommTableAction.java
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -299,7 +301,7 @@ public class RailComTableAction extends AbstractTableAction {
     protected String getClassName() {
         return RailComTableAction.class.getName();
     }
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RailComTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RailComTableAction.class.getName());
 }
 
 /* @(#)RailCommTableAction.java */

@@ -1,7 +1,9 @@
-// SerialMon Frame.java
+// SerialMonFrame.java
 
 package jmri.jmrix.cmri.serial.serialmon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialNode;
@@ -16,7 +18,7 @@ import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
  * @version         $Revision: 17977 $
  */
 
-public abstract class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
+public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
     public SerialMonFrame() {
         super();
@@ -184,7 +186,7 @@ public abstract class SerialMonFrame extends jmri.jmrix.AbstractMonFrame impleme
                 nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
             }
     }
-   
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonFrame.class.getName());
+
+    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

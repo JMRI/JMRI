@@ -2,6 +2,8 @@
 
 package jmri.jmrix.dcc4pc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +130,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                    showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         
@@ -1089,7 +1091,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class.getName());
 }
 
 /* @(#)Dcc4PcSensorManager.java */

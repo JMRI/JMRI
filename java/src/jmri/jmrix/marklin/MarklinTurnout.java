@@ -2,6 +2,8 @@
 
 package jmri.jmrix.marklin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -116,7 +118,7 @@ public class MarklinTurnout extends AbstractTurnout
     
     /**
      * Tell the layout to go to new state.
-     * @param closed State of the turnout to be sent to the command station
+     * @param newstate State of the turnout to be sent to the command station
      */
     protected void sendMessage(final boolean newstate) {
         MarklinMessage m = MarklinMessage.getSetTurnout(getCANAddress(), (newstate? 1:0), 0x01);
@@ -176,7 +178,7 @@ public class MarklinTurnout extends AbstractTurnout
     static final int METERINTERVAL = 100;  // msec wait before closed
     static java.util.Timer meterTimer = new java.util.Timer(true);
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinTurnout.class.getName());
+    static Logger log = LoggerFactory.getLogger(MarklinTurnout.class.getName());
 }
 
 /* @(#)MarklinTurnout.java */

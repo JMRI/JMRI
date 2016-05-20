@@ -1,5 +1,7 @@
 package jmri.jmrix.srcp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -159,6 +161,6 @@ public class SRCPThrottle extends AbstractThrottle
     protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(SRCPThrottle.class.getName());
 
 }

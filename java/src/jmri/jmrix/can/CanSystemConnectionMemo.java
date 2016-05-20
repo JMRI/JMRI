@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import java.util.ResourceBundle;
 
@@ -70,6 +72,8 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         } else if (ConfigurationManager.TEST.equals(protocol)) {
             manager=new jmri.jmrix.can.nmranet.NmraConfigurationManager(this);
         }
+        // make sure appropriate actions in preferences
+        addToActionList();
     }
     
     /**
@@ -96,7 +100,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     }
         // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanSystemConnectionMemo.class.getName());
+    static Logger log = LoggerFactory.getLogger(CanSystemConnectionMemo.class.getName());
 }
 
 

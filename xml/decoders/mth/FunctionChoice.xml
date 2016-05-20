@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text-xsl" href="..-XSLT-decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and-or modify it under  -->
@@ -12,51 +11,46 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file for MTH expanded -->
-
-      <enumVal>
-        <enumChoice choice="None"/>
-        <enumChoice choice="Bell"/>
-        <enumChoice choice="Brake Sounds"/>
-        <enumChoice choice="Cab Chatter"/>
-        <enumChoice choice="Clickety Clack"/>
-        <enumChoice choice="Coupler Close"/>
-        <enumChoice choice="Coupler Slack"/>
-        <enumChoice choice="Driff Chuff"/>
-        <enumChoice choice="Engine Sounds"/>
-        <enumChoice choice="Forward Signal"/>
-        <enumChoice choice="Grade Crossing Signal"/>
-        <enumChoice choice="Horn"/>
-        <enumChoice choice="Idle Sequence 1"/>
-        <enumChoice choice="Idle Sequence 2"/>
-        <enumChoice choice="Idle Sequence 3"/>
-        <enumChoice choice="Idle Sequence 4"/>
-        <enumChoice choice="Labor Chuff"/>
-        <enumChoice choice="Master Volume"/>
-        <enumChoice choice="Short Horn"/>
-        <enumChoice choice="One Shot Doppler"/>
-        <enumChoice choice="Reverse Signal"/>
-        <enumChoice choice="Extended Shut Down"/>
-        <enumChoice choice="Extended Start Up"/>
-        <enumChoice choice="PFA"/>
-        <enumChoice choice="Start Up-Shut Down"/>
-        <enumChoice choice="Train Wreck"/>
-        <enumChoice choice="Trolley Manual Mode"/>
-        <enumChoice choice="Trolley Learn Mode"/>
-        <enumChoice choice="Trolley Auto Mode"/>
-        <enumChoice choice="Feature Reset"/>
-        <enumChoice choice="Front Coupler"/>
-        <enumChoice choice="Front Pantograph Up-Down"/>
-        <enumChoice choice="Pantograph Auto-Manual"/>
-        <enumChoice choice="Rear Coupler"/>
-        <enumChoice choice="Rear Pantograph Up-Down"/>
-        <enumChoice choice="Rev Down"/>
-        <enumChoice choice="Rev Up"/>
-        <enumChoice choice="Smoke On-Off"/>
-        <enumChoice choice="Smoke Volume"/>
-        <enumChoice choice="Lights"/>
-      </enumVal>
-      
- 	  	 
+<enumVal>
+  <enumChoice choice="None"/>
+  <enumChoice choice="Bell"/>
+  <enumChoice choice="Brake Sounds"/>
+  <enumChoice choice="Cab Chatter"/>
+  <enumChoice choice="Clickety Clack"/>
+  <enumChoice choice="Coupler Close"/>
+  <enumChoice choice="Coupler Slack"/>
+  <enumChoice choice="Driff Chuff"/>
+  <enumChoice choice="Engine Sounds"/>
+  <enumChoice choice="Forward Signal"/>
+  <enumChoice choice="Grade Crossing Signal"/>
+  <enumChoice choice="Horn"/>
+  <enumChoice choice="Idle Sequence 1"/>
+  <enumChoice choice="Idle Sequence 2"/>
+  <enumChoice choice="Idle Sequence 3"/>
+  <enumChoice choice="Idle Sequence 4"/>
+  <enumChoice choice="Labor Chuff"/>
+  <enumChoice choice="Master Volume"/>
+  <enumChoice choice="Short Horn"/>
+  <enumChoice choice="One Shot Doppler"/>
+  <enumChoice choice="Reverse Signal"/>
+  <enumChoice choice="Extended Shut Down"/>
+  <enumChoice choice="Extended Start Up"/>
+  <enumChoice choice="PFA"/>
+  <enumChoice choice="Start Up-Shut Down"/>
+  <enumChoice choice="Train Wreck"/>
+  <enumChoice choice="Trolley Manual Mode"/>
+  <enumChoice choice="Trolley Learn Mode"/>
+  <enumChoice choice="Trolley Auto Mode"/>
+  <enumChoice choice="Feature Reset"/>
+  <enumChoice choice="Front Coupler"/>
+  <enumChoice choice="Front Pantograph Up-Down"/>
+  <enumChoice choice="Pantograph Auto-Manual"/>
+  <enumChoice choice="Rear Coupler"/>
+  <enumChoice choice="Rear Pantograph Up-Down"/>
+  <enumChoice choice="Rev Down"/>
+  <enumChoice choice="Rev Up"/>
+  <enumChoice choice="Smoke On-Off"/>
+  <enumChoice choice="Smoke Volume"/>
+  <enumChoice choice="Lights"/>
+</enumVal>

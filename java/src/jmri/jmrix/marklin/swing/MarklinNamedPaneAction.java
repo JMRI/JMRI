@@ -2,6 +2,8 @@
 
 package jmri.jmrix.marklin.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
@@ -48,7 +50,7 @@ public class MarklinNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction 
         return p;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinNamedPaneAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(MarklinNamedPaneAction.class.getName());
 }
 
 /* @(#)MarklinNamedPaneAction.java */

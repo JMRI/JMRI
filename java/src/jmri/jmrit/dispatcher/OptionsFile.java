@@ -2,13 +2,15 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Scale;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import jmri.util.FileUtil;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -51,7 +53,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 	
 	// operational variables
 	protected DispatcherFrame dispatcher = null;
-	private static String defaultFileName = XmlFile.prefsDir()+"dispatcheroptions.xml";
+	private static String defaultFileName = FileUtil.getUserFilesPath()+"dispatcheroptions.xml";
 	public static void setDefaultFileName(String testLocation){
 		defaultFileName = testLocation;
 	}
@@ -96,6 +98,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 							}									
 						}
 					}
+                    if(options.getAttribute("usesignaltype")!=null){
+                        dispatcher.setSignalType(0x00);
+                        if(options.getAttribute("usesignaltype").getValue().equals("signalmast"))
+                            dispatcher.setSignalType(0x01);
+                    }
 					if (options.getAttribute("useconnectivity")!=null) {
 						dispatcher.setUseConnectivity(true);
 						if (options.getAttribute("useconnectivity").getValue().equals("no"))
@@ -151,6 +158,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 						if (options.getAttribute("nameinallocatedblock").getValue().equals("no"))
 							dispatcher.setNameInAllocatedBlock(false);
 					}
+					if (options.getAttribute("supportvsdecoder")!=null) {
+						dispatcher.setSupportVSDecoder(true);
+						if (options.getAttribute("supportvsdecoder").getValue().equals("no"))
+							dispatcher.setSupportVSDecoder(false);
+					}
 					if (options.getAttribute("layoutscale")!=null) {
 						String s = (options.getAttribute("layoutscale")).getValue();
 						for (int i = 1; i<=Scale.NUM_SCALES; i++) {
@@ -164,6 +176,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 						if (options.getAttribute("usescalemeters").getValue().equals("no"))
 							dispatcher.setUseScaleMeters(false);
 					}
+                    if(options.getAttribute("userosterentryinblock")!=null){
+                        dispatcher.setRosterEntryInBlock(false);
+						if (options.getAttribute("userosterentryinblock").getValue().equals("yes"))
+							dispatcher.setRosterEntryInBlock(true);
+                    }
 				}
 			}
 		} 
@@ -202,8 +219,15 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		options.setAttribute("shortnameinblock", ""+(dispatcher.getShortNameInBlock()?"yes":"no"));
 		options.setAttribute("extracolorforallocated", ""+(dispatcher.getExtraColorForAllocated()?"yes":"no"));
 		options.setAttribute("nameinallocatedblock", ""+(dispatcher.getNameInAllocatedBlock()?"yes":"no"));
+		options.setAttribute("supportvsdecoder", ""+(dispatcher.getSupportVSDecoder()?"yes":"no"));
 		options.setAttribute("layoutscale", Scale.getShortScaleID(dispatcher.getScale()));
 		options.setAttribute("usescalemeters", ""+(dispatcher.getUseScaleMeters()?"yes":"no"));
+		options.setAttribute("userosterentryinblock", ""+(dispatcher.getRosterEntryInBlock()?"yes":"no"));
+        if(dispatcher.getSignalType()==0x00){
+            options.setAttribute("usesignaltype", "signalhead");
+        } else {
+            options.setAttribute("usesignaltype", "signalmast");
+        }
 		root.addContent(options);
 			
 		// write out the file
@@ -229,7 +253,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		return _instance;
 	}		
   
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OptionsFile.class.getName());
+    static Logger log = LoggerFactory.getLogger(OptionsFile.class.getName());
 }
 
 /* @(#)OptionsFile.java */

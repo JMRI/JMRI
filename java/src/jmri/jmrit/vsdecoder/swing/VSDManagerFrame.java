@@ -24,6 +24,8 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -59,7 +61,7 @@ import jmri.jmrit.vsdecoder.SoundEvent;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
 import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
-import jmri.jmrit.vsdecoder.VSDecoderPreferencesAction;
+
 
 @SuppressWarnings("serial")
 public class VSDManagerFrame extends JmriJFrame {
@@ -295,7 +297,7 @@ public class VSDManagerFrame extends JmriJFrame {
 
 	JMenu editMenu = new JMenu(rb.getString("VSDecoderEditMenu"));
 	editMenu.setMnemonic(Mnemonics.get("EditMenu"));
-	editMenu.add(new VSDecoderPreferencesAction(rb.getString("VSDecoderEditMenuPreferences")));
+	editMenu.add(new VSDPreferencesAction(rb.getString("VSDecoderEditMenuPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load
@@ -381,5 +383,5 @@ public class VSDManagerFrame extends JmriJFrame {
 
     //public List<JMenu> getMenus() { return menuList; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDManagerFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class.getName());
 }

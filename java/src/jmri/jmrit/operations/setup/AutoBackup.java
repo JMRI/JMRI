@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,7 +14,7 @@ import java.io.IOException;
  * @author Gregory Madsen Copyright (C) 2012
  */
 public class AutoBackup extends BackupBase {
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(AutoBackup.class.getName());
 
 	/**
@@ -20,14 +22,13 @@ public class AutoBackup extends BackupBase {
 	 * to the given name.
 	 */
 	public AutoBackup() {
-		super("autoBackups");
+		super("autoBackups"); // NOI18N
 	}
 
 	/**
 	 * Backs up Operations files to a generated directory under the automatic
 	 * backup root directory.
 	 * 
-	 * @return
 	 * @throws Exception
 	 */
 	public synchronized void autoBackup() throws IOException {

@@ -1,11 +1,14 @@
 package jmri.jmrix.rps;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 import org.jdom.*;
 import java.util.*;
 
 import jmri.jmrit.XmlFile;
 import javax.vecmath.Point3d;
+import jmri.util.FileUtil;
 
 /**
  * Persist RPS configuration information
@@ -304,9 +307,8 @@ public class PositionFile extends XmlFile {
     }
         
     static public String defaultLocation() {
-        String location = XmlFile.prefsDir()+File.separator+"rps"+File.separator;
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(location);
+        String location = FileUtil.getUserFilesPath()+"rps"+File.separator;
+        FileUtil.createDirectory(location);
         return location;
     }
     static public String defaultFilename() {
@@ -314,5 +316,5 @@ public class PositionFile extends XmlFile {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionFile.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionFile.class.getName());
 }

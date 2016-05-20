@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
 
 import java.util.*;
@@ -569,7 +571,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCommandStation.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogCommandStation.class.getName());
 }
 
 

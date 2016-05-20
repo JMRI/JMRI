@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.pr3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.loconet.*;
@@ -132,7 +134,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
         InstanceManager.deregister(this, PR3SystemConnectionMemo.class);
         super.dispose();
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PR3SystemConnectionMemo.class.getName());   
+    static Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class.getName());   
 }
 
 /* @(#)PR3SystemConnectionMemo.java */

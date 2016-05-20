@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!--$Id$ -->
+<!--$Id: ESU_LokPilotDCC.xml 22294 2013-01-06 21:25:34Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,12 +14,16 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Walter Thompson wsthompson#earthlink.net" version="4" lastUpdated="20050619"/>
-<!--Based on the contribution of many others -->
-<!--version 2 - add consist direction - jake -->
-<!--version 3 - fix mfg name - jake -->
-<!--version 4 - changed numerious variable "items" so that Comprehensive programmer will work
+  <!--Based on the contribution of many others -->
+  <!--version 2 - add consist direction - jake -->
+  <!--version 3 - fix mfg name - jake -->
+  <!--version 4 - changed numerious variable "items" so that Comprehensive programmer will work
          in place of MFG specific programmer, also added CV55, numFns to 8. wsthompson,@earthlink.net -->
-  <decoder>
+  <!-- ver5 added support for new mfx&reg; speed table -->
+  <version author="Dave Heap" version="5" lastUpdated="20130105"/>
+  <!-- ver6 revert version 5 changes - inapplicable to this decoder -->
+  <version author="Dave Heap" version="6" lastUpdated="20130127"/>
+<decoder>
     <family name="ESU LokPilot Silent BEMF decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21">
       <model model="ESU_LokPilotDCC" numOuts="6" numFns="8" nmraWarrant="yes">
         <output name="1" label="Front Lights"/>
@@ -60,10 +64,10 @@
         <label>Vmid</label>
         <comment>Range 1-63</comment>
       </variable>
-<!--readOnly="yes" -->
+      <!--readOnly="yes" -->
       <variable label="Decoder Version" CV="7" item="Decoder Version">
         <decVal/>
-<!--readOnly="yes" -->
+        <!--readOnly="yes" -->
         <label>Decoder Version</label>
       </variable>
       <variable label="Manufacturer ID" CV="8" item="Manufacturer">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Atlas_342.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,10 +13,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="3" lastUpdated="20130501"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20091028"/>
   <version author="Michael Mosher" version="1" lastUpdated="20030706"/>
-<!-- version 1 - made from Lenz_DriveSelect version 3 -->
-<!-- version 2 - Added Factory reset, corrected some defaults -->
+  <!-- version 1 - made from Lenz_DriveSelect version 3 -->
+  <!-- version 2 - Added Factory reset, corrected some defaults -->
+  <!-- version 3 - Corrected CV 3/4 not showing on Motor Control Pane -->
   <decoder>
     <family name="Four Function Dual Mode" mfg="Atlas" lowVersionID="46" highVersionID="46">
       <model model="Four Function Dual Mode" numOuts="4" numFns="8">
@@ -35,15 +37,15 @@
         <label>Start Volts</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Accel" CV="3" default="1" comment="Range 0-255">
-        <decVal/>
-        <label>Accel</label>
-        <comment>Range 0-255</comment>
+      <variable label="Acceleration momentum" CV="3" item="Accel" default="1" comment="Range 1-255">
+        <decVal max="255"/>
+        <label>Acceleration momentum</label>
+        <comment>Range 1-255</comment>
       </variable>
-      <variable label="Decel" CV="4" default="1" comment="Range 0-255">
-        <decVal/>
-        <label>Decel</label>
-        <comment>Range 0-255</comment>
+      <variable label="Brake momentum" CV="4" item="Decel" default="1" comment="Range 1-255">
+        <decVal max="255"/>
+        <label>Brake momentum</label>
+        <comment>Range 1-255</comment>
       </variable>
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
@@ -538,9 +540,9 @@
         <decVal/>
         <label>Decoder Software Version</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
-      <constant label="FL(f) controls output 1" minOut="1" default="1"/>
-      <constant label="FL(r) controls output 2" minOut="2" default="1"/>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33"/>

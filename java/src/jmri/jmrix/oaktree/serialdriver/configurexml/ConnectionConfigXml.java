@@ -1,5 +1,7 @@
 package jmri.jmrix.oaktree.serialdriver.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.oaktree.serialdriver.ConnectionConfig;
@@ -82,7 +84,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     /**
      * Service routine to look through "parameter" child elements
      * to find a particular parameter value
-     * @param node Element containing parameters
+     * @param e Element containing parameters
      * @param name name of desired parameter
      * @return String value
      */
@@ -103,6 +105,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

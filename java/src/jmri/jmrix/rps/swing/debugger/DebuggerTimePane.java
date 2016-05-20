@@ -2,6 +2,8 @@
  
  package jmri.jmrix.rps.swing.debugger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.*;
 
 import javax.swing.*;
@@ -119,5 +121,5 @@ public class DebuggerTimePane extends JPanel
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebuggerTimePane.class.getName());
+    static Logger log = LoggerFactory.getLogger(DebuggerTimePane.class.getName());
 }

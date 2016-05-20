@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.clockmon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.swing.LnPanel;
 
@@ -128,6 +130,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockMonPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(ClockMonPane.class.getName());
 
 }

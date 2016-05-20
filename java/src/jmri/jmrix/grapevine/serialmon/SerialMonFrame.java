@@ -2,6 +2,8 @@
 
 package jmri.jmrix.grapevine.serialmon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.grapevine.SerialListener;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
@@ -42,6 +44,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         nextLine("R: "+l.format()+"\n", l.toString());
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

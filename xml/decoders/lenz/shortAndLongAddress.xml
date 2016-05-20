@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id: shortAndLongAddress.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2012-12-27</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+    </revision>
+  </revhistory>
+  <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="03" comment="Range 1-127">
+    <shortAddressVal/>
+    <label>Primary Address (1-127)</label>
+    <label xml:lang="it">Indirizzo primario (1-127)</label>
+    <comment>Range 1-127</comment>
+    <comment xml:lang="it">Valori da 1 a 127</comment>
+  </variable>
+  <variable label="Extended Address (0-9999)" CV="17" item="Long Address" default="100" comment="4 digit address (Range 0-9999)">
+    <longAddressVal/>
+    <label>Extended Address (0-9999)</label>
+    <label xml:lang="it">Indirizzo Esteso (0-9999)</label>
+    <comment>4 digit address (Range 0-9999)</comment>
+    <comment xml:lang="it">Indirizzo Esteso a 4 cifre</comment>
+  </variable>
+  <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+    <enumVal>
+      <enumChoice choice="2 digit addressing">
+        <choice>2 digit addressing</choice>
+        <choice xml:lang="it">Indirizzo a 2 cifre</choice>
+      </enumChoice>
+      <enumChoice choice="4 digit addressing">
+        <choice>4 digit addressing</choice>
+        <choice xml:lang="it">Indirizzo a 4 cifre</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Addressing Mode</label>
+    <label xml:lang="it">Tipo di Indirizzo</label>
+  </variable>
+</variables>

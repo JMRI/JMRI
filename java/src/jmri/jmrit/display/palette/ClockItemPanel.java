@@ -1,6 +1,8 @@
 
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 
 //import java.awt.datatransfer.Transferable; 
@@ -10,7 +12,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import jmri.util.JmriJFrame;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -30,28 +32,26 @@ import jmri.jmrit.display.AnalogClock2Display;
 */
 public class ClockItemPanel extends IconItemPanel {
 
-    Hashtable<String, NamedIcon> _iconMap;
-
     /**
     * Constructor for plain icons and backgrounds
     */
     public ClockItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame,  type, family, editor);
-        setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
     
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("AddClockToPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("AddClockToPanel")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
         return panel;
     }
 
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         _iconPanel = new JPanel();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -64,7 +64,7 @@ public class ClockItemPanel extends IconItemPanel {
            try {
                JLabel label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
                if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
-                   label.setText(ItemPalette.rbp.getString("invisibleIcon"));
+                   label.setText(Bundle.getMessage("invisibleIcon"));
                    label.setForeground(Color.lightGray);
                } else {
                    icon.reduceTo(100, 100, 0.2);
@@ -96,7 +96,13 @@ public class ClockItemPanel extends IconItemPanel {
             }
             String url = ((NamedIcon)getIcon()).getURL();
             if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferData url= "+url);
-            AnalogClock2Display c = new AnalogClock2Display(_editor);
+            AnalogClock2Display c;
+            String link = _linkName.getText().trim();
+            if (link.length()==0) {
+            	c = new AnalogClock2Display(_editor);            	
+            } else {            	
+            	c = new AnalogClock2Display(_editor, link);
+            }
             c.setOpaque(false);
             c.update();
             c.setLevel(Editor.CLOCK);
@@ -104,5 +110,5 @@ public class ClockItemPanel extends IconItemPanel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(ClockItemPanel.class.getName());
 }

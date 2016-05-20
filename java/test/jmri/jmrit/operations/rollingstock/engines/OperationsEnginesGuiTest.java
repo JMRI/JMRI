@@ -51,16 +51,16 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		Location westford = lManager.newLocation("Westford");
 		Track westfordYard = westford.addTrack("Yard", Track.YARD);
 		westfordYard.setLength(300);
-		Track westfordSiding = westford.addTrack("Siding", Track.SIDING);
+		Track westfordSiding = westford.addTrack("Siding", Track.SPUR);
 		westfordSiding.setLength(300);
-		Track westfordAble = westford.addTrack("Able", Track.SIDING);
+		Track westfordAble = westford.addTrack("Able", Track.SPUR);
 		westfordAble.setLength(300);
 		Location boxford = lManager.newLocation("Boxford");
 		Track boxfordYard = boxford.addTrack("Yard", Track.YARD);
 		boxfordYard.setLength(300);
-		Track boxfordJacobson = boxford.addTrack("Jacobson", Track.SIDING);
+		Track boxfordJacobson = boxford.addTrack("Jacobson", Track.SPUR);
 		boxfordJacobson.setLength(300);
-		Track boxfordHood = boxford.addTrack("Hood", Track.SIDING);
+		Track boxfordHood = boxford.addTrack("Hood", Track.SPUR);
 		boxfordHood.setLength(300);
 		
 		// enable rfid field
@@ -248,7 +248,7 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		
 		Assert.assertNotNull("Engine did not create", c6);
 		Assert.assertEquals("Engine type", "SW8", c6.getModel());
-		Assert.assertEquals("Engine type", "Diesel", c6.getType());
+		Assert.assertEquals("Engine type", "Diesel", c6.getTypeName());
 		Assert.assertEquals("Engine length", "44", c6.getLength()); //default for SW8 is 44
 		Assert.assertEquals("Engine built", "1999", c6.getBuilt());
 		Assert.assertEquals("Engine owner", "Owner1", c6.getOwner());

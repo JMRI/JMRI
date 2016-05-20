@@ -102,6 +102,7 @@ The full interlock will also set the state of the blocks to use the alternative 
 If you try and set a conflicting path, then an error message will be displayed and the path will not be set.
 <p>
 As the route gets cleared down by a train occupying the blocks, so does the interlock.
+<p>
 <img src="images/interlockfull2.png" width="498" height="229">
 <p>
 If you re-select an active interlock, the NX sensors will start to flash, and you get the option to either "Cancel" the route, "Clear Down" or "Exit".  

@@ -2,14 +2,12 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import junit.framework.Test;
 import junit.framework.Assert;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrit.XmlFile;
 
 /**
  * Check the names in an XML programmer file against the names.xml definitions
@@ -18,7 +16,7 @@ import jmri.jmrit.XmlFile;
  * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
-public class CheckProgrammerNames extends TestCase {
+public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
     
     public void testAdvanced() {
         checkAgainstNames(new File("xml/programmers/Advanced.xml"));
@@ -111,6 +109,9 @@ public class CheckProgrammerNames extends TestCase {
         validate(new File("xml/programmers/Zimo.xml"));
     }
     
+    public void testValidateAllParts() {
+        doDirectory("xml/programmers");
+    }
 
     // utilities
     
@@ -125,22 +126,7 @@ public class CheckProgrammerNames extends TestCase {
         if (!result.equals(""))
             Assert.fail(result);
     }
-    
-    public void validate(File file) {
-        boolean original = XmlFile.getVerify();
-        try {
-            XmlFile.setVerify(true);
-            XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
-            xf.rootFromFile(file);
-        } catch (Exception ex) {
-            XmlFile.setVerify(original);
-            Assert.fail(ex.toString());
-            return;
-        } finally {
-            XmlFile.setVerify(original);
-        }
-    }
-    
+        
     // from here down is testing infrastructure
 
     public CheckProgrammerNames(String s) {
@@ -164,6 +150,6 @@ public class CheckProgrammerNames extends TestCase {
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CheckProgrammerNames.class.getName());
+    static Logger log = Logger.getLogger(CheckProgrammerNames.class.getName());
     
 }

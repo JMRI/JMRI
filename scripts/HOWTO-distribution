@@ -18,15 +18,11 @@ If you're building locally:
 ================================================================================
 First, we merge in as much tentative content as possible to the SVN trunk.
 
-( ) If it's a new year, update copyright dates (done for 2010):
-    * build.xml (3) in the javadoc instructions and as a property value (jmri.copyright.years)
+( ) If it's a new year, update copyright dates (done for 2012):
+    * build.xml (3) in the jmri.copyright.years property value
     * site/Copyright.html (3 places)
-    * xml/XSLT masters and stylesheets
+    * xml/XSLT/build.xml in the property value, index.html, CSVindex.html
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
-    * Windows installer script
-        bbedit scripts/WinInstallFiles/InstallJMRI.nsi
-    * Linux & Mac OS X startup script
-        bbedit scripts/AppScriptTemplate
 
 ( ) Bring in all possible sf.net patches, including decoders
 
@@ -34,10 +30,10 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     If so, remake the decoder index.
         Delete old index from preferences
         ant remakedecoderindex
-        Move the new file from preferences into the SVN tree.
+        Move (mv) the new file from preferences into the SVN tree.
         Change file to Unix line ends.  (ant might eventually do this with <fixcrlf file="path/to/file" eol="unix" />, but be careful with cross-platform SVN expectations)
-        svn diff as a check.
         Update the internal version number by hand, adding 2.
+        svn diff as a check.
         Commit.
 
 ( ) Update the help/en/Acknowledgements.shtml help page with any recent changes
@@ -48,7 +44,8 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     cd help/en/
     ./JHelpDev.csh   (See the doc page for setup)
     (navigate to JHelpDev.xml in release html/en/ & open it)
-    (click "create all")
+    (click "Create All", takes a bit of time, wait for button to release)
+    (quit)
 
     In that same directory, also remake the index and toc web
     pages by doing invoking ant (no argument needed).
@@ -58,11 +55,15 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     Check the version number into the top help page on the branch (one place):
     bbedit help/en/index.html
 
+    (Need to consider whether to do this in help/fr, and eventually others)
+    
     Run the program and make sure help works.
 
     Commit any changed files.
 
 ( ) Confirm that all the above changes have been committed back to SVN trunk
+
+( ) Create & commit the start of a release note for the next version
 
 ( ) This is a good place to check that the decoder XSLT transforms work
         cd xml/XSLT
@@ -94,7 +95,7 @@ Second, we build the release branch:
     
     This will do (more or less) the following actions:
 
-    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.1.5
+    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.3.2
     <check in an update of the version number of trunk/HEAD>
     <check in an update of the version number of the new release>
 
@@ -104,9 +105,9 @@ Second, we build the release branch:
     and update to get the release copy:
 
     cd ../../branches/jmri/releases
-    svn update 2.13.5
+    svn update 3.3.2
 
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.1.5")
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.3.2")
 
     ( to merge everything to date: svn merge ^/trunk/jmri
       If you do this, beware, you'll also merge in the new release.properties file, which you do NOT want to do.
@@ -118,9 +119,6 @@ Second, we build the release branch:
 
     ( to merge a single later change: svn merge -c <changeset#> ^/trunk/jmri )
     
-    ( ) Edit the new version number into the top help page on the branch (one place):
-    bbedit help/en/index.html
-
 
 ================================================================================
 Third, we do any necessary release-specific updates.
@@ -140,7 +138,7 @@ Third, we do any necessary release-specific updates.
 
 ( ) Announce the file set to jmri-developers with a download URL like:
 
-    http://builds.jmri.org/jenkins/job/Test%20Release%202.13.5/ws/jmri/dist/release/
+    http://builds.jmri.org/jenkins/job/Test%20Release%203.3.2/ws/jmri/dist/release/
 
     or from your local build files.
 
@@ -150,7 +148,7 @@ For local builds, these are the build instructions; CI builds will already be ru
 ( ) ant -Dnsis.home="" packages
 
     Ant will do the various builds, construct the distribution
-    directories, and finally construct the Linux, MacOS X and Windows
+    directories, and finally construct the Linux, Mac OS X and Windows
     distribution files in dist/releases/
 
 ( ) Put the Linux, Mac OS X and Windows files where developers can
@@ -172,57 +170,49 @@ Final release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.1.5/ws/jmri/dist/release/*zip*/release.zip"
-    unzip archive.zip
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.4/ws/jmri/dist/release/*zip*/release.zip"
+    unzip release.zip
     cd release
-    scp JMRI.3.1.5-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"    
+    scp JMRI.* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"    
         (the scp is needed even if on SF.net, so that the FRS system knows you've added something; using cp is NFG)
     (clean up and logout)
 
-    Wait until the downloads have propagated to the mirrors; check
-    by trying to download each file
-
 ( ) Create and upload the JavaDocs
-    and XSLT'd decoder pages (you need to have Java 1.6 in ~/.ant/ant.conf)
+    and XSLT'd decoder pages
 
-	ant javadoc-uml
-	ant uploadjavadoc
+	ant javadoc-uml uploadjavadoc
 	cd xml/XSLT
-	ant
-	ant upload
-
-	(no need to set ~/.ant/ant.conf back to Java 1.5 afterwards)
+	ant xslt upload
 
 ( ) Format the release note page, change date, etc
+
+( ) Wait until the downloads have propagated to the mirrors; check
+    by trying to download each file
 
 ( ) Commit release note files to the web site SVN directory
 
 ( ) Complete all the above before continuing
 
-( ) Update the web site front page and downloads page
+( ) Update the web site front page and downloads page:
+     index.html download/Sidebar download/index.shtml
+
+( ) Update the "releaselist" file at the top of the web directory
 
 ( ) If the decoder definitions have changed, make a .zip file and send to:
     Graham Plowman: gppsoftware@gppsoftware.com
 
-( ) Create the start of a release note for the next version
-
 ( ) Commit site
 
-( ) File copyright registration
+( ) For production releases, file copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
 
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 2.11.8 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 3.3.3 of JMRI/DecoderPro is available for download"
 
-( ) Mail announcement to jmri-announce@lists.sourceforge.net
-
-( ) News item from JMRI sourceforge page, Develop tab
-
-	Title is of the form "JMRI 2.11.8 test version is available";
-	text is pretty much directly taken from the release note
+( ) If production release, mail announcement to jmri-announce@lists.sourceforge.net
 
 ( ) If a production version, update the SF automatic download icon by selecting default in FRS
 

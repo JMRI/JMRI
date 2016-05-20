@@ -2,6 +2,8 @@
 
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import jmri.NamedBean;
 import java.util.ArrayList;
@@ -278,7 +280,7 @@ abstract public class AbstractProxyManager implements Manager {
         }
         return arr;
     }
-
+    
     /**
      * Get a list of all system names.
      */
@@ -290,8 +292,16 @@ abstract public class AbstractProxyManager implements Manager {
         return new ArrayList<String>(ts);
     }
     
+    public List<NamedBean> getNamedBeanList() {
+        TreeSet<NamedBean> ts = new TreeSet<NamedBean>(new SystemNameComparator());
+        for (AbstractManager m:mgrs) {
+            ts.addAll(m.getNamedBeanList());
+        }
+        return new ArrayList<NamedBean>(ts);
+    }
+    
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractProxyManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class.getName());
 }
 
 /* @(#)AbstractProxyManager.java */

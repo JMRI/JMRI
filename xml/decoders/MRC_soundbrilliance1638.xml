@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008 All rights reserved          -->
-<!-- $Id$ -->
+<!-- $Id: MRC_soundbrilliance1638.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Paul Fraker" version="1.1" lastUpdated="20081202"/>
-<!-- used MRC_soundbrilliance1639 file by Charles Dearden as a starting point-->
+  <!-- used MRC_soundbrilliance1639 file by Charles Dearden as a starting point-->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Mini HO EMD Modern Large Diesel Sound 1638" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsMRC="yes">

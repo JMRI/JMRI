@@ -2,12 +2,16 @@
 
 package jmri.jmrit.operations.routes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JComboBox;
+
+import org.jdom.Element;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -22,7 +26,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * @version	$Revision$
  */
 public class RouteManager {
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLengthChanged";  // NOI18N
     
 	public RouteManager() {
     }
@@ -57,7 +61,7 @@ public class RouteManager {
     public Route getRouteByName(String name) {
     	Route l;
     	Enumeration<Route> en =_routeHashTable.elements();
-    	for (int i = 0; i < _routeHashTable.size(); i++){
+    	while (en.hasMoreElements()) {
     		l = en.nextElement();
     		if (l.getName().equals(name))
     			return l;
@@ -301,6 +305,28 @@ public class RouteManager {
      */
     public int numEntries() { return _routeHashTable.size(); }
     
+    public void load(Element root) {
+        // decode type, invoke proper processing routine if a decoder file
+        if (root.getChild(Xml.ROUTES) != null) {
+        	@SuppressWarnings("unchecked")
+            List<Element> l = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
+            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" routes");
+            for (int i=0; i<l.size(); i++) {
+                register(new Route(l.get(i)));
+            }
+        }
+    }
+    
+    public void store(Element root) {
+		Element values = new Element(Xml.ROUTES);
+		root.addContent(values);
+		List<String> routeList = getRoutesByIdList();
+		for (int i=0; i<routeList.size(); i++) {
+			Route route = getRouteById(routeList.get(i));
+			values.addContent(route.store());
+		}
+    }
+    
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
@@ -314,7 +340,7 @@ public class RouteManager {
     	pcs.firePropertyChange(p,old,n);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
 
 }
 

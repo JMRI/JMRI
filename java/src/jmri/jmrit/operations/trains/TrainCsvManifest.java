@@ -4,8 +4,9 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -32,45 +33,42 @@ public class TrainCsvManifest extends TrainCsvCommon {
 	CarManager carManager = CarManager.instance();
 	LocationManager locationManager = LocationManager.instance();
 	
-	public TrainCsvManifest(Train train){
+	public TrainCsvManifest(Train train) {
 		// create comma separated value manifest file
-		File file = TrainManagerXml.instance().createTrainCsvManifestFile(
-				train.getName());
+		File file = TrainManagerXml.instance().createTrainCsvManifestFile(train.getName());
 		PrintWriter fileOut;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file)),
-					true);
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(file), "UTF-8")), true);	// NOI18N
 		} catch (IOException e) {
 			log.error("can not open train csv manifest file");
 			return;
 		}
 		// build header
 		addLine(fileOut, HEADER);
-		if (!train.getRailroadName().equals(""))
-			addLine(fileOut, RN+"\""+train.getRailroadName()+"\"");
-		else
-			addLine(fileOut, RN+"\""+Setup.getRailroadName()+"\"");
-		addLine(fileOut, TN+train.getName());
-		addLine(fileOut, TM+"\""+train.getDescription()+"\"");
+		addLine(fileOut, RN + ESC + Setup.getRailroadName() + ESC);
+		addLine(fileOut, TN + train.getName());
+		addLine(fileOut, TM + ESC + train.getDescription() + ESC);
+		addLine(fileOut, PRNTR + ESC + locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName() + ESC);
 		// add logo
 		String logoURL = Setup.getManifestLogoURL();
 		if (!train.getManifestLogoURL().equals(""))
 			logoURL = train.getManifestLogoURL();
 		if (!logoURL.equals(""))
-			addLine(fileOut, LOGO+logoURL);
-		addLine(fileOut, VT+getDate());
+			addLine(fileOut, LOGO + logoURL);
+		addLine(fileOut, VT + getDate(true));
 		// train comment can have multiple lines
-		if (!train.getComment().equals("")){
-			String[] comments = train.getComment().split("\n");
-			for (int i=0; i<comments.length; i++)
-				addLine(fileOut, TC+"\""+comments[i]+"\"");							
+		if (!train.getComment().equals("")) {
+			String[] comments = train.getComment().split("\n"); // NOI18N
+			for (int i = 0; i < comments.length; i++)
+				addLine(fileOut, TC + ESC + comments[i] + ESC);
 		}
 		if (Setup.isPrintRouteCommentsEnabled())
-			addLine(fileOut, RC+"\""+train.getRoute().getComment()+"\"");
+			addLine(fileOut, RC + ESC + train.getRoute().getComment() + ESC);
 
 		// get engine and car lists
-		List<String> engineList = engineManager.getByTrainList(train);			
+		List<String> engineList = engineManager.getByTrainList(train);
 		List<String> carList = carManager.getByTrainDestinationList(train);
 
 		int cars = 0;
@@ -79,78 +77,78 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		String previousRouteLocationName = null;
 		List<String> routeList = train.getRoute().getLocationsBySequenceList();
 		for (int r = 0; r < routeList.size(); r++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));		
+			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
 			// print info only if new location
 			String routeLocationName = splitString(rl.getName());
 			String locationName = routeLocationName;
-			if (locationName.contains(del)){
-				log.debug("location name has delimiter: "+locationName);
-				locationName = "\""+routeLocationName+"\"";
+			if (locationName.contains(DEL)) {
+				log.debug("location name has delimiter: " + locationName);
+				locationName = ESC + routeLocationName + ESC;
 			}
-			if (!routeLocationName.equals(previousRouteLocationName)){
-				addLine(fileOut, LN+locationName);
+			if (!routeLocationName.equals(previousRouteLocationName)) {
+				addLine(fileOut, LN + locationName);
 				if (r != 0)
-					addLine(fileOut, AT+train.getExpectedArrivalTime(rl));
+					addLine(fileOut, AT + train.getExpectedArrivalTime(rl));
 				if (r == 0)
-					addLine(fileOut, DT+train.getDepartureTime());
+					addLine(fileOut, DT + train.getDepartureTime());
 				else if (!rl.getDepartureTime().equals(""))
-					addLine(fileOut, DTR+rl.getDepartureTime());
+					addLine(fileOut, DTR + rl.getDepartureTime());
 				else
-					addLine(fileOut, EDT+train.getExpectedDepartureTime(rl));
-					
+					addLine(fileOut, EDT + train.getExpectedDepartureTime(rl));
+
 				Location loc = locationManager.getLocationByName(rl.getName());
 				// add location comment
-				if (Setup.isPrintLocationCommentsEnabled() && !loc.getComment().equals("")){					
+				if (Setup.isPrintLocationCommentsEnabled() && !loc.getComment().equals("")) {
 					// location comment can have multiple lines
-					String[] comments = loc.getComment().split("\n");
-					for (int i=0; i<comments.length; i++)
-						addLine(fileOut, LC+"\""+comments[i]+"\"");							
+					String[] comments = loc.getComment().split("\n"); // NOI18N
+					for (int i = 0; i < comments.length; i++)
+						addLine(fileOut, LC + ESC + comments[i] + ESC);
 				}
 				if (Setup.isTruncateManifestEnabled() && loc.isSwitchListEnabled())
 					addLine(fileOut, TRUN);
 			}
 			// add route comment
-			if (!rl.getComment().equals("")){
-				addLine(fileOut, RLC+"\""+rl.getComment()+"\"");
-			}			
+			if (!rl.getComment().equals("")) {
+				addLine(fileOut, RLC + ESC + rl.getComment() + ESC);
+			}
 			// engine change or helper service?
-			if (train.getSecondLegOptions() != Train.NONE){
-				if (rl == train.getSecondLegStartLocation()){
+			if (train.getSecondLegOptions() != Train.NONE) {
+				if (rl == train.getSecondLegStartLocation()) {
 					engineCsvChange(fileOut, rl, train.getSecondLegOptions());
 				}
 				if (rl == train.getSecondLegEndLocation())
 					addLine(fileOut, RH);
 			}
-			if (train.getThirdLegOptions() != Train.NONE){
-				if (rl == train.getThirdLegStartLocation()){
+			if (train.getThirdLegOptions() != Train.NONE) {
+				if (rl == train.getThirdLegStartLocation()) {
 					engineCsvChange(fileOut, rl, train.getThirdLegOptions());
 				}
 				if (rl == train.getThirdLegEndLocation())
 					addLine(fileOut, RH);
 			}
 
-			for (int i =0; i < engineList.size(); i++){
+			for (int i = 0; i < engineList.size(); i++) {
 				Engine engine = engineManager.getById(engineList.get(i));
 				if (engine.getRouteLocation() == rl)
 					fileOutCsvEngine(fileOut, engine, PL);
-			}	
-			for (int i =0; i < engineList.size(); i++){
+			}
+			for (int i = 0; i < engineList.size(); i++) {
 				Engine engine = engineManager.getById(engineList.get(i));
 				if (engine.getRouteDestination() == rl)
 					fileOutCsvEngine(fileOut, engine, SL);
-			}	
+			}
 
 			// block cars by destination
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carManager.getById(carList.get(k));
-					if (car.getRouteLocation() == rl
-							&& car.getRouteDestination() == rld) {
+					if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
 						fileOutCsvCar(fileOut, car, PC);
 						cars++;
 						newWork = true;
-						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
+								CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 					}
 				}
@@ -162,31 +160,32 @@ public class TrainCsvManifest extends TrainCsvCommon {
 					fileOutCsvCar(fileOut, car, SC);
 					cars--;
 					newWork = true;
-					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+					if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
+							CarLoad.LOAD_TYPE_EMPTY))
 						emptyCars--;
 				}
 			}
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
-				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
+				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r + 1));
 				String nextRouteLocationName = splitString(rlNext.getName());
-				if (!routeLocationName.equals(nextRouteLocationName)){
-					if (newWork){
-						addLine(fileOut, TD+locationName+del+rl.getTrainDirectionString());
-						addLine(fileOut, TL+train.getTrainLength(rl)+del+emptyCars+del+cars);
-						addLine(fileOut, TW+train.getTrainWeight(rl));
+				if (!routeLocationName.equals(nextRouteLocationName)) {
+					if (newWork) {
+						addLine(fileOut, TD + locationName + DEL + rl.getTrainDirectionString());
+						addLine(fileOut, TL + train.getTrainLength(rl) + DEL + emptyCars + DEL + cars);
+						addLine(fileOut, TW + train.getTrainWeight(rl));
 						newWork = false;
 					} else {
 						addLine(fileOut, NW);
 					}
 				}
 			} else {
-				addLine(fileOut, TT+locationName);
+				addLine(fileOut, TT + locationName);
 			}
 			previousRouteLocationName = routeLocationName;
 		}
 		// TODO Are there any cars that need to be found?
-		//getCarsLocationUnknown(fileOut);
+		// getCarsLocationUnknown(fileOut);
 
 		fileOut.flush();
 		fileOut.close();

@@ -2,6 +2,8 @@
 
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
@@ -95,7 +97,7 @@ public abstract class NetMessage implements Serializable {
 	private int mOpCode = 0;
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(NetMessage.class.getName());
 
 }
 

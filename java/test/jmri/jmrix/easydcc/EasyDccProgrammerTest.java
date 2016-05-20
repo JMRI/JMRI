@@ -8,6 +8,7 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 import java.util.*;
@@ -229,7 +230,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccProgrammerTest.class.getName());
+	static Logger log = Logger.getLogger(EasyDccProgrammerTest.class.getName());
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }

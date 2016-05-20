@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
-<!-- $Id$ -->
+<!-- $Id: MRC_soundbrilliance1810.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                         -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->
 <!-- the terms of version 2 of the GNU General Public License as published   -->
@@ -14,7 +15,7 @@
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="1" lastUpdated="20091228"/>
-<!--   version 1  Created from MRC 1806 ver. 1.6 -->
+  <!--   version 1  Created from MRC 1806 ver. 1.6 -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45">
       <model model="Synch Diesel Sound 1810 - N Scale KATO F40PH" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">

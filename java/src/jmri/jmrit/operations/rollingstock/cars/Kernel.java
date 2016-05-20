@@ -1,6 +1,8 @@
 // Kernel.java
 
 package jmri.jmrit.operations.rollingstock.cars;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.*;
 
 import jmri.jmrit.operations.rollingstock.RollingStockGroup;
@@ -36,6 +38,6 @@ public class Kernel extends RollingStockGroup{
 		super.dispose();
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(Kernel.class.getName());
 }

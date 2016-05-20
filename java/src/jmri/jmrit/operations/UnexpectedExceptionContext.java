@@ -11,16 +11,16 @@ public class UnexpectedExceptionContext extends ExceptionContext {
 
 	@Override
 	public String getTitle() {
-		return super.getTitle() + " (Unexpected)";
+		return super.getTitle() + " (Unexpected)";	// NOI18N
 	}
 
 	public UnexpectedExceptionContext(Exception ex, String operation) {
 		super(
 				ex,
 				operation,
-				"This exception was unexpected and is probably a bug in the code.");
+				"This exception was unexpected and is probably a bug in the code.");	// NOI18N
 
-		this._preface = "An unexpected error occurred during the following operation.";
+		this._preface = "An unexpected error occurred during the following operation.";	// NOI18N
 
 	}
 }

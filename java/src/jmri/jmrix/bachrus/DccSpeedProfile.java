@@ -2,10 +2,13 @@
 
 package jmri.jmrix.bachrus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
+import jmri.util.FileUtil;
 
 /**
  * Class to represent a dimensionless speed profile of a DCC decoder.
@@ -151,7 +154,7 @@ public class DccSpeedProfile {
     private static PrintWriter p = null;
 
     private static void openExportFile() {
-        JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+        JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
         String fileName = null;
         
         // get filename
@@ -187,5 +190,5 @@ public class DccSpeedProfile {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccSpeedProfile.class.getName());
+    static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class.getName());
 }

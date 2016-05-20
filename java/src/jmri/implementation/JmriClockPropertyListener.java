@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.util.Date;
 import jmri.*;
@@ -116,6 +118,6 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener
             }
         }
     }
-static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriClockPropertyListener.class.getName());
+static final Logger log = LoggerFactory.getLogger(JmriClockPropertyListener.class.getName());
 }
 

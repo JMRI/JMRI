@@ -2,6 +2,8 @@
 
 package jmri.jmrix.acela;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.Turnout;
 
@@ -123,7 +125,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
     static AcelaTurnoutManager _instance = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaTurnoutManager.class.getName());
 }
 
 /* @(#)AcelaTurnoutManager.java */

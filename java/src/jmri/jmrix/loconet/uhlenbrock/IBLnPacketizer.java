@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.uhlenbrock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.NoSuchElementException;
 
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -11,6 +13,7 @@ import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetInterface;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 
@@ -208,7 +211,7 @@ public class IBLnPacketizer extends LnPacketizer implements LocoNetInterface {
                                LocoNetMessage msgForLater = thisMsg;
                                LnPacketizer myTC = thisTC;
                                public void run() {
-                                   myTC.notify(msgForLater);
+                                   myTC.notifyRcv(new Date(), msgForLater);
                                }
                            };
                        javax.swing.SwingUtilities.invokeLater(r);
@@ -365,7 +368,7 @@ public class IBLnPacketizer extends LnPacketizer implements LocoNetInterface {
     }
 
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IBLnPacketizer.class.getName());
+    static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class.getName());
 }
 
 /* @(#)LnPacketizer.java */

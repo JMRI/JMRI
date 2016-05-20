@@ -2,6 +2,8 @@
 
 package jmri.jmrix.ecos;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 
@@ -366,7 +368,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
       
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosPreferences.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosPreferences.class.getName());
 
  }
  

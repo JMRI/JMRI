@@ -1,5 +1,7 @@
 package jmri.util.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.NamedBean;
 
 import java.util.HashMap;
@@ -227,6 +229,13 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
         updateComboBox(_lastSelected);
     }
     
+    public void setSelectedBeanByName(String name){
+        if(name==null)
+            return;
+        NamedBean nBean = _manager.getNamedBean(name);
+        setSelectedBean(nBean);
+    }
+    
     List<NamedBean> exclude = new ArrayList<NamedBean>();
     
     public void excludeItems(List<NamedBean> exclude){
@@ -318,5 +327,5 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
     }
 	
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriBeanComboBox.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
 }

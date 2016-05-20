@@ -2,6 +2,8 @@
 
 package jmri.jmrix.easydcc.packetgen;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -31,7 +33,7 @@ public class EasyDccPacketGenAction 			extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccPacketGenAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(EasyDccPacketGenAction.class.getName());
 }
 
 

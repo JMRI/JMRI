@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id: ienum-OffOn.xml 17977 2011-07-18 17:23:46Z zoo $ -->
 <!--                                                                        -->
@@ -13,12 +12,11 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <ienumVal>
-	<ienumChoice choice="Speaker 2">
-		<choice>Speaker 2</choice>
-	</ienumChoice>
-	<ienumChoice choice="Speaker 1">
-		<choice>Speaker 1</choice>
-	</ienumChoice>
+  <ienumChoice choice="Speaker 2">
+    <choice>Speaker 2</choice>
+  </ienumChoice>
+  <ienumChoice choice="Speaker 1">
+    <choice>Speaker 1</choice>
+  </ienumChoice>
 </ienumVal>

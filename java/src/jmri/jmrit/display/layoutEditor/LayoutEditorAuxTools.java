@@ -2,6 +2,8 @@
 
 package jmri.jmrit.display.layoutEditor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 
 import java.awt.geom.*;
@@ -1351,5 +1353,5 @@ public class LayoutEditorAuxTools
 	}
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditorAuxTools.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutEditorAuxTools.class.getName());
 }

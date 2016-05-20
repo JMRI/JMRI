@@ -2,6 +2,8 @@
 
 package jmri.jmrit.dualdecoder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -296,6 +298,6 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DualDecoderSelectPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(DualDecoderSelectPane.class.getName());
 
 }

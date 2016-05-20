@@ -1,5 +1,7 @@
 package jmri.jmrit.withrottle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.ThrottleListener;
@@ -56,6 +58,6 @@ public class ConsistFunctionController implements ThrottleListener{
         return jmri.InstanceManager.throttleManagerInstance().requestThrottle(loco.getNumber(), loco.isLongAddress(), this);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistFunctionController.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConsistFunctionController.class.getName());
 
 }

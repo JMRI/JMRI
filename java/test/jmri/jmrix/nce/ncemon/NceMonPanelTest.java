@@ -8,6 +8,7 @@
 
 package jmri.jmrix.nce.ncemon;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 
 import junit.framework.Assert;
@@ -134,6 +135,6 @@ public class NceMonPanelTest extends TestCase {
         return suite;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMonPanelTest.class.getName());
+    static Logger log = Logger.getLogger(NceMonPanelTest.class.getName());
     
 }

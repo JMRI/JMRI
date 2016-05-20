@@ -45,6 +45,6 @@ public class SoundUtilTest extends TestCase {
         return suite;
     }
 
-    // static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFileTest.class.getName());
+    // static private Logger log = Logger.getLogger(XmlFileTest.class.getName());
 
 }

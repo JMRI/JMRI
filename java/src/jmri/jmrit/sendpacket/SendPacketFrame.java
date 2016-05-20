@@ -2,6 +2,8 @@
 
 package jmri.jmrit.sendpacket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.util.*;
 import java.awt.*;
@@ -229,6 +231,6 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     // private data
     private CommandStation cs = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SendPacketAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(SendPacketAction.class.getName());
 
 }

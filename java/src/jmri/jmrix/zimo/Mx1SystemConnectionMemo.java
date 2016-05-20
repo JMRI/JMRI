@@ -1,6 +1,8 @@
 // Mx1SystemConnectionMemo.javaf
 package jmri.jmrix.zimo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
 import java.util.ResourceBundle;
@@ -137,7 +139,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1SystemConnectionMemo.class.getName());
+    static Logger log = LoggerFactory.getLogger(Mx1SystemConnectionMemo.class.getName());
 }
 
 

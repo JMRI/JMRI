@@ -1,7 +1,8 @@
 package jmri.jmrit.logix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
-import java.util.ResourceBundle;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -39,8 +40,6 @@ import javax.swing.event.ChangeListener;
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
-    static final ResourceBundle rb = jmri.jmrit.throttle.ThrottleBundle.bundle();
-    
     private LearnThrottleFrame _throttleFrame;
     
     private JSlider speedSlider;
@@ -97,10 +96,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner.setModel(speedSpinnerModel);
         speedSpinner.setFocusable(false);
 
-        SpeedStep128Button = new JRadioButton(rb.getString("Button128SS"));
-        SpeedStep28Button = new JRadioButton(rb.getString("Button28SS"));
-        SpeedStep27Button = new JRadioButton(rb.getString("Button27SS"));
-        SpeedStep14Button= new JRadioButton(rb.getString("Button14SS"));
+        SpeedStep128Button = new JRadioButton(Bundle.getMessage("Button128SS"));
+        SpeedStep28Button = new JRadioButton(Bundle.getMessage("Button28SS"));
+        SpeedStep27Button = new JRadioButton(Bundle.getMessage("Button27SS"));
+        SpeedStep14Button= new JRadioButton(Bundle.getMessage("Button14SS"));
         
         initGUI();
         pack();
@@ -226,7 +225,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
         labelTable.put(Integer.valueOf(MAX_SPEED/2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(MAX_SPEED), new JLabel("100%"));
-        labelTable.put(Integer.valueOf(0), new JLabel(rb.getString("LabelStop")));
+        labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("LabelStop")));
         speedSlider.setLabelTable(labelTable);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
@@ -313,7 +312,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
         labelTable.put(Integer.valueOf(MAX_SPEED/2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(MAX_SPEED), new JLabel("100%"));
-        labelTable.put(Integer.valueOf(0), new JLabel(rb.getString("LabelStop")));
+        labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("LabelStop")));
         speedSlider.setLabelTable(labelTable);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
@@ -491,7 +490,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
     }
     
-    private void speedSetting(float speed) {
+/*    private void speedSetting(float speed) {
         // multiply by MAX_SPEED, and round to find the new slider setting.
         int newSliderSetting = java.lang.Math.round(speed * MAX_SPEED) ;
         if (log.isDebugEnabled()) {log.debug( "speedSetting: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;}
@@ -499,7 +498,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.repaint();
         if(speedSpinner!=null)
             speedSpinner.setValue(Integer.valueOf(newSliderSetting));
-    }
+    }*/
 
     /**
      * Configure the active Speed Step modes based on what is supported by 
@@ -531,6 +530,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(ControlPanel.class.getName());
 }
 

@@ -1,10 +1,12 @@
 // MultiSensorIconDialog.java
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -24,7 +26,7 @@ public class MultiSensorIconDialog extends IconDialog {
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public MultiSensorIconDialog(String type, String family, ItemPanel parent, 
-    						Hashtable <String, NamedIcon> iconMap) {
+    						HashMap <String, NamedIcon> iconMap) {
         super(type, family, parent, iconMap); 
     }
 
@@ -38,7 +40,7 @@ public class MultiSensorIconDialog extends IconDialog {
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
         JPanel panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
-        JButton addSensor = new JButton(ItemPalette.rbp.getString("addIcon"));
+        JButton addSensor = new JButton(Bundle.getMessage("addIcon"));
         addSensor.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (addNewIcon(getIconName())) {
@@ -50,10 +52,10 @@ public class MultiSensorIconDialog extends IconDialog {
                     }
                 }
         });
-        addSensor.setToolTipText(ItemPalette.rbp.getString(addTip));
+        addSensor.setToolTipText(Bundle.getMessage(addTip));
         panel2.add(addSensor);
 
-        JButton deleteSensor = new JButton(ItemPalette.rbp.getString("deleteIcon"));
+        JButton deleteSensor = new JButton(Bundle.getMessage("deleteIcon"));
         deleteSensor.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (deleteIcon()) {
@@ -65,7 +67,7 @@ public class MultiSensorIconDialog extends IconDialog {
                     }
                 }
         });
-        deleteSensor.setToolTipText(ItemPalette.rbp.getString(deleteTip));
+        deleteSensor.setToolTipText(Bundle.getMessage(deleteTip));
         panel2.add(deleteSensor);
         buttonPanel.add(panel2);
     }
@@ -84,13 +86,13 @@ public class MultiSensorIconDialog extends IconDialog {
     protected boolean addNewIcon(String name) {
         if (log.isDebugEnabled()) log.debug("addNewIcon Action: iconMap.size()= "+_iconMap.size());
         if (name==null || name.length()==0) {
-            JOptionPane.showMessageDialog(_parent._paletteFrame, ItemPalette.rbp.getString("NoIconName"),
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(_parent._paletteFrame, Bundle.getMessage("NoIconName"),
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         } else if (_iconMap.get(name)!=null) {
             JOptionPane.showMessageDialog(_parent._paletteFrame,
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateIconName"), name),
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("DuplicateIconName", name),
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         String fileName = "resources/icons/misc/X-red.gif";
@@ -112,6 +114,6 @@ public class MultiSensorIconDialog extends IconDialog {
         return true;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorIconDialog.class.getName());
+    static Logger log = LoggerFactory.getLogger(MultiSensorIconDialog.class.getName());
 }
 

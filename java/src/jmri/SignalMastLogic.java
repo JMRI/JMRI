@@ -1,5 +1,6 @@
 package jmri;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
@@ -94,9 +95,13 @@ public interface SignalMastLogic {
      * where a signalmast can at a certain location can be replaced with another, while the
      * remainder of the configuration stays the same.
      */
-     public void replaceDestinationMast(SignalMast oldMast, SignalMast newMast);
+    public void replaceDestinationMast(SignalMast oldMast, SignalMast newMast);
     
     public void dispose();
+    
+    public Section getAssociatedSection(SignalMast destination);
+    
+    public void setAssociatedSection(Section sec, SignalMast destination);
 
     public int getAutoBlockState(Block block, SignalMast destination);
 
@@ -168,6 +173,11 @@ public interface SignalMastLogic {
      * Query if the signalmast logic to the destination signal mast is active.
      */
     public boolean isActive(SignalMast dest);
+    
+    /**
+    * return the active the active destination Signal Mast
+    */
+    public SignalMast getActiveDestination();
 
     public boolean isBlockIncluded(Block block, SignalMast destination);
 
@@ -251,8 +261,6 @@ public interface SignalMastLogic {
      * @param masts
      */
     public void setMasts(Hashtable<SignalMast, String> masts, SignalMast destination);
-
-    public void setProtectingBlock(LayoutBlock protecting);
 
     /**
      * Sets which sensors must be in a given state before our mast can be set.
@@ -339,8 +347,24 @@ public interface SignalMastLogic {
 
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
     
+    /**
+    *  Get the block facing our source signal
+    *  
+    */
     public LayoutBlock getFacingBlock();
     
-    public LayoutBlock getProtectingBlock();
+    /**
+    * Get the block that the source signal is protecting on the path to the 
+    * destination signal mast
+    */
+    public LayoutBlock getProtectingBlock(SignalMast destination);
+    
+    /**
+     * Set the auto turnouts based upon a given list of layout blocks for a specific destination mast
+     * @param blks List of Layout Blockt.
+     * @param destination Destination SignalMast.
+     * @return A LinkedHashMap of the original blocks and the required state, plus any blocks found on double-overs that also need to be un-occupied
+    */
+    public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination);
     
 }

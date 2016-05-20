@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog.symbolicframe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.progsupport.ProgModePane;
 import jmri.jmrit.symbolicprog.*;
@@ -455,10 +457,10 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             variableModel.setFileDirty(false);
         }
         catch (Exception e) {
-            log.error(e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SymbolicProgFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SymbolicProgFrame.class.getName());
 
 }

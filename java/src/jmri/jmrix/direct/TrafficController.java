@@ -2,6 +2,8 @@
 
 package jmri.jmrix.direct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractSerialPortController;
 
 import java.io.DataInputStream;
@@ -144,7 +146,7 @@ public class TrafficController implements jmri.CommandStation {
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrafficController.class.getName());
 }
 
 

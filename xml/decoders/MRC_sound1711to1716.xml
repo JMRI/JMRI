@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
+<!-- $Id: MRC_sound1906.xml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+   <version author="John Crellin" version="1" lastUpdated="20130211"/>
+<!-- Version 1 - Covers MRC 1711 to 1716 -->
+  <decoder>
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="0" highVersionID="60">
+      <model model="HO Gauge Diesel Universal - 16 Bit 1711 EMD645E" numOuts="7" numFns="28" maxTotalCurrent="1.0A" >
+        <size length="73" width="17.6" height="8.4" units="mm"/>
+      </model>
+      <model model="HO Gauge Diesel Universal - 16 Bit 1712 EMD645" numOuts="7" numFns="28" maxTotalCurrent="1.0A" >
+        <size length="73" width="17.6" height="8.4" units="mm"/>
+      </model>
+      <model model="HO Gauge Diesel Universal - 16 Bit 1713 EMD710" numOuts="7" numFns="28" maxTotalCurrent="1.0A" >
+        <size length="73" width="17.6" height="8.4" units="mm"/>
+      </model>
+      <model model="HO Gauge Diesel Universal - 16 Bit 1714 ALCO 244" numOuts="7" numFns="28" maxTotalCurrent="1.0A" >
+        <size length="73" width="17.6" height="8.4" units="mm"/>
+      </model>
+      <model model="HO Gauge Diesel Universal - 16 Bit 1715 ALCO 539T" numOuts="7" numFns="28" maxTotalCurrent="1.0A" >
+        <size length="73" width="17.6" height="8.4" units="mm"/>
+      </model>
+      <model model="HO Gauge Diesel Universal - 16 Bit 1716 EMD567" numOuts="7" numFns="28" maxTotalCurrent="1.0A" >
+        <size length="73" width="17.6" height="8.4" units="mm"/>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="true">Ditch Lights</functionlabel>
+        <functionlabel num="4" lockable="true">Coupling1</functionlabel>
+        <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+        <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+        <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+        <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+        <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+        <functionlabel num="11" lockable="true">Traction Air Compressor</functionlabel>
+        <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
+        <functionlabel num="13" lockable="true">Master Volume Decrease</functionlabel>
+        <functionlabel num="14" lockable="true">Master Volume Increase</functionlabel>
+        <functionlabel num="15" lockable="true">Air Compressor</functionlabel>
+        <functionlabel num="16" lockable="true">Flange Squeal</functionlabel>
+        <functionlabel num="17" lockable="true">Air Release</functionlabel>
+        <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+        <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+        <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+        <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+        <functionlabel num="23" lockable="true">Diesel Rumble Volume</functionlabel>
+        <functionlabel num="24" lockable="true">Safety Valve Pop</functionlabel>
+        <functionlabel num="25" lockable="true">Air Release</functionlabel>
+        <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
+        <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+        <functionlabel num="28" lockable="true">Air Release</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
+      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="3">
+        <shortAddressVal/>
+        <label>Primary Address</label>
+        <comment>Short address</comment>
+      </variable>
+      <variable label="Start Volts" CV="2" item="Vstart" default="10" comment="Range 0-63">
+        <decVal max="63"/>
+        <label>Start Volts</label>
+        <comment>Range 0-63</comment>
+      </variable>
+      <variable label="Acceleration" CV="3" item="Accel" default="0" comment="Range 0-63">
+        <decVal max="63"/>
+        <label>Acceleration</label>
+        <comment>Range 0-63</comment>
+      </variable>
+      <variable label="Deceleration" CV="4" item="Decel" default="0" comment="Range 0-63">
+        <decVal max="63"/>
+        <label>Deceleration</label>
+        <comment>Range 0-63</comment>
+      </variable>
+      <variable label="Max Voltage" CV="5" item="Vhigh" default="32" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Max Voltage</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Ultra Slow Speed" CV="6" item="Ultra Slow Speed Enable" default="0" >
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Ultra Low Speed</label>
+      </variable>
+      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="0">
+        <decVal/>
+        <label>Version ID</label>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="143">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
+      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
+        <longAddressVal/>
+        <label>Long Address</label>
+        <comment>4 digit address (Range 0001-9999)</comment>
+      </variable>
+      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+        <decVal/>
+        <label>Consist Address</label>
+      </variable>
+      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Direction</label>
+      </variable>
+      <variable label="Functions Respond To Address" item="Consist Address Active For FL in Forward" CV="21" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Functions Respond To Address</label>
+      </variable>
+      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+        <enumVal>
+          <enumChoice choice="Forward">
+            <choice>Forward</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse">
+            <choice>Reverse</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Normal direction of motion</label>
+      </variable>
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+        <enumVal>
+          <enumChoice choice="14">
+            <choice>14</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 (recommended)">
+            <choice>28/128 (recommended)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Steps</label>
+      </variable>
+      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Analog conversion mode</label>
+      </variable>
+      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+        <enumVal>
+          <enumChoice choice="Don't use Speed Table">
+            <choice>Don't use Speed Table</choice>
+          </enumChoice>
+          <enumChoice choice="Use Speed Table">
+            <choice>Use Speed Table</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Use Speed Table</label>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+        <enumVal>
+          <enumChoice choice="2 digit addressing">
+            <choice>2 digit addressing</choice>
+          </enumChoice>
+          <enumChoice choice="4 digit addressing">
+            <choice>4 digit addressing</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Addressing Mode</label>
+      </variable>
+      <variable label="Sound On/Off" CV="49" mask="XXXXXXXV" tooltip="CV49, F12 also sets sound on/off" default="1" item="Sound Option 1">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sound On/Off</label>
+      </variable>
+      <variable label="Horn Type" CV="50" item="Sound Option 2" default="0" comment="Range 0-3">
+        <enumVal>
+          <enumChoice choice="Horn 0">
+            <choice>Horn 0</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 1">
+            <choice>Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 2">
+            <choice>Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 3">
+            <choice>Horn 3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Horn Type</label>
+        <comment>Range 0-22</comment>
+      </variable>
+      
+      <variable label="Horn Volume" CV="51" item="Sound Setting 1" default="12" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Horn Volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Bell Type" CV="52" item="Sound Option 3" default="3" comment="Range 0-3">
+        <enumVal>
+          <enumChoice choice="Bell 0">
+            <choice>Bell 0</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 1">
+            <choice>Bell 1</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 2">
+            <choice>Bell 2</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 3">
+            <choice>Bell 3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Bell Type</label>
+        <comment>Range 0-6</comment>
+      </variable>
+      <variable label="Bell Volume" CV="53" item="Sound Setting 2" default="12" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Bell Volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Bell Ring Rate" CV="54" item="Sound Option 4" default="3" comment="Range 0-50">
+        <decVal max="50"/>
+        <label>Bell Ring Rate</label>
+        <comment>Range 0-50</comment>
+      </variable>
+      <variable label="Diesel Rumble Volume" CV="55" item="Sound Setting 3" default="12" comment="Range 0-15">
+        <decVal max="13"/>
+        <label>Prime Mover Volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Brake Squeal Volume" CV="56" item="Sound Setting 4" default="7" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Brake Squeal Volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Air Release Volume" item="Sound Setting 5" CV="58" default="12" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Air Release Volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Air Pump Volume" CV="59" item="Sound Setting 6" default="12" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Air Pump Volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Safety Pop Value Volume" CV="60" item="Sound Setting 7" default="12" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Safety Pop Value Volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Engine Cooling Fan Volume" CV="61" item="Sound Setting 8" default="12" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Engine Cooling Fan Volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Coupling Volume" CV="62" item="Sound Setting 9" default="12" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Coupling Volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Air Compressor Mode" CV="121" item="Sound option 5" default="0" comment="Range 0-1">
+        <decVal max="1"/>
+        <enumVal>
+          <enumChoice choice="Constant">
+            <choice>Constant</choice>
+          </enumChoice>
+          <enumChoice choice="Synch to Prime Mover">
+            <choice>Synch to Prime Mover</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Air Compressor Mode</label>
+        <comment>Range 0-1</comment>
+      </variable>
+      <variable label="Headlight Effect" CV="117" item="Global lighting option 1" default="0" >
+        <enumVal>
+          <enumChoice choice="Normal" value="0">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno Effect (fading)" value="1">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Dim, Bright, Off cycle" value="2">
+              <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17" value="3">
+                <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Both headlights on" value="4">
+                  <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Dith light A" value="5">
+              <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch Light B" value="6">
+                <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralight" value="7">
+                  <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Mars Light" value="8">
+                    <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Strato Light" value="9">
+                      <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Single Strobe Light" value="10">
+              <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Double Strobe Light" value="11">
+                <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Rotating Beacon" value="12">
+                  <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="FRED Rear End Flashing" value="13">
+                    <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Fire Box Flicker A" value="14">
+                      <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Fire Box Flicker B" value="15">
+              <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Engine Exhaust Flicker" value="16">
+                <choice>Enable</choice>
+          </enumChoice>       
+        </enumVal>
+        <label>Headlight Effect</label>
+      </variable>
+      <variable label="ACC Light Mode 1" CV="118" item="Global lighting option 2" default="0" >
+        <enumVal>
+          <enumChoice choice="Normal" value="0">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno Effect (fading)" value="1">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Dim, Bright, Off cycle" value="2">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17" value="3">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Both headlights on" value="4">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Dith light A" value="5">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch Light B" value="6">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralight" value="7">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Mars Light" value="8">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Strato Light" value="9">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Single Strobe Light" value="10">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Double Strobe Light" value="11">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Rotating Beacon" value="12">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="FRED Rear End Flashing" value="13">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Fire Box Flicker A" value="14">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Fire Box Flicker B" value="15">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Engine Exhaust Flicker" value="16">
+            <choice>Enable</choice>
+          </enumChoice>
+        </enumVal>
+        <label>ACC Light Mode 1</label>
+      </variable>
+      <variable label="ACC Light Mode 2" CV="119" item="Global lighting option 3" default="0" >
+        <enumVal>
+          <enumChoice choice="Normal" value="0">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno Effect (fading)" value="1">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Dim, Bright, Off cycle" value="2">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17" value="3">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Both headlights on" value="4">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Dith light A" value="5">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch Light B" value="6">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralight" value="7">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Mars Light" value="8">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Strato Light" value="9">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Single Strobe Light" value="10">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Double Strobe Light" value="11">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Rotating Beacon" value="12">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="FRED Rear End Flashing" value="13">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Fire Box Flicker A" value="14">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Fire Box Flicker B" value="15">
+            <choice>Enable</choice>
+          </enumChoice>
+          <enumChoice choice="Engine Exhaust Flicker" value="16">
+            <choice>Enable</choice>
+          </enumChoice>
+        </enumVal>
+        <label>ACC Light Mode 2</label>
+      </variable>
+      <variable label="Rail wheel clack" CV="64" item="Sound Setting 10" default="12" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Rail wheel clack</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Kick Start" CV="65">
+        <decVal/>
+        <label>Kick Start</label>
+      </variable>
+      <variable label="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+      <variable label="User ID #1" CV="105" item="User Id #1" default="0">
+        <decVal max="255"/>
+        <label>User ID #1</label>
+      </variable>
+      <variable label="User ID #2" CV="106" item="User Id #2" default="0">
+        <decVal max="255"/>
+        <label>User ID #2</label>
+      </variable>
+      <variable label="Back EMF start speed adjustment" CV="112" item="Back EMF Start Speed Adjustment" default="0" comment="Range 0-7">
+        <decVal max="7"/>
+        <label>Back EMF start speed adjustment</label>
+        <comment>Range 0-7</comment>
+      </variable>
+      <variable label="Back EMF load control proportional gain Kp" CV="113" item="Back EMF Load Control proportional gain Kp" default="20" comment="Range 0-31">
+        <decVal max="31"/>
+        <label>Back EMF Load Control proportional gain Kp</label>
+        <comment>Range 0-31</comment>
+      </variable>
+      <variable label="Back EMF load control integral gain Ki" CV="114" item="Back EMF Load Control integral gain Ki" default="10" comment="Range 0-31">
+        <decVal max="31"/>
+        <label>Back EMF Load Control integral gain Ki</label>
+        <comment>Range 0-31</comment>
+      </variable>
+      <variable label="Back EMF load control intensity (0=off)" CV="124" item="Back EMF load control intensity (0=off)" default="160" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Back EMF load control intensity (0=off)</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable label="F3  to F4 Exchange" item="F3 to F4 Exchange" CV="37" default="0">
+        <enumVal>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On" value="1">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F3 to F4 Exchange</label>
+      </variable>
+      <variable label="F5  to F6 Exchange" item="F5 to F6 Exchange" CV="39" default="0">
+        <enumVal>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On" value="1">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F5 to F6 Exchange</label>
+      </variable>
+      <variable label="F8 to F12 Exchange" item="F8 to F12 Exchange" CV="42" default="0">
+        <enumVal>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On" value="1">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F8 to F12 Exchange</label>
+      </variable>
+      <variable label="Auto Brake Squeal" item="Sound Option 6" CV="115" default="0">
+        <enumVal>
+          <enumChoice choice="Off" value="2">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On" value="0">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Auto Brake squeal</label>
+      </variable>
+      <variable label="Diesel Notch Mode" item="Sound Option 7" CV="122" default="3">
+        <enumVal>
+          <enumChoice choice="Auto" value ="0">
+            <choice>Auto</choice>
+          </enumChoice>
+          <enumChoice choice="Manual" value="3">
+            <choice>Manual</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="125" default="1"/>
+    </resets>
+  </decoder>
+  <pane name="MRC">
+    <column>
+      <display item="Back EMF start speed adjustment"/>
+      <display item="Back EMF load control proportional gain Kp"/>
+      <display item="Back EMF load control integral gain Ki"/>
+      <display item="Back EMF load control intensity (0=off)"/>
+      <display item="F3 to F4 Exchange"/>
+      <display item="F5 to F6 Exchange"/>
+      <display item="F8 to F12 Exchange"/>
+      <display item="Ultra Slow Speed Enable"/>
+    </column>
+    <name>MRC</name>
+  </pane>
+</decoder-config>

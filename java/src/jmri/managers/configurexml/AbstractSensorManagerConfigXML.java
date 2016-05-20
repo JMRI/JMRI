@@ -1,5 +1,7 @@
 package jmri.managers.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.Sensor;
@@ -34,6 +36,10 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      */
     public Element store(Object o) {
         Element sensors = new Element("sensors");
+        return store(o, sensors);
+    }
+    
+    public Element store(Object o, Element sensors){
         setStoreElementClass(sensors);
         SensorManager tm = (SensorManager) o;
         if(tm.getDefaultSensorDebounceGoingActive()>0 || tm.getDefaultSensorDebounceGoingInActive()>0){
@@ -137,8 +143,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         for (int i=0; i<sensorList.size(); i++) {
             String sysName = getSystemName(sensorList.get(i));
             if (sysName == null) {
-                creationErrorEncountered (org.apache.log4j.Level.ERROR,
-                                      "Unexpected missing system name while loading sensors",
+                creationErrorEncountered ("Unexpected missing system name while loading sensors",
                                       null,null,null);
                 result = false;
                 break;
@@ -155,8 +160,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             Sensor s = tm.newSensor(sysName, userName);
             
             if (s==null){
-                creationErrorEncountered (org.apache.log4j.Level.WARN,
-                                      "Could not create sensor",
+                creationErrorEncountered ("Could not create sensor",
                                       sysName,userName,null);
             	result = false;
             	continue;
@@ -200,5 +204,5 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         return InstanceManager.sensorManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManagerConfigXML.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class.getName());
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: TCS_TH150DP.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,18 +14,17 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="3.1" lastUpdated="20031008"/>
-<!-- Version 1 - made from NMRA & Digitrax examples -->
-<!-- Version 2 - moved 141 to T1 file, add function map -->
-<!-- Version 3 - fix "rule 17" typos -->
-<!-- Version 3.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- Version 3.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
-
+  <!-- Version 1 - made from NMRA & Digitrax examples -->
+  <!-- Version 2 - moved 141 to T1 file, add function map -->
+  <!-- Version 3 - fix "rule 17" typos -->
+  <!-- Version 3.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 3.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS 150 series decoders" mfg="Train Control Systems">
-      <model model="TH150DP" numOuts="5" numFns="6">
+      <model show="no" model="TH150DP" numOuts="5" numFns="6">
         <output name="4" label="Violet"/>
       </model>
-      <model model="TH150W" numOuts="5" numFns="6">
+      <model show="no" model="TH150W" numOuts="5" numFns="6">
         <output name="4" label="Violet"/>
       </model>
     </family>
@@ -1953,7 +1952,6 @@
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-  
   <pane name="TCS">
     <column>
       <display item="Burst duration"/>

@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
@@ -178,7 +180,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     /** 
      * Do end of initialization processing.
      */
-    @SuppressWarnings("null")
+    @SuppressWarnings("null")     
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_ON_SOME_PATH",
+                                                    justification="we want to force an exception")
 	public void lastItem() {
         // configure the representation object
         _defaultColor = _value.getBackground();
@@ -479,6 +483,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CompositeVariableValue.class.getName());
+    static Logger log = LoggerFactory.getLogger(CompositeVariableValue.class.getName());
 
 }

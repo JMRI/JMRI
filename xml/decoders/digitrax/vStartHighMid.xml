@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: vStartHighMid.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>32</revnumber>
+      <date>2012-12-27</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>31</revnumber>
+      <date>2011-12-30</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Digitrax_01x3.xml file</revremark>
+    </revision>
+  </revhistory>
+  <variable label="Start Volts" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
+    <decVal/>
+    <label>Start Volts</label>
+    <label xml:lang="it">Volts Minimi</label>
+    <comment>A value of 255 corresponds to 100%</comment>
+    <comment xml:lang="it">Un valore di 255 corrisponde al 100%i</comment>
+  </variable>
+  <variable label="Max Volts" CV="5" item="Vhigh">
+    <decVal/>
+    <label>Max Volts</label>
+    <label xml:lang="it">Volts massimi</label>
+  </variable>
+  <variable label="Mid Volts" CV="6" item="Vmid">
+    <decVal/>
+    <label>Mid Volts</label>
+    <label xml:lang="it">Volts medi</label>
+  </variable>
+</variables>

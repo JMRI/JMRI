@@ -2,6 +2,8 @@
 
 package jmri.jmrit.sensorgroup;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import javax.swing.table.AbstractTableModel;
 
@@ -63,7 +65,7 @@ public abstract class BeanTableModel extends AbstractTableModel {
             return null;
         }
     }
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanTableModel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(BeanTableModel.class.getName());
 }
 
 

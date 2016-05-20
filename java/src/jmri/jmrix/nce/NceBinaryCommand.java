@@ -2,6 +2,9 @@
 
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  
   From NCE System notes for version March 1, 2007
@@ -72,47 +75,66 @@ package jmri.jmrix.nce;
   * Also see NceMessage.java for additional commands
   * 
   * @author Daniel Boudreau (C) 2007, 2010
+  * @author ken cameron (C) 2013
   * @version     $Revision$
   */
 
 public class NceBinaryCommand {
     
-	// NOTE: NCE USB does not support any clock commands
-	
-	public static final int READ_CLOCK_CMD = 0x82;	//NCE read clock command
-	public static final int STOP_CLOCK_CMD = 0x83;	//NCE stop clock command
-    public static final int START_CLOCK_CMD = 0x84;	//NCE start clock command
-    public static final int SET_CLOCK_CMD = 0x85;	//NCE set clock command
-    public static final int CLOCK_1224_CMD = 0x86;	//NCE change clock 12/24 command
-    public static final int CLOCK_RATIO_CMD = 0x87;	//NCE set clock ratio command
+	public static final int NOOP_CMD = 0x80;		// NCE No Op Command, NCE-USB yes
+	public static final int ASSIGN_CAB_CMD = 0x81;	// NCE Assign loco to cab command, NCE-USB no
+	public static final int READ_CLOCK_CMD = 0x82;	//NCE read clock command, NCE-USB no
+	public static final int STOP_CLOCK_CMD = 0x83;	//NCE stop clock command, NCE-USB no
+    public static final int START_CLOCK_CMD = 0x84;	//NCE start clock command, NCE-USB no
+    public static final int SET_CLOCK_CMD = 0x85;	//NCE set clock command, NCE-USB no
+    public static final int CLOCK_1224_CMD = 0x86;	//NCE change clock 12/24 command, NCE-USB no
+    public static final int CLOCK_RATIO_CMD = 0x87;	//NCE set clock ratio command, NCE-USB no
+    public static final int DEQUEUE_CMD = 0x88;		//NCE dequeue packets based on loco addr, NCE-USB no
+    public static final int ENABLE_TRACK_CMD = 0x89;	//NCE enable track/kill programm track, NCE-USB no
+    public static final int READ_AUI4_CMD = 0x8A;	//NCE read status of AUI yy, returns four bytes, NCE-USB no
+    public static final int DISABLE_TRACK_CMD = 0x89;	//NCE enable program/kill main track, NCE-USB no
+    public static final int DUMMY_CMD = 0x8C;		//NCE Dummy instruction, NCE-USB yes
+    public static final int SPEED_MODE_CMD = 0x8D;	//NCE set speed mode, NCE-USB no
+    public static final int WRITEn_CMD = 0x8E;		//NCE write up to 16 bytes of memory command, NCE-USB no
+    public static final int READ16_CMD = 0x8F;		//NCE read 16 bytes of memory command, NCE-USB no
+    public static final int DISPLAY3_CMD = 0x90;	//NCE write 16 char to cab display line 3, NCE-USB no
+    public static final int DISPLAY4_CMD = 0x91;	//NCE write 16 char to cab display line 4, NCE-USB no
+    public static final int DISPLAY2_CMD = 0x92;	//NCE write 8 char to cab display line 2 right, NCE-USB no
+    public static final int QUEUE3_TMP_CMD = 0x93;		//NCE queue 3 bytes to temp queue, NCE-USB no
+    public static final int QUEUE4_TMP_CMD = 0x94;		//NCE queue 4 bytes to temp queue, NCE-USB no
+    public static final int QUEUE5_TMP_CMD = 0x95;		//NCE queue 5 bytes to temp queue, NCE-USB no
+    public static final int QUEUE6_TMP_CMD = 0x96;		//NCE queue 6 bytes to temp queue, NCE-USB no
+    public static final int WRITE1_CMD = 0x97;		//NCE write 1 bytes of memory command, NCE-USB no
+    public static final int WRITE2_CMD = 0x98;		//NCE write 2 bytes of memory command, NCE-USB no
+    public static final int WRITE4_CMD = 0x99;		//NCE write 4 bytes of memory command, NCE-USB no
+    public static final int WRITE8_CMD = 0x9A;		//NCE write 8 bytes of memory command, NCE-USB no
+    public static final int READ_AUI2_CMD = 0x9B;	//NCE read status of AUI yy, returns two bytes, NCE-USB >= 1.65
+    public static final int MACRO_CMD = 0x9C;		//NCE execute macro n, NCE-USB yes
+    public static final int READ1_CMD = 0x9D;		//NCE read 1 byte of memory command, NCE-USB no
+    public static final int PGM_TRK_ON_CMD = 0x9E;	//NCE enter program track  command, NCE-USB yes
+    public static final int PGM_TRK_OFF_CMD = 0x9F;	//NCE exit program track  command, NCE-USB yes
+    public static final int PGM_PAGE_WRITE_CMD = 0xA0;	//NCE program track, page mode write command, NCE-USB yes
+    public static final int PGM_PAGE_READ_CMD = 0xA1;	//NCE program track, page mode read command, NCE-USB yes
+    public static final int LOCO_CMD = 0xA2;	//NCE loco control command, NCE-USB yes
+    public static final int QUEUE3_TRK_CMD = 0xA3;		//NCE queue 3 bytes to track queue, NCE-USB no
+    public static final int QUEUE4_TRK_CMD = 0xA4;		//NCE queue 4 bytes to track queue, NCE-USB no
+    public static final int QUEUE5_TRK_CMD = 0xA5;		//NCE queue 5 bytes to track queue, NCE-USB no
+    public static final int PGM_REG_WRITE_CMD = 0xA6;	//NCE program track, register mode write command, NCE-USB yes
+    public static final int PGM_REG_READ_CMD = 0xA7;	//NCE program track, register mode read command, NCE-USB yes
+    public static final int PGM_DIR_WRITE_CMD = 0xA8;	//NCE program track, direct mode write command, NCE-USB yes
+    public static final int PGM_DIR_READ_CMD = 0xA9;	//NCE program track, direct mode read command, NCE-USB yes
+    public static final int SW_REV_CMD = 0xAA; 		//NCE get EPROM revision cmd, Reply Format: VV.MM.mm, NCE-USB yes
+    public static final int RESET_SOFT_CMD = 0xAB;			//NCE soft reset command, NCE-USB no
+    public static final int RESET_HARD_CMD = 0xAC;			//NCE hard reset command, NCE-USB no
+    public static final int ACC_CMD = 0xAD;			//NCE accessory command, NCE-USB yes
+    public static final int OPS_PROG_LOCO_CMD = 0xAE; // NCE ops mode program loco, NCE-USB yes
+    public static final int OPS_PROG_ACCY_CMD = 0xAF; // NCE ops mode program accessories, NCE-USB yes
+    public static final int FACTORY_TEST_CMD = 0xB0; // NCE factory test, NCE-USB yes
+    public static final int USB_SET_CAB_CMD = 0xB1; // NCE set cab address in USB, NCE-USB yes
+    public static final int USB_MEM_POINTER_CMD = 0xB3;	//NCE set memory context pointer, NCE-USB >= 1.65
+    public static final int USB_MEM_WRITE_CMD = 0xB4;	//NCE write memory, NCE-USB >= 1.65
+    public static final int USB_MEM_READ_CMD = 0xB5;	//NCE read memory, NCE-USB >= 1.65
 
-    // NOTE: NCE USB does not support AUI commands
-    
-    public static final int READ_AUI4_CMD = 0x8A;	//NCE read status of AUI yy
-    public static final int DUMMY_CMD = 0x8C;		//NCE Dummy instruction
-    
-    // NOTE: NCE USB does not support any read or write memory commands
-    
-    public static final int WRITEn_CMD = 0x8E;		//NCE write up to 16 bytes of memory command
-    public static final int READ16_CMD = 0x8F;		//NCE read 16 bytes of memory command
-    public static final int WRITE1_CMD = 0x97;		//NCE write 1 bytes of memory command
-    public static final int WRITE2_CMD = 0x98;		//NCE write 2 bytes of memory command
-    public static final int WRITE4_CMD = 0x99;		//NCE write 4 bytes of memory command
-    public static final int WRITE8_CMD = 0x9A;		//NCE write 8 bytes of memory command
-    public static final int READ1_CMD = 0x9D;		//NCE read 1 byte of memory command
-    
-    public static final int MACRO_CMD = 0x9C;		//NCE execute macro n
-
-    public static final int ACC_CMD = 0xAD;			//NCE accessory command
-    public static final int LOCO_CMD = 0xA2;		//NCE Loco control command 
-    public static final int SW_REV_CMD = 0xAA; 		//NCE get EPROM revision cmd, Reply Format: VV.MM.mm
-
-    // NOTE: ONLY NCE USB connected to PowerCab or SB3 supports the following commands
-    
-    public static final int OPS_PROG_LOCO_CMD = 0xAE; // NCE ops mode program loco
-    public static final int OPS_PROG_ACCY_CMD = 0xAF; // NCE ops mode program accessories
-
-    
     public static byte[] accDecoder(int number, boolean closed) {
         
         if (number < 1 || number > 2044) {
@@ -147,14 +169,6 @@ public class NceBinaryCommand {
     }
     
     public static byte[] accMemoryRead(int address){
- 
-        /* Moved to NceMessageCheck
-        // this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-    	}
-    	*/
         
         int addr_h = address/256;
         int addr_l = address & 0xFF;
@@ -174,13 +188,6 @@ public class NceBinaryCommand {
      * @return binary command to read one byte
      */
     public static byte[] accMemoryRead1(int address) {
-    	/* Moved to NceMessageCheck
-    	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
-    		log.error("attempt to send unsupported binary command to NCE USB");
-    		return null;
-    	}
-    	*/
 
     	int addr_h = address/256;
     	int addr_l = address & 0xFF;
@@ -195,13 +202,6 @@ public class NceBinaryCommand {
     }
 
     public static byte[] accMemoryWriteN(int address, int num) {
-    	/* Moved to NceMessageCheck
-    	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-    		return null;
-    	}
-    	*/
 
     	int addr_h = address / 256;
     	int addr_l = address & 0xFF;
@@ -217,13 +217,6 @@ public class NceBinaryCommand {
     }
 
     public static byte[] accMemoryWrite8(int address) {
-    	/* Moved to NceMessageCheck
-    	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-    		return null;
-    	}
-    	*/
 
     	int addr_h = address / 256;
     	int addr_l = address & 0xFF;
@@ -238,13 +231,6 @@ public class NceBinaryCommand {
     }
 
     public static byte[] accMemoryWrite4(int address) {
-    	/* Moved to NceMessageCheck
-    	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-    	}
-    	*/
 
 		int addr_h = address / 256;
 		int addr_l = address & 0xFF;
@@ -258,13 +244,6 @@ public class NceBinaryCommand {
 	}
 
     public static byte[] accMemoryWrite2(int address) {
-    	/* Moved to NceMessageCheck
-    	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-    	}
-    	*/
 
 		int addr_h = address / 256;
 		int addr_l = address & 0xFF;
@@ -278,13 +257,6 @@ public class NceBinaryCommand {
 	}
     
     public static byte[] accMemoryWrite1(int address) {
-    	/* Moved to NceMessageCheck
-    	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-    	}
-    	*/
 
 		int addr_h = address / 256;
 		int addr_l = address & 0xFF;
@@ -297,14 +269,53 @@ public class NceBinaryCommand {
 		return retVal;
 	}
 
+    public static byte[] accAiu2Read(int cabId) {
+
+		byte[] retVal = new byte[1+1];
+		retVal[0] = (byte) (READ_AUI2_CMD);// write 4 bytes command
+		retVal[1] = (byte) (cabId); 	// cab address
+
+		return retVal;
+	}
+
+    public static byte[] usbSetCabId(int cab) {
+
+		byte[] retVal = new byte[2];
+		retVal[0] = (byte) (USB_SET_CAB_CMD);// read N bytes command
+		retVal[1] = (byte) (cab); 	//  cab number
+
+		return retVal;
+	}
+
+    public static byte[] usbMemoryWrite1(byte data) {
+
+		byte[] retVal = new byte[2];
+		retVal[0] = (byte) (USB_MEM_WRITE_CMD);// write 2 bytes command
+		retVal[1] = (data); 	//  data
+
+		return retVal;
+	}
+
+    public static byte[] usbMemoryRead(int num) {
+
+		byte[] retVal = new byte[2];
+		retVal[0] = (byte) (USB_MEM_READ_CMD);// read N bytes command
+		retVal[1] = (byte) (num); 	//  byte count
+
+		return retVal;
+	}
+
+    public static byte[] usbMemoryPointer(int cab, int loc) {
+
+		byte[] retVal = new byte[3];
+		retVal[0] = (byte) (USB_MEM_POINTER_CMD);// read N bytes command
+		retVal[1] = (byte) (cab); 	//  cab number
+		retVal[2] = (byte) (loc);	// memory offset
+
+		return retVal;
+	}
+
 	public static byte[] accStopClock() {
-		/* Moved to NceMessageCheck
-	   	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-    	}
-    	*/
 
 		byte[] retVal = new byte[1];
 		retVal[0] = (byte) (STOP_CLOCK_CMD);// stop clock command
@@ -313,13 +324,6 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accStartClock() {
-		/* Moved to NceMessageCheck
-	   	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-    	}
-    	*/
 
 		byte[] retVal = new byte[1];
 		retVal[0] = (byte) (START_CLOCK_CMD);// start clock command
@@ -328,13 +332,6 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accSetClock(int hours, int minutes) {
-		/* Moved to NceMessageCheck
-	   	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-    	}
-    	*/
 
 		byte[] retVal = new byte[3];
 		retVal[0] = (byte) (SET_CLOCK_CMD);// set clock command
@@ -345,13 +342,6 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accSetClock1224(boolean flag) {
-		/* Moved to NceMessageCheck
-	   	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-    	}
-    	*/
 
 		int bit = 0;
 		if (flag) {
@@ -367,13 +357,6 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accSetClockRatio(int ratio) {
-		/* Moved to NceMessageCheck
-	   	// this command isn't supported by the NCE USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-    	}
-    	*/
 
 		byte[] retVal = new byte[2];
 		retVal[0] = (byte) (CLOCK_RATIO_CMD);// set clock command
@@ -444,32 +427,21 @@ public class NceBinaryCommand {
 	 * @return byte[] containing message
 	 */
 	public static byte[] usbOpsModeLoco(NceTrafficController tc, int locoAddr, int cvAddr, int cvData) {
-		/* Moved to NceMessageCheck
-		// ONLY USB connected to PowerCab or SB3 can send this message
-		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERCAB
-				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3) {
-				*/
 
-			byte[] retVal = new byte[6];
-			int locoAddr_h = locoAddr / 256;
-			int locoAddr_l = locoAddr & 0xFF;
-			int cvAddr_h = cvAddr / 256;
-			int cvAddr_l = cvAddr & 0xFF;
+		byte[] retVal = new byte[6];
+		int locoAddr_h = locoAddr / 256;
+		int locoAddr_l = locoAddr & 0xFF;
+		int cvAddr_h = cvAddr / 256;
+		int cvAddr_l = cvAddr & 0xFF;
 
-			retVal[0] = (byte) (OPS_PROG_LOCO_CMD); // NCE ops mode loco command
-			retVal[1] = (byte) (locoAddr_h); // loco high address
-			retVal[2] = (byte) (locoAddr_l); // loco low address
-			retVal[3] = (byte) (cvAddr_h); // CV high address
-			retVal[4] = (byte) (cvAddr_l); // CV low address
-			retVal[5] = (byte) (cvData); // CV data
+		retVal[0] = (byte) (OPS_PROG_LOCO_CMD); // NCE ops mode loco command
+		retVal[1] = (byte) (locoAddr_h); // loco high address
+		retVal[2] = (byte) (locoAddr_l); // loco low address
+		retVal[3] = (byte) (cvAddr_h); // CV high address
+		retVal[4] = (byte) (cvAddr_l); // CV low address
+		retVal[5] = (byte) (cvData); // CV data
 
-			return retVal;
-			/* Moved to NceMessageCheck
-		} else {
-			log.error("attempt to send unsupported binary command");
-			return null;
-		}
-		*/
+		return retVal;
 	}
 
 	/**
@@ -481,36 +453,25 @@ public class NceBinaryCommand {
 	 * @return byte[] containing message
 	 */
 	public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
-		/* Moved to NceMessageCheck
-		// ONLY USB connected to PowerCab or SB3 can send this message
-		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB
-				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3) {
-				*/
 
-			byte[] retVal = new byte[6];
-			int accyAddr_h = accyAddr / 256;
-			int accyAddr_l = accyAddr & 0xFF;
-			int cvAddr_h = cvAddr / 256;
-			int cvAddr_l = cvAddr & 0xFF;
+		byte[] retVal = new byte[6];
+		int accyAddr_h = accyAddr / 256;
+		int accyAddr_l = accyAddr & 0xFF;
+		int cvAddr_h = cvAddr / 256;
+		int cvAddr_l = cvAddr & 0xFF;
 
-			retVal[0] = (byte) (OPS_PROG_ACCY_CMD); // NCE ops mode accy command
-			retVal[1] = (byte) (accyAddr_h); // accy high address
-			retVal[2] = (byte) (accyAddr_l); // accy low address
-			retVal[3] = (byte) (cvAddr_h); // CV high address
-			retVal[4] = (byte) (cvAddr_l); // CV low address
-			retVal[5] = (byte) (cvData); // CV data
+		retVal[0] = (byte) (OPS_PROG_ACCY_CMD); // NCE ops mode accy command
+		retVal[1] = (byte) (accyAddr_h); // accy high address
+		retVal[2] = (byte) (accyAddr_l); // accy low address
+		retVal[3] = (byte) (cvAddr_h); // CV high address
+		retVal[4] = (byte) (cvAddr_l); // CV low address
+		retVal[5] = (byte) (cvData); // CV data
 
-			return retVal;
-			/* Moved to NceMessageCheck
-		} else {
-			log.error("attempt to send unsupported binary command");
-			return null;
-		}
-		*/
+		return retVal;
 	}
 	
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceBinaryCommand.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class.getName());
 }
 /* @(#)NceBinaryCommand.java */
 

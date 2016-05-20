@@ -1,12 +1,13 @@
 package jmri.jmrit.throttle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.*;
-import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -49,8 +50,6 @@ import org.jdom.Element;
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
-    static final ResourceBundle rb = ThrottleBundle.bundle();
-    
     private DccThrottle throttle;
     
     private JSlider speedSlider;
@@ -300,7 +299,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
         labelTable.put(Integer.valueOf(maxSpeed/2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
-        labelTable.put(Integer.valueOf(0), new JLabel(rb.getString("LabelStop")));
+        labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("LabelStop")));
         speedSlider.setLabelTable(labelTable);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
@@ -317,7 +316,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	labelTable = new java.util.Hashtable<Integer,JLabel>();
         	labelTable.put(Integer.valueOf(maxSpeed/2), new JLabel("50%"));
         	labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
-        	labelTable.put(Integer.valueOf(0), new JLabel(rb.getString("LabelStop")));
+        	labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("LabelStop")));
         	labelTable.put(Integer.valueOf(-maxSpeed/2), new JLabel("-50%"));
         	labelTable.put(Integer.valueOf(-maxSpeed), new JLabel("-100%"));
         	speedSliderContinuous.setLabelTable(labelTable);
@@ -526,10 +525,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner.setModel(speedSpinnerModel);
         speedSpinner.setFocusable(false);
 
-        SpeedStep128Button = new JRadioButton(rb.getString("Button128SS"));
-        SpeedStep28Button = new JRadioButton(rb.getString("Button28SS"));
-        SpeedStep27Button = new JRadioButton(rb.getString("Button27SS"));
-        SpeedStep14Button= new JRadioButton(rb.getString("Button14SS"));
+        SpeedStep128Button = new JRadioButton(Bundle.getMessage("Button128SS"));
+        SpeedStep28Button = new JRadioButton(Bundle.getMessage("Button28SS"));
+        SpeedStep27Button = new JRadioButton(Bundle.getMessage("Button27SS"));
+        SpeedStep14Button= new JRadioButton(Bundle.getMessage("Button14SS"));
         
         forwardButton = new JRadioButton();
         if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
@@ -540,9 +539,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	forwardButton.setIcon(new ImageIcon("resources/icons/throttles/up-red.png"));
         	forwardButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/up-green.png"));
         	forwardButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-        	forwardButton.setToolTipText(rb.getString("ButtonForward"));
+        	forwardButton.setToolTipText(Bundle.getMessage("ButtonForward"));
         } else {
-            forwardButton.setText(rb.getString("ButtonForward"));
+            forwardButton.setText(Bundle.getMessage("ButtonForward"));
         }
         
         reverseButton = new JRadioButton();
@@ -554,9 +553,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	reverseButton.setIcon(new ImageIcon("resources/icons/throttles/down-red.png"));
         	reverseButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/down-green.png"));
         	reverseButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-        	reverseButton.setToolTipText(rb.getString("ButtonReverse"));
+        	reverseButton.setToolTipText(Bundle.getMessage("ButtonReverse"));
         } else {
-            reverseButton.setText(rb.getString("ButtonReverse"));
+            reverseButton.setText(Bundle.getMessage("ButtonReverse"));
         }
     
         propertiesPopup = new JPopupMenu();
@@ -583,7 +582,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
         labelTable.put(Integer.valueOf(maxSpeed/2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
-        labelTable.put(Integer.valueOf(0), new JLabel(rb.getString("LabelStop")));
+        labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("LabelStop")));
         speedSlider.setLabelTable(labelTable);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
@@ -645,7 +644,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable = new java.util.Hashtable<Integer,JLabel>();
         labelTable.put(Integer.valueOf(maxSpeed/2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
-        labelTable.put(Integer.valueOf(0), new JLabel(rb.getString("LabelStop")));
+        labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("LabelStop")));
         labelTable.put(Integer.valueOf(-maxSpeed/2), new JLabel("-50%"));
         labelTable.put(Integer.valueOf(-maxSpeed), new JLabel("-100%"));
         speedSliderContinuous.setLabelTable(labelTable);
@@ -833,9 +832,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	stopButton.setIcon(new ImageIcon("resources/icons/throttles/estop.png"));
         	stopButton.setPressedIcon(new ImageIcon("resources/icons/throttles/estop24.png"));
         	stopButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-        	stopButton.setToolTipText(rb.getString("ButtonEStop"));
+        	stopButton.setToolTipText(Bundle.getMessage("ButtonEStop"));
         } else
-        	stopButton.setText(rb.getString("ButtonEStop"));
+        	stopButton.setText(Bundle.getMessage("ButtonEStop"));
         constraints.gridy = 4;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         buttonPanel.add(stopButton, constraints);
@@ -869,9 +868,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	idleButton.setIcon(new ImageIcon("resources/icons/throttles/stop.png"));
         	idleButton.setPressedIcon(new ImageIcon("resources/icons/throttles/stop24.png"));
         	idleButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-        	idleButton.setToolTipText(rb.getString("ButtonIdle"));
+        	idleButton.setToolTipText(Bundle.getMessage("ButtonIdle"));
         } else
-        	idleButton.setText(rb.getString("ButtonIdle"));
+        	idleButton.setText(Bundle.getMessage("ButtonIdle"));
         
         if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
         		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())
@@ -902,7 +901,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                       }
                                   });
         
-        JMenuItem propertiesItem = new JMenuItem(rb.getString("ControlPanelProperties"));
+        JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("ControlPanelProperties"));
         propertiesItem.addActionListener(this);
         propertiesPopup.add(propertiesItem);
         
@@ -1444,6 +1443,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	}
 	
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());	
+    static Logger log = LoggerFactory.getLogger(ControlPanel.class.getName());	
 }
 

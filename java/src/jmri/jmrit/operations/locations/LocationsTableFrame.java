@@ -2,17 +2,15 @@
 
 package jmri.jmrit.operations.locations;
  
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -33,25 +31,23 @@ import javax.swing.ScrollPaneConstants;
  */
 public class LocationsTableFrame extends OperationsFrame {
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-
 	LocationsTableModel locationsModel = new LocationsTableModel();
 	javax.swing.JTable locationsTable = new javax.swing.JTable(locationsModel);
 	JScrollPane locationsPane;
 	
 	// labels
-	JLabel textSort = new JLabel(rb.getString("SortBy"));
+	JLabel textSort = new JLabel(Bundle.getMessage("SortBy"));
 	JLabel textSep = new JLabel("          ");
 	
 	// radio buttons
-    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(rb.getString("Name"));
-    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(rb.getString("Id"));
+    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(Bundle.getMessage("Name"));
+    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getMessage("Id"));
 
 	// major buttons
-	JButton addButton = new JButton(rb.getString("Add"));
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
 
     public LocationsTableFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle").getString("TitleLocationsTable"));
+        super(Bundle.getMessage("TitleLocationsTable"));
         // general GUI config
 
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
@@ -86,18 +82,18 @@ public class LocationsTableFrame extends OperationsFrame {
     	
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new SchedulesTableAction(rb.getString("Schedules")));
-		toolMenu.add(new ModifyLocationsAction(rb.getString("TitleModifyLocations")));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new SchedulesTableAction(Bundle.getMessage("Schedules")));
+		toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocations")));
 		toolMenu.add(new ShowCarsByLocationAction(false, null, null));
 		if (Setup.isVsdPhysicalLocationEnabled())
-			toolMenu.add(new SetPhysicalLocationAction(rb.getString("MenuSetPhysicalLocation"), null));
-		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
-		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
+			toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), null));
+		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
+		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);	// NOI18N
     	
     	pack();
     	if ((getWidth()<670)) setSize(670, getHeight());
@@ -127,7 +123,7 @@ public class LocationsTableFrame extends OperationsFrame {
 		if (ae.getSource() == addButton){
 			LocationEditFrame f = new LocationEditFrame();
 			f.initComponents(null);
-			f.setTitle("Add Location");
+			f.setTitle(Bundle.getMessage("TitleLocationAdd"));
 		}
 	}
 
@@ -136,6 +132,6 @@ public class LocationsTableFrame extends OperationsFrame {
         super.dispose();
     }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(LocationsTableFrame.class.getName());
 }

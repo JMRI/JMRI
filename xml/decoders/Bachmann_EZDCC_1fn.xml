@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Bachmann_EZDCC_1fn.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,8 +15,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="2" lastUpdated="20090725"/>
   <version author="John McAleely (john@mcaleely.com)" version="1" lastUpdated="20080618"/>
-<!-- Version 1 - Based on other Bachmann decoder files created to support UK 1fn model, 36-551-->
-<!-- Version 2 - Changed model name to match others and cleaned up xml formatting (Peter Ulvestad) -->
+  <!-- Version 1 - Based on other Bachmann decoder files created to support UK 1fn model, 36-551-->
+  <!-- Version 2 - Changed model name to match others and cleaned up xml formatting (Peter Ulvestad) -->
   <decoder>
     <family name="E-Z Command decoders" mfg="Bachmann Trains">
       <model model="1 function decoder (36-551)" numOuts="2" numFns="1" lowVersionID="10">
@@ -133,7 +133,7 @@
         <label>Headlight Dimming intensity</label>
         <comment>Controls how much headlights dim (0-dark to 255-max bright)</comment>
       </variable>
-<!-- User private ID CV's are not documented by Bachamann, but appear to work -->
+      <!-- User private ID CV's are not documented by Bachamann, but appear to work -->
       <variable label="User Private ID #1" CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>

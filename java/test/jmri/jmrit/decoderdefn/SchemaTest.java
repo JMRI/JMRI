@@ -2,6 +2,7 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 //import jmri.InstanceManager;
@@ -17,6 +18,17 @@ public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
 
     public void testValidateQsiV7() {
         validate(new java.io.File("java/test/jmri/jmrit/decoderdefn/QSI_Diesel_Ver7.xml"));
+    }
+
+    public void testDigitraxPart() {
+        validate(new java.io.File("xml/decoders/digitrax/consistAddrDirection.xml"));
+    }
+
+    public void testLenzPart() {
+        validate(new java.io.File("xml/decoders/lenz/functionmap.xml"));
+        validate(new java.io.File("xml/decoders/lenz/braking_cv51.xml"));
+        validate(new java.io.File("xml/decoders/lenz/abc_cv51.xml"));
+        validate(new java.io.File("xml/decoders/Lenz_Plus_2010.xml"));
     }
 
     public void testValidateQualifier() {
@@ -50,5 +62,5 @@ public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SchemaTest.class.getName());
+    static Logger log = Logger.getLogger(SchemaTest.class.getName());
 }

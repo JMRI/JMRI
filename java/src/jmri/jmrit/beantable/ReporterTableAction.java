@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -210,7 +212,7 @@ public class ReporterTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to Reporters to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Number to Reporters to Add must be a number!",""+ex, "",true, false);
                 return;
             }
         } 
@@ -248,7 +250,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 if (user!= null && !user.equals("") && (reportManager.getByUserName(user)==null)){
                     r.setUserName(user);
                 } else if (reportManager.getByUserName(user)!=null && !pref.getPreferenceState(getClassName(), userNameError)) {
-                    pref.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true, org.apache.log4j.Level.ERROR);
+                    pref.showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true);
                 }
             }
         }
@@ -288,7 +290,7 @@ public class ReporterTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleReporterTable"); }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
 }
 
 /* @(#)ReporterTableAction.java */

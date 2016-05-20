@@ -1,60 +1,68 @@
 //AbstractMemoryServer.java
-
 package jmri.jmris;
 
-import java.io.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
-
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Memory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Abstract interface between a JMRI memory and a 
- * network connection
- * @author          mstevetodd Copyright (C) 2012 (copied from AbstractSensorServer)
- * @version         $Revision:  $
+ * Abstract interface between a JMRI memory and a network connection
+ *
+ * @author mstevetodd Copyright (C) 2012 (copied from AbstractSensorServer)
+ * @author Randall Wood Copyright (C) 2013
+ * @version $Revision: $
  */
-
 abstract public class AbstractMemoryServer {
 
-   public AbstractMemoryServer(){
-      memories= new ArrayList<String>();
-   }
+    public AbstractMemoryServer() {
+        memories = new ArrayList<String>();
+    }
 
     /*
      * Protocol Specific Abstract Functions
      */
+    abstract public void sendStatus(String memory, String Status) throws IOException;
 
-     abstract public void sendStatus(String memory, String Status) throws IOException; 
-     abstract public void sendErrorStatus(String memory) throws IOException;
-     abstract public void parseStatus(String statusString) throws jmri.JmriException,java.io.IOException;
+    abstract public void sendErrorStatus(String memory) throws IOException;
 
-    synchronized protected void addMemoryToList(java.lang.String memoryName) {
-         if (!memories.contains(memoryName) ) {
-             memories.add(memoryName);
-             InstanceManager.memoryManagerInstance().provideMemory(memoryName)
-                     .addPropertyChangeListener(new MemoryListener(memoryName));
-         }
+    abstract public void parseStatus(String statusString) throws JmriException, IOException;
+
+    synchronized protected void addMemoryToList(String memoryName) {
+        if (!memories.contains(memoryName)) {
+            memories.add(memoryName);
+            InstanceManager.memoryManagerInstance().getMemory(memoryName)
+                    .addPropertyChangeListener(new MemoryListener(memoryName));
+        }
     }
 
-    synchronized protected void removeMemoryFromList(java.lang.String memoryName) {
-         if (memories.contains(memoryName) ) {
-             memories.remove(memoryName);
-         }
+    synchronized protected void removeMemoryFromList(String memoryName) {
+        if (memories.contains(memoryName)) {
+            memories.remove(memoryName);
+        }
     }
 
-	
-    public void setMemoryValue(java.lang.String memoryName, java.lang.String memoryValue) {
-    	Memory memory = null;
-    	try {
-    		addMemoryToList(memoryName);
-    		memory= InstanceManager.memoryManagerInstance().provideMemory(memoryName);
-    		if (memory == null) {
-    			log.error("Memory " + memoryName
-    					+ " is not available");
+    public Memory initMemory(String memoryName) {
+        Memory memory = InstanceManager.memoryManagerInstance().provideMemory(memoryName);
+        this.addMemoryToList(memoryName);
+        return memory;
+    }
+
+    public void setMemoryValue(String memoryName, String memoryValue) {
+        Memory memory;
+        try {
+            addMemoryToList(memoryName);
+            memory = InstanceManager.memoryManagerInstance().getMemory(memoryName);
+            if (memory == null) {
+                log.error("Memory {} is not available", memoryName);
             } else {
                 if (memory.getValue() != memoryValue) {
-                	memory.setValue(memoryValue);
+                    memory.setValue(memoryValue);
                 } else {
                     try {
                         sendStatus(memoryName, memoryValue);
@@ -63,45 +71,37 @@ abstract public class AbstractMemoryServer {
                     }
                 }
             }
-    	} catch (Exception ex) {
-    		log.error("error setting memory value, exception: "
-    				+ ex.toString());
-    	}
+        } catch (Exception ex) {
+            log.error("error setting memory value", ex);
+        }
     }
 
+    class MemoryListener implements PropertyChangeListener {
 
-    class MemoryListener implements java.beans.PropertyChangeListener {
+        MemoryListener(String memoryName) {
+            name = memoryName;
+            memory = InstanceManager.memoryManagerInstance().getMemory(memoryName);
+        }
 
-       MemoryListener(String memoryName) {
-          name=memoryName;
-          memory= InstanceManager.memoryManagerInstance().provideMemory(memoryName);
-       }
-
-       // update state as state of memory changes
-       public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("value")) {
-            String state =  (String) e.getNewValue();
-            try {
-               sendStatus(name, state);
-            } catch(java.io.IOException ie) {
-                  log.debug("Error sending status, removing listener from memory: " + name);
-                  // if we get an error, de-register
-                  memory.removePropertyChangeListener(this);
-                  removeMemoryFromList(name);
+        // update state as state of memory changes
+        @Override
+        public void propertyChange(PropertyChangeEvent e) {
+            if (e.getPropertyName().equals("value")) {
+                String state = (String) e.getNewValue();
+                try {
+                    sendStatus(name, state);
+                } catch (IOException ie) {
+                    log.debug("Error sending status, removing listener from memory {}", name);
+                    // if we get an error, de-register
+                    memory.removePropertyChangeListener(this);
+                    removeMemoryFromList(name);
+                }
             }
-         }
-      }
-
-      String name = null;
-      Memory memory=null;
- 
+        }
+        String name = null;
+        Memory memory = null;
     }
-
     protected ArrayList<String> memories = null;
-
     String newState = "";
-
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMemoryServer.class.getName());
-
+    static Logger log = LoggerFactory.getLogger(AbstractMemoryServer.class);
 }

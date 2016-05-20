@@ -1,5 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -9,7 +11,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.List;
@@ -61,15 +63,15 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         elem.addContent(show);
         element.addContent(elem);
 
-        Hashtable<String, Hashtable<Integer, NamedIcon>> iconMaps = p.getIconMaps();
-        Iterator<Entry<String, Hashtable<Integer, NamedIcon>>> it = iconMaps.entrySet().iterator();
+        HashMap<String, HashMap<Integer, NamedIcon>> iconMaps = p.getIconMaps();
+        Iterator<Entry<String, HashMap<Integer, NamedIcon>>> it = iconMaps.entrySet().iterator();
         Element el = new Element("iconmaps");
         String family = p.getFamily();
         if (family!=null) {
             el.setAttribute("family", family);
         }
         while (it.hasNext()) {
-            Entry<String, Hashtable<Integer, NamedIcon>> ent = it.next();
+            Entry<String, HashMap<Integer, NamedIcon>> ent = it.next();
             elem = new Element(ent.getKey());
             Iterator<Entry<Integer, NamedIcon>> iter = ent.getValue().entrySet().iterator();
             while (iter.hasNext()) {
@@ -189,5 +191,5 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTurnoutIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconXml.class.getName());
 }

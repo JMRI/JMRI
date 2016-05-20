@@ -2,10 +2,11 @@
 
 package jmri.jmrit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 
 import java.awt.event.*;
-import java.util.*;
 
 import javax.swing.*;
 
@@ -21,8 +22,6 @@ public class LogixLoadAction extends AbstractAction {
         super(s);
         _who = who;
     }
-
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.JmritDebugBundle");
 	
     JPanel _who;
 
@@ -32,19 +31,19 @@ public class LogixLoadAction extends AbstractAction {
         Object[] options = {"Disable",
                     "Enable"};
 
-        int retval = JOptionPane.showOptionDialog(_who, rb.getString("LogixDisabledMessage"), rb.getString("DebugOption"),
+        int retval = JOptionPane.showOptionDialog(_who, Bundle.getMessage("LogixDisabledMessage"), Bundle.getMessage("DebugOption"),
                                                   JOptionPane.YES_NO_OPTION,
                                                   JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (retval != 0) {
             InstanceManager.logixManagerInstance().setLoadDisabled(false);
-            log.error("Requested load Logixs enabled via Debug menu.");
+            log.info("Requested load Logixs enabled via Debug menu.");
         } else {
             InstanceManager.logixManagerInstance().setLoadDisabled(true);
-            log.error("Requested load Logixs diabled via Debug menu.");
+            log.info("Requested load Logixs diabled via Debug menu.");
         }
 
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LogixLoadAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(LogixLoadAction.class.getName());
 }

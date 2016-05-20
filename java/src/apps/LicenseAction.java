@@ -34,12 +34,12 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
         // get the file
         
-        File file = new File("resources"+File.separator+"COPYING");
+        File file = new File("resources"+File.separator+"COPYING"); // NOI18N
         
         String t;
         
         try {
-            BufferedReader r = new BufferedReader(new FileReader(file));
+            BufferedReader r = new BufferedReader(new InputStreamReader( new FileInputStream(file), "US-ASCII"));  // file stored as ASCII // NOI18N
             StringBuffer buf = new StringBuffer();
             while (r.ready()) {
                 buf.append(r.readLine());

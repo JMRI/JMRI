@@ -32,13 +32,19 @@ It uses the facilities of the jmri.util.JmriJFrame class
 to locate windows and create an image of their current appearance.
 The window does not have to be maximized, but it does have to be open;
 it's OK for the window to have been minimized to the Start Bar (Windows)
-or converted to an icon (MacOS X and Linux).
+or converted to an icon (Mac OS X and Linux).
 
 <p>
 The <a href="index.shtml#Configure">Web Server Preferences</a> can be used to adjust the default delay after
 a click and adjust the periodic refresh between clicks.  You can also
 enter a list of frames which are not to be allowed, and enable ajax 
 refresh (recommended) or use the older meta-refresh.
+
+<p>
+You can override the defaults for individual pages by adding the following yes/no parms to your URL:
+<ul><li><b>plain</b> (hide the footer links)</li>
+<li><b>protect</b> (protect the frame from user clicks, i.e. read-only image, but with refresh)</li>
+<li><b>ajax</b> (use ajax for updates)</li></ul>
 
 <p>
 The jmri/web/servlet/frameimage/JmriJFrameServlet.properties 

@@ -1,6 +1,8 @@
 // jmri.jmrit.display.LayoutConnectivity.java
 package jmri.jmrit.display.layoutEditor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Path;
 
 /**
@@ -127,7 +129,7 @@ public class LayoutConnectivity {
 	public int getXoverBoundaryType() {return xoverBoundaryType;}
 	public PositionablePoint getAnchor() {return anchor;}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutConnectivity.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
 
 }	
 		

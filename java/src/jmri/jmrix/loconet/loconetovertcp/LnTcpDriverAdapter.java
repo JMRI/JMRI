@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.*;
 
@@ -76,6 +78,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTcpDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnTcpDriverAdapter.class.getName());
 
 }

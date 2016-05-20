@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.IdentifyDecoder;
@@ -49,9 +51,9 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
     public void init() {
         JLabel last;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(last = new JLabel("New locomotive on programming track"));
+        add(last = new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("NewLocoProgTrack")));
         last.setBorder(new EmptyBorder(6,0,6,0));
-        add(new JLabel("Copy settings from existing locomotive:"));
+        add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("CopySettings")));
 
         locoBox = new GlobalRosterEntryComboBox();
         locoBox.addActionListener( new ActionListener() {
@@ -64,8 +66,8 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
 
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
-        pane1a.add(new JLabel("Decoder installed:"));
-        JButton iddecoder= new JButton("Identify decoder");
+        pane1a.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("DecoderInstalled")));
+        JButton iddecoder= new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("IdentifyDecoder"));
         iddecoder.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("identify decoder pressed");
@@ -80,7 +82,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
         add(decoderBox);
 
         // Open programmer button
-        JButton go1 = new JButton("Open programmer");
+        JButton go1 = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("IdentifyDecoder"));
         go1.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
@@ -177,7 +179,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
         RosterEntry re = new RosterEntry();
         re.setDecoderFamily(decoderFile.getFamily());
         re.setDecoderModel(decoderFile.getModel());
-        re.setId(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"));
+        re.setId(Bundle.getMessage("LabelNewDecoder"));
         // note we're leaving the filename information as null
         // add the new roster entry to the in-memory roster
         Roster.instance().addEntry(re);
@@ -194,6 +196,6 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NewLocoSelPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(NewLocoSelPane.class.getName());
 
 }

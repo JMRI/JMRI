@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.NamedBeanHandle;
@@ -12,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
-import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -46,8 +48,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     static final public int INCONSISTENT_BACKGROUND_COLOR =  0x0B;
     private boolean debug = false;
 
-    protected Hashtable <String, Integer> _name2stateMap;       // name to state
-    protected Hashtable <Integer, String> _state2nameMap;       // state to name
+    protected HashMap <String, Integer> _name2stateMap;       // name to state
+    protected HashMap <Integer, String> _state2nameMap;       // state to name
 
     public SensorIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -150,46 +152,44 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 if (getSensor().getUserName()!=null)
                 {
                     String userName=getSensor().getUserName();
-                    if (activeText==null)
+                    if (activeText==null){
                         activeText=userName;
-                    if (inactiveText==null)
+                        //textColorActive=Color.red;
+                    }
+                    if (inactiveText==null){
                         inactiveText = userName;
-                    if (inconsistentText==null)
+                        //textColorInActive=Color.yellow;
+                    }
+                    if (inconsistentText==null){
                         inconsistentText=userName;
-                    if (unknownText==null)
+                        //textColorUnknown=Color.black;
+                    }
+                    if (unknownText==null){
                         unknownText=userName;
-                } else {
-                    if (activeText==null)
-                        activeText=rb.getString("SensorActive");
-                    if (inactiveText==null)
-                        inactiveText = rb.getString("SensorInactive");
-                    if (inconsistentText==null)
-                        inconsistentText=rb.getString("Inconsistent");
-                    if (unknownText==null)
-                        unknownText=rb.getString("Unknown");
+                        //textColorInconsistent=Color.blue;
+                    }
                 }
             }
             if (activeText==null) {
-                activeText=rb.getString("SensorActive");
-                textColorActive=Color.red;
+                activeText=Bundle.getMessage("SensorActive");
+                //textColorActive=Color.red;
             }
             if (inactiveText==null) {
-                inactiveText = rb.getString("SensorInactive");
-                textColorInActive=Color.yellow;
+                inactiveText = Bundle.getMessage("SensorInactive");
+                //textColorInActive=Color.yellow;
             }
-                //inactiveText = rb.getString("SensorInactive");
             if (inconsistentText==null)
-                inconsistentText=rb.getString("Inconsistent");
+                inconsistentText=Bundle.getMessage("Inconsistent");
             if (unknownText==null)
-                unknownText=rb.getString("Unknown");
+                unknownText=Bundle.getMessage("Unknown");
             if (textColorActive==null)
                 textColorActive=Color.red;
             if (textColorInActive==null)
                 textColorInActive=Color.yellow;
             if (textColorUnknown==null)
-                textColorUnknown=Color.black;
+                textColorUnknown=Color.blue;
             if (textColorInconsistent==null)
-                textColorInconsistent=Color.blue;
+                textColorInconsistent=Color.black;
             setOpaque(true);
         } else {
             setOpaque(false);
@@ -217,13 +217,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     void makeIconMap() {
-        _iconMap = new Hashtable <String, NamedIcon>();
-        _name2stateMap = new Hashtable <String, Integer>();
+        _iconMap = new HashMap <String, NamedIcon>();
+        _name2stateMap = new HashMap <String, Integer>();
         _name2stateMap.put("BeanStateUnknown", Integer.valueOf(Sensor.UNKNOWN));
         _name2stateMap.put("BeanStateInconsistent", Integer.valueOf(Sensor.INCONSISTENT));
         _name2stateMap.put("SensorStateActive", Integer.valueOf(Sensor.ACTIVE));
         _name2stateMap.put("SensorStateInactive", Integer.valueOf(Sensor.INACTIVE));
-        _state2nameMap = new Hashtable <Integer, String>();
+        _state2nameMap = new HashMap <Integer, String>();
         _state2nameMap.put(Integer.valueOf(Sensor.UNKNOWN), "BeanStateUnknown");
         _state2nameMap.put(Integer.valueOf(Sensor.INCONSISTENT), "BeanStateInconsistent");
         _state2nameMap.put(Integer.valueOf(Sensor.ACTIVE), "SensorStateActive");
@@ -284,7 +284,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     @Override
     public String getNameString() {
         String name;
-        if (namedSensor == null) name = rb.getString("NotConnected");
+        if (namedSensor == null) name = Bundle.getMessage("NotConnected");
         else if (getSensor().getUserName()==null)
             name = getSensor().getSystemName();
         else
@@ -292,7 +292,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return name;
     }
 
-    JCheckBoxMenuItem  momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
+    JCheckBoxMenuItem  momentaryItem = new JCheckBoxMenuItem(Bundle.getMessage("Momentary"));
     /**
      * Pop-up just displays the sensor name
      */
@@ -300,13 +300,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
             if(isIcon()){
-                popup.add(new AbstractAction(rb.getString("ChangeToText")) {
+                popup.add(new AbstractAction(Bundle.getMessage("ChangeToText")) {
                     public void actionPerformed(ActionEvent e) {
                         changeLayoutSensorType();
                     }
                 });
             } else {
-                popup.add(new AbstractAction(rb.getString("ChangeToIcon")) {
+                popup.add(new AbstractAction(Bundle.getMessage("ChangeToIcon")) {
                     public void actionPerformed(ActionEvent e) {
                         changeLayoutSensorType();
                     }
@@ -335,18 +335,18 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         if (isIcon()) {
             popup.add(CoordinateEdit.getTextEditAction(this, "OverlayText"));
         } else {
-            popup.add(new AbstractAction(rb.getString("SetSensorText")) {
+            popup.add(new AbstractAction(Bundle.getMessage("SetSensorText")) {
                 public void actionPerformed(ActionEvent e) {
                     String name = getNameString();
                     sensorTextEdit(name);
                 }
             });
             if (isText() && !isIcon()) {
-                JMenu stateColor = new JMenu(rb.getString("StateColors"));
-                    stateColor.add(stateMenu(rb.getString("Unknown"), UNKOWN_FONT_COLOR)); //Unknown
-                    stateColor.add(stateMenu(rb.getString("SensorActive"), ACTIVE_FONT_COLOR)); //Active
-                    stateColor.add(stateMenu(rb.getString("SensorInactive"), INACTIVE_FONT_COLOR)); //Inactive
-                    stateColor.add(stateMenu(rb.getString("Inconsistent"), INCONSISTENT_FONT_COLOR)); //Inconsistent
+                JMenu stateColor = new JMenu(Bundle.getMessage("StateColors"));
+                    stateColor.add(stateMenu(Bundle.getMessage("Unknown"), UNKOWN_FONT_COLOR)); //Unknown
+                    stateColor.add(stateMenu(Bundle.getMessage("SensorActive"), ACTIVE_FONT_COLOR)); //Active
+                    stateColor.add(stateMenu(Bundle.getMessage("SensorInactive"), INACTIVE_FONT_COLOR)); //Inactive
+                    stateColor.add(stateMenu(Bundle.getMessage("Inconsistent"), INCONSISTENT_FONT_COLOR)); //Inconsistent
                 popup.add(stateColor);
             }
         }
@@ -412,7 +412,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Sensor"));
         popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     editItem();
@@ -422,7 +422,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
     
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor")));
+        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Sensor")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
                                        PickListModel.sensorPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -431,7 +431,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             }
         };
         // duplicate _iconMap map with unscaled and unrotated icons
-        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();
+        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();
         Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
@@ -450,10 +450,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     void updateItem() {
-        Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
+    	HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setSensor(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
-        Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
+        HashMap <String, NamedIcon> iconMap = _itemPanel.getIconMap();
         if (iconMap!=null) {
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -466,7 +466,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
+//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();
@@ -476,7 +476,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Sensor"));
         popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -489,10 +489,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     protected void edit() {
         makeIconEditorFrame(this, "Sensor", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
-        Enumeration <String> e = _iconMap.keys();
+        Iterator <String> e = _iconMap.keySet().iterator();
         int i = 0;
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
+        while (e.hasNext()) {
+            String key = e.next();
             _iconEditor.setIcon(i++, /*_state2nameMap.get(key)*/ key, _iconMap.get(key));
         }
         _iconEditor.makeIconPanel(false);
@@ -508,7 +508,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
     
     void updateSensor() {
-        Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
+    	HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setSensor(_iconEditor.getTableSelection().getDisplayName());
         Hashtable <String, NamedIcon> iconMap = _iconEditor.getIconMap();
 
@@ -616,9 +616,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         super.dispose();
     }
 
-    protected Hashtable<Integer, NamedIcon> cloneMap(Hashtable<Integer, NamedIcon> map,
+    protected HashMap<Integer, NamedIcon> cloneMap(HashMap<Integer, NamedIcon> map,
                                                              SensorIcon pos) {
-        Hashtable<Integer, NamedIcon> clone = new Hashtable<Integer, NamedIcon>();
+    	HashMap<Integer, NamedIcon> clone = new HashMap<Integer, NamedIcon>();
         if (map!=null) {
             Iterator<Entry<Integer, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {
@@ -633,51 +633,50 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
     // The code below here is from the layoutsensoricon.
 
-    Color textColorActive = Color.black;
-    //Color clear = new Color(238,238,238);
-
+    Color textColorActive = Color.red;
+    
     public void setTextActive(Color color){
         textColorActive=color;
         displayState(sensorState());
     }
-
+    
     public Color getTextActive(){
         return textColorActive;
     }
-
-    Color textColorInActive = Color.black;
-
+    
+    Color textColorInActive = Color.yellow;
+    
     public void setTextInActive(Color color){
         textColorInActive=color;
         displayState(sensorState());
     }
-
+    
     public Color getTextInActive(){
         return textColorInActive;
     }
-
-    Color textColorUnknown = Color.black;
+    
+    Color textColorUnknown = Color.blue;
     public void setTextUnknown(Color color){
         textColorUnknown=color;
         displayState(sensorState());
     }
-
+    
     public Color getTextUnknown(){
         return textColorUnknown;
     }
-
+    
     Color textColorInconsistent = Color.black;
     public void setTextInconsistent(Color color){
         textColorInconsistent=color;
         displayState(sensorState());
     }
-
+    
     public Color getTextInconsistent(){
         return textColorInconsistent;
     }
-
+    
     Color backgroundColorActive = null;
-
+    
     public void setBackgroundActive(Color color){
         if (color==null)
             setOpaque(false);
@@ -768,10 +767,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     JMenu stateMenu(final String name, int state) {
         JMenu menu = new JMenu(name);
-        JMenu colorMenu = new JMenu(rb.getString("FontColor"));
+        JMenu colorMenu = new JMenu(Bundle.getMessage("FontColor"));
         getPopupUtility().makeColorMenu(colorMenu, state);
         menu.add(colorMenu);
-        colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
+        colorMenu = new JMenu(Bundle.getMessage("FontBackgroundColor"));
         getPopupUtility().makeColorMenu(colorMenu, state+1);
         menu.add(colorMenu);
         return menu;
@@ -794,12 +793,12 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         _namedIcon = null;
         displayState(sensorState());
-//        setAttributes();
+        setAttributes();
 //        setSensor(handle);
         int deg = getDegrees();
         rotate(deg);
         if (deg!=0 && _text && !_icon) {
-            setSuperText(null);        	
+            setSuperText(null);
         }
     }
     
@@ -822,7 +821,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             log.error("one or other of the states passed for flash is null");
             return;
         } else if (state1==state2){
-            log.info("Both states to flash between are the same, therefore no flashing will occur");
+            log.debug("Both states to flash between are the same, therefore no flashing will occur");
             return;
         }
         int interval = (1000/tps)/2;
@@ -885,22 +884,22 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         @SuppressWarnings("fallthrough")
         protected void makeColorMenu(JMenu colorMenu, int type) {
             ButtonGroup buttonGrp = new ButtonGroup();
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Black"), Color.black, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("DarkGray"),Color.darkGray, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Gray"),Color.gray, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("LightGray"),Color.lightGray, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("White"),Color.white, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Red"),Color.red, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Orange"),Color.orange, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Yellow"),Color.yellow, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Green"),Color.green, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Blue"),Color.blue, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Magenta"),Color.magenta, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Black"), Color.black, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("DarkGray"),Color.darkGray, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Gray"),Color.gray, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("LightGray"),Color.lightGray, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("White"),Color.white, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Red"),Color.red, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Orange"),Color.orange, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Yellow"),Color.yellow, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Green"),Color.green, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"),Color.blue, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"),Color.magenta, type);
             switch(type){
                 case UNKOWN_BACKGROUND_COLOR :
                 case ACTIVE_BACKGROUND_COLOR :
                 case INACTIVE_BACKGROUND_COLOR :
-                case INCONSISTENT_BACKGROUND_COLOR : addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Clear"), null, type);
+                case INCONSISTENT_BACKGROUND_COLOR : addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
             }
         }
         
@@ -1006,5 +1005,5 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(SensorIcon.class.getName());
 }

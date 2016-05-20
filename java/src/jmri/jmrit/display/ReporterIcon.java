@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Reporter;
 
@@ -33,7 +35,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         public void setTextJustificationMenu(JPopupMenu popup) {}
         public void setFixedTextMenu(JPopupMenu popup) {}
         public void setTextMarginMenu(JPopupMenu popup) {
-            JMenu colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
+            JMenu colorMenu = new JMenu(Bundle.getMessage("FontBackgroundColor"));
             makeColorMenu(colorMenu, BACKGROUND_COLOR);
             popup.add(colorMenu);
         }
@@ -93,7 +95,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
 
     public String getNameString() {
         String name;
-        if (reporter == null) name = rb.getString("NotConnected");
+        if (reporter == null) name = Bundle.getMessage("NotConnected");
         else if (reporter.getUserName()!=null)
             name = reporter.getUserName()+" ("+reporter.getSystemName()+")";
         else
@@ -109,11 +111,11 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     void displayState() {
         if (reporter.getCurrentReport()!=null) {
         	if (reporter.getCurrentReport().equals(""))
-        		setText(rb.getString("Blank"));
+        		setText(Bundle.getMessage("Blank"));
         	else
         	 	setText(reporter.getCurrentReport().toString());
         } else {
-        	setText(rb.getString("NoReport"));
+        	setText(Bundle.getMessage("NoReport"));
 		}
 		updateSize();
         return;
@@ -155,5 +157,5 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(ReporterIcon.class.getName());
 }

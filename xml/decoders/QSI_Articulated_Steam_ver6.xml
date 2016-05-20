@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: QSI_Articulated_Steam_ver6.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,10 +16,10 @@
   <version author="Howard G. Penny" version="2" lastUpdated="20051117"/>
   <version author="Peter Ulvestad" version="3" lastUpdated="20100807"/>
   <version author="Peter Ulvestad" version="4" lastUpdated="20100809"/>
-<!-- version 1 - modified for QSI CV.PI.SI version 6 format - Howard -->
-<!-- version 2 - added new models - Howard -->
-<!-- version 3 - Corrected spelling on Function Output pane - Peter -->
-<!-- version 4 - Turned off Direct mode - Peter -->
+  <!-- version 1 - modified for QSI CV.PI.SI version 6 format - Howard -->
+  <!-- version 2 - added new models - Howard -->
+  <!-- version 3 - Corrected spelling on Function Output pane - Peter -->
+  <!-- version 4 - Turned off Direct mode - Peter -->
   <decoder>
     <family name="QSI Articulated Steam Ver. 6" mfg="QSIndustries" lowVersionID="6">
       <model model="BLI N-W Class A" lowVersionID="6" numFns="14" numOuts="14" productID="400">
@@ -401,7 +401,7 @@
         </enumVal>
         <label>Power Source Conversion</label>
       </variable>
-<!-- This bit is not used by QSI
+      <!-- This bit is not used by QSI
     <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX"
           item="Advanced Ack">
       <enumVal>
@@ -1675,7 +1675,7 @@
         <label>Programming Verbal Acknowledgement</label>
         <comment>CV62</comment>
       </variable>
-<!-- need to make this work for indexed CVs as well - TBD -->
+      <!-- need to make this work for indexed CVs as well - TBD -->
       <variable label="Verbal CV Inquiry" CV="64" opsOnly="yes" writeOnly="yes" comment="CV64" item="Verbal CV Inquiry">
         <decVal/>
         <label>Verbal CV Inquiry</label>
@@ -1693,10 +1693,10 @@
         <decVal/>
         <label>Reverse Trim</label>
       </variable>
-      <constant label="PICV" default="49" comment="CV used for Primary Index"/>
-      <constant label="SICV" default="50" comment="CV used for Secondary Index"/>
-<!-- QSI CV.PI.SI formatted items -->
-<!-- Sound control -->
+      <constant item="PICV" default="49" comment="CV used for Primary Index"/>
+      <constant item="SICV" default="50" comment="CV used for Secondary Index"/>
+      <!-- QSI CV.PI.SI formatted items -->
+      <!-- Sound control -->
       <ivariable label="System Volume" CVname="51.0" CV="51" PI="0" default="127" comment="QSI" item="CV51.0">
         <indexedVal max="127"/>
       </ivariable>
@@ -1713,7 +1713,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-<!-- Sound volumes -->
+      <!-- Sound volumes -->
       <ivariable label="Whistle" CVname="52.0" CV="52" PI="0" default="11" comment="QSI" item="CV52.0">
         <indexedVal max="15"/>
       </ivariable>
@@ -3554,13 +3554,11 @@
       <ivariable label="Chuff Interval Scale Factor" CVname="56.12" CV="56" PI="12" default="32" item="CV56.12">
         <indexedVal max="128"/>
       </ivariable>
-<!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
-
-<!-- CV 56.254 About Quantum Decoder -->
-<!-- QSI Product ID -->
-    <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
-
-<!-- CV 56.255 Play Build Information (for ops mode) -->
+      <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
+      <!-- CV 56.254 About Quantum Decoder -->
+      <!-- QSI Product ID -->
+      <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
+      <!-- CV 56.255 Play Build Information (for ops mode) -->
       <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_0" default="0">
         <indexedVal/>
       </ivariable>

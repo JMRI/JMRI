@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.locobufferii;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 
 /**
@@ -31,5 +33,5 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
     public String option1Name() { return "LocoBuffer-II connection uses "; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferIIAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoBufferIIAdapter.class.getName());
 }

@@ -1,5 +1,7 @@
 package apps.gui3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 import jmri.util.swing.JmriPanel;
@@ -133,6 +135,6 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         throw new IllegalArgumentException("Should not be invoked");
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferencesAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(TabbedPreferencesAction.class.getName());
     
 }

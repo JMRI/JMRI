@@ -43,7 +43,7 @@
         <xs:element name="transit" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="transitsection" minOccurs="1" maxOccurs="unbounded" >
                 <xs:complexType>

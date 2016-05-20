@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.21.0
+; - Add request for administrator level access when installing to correct
+; - for bug highlighted by Suzie Tall
+; -------------------------------------------------------------------------
 ; - Version 0.1.20.1
 ; - Added removal of obsolete library 'lib\servlet.jar'
 ; -------------------------------------------------------------------------
@@ -211,7 +215,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.6"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.20.1"                    ; Installer version
+!define INST_VER  "0.1.21.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -283,6 +287,7 @@ CRCCheck On ; do CRC check on launcher before start ("Off" for later EXE compres
 ShowInstDetails Hide ; Hide the installation details
 ShowUninstDetails Hide ; Hide the uninstallation details
 AutoCloseWindow False ; do not automatically close when finished
+RequestExecutionLevel admin ; Request administrator level access
 
 ; -------------------------------------------------------------------------
 ; - Set basic information

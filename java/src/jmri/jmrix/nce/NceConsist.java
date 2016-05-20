@@ -11,14 +11,16 @@
 
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 import jmri.Consist;
 import jmri.ConsistListener;
-import jmri.DccConsist;
+import jmri.implementation.DccConsist;
 import jmri.DccLocoAddress;
 
-public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceListener{
+public class NceConsist extends jmri.implementation.DccConsist implements jmri.jmrix.nce.NceListener{
 	
 	public static final int CONSIST_MIN = 1; 			// NCE doesn't use consist 0
 	public static final int CONSIST_MAX = 127;
@@ -460,6 +462,6 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceConsist.class.getName());
+	static Logger log = LoggerFactory.getLogger(NceConsist.class.getName());
 
 }

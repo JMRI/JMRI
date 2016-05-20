@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.implementation.*;
 
@@ -49,6 +50,6 @@ public class NamedBeanHandleTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NamedBeanHandleTest.class.getName());
+	 static Logger log = Logger.getLogger(NamedBeanHandleTest.class.getName());
 
 }

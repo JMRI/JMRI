@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: TAMS_LD-G-21.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,9 +14,9 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael@Povel-Walsrode.de" version="1.3" lastUpdated="20100108"/>
-<!-- 1.3 2010/01/08 MCP added CV as tooltip and reordered variables in CV order-->
-<!-- 1.2 2010/01/08 MCP Changed Function Map, improved light effects -->
-<!-- 1.1 2010/01/08 MCP Changed Function Map, thanks to Peter -->
+  <!-- 1.3 2010/01/08 MCP added CV as tooltip and reordered variables in CV order-->
+  <!-- 1.2 2010/01/08 MCP Changed Function Map, improved light effects -->
+  <!-- 1.1 2010/01/08 MCP Changed Function Map, thanks to Peter -->
   <decoder>
     <family name="Standard Decoder" mfg="Tams Elektronik GmbH" lowVersionID="10" highVersionID="10">
       <model model="LD-G-21" numOuts="4" numFns="10">

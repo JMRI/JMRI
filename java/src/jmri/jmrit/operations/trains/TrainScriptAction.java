@@ -4,8 +4,6 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -16,7 +14,6 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class TrainScriptAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     public TrainScriptAction(String s, TrainEditFrame frame) {
     	super(s);
@@ -35,7 +32,7 @@ public class TrainScriptAction extends AbstractAction {
     	f.setLocation(frame.getLocation());
     	f.initComponents(frame);
     	f.setExtendedState(Frame.NORMAL);  	
-    	f.setTitle(rb.getString("MenuItemScripts"));
+    	f.setTitle(Bundle.getMessage("MenuItemScripts"));
     }
 }
 

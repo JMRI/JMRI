@@ -1,6 +1,8 @@
 
 package jmri.jmrit.display.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import jmri.jmrit.display.Editor;
@@ -69,18 +71,19 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         Editor p = (Editor)o;
 
         Element elem = element.getChild("itemList");
-        List<Element> list = elem.getChildren("item");
+        @SuppressWarnings("unchecked")
+		List<Element> list = elem.getChildren("item");
         String[] items = new String[list.size()];
         for (int i=0; i<list.size(); i++) {
             Element e = list.get(i);
             String item = e.getText();
-            int idx = 0;
-            try {
-                idx = e.getAttribute("index").getIntValue();
-            } catch ( org.jdom.DataConversionException ex) {
-                log.error("failed to convert ComboBoxIcon index attribute");
-                idx = i;
-            }
+//            int idx = 0;
+//            try {
+//                idx = e.getAttribute("index").getIntValue();
+//            } catch ( org.jdom.DataConversionException ex) {
+//                log.error("failed to convert ComboBoxIcon index attribute");
+//                idx = i;
+//            }
             items[i] = item;
         }
 
@@ -112,5 +115,5 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryComboIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryComboIconXml.class.getName());
 }

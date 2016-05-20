@@ -54,6 +54,7 @@
         <xs:element name="sourceSignalMast" minOccurs="1" maxOccurs="1"/>
         <xs:element name="destinationMast" type="SignalMastLogicDestinationType" minOccurs="1" maxOccurs="unbounded" />
       </xs:sequence>
+      <xs:attribute name="source" type="xs:string"/>
     </xs:complexType>
     
     <xs:complexType name="SignalMastLogicDestinationType">
@@ -74,6 +75,7 @@
         <xs:element name="useLayoutEditor" type="yesNoType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="useLayoutEditorTurnouts" type="yesNoType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="useLayoutEditorBlocks" type="yesNoType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="associatedSection" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="lockTurnouts" type="yesNoType" minOccurs="0" maxOccurs="unbounded" />
         
         <xs:element name="blocks" minOccurs="0" maxOccurs="1" >
@@ -157,8 +159,8 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-
       </xs:sequence>
+      <xs:attribute name="destination" type="xs:string"/>
 
     </xs:complexType>
 

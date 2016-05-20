@@ -25,13 +25,12 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.border.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import jmri.util.swing.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -58,21 +57,22 @@ public class VSDControl extends JPanel {
     private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
 
-    public static enum PropertyChangeID { ADDRESS_CHANGE, CONFIG_CHANGE, PROFILE_SELECT, HORN, BELL, NOTCH, COUPLER, BRAKE, ESTART, DELETE }
+    public static enum PropertyChangeID { ADDRESS_CHANGE, CONFIG_CHANGE, OPTION_CHANGE, PROFILE_SELECT, HORN, BELL, NOTCH, COUPLER, BRAKE, ESTART, DELETE }
 
     public static final Map<PropertyChangeID, String> PCIDMap;
     static {
 	Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
-	aMap.put(PropertyChangeID.ADDRESS_CHANGE, "AddressChange");
-	aMap.put(PropertyChangeID.CONFIG_CHANGE, "ConfigChange");
-	aMap.put(PropertyChangeID.PROFILE_SELECT, "ProfileSelect");
-	aMap.put(PropertyChangeID.HORN, "HornSound");
-	aMap.put(PropertyChangeID.BELL, "BellSound");
-	aMap.put(PropertyChangeID.NOTCH, "EngineNotch");
-	aMap.put(PropertyChangeID.COUPLER, "CouplerSound");
-	aMap.put(PropertyChangeID.BRAKE, "BrakeSound");
-	aMap.put(PropertyChangeID.ESTART, "EngineStart");
-	aMap.put(PropertyChangeID.DELETE, "DeleteDecoder");
+	aMap.put(PropertyChangeID.ADDRESS_CHANGE, "AddressChange"); // NOI18N
+	aMap.put(PropertyChangeID.CONFIG_CHANGE, "ConfigChange"); // NOI18N
+	aMap.put(PropertyChangeID.OPTION_CHANGE, "OptionChange"); // NOI18N
+	aMap.put(PropertyChangeID.PROFILE_SELECT, "ProfileSelect"); // NOI18N
+	aMap.put(PropertyChangeID.HORN, "HornSound"); // NOI18N
+	aMap.put(PropertyChangeID.BELL, "BellSound"); // NOI18N
+	aMap.put(PropertyChangeID.NOTCH, "EngineNotch"); // NOI18N
+	aMap.put(PropertyChangeID.COUPLER, "CouplerSound"); // NOI18N
+	aMap.put(PropertyChangeID.BRAKE, "BrakeSound"); // NOI18N
+	aMap.put(PropertyChangeID.ESTART, "EngineStart"); // NOI18N
+	aMap.put(PropertyChangeID.DELETE, "DeleteDecoder"); // NOI18N
 	PCIDMap = Collections.unmodifiableMap(aMap);
     }
 
@@ -241,7 +241,14 @@ public class VSDControl extends JPanel {
     /** Handle "Option" button presses */
     protected void optionButtonPressed(ActionEvent e) {
 	log.debug("("+address+") Option Button Pressed");
-	JOptionPane.showMessageDialog(this, rb.getString("OptionButtonPressedMessage"));
+	VSDOptionsDialog d = new VSDOptionsDialog(this, rb.getString("OptionsDialogTitlePrefix") + " " + this.address);
+	d.addPropertyChangeListener(new PropertyChangeListener() {
+		public void propertyChange(PropertyChangeEvent event) {
+		    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
+		    optionsDialogPropertyChange(event);
+		}
+		
+	    });
     }
 
     /** Handle "Config" button presses */
@@ -267,6 +274,12 @@ public class VSDControl extends JPanel {
     protected void configDialogPropertyChange(PropertyChangeEvent event) {
 	log.debug("internal config dialog handler");
 	firePropertyChange(PropertyChangeID.CONFIG_CHANGE, event.getOldValue(), event.getNewValue());
+    }
+
+    /** Callback for the Config Dialog */
+    protected void optionsDialogPropertyChange(PropertyChangeEvent event) {
+	log.debug("internal options dialog handler");
+	firePropertyChange(PropertyChangeID.OPTION_CHANGE, event.getOldValue(), event.getNewValue());
     }
 
     // VSDecoderManager Events
@@ -304,5 +317,5 @@ public class VSDControl extends JPanel {
     }
 
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDControl.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDControl.class.getName());
 }

@@ -2,6 +2,8 @@
 
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.DccLocoAddress;
 import java.util.Hashtable;
@@ -237,7 +239,7 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom{
 
     Hashtable <Integer, Integer> cvValues = new Hashtable <Integer, Integer>();
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRailCom.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultRailCom.class.getName());
 }
 
 /* @(#)DefaultRailCom.java */

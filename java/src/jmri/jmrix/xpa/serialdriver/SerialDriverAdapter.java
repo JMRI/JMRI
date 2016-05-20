@@ -2,6 +2,8 @@
 
 package jmri.jmrix.xpa.serialdriver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.xpa.XpaPortController;
 import jmri.jmrix.xpa.XpaTrafficController;
 import java.io.DataInputStream;
@@ -176,6 +178,6 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

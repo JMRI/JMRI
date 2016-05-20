@@ -27,6 +27,14 @@ import java.util.List;
  * @version			$Revision$
  */
 public class Metadata {
+
+    public static final String JMRIVERSION = "JMRIVERSION"; // NOI18N
+    public static final String JMRIVERCANON = "JMRIVERCANON"; // NOI18N
+    public static final String JMRIVERMAJOR = "JMRIVERMAJOR"; // NOI18N
+    public static final String JMRIVERMINOR = "JMRIVERMINOR"; // NOI18N
+    public static final String JMRIVERTEST = "JMRIVERTEST"; // NOI18N
+    public static final String JVMVERSION = "JVMVERSION"; // NOI18N
+    public static final String JVMVENDOR = "JVMVENDOR"; // NOI18N
     
     /**
      * Return the value of the named meta data, or any valid system property.
@@ -35,20 +43,20 @@ public class Metadata {
      * @return String value of requested data or null
      */
     public static String getBySystemName(String name) {
-        if (name.equalsIgnoreCase("JMRIVERSION")) {
+        if (name.equalsIgnoreCase(JMRIVERSION)) {
             return jmri.Version.name();
-        } else if (name.equalsIgnoreCase("JMRIVERCANON")) {
+        } else if (name.equalsIgnoreCase(JMRIVERCANON)) {
             return jmri.Version.getCanonicalVersion();
-        } else if (name.equalsIgnoreCase("JMRIVERMAJOR")) {
+        } else if (name.equalsIgnoreCase(JMRIVERMAJOR)) {
             return Integer.toString(jmri.Version.major);
-        } else if (name.equalsIgnoreCase("JMRIVERMINOR")) {
+        } else if (name.equalsIgnoreCase(JMRIVERMINOR)) {
             return Integer.toString(jmri.Version.minor);
-        } else if (name.equalsIgnoreCase("JMRIVERTEST")) {
+        } else if (name.equalsIgnoreCase(JMRIVERTEST)) {
             return Integer.toString(jmri.Version.test);
-        } else if (name.equalsIgnoreCase("JVMVERSION")) {
-            return System.getProperty("java.version", "<unknown>");
-        } else if (name.equalsIgnoreCase("JVMVENDOR")) {
-            return System.getProperty("java.vendor", "<unknown>");
+        } else if (name.equalsIgnoreCase(JVMVERSION)) {
+            return System.getProperty("java.version", "<unknown>"); // NOI18N
+        } else if (name.equalsIgnoreCase(JVMVENDOR)) {
+            return System.getProperty("java.vendor", "<unknown>"); // NOI18N
         }
         // returns null if name is not a system property
         return System.getProperty(name);
@@ -60,13 +68,13 @@ public class Metadata {
      * @return String[]
      */
     public static String[] getSystemNameArray() {
-        String[] names = {"JMRIVERSION",
-            "JMRIVERCANON",
-            "JMRIVERMAJOR",
-            "JMRIVERMINOR",
-            "JMRIVERTEST",
-            "JVMVERSION",
-            "JVMVENDOR"};
+        String[] names = {JMRIVERSION,
+            JMRIVERCANON,
+            JMRIVERMAJOR,
+            JMRIVERMINOR,
+            JMRIVERTEST,
+            JVMVERSION,
+            JVMVENDOR};
         return names;
     }
 

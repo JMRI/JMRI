@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
@@ -434,7 +436,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     public String getNameString() {
         String name;
-        if (namedTurnoutWest == null) name = rb.getString("NotConnected");
+        if (namedTurnoutWest == null) name = Bundle.getMessage("NotConnected");
         else name = namedTurnoutWest.getName();
         if (namedTurnoutEast != null)
             name = name + " " + namedTurnoutEast.getName();
@@ -455,7 +457,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     javax.swing.JCheckBoxMenuItem tristateItem = null;
     void addTristateEntry(JPopupMenu popup) {
-    	tristateItem = new javax.swing.JCheckBoxMenuItem(rb.getString("Tristate"));
+    	tristateItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("Tristate"));
     	tristateItem.setSelected(getTristate());
         popup.add(tristateItem);
         tristateItem.addActionListener(new ActionListener(){
@@ -549,7 +551,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
         switch (state) {
         case Turnout.UNKNOWN:
-            if (isText()) super.setText(rb.getString("UnKnown"));
+            if (isText()) super.setText(Bundle.getMessage("UnKnown"));
             if (isIcon()) super.setIcon(unknown);
             break;
         case 5: //first closed, second closed
@@ -569,17 +571,17 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             if (isIcon()) super.setIcon(lowerWestToUpperEast);
             break;
         default:
-            if (isText()) super.setText(rb.getString("Inconsistent"));
+            if (isText()) super.setText(Bundle.getMessage("Inconsistent"));
             if (isIcon()) super.setIcon(inconsistent);
             break;
         }
         return;
     }
     
-    String lowerWestToUpperEastText = rb.getString("LowerWestToUpperEast");
-    String upperWestToLowerEastText = rb.getString("UpperWestToLowerEast");
-    String lowerWestToLowerEastText = rb.getString("LowerWestToLowerEast");
-    String upperWestToUpperEastText = rb.getString("UpperWestToUpperEast");
+    String lowerWestToUpperEastText = Bundle.getMessage("LowerWestToUpperEast");
+    String upperWestToLowerEastText = Bundle.getMessage("UpperWestToLowerEast");
+    String lowerWestToLowerEastText = Bundle.getMessage("LowerWestToLowerEast");
+    String upperWestToUpperEastText = Bundle.getMessage("UpperWestToUpperEast");
     
     /**
     * Get the text used in the pop-up for setting the route from Lower West
@@ -1002,11 +1004,11 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     
     // overide
     public boolean setTextEditMenu(JPopupMenu popup) {
-        String popuptext = rb.getString("SetSlipText");
+        String popuptext = Bundle.getMessage("SetSlipText");
         if (turnoutType==THREEWAY)
-            popuptext = rb.getString("Set3WayText");
+            popuptext = Bundle.getMessage("Set3WayText");
         else if (turnoutType==SCISSOR)
-            popuptext = rb.getString("SetScissorText");
+            popuptext = Bundle.getMessage("SetScissorText");
         popup.add(new AbstractAction(popuptext) {
             public void actionPerformed(ActionEvent e) {
                 String name = getNameString();
@@ -1096,7 +1098,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 				thread.start();
 			}
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SlipTurnoutIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(SlipTurnoutIcon.class.getName());
 }
 
 class SetSlipThread extends Thread {
@@ -1129,7 +1131,7 @@ class SetSlipThread extends Thread {
 	}
     
     private SlipTurnoutIcon s;
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SetSlipThread.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SetSlipThread.class.getName());
 
     
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractLight;
 
 /**
@@ -79,7 +81,7 @@ public class LnLight extends AbstractLight {
 		tc.sendLocoNetMessage(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnLight.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnLight.class.getName());
 }
 
 /* @(#)LnLight.java */

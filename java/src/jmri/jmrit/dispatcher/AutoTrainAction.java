@@ -2,6 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -101,7 +103,7 @@ public class AutoTrainAction {
 					case TransitSectionAction.TRAINSTART:
 						// when train starts - monitor in separate thread
 						Runnable monTrain = new MonitorTrain(tsa);
-						Thread tMonTrain = new Thread(monTrain);
+						Thread tMonTrain = new Thread(monTrain, "Monitor Train Transit Action");
 						tsa.setWaitingThread(tMonTrain);
 						tMonTrain.start();
 						break;
@@ -259,7 +261,7 @@ public class AutoTrainAction {
 		else {
 			// start thread to trigger delayed action execution
 			Runnable r = new TSActionDelay(tsa,delay);
-			Thread t = new Thread(r);
+			Thread t = new Thread(r, "Check Delay on Action");
 			tsa.setWaitingThread(t);
 			t.start();
 		}
@@ -672,7 +674,7 @@ public class AutoTrainAction {
 		private TransitSectionAction _tsa = null;
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoTrainAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(AutoTrainAction.class.getName());
 }
 
 /* @(#)AutoTrainAction.java */

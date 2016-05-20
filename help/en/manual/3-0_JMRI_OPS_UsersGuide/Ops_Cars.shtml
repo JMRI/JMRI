@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Ops_Cars.shtml 18388 2011-09-07 09:24:59Z dat7719 $ -->
+<title>Operations-Locations</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Operations Cars Window</h1>
+
+<div align=right>
+<div align="right">
+  <p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
+  <p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+<p><a href="Ops_Locations.shtml"></a></p>
+</div>
+
+<hr>
+<p>This window is opened from the DecoderPro&reg; Tools Menu, or Operations Menu; and alternatively from <strong>Location</strong> Window <strong>Tools</strong> menu, <strong>Show Cars: and various Windows Opertions Menus.</strong></p>
+<p>The cars window allows you to edit your car roster. or add a car by entering a car's number, road, type, length. The program will automatically calculate the car's weight based on length and the scale you are modeling. Optionally the car's color, build date, load and owner can be added. You may want to switch a group of cars as a unit, then you may create a &quot;kernel&quot;. You can assign any number of cars to a kernel but the type of the first car assigned will be used by the program to determine if the kernel is allowed at a location. The entire length of the kernel is used to determine if the cars in the kernel will fit. Note that the program also includes space for the car's couplers when calculating the length of a kernel.(group of similar cars)</p>
+<p>The complete roster of cars is displayed. At the bottom of the page is a series of radio buttons that allow you to select the sort order.</p>
+<p>
+  <input type="button" name="button2" id="button2" value="Add"> 
+Opens the<strong><a href="Ops_AddCars.shtml">Add Car</a></strong> window and allows you to add a new car. </p>
+<p>
+  <input type="button" name="button3" id="button3" value="Save"> 
+  Saves the car roster to disk.
+</p>
+<p>
+  <input type="button" name="button4" id="button4" value="Find"> 
+  <input name="textfield" type="text" id="textfield" size="10">
+Used to find a car by its road number.   The wild card may be used &quot;*&quot; when entering a car number. for example, if you want to find all the cars with a number ending in 345 , enter *345 then press 
+<input type="button" name="button5" id="button5" value="Find">
+each time pressed the next car with the 345 ending will be displayed..
+</p>
+<p>To the right of each car entry:</p>
+<p>
+  <input type="button" name="button6" id="button6" value="Set">
+opens the<strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></strong>Window.</p>
+<p>
+  <input type="button" name="button7" id="button7" value="Edit">
+  opens
+  the <a href="Ops_AddCars.shtml">Edit Car </a>window, similar to the <strong>Add Car </strong>Window</p>
+<p><img src="images/Ops_location_showCars.png" width="900" height="486" alt="show cars"></p>
+<h3>Menu Bar</h3>
+
+ <strong>Tools </strong>
+ <ul>
+    <li><strong>Roster --&gt;
+      </strong>
+      <ul>
+        <li><strong><a href="Ops_ImportCarsFile.shtml">Import from File</a><br>
+        </strong>Opens the <strong>Open</strong> dialog box, to import a roster of cars if you already have a list of cars in a database. The import function requires an ACSII text file, with one line for each car. The car import requires four attributes and the order is car number, road name, type, and length. An example of a correct format:</li>
+      </ul>
+      <blockquote>
+        <p><strong>336 GCR Flat 40<br>
+        655579 UP Boxcar 40
+      </strong></p>
+        <p>Optionally you may include additional attributes in the following order: weight, color, owner name, date built, and location. Check the Windows help file for further information.</p>
+      </blockquote>
+      <ul>
+        <li><strong>Export to File<br>
+          <img src="images/Ops_Export_carRoster.png" width="712" height="122" alt="export roster"><br>
+        </strong></li>
+      </ul>
+      <ul>
+        <li><strong>Delete all Cars<br>
+          <img src="images/Ops_delete_cars_roster.png" width="403" height="122" alt="delete"><br>
+        </strong></li>
+        <li><strong>Print</strong><br>
+          <br>
+        <img src="images/Ops_carRoster_printOptions.png" width="290" height="477" alt="options"></li>
+        <li><strong>Print Preview</strong><br>
+          Print options dialog displays, 
+          <input type="button" name="button" id="button" value="OK"> 
+          opens output in printer preview window.
+        </li>
+      </ul>
+    </li>
+    <blockquote>
+      <p><img src="Ops_Cars_Ops_location_setCars_0000.png" alt="set cars" height="650" width="500"></p>
+    </blockquote>
+    <li><strong><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></strong><img src="Ops_Cars_Ops_location_setCars.png" alt="set cars" height="650" width="500"></li>
+    <li><strong><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></strong></li>
+    <li><strong><a href="Ops_Locations_setCars.shtml">Set Cars</a></strong></li>
+ </ul>
+<p><strong>Operations</strong> </p>
+ <ul>
+   <ul>
+     <li><strong>Settings</strong>
+       <blockquote>
+         <p>Opens <strong><a href="Ops_Settings.shtml">Operations Setting</a></strong> window.</p>
+       </blockquote>
+     </li>
+     <li><strong>Locations</strong></li>
+     <blockquote>
+       <p>Opens <strong><a href="Ops_Locations.shtml">Locations</a></strong> window.</p>
+     </blockquote>
+     <li><strong>Cars</strong></li>
+     <blockquote>
+       <p>Opens <strong><a href="Ops_Cars.shtml">Cars</a></strong> window.</p>
+     </blockquote>
+     <li><strong>:Locomotives</strong>
+       <blockquote>
+         <p>Opens <strong><a href="Ops_Engines.shtml">Locomotives</a></strong> window.</p>
+       </blockquote>
+     </li>
+     <li><strong>Routes</strong>
+       <blockquote>
+         <p>Opens <strong><a href="Ops_Routes.shtml">Routes</a></strong> window.</p>
+       </blockquote>
+     </li>
+     <li><strong>Trains</strong>
+       <blockquote>
+         <p>Opens <a href="Ops_Trains.shtml">Trains</a> window.</p>
+       </blockquote>
+     </li>
+   </ul>
+</ul>
+ <p><strong>Window</strong></p>
+ <p><strong>Help</strong></p>
+<p>&nbsp;</p>
+<div align=right>
+  <p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
+  <p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

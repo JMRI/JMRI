@@ -2,7 +2,9 @@
 
 package jmri.jmrit;
 
+import org.apache.log4j.Logger;
 import java.io.File;
+import jmri.util.FileUtil;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -12,8 +14,6 @@ import junit.framework.TestSuite;
 import org.jdom.Element;
 import org.jdom.Document;
 import org.jdom.DocType;
-
-import java.io.InputStream;
 
 /**
  * Tests for the XmlFile class.
@@ -81,9 +81,8 @@ public class XmlFileTest extends TestCase {
 
         // this test uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.  This is not
-        // a test of prefsDir, and shouldn't use that.
-        XmlFile.ensurePrefsPresent("temp");
-        XmlFile.ensurePrefsPresent("temp"+File.separator+"prefs");
+        // a test of the user's files directory, and shouldn't use that.
+        FileUtil.createDirectory("temp"+File.separator+"prefs");
         Assert.assertTrue("existing file ", x.checkFile("decoders"));  // should be in xml
         Assert.assertTrue("non-existing file ", !x.checkFile("dummy file not expected to exist"));
     }
@@ -109,8 +108,7 @@ public class XmlFileTest extends TestCase {
         doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 
         // write it out
-        XmlFile.ensurePrefsPresent("temp");
-        XmlFile.ensurePrefsPresent("temp"+File.separator+"prefs");
+        FileUtil.createDirectory("temp"+File.separator+"prefs");
         File f = new File("temp"+File.separator+"prefs"+File.separator+"test.xml");
 
         x.writeXML(f, doc);
@@ -151,6 +149,6 @@ public class XmlFileTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFileTest.class.getName());
+    static protected Logger log = Logger.getLogger(XmlFileTest.class.getName());
 
 }

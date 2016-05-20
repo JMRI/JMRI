@@ -2,6 +2,8 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
@@ -87,32 +89,32 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 		element.setAttribute("xb", ""+coords.getX());
 		element.setAttribute("yb", ""+coords.getY());
         
-        if(p.getSignalAMast().length()>0){
-            element.addContent(new Element("signalAMast").addContent(p.getSignalAMast()));
+        if(p.getSignalAMastName().length()>0){
+            element.addContent(new Element("signalAMast").addContent(p.getSignalAMastName()));
         }
         
-        if(p.getSignalBMast().length()>0){
-            element.addContent(new Element("signalBMast").addContent(p.getSignalBMast()));
+        if(p.getSignalBMastName().length()>0){
+            element.addContent(new Element("signalBMast").addContent(p.getSignalBMastName()));
         }
-        if(p.getSignalCMast().length()>0){
-            element.addContent(new Element("signalCMast").addContent(p.getSignalCMast()));
+        if(p.getSignalCMastName().length()>0){
+            element.addContent(new Element("signalCMast").addContent(p.getSignalCMastName()));
         }
-        if(p.getSignalDMast().length()>0){
-            element.addContent(new Element("signalDMast").addContent(p.getSignalDMast()));
-        }
-        
-        if(p.getSensorA().length()>0){
-            element.addContent(new Element("sensorA").addContent(p.getSensorA()));
+        if(p.getSignalDMastName().length()>0){
+            element.addContent(new Element("signalDMast").addContent(p.getSignalDMastName()));
         }
         
-        if(p.getSensorB().length()>0){
-            element.addContent(new Element("sensorB").addContent(p.getSensorB()));
+        if(p.getSensorAName().length()>0){
+            element.addContent(new Element("sensorA").addContent(p.getSensorAName()));
         }
-        if(p.getSensorC().length()>0){
-            element.addContent(new Element("sensorC").addContent(p.getSensorC()));
+        
+        if(p.getSensorBName().length()>0){
+            element.addContent(new Element("sensorB").addContent(p.getSensorBName()));
         }
-        if(p.getSensorD().length()>0){
-            element.addContent(new Element("sensorD").addContent(p.getSensorD()));
+        if(p.getSensorCName().length()>0){
+            element.addContent(new Element("sensorC").addContent(p.getSensorCName()));
+        }
+        if(p.getSensorDName().length()>0){
+            element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
         
         if(p.getTurnoutName().length()>0){
@@ -182,7 +184,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         }
 		
 		// create the new LayoutSlip
-        LayoutSlip l = new LayoutSlip(name,new Point2D.Double(x,y),p,type);
+        LayoutSlip l = new LayoutSlip(name,new Point2D.Double(x,y), 0.0, p,type);
 
 		// get remaining attributes
 		Attribute a = element.getAttribute("blockname");
@@ -282,5 +284,5 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         return "";
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutSlipXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutSlipXml.class.getName());
 }

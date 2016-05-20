@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
+ * @author ken cameron Copyright (C) 2013
  * @version             $Revision$
  */
 public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -30,11 +31,18 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
     jmri.jmrix.swing.ComponentFactory componentFactory = null;
     
-    public void setNceUSB(int result) { getNceTrafficController().setUsbSystem(result); }
-    public int getNceUSB() { 
+    public void setNceUsbSystem(int result) { getNceTrafficController().setUsbSystem(result); }
+    public int getNceUsbSystem() { 
     	if (getNceTrafficController() != null)
     		return getNceTrafficController().getUsbSystem(); 
     	return NceTrafficController.USB_SYSTEM_NONE;} // error no connection!
+    
+    public void setNceCmdGroups(long result) { getNceTrafficController().setCmdGroups(result); }
+    public long getNceCmdGroups() { 
+    	if (getNceTrafficController() != null)
+    		return getNceTrafficController().getCmdGroups(); 
+    	return NceTrafficController.CMDS_NONE;} // error no connection!
+    
     /**
      * Provides access to the TrafficController for this
      * particular connection.
@@ -153,8 +161,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.nce.NceThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
         
-        if (getNceUSB() != NceTrafficController.USB_SYSTEM_NONE) {
-            if (getNceUSB() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+        if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
+            if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
                 jmri.InstanceManager.setProgrammerManager(new NceProgrammerManager(new NceProgrammer(getNceTrafficController()), this));
             }
         } else {

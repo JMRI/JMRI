@@ -2,6 +2,8 @@
 
 package jmri.jmrit.roster.swing.attributetable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.roster.*;
 
 /**
@@ -59,5 +61,5 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AttributeTableModel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(AttributeTableModel.class.getName());
 }

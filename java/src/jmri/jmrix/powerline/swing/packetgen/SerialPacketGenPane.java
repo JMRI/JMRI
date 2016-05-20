@@ -2,6 +2,8 @@
 
 package jmri.jmrix.powerline.swing.packetgen;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.util.ResourceBundle;
 
@@ -116,7 +118,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
     public void  message(SerialMessage m) {}  // ignore replies
     public void  reply(SerialReply r) {} // ignore replies
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialPacketGenPane.class.getName());
+	static Logger log = LoggerFactory.getLogger(SerialPacketGenPane.class.getName());
 
 }
 

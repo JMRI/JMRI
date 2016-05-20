@@ -30,7 +30,7 @@
 <dl>
 
 <dt class=left>Assurez-vous que DecoderPro peut s'exécuter sur votre ordinateur
-</dt> <dd class=first> Le logiciel DecoderPro fonctionne sur Windows, Linux et MacOS X.
+</dt> <dd class=first> Le logiciel DecoderPro fonctionne sur Windows, Linux et Mac OS X.
 Il pourra probablement aussi travailler sur
 d'autres systèmes d'exploitation modernes qui ont Java d'installer; nous contacter pour
 vous aider si vous souhaitez l'essayer sur un autre système. Vous avez besoin d'avoir un
@@ -47,7 +47,7 @@ dresse la liste des systèmes DCC compatibles avec DecoderPro, avec les limitati
 
 <dt class=left>Téléchargez et installez JMRI
 </dt> <dd class=first> La
-<A HREF="http://jmri.sourceforge.net/download/index.html"> page de téléchargement </a>
+<A HREF="http://jmri.sourceforge.net/download/index.shtml"> page de téléchargement </a>
 sur le site Web principal JMRI fournit des liens pour télécharger les différentes versions JMRI, ainsi que des liens pour les notes, etc Nous vous recommandons fortement d'abord de télécharger et d'installer la version de production la plus récente et assurez-vous que cela fonctionne, avant d'essayer quelques-unes des versions de développement plus récentes.
 <p>
 Notez qu'il existe différents téléchargements pour les différents types
@@ -59,7 +59,7 @@ page de téléchargement.</P>
 <dt class=left>Démarrer et configurer le programme
 </dt> <dd class=first> Les instructions d'installation
 obtenues par la
-<A HREF="http://jmri.sourceforge.net/download/index.html"> page de téléchargement </a>
+<A HREF="http://jmri.sourceforge.net/download/index.shtml"> page de téléchargement </a>
 vous auront dit comment démarrer le programme et le configurer. Lorsque c'est fait, vous devriez avoir une installation fonctionnelle DecoderPro.
 </dd>
 

@@ -1,124 +1,121 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
-<variables>
-      <variable label="Input mapping for internal F0" CV="400" tooltip="CV 400">
-        <decVal/>
-        <label>Input mapping for internal F0</label>
-      </variable>
-      <variable label="Input mapping for internal F1" CV="401" tooltip="CV 401">
-        <decVal/>
-        <label>Input mapping for internal F1</label>
-      </variable>
-      <variable label="Input mapping for internal F2" CV="402" tooltip="CV 402">
-        <decVal/>
-        <label>Input mapping for internal F2</label>
-      </variable>
-      <variable label="Input mapping for internal F3" CV="403" tooltip="CV 403">
-        <decVal/>
-        <label>Input mapping for internal F3</label>
-      </variable>
-      <variable label="Input mapping for internal F4" CV="404" tooltip="CV 404">
-        <decVal/>
-        <label>Input mapping for internal F4</label>
-      </variable>
-      <variable label="Input mapping for internal F5" CV="405" tooltip="CV 405">
-        <decVal/>
-        <label>Input mapping for internal F5</label>
-      </variable>
-      <variable label="Input mapping for internal F6" CV="406" tooltip="CV 406">
-        <decVal/>
-        <label>Input mapping for internal F6</label>
-      </variable>
-      <variable label="Input mapping for internal F7" CV="407" tooltip="CV 407">
-        <decVal/>
-        <label>Input mapping for internal F7</label>
-      </variable>
-      <variable label="Input mapping for internal F8" CV="408" tooltip="CV 408">
-        <decVal/>
-        <label>Input mapping for internal F8</label>
-      </variable>
-      <variable label="Input mapping for internal F9" CV="409" tooltip="CV 409">
-        <decVal/>
-        <label>Input mapping for internal F9</label>
-      </variable>
-      <variable label="Input mapping for internal F10" CV="410" tooltip="CV 410">
-        <decVal/>
-        <label>Input mapping for internal F10</label>
-      </variable>
-      <variable label="Input mapping for internal F11" CV="411" tooltip="CV 411">
-        <decVal/>
-        <label>Input mapping for internal F11</label>
-      </variable>
-      <variable label="Input mapping for internal F12" CV="412" tooltip="CV 412">
-        <decVal/>
-        <label>Input mapping for internal F12</label>
-      </variable>
-      <variable label="Input mapping for internal F13" CV="413" tooltip="CV 413">
-        <decVal/>
-        <label>Input mapping for internal F13</label>
-      </variable>
-      <variable label="Input mapping for internal F14" CV="414" tooltip="CV 414">
-        <decVal/>
-        <label>Input mapping for internal F14</label>
-      </variable>
-      <variable label="Input mapping for internal F15" CV="415" tooltip="CV 415">
-        <decVal/>
-        <label>Input mapping for internal F15</label>
-      </variable>
-      <variable label="Input mapping for internal F16" CV="416" tooltip="CV 416">
-        <decVal/>
-        <label>Input mapping for internal F16</label>
-      </variable>
-      <variable label="Input mapping for internal F17" CV="417" tooltip="CV 417">
-        <decVal/>
-        <label>Input mapping for internal F17</label>
-      </variable>
-      <variable label="Input mapping for internal F18" CV="418" tooltip="CV 418">
-        <decVal/>
-        <label>Input mapping for internal F18</label>
-      </variable>
-      <variable label="Input mapping for internal F19" CV="419" tooltip="CV 419">
-        <decVal/>
-        <label>Input mapping for internal F19</label>
-      </variable>
-      <variable label="Input mapping for internal F20" CV="420" tooltip="CV 420">
-        <decVal/>
-        <label>Input mapping for internal F20</label>
-      </variable>
-      <variable label="Input mapping for internal F21" CV="421" tooltip="CV 421">
-        <decVal/>
-        <label>Input mapping for internal F21</label>
-      </variable>
-      <variable label="Input mapping for internal F22" CV="422" tooltip="CV 422">
-        <decVal/>
-        <label>Input mapping for internal F22</label>
-      </variable>
-      <variable label="Input mapping for internal F23" CV="423" tooltip="CV 423">
-        <decVal/>
-        <label>Input mapping for internal F23</label>
-      </variable>
-      <variable label="Input mapping for internal F24" CV="424" tooltip="CV 424">
-        <decVal/>
-        <label>Input mapping for internal F24</label>
-      </variable>
-      <variable label="Input mapping for internal F25" CV="425" tooltip="CV 425">
-        <decVal/>
-        <label>Input mapping for internal F25</label>
-      </variable>
-      <variable label="Input mapping for internal F26" CV="426" tooltip="CV 426">
-        <decVal/>
-        <label>Input mapping for internal F26</label>
-      </variable>
-      <variable label="Input mapping for internal F27" CV="427" tooltip="CV 427">
-        <decVal/>
-        <label>Input mapping for internal F27</label>
-      </variable>
-      <variable label="Input mapping for internal F28" CV="428" tooltip="CV 428">
-        <decVal/>
-        <label>Input mapping for internal F28</label>
-      </variable>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+  <variable label="Input mapping for internal F0" CV="400" tooltip="CV 400">
+    <decVal/>
+    <label>Input mapping for internal F0</label>
+  </variable>
+  <variable label="Input mapping for internal F1" CV="401" tooltip="CV 401">
+    <decVal/>
+    <label>Input mapping for internal F1</label>
+  </variable>
+  <variable label="Input mapping for internal F2" CV="402" tooltip="CV 402">
+    <decVal/>
+    <label>Input mapping for internal F2</label>
+  </variable>
+  <variable label="Input mapping for internal F3" CV="403" tooltip="CV 403">
+    <decVal/>
+    <label>Input mapping for internal F3</label>
+  </variable>
+  <variable label="Input mapping for internal F4" CV="404" tooltip="CV 404">
+    <decVal/>
+    <label>Input mapping for internal F4</label>
+  </variable>
+  <variable label="Input mapping for internal F5" CV="405" tooltip="CV 405">
+    <decVal/>
+    <label>Input mapping for internal F5</label>
+  </variable>
+  <variable label="Input mapping for internal F6" CV="406" tooltip="CV 406">
+    <decVal/>
+    <label>Input mapping for internal F6</label>
+  </variable>
+  <variable label="Input mapping for internal F7" CV="407" tooltip="CV 407">
+    <decVal/>
+    <label>Input mapping for internal F7</label>
+  </variable>
+  <variable label="Input mapping for internal F8" CV="408" tooltip="CV 408">
+    <decVal/>
+    <label>Input mapping for internal F8</label>
+  </variable>
+  <variable label="Input mapping for internal F9" CV="409" tooltip="CV 409">
+    <decVal/>
+    <label>Input mapping for internal F9</label>
+  </variable>
+  <variable label="Input mapping for internal F10" CV="410" tooltip="CV 410">
+    <decVal/>
+    <label>Input mapping for internal F10</label>
+  </variable>
+  <variable label="Input mapping for internal F11" CV="411" tooltip="CV 411">
+    <decVal/>
+    <label>Input mapping for internal F11</label>
+  </variable>
+  <variable label="Input mapping for internal F12" CV="412" tooltip="CV 412">
+    <decVal/>
+    <label>Input mapping for internal F12</label>
+  </variable>
+  <variable label="Input mapping for internal F13" CV="413" tooltip="CV 413">
+    <decVal/>
+    <label>Input mapping for internal F13</label>
+  </variable>
+  <variable label="Input mapping for internal F14" CV="414" tooltip="CV 414">
+    <decVal/>
+    <label>Input mapping for internal F14</label>
+  </variable>
+  <variable label="Input mapping for internal F15" CV="415" tooltip="CV 415">
+    <decVal/>
+    <label>Input mapping for internal F15</label>
+  </variable>
+  <variable label="Input mapping for internal F16" CV="416" tooltip="CV 416">
+    <decVal/>
+    <label>Input mapping for internal F16</label>
+  </variable>
+  <variable label="Input mapping for internal F17" CV="417" tooltip="CV 417">
+    <decVal/>
+    <label>Input mapping for internal F17</label>
+  </variable>
+  <variable label="Input mapping for internal F18" CV="418" tooltip="CV 418">
+    <decVal/>
+    <label>Input mapping for internal F18</label>
+  </variable>
+  <variable label="Input mapping for internal F19" CV="419" tooltip="CV 419">
+    <decVal/>
+    <label>Input mapping for internal F19</label>
+  </variable>
+  <variable label="Input mapping for internal F20" CV="420" tooltip="CV 420">
+    <decVal/>
+    <label>Input mapping for internal F20</label>
+  </variable>
+  <variable label="Input mapping for internal F21" CV="421" tooltip="CV 421">
+    <decVal/>
+    <label>Input mapping for internal F21</label>
+  </variable>
+  <variable label="Input mapping for internal F22" CV="422" tooltip="CV 422">
+    <decVal/>
+    <label>Input mapping for internal F22</label>
+  </variable>
+  <variable label="Input mapping for internal F23" CV="423" tooltip="CV 423">
+    <decVal/>
+    <label>Input mapping for internal F23</label>
+  </variable>
+  <variable label="Input mapping for internal F24" CV="424" tooltip="CV 424">
+    <decVal/>
+    <label>Input mapping for internal F24</label>
+  </variable>
+  <variable label="Input mapping for internal F25" CV="425" tooltip="CV 425">
+    <decVal/>
+    <label>Input mapping for internal F25</label>
+  </variable>
+  <variable label="Input mapping for internal F26" CV="426" tooltip="CV 426">
+    <decVal/>
+    <label>Input mapping for internal F26</label>
+  </variable>
+  <variable label="Input mapping for internal F27" CV="427" tooltip="CV 427">
+    <decVal/>
+    <label>Input mapping for internal F27</label>
+  </variable>
+  <variable label="Input mapping for internal F28" CV="428" tooltip="CV 428">
+    <decVal/>
+    <label>Input mapping for internal F28</label>
+  </variable>
 </variables>

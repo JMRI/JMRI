@@ -1,5 +1,7 @@
 package jmri.jmrit.jython;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Container;
 
 import javax.swing.JPanel;
@@ -85,7 +87,7 @@ public abstract class Jynstrument extends JPanel {
 	public abstract void init();
 	protected abstract void quit();
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Jynstrument.class.getName());
+	static Logger log = LoggerFactory.getLogger(Jynstrument.class.getName());
 
 	public JPopupMenu getPopUpMenu() {
 		return myPopUpMenu;

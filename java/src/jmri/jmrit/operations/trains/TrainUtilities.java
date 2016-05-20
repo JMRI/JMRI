@@ -2,9 +2,10 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 /**
  * Train print utilities
@@ -13,9 +14,7 @@ import java.util.ResourceBundle;
  *
  */
 public class TrainUtilities {
-	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	
+		
 	/**
 	 * This method uses Desktop which is supported in Java 1.6.
 	 */
@@ -36,6 +35,6 @@ public class TrainUtilities {
 		}
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(TrainUtilities.class.getName());
 }

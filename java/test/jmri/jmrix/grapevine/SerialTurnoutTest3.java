@@ -2,6 +2,7 @@
 
 package jmri.jmrix.grapevine;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.*;
 
@@ -53,6 +54,6 @@ public class SerialTurnoutTest3 extends AbstractTurnoutTest {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutTest3.class.getName());
+	 static Logger log = Logger.getLogger(SerialTurnoutTest3.class.getName());
 
 }

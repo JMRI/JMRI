@@ -1,9 +1,15 @@
 
 package jmri.jmrit.display.palette;
 
-import java.util.Hashtable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.FlowLayout;
+import java.util.HashMap;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import jmri.util.JmriJFrame;
 import jmri.jmrit.catalog.NamedIcon;
@@ -28,6 +34,7 @@ public abstract class ItemPanel extends JPanel {
     protected Editor    _editor;
     protected boolean   _update = false;    // Editing existing icon, do not allow icon dragging. set in init()
     protected boolean   _initialized = false;    // Has init() been run
+	JTextField _linkName = new JTextField(30);
 
     /**
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
@@ -52,13 +59,23 @@ public abstract class ItemPanel extends JPanel {
     public void init() {
     	_initialized = true;
     }
+    protected void initLinkPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
+        panel.add(new JLabel(Bundle.getMessage("LinkName")));
+    	panel.add(_linkName);
+    	_linkName.setToolTipText(Bundle.getMessage("ToolTipLink"));
+    	panel.setToolTipText(Bundle.getMessage("ToolTipLink"));
+
+    	add(panel);
+    }
 
     /* Methods used upon return from Icon dialogs
     * to update the panel for TableItemPanel item types.
     */    
     protected void initIconFamiliesPanel(){
     }
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap){
+    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap){
     }
     protected void setFamily(String family) {
     }
@@ -74,9 +91,10 @@ public abstract class ItemPanel extends JPanel {
     }
     protected void updateFamiliesPanel() {
     }
-    public void dispose() {
+    protected void closeDialogs() {
     } 
-    
+    public void dispose() {
+    }    
     public String getFamilyName() {
         return _family;
     }
@@ -106,8 +124,8 @@ public abstract class ItemPanel extends JPanel {
     static final String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "AllocatedTrack",
                                                 "PositionTrack", "DontUseTrack", "ErrorTrack"};
 
-    static protected Hashtable<String, NamedIcon> makeNewIconMap(String type) {
-        Hashtable <String, NamedIcon> newMap = new Hashtable <String, NamedIcon>();
+    static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
+        HashMap <String, NamedIcon> newMap = new HashMap <String, NamedIcon>();
         String[] names = null;
         if (type.equals("Turnout")) {
             names = TURNOUT;
@@ -141,5 +159,5 @@ public abstract class ItemPanel extends JPanel {
         return newMap;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(ItemPanel.class.getName());
 }

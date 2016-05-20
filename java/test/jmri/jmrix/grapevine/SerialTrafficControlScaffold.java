@@ -2,6 +2,7 @@
 
 package jmri.jmrix.grapevine;
 
+import org.apache.log4j.Logger;
 import java.util.Vector;
 
 /**
@@ -54,6 +55,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
 		return cmdListeners.size();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTrafficControlScaffold.class.getName());
+	static Logger log = Logger.getLogger(SerialTrafficControlScaffold.class.getName());
 
 }

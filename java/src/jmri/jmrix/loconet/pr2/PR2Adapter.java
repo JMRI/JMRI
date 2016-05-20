@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.pr2;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import jmri.jmrix.loconet.*;
@@ -126,5 +128,5 @@ public class PR2Adapter extends LocoBufferAdapter {
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PR2Adapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(PR2Adapter.class.getName());
 }

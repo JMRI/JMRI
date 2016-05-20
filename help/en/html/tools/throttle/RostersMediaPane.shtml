@@ -117,7 +117,10 @@ Wikipedia entry for that roster prototype.<br>
 <br>
 
 It is also recommended to fill in the Function Labels entries in the
-Function Labels pane in DecoderPro (also accessible from Advanced mode). These entries will be reused by the <a href="BasicThrottleWindow.shtml">Function Panel in Throttle Windows</a>.<br>
+Function Labels pane in DecoderPro (also accessible from Advanced mode). 
+These entries will be used by the <a href="BasicThrottleWindow.shtml">Function Panel in Throttle Windows</a>,
+and also by the <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">throttle apps</a> to display
+label text instead of the function numbers.<br>
 
 <br>
 

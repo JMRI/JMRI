@@ -2,6 +2,8 @@
 
 package jmri.jmrix.powerline.cp290;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 import jmri.jmrix.powerline.SerialSensorManager;
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -93,7 +95,7 @@ public class SpecificSensorManager extends SerialSensorManager {
     	}
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpecificSensorManager.class.getName());
 }
 
 /* @(#)SpecificSensorManager.java */

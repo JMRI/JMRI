@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,45 +11,42 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add minor version to top of pane -->
 <!-- version 3 - Add support for V8 -->
-
 <pane name="Multi Auto Lights">
   <column>
     <row>
       <column>
         <label label=" "/>
-       	<label label="JMRI 2.9.5 or later is required for QSI V7"/>
-       	<label label="JMRI 2.13.2 or later is required for QSI V8"/>
+        <label label="JMRI 2.9.5 or later is required for QSI V7"/>
+        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
-    	<display item="CV56.254.6"/>
+        <display item="CV56.254.6"/>
         <label label=" "/>
       </column>
     </row>
     <row>
       <column>
         <label label="Multiple Automatic Lights #1"/>
-        <display item="CV55.136.0 70" format="checkbox" />
-        <display item="CV55.136.0 73" format="checkbox" />
-        <display item="CV55.136.0 76" format="checkbox" />
-        <display item="CV55.136.0 80" format="checkbox" />
-        <display item="CV55.136.0 84" format="checkbox" />
-        <display item="CV55.136.0 88" format="checkbox" />
-        <display item="CV55.136.0 92" format="checkbox" />
-        <display item="CV55.136.0 96" format="checkbox" />
-        <display item="CV55.136.1 100" format="checkbox" />
-        <display item="CV55.136.1 102" format="checkbox" />
-        <display item="CV55.136.1 104" format="checkbox" />
-        <display item="CV55.136.1 106" format="checkbox" />
-        <display item="CV55.136.1 109" format="checkbox" />
-        <display item="CV55.136.1 113" format="checkbox" />
-        <display item="CV55.136.2 116" format="checkbox" />
-        <display item="CV55.136.2 118" format="checkbox" />
-        <display item="CV55.136.2 122" format="checkbox" />
+        <display item="CV55.136.0 70" format="checkbox"/>
+        <display item="CV55.136.0 73" format="checkbox"/>
+        <display item="CV55.136.0 76" format="checkbox"/>
+        <display item="CV55.136.0 80" format="checkbox"/>
+        <display item="CV55.136.0 84" format="checkbox"/>
+        <display item="CV55.136.0 88" format="checkbox"/>
+        <display item="CV55.136.0 92" format="checkbox"/>
+        <display item="CV55.136.0 96" format="checkbox"/>
+        <display item="CV55.136.1 100" format="checkbox"/>
+        <display item="CV55.136.1 102" format="checkbox"/>
+        <display item="CV55.136.1 104" format="checkbox"/>
+        <display item="CV55.136.1 106" format="checkbox"/>
+        <display item="CV55.136.1 109" format="checkbox"/>
+        <display item="CV55.136.1 113" format="checkbox"/>
+        <display item="CV55.136.2 116" format="checkbox"/>
+        <display item="CV55.136.2 118" format="checkbox"/>
+        <display item="CV55.136.2 122" format="checkbox"/>
       </column>
       <column>
         <label label="  #2"/>
@@ -92,6 +88,6 @@
         <display item="CV55.138.2 118" format="checkbox" label=""/>
         <display item="CV55.138.2 122" format="checkbox" label=""/>
       </column>
-  	</row>
+    </row>
   </column>
 </pane>

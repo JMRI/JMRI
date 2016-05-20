@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import org.apache.log4j.Logger;
 import jmri.Light;
 import jmri.LightManager;
 import junit.framework.Assert;
@@ -68,6 +69,6 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
     @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaLightManagerTest.class.getName());
+    static Logger log = Logger.getLogger(AcelaLightManagerTest.class.getName());
 
 }

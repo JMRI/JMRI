@@ -2,6 +2,9 @@
 
 package jmri.jmrix.internal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
@@ -16,7 +19,7 @@ public class InternalTurnoutManager extends jmri.managers.InternalTurnoutManager
         this.prefix = prefix;
     }
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(InternalTurnoutManager.class.getName());
 }
 
 /* @(#)InternalTurnoutManager.java */

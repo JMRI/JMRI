@@ -9,86 +9,155 @@
 
   <name>My Layout</name>
 
-  <node><name>Controls</name>
-    <node><name>Power Control</name>
+  <node>
+    <name>Controls</name>
+    <name xml:lang="it">Controlli</name>
+    <node>
+      <name>Power Control</name>
+      <name xml:lang="it">Controllo Alimentazione</name>
         <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
     </node>
-    <node><name>Turnout Control</name>
+    <node>
+      <name>Turnout Control</name>
+      <name xml:lang="it">Controllo Scambi</name>
     </node>
-    <node><name>Light Control</name>
+    <node>
+      <name>Light Control</name>
+      <name xml:lang="it">Controllo Luci</name>
     </node>
-    <node><name>Send DCC Packet</name>
+    <node>
+      <name>Send DCC Packet</name>
+      <name xml:lang="it">Invio Pacchetto DCC</name>
     </node>
-    <node><name>Speedometer</name>
+    <node>
+      <name>Speedometer</name>
+      <name xml:lang="it">Tachimetro</name>
     </node>
   </node>
 
-  <node><name>Operations</name>
+  <node>
+    <name>Operations</name>
+    <name xml:lang="it">Esercizio</name>
   </node>
 
-  <node><name>Clocks</name>
-    <node><name>Setup Fast Clock</name>
+  <node>
+    <name>Clocks</name>
+    <name xml:lang="it">Orologi</name>
+    <node>
+      <name>Setup Fast Clock</name>
+      <name xml:lang="it">Imposta orologio Accellerato</name>
     </node>
-    <node><name>Nixie Clock</name>
+    <node>
+      <name>Nixie Clock</name>
+      <name xml:lang="it">Orologio Nixie</name>
     </node>
-    <node><name>LCD Clock</name>
+    <node>
+      <name>LCD Clock</name>
+      <name xml:lang="it">Orologio LCD</name>
     </node>
-    <node><name>Analog Clock</name>
+    <node>
+      <name>Analog Clock</name>
+      <name xml:lang="it">Orologio Analogico</name>
     </node>
   </node>
 
   <node><name>Devices</name>
-    <node><name>Turnouts</name>
+    <name xml:lang="it">Dispositivi</name>
+    <node>
+      <name>Turnouts</name>
+      <name xml:lang="it">Scambi</name>
     </node>
-    <node><name>Sensors</name>
+    <node>
+      <name>Sensors</name>
+      <name xml:lang="it">Sensori</name>
       <panel>jmri.jmrit.beantable.sensor.SensorTablePanel</panel>
     </node>
-    <node><name>Lights</name>
+    <node>
+      <name>Lights</name>
+      <name xml:lang="it">Luci</name>
     </node>
-    <node><name>Signals Heads</name>
+    <node>
+      <name>Signals Heads</name>
+      <name xml:lang="it">Vela Segnale</name>
     </node>
-    <node><name>Signal Masts</name>
+    <node>
+      <name>Signal Masts</name>
+      <name xml:lang="it">Stante Segnale</name>
     </node>
-    <node><name>Signal Groups</name>
+    <node>
+      <name>Signal Groups</name>
+      <name xml:lang="it">Gruppi Segnali</name>
     </node>
-    <node><name>Reporters</name>
+    <node>
+      <name>Reporters</name>
     </node>
-    <node><name>Memory Variables</name>
+    <node>
+      <name>Memory Variables</name>
+      <name xml:lang="it">Variabili Memoria</name>
     </node>
-    <node><name>Routes</name>
+    <node>
+      <name>Routes</name>
+      <name xml:lang="it">Percorsi</name>
     </node>
-    <node><name>LRoutes</name>
+    <node>
+      <name>LRoutes</name>
+      <name xml:lang="it">Logica Percorsi</name>
     </node>
-    <node><name>Logix</name>
+    <node>
+      <name>Logix</name>
     </node>
-    <node><name>Occupancy Blocks</name>
+    <node>
+      <name>Occupancy Blocks</name>
+      <name xml:lang="it">Occupazione Blocchi</name>
     </node>
-    <node><name>Blocks</name>
+    <node>
+      <name>Blocks</name>
+      <name xml:lang="it">Blocchi</name>
     </node>
-    <node><name>Sections</name>
+    <node>
+      <name>Sections</name>
+      <name xml:lang="it">Sezioni</name>
     </node>
-    <node><name>Transits</name>
+    <node>
+      <name>Transits</name>
+      <name xml:lang="it">Transiti</name>
     </node>
-    <node><name>Audio</name>
+    <node>
+      <name>Audio</name>
     </node>
-    <node><name>Sensor Groups</name>
+    <node>
+      <name>Sensor Groups</name>
+      <name xml:lang="it">Gruppi Sensori</name>
     </node>
-    <node><name>Simple Signal Logic</name>
+    <node>
+      <name>Simple Signal Logic</name>
+      <name xml:lang="it">Logica segnali Semplificata</name>
     </node>
   </node>
 
-  <node><name>Throttles</name>
-    <node><name>Throttle 1</name>
+  <node>
+    <name>Throttles</name>
+    <name xml:lang="it">Palmari</name>
+    <node>
+      <name>Throttle 1</name>
+      <name xml:lang="it">Palmare 1</name>
     </node>
-    <node><name>UP 5768</name>
+    <node>
+      <name>UP 5768</name>
     </node>
-    <node><name>New Throttle</name>
+    <node>
+      <name>New Throttle</name>
+      <name xml:lang="it">Nuovo Palmare</name>
     </node>
-    <node><name>Consisting Tool</name>
+    <node>
+      <name>Consisting Tool</name>
+      <name xml:lang="it">Strumento Multi-Trazione</name>
     </node>
   </node>
 
-  <node><name>Debugging Tools</name>
+  <node>
+    <name>Debugging Tools</name>
+    <name xml:lang="it">Strumento Debug</name>
   </node>
 
 </nodes>

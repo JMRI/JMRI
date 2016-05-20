@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog.console;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import javax.swing.*;
 
@@ -378,12 +380,12 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             if (isBlueLineSupportPossible()) {
                 if (log.isDebugEnabled()) { log.debug("Enable blueline check box"); }
                 blueCheckBox.setEnabled(true);
-                if (log.isDebugEnabled()) { log.debug(blueCheckBox.isEnabled()); }
+                if (log.isDebugEnabled()) { log.debug(Boolean.toString(blueCheckBox.isEnabled())); }
             }
             if (isFirmwareUnlockPossible()) {
                 if (log.isDebugEnabled()) { log.debug("Enable firmware check box"); }
                 unlockCheckBox.setEnabled(true);
-                if (log.isDebugEnabled()) { log.debug(unlockCheckBox.isEnabled()); }
+                if (log.isDebugEnabled()) { log.debug(Boolean.toString(unlockCheckBox.isEnabled())); }
             }
 
             ztcCheckBox.setEnabled(isZTCModePossible());
@@ -585,6 +587,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         timer.start();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogConsoleFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogConsoleFrame.class.getName());
     
 }

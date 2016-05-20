@@ -1,9 +1,10 @@
 package jmri.jmrit.withrottle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
@@ -91,7 +92,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
 
         StringBuilder labels = new StringBuilder("PTT");    //  Panel Turnout Titles
 
-        labels.append("]\\[" + ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle").getString("MenuItemTurnoutTable") + "}|{Turnout");
+        labels.append("]\\[" + Bundle.getMessage("MenuItemTurnoutTable") + "}|{Turnout");
         labels.append("]\\[" + manager.getClosedText() + "}|{2");
         labels.append("]\\[" + manager.getThrownText() + "}|{4");
 
@@ -188,5 +189,5 @@ public class TurnoutController extends AbstractController implements PropertyCha
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutController.class.getName());
+    static Logger log = LoggerFactory.getLogger(TurnoutController.class.getName());
 }

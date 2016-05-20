@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.IdentifyDecoder;
@@ -57,8 +59,6 @@ import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
-
     public CombinedLocoSelPane(JLabel s) {
         _statusLabel = s;
         init();
@@ -89,10 +89,10 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
                     go2.setEnabled(true);
                     go2.setRequestFocusEnabled(true);
                     go2.requestFocus();
-                    go2.setToolTipText(rbt.getString("CLICK TO OPEN THE PROGRAMMER"));
+                    go2.setToolTipText(Bundle.getMessage("CLICK TO OPEN THE PROGRAMMER"));
                 } else {
                     go2.setEnabled(false);
-                    go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+                    go2.setToolTipText(Bundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
                 }
             }
         });
@@ -106,14 +106,14 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     }
 
     JToggleButton addDecoderIdentButton() {
-        JToggleButton iddecoder = new JToggleButton(rbt.getString("ButtonReadType"));
-        iddecoder.setToolTipText(rbt.getString("TipSelectType"));
+        JToggleButton iddecoder = new JToggleButton(Bundle.getMessage("ButtonReadType"));
+        iddecoder.setToolTipText(Bundle.getMessage("TipSelectType"));
             if (jmri.InstanceManager.programmerManagerInstance()!= null
                     && jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer()!=null
                     && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
-            iddecoder.setToolTipText(rbt.getString("TipNoRead"));
+            iddecoder.setToolTipText(Bundle.getMessage("TipNoRead"));
         }
         iddecoder.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -143,7 +143,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Convert the decoder selection UI result into a name.
      * @return The selected decoder type name, or null if none selected.
      */
-    String selectedDecoderType() {
+    protected String selectedDecoderType() {
         if (!isDecoderSelected()) return null;
         else return (String)decoderBox.getSelectedItem();
     }
@@ -155,8 +155,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     protected JPanel layoutRosterSelection() {
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
-        pane2a.add(new JLabel(rbt.getString("USE LOCOMOTIVE SETTINGS FOR: ")));
-        locoBox.setNonSelectedItem(rbt.getString("<NONE - NEW LOCO>"));
+        pane2a.add(new JLabel(Bundle.getMessage("USE LOCOMOTIVE SETTINGS FOR: ")));
+        locoBox.setNonSelectedItem(Bundle.getMessage("<NONE - NEW LOCO>"));
         Roster.instance().addPropertyChangeListener(this);
         pane2a.add(locoBox);
         locoBox.addPropertyChangeListener(RosterEntrySelector.SELECTED_ROSTER_ENTRIES, new PropertyChangeListener() {
@@ -169,21 +169,21 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
                     go2.setEnabled(true);
                     go2.setRequestFocusEnabled(true);
                     go2.requestFocus();
-                    go2.setToolTipText(rbt.getString("CLICK TO OPEN THE PROGRAMMER"));
+                    go2.setToolTipText(Bundle.getMessage("CLICK TO OPEN THE PROGRAMMER"));
                 } else {
                     go2.setEnabled(false);
-                    go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+                    go2.setToolTipText(Bundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
                 }
             }
         });
-        idloco = new JToggleButton(rbt.getString("IDENT"));
-        idloco.setToolTipText(rbt.getString("READ THE LOCOMOTIVE'S ADDRESS AND ATTEMPT TO SELECT THE RIGHT SETTINGS"));
+        idloco = new JToggleButton(Bundle.getMessage("IDENT"));
+        idloco.setToolTipText(Bundle.getMessage("READ THE LOCOMOTIVE'S ADDRESS AND ATTEMPT TO SELECT THE RIGHT SETTINGS"));
         if (jmri.InstanceManager.programmerManagerInstance() != null &&
             jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer()!= null
             && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             idloco.setEnabled(false);
-            idloco.setToolTipText(rbt.getString("BUTTON DISABLED BECAUSE CONFIGURED COMMAND STATION CAN'T READ CVS"));
+            idloco.setToolTipText(Bundle.getMessage("BUTTON DISABLED BECAUSE CONFIGURED COMMAND STATION CAN'T READ CVS"));
         }
         idloco.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -219,7 +219,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // create the programmer box
         JPanel progFormat = new JPanel();
         progFormat.setLayout(new BoxLayout(progFormat, BoxLayout.X_AXIS));
-        progFormat.add(new JLabel(rbt.getString("PROGRAMMER FORMAT: ")));
+        progFormat.add(new JLabel(Bundle.getMessage("ProgrammerFormat")));
         progFormat.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 
         programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
@@ -227,7 +227,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
         progFormat.add(programmerBox);
         
-        go2 = new JButton(rbt.getString("OPEN PROGRAMMER"));
+        go2 = new JButton(Bundle.getMessage("OpenProgrammer"));
         go2.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("Open programmer pressed");
@@ -236,7 +236,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             });
         go2.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         go2.setEnabled(false);
-        go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+        go2.setToolTipText(Bundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
         pane3a.add(progFormat);
         pane3a.add(go2);
         return pane3a;
@@ -324,7 +324,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             locoBox.setSelectedItem(r);
         } else {
             log.warn("Read address "+dccAddress+", but no such loco in roster");
-            _statusLabel.setText(rbt.getString("READ ADDRESS ")+dccAddress+rbt.getString(", BUT NO SUCH LOCO IN ROSTER"));
+            _statusLabel.setText(Bundle.getMessage("READ ADDRESS ")+dccAddress+Bundle.getMessage(", BUT NO SUCH LOCO IN ROSTER"));
         }
     }
 
@@ -476,7 +476,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         RosterEntry re = new RosterEntry();
         re.setDecoderFamily(decoderFile.getFamily());
         re.setDecoderModel(decoderFile.getModel());
-        re.setId(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"));
+        re.setId(Bundle.getMessage("LabelNewDecoder"));
         // note that we're leaving the filename null
         // add the new roster entry to the in-memory roster
         Roster.instance().addEntry(re);
@@ -489,6 +489,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CombinedLocoSelPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(CombinedLocoSelPane.class.getName());
 
 }

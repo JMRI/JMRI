@@ -2,6 +2,8 @@
 
 package jmri.jmrix.openlcb.swing.send;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.StringUtil;
 import jmri.util.JmriJFrame;
 
@@ -56,10 +58,10 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     JTextField srcAliasField = new JTextField(4);
     NodeSelector nodeSelector;
-    JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");
-    JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");
-    JTextField configNumberField = new JTextField("40");
-    JTextField configAddressField = new JTextField("000000");
+    JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");     // NOI18N
+    JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");  // NOI18N
+    JTextField configNumberField = new JTextField("40");                        // NOI18N
+    JTextField configAddressField = new JTextField("000000");                   // NOI18N
     JTextField readDataField = new JTextField(80);
     JTextField writeDataField = new JTextField(80);
     JComboBox addrSpace = new JComboBox(new String[]{"CDI", "All", "Config", "None"});
@@ -300,7 +302,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 });
         pane2.add(b); 
         pane2.add(new JLabel("Data: "));
-        writeDataField.setText("00 00");
+        writeDataField.setText("00 00");   // NOI18N
         pane2.add(writeDataField);
 
         b = new JButton("Open CDI Config Tool");
@@ -313,7 +315,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         
     }
     
-    public String getHelpTarget() { return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"; }
+    public String getHelpTarget() { return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"; } // NOI18N
 
     public String getTitle() {
         if(memo!=null) {
@@ -350,7 +352,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void sendCimPerformed(java.awt.event.ActionEvent e) {
-        String data = "[10700"+srcAliasField.getText()+"]";
+        String data = "[10700"+srcAliasField.getText()+"]";  // NOI18N
         log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendCimPerformed");
@@ -577,16 +579,16 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         } else {
             m = new CanMessage(tc.getCanid());
             // check for header
-            if (s.charAt(0)=='[') {
+            if (s.charAt(0)=='[') {           // NOI18N
                 // extended header
                 m.setExtended(true);
-                int i = s.indexOf(']');
+                int i = s.indexOf(']');       // NOI18N
                 String h = s.substring(1, i);
                 m.setHeader(Integer.parseInt(h, 16));
                 s = s.substring(i+1, s.length());
-            } else if (s.charAt(0) == '(') {
+            } else if (s.charAt(0) == '(') {  // NOI18N
                 // standard header
-                int i = s.indexOf(')');
+                int i = s.indexOf(')');       // NOI18N
                 String h = s.substring(1, i);
                 m.setHeader(Integer.parseInt(h, 16));
                 s = s.substring(i+1, s.length());
@@ -633,6 +635,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     
     // private data
     private TrafficController tc = null; //was CanInterface
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OpenLcbCanSendPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class.getName());
 
 }

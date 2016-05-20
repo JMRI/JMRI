@@ -225,6 +225,9 @@ The signal address is always displayed with 4 digits. The CV number in
 the above example is 513 (always displayed with 4 digits) and the value
 for the CV is 123. Only the write byte portion of this command is
 decoded by the analyzer.</P>
+<!--#include virtual="/Footer" -->
+	</div>
+  </div>
 </BODY>
 </HTML>
 

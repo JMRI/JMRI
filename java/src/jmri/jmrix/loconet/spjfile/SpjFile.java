@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.spjfile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 
 import jmri.jmrix.loconet.sdf.SdfBuffer;
@@ -632,7 +634,7 @@ public class SpjFile {
         }
     }
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpjFile.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpjFile.class.getName());
 
 }
 

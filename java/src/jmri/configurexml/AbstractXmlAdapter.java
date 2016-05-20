@@ -1,5 +1,8 @@
 package jmri.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Abstract class to provide basic error handling for XmlAdapter
  *
@@ -26,7 +29,6 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      *         should be propagated upward to higher-level error handling
      */
     public void creationErrorEncountered (
-                org.apache.log4j.Level level,
                 String description, 
                 String systemName, 
                 String userName, 
@@ -34,7 +36,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     {
         ConfigXmlManager.creationErrorEncountered(
                 null, null,
-                level, description, systemName, userName, exception
+                description, systemName, userName, exception
         );
     }
 
@@ -64,5 +66,5 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     public void setConfigXmlManager(ConfigXmlManager c) { this.c = c; }
     protected ConfigXmlManager getConfigXmlManager() { return c; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractXmlAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractXmlAdapter.class.getName());
 }

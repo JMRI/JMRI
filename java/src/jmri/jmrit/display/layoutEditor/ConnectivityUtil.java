@@ -1,16 +1,17 @@
 // jmri.jmrit.display.ConnectivityUtil.java
 package jmri.jmrit.display.layoutEditor;
 
-import java.util.ResourceBundle;
 import java.util.ArrayList;
-
+import java.util.ResourceBundle;
 import jmri.Block;
+import jmri.EntryPoint;
 import jmri.InstanceManager;
-import jmri.Turnout;
 import jmri.SignalHead;
 import jmri.SignalMast;
-import jmri.EntryPoint;
+import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ConnectivityUtil provides methods supporting use of layout connectivity available 
@@ -241,6 +242,7 @@ public class ConnectivityUtil
                             }
                             else {
                                 log.error("Cannot determine turnout setting for "+ltx.getTurnoutName());
+                                log.error("lb " + lb + " nlb " + nlb + " connect B " + ((TrackSegment)ltx.getConnectB()).getLayoutBlock() + " connect C " + ((TrackSegment)ltx.getConnectC()).getLayoutBlock());
                                 companion.add(Integer.valueOf(Turnout.CLOSED));
                             }
                             break;
@@ -544,7 +546,10 @@ public class ConnectivityUtil
 								prevConnectType = LayoutEditor.TURNOUT_C;
 								prevConnectObject = cObject;
 							}
-							else {
+							else if (lt.getLayoutBlock()==lb && lb == nlb){
+                                //we are at our final destination so not an error such
+                                tr = null;
+                            } else {
 								// no legal outcome found, print error
 								log.error("Connectivity mismatch at A in turnout "+lt.getTurnoutName());
 								tr = null;
@@ -583,6 +588,10 @@ public class ConnectivityUtil
 								prevConnectType = LayoutEditor.TURNOUT_D;
 								prevConnectObject = cObject;
 							}
+                            else if (lt.getLayoutBlockB()==lb && lb == nlb){
+                                //we are at our final destination so not an error such
+                                tr=null;
+                            }
 							else {
 								// no legal outcome found, print error
 								log.error("Connectivity mismatch at B in turnout "+lt.getTurnoutName());
@@ -622,6 +631,10 @@ public class ConnectivityUtil
 								prevConnectType = LayoutEditor.TURNOUT_A;
 								prevConnectObject = cObject;
 							}
+                            else if (lt.getLayoutBlockC()==lb && lb == nlb){
+                                //we are at our final destination so not an error such
+                                tr=null;
+                            }
 							else {
 								// no legal outcome found, print error
 								log.error("Connectivity mismatch at C in turnout "+lt.getTurnoutName());
@@ -661,6 +674,10 @@ public class ConnectivityUtil
 								prevConnectType = LayoutEditor.TURNOUT_B;
 								prevConnectObject = cObject;
 							}
+							else if (lt.getLayoutBlockD()==lb && lb == nlb){
+                                //we are at our final destination so not an error such
+                                tr=null;
+                            }
 							else {
 								// no legal outcome found, print error
 								log.error("Connectivity mismatch at D in turnout "+lt.getTurnoutName());
@@ -936,16 +953,16 @@ public class ConnectivityUtil
 		if (((p.getConnect1()).getLayoutBlock()==lBlock) && ((p.getConnect2()).getLayoutBlock()!=lBlock)) {
 			if ( (leTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing) ||
 						((!leTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing)) )				
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMast()));
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMastName()));
 			else
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMast()));
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMastName()));
 		}
 		else if (((p.getConnect1()).getLayoutBlock()!=lBlock) && ((p.getConnect2()).getLayoutBlock()==lBlock)) {
 			if ( (leTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing) ||
 						((!leTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing)) )
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMast()));
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMastName()));
 			else
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMast()));
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMastName()));
 		}
 		else {
 			// should never happen
@@ -958,13 +975,13 @@ public class ConnectivityUtil
     public boolean layoutTurnoutHasSignalMasts(LayoutTurnout t) {
         String[] turnoutBlocks = t.getBlockBoundaries();
         boolean valid = true;
-        if(turnoutBlocks[0]!=null && (t.getSignalAMast()==null  || t.getSignalAMast().equals("")))
+        if(turnoutBlocks[0]!=null && (t.getSignalAMastName()==null  || t.getSignalAMastName().equals("")))
             valid = false;
-        if(turnoutBlocks[1]!=null && (t.getSignalBMast()==null  || t.getSignalBMast().equals("")))
+        if(turnoutBlocks[1]!=null && (t.getSignalBMastName()==null  || t.getSignalBMastName().equals("")))
             valid = false;
-        if(turnoutBlocks[2]!=null && (t.getSignalCMast()==null  || t.getSignalCMast().equals("")))
+        if(turnoutBlocks[2]!=null && (t.getSignalCMastName()==null  || t.getSignalCMastName().equals("")))
             valid = false;
-        if(turnoutBlocks[3]!=null && (t.getSignalDMast()==null  || t.getSignalDMast().equals("")))
+        if(turnoutBlocks[3]!=null && (t.getSignalDMastName()==null  || t.getSignalDMastName().equals("")))
             valid = false;
 		return valid;
 	}
@@ -2682,5 +2699,5 @@ public class ConnectivityUtil
 
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectivityUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConnectivityUtil.class.getName());
 }

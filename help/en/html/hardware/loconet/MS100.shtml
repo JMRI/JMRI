@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Connecting an MS100 to LocoNet
+      JMRI Hardware Guide: Connecting an MS100 to LocoNet&reg;
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -26,13 +26,13 @@
     <div id="mainContent">
 
       <h1> 
-      JMRI Hardware Guide: Connecting an MS100 to LocoNet
+      JMRI Hardware Guide: Connecting an MS100 to LocoNet&reg;
       </h1>
 
 
 <p>
 The MS100 from Digitrax allows you to connect many types of computers
-to a LocoNet. 
+to a LocoNet&reg;. 
 </p>
 <p>
 Unfortunately, the MS100 is a somewhat old design, and doesn't
@@ -64,7 +64,7 @@ to work.  If this also fails, the won't be able to talk to the
 LocoNet through the MS100.
 <p>
 Because neither of these rates are available, <b>the MS100 can't be
-used with MacOS X, Windows 7 or most Windows Vista machines</b>.  
+used with Mac OS X, Windows 7 or most Windows Vista machines</b>.  
 <p>
 Because we can't be sure your computer
 will be able to talk to a MS100 without trying it, you should
@@ -102,6 +102,7 @@ stty speed 38400 &lt; /dev/ttyS0
 
 This has been reported to work
 with both RH9 and FC3.
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
       <hr class="hide">
     </div>
   </div>

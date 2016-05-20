@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -91,8 +93,22 @@ public class SignalMastTableAction extends AbstractTableAction {
         }
         addFrame.setVisible(true);
     }
+    
+    public void setMenuBar(BeanTableFrame f){
+        JMenuBar menuBar = f.getJMenuBar();
+        JMenu pathMenu = new JMenu(rb.getString("Tools"));
+        menuBar.add(pathMenu);
+        JMenuItem item = new JMenuItem(rb.getString("MenuItemRepeaters"));
+        pathMenu.add(item);
+        item.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame frame = new jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame(); 
+                frame.setVisible(true);
+        	}
+        });
+    }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SignalMastTableAction.class.getName());
 
     public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
         public MyComboBoxRenderer(Vector<String> items) {

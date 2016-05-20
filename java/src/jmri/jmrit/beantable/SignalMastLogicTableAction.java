@@ -1,5 +1,7 @@
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -22,11 +24,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JCheckBox;
+//import javax.swing.JComponent;
 import javax.swing.JTextField;
+import javax.swing.BoxLayout;
+import javax.swing.JDialog;
+import javax.swing.BorderFactory;
 import jmri.util.com.sun.TableSorter;
 import java.awt.event.MouseEvent;
+import java.awt.Component;
 
-public class SignalMastLogicTableAction extends AbstractTableAction implements PropertyChangeListener{
+public class SignalMastLogicTableAction extends AbstractTableAction{
 
     /**
      * Create an action with a specific title.
@@ -62,21 +70,27 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
     public void setMenuBar(BeanTableFrame f){
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu(rb.getString("Pairs"));
+        JMenu pathMenu = new JMenu(Bundle.getMessage("Tools"));
         menuBar.add(pathMenu);
-        JMenuItem item = new JMenuItem(rb.getString("MenuItemAutoGen"));
+        JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemAutoGen"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     autoCreatePairs(finalF);
         	}
             });
+        item = new JMenuItem(Bundle.getMessage("MenuItemAutoGenSections"));
+        pathMenu.add(item);
+        item.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+               ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.signalMastLogicManagerInstance()).generateSection();
+               JOptionPane.showMessageDialog(null, Bundle.getMessage("SectionGenerationComplete"));
+        	}
+            });
     
     }
     
-    ArrayList<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;
-    //Hashtable<SignalMastLogic, ArrayList<SignalMast>> signalMastLogicList = null;
-    
+    ArrayList<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;  
     
     protected void createModel() {
         m = new BeanTableDataModel() {
@@ -138,6 +152,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
             //Will need to redo this so that we work out the row number from looking in the signalmastlogiclist.
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if(suppressUpdate)
+                    return;
                // updateNameList();
                 if (e.getPropertyName().equals("length") ||  e.getPropertyName().equals("updatedDestination") ||  e.getPropertyName().equals("updatedSource")) {
                     updateNameList();
@@ -410,7 +426,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
 
     @Override
     protected String helpTarget() {
-        return "package.jmri.jmrit.beantable.SignalMastLogicTable";
+        return "package.jmri.jmrit.beantable.SignalMastLogicTable";// NOI18N
     }
     
     protected void addPressed(ActionEvent e){
@@ -419,56 +435,83 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
     }
     
     JPanel update;
-    
+    boolean suppressUpdate = false;
     JmriJFrame signalMastLogicFrame = null;
     JLabel sourceLabel = new JLabel();
     
     void autoCreatePairs(jmri.util.JmriJFrame f) {
         if (!InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
-            int response = JOptionPane.showConfirmDialog(null, rb.getString("EnableLayoutBlockRouting"));
+            int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));
             if (response == 0){
                 InstanceManager.layoutBlockManagerInstance().enableAdvancedRouting(true);
-                JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabled"));
+            } else {
+                return;
             }
         }
-        signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs", false, false);
+        signalMastLogicFrame = new JmriJFrame(Bundle.getMessage("DiscoverSignalMastPairs"), false, false);
         signalMastLogicFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
-        sourceLabel = new JLabel("Discovering Signalmasts");
+        sourceLabel = new JLabel(Bundle.getMessage("DiscoveringSignalMastPairs"));
         panel1.add(sourceLabel);
         signalMastLogicFrame.add(panel1);
         signalMastLogicFrame.pack();
         signalMastLogicFrame.setVisible(true);
-        int retval = JOptionPane.showOptionDialog(f, rb.getString("AutoGenSignalMastLogicMessage"), rb.getString("AutoGenSignalMastLogicTitle"),
-                                                  JOptionPane.YES_NO_OPTION,
-                                                  JOptionPane.QUESTION_MESSAGE, null, null, null);
+        
+        final JCheckBox genSect = new JCheckBox(Bundle.getMessage("AutoGenSectionAfterLogic"));
+        genSect.setToolTipText(Bundle.getMessage("AutoGenSectionAfterLogicToolTip"));
+        Object[] params = {Bundle.getMessage("AutoGenSignalMastLogicMessage")," ", genSect}; 
+        int retval = JOptionPane.showConfirmDialog(f, params, Bundle.getMessage("AutoGenSignalMastLogicTitle"), 
+                                                  JOptionPane.YES_NO_OPTION);
+
         if (retval == 0) {
-            try {
-                InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(this);
-                InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
-                    
-            } catch (jmri.JmriException e){
-                InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
-                JOptionPane.showMessageDialog(null, e.toString());
-                signalMastLogicFrame.setVisible(false);
-            }
+            InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(propertyGenerateListener);
+            //This process can take some time, so we do not want to hog the GUI thread
+            Runnable r = new Runnable() {
+            public void run() {
+                //While the global discovery is taking place we remove the listener as this can result in a race condition.
+                suppressUpdate=true;
+                try {
+                    InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
+                } catch (jmri.JmriException e){
+                    InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(propertyGenerateListener);
+                    JOptionPane.showMessageDialog(null, e.toString());
+                    signalMastLogicFrame.setVisible(false);
+                }
+                m.updateNameList();
+                suppressUpdate=false;
+                m.fireTableDataChanged();
+                if(genSect.isSelected()){
+                    ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.signalMastLogicManagerInstance()).generateSection();
+                }
+              }
+            };
+            Thread thr = new Thread(r, "Discover Signal Mast Logic");  // NOI18N
+            thr.start();
+            
         } else {
             signalMastLogicFrame.setVisible(false);
         }
     }
     
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("autoGenerateComplete")){
-            if (signalMastLogicFrame!=null)
-                signalMastLogicFrame.setVisible(false);
-            InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
-            JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
+    protected transient PropertyChangeListener propertyGenerateListener = new PropertyChangeListener() {
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals("autoGenerateComplete")){// NOI18N
+                if (signalMastLogicFrame!=null)
+                    signalMastLogicFrame.setVisible(false);
+                InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastPairGenerationComplete"));
+            } else if (evt.getPropertyName().equals("autoGenerateUpdate")){// NOI18N
+                sourceLabel.setText((String)evt.getNewValue());
+                signalMastLogicFrame.pack();
+                signalMastLogicFrame.repaint();
+            }
         }
-    }
+    };
     
     jmri.jmrit.signalling.SignallingAction sigLog = new jmri.jmrit.signalling.SignallingAction();
     
     protected String getClassName() { return SignalMastLogicTableAction.class.getName(); }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastLogicTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SignalMastLogicTableAction.class.getName());
 }

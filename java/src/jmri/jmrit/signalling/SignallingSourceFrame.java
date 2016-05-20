@@ -26,7 +26,7 @@ public class SignallingSourceFrame extends jmri.util.JmriJFrame {
         // the following code sets the frame's initial state
         sigPanel = new SignallingSourcePanel(source);
         
-        setTitle(rb.getString("SignallingPairs"));
+        setTitle(rb.getString("SignallingPairs") + " : " + source.getDisplayName());
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(sigPanel);

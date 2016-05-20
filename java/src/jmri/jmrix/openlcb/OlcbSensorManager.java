@@ -2,6 +2,8 @@
 
 package jmri.jmrix.openlcb;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 
 import jmri.jmrix.can.CanListener;
@@ -102,7 +104,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
 	public void updateAll() {
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class.getName());
 
 }
 

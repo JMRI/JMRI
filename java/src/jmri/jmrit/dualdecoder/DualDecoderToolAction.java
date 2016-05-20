@@ -4,7 +4,6 @@ package jmri.jmrit.dualdecoder;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 
 /**
  * Swing action to create and register a
@@ -28,7 +27,7 @@ public class DualDecoderToolAction extends AbstractAction {
 
     public DualDecoderToolAction() {
 
-        this(ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle").getString("MenuItemMultiDecoderControl"));
+        this(Bundle.getMessage("MenuItemMultiDecoderControl"));
     }
 
     public void actionPerformed(ActionEvent e) {

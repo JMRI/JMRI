@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -36,6 +39,15 @@ public class Pr2Throttle extends AbstractThrottle {
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) return 0.f;
         else if (lSpeed == 1) return -1.f;   // estop
+        if(getSpeedStepMode()==DccThrottle.SpeedStepMode28){
+            if(lSpeed<=15) //Value less than 15 is in the stop/estop range bracket
+                return 0.f;
+            return (((lSpeed-12)/4f)/28.f);
+        }  else if (getSpeedStepMode()==DccThrottle.SpeedStepMode14){
+            if(lSpeed<=15) //Value less than 15 is in the stop/estop range bracket
+                return 0.f;
+            return ((lSpeed-8)/8f)/14.f;
+        }
         else return ( (lSpeed-1)/126.f);
     }
 
@@ -47,6 +59,11 @@ public class Pr2Throttle extends AbstractThrottle {
         return 0;
       else if (fSpeed < 0.f)
         return 1;   // estop
+      if(getSpeedStepMode()==DccThrottle.SpeedStepMode28){
+        return (int)((fSpeed*28)*4)+12;
+      } else if (getSpeedStepMode()==DccThrottle.SpeedStepMode14){
+          return (int)((fSpeed*14)*8)+8;
+      }
         // add the 0.5 to handle float to int round for positive numbers
       return (int)(fSpeed * 126.f + 0.5) + 1 ;
     }
@@ -196,6 +213,6 @@ public class Pr2Throttle extends AbstractThrottle {
     protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr2Throttle.class.getName());
+    static Logger log = LoggerFactory.getLogger(Pr2Throttle.class.getName());
 
 }

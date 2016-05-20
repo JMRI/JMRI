@@ -2,6 +2,7 @@
 
 package jmri.jmrit.progsupport;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -73,7 +74,7 @@ public class ProgServiceModePaneTest extends TestCase {
 		return suite;
 	}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(ProgServiceModePaneTest.class.getName());
+    static Logger log = Logger.getLogger(ProgServiceModePaneTest.class.getName());
     // The minimal setup for log4J
     protected void setUp() { 
         apps.tests.Log4JFixture.setUp();

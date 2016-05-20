@@ -6,51 +6,80 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
 >
-
+<node>
   <name>My Roster</name>
-
-  <node><name>My Roster</name>
-    <node><name>All Entries</name>
-        <node><name>SP 4554</name>
+  <name xml:lang="it">Il mio Roster</name>
+  <node>
+      <name>My Roster</name>
+      <name xml:lang="it">Il mio Roster</name>
+    <node>
+        <name>All Entries</name>
+        <name xml:lang="it">Tutte le Voci</name>
+        <node>
+            <name>SP 4554</name>
         </node>
-        <node><name>UP 2411</name>
+        <node>
+            <name>UP 2411</name>
         </node>
-        <node><name>UP 2451</name>
+        <node>
+            <name>UP 2451</name>
         </node>
-        <node><name>UP 5768</name>
+        <node>
+            <name>UP 5768</name>
         </node>
-        <node><name>New Entry</name>
-        </node>
-    </node>
-    <node><name>Club Locos</name>
-        <node><name>SP 4554</name>
-        </node>
-        <node><name>UP 5768</name>
-        </node>
-        <node><name>New Entry</name>
-        </node>
-    </node>
-    <node><name>Diesels</name>
-        <node><name>UP 5768</name>
-        </node>
-        <node><name>New Entry</name>
+        <node>
+            <name>New Entry</name>
         </node>
     </node>
-    <node><name>Add Group</name>
+    <node>
+        <name>Club Locos</name>
+        <name xml:lang="it">Loco del Club</name>
+        <node>
+            <name>SP 4554</name>
+        </node>
+        <node>
+            <name>UP 5768</name>
+        </node>
+        <node>
+            <name>New Entry</name>
+        </node>
+    </node>
+    <node>
+        <name>Diesels</name>
+        <node>
+            <name>UP 5768</name>
+        </node>
+        <node>
+            <name>New Entry</name>
+            <name xml:lang="it">Nuova Voce</name>
+        </node>
+    </node>
+    <node>
+        <name>Add Group</name>
+        <name xml:lang="it">Aggiungi Gruppor</name>
     </node>
   </node>
 
 
-  <node><name>Throttles</name>
-    <node><name>Throttle 1</name>
+  <node>
+      <name>Throttles</name>
+      <name xml:lang="it">Palmari</name>
+    <node>
+        <name>Throttle 1</name>
+        <name xml:lang="it">Palmare 1</name>
     </node>
-    <node><name>UP 5768</name>
+    <node>
+        <name>UP 5768</name>
     </node>
-    <node><name>New Throttle</name>
+    <node>
+        <name>New Throttle</name>
+        <name xml:lang="it">Nuovo Palmare</name>
     </node>
-    <node><name>Consisting Tool</name>
+    <node>
+        <name>Consisting Tool</name>
+        <name xml:lang="it">Strumento Multi-Trazione</name>
     </node>
   </node>
-
+</node>
 </nodes>
   

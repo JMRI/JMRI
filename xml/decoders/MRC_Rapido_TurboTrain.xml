@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: MRC_Rapido_TurboTrain.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,14 +16,14 @@
   <version author="Peter Ulvestad" version="3" lastUpdated="20091115"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20091011"/>
   <version author="Ilidio Serra" version="1" lastUpdated="20090825"/>
-<!-- made from the MRC_soundbrilliance1636 file by Bob Jacobsen-->
-<!-- Version 2 - Added consist, moved consist functions to consist pane, added locomotive direction
+  <!-- made from the MRC_soundbrilliance1636 file by Bob Jacobsen-->
+  <!-- Version 2 - Added consist, moved consist functions to consist pane, added locomotive direction
 		, removed speed table pane and added CV6 to Basic speed pane, corrected factory reset -->
-<!-- Version 3 - Added tooltips and correct spelling errors -->
+  <!-- Version 3 - Added tooltips and correct spelling errors -->
   <decoder>
     <family name="Rapido" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="TurboTrain" numOuts="0" numFns="26" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
-<!-- note only F0 to F12 are NMRA compatible -->
+        <!-- note only F0 to F12 are NMRA compatible -->
         <size length="0" width="0" height="0" units="mm"/>
       </model>
     </family>
@@ -233,7 +233,7 @@
         <label>NMRA-compatible decoder with your DCC system. Although the sound decoders in the</label>
       </label>
       <label label="Turbo support &quot;read back on a program track&quot;, there may be some DCC systems that either">
-        <label>Turbo support &quot;read back on a program track&quot;, there may be some DCC systems that either</label>
+        <label>Turbo support "read back on a program track", there may be some DCC systems that either</label>
       </label>
       <label label="do not support reading back decoders, or do not have the capability to read back sound">
         <label>do not support reading back decoders, or do not have the capability to read back sound</label>

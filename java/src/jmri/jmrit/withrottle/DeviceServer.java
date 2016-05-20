@@ -79,6 +79,8 @@ package jmri.jmrit.withrottle;
  */
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.net.Socket;
 import java.io.*;
 import java.util.ArrayList;
@@ -629,6 +631,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DeviceServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(DeviceServer.class.getName());
 
 }

@@ -8,6 +8,7 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
@@ -162,6 +163,6 @@ public class EliteXNetProgrammerTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetProgrammerTest.class.getName());
+	static Logger log = Logger.getLogger(EliteXNetProgrammerTest.class.getName());
 
 }

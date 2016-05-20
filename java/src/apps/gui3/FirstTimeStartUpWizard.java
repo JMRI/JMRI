@@ -1,5 +1,7 @@
 package apps.gui3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -271,7 +273,7 @@ public class FirstTimeStartUpWizard {
                     adp.connect();
                     adp.configure();
                 } catch (Exception ex) {
-                    log.error(ex);
+                    log.error(ex.getLocalizedMessage(), ex);
                     Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
                     parent.setCursor(normalCursor);
                     JOptionPane.showMessageDialog(null, "An error occured while trying to connect to " + ((jmri.jmrix.AbstractConnectionConfig)connect).getConnectionName() + ", press the back button and check the connection details","Error Opening Connection" , JOptionPane.ERROR_MESSAGE);
@@ -385,6 +387,6 @@ public class FirstTimeStartUpWizard {
     
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FirstTimeStartUpWizard.class.getName());
+    static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizard.class.getName());
   
 }

@@ -1,500 +1,497 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 15 Aug 11 JES
                  - added 224 to includes for servo 3 and 4
 -->
-
-<variables>
-      <variable label="Servo Protocol" CV="161" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="Negative Pulse" value="0">
-            <choice>Negative Pulse</choice>
-          </enumChoice>
-          <enumChoice choice="Positive Pulse" value="1">
-            <choice>Positive Pulse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Servo Protocol</label>
-      </variable>
-      <variable label="Servo Control Signal" CV="161" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="Only Active for movement" value="0">
-            <choice>Only Active for movement</choice>
-          </enumChoice>
-          <enumChoice choice="Allways Active" value="1">
-            <choice>Allways Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Servo Control Signal</label>
-      </variable>
-      <variable label="Servo Centering" CV="161" mask="VVVVVXVV" default="0">
-        <enumVal>
-          <enumChoice choice="Moves to centre in dual key if both Fn's off">
-            <choice>Moves to centre in dual key if both Fn's off</choice>
-          </enumChoice>
-          <enumChoice choice="Only moves if function key pressed">
-            <choice>Only moves if function key pressed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Servo Centering</label>
-      </variable>
-      <variable label="Servo 1 Left Stop" CV="162" default="49">
-        <decVal/>
-        <label>Servo 1 Left Stop</label>
-      </variable>
-      <variable label="Servo 1 Right Stop" CV="163" default="205">
-        <decVal/>
-        <label>Servo 1 Right Stop</label>
-      </variable>
-      <variable label="Servo 1 Centre" CV="164" default="127">
-        <decVal/>
-        <label>Servo 1 Centre</label>
-      </variable>
-      <variable label="Servo 1 Rotation Speed" CV="165" default="30">
-        <decVal/>
-        <label>Servo 1 Rotation Speed</label>
-      </variable>
-      <variable label="Servo 2 Left Stop" CV="166" default="49">
-        <decVal/>
-        <label>Servo 2 Left Stop</label>
-      </variable>
-      <variable label="Servo 2 Right Stop" CV="167" default="205">
-        <decVal/>
-        <label>Servo 2 Right Stop</label>
-      </variable>
-      <variable label="Servo 2 Centre" CV="168" default="127">
-        <decVal/>
-        <label>Servo 2 Centre</label>
-      </variable>
-      <variable label="Servo 2 Rotation Speed" CV="169" default="30">
-        <decVal/>
-        <label>Servo 2 Rotation Speed</label>
-      </variable>
-      <variable label="Servo 3 Left Stop" CV="170" default="49" include="208,209,224">
-        <decVal/>
-        <label>Servo 3 Left Stop</label>
-      </variable>
-      <variable label="Servo 3 Right Stop" CV="171" default="205" include="208,209,224">
-        <decVal/>
-        <label>Servo 3 Right Stop</label>
-      </variable>
-      <variable label="Servo 3 Centre" CV="172" default="127" include="208,209,224">
-        <decVal/>
-        <label>Servo 3 Centre</label>
-      </variable>
-      <variable label="Servo 3 Rotation Speed" CV="173" default="30" include="208,209,224">
-        <decVal/>
-        <label>Servo 3 Rotation Speed</label>
-      </variable>
-      <variable label="Servo 4 Left Stop" CV="174" default="49" include="208,209,224">
-        <decVal/>
-        <label>Servo 4 Left Stop</label>
-      </variable>
-      <variable label="Servo 4 Right Stop" CV="175" default="205" include="208,209,224">
-        <decVal/>
-        <label>Servo 4 Right Stop</label>
-      </variable>
-      <variable label="Servo 4 Centre" CV="176" default="127" include="208,209,224">
-        <decVal/>
-        <label>Servo 4 Centre</label>
-      </variable>
-      <variable label="Servo 4 Rotation Speed" CV="177" default="30" include="208,209,224">
-        <decVal/>
-        <label>Servo 4 Rotation Speed</label>
-      </variable>
-      <variable label="Servo 1 Function Allocation" CV="181" default="0" >
-        <enumVal>
-          <enumChoice choice="Servo not in operation">
-            <choice>Servo not in operation</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="forward = left, reverse = right" value="90">
-            <choice>forward = left, reverse = right</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + forward = right, other = left">
-            <choice>stopped + forward = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + reverse = right, other = left">
-            <choice>stopped + reverse = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped = right, moving = left">
-            <choice>stopped = right, moving = left</choice>
-          </enumChoice>
-          <enumChoice choice="F1 left, F2 right" value="101">
-            <choice>F1 left, F2 right</choice>
-          </enumChoice>
-          <enumChoice choice="F2 left, F3 right">
-            <choice>F2 left, F3 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F4 right">
-            <choice>F3 left, F4 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F5 right">
-            <choice>F4 left, F5 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F6 right">
-            <choice>F5 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F6 left, F7 right">
-            <choice>F6 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F7 left, F8 right">
-            <choice>F7 left, F8 right</choice>
-          </enumChoice>
-          <enumChoice choice="F8 left, F9 right">
-            <choice>F8 left, F9 right</choice>
-          </enumChoice>
-          <enumChoice choice="F9 left, F10 right">
-            <choice>F9 left, F10 right</choice>
-          </enumChoice>
-          <enumChoice choice="F10 left, F11 right">
-            <choice>F10 left, F11 right</choice>
-          </enumChoice>
-          <enumChoice choice="F11 left, F12 right">
-            <choice>F11 left, F12 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F6 right">
-            <choice>F3 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F7 right">
-            <choice>F4 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F8 right">
-            <choice>F5 left, F8 right</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Servo 1 Function Allocation</label>
-      </variable>
-      <variable label="Servo 2 Function Allocation" CV="182" default="0">
-        <enumVal>
-          <enumChoice choice="Servo not in operation">
-            <choice>Servo not in operation</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="forward = left, reverse = right" value="90">
-            <choice>forward = left, reverse = right</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + forward = right, other = left">
-            <choice>stopped + forward = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + reverse = right, other = left">
-            <choice>stopped + reverse = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped = right, moving = left">
-            <choice>stopped = right, moving = left</choice>
-          </enumChoice>
-          <enumChoice choice="F1 left, F2 right" value="101">
-            <choice>F1 left, F2 right</choice>
-          </enumChoice>
-          <enumChoice choice="F2 left, F3 right">
-            <choice>F2 left, F3 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F4 right">
-            <choice>F3 left, F4 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F5 right">
-            <choice>F4 left, F5 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F6 right">
-            <choice>F5 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F6 left, F7 right">
-            <choice>F6 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F7 left, F8 right">
-            <choice>F7 left, F8 right</choice>
-          </enumChoice>
-          <enumChoice choice="F8 left, F9 right">
-            <choice>F8 left, F9 right</choice>
-          </enumChoice>
-          <enumChoice choice="F9 left, F10 right">
-            <choice>F9 left, F10 right</choice>
-          </enumChoice>
-          <enumChoice choice="F10 left, F11 right">
-            <choice>F10 left, F11 right</choice>
-          </enumChoice>
-          <enumChoice choice="F11 left, F12 right">
-            <choice>F11 left, F12 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F6 right">
-            <choice>F3 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F7 right">
-            <choice>F4 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F8 right">
-            <choice>F5 left, F8 right</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Servo 2 Function Allocation</label>
-      </variable>
-      <variable label="Servo 3 Function Allocation" CV="183" default="0" include="208,209,224">
-        <enumVal>
-          <enumChoice choice="Servo not in operation">
-            <choice>Servo not in operation</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="forward = left, reverse = right" value="90">
-            <choice>forward = left, reverse = right</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + forward = right, other = left">
-            <choice>stopped + forward = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + reverse = right, other = left">
-            <choice>stopped + reverse = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped = right, moving = left">
-            <choice>stopped = right, moving = left</choice>
-          </enumChoice>
-          <enumChoice choice="F1 left, F2 right" value="101">
-            <choice>F1 left, F2 right</choice>
-          </enumChoice>
-          <enumChoice choice="F2 left, F3 right">
-            <choice>F2 left, F3 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F4 right">
-            <choice>F3 left, F4 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F5 right">
-            <choice>F4 left, F5 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F6 right">
-            <choice>F5 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F6 left, F7 right">
-            <choice>F6 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F7 left, F8 right">
-            <choice>F7 left, F8 right</choice>
-          </enumChoice>
-          <enumChoice choice="F8 left, F9 right">
-            <choice>F8 left, F9 right</choice>
-          </enumChoice>
-          <enumChoice choice="F9 left, F10 right">
-            <choice>F9 left, F10 right</choice>
-          </enumChoice>
-          <enumChoice choice="F10 left, F11 right">
-            <choice>F10 left, F11 right</choice>
-          </enumChoice>
-          <enumChoice choice="F11 left, F12 right">
-            <choice>F11 left, F12 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F6 right">
-            <choice>F3 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F7 right">
-            <choice>F4 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F8 right">
-            <choice>F5 left, F8 right</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Servo 4 Function Allocation</label>
-      </variable>
-      <variable label="Servo 4 Function Allocation" CV="184" default="0" include="208,209,224">
-        <enumVal>
-          <enumChoice choice="Servo not in operation">
-            <choice>Servo not in operation</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="forward = left, reverse = right" value="90">
-            <choice>forward = left, reverse = right</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + forward = right, other = left">
-            <choice>stopped + forward = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped + reverse = right, other = left">
-            <choice>stopped + reverse = right, other = left</choice>
-          </enumChoice>
-          <enumChoice choice="stopped = right, moving = left">
-            <choice>stopped = right, moving = left</choice>
-          </enumChoice>
-          <enumChoice choice="F1 left, F2 right" value="101">
-            <choice>F1 left, F2 right</choice>
-          </enumChoice>
-          <enumChoice choice="F2 left, F3 right">
-            <choice>F2 left, F3 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F4 right">
-            <choice>F3 left, F4 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F5 right">
-            <choice>F4 left, F5 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F6 right">
-            <choice>F5 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F6 left, F7 right">
-            <choice>F6 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F7 left, F8 right">
-            <choice>F7 left, F8 right</choice>
-          </enumChoice>
-          <enumChoice choice="F8 left, F9 right">
-            <choice>F8 left, F9 right</choice>
-          </enumChoice>
-          <enumChoice choice="F9 left, F10 right">
-            <choice>F9 left, F10 right</choice>
-          </enumChoice>
-          <enumChoice choice="F10 left, F11 right">
-            <choice>F10 left, F11 right</choice>
-          </enumChoice>
-          <enumChoice choice="F11 left, F12 right">
-            <choice>F11 left, F12 right</choice>
-          </enumChoice>
-          <enumChoice choice="F3 left, F6 right">
-            <choice>F3 left, F6 right</choice>
-          </enumChoice>
-          <enumChoice choice="F4 left, F7 right">
-            <choice>F4 left, F7 right</choice>
-          </enumChoice>
-          <enumChoice choice="F5 left, F8 right">
-            <choice>F5 left, F8 right</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Servo 4 Function Allocation</label>
-      </variable>
- </variables>  	
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+  <variable label="Servo Protocol" CV="161" mask="XXXXXXXV" default="0">
+    <enumVal>
+      <enumChoice choice="Negative Pulse" value="0">
+        <choice>Negative Pulse</choice>
+      </enumChoice>
+      <enumChoice choice="Positive Pulse" value="1">
+        <choice>Positive Pulse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Servo Protocol</label>
+  </variable>
+  <variable label="Servo Control Signal" CV="161" mask="XXXXXXVX" default="0">
+    <enumVal>
+      <enumChoice choice="Only Active for movement" value="0">
+        <choice>Only Active for movement</choice>
+      </enumChoice>
+      <enumChoice choice="Allways Active" value="1">
+        <choice>Allways Active</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Servo Control Signal</label>
+  </variable>
+  <variable label="Servo Centering" CV="161" mask="VVVVVXVV" default="0">
+    <enumVal>
+      <enumChoice choice="Moves to centre in dual key if both Fn's off">
+        <choice>Moves to centre in dual key if both Fn's off</choice>
+      </enumChoice>
+      <enumChoice choice="Only moves if function key pressed">
+        <choice>Only moves if function key pressed</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Servo Centering</label>
+  </variable>
+  <variable label="Servo 1 Left Stop" CV="162" default="49">
+    <decVal/>
+    <label>Servo 1 Left Stop</label>
+  </variable>
+  <variable label="Servo 1 Right Stop" CV="163" default="205">
+    <decVal/>
+    <label>Servo 1 Right Stop</label>
+  </variable>
+  <variable label="Servo 1 Centre" CV="164" default="127">
+    <decVal/>
+    <label>Servo 1 Centre</label>
+  </variable>
+  <variable label="Servo 1 Rotation Speed" CV="165" default="30">
+    <decVal/>
+    <label>Servo 1 Rotation Speed</label>
+  </variable>
+  <variable label="Servo 2 Left Stop" CV="166" default="49">
+    <decVal/>
+    <label>Servo 2 Left Stop</label>
+  </variable>
+  <variable label="Servo 2 Right Stop" CV="167" default="205">
+    <decVal/>
+    <label>Servo 2 Right Stop</label>
+  </variable>
+  <variable label="Servo 2 Centre" CV="168" default="127">
+    <decVal/>
+    <label>Servo 2 Centre</label>
+  </variable>
+  <variable label="Servo 2 Rotation Speed" CV="169" default="30">
+    <decVal/>
+    <label>Servo 2 Rotation Speed</label>
+  </variable>
+  <variable label="Servo 3 Left Stop" CV="170" default="49" include="208,209,224">
+    <decVal/>
+    <label>Servo 3 Left Stop</label>
+  </variable>
+  <variable label="Servo 3 Right Stop" CV="171" default="205" include="208,209,224">
+    <decVal/>
+    <label>Servo 3 Right Stop</label>
+  </variable>
+  <variable label="Servo 3 Centre" CV="172" default="127" include="208,209,224">
+    <decVal/>
+    <label>Servo 3 Centre</label>
+  </variable>
+  <variable label="Servo 3 Rotation Speed" CV="173" default="30" include="208,209,224">
+    <decVal/>
+    <label>Servo 3 Rotation Speed</label>
+  </variable>
+  <variable label="Servo 4 Left Stop" CV="174" default="49" include="208,209,224">
+    <decVal/>
+    <label>Servo 4 Left Stop</label>
+  </variable>
+  <variable label="Servo 4 Right Stop" CV="175" default="205" include="208,209,224">
+    <decVal/>
+    <label>Servo 4 Right Stop</label>
+  </variable>
+  <variable label="Servo 4 Centre" CV="176" default="127" include="208,209,224">
+    <decVal/>
+    <label>Servo 4 Centre</label>
+  </variable>
+  <variable label="Servo 4 Rotation Speed" CV="177" default="30" include="208,209,224">
+    <decVal/>
+    <label>Servo 4 Rotation Speed</label>
+  </variable>
+  <variable label="Servo 1 Function Allocation" CV="181" default="0">
+    <enumVal>
+      <enumChoice choice="Servo not in operation">
+        <choice>Servo not in operation</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="forward = left, reverse = right" value="90">
+        <choice>forward = left, reverse = right</choice>
+      </enumChoice>
+      <enumChoice choice="stopped + forward = right, other = left">
+        <choice>stopped + forward = right, other = left</choice>
+      </enumChoice>
+      <enumChoice choice="stopped + reverse = right, other = left">
+        <choice>stopped + reverse = right, other = left</choice>
+      </enumChoice>
+      <enumChoice choice="stopped = right, moving = left">
+        <choice>stopped = right, moving = left</choice>
+      </enumChoice>
+      <enumChoice choice="F1 left, F2 right" value="101">
+        <choice>F1 left, F2 right</choice>
+      </enumChoice>
+      <enumChoice choice="F2 left, F3 right">
+        <choice>F2 left, F3 right</choice>
+      </enumChoice>
+      <enumChoice choice="F3 left, F4 right">
+        <choice>F3 left, F4 right</choice>
+      </enumChoice>
+      <enumChoice choice="F4 left, F5 right">
+        <choice>F4 left, F5 right</choice>
+      </enumChoice>
+      <enumChoice choice="F5 left, F6 right">
+        <choice>F5 left, F6 right</choice>
+      </enumChoice>
+      <enumChoice choice="F6 left, F7 right">
+        <choice>F6 left, F7 right</choice>
+      </enumChoice>
+      <enumChoice choice="F7 left, F8 right">
+        <choice>F7 left, F8 right</choice>
+      </enumChoice>
+      <enumChoice choice="F8 left, F9 right">
+        <choice>F8 left, F9 right</choice>
+      </enumChoice>
+      <enumChoice choice="F9 left, F10 right">
+        <choice>F9 left, F10 right</choice>
+      </enumChoice>
+      <enumChoice choice="F10 left, F11 right">
+        <choice>F10 left, F11 right</choice>
+      </enumChoice>
+      <enumChoice choice="F11 left, F12 right">
+        <choice>F11 left, F12 right</choice>
+      </enumChoice>
+      <enumChoice choice="F3 left, F6 right">
+        <choice>F3 left, F6 right</choice>
+      </enumChoice>
+      <enumChoice choice="F4 left, F7 right">
+        <choice>F4 left, F7 right</choice>
+      </enumChoice>
+      <enumChoice choice="F5 left, F8 right">
+        <choice>F5 left, F8 right</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Servo 1 Function Allocation</label>
+  </variable>
+  <variable label="Servo 2 Function Allocation" CV="182" default="0">
+    <enumVal>
+      <enumChoice choice="Servo not in operation">
+        <choice>Servo not in operation</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="forward = left, reverse = right" value="90">
+        <choice>forward = left, reverse = right</choice>
+      </enumChoice>
+      <enumChoice choice="stopped + forward = right, other = left">
+        <choice>stopped + forward = right, other = left</choice>
+      </enumChoice>
+      <enumChoice choice="stopped + reverse = right, other = left">
+        <choice>stopped + reverse = right, other = left</choice>
+      </enumChoice>
+      <enumChoice choice="stopped = right, moving = left">
+        <choice>stopped = right, moving = left</choice>
+      </enumChoice>
+      <enumChoice choice="F1 left, F2 right" value="101">
+        <choice>F1 left, F2 right</choice>
+      </enumChoice>
+      <enumChoice choice="F2 left, F3 right">
+        <choice>F2 left, F3 right</choice>
+      </enumChoice>
+      <enumChoice choice="F3 left, F4 right">
+        <choice>F3 left, F4 right</choice>
+      </enumChoice>
+      <enumChoice choice="F4 left, F5 right">
+        <choice>F4 left, F5 right</choice>
+      </enumChoice>
+      <enumChoice choice="F5 left, F6 right">
+        <choice>F5 left, F6 right</choice>
+      </enumChoice>
+      <enumChoice choice="F6 left, F7 right">
+        <choice>F6 left, F7 right</choice>
+      </enumChoice>
+      <enumChoice choice="F7 left, F8 right">
+        <choice>F7 left, F8 right</choice>
+      </enumChoice>
+      <enumChoice choice="F8 left, F9 right">
+        <choice>F8 left, F9 right</choice>
+      </enumChoice>
+      <enumChoice choice="F9 left, F10 right">
+        <choice>F9 left, F10 right</choice>
+      </enumChoice>
+      <enumChoice choice="F10 left, F11 right">
+        <choice>F10 left, F11 right</choice>
+      </enumChoice>
+      <enumChoice choice="F11 left, F12 right">
+        <choice>F11 left, F12 right</choice>
+      </enumChoice>
+      <enumChoice choice="F3 left, F6 right">
+        <choice>F3 left, F6 right</choice>
+      </enumChoice>
+      <enumChoice choice="F4 left, F7 right">
+        <choice>F4 left, F7 right</choice>
+      </enumChoice>
+      <enumChoice choice="F5 left, F8 right">
+        <choice>F5 left, F8 right</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Servo 2 Function Allocation</label>
+  </variable>
+  <variable label="Servo 3 Function Allocation" CV="183" default="0" include="208,209,224">
+    <enumVal>
+      <enumChoice choice="Servo not in operation">
+        <choice>Servo not in operation</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="forward = left, reverse = right" value="90">
+        <choice>forward = left, reverse = right</choice>
+      </enumChoice>
+      <enumChoice choice="stopped + forward = right, other = left">
+        <choice>stopped + forward = right, other = left</choice>
+      </enumChoice>
+      <enumChoice choice="stopped + reverse = right, other = left">
+        <choice>stopped + reverse = right, other = left</choice>
+      </enumChoice>
+      <enumChoice choice="stopped = right, moving = left">
+        <choice>stopped = right, moving = left</choice>
+      </enumChoice>
+      <enumChoice choice="F1 left, F2 right" value="101">
+        <choice>F1 left, F2 right</choice>
+      </enumChoice>
+      <enumChoice choice="F2 left, F3 right">
+        <choice>F2 left, F3 right</choice>
+      </enumChoice>
+      <enumChoice choice="F3 left, F4 right">
+        <choice>F3 left, F4 right</choice>
+      </enumChoice>
+      <enumChoice choice="F4 left, F5 right">
+        <choice>F4 left, F5 right</choice>
+      </enumChoice>
+      <enumChoice choice="F5 left, F6 right">
+        <choice>F5 left, F6 right</choice>
+      </enumChoice>
+      <enumChoice choice="F6 left, F7 right">
+        <choice>F6 left, F7 right</choice>
+      </enumChoice>
+      <enumChoice choice="F7 left, F8 right">
+        <choice>F7 left, F8 right</choice>
+      </enumChoice>
+      <enumChoice choice="F8 left, F9 right">
+        <choice>F8 left, F9 right</choice>
+      </enumChoice>
+      <enumChoice choice="F9 left, F10 right">
+        <choice>F9 left, F10 right</choice>
+      </enumChoice>
+      <enumChoice choice="F10 left, F11 right">
+        <choice>F10 left, F11 right</choice>
+      </enumChoice>
+      <enumChoice choice="F11 left, F12 right">
+        <choice>F11 left, F12 right</choice>
+      </enumChoice>
+      <enumChoice choice="F3 left, F6 right">
+        <choice>F3 left, F6 right</choice>
+      </enumChoice>
+      <enumChoice choice="F4 left, F7 right">
+        <choice>F4 left, F7 right</choice>
+      </enumChoice>
+      <enumChoice choice="F5 left, F8 right">
+        <choice>F5 left, F8 right</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Servo 4 Function Allocation</label>
+  </variable>
+  <variable label="Servo 4 Function Allocation" CV="184" default="0" include="208,209,224">
+    <enumVal>
+      <enumChoice choice="Servo not in operation">
+        <choice>Servo not in operation</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="forward = left, reverse = right" value="90">
+        <choice>forward = left, reverse = right</choice>
+      </enumChoice>
+      <enumChoice choice="stopped + forward = right, other = left">
+        <choice>stopped + forward = right, other = left</choice>
+      </enumChoice>
+      <enumChoice choice="stopped + reverse = right, other = left">
+        <choice>stopped + reverse = right, other = left</choice>
+      </enumChoice>
+      <enumChoice choice="stopped = right, moving = left">
+        <choice>stopped = right, moving = left</choice>
+      </enumChoice>
+      <enumChoice choice="F1 left, F2 right" value="101">
+        <choice>F1 left, F2 right</choice>
+      </enumChoice>
+      <enumChoice choice="F2 left, F3 right">
+        <choice>F2 left, F3 right</choice>
+      </enumChoice>
+      <enumChoice choice="F3 left, F4 right">
+        <choice>F3 left, F4 right</choice>
+      </enumChoice>
+      <enumChoice choice="F4 left, F5 right">
+        <choice>F4 left, F5 right</choice>
+      </enumChoice>
+      <enumChoice choice="F5 left, F6 right">
+        <choice>F5 left, F6 right</choice>
+      </enumChoice>
+      <enumChoice choice="F6 left, F7 right">
+        <choice>F6 left, F7 right</choice>
+      </enumChoice>
+      <enumChoice choice="F7 left, F8 right">
+        <choice>F7 left, F8 right</choice>
+      </enumChoice>
+      <enumChoice choice="F8 left, F9 right">
+        <choice>F8 left, F9 right</choice>
+      </enumChoice>
+      <enumChoice choice="F9 left, F10 right">
+        <choice>F9 left, F10 right</choice>
+      </enumChoice>
+      <enumChoice choice="F10 left, F11 right">
+        <choice>F10 left, F11 right</choice>
+      </enumChoice>
+      <enumChoice choice="F11 left, F12 right">
+        <choice>F11 left, F12 right</choice>
+      </enumChoice>
+      <enumChoice choice="F3 left, F6 right">
+        <choice>F3 left, F6 right</choice>
+      </enumChoice>
+      <enumChoice choice="F4 left, F7 right">
+        <choice>F4 left, F7 right</choice>
+      </enumChoice>
+      <enumChoice choice="F5 left, F8 right">
+        <choice>F5 left, F8 right</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Servo 4 Function Allocation</label>
+  </variable>
+</variables>

@@ -2,6 +2,8 @@
 
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
@@ -194,7 +196,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     public void dispose() {
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SE8cSignalHead.class.getName());
+    static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
 }
 
 /* @(#)SE8cSignalHead.java */

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.rfid.generic.standalone;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -65,7 +67,7 @@ public class SpecificReporterManager extends RfidReporterManager {
         report.notify(idTag);
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SpecificReporterManager.class.getName());
 
 }
 

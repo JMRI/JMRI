@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
 import jmri.JmriException;
 
@@ -22,6 +24,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * message.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
+ * @author ken cameron Copyright (C) 2013
  * @version $Revision$
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
@@ -94,6 +97,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     static public final int OPTION_2006 = 20;
     /**
+     * Create commands compatible with the 1.28 EPROM.
+     *<P>
+     * For PowerCab/SB3 original pre-Nov 2012
+     */
+    static public final int OPTION_1_28 = 30;
+    /**
+     * Create commands compatible with the 1.65 EPROM.
+     *<P>
+     * For PowerCab/SB5/Twin update post-Nov 2012
+     */
+    static public final int OPTION_1_65 = 40;
+    /**
      * Create all commands in the binary format.
      */
     static public final int OPTION_FORCE_BINARY = 10000;
@@ -113,6 +128,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      *<LI>{@link #OPTION_1999}
      *<LI>{@link #OPTION_2004}
      *<LI>{@link #OPTION_2006}
+     *<LI>{@link #OPTION_1_28}
+     *<LI>{@link #OPTION_1_65}
      *<LI>{@link #OPTION_FORCE_BINARY}
      *</UL>
      *
@@ -138,6 +155,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      *<LI>{@link #OPTION_1999}
      *<LI>{@link #OPTION_2004}
      *<LI>{@link #OPTION_2006}
+     *<LI>{@link #OPTION_1_28}
+     *<LI>{@link #OPTION_1_65}
      *<LI>{@link #OPTION_FORCE_BINARY}
      *</UL>
      *
@@ -162,8 +181,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	/**
 	 * Create commands compatible with a NCE USB connected to a PowerHouse
 	 */
-	static public final int USB_SYSTEM_POWERHOUSE = 4;
+	static public final int USB_SYSTEM_POWERHOUSE = 3;
+	
+	/**
+	 * Create commands compatible with a NCE USB with >=7.* connected to a Twin
+	 */
+	static public final int USB_SYSTEM_TWIN = 4;
 
+	/**
+	 * Create commands compatible with a NCE USB with SB5
+	 */
+	static public final int USB_SYSTEM_SB5 = 5;
+		
 	private int usbSystem = USB_SYSTEM_NONE;
 	private boolean usbSystemSet = false;
 
@@ -174,6 +203,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	 * <LI>{@link #USB_SYSTEM_POWERCAB}
 	 * <LI>{@link #USB_SYSTEM_SB3}
 	 * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+	 * <LI>{@link #USB_SYSTEM_TWIN}
+	 * <LI>{@link #USB_SYSTEM_SB5}
 	 * </UL>
 	 * 
 	 * @param val
@@ -194,10 +225,109 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	 * <LI>{@link #USB_SYSTEM_POWERCAB}
 	 * <LI>{@link #USB_SYSTEM_SB3}
 	 * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+	 * <LI>{@link #USB_SYSTEM_TWIN}
+	 * <LI>{@link #USB_SYSTEM_SB5}
 	 * </UL>
 	 * 
 	 */
 	public int getUsbSystem() {return usbSystem;}
+	
+	/**
+	 * Initializer for supported command groups
+	 */
+	static public final long CMDS_NONE = 0;
+	
+	/**
+	 * Limit max accy decoder to addr 250
+	 */
+	static public final long CMDS_ACCYADDR250 = 0x0001;
+	
+	/**
+	 * Supports programming track and related commands
+	 */
+	static public final long CMDS_PROGTRACK = 0x0002;
+			
+	/**
+	 * Supports read AIU status commands 0x9B
+	 */
+	static public final long CMDS_AUI_READ = 0x004;
+	
+	/**
+	 * Supports USB read/write memory commands 0xB3 -> 0xB5
+	 */
+	static public final long CMDS_MEM = 0x0008;
+	
+	/**
+	 * Support Ops Mode Pgm commands 0xAE -> 0xAF
+	 */
+	static public final long CMDS_OPS_PGM = 0x0010;
+	
+	/**
+	 * Support Clock commands 0x82 -> 0x87
+	 */
+	static public final long CMDS_CLOCK = 0x0020;
+	
+	/**
+	 * Support USB Interface commands 0xB1
+	 */
+	static public final long CMDS_USB = 0x0040;
+	
+	/**
+	 * Disable for USB commands
+	 */
+	static public final long CMDS_NOT_USB = 0x0080;
+	
+	/**
+	 * All Connections Support commands
+	 */
+	static public final long CMDS_ALL_SYS = 0x0100;
+		
+	private long cmdGroups = CMDS_NONE;
+	private boolean cmdGroupsSet = false;
+
+	/**
+	 * Set  the types of commands valid connected system
+	 * <UL>
+	 * <LI>{@link #CMDS_NONE}
+	 * <LI>{@link #CMDS_ACCYADDR250}
+	 * <LI>{@link #CMDS_PROGTRACK}
+	 * <LI>{@link #CMDS_AUI_READ}
+	 * <LI>{@link #CMDS_MEM}
+	 * <LI>{@link #CMDS_OPS_PGM}
+	 * <LI>{@link #CMDS_CLOCK}
+	 * <LI>{@link #CMDS_USB}
+	 * <LI>{@link #CMDS_NOT_USB}
+	 * <LI>{@link #CMDS_ALL_SYS}
+	 * </UL>
+	 * 
+	 * @param val
+	 */
+	public void setCmdGroups(long val) {
+		cmdGroups = val;
+		if (cmdGroupsSet) {
+			log.warn("setCmdGroups called more than once");
+			//new Exception().printStackTrace();
+		}
+		cmdGroupsSet = true;
+	}
+
+	/**
+	 * Get the types of commands valid for the NCE USB and connected system
+	 * <UL>
+	 * <LI>{@link #CMDS_NONE}
+	 * <LI>{@link #CMDS_ACCYADDR250}
+	 * <LI>{@link #CMDS_PROGTRACK}
+	 * <LI>{@link #CMDS_AUI_READ}
+	 * <LI>{@link #CMDS_MEM}
+	 * <LI>{@link #CMDS_OPS_PGM}
+	 * <LI>{@link #CMDS_CLOCK}
+	 * <LI>{@link #CMDS_USB}
+	 * <LI>{@link #CMDS_NOT_USB}
+	 * <LI>{@link #CMDS_ALL_SYS}
+	 * </UL>
+	 * 
+	 */
+	public long getCmdGroups() {return cmdGroups;}
 	
 	private boolean nceProgMode = false;					// Do not use exit program mode unless active
 	
@@ -439,7 +569,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return adaptermemo.getSystemPrefix();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
 }
 
 

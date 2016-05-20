@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.sdf;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -98,6 +99,6 @@ public class PlayTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PlayTest.class.getName());
+	 static Logger log = Logger.getLogger(PlayTest.class.getName());
 
 }

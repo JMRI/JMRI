@@ -7,32 +7,49 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
 >
 
-  <node><name>File</name>
-    <node><name>Load...</name>
+  <node>
+    <name>File</name>
+    <node>
+      <name>Load...</name>
+      <name xml:lang="it">Carica...</name>
     </node>
-    <node><name>Store...</name>
+    <node>
+      <name>Store...</name>
+      <name xml:lang="it">Salva...</name>
     </node>
-    <node><name>Print...</name>
+    <node>
+      <name>Print...</name>
+      <name xml:lang="it">Stampa...</name>
     </node>
-    <node><name>Quit</name>
+    <node>
+      <name>Quit</name>
+      <name xml:lang="it">Esci</name>
         <adapter>apps.gui3.paned.QuitAction</adapter>
     </node>
   </node>
 
-  <node><name>Edit</name>
-    <node><name>Cut</name>
+  <node>
+    <name>Edit</name>
+    <name xml:lang="it">Modifica</name>
+    <node>
+      <name>Cut</name>
+      <name xml:lang="it">Taglia</name>
     </node>
-    <node><name>Copy</name>
+    <node>
+      <name>Copy</name>
+      <name xml:lang="it">Copia</name>
     </node>
-    <node><name>Paste</name>
+    <node>
+      <name>Paste</name>
+      <name xml:lang="it">Incolla</name>
     </node>
-    <node><name>Preferences</name>
+    <node>
+      <name>Preferences</name>
+      <name xml:lang="it">Preferenze</name>
         <panel>apps.gui3.TabbedPreferences</panel>
     </node>
   </node>
 
-  <xi:include href="http://jmri.org/xml/config/parts/WindowsMenu.xml"/>
-  <xi:include href="http://jmri.org/xml/config/parts/HelpMenu.xml"/>
 
 </nodes>
   

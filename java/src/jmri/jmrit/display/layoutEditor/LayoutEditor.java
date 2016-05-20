@@ -1,6 +1,8 @@
 // jmri.jmrit.display.LayoutEditor.java
 package jmri.jmrit.display.layoutEditor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -379,6 +381,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		setupZoomMenu(menuBar);
 		// setup Zoom menu
 		setupMarkerMenu(menuBar);
+        //Setup Dispatcher window
+        setupDispatcherMenu(menuBar);
+
 		// setup Help menu
         addHelpMenu("package.jmri.jmrit.display.LayoutEditor", true);
 		
@@ -407,21 +412,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         ActionListener selectionListAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 Component[] extra = extraTurnoutPanel.getComponents();
-                Component[] rotate = rotationPanel.getComponents();
                 if (layoutSingleSlipBox.isSelected() || layoutDoubleSlipBox.isSelected()){
                     for (Component item: extra) {
                          item.setEnabled(true);
-                    }
-                    for (Component item: rotate) {
-                         item.setEnabled(false);
                     }
                 }
                 else {
                     for (Component item: extra) {
                          item.setEnabled(false);
-                    }
-                    for (Component item: rotate) {
-                         item.setEnabled(true);
                     }
                 }
             }
@@ -1378,7 +1376,44 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         		removeMarkers();
             }
         });
-	}
+    }
+
+    private void setupDispatcherMenu(JMenuBar menuBar){
+        JMenu dispMenu = new JMenu(Bundle.getMessage("MenuDispatcher"));
+        dispMenu.add(new JMenuItem(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemOpen"))));
+        menuBar.add(dispMenu);
+        JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
+        dispMenu.add(newTrainItem);
+        newTrainItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                if (jmri.InstanceManager.transitManagerInstance().getSystemNameList().size()<=0) {
+                    // Inform the user that there are no Transits available, and don't open the window
+                    javax.swing.JOptionPane.showMessageDialog(null,ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").getString("NoTransitsMessage"));
+                    return;
+                }
+                jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
+                if (!df.getNewTrainActive()) {
+                    df.getActiveTrainFrame().initiateTrain(event, null, null);
+                    df.setNewTrainActive(true);
+                } else {
+                    df.getActiveTrainFrame().showActivateFrame(null);
+                }
+                
+            }
+        });
+        menuBar.add(dispMenu);
+    
+    }
+    
+    static boolean openDispatcherOnLoad = false;
+    
+    static public boolean getOpenDispatcherOnLoad(){
+        return openDispatcherOnLoad;
+    }
+    
+    static public void setOpenDispatcherOnLoad(Boolean boo){
+        openDispatcherOnLoad = boo;
+    }
     /**
      * Remove marker icons from panel
      */
@@ -2658,6 +2693,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                             break;
                         }
                     }
+                    for (int i = 0; i<turntableList.size();i++) {
+                        LayoutTurntable x = turntableList.get(i);
+                        for (int k = 0; k<x.getNumberRays(); k++) {
+                            if (x.getRayConnectOrdered(k)!=null) {
+                                // check the A connection point
+                                Point2D pt = x.getRayCoordsOrdered(k);
+                                Rectangle2D r = new Rectangle2D.Double(
+                                        pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
+                                if (r.contains(dLoc)) {
+                                    // mouse was pressed on this connection point
+                                    selectedObject = x;
+                                    selectedPointType = TURNTABLE_RAY_OFFSET+x.getRayIndex(k);
+                                    break;
+                                }
+                            }
+                        }
+                    }
 				}
 				// initialize starting selection - cancel any previous selection rectangle
 				selectionActive = true;
@@ -2700,6 +2752,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					break;
 				}
 			}
+            for (int i = 0; i<turntableList.size();i++) {
+                LayoutTurntable x = turntableList.get(i);
+                for (int k = 0; k<x.getNumberRays(); k++) {
+                    if (x.getRayConnectOrdered(k)!=null) {
+                        // check the A connection point
+                        Point2D pt = x.getRayCoordsOrdered(k);
+                        Rectangle2D r = new Rectangle2D.Double(
+                                pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
+                        if (r.contains(dLoc)) {
+                            // mouse was pressed on this connection point
+                            selectedObject = x;
+                            selectedPointType = TURNTABLE_RAY_OFFSET+x.getRayIndex(k);
+                            break;
+                        }
+                    }
+                }
+            }
 		}
 		else if ( (event.isMetaDown() || event.isAltDown()) &&
 							(!event.isShiftDown()) && (!event.isControlDown()) ) {
@@ -3002,7 +3071,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				}
 				for (int k = 0; k<x.getNumberRays(); k++) {
 					if (!requireUnconnected || (x.getRayConnectOrdered(k)==null)) {
-						// check the A connection point
 						Point2D pt = x.getRayCoordsOrdered(k);
 						Rectangle2D r = new Rectangle2D.Double(
 								pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
@@ -3366,6 +3434,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 LayoutSlip t = (LayoutSlip)selectedObject;
                 t.toggleState();
 			}
+            else if ( ( selectedObject!=null) && (selectedPointType>=TURNTABLE_RAY_OFFSET) && 
+					allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) && 
+						(!event.isShiftDown()) && (!event.isControlDown()) ) {
+				// controlling layout, in edit mode
+                LayoutTurntable t =  (LayoutTurntable)selectedObject;
+                t.setPosition(selectedPointType-TURNTABLE_RAY_OFFSET);
+			}
 			if ( (trackBox.isSelected()) && (beginObject!=null) && (foundObject!=null) ) {
 				// user let up shift key before releasing the mouse when creating a track segment
 				setCursor(Cursor.getDefaultCursor());
@@ -3391,6 +3466,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			LayoutSlip t = (LayoutSlip)selectedObject;
 			t.toggleState();
 		}
+        else if ( ( selectedObject!=null) && (selectedPointType>=TURNTABLE_RAY_OFFSET) && 
+				allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) && 
+					(!event.isShiftDown()) && (!delayedPopupTrigger) ) {
+                LayoutTurntable t =  (LayoutTurntable)selectedObject;
+                t.setPosition(selectedPointType-TURNTABLE_RAY_OFFSET);
+        }
 		// check if requesting marker popup out of edit mode
 		else if ( (event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging) ) {
 			LocoIcon lo = checkMarkers(dLoc);
@@ -3466,6 +3547,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					break;
                 default: break;
 			}
+            if(foundPointType>=TURNTABLE_RAY_OFFSET){
+                LayoutTurntable t = (LayoutTurntable)foundObject;
+                if(t.isTurnoutControlled()){
+                    ((LayoutTurntable)foundObject).showRayPopUp(event, foundPointType-TURNTABLE_RAY_OFFSET);
+                }
+            }
 		}
 		else {
 			TrackSegment tr = checkTrackSegments(dLoc);
@@ -4813,7 +4900,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
      * Add a LayoutSlip
      */
     public void addLayoutSlip(int type) {
-		numLayoutSlips ++;
+        double rot = 0.0;
+		String s = rotationField.getText().trim();
+		if (s.length()<1) {
+			rot = 0.0;
+		}
+		else {
+			try {
+				rot = Double.parseDouble(s);
+			}
+			catch (Exception e) {
+				JOptionPane.showMessageDialog(this, rb.getString("Error3")+" "+
+						e,rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+        numLayoutSlips ++;
 		// get unique name
 		String name = "";
 		boolean duplicate = true;
@@ -4823,7 +4925,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			if (duplicate) numLayoutSlips ++;
 		}
 		// create object
-		LayoutSlip o = new LayoutSlip(name,currentPoint,this, type);
+		LayoutSlip o = new LayoutSlip(name,currentPoint, rot, this, type);
         slipList.add(o);
         setDirty(true);
         
@@ -6383,12 +6485,33 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         }
         return null;
     }
+    
+    public PositionablePoint findPositionablePointByWestBoundBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(PositionablePoint p:pointList){
+                if(p.getWestBoundSignalMast()==bean)
+                    return p;
+            }
+        } else if (bean instanceof Sensor){
+            for(PositionablePoint p:pointList){
+                if(p.getWestBoundSensor()==bean)
+                    return p;
+            }
+        }
+        return null;
+    }
 
-    public PositionablePoint findPositionablePointByEastBoundSignalMast(String signalMastName){
-        for (int i = 0; i<pointList.size(); i++) {
-            PositionablePoint p = pointList.get(i);
-            if (p.getEastBoundSignalMast().equals(signalMastName))
-                return p;
+    public PositionablePoint findPositionablePointByEastBoundBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(PositionablePoint p:pointList){
+                if(p.getEastBoundSignalMast()==bean)
+                    return p;
+            }
+        } else if (bean instanceof Sensor){
+            for(PositionablePoint p:pointList){
+                if(p.getEastBoundSensor()==bean)
+                    return p;
+            }
         }
         return null;
     }
@@ -6396,87 +6519,123 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public PositionablePoint findPositionablePointByWestBoundSignalMast(String signalMastName){
         for (int i = 0; i<pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
-            if (p.getWestBoundSignalMast().equals(signalMastName))
+            if (p.getWestBoundSignalMastName().equals(signalMastName))
                 return p;
-
         }
         return null;
     }
     
+    public PositionablePoint findPositionablePointByBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(PositionablePoint p:pointList){
+                if(p.getWestBoundSignalMast()==bean ||
+                    p.getEastBoundSignalMast()==bean)
+                    return p;
+            }
+        } else if (bean instanceof Sensor){
+            for(PositionablePoint p:pointList){
+                if(p.getWestBoundSensor()==bean ||
+                    p.getEastBoundSensor()==bean)
+                    return p;
+            }
+        }
+        return null;
+    
+    }
+    
     public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName){
-        for(int i = 0; i<turnoutList.size(); i++){
-            LayoutTurnout t = turnoutList.get(i);
-            if((t.getSignalAMast().equals(signalMastName)) ||
-                (t.getSignalBMast().equals(signalMastName)) ||
-                (t.getSignalCMast().equals(signalMastName)) ||
-                (t.getSignalDMast().equals(signalMastName)))
-                return t;
+        return findLayoutTurnoutByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+    }
+    
+    public LayoutTurnout findLayoutTurnoutByBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(LayoutTurnout t:turnoutList){
+                if(t.getSignalAMast()==bean ||
+                    t.getSignalBMast()==bean ||
+                    t.getSignalCMast()==bean ||
+                    t.getSignalDMast()==bean)
+                    return t;
+            }
+        } else if (bean instanceof Sensor){
+            for(LayoutTurnout t:turnoutList){
+                if(t.getSensorA()==bean ||
+                    t.getSensorB()==bean ||
+                    t.getSensorC()==bean ||
+                    t.getSensorD()==bean)
+                    return t;
+            }
         }
         return null;
     }
     
     public LayoutTurnout findLayoutTurnoutBySensor(String sensorName){
-        for(int i = 0; i<turnoutList.size(); i++){
-            LayoutTurnout t = turnoutList.get(i);
-            if((t.getSensorA().equals(sensorName)) ||
-                (t.getSensorB().equals(sensorName)) ||
-                (t.getSensorC().equals(sensorName)) ||
-                (t.getSensorD().equals(sensorName)))
-                return t;
-        }
-        return null;
+        return findLayoutTurnoutByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
     
     public LevelXing findLevelXingBySignalMast(String signalMastName){
-        for(int i = 0; i<xingList.size(); i++){
-            LevelXing l = xingList.get(i);
-            if((l.getSignalAMastName().equals(signalMastName)) ||
-                (l.getSignalBMastName().equals(signalMastName)) ||
-                (l.getSignalCMastName().equals(signalMastName)) ||
-                (l.getSignalDMastName().equals(signalMastName)))
-                return l;
+        return findLevelXingByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+    }
+    
+    public LevelXing findLevelXingBySensor(String sensorName){
+        return findLevelXingByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
+    }
+    
+    public LevelXing findLevelXingByBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(LevelXing l: xingList){
+                if(l.getSignalAMast()==bean ||
+                    l.getSignalBMast()==bean ||
+                    l.getSignalCMast()==bean ||
+                    l.getSignalDMast()==bean)
+                    return l;
+            }
+        } else if (bean instanceof Sensor){
+            for(LevelXing l: xingList){
+                if(l.getSensorA()==bean ||
+                    l.getSensorB()==bean ||
+                    l.getSensorC()==bean ||
+                    l.getSensorD()==bean)
+                    return l;
+            }
+        
         }
         return null;
     }
     
-    public LevelXing findLevelXingBySensor(String sensorName){
-        for(int i = 0; i<xingList.size(); i++){
-            LevelXing l = xingList.get(i);
-            if((l.getSensorAName().equals(sensorName)) ||
-                (l.getSensorBName().equals(sensorName)) ||
-                (l.getSensorCName().equals(sensorName)) ||
-                (l.getSensorDName().equals(sensorName)))
-                return l;
+    public LayoutSlip findLayoutSlipByBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(LayoutSlip l: slipList){
+                if(l.getSignalAMast()==bean ||
+                    l.getSignalBMast()==bean ||
+                    l.getSignalCMast()==bean ||
+                    l.getSignalDMast()==bean)
+                    return l;
+            }
+        } else if (bean instanceof Sensor){
+            for(LayoutSlip l: slipList){
+                if(l.getSensorA()==bean ||
+                    l.getSensorB()==bean ||
+                    l.getSensorC()==bean ||
+                    l.getSensorD()==bean)
+                    return l;
+            }
+        
         }
         return null;
     }
 
     public LayoutSlip findLayoutSlipBySignalMast(String signalMastName){
-        for(LayoutSlip l: slipList){
-            if((l.getSignalAMast().equals(signalMastName)) ||
-                (l.getSignalBMast().equals(signalMastName)) ||
-                (l.getSignalCMast().equals(signalMastName)) ||
-                (l.getSignalDMast().equals(signalMastName)))
-                return l;
-        }
-        return null;
+        return findLayoutSlipByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
     }
     
     public LayoutSlip findLayoutSlipBySensor(String sensorName){
-        for(LayoutSlip l: slipList){
-            if((l.getSensorA().equals(sensorName)) ||
-                (l.getSensorB().equals(sensorName)) ||
-                (l.getSensorC().equals(sensorName)) ||
-                (l.getSensorD().equals(sensorName)))
-                return l;
-        }
-        return null;
+        return findLayoutSlipByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
     
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName){
         for (int i = 0; i<pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
-            if (p.getEastBoundSensor().equals(sensorName))
+            if (p.getEastBoundSensorName().equals(sensorName))
                 return p;
         }
         return null;
@@ -6485,7 +6644,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName){
         for (int i = 0; i<pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
-            if (p.getWestBoundSensor().equals(sensorName))
+            if (p.getWestBoundSensorName().equals(sensorName))
                 return p;
 
         }
@@ -7421,6 +7580,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 						pt.getX()-((pt.getX()-c.getX())*0.2),
 							pt.getY()-((pt.getY()-c.getY())*0.2)), pt));
 			}
+            if(x.isTurnoutControlled() && x.getPosition()!=-1){
+                Point2D pt = x.getRayCoordsIndexed(x.getPosition());
+                g2.draw(new Line2D.Double(new Point2D.Double(
+						pt.getX()-((pt.getX()-c.getX())*1.8/*2*/),
+							pt.getY()-((pt.getY()-c.getY())*1.8/**2*/)), pt));
+            }
 		}
 	}
 	
@@ -8018,5 +8183,5 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         }
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditor.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutEditor.class.getName());
 }

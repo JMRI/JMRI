@@ -2,7 +2,6 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,14 +10,15 @@ import java.io.PrintStream;
 import java.util.List;
 
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmrit.roster package & jmrit.roster.Roster class.
- * @author	Bob Jacobsen     Copyright (C) 2001, 2002
+ * Tests for the jmrit.roster.Roster class.
+ * @author	Bob Jacobsen     Copyright (C) 2001, 2002, 2012
  * @version     $Revision$
  */
 public class RosterTest extends TestCase {
@@ -128,10 +128,9 @@ public class RosterTest extends TestCase {
         // the resulting files go into the test tree area.
 
         // create a file in "temp"
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
         Roster.setFileLocation("temp");
-        File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"roster.xml");
+        File f = new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"roster.xml");
         // remove it if its there
         f.delete();
         // load a new one
@@ -140,18 +139,18 @@ public class RosterTest extends TestCase {
         p.println(contents);
         p.close();
         // delete previous backup file if there's one
-        File bf = new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterBackupTest");
+        File bf = new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterBackupTest");
         bf.delete();
 
         // now do the backup
         Roster r = new Roster() {
                 public String backupFileName(String name)
-                { return XmlFile.prefsDir()+File.separator+"temp"+File.separator+"rosterBackupTest"; }
+                { return FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterBackupTest"; }
             };
         r.makeBackupFile("temp"+File.separator+"roster.xml");
 
         // and check
-        InputStream in = new FileInputStream(new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterBackupTest"));
+        InputStream in = new FileInputStream(new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterBackupTest"));
         Assert.assertEquals("read 0 ", contents.charAt(0), in.read());
         Assert.assertEquals("read 1 ", contents.charAt(1), in.read());
         Assert.assertEquals("read 2 ", contents.charAt(2), in.read());
@@ -168,7 +167,7 @@ public class RosterTest extends TestCase {
         r.makeBackupFile("temp"+File.separator+"roster.xml");
 
         // and check
-        in = new FileInputStream(new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterBackupTest"));
+        in = new FileInputStream(new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterBackupTest"));
         Assert.assertEquals("read 4 ", contents.charAt(0), in.read());
         Assert.assertEquals("read 5 ", contents.charAt(1), in.read());
         Assert.assertEquals("read 6 ", contents.charAt(2), in.read());
@@ -244,12 +243,11 @@ public class RosterTest extends TestCase {
         // the resulting files go into the test tree area.
 
         // store files in "temp"
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
         Roster.setFileLocation("temp"+File.separator);
         Roster.setRosterFileName("rosterTest.xml");
 
-        File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterTest.xml");
+        File f = new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterTest.xml");
         // remove existing roster if its there
         f.delete();
 
@@ -304,17 +302,6 @@ public class RosterTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(RosterTest.class);
-        suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
-        suite.addTest(jmri.jmrit.roster.swing.RosterTableModelTest.suite());
-        suite.addTest(jmri.jmrit.roster.swing.attributetable.AttributeTableModelTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(jmri.jmrit.roster.CopyRosterItemActionTest.suite());
-            suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());
-            suite.addTest(jmri.jmrit.roster.FunctionLabelPaneTest.suite());
-            suite.addTest(jmri.jmrit.roster.IdentifyLocoTest.suite());
-        }
-        
         return suite;
     }
 

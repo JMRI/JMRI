@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
 import java.util.List;
 import jmri.Audio;
@@ -46,11 +48,12 @@ public abstract class AbstractAudioFactory implements AudioFactory {
     private static boolean _distanceAttenuated = true;
 
     /**
-     * Reference to the seperate thread used to process all AudioCommands
+     * Reference to the separate thread used to process all AudioCommands
      */
     private static AbstractAudioThread audioCommandThread = null;
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @Override
     public boolean init() {
         if (_initialised) {
             log.debug("Already initialised");
@@ -68,6 +71,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         return true;
     }
 
+    @Override
     public void cleanup() {
 
         boolean dieException = false;
@@ -91,6 +95,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         }
     }
 
+    @Override
     public synchronized boolean audioCommandQueue(AudioCommand queueAudioCommand) {
         if (queueAudioCommand == null) {
             log.debug("Processing command queue");
@@ -192,20 +197,23 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         }
     }
 
+    @Override
     public Thread getCommandThread() {
         return audioCommandThread;
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @Override
     public void setDistanceAttenuated(boolean attenuated) {
         _distanceAttenuated = attenuated;
     }
 
+    @Override
     public boolean isDistanceAttenuated() {
         return _distanceAttenuated;
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioFactory.class.getName());
 
 }
 

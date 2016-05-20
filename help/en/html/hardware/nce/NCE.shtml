@@ -87,7 +87,7 @@ on their front panel.
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
 	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
-	Linux, Windows, and MacOS X respectively.</LI>
+	Linux, Windows, and Mac OS X respectively.</LI>
 	<LI>In the bottom selection box, you can pick the default
 	programmer format. You can override this each time you open the
 	programmer, so this is here just for convenience.</LI>
@@ -149,8 +149,8 @@ BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
 <P>Sensor ID = 785</P>
 
 <p>In the hardware address field of the Add Sensor window you can enter in the 
-AIU Cab Address followed by the Pin Number seperated by a ":"<br>
-So for a sensor on AIU Cab Address 50, pin 2 you would enter the following : <b>50:2</b></p>
+AIU cab address followed by the pin number separated by a semicolon. 
+So for a sensor on AIU cab address 50, pin 2 you would enter the following: <b>50:2</b></p>
 
 <h3>Turnout Numbering</h3>
 JMRI can access accessory decoders as NCE Turnouts and Lights.
@@ -218,7 +218,7 @@ on the use of serial-network adapters, also known as terminal servers)</p>
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
 	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
-	Linux, Windows, and MacOS X respectively.</LI>
+	Linux, Windows, and Mac OS X respectively.</LI>
 	<LI>In the bottom selection box, you can pick the default
 	programmer format. You can override this each time you open the
 	programmer, so this is here just for convenience.</LI>
@@ -240,8 +240,8 @@ user's manual under "Setup Command Station".</P>
 
 <IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALIGN="right" ALT="NCE USB Interface" >
 
-<P>The NCE USB Interface can be connected to three NCE systems,
-Power Cab, SB3 (SmartBooster) or Power Pro. You must select the correct
+<P>The NCE USB Interface can be connected to all NCE systems,
+Power Cab, SB3 (SmartBooster), SB5, Twin or Power Pro. You must select the correct
 system from the preference menu for reliable operation.</P>
 
 <H3>Setup</H3>
@@ -275,7 +275,7 @@ system from the preference menu for reliable operation.</P>
 	in the NCE USB Interface. 
 	    <UL>
 	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/CP210x_VCP_Win2K_XP_S2K3.zip">Windows driver</a></LI>
-	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">MacOS X driver</a></LI>
+	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">Mac OS X driver</a></LI>
 	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz">Linux driver</a></LI>
         <LI>
         If one of the above links doesn't work, you can
@@ -305,7 +305,7 @@ system from the preference menu for reliable operation.</P>
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
 	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
-	Linux, Windows, and MacOS X respectively.</LI>
+	Linux, Windows, and Mac OS X respectively.</LI>
 	<LI>In the bottom selection box, you can pick the default
 	programmer format. You can override this each time you open the
 	programmer, so this is here just for convenience.</LI>
@@ -321,9 +321,11 @@ system from the preference menu for reliable operation.</P>
 
 <P>The NCE USB Interface doesn't support all of the current JMRI
 features and functions. Some of the restrictions are based on the type
-of system the USB Adapter is connected to. The USB can't get information
-from AIUs, so they can't be used to get feedback from the layout. The
-turnout feedback mode MONITORING isn't available when using a USB, and
+of system the USB Adapter is connected to. The USB version 6.* can't get information
+from AIUs, so they can't be used to get feedback from the layout. The USB 7.* version
+when connected to a system with the 1.65 or higher firmware (PowerCab, SB5, Twin)
+the AIU cards can be used, but with restricted cab numbers as in the system manual.
+The turnout feedback mode MONITORING isn't available when using a USB, and
 the Clock functions found in tools are also not available. The USB when
 connected to a Power Pro system doesn't support any type of loco
 programming, and when connected to a SB3 only operation mode (no program
@@ -340,7 +342,7 @@ limitation when connected to a Power Pro.</P> -->
 
 <DL>
 	<DT>All systems:</DT>
-	<DD>No AIU support, No Turnout MONITORING, No Clock functions.</DD>
+	<DD>No Turnout MONITORING, No Clock functions.</DD>
 
 	<!--  <DT>Power Cab and SB3:</DT>
 	<DD>Can only access accessory addresses between 1 and 250.</DD> -->
@@ -350,6 +352,10 @@ limitation when connected to a Power Pro.</P> -->
 
 	<DT>Power Pro:</DT>
 	<DD>No loco programming</DD>
+	
+	<DT>AIU Support:</DT>
+	<DD>USB below 7.* version, no AIU support</DD>
+	<DD>USB version 7.* and above, system with version 1.65 and above firmware, AIU supported</DD>
 </DL>
 
 <a name="troubleShoot"></a>

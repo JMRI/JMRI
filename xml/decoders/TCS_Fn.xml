@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: TCS_Fn.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,16 +14,17 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20061010"/>
-<!-- Version 1 - made from TCS_X.xml -->
-<!-- Version 1.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 1 - made from TCS_X.xml -->
+  <!-- Version 1.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Function Decoders" mfg="Train Control Systems">
-      <model model="FL2" numOuts="2" numFns="14" lowVersionID="30" highVersionID="37" formFactor="HO">
+      <model show="no" model="FL2" numOuts="2" numFns="14" lowVersionID="30" highVersionID="37" formFactor="HO"
+          replacementModel="FL2" replacementFamily="June 2007">
         <output name="1" label="Green" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Purple" connection="solder" maxcurrent="100 mA"/>
         <size length="1.000" width="0.650" height="0.160" units="inches"/>
       </model>
-      <model model="FL4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+      <model show="no" model="FL4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="FL4" replacementFamily="June 2007">
         <output name="1" label="Green" connection="solder" maxcurrent="200 mA"/>
         <output name="2" label="Purple" connection="solder" maxcurrent="200 mA"/>
         <output name="3" label="Brown" connection="solder" maxcurrent="200 mA"/>
@@ -90,10 +91,7 @@
         </enumVal>
         <label>Analog Mode Pick</label>
       </variable>
-      <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="1" tooltip="Set this decoder's unique locking ID number">
-        <decVal/>
-        <label>Decoder Lock ID number</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <variable label="Long Address" CV="17" item="Extended Address">
         <longAddressVal/>
         <label>Long Address</label>
@@ -1141,7 +1139,6 @@
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-  
   <pane name="Misc">
     <column>
       <display item="Decoder Lock ID number"/>

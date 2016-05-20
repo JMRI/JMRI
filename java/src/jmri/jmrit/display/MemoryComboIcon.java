@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
@@ -164,7 +166,7 @@ public class MemoryComboIcon extends PositionableJPanel
 
     public String getNameString() {
         String name;
-        if (namedMemory == null) name = rb.getString("NotConnected");
+        if (namedMemory == null) name = Bundle.getMessage("NotConnected");
         else if (getMemory().getUserName()!=null)
             name = getMemory().getUserName()+" ("+getMemory().getSystemName()+")";
         else
@@ -178,7 +180,7 @@ public class MemoryComboIcon extends PositionableJPanel
     }
 
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -194,8 +196,8 @@ public class MemoryComboIcon extends PositionableJPanel
     protected void edit() {
         _iconEditor = new IconAdder("Memory") {
             JList list;
-            JButton bDel = new JButton(rb.getString("deleteSelection"));
-            JButton bAdd = new JButton(rb.getString("addItem"));
+            JButton bDel = new JButton(Bundle.getMessage("deleteSelection"));
+            JButton bAdd = new JButton(Bundle.getMessage("addItem"));
             JTextField textfield = new JTextField(30);
             protected void addAdditionalButtons(JPanel p) {
             	_listModel = new DefaultListModel();
@@ -226,11 +228,11 @@ public class MemoryComboIcon extends PositionableJPanel
                 list = new JList(_listModel);
                 JScrollPane scrollPane = new JScrollPane(list);
                 JPanel p1 = new JPanel();
-                p1.add(new JLabel(rb.getString("comboList")));
+                p1.add(new JLabel(Bundle.getMessage("comboList")));
                 p.add(p1);
                 p.add(scrollPane);
                 p1 = new JPanel();
-                p1.add(new JLabel(rb.getString("newItem"), SwingConstants.RIGHT));
+                p1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
                 textfield.setMaximumSize(textfield.getPreferredSize());
                 p1.add(textfield);
                 p.add(p1);
@@ -300,5 +302,5 @@ public class MemoryComboIcon extends PositionableJPanel
         namedMemory = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryComboIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryComboIcon.class.getName());
 }

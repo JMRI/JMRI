@@ -1,5 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 
@@ -22,8 +24,11 @@ import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
+import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.logix.TrackerTableAction;
+import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 
 /**
@@ -53,7 +58,7 @@ import jmri.util.HelpUtil;
  * 
  */
 
-public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner, KeyListener {
+public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner/*, KeyListener*/ {
 
     public boolean _debug;
     protected JMenuBar _menuBar;
@@ -71,18 +76,16 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
 
-    private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(rb.getString("CheckBoxGlobalFlags"));
-//    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CloseEditor"));
-    private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxPositionable"));
-    private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(rb.getString("CheckBoxControlling"));
-    private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowTooltips"));
-    private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(rb.getString("CheckBoxHidden"));
-    private JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(rb.getString("ScrollBoth"));
-    private JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(rb.getString("ScrollNone"));
-    private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(rb.getString("ScrollHorizontal"));
-    private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(rb.getString("ScrollVertical"));
-
-    public static final ResourceBundle rbcp = ResourceBundle.getBundle("jmri.jmrit.display.controlPanelEditor.ControlPanelBundle");
+    private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
+//    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
+    private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
+    private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
+    private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
+    private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHidden"));
+    private JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
+    private JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
+    private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
+    private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
 
     // DnD
     public static final String POSITIONABLE_LIST_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
@@ -120,7 +123,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.ControlPanelEditor", true);
-        _itemPalette = new ItemPalette(rb.getString("MenuItemItemPallette"), this);        		
+        _itemPalette = ItemPalette.getInstance(Bundle.getMessage("MenuItemItemPallette"), this);        		
 
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
@@ -135,13 +138,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         InstanceManager.configureManagerInstance().registerUser(this);
         pack();
         setVisible(true);
-        addKeyListener(this);
+ //       addKeyListener(this);
+    }
+    
+    public void setDrawFrame(jmri.jmrit.display.controlPanelEditor.shape.DrawFrame f) {
+    	_shapeDrawer.setDrawFrame(f);
     }
 
     protected void makeIconMenu() {
-        _iconMenu = new JMenu(rb.getString("MenuIcon"));
+        _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
-        JMenuItem mi = new JMenuItem(rb.getString("MenuItemItemPallette"));
+        JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPallette"));
         mi.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     _itemPalette.setVisible(true);        	
@@ -149,8 +156,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             });
         mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
         _iconMenu.add(mi);
-        _iconMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemTableList")));                                                  
+        _iconMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable"))); 
         mi = (JMenuItem)_iconMenu.getMenuComponent(1); 
+        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.CTRL_MASK));        		
+        _iconMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTableList")));                                                  
+        mi = (JMenuItem)_iconMenu.getMenuComponent(2); 
         mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
     }
     
@@ -169,9 +179,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     protected void makeZoomMenu() {
-        _zoomMenu = new JMenu(rb.getString("MenuZoom"));
+        _zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
         _menuBar.add(_zoomMenu, 0);
-        JMenuItem addItem = new JMenuItem(rb.getString("NoZoom"));
+        JMenuItem addItem = new JMenuItem(Bundle.getMessage("NoZoom"));
         _zoomMenu.add(addItem);
         addItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -179,13 +189,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             });
 
-        addItem = new JMenuItem(rb.getString("Zoom"));
+        addItem = new JMenuItem(Bundle.getMessage("Zoom"));
         _zoomMenu.add(addItem);
         PositionableJComponent z = new PositionableJComponent(this);
         z.setScale(getPaintScale());
         addItem.addActionListener(CoordinateEdit.getZoomEditAction(z));
 
-        addItem = new JMenuItem(rb.getString("ZoomFit"));
+        addItem = new JMenuItem(Bundle.getMessage("ZoomFit"));
         _zoomMenu.add(addItem);
         addItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -204,24 +214,26 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             aboutItem = new JMenuItem("About OBlocks&Portals");
             HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.OBlockTable", null);
             _warrantMenu.add(aboutItem);
+        } else {
+            _warrantMenu.add(TrackerTableAction.getInstance());         	
         }
     	_menuBar.add(_warrantMenu, 0);
     }
     
     protected void makeMarkerMenu() {
-        _markerMenu = new JMenu(rb.getString("MenuMarker"));
+        _markerMenu = new JMenu(Bundle.getMessage("MenuMarker"));
         _menuBar.add(_markerMenu);
-        _markerMenu.add(new AbstractAction(rb.getString("AddLoco")){
+        _markerMenu.add(new AbstractAction(Bundle.getMessage("AddLoco")){
         	public void actionPerformed(ActionEvent e) {
         		locoMarkerFromInput();
             }
         });
-        _markerMenu.add(new AbstractAction(rb.getString("AddLocoRoster")){
+        _markerMenu.add(new AbstractAction(Bundle.getMessage("AddLocoRoster")){
         	public void actionPerformed(ActionEvent e) {
         		locoMarkerFromRoster();
             }
         });
-        _markerMenu.add(new AbstractAction(rb.getString("RemoveMarkers")){
+        _markerMenu.add(new AbstractAction(Bundle.getMessage("RemoveMarkers")){
         	public void actionPerformed(ActionEvent e) {
         		removeMarkers();
             }
@@ -229,7 +241,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
     
     protected void makeOptionMenu() {
-        _optionMenu = new JMenu(rb.getString("MenuOption"));
+        _optionMenu = new JMenu(Bundle.getMessage("MenuOption"));
         _menuBar.add(_optionMenu, 0);
         // use globals item
         _optionMenu.add(useGlobalFlagBox);
@@ -273,7 +285,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         showTooltipBox.setSelected(showTooltip());
 
 		// Show/Hide Scroll Bars
-        JMenu scrollMenu = new JMenu(rb.getString("ComboBoxScrollable"));
+        JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
         _optionMenu.add(scrollMenu);
         ButtonGroup scrollGroup = new ButtonGroup();
         scrollGroup.add(scrollBoth);
@@ -311,31 +323,26 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
     
     private void makeFileMenu() {
-        _fileMenu = new JMenu(rb.getString("MenuFile"));
+        _fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         _menuBar.add(_fileMenu, 0);
-        _fileMenu.add(new jmri.jmrit.display.NewPanelAction(rb.getString("MenuItemNew")));
+        _fileMenu.add(new jmri.jmrit.display.NewPanelAction(Bundle.getMessage("MenuItemNew")));
 
-        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
-        JMenuItem storeIndexItem = new JMenuItem(rb.getString("MIStoreImageIndex"));
+        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
+        JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener(new ActionListener() {
-                ControlPanelEditor panelEd;
                 public void actionPerformed(ActionEvent event) {
-					jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex(panelEd);
+					jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
                 }
-                ActionListener init(ControlPanelEditor pe) {
-                    panelEd = pe;
-                    return this;
-                }
-            }.init(this));
+            });
 
-        JMenuItem editItem = new JMenuItem(rb.getString("renamePanelMenu"));
+        JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu"));
         PositionableJComponent z = new PositionableJComponent(this);
         z.setScale(getPaintScale());
         editItem.addActionListener(CoordinateEdit.getNameEditAction(z));
         _fileMenu.add(editItem);
 
-        editItem = new JMenuItem(rb.getString("editIndexMenu"));
+        editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
         _fileMenu.add(editItem);
         editItem.addActionListener(new ActionListener() {
                 ControlPanelEditor panelEd;
@@ -350,16 +357,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             }.init(this));
 
-        editItem = new JMenuItem(rb.getString("PEView"));
+        editItem = new JMenuItem(Bundle.getMessage("PEView"));
         _fileMenu.add(editItem);
         editItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					changeView("jmri.jmrit.display.panelEditor.PanelEditor");
+					_itemPalette.dispose();
                 }
             });
 
         _fileMenu.addSeparator();
-        JMenuItem deleteItem = new JMenuItem(rb.getString("DeletePanel"));
+        JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
         _fileMenu.add(deleteItem);
         deleteItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -369,7 +377,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             });
         _fileMenu.addSeparator();
-        editItem = new JMenuItem(rb.getString("CloseEditor"));
+        editItem = new JMenuItem(Bundle.getMessage("CloseEditor"));
         _fileMenu.add(editItem);
         editItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -430,7 +438,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _editMenu.add(menuItem);
         */
 
-        JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemCut"));
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemCut"));
         menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     copyToClipboard();
@@ -442,7 +450,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         menuItem.setMnemonic(KeyEvent.VK_T);
         _editMenu.add(menuItem);
         
-        menuItem = new JMenuItem(rb.getString("MenuItemCopy"));
+        menuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
         menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     copyToClipboard();
@@ -453,7 +461,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         menuItem.setMnemonic(KeyEvent.VK_C);
         _editMenu.add(menuItem);
         
-        menuItem = new JMenuItem(rb.getString("MenuItemPaste"));
+        menuItem = new JMenuItem(Bundle.getMessage("MenuItemPaste"));
         menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     pasteFromClipboard();
@@ -464,7 +472,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         menuItem.setMnemonic(KeyEvent.VK_P);
         _editMenu.add(menuItem);
 
-        menuItem = new JMenuItem(rb.getString("SelectAll"));
+        menuItem = new JMenuItem(Bundle.getMessage("SelectAll"));
         menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     _selectionGroup = _contents;
@@ -665,8 +673,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 _menuBar.add(_markerMenu, 0);
             }
             if (_editorMenu==null) {
-                _editorMenu = new JMenu(rb.getString("MenuEdit"));
-                _editorMenu.add(new AbstractAction(rb.getString("OpenEditor")) {
+                _editorMenu = new JMenu(Bundle.getMessage("MenuEdit"));
+                _editorMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
                         public void actionPerformed(ActionEvent e) {
                             setAllEditable(true);
                         }
@@ -774,7 +782,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             name = "Control Panel";
         }
         if (isEditable()) {
-            super.setTitle(name+" "+rb.getString("LabelEditor"));
+            super.setTitle(name+" "+Bundle.getMessage("LabelEditor"));
         } else {
             super.setTitle(name);
         }
@@ -788,7 +796,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * After construction, initialize all the widgets to their saved config settings.
      */
     public void initView() {
-//        editableBox.setSelected(isEditable());
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());
@@ -834,6 +841,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 selection = null;
             }
         }
+        if (!isEditable() && selection!=null && selection.isHidden()) {
+        	return null;
+        }
         return selection;
     }
 
@@ -843,7 +853,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         double x = event.getX();
         double y = event.getY();
-        Rectangle rect = new Rectangle();
 
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable p = _selectionGroup.get(i);
@@ -858,9 +867,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         return null;
     }
     
-    /*********** KeyListener *********/
+    /*********** KeyListener *********
     public void keyTyped(KeyEvent e) {
-    }
+    }*/
+    // override
     public void keyPressed(KeyEvent e) {
     	if (_selectionGroup==null) {
     		return;
@@ -869,19 +879,23 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         int y = 0;
         switch (e.getKeyCode()){
         	case KeyEvent.VK_UP: 
-        	case KeyEvent.VK_KP_UP: 
+        	case KeyEvent.VK_KP_UP:
+        	case KeyEvent.VK_NUMPAD8:
             	y=-1;
                 break;
             case KeyEvent.VK_DOWN: 
             case KeyEvent.VK_KP_DOWN: 
+        	case KeyEvent.VK_NUMPAD2:
             	y=1;
                 break;
             case KeyEvent.VK_LEFT: 
             case KeyEvent.VK_KP_LEFT: 
+        	case KeyEvent.VK_NUMPAD4:
             	x=-1;
                 break;
             case KeyEvent.VK_RIGHT: 
             case KeyEvent.VK_KP_RIGHT: 
+        	case KeyEvent.VK_NUMPAD6:
             	x=1;
                 break;
         }
@@ -890,7 +904,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         repaint();
     }
-    public void keyReleased(KeyEvent e) {}
+//    public void keyReleased(KeyEvent e) {}
+    public Positionable getCurrentSelection() {
+    	return _currentSelection;
+    }
     
     /*********** Mouse ***************/
 
@@ -904,19 +921,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _lastX = _anchorX;
         _lastY = _anchorY;
 
+        _currentSelection = getCurrentSelection(event);
         if (_shapeDrawer.doMousePressed(event)) {
         	_selectionGroup = null;
         	_currentSelection = null;
         	return;
         }
-        _currentSelection = getCurrentSelection(event);
 
         if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown()) {
           /*  if (!event.isControlDown()) */{
                 if (_currentSelection!=null) {
-                    if (!event.isControlDown() && !event.isShiftDown()) {
-                        _currentSelection.doMousePressed(event);
-                    }
+                    _currentSelection.doMousePressed(event);
                     if (isEditable()) {
                         if ( !event.isControlDown() &&
                              (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
@@ -962,35 +977,46 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (selection!=null) {
-                if (!event.isControlDown() && !event.isShiftDown()) {
-                    selection.doMouseReleased(event);
-                }
+                selection.doMouseReleased(event);
             }
+            boolean circuitBuilder =_circuitBuilder.doMouseReleased(selection, event);
             // when dragging, don't change selection group
             if (isEditable()) {
                 if (_shapeDrawer.doMouseReleased(selection, event)) {
                 	_selectRect = null;
                 }
-                if (selection!=null && !_circuitBuilder.doMouseReleased(selection, event)) {
+                if (selection!=null && !circuitBuilder) {
                 	if (!_dragging) {
                     	modifySelectionGroup(selection, event);
                     }
                 }
-                if (_selectRect!=null) {
+                if (_selectRect!=null && !circuitBuilder) {
                     makeSelectionGroup(event);
                 }
-            }
-            if (_pastePending && _dragging) {
-                pasteItems();
+                if (_pastePending && _dragging) {
+                    pasteItems();
+                }
+                _currentSelection = selection;            	
+                if (!circuitBuilder) {
+                	if (_currentSelection!=null && (_selectionGroup==null || _selectionGroup.size()==0)) {
+                		if (_selectionGroup==null) _selectionGroup = new ArrayList <Positionable>();
+                		_selectionGroup.add(_currentSelection);
+                	}        	
+                }
+            } else {
+            	_selectionGroup = null;
+            	_currentSelection = null;
+                _highlightcomponent = null;
             }
         }
-        _currentSelection = null;
         _selectRect = null;
 
         // if not sending MouseClicked, do it here
         if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
             mouseClicked(event);
 
+        _lastX = event.getX();
+        _lastY = event.getY();
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
 //        if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+
@@ -1011,7 +1037,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+")");
 
         Positionable selection = getCurrentSelection(event);
-        if (_shapeDrawer.doMouseClicked(selection, event)) {
+        if (_shapeDrawer.doMouseClicked(event)) {
         	return;
         }
 
@@ -1022,11 +1048,19 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (selection!=null) {
-                if (!_circuitBuilder.doMouseClicked(selection, event) && 
-                		!event.isControlDown() && !event.isShiftDown() ) {
+                if (!_circuitBuilder.doMouseClicked(selection, event)) {
                     selection.doMouseClicked(event);
                 }
+                if (selection instanceof IndicatorTrack) {
+                	WarrantTableAction.mouseClickedOnBlock(((IndicatorTrack)selection).getOccBlock());
+                	TrackerTableAction.mouseClickedOnBlock(((IndicatorTrack)selection).getOccBlock());
+                }
             }
+        }
+        if (!isEditable()) {
+        	_selectionGroup = null;
+        	_currentSelection = null;
+            _highlightcomponent = null;
         }
         _targetPanel.repaint(); // needed for ToolTip
     }
@@ -1036,6 +1070,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setToolTip(null); // ends tooltip if displayed
         
         if (_circuitBuilder.doMouseDragged(_currentSelection, event) ) {
+        	return;
+        }
+        if (_shapeDrawer.doMouseDragged(event) ) {
         	return;
         }
         if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && (isEditable() || _currentSelection instanceof LocoIcon)) {
@@ -1075,14 +1112,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     _highlightcomponent = null;
                 } else {
                     moveItem(_currentSelection, deltaX, deltaY);
-                    // don't highlight LocoIcon in edit mode
-                    if (isEditable()) {
-                        _highlightcomponent = new Rectangle(_currentSelection.getX(), _currentSelection.getY(), 
-                                                            _currentSelection.maxWidth(), _currentSelection.maxHeight());
-                    }
                 }
             } else {
-                if ((isEditable() && _selectionGroup==null) || _shapeDrawer.doMouseDragged(_currentSelection, event)) {
+                if ((isEditable() && _selectionGroup==null && !_shapeDrawer.doMouseDragged(event))) {
                     drawSelectRect(event.getX(), event.getY());
                 }
             }
@@ -1096,14 +1128,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void mouseMoved(MouseEvent event) {
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
         if (_dragging || event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) { return; }
-
-        Positionable selection = getCurrentSelection(event);
-        if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
-            showToolTip(selection, event);
-            //selection.highlightlabel(true);
-        } else {
-            setToolTip(null);
-        }
+    	if (!_shapeDrawer.doMouseMoved(event)) {
+            Positionable selection = getCurrentSelection(event);
+            if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
+                showToolTip(selection, event);
+                //selection.highlightlabel(true);
+            } else {
+                setToolTip(null);
+            }    		
+    	}
         _targetPanel.repaint();
     }
     
@@ -1123,11 +1156,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 	 *   time.  Deletion must be accomplished via the Delete this panel menu item.
      */
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(this);
+        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         targetWindowClosing(true);
     }
 
     protected void paintTargetPanel(Graphics g) {
+    	// needed to create PositionablePolygon
+    	_shapeDrawer.paint(g);
     }
 
     /**
@@ -1206,7 +1241,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     * Add an action to copy the Positionable item and the group to which is may belong.
     */
     public void setCopyMenu(Positionable p, JPopupMenu popup) {
-        JMenuItem edit = new JMenuItem(rb.getString("MenuItemDuplicate"));
+        JMenuItem edit = new JMenuItem(Bundle.getMessage("MenuItemDuplicate"));
         edit.addActionListener(new ActionListener() {
             Positionable comp;
             public void actionPerformed(ActionEvent e) {
@@ -1257,11 +1292,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 popup.addSeparator();
                 popupSet = false;
             }
-            if (event.isControlDown()) {
+            popupSet = p.setEditItemMenu(popup);    // ItemPalette Editor        
+/*            if (event.isControlDown()) {
                 popupSet = p.setEditIconMenu(popup);    // old IconEditor        
             } else {
                 popupSet = p.setEditItemMenu(popup);    // ItemPalette Editor        
-            }
+            }*/
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
@@ -1271,6 +1307,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             	PositionableLabel pl = (PositionableLabel)p;
             	if (!pl.isIcon()) {
                     popupSet |= setTextAttributes(pl, popup);            	            		
+            	}
+            	if (p instanceof LinkingLabel) {
+            		LinkingLabel pll = (LinkingLabel)p;
+                    popupSet |= pll.setLinkMenu(popup);            	            		            		
             	}
             } else if (p instanceof PositionableJPanel) {
                 popupSet |= setTextAttributes(p, popup);            	            		            	
@@ -1322,9 +1362,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _highlightcomponent = null;
         TargetPane targetPane = (TargetPane)getTargetPanel();
         targetPane.setDefaultColors();
+        targetPane.validate();
         setSelectionGroup(null);
     }
 
+    /* Called by CircuitBuilder
+     * */
     protected void highlight(Positionable pos) {
     	if (pos==null) {
     		_highlightcomponent = null;
@@ -1398,7 +1441,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (tr.isDataFlavorSupported(_positionableDataFlavor)) {
                 Positionable item = (Positionable)tr.getTransferData(_positionableDataFlavor);
                 if (item==null) {
-                    if (_debug) log.debug("Drop of null POSITIONABLE_FLAVOR");
+//                    if (_debug) log.debug("Drop of null POSITIONABLE_FLAVOR");
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"), 
+                    		Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 item.setLocation(pt.x, pt.y);
@@ -1495,5 +1540,5 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanelEditor.class.getName());
+    static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class.getName());
 }

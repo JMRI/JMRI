@@ -1,6 +1,8 @@
 // IndexedVarSlider.java
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JSlider;
@@ -58,5 +60,5 @@ public class IndexedVarSlider extends JSlider implements ChangeListener {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndexedVarSlider.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndexedVarSlider.class.getName());
 }

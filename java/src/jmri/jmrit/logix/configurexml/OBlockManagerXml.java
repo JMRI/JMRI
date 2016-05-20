@@ -1,8 +1,12 @@
 package jmri.jmrit.logix.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Iterator;
+
+import javax.swing.JOptionPane;
 
 import org.jdom.Element;
 import org.jdom.Attribute;
@@ -11,11 +15,13 @@ import jmri.InstanceManager;
 import jmri.BeanSetting;
 import jmri.Path;
 import jmri.NamedBean;
+import jmri.Reporter;
 import jmri.Turnout;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.WarrantTableAction;
 
 /**
  * Provides the abstract base and store functionality for
@@ -61,6 +67,7 @@ public class OBlockManagerXml // extends XmlFile
                 elem.addContent(c);
             }
             elem.setAttribute("length", ""+block.getLengthMm());
+            elem.setAttribute("units", block.isMetric()?"true":"false");
             elem.setAttribute("curve", ""+block.getCurvature());
             if (block.getNamedSensor()!=null) {
                 Element se = new Element("sensor");
@@ -72,6 +79,15 @@ public class OBlockManagerXml // extends XmlFile
                 se.setAttribute("systemName", block.getNamedErrorSensor().getName());
                 elem.addContent(se);
             }
+            if (block.getReporter() !=null) {
+                Element se = new Element("reporter");
+                se.setAttribute("systemName", block.getReporter().getSystemName());
+                se.setAttribute("reportCurrent", block.isReportingCurrent()?"true":"false");
+                elem.addContent(se);            	
+            }
+            elem.setAttribute("permissive", block.getPermissiveWorking()?"true":"false");
+            elem.setAttribute("speedNotch", block.getBlockSpeed());
+            
             List<Path> paths = block.getPaths();
             for (int j=0; j<paths.size(); j++) {
                 elem.addContent(storePath((OPath)paths.get(j)));
@@ -264,6 +280,11 @@ public class OBlockManagerXml // extends XmlFile
             if (c != null) {
                 block.setComment(c);
             }
+			if (elem.getAttribute("units") != null) {
+				block.setMetricUnits(elem.getAttribute("units").getValue().equals("true"));
+			} else {
+				block.setMetricUnits(false);
+			}
 			if (elem.getAttribute("length") != null) {
 				block.setLength(Float.valueOf(elem.getAttribute("length").getValue()).floatValue());
 			}
@@ -284,6 +305,37 @@ public class OBlockManagerXml // extends XmlFile
                 //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
                 block.setErrorSensor(name);
             }
+            Element reporter = elem.getChild("reporter");
+            if (reporter!=null) {
+                // sensor
+                String name = reporter.getAttribute("systemName").getValue();
+                //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
+                try {
+                    Reporter rep = InstanceManager.reporterManagerInstance().getReporter(name);
+                    if (rep!=null) {
+                    	block.setReporter(rep);
+                    }
+                } catch (Exception ex) {
+                    log.error("No Reporter named \""+name+"\" found. threw exception: "+ ex);
+                }
+    			if (reporter.getAttribute("reportCurrent") != null) {
+    				block.setReportingCurrent(reporter.getAttribute("reportCurrent").getValue().equals("true"));
+    			} else {
+    				block.setReportingCurrent(false);
+    			}
+            }
+			if (elem.getAttribute("permissive") != null) {
+				block.setPermissiveWorking(elem.getAttribute("permissive").getValue().equals("true"));
+			} else {
+				block.setPermissiveWorking(false);
+			}
+			if (elem.getAttribute("speedNotch") != null) {
+                try {
+    				block.setBlockSpeed(elem.getAttribute("speedNotch").getValue());
+                } catch (jmri.JmriException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + elem.getAttribute("speedNotch").getValue());
+                }
+			}
             List<Element> paths = elem.getChildren("path");
             for (int j=0; j<paths.size(); j++) {
                 if (!block.addPath(loadPath(paths.get(j), block))) {
@@ -295,6 +347,13 @@ public class OBlockManagerXml // extends XmlFile
             for (int k=0; k<portals.size(); k++) {
                 block.addPortal(loadPortal(portals.get(k)));
             }
+        }
+        // Build data structure for blocks to know with whon they share turnouts.
+        // check whether any turnouts are shared between two blocks;
+        String[] sysNames = _manager.getSystemNameArray();
+        for (int i=0; i<sysNames.length; i++)
+        {
+            WarrantTableAction.checkSharedTurnouts(_manager.getOBlock(sysNames[i]));        	
         }
         // patch in Paths to Portals
         //addPathsToPortals();
@@ -448,5 +507,5 @@ public class OBlockManagerXml // extends XmlFile
         return InstanceManager.oBlockManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OBlockManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class.getName());
 }

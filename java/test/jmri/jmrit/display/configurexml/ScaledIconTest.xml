@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>3</major>
-    <minor>1</minor>
+    <minor>3</minor>
     <test>1</test>
-    <modifier>+dev</modifier>
+    <modifier>.1</modifier>
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
     <sensor systemName="ISCLOCKRUNNING" inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
   </sensors>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory systemName="IMCURRENTTIME" value="--">
+    <memory systemName="IMCURRENTTIME" value="10:58 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory systemName="IMRATEFACTOR" value="1.0">
@@ -23,53 +24,7 @@
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Nov 19 14:34:10 PST 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Scaled Icon Test" x="468" y="398" height="412" width="358" editable="no" positionable="yes" showcoordinates="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both">
-    <positionablelabel x="168" y="42" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Scaled to 150%" size="14" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="43" y="16" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Scaled to 75%" size="14" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="242" y="98" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
-        <rotation>1</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="188" y="149" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="116" y="98" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
-        <rotation>1</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="68" y="148" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="25" y="38" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/PanelPro.gif" degrees="0" scale="0.75">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="173" y="80" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/jmri48x48.gif" degrees="0" scale="1.5">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="33" y="169" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/PanelPro.gif" degrees="0" scale="0.75">
-        <rotation>2</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="161" y="172" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="45" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/jmri48x48.gif" degrees="45" scale="1.5">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="51" y="293" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Upsidedown" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="160" y="277" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Clockwise 45 degrees" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-  </paneleditor>
-  <!--Written by JMRI version 2.11 on Sun Aug 15 00:00:10 PDT 2010 $Id$-->
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Nov 19 15:34:10 MST 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <!--Written by JMRI version 20121216-1756-jake on Sun Dec 16 10:58:04 MST 2012 $Id$-->
 </layout-config>
 

@@ -36,7 +36,7 @@
 <H1>JMRI: Construction avec XCode</H1>
 
 <H2>Introduction</H2>
-<p>Les versions récentes de <b> MacOS X </b> sont livrés avec <b> Xcode</b> , un système de logiciel
+<p>Les versions récentes de <b> Mac OS X </b> sont livrés avec <b> Xcode</b> , un système de logiciel
 de développement élaboré pour le Macintosh d'Apple Computer.
 Xcode peut être utilisé pour travailler avec JMRI.
 
@@ -84,7 +84,7 @@ latest RXTX), may not find serial ports when JMRI is run from Xcode.</p>
 <li> Vous pouvez suivre les 8 mis en place pour exécuter facilement les commandes ant que JMRI utilise.
 </ol>
 <b> ATTENTION: </b> Cette procédure nécessite JMRI 2.9.2 ou version ultérieure. Il a été testé
-utilisant MacOS X 10.6.2, en utilisant Xcode 3.2.1. Les versions antérieures de JMRI (sans le
+utilisant Mac OS X 10.6.2, en utilisant Xcode 3.2.1. Les versions antérieures de JMRI (sans le
 dernière RXTX), ne peut pas trouver les ports série lorsque JMRI est exécuté à partir Xcode.</p>
 
 <!--#include virtual="/Footer" -->

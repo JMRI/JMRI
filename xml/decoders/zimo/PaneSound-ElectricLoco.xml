@@ -1,99 +1,96 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
-  <pane name="Sound - Electric Loco">
-    <column>
-      <label label="Thyristor control">
-        <label>Thyristor control</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Thyristor control: Sound pitch for stepping effect" label="Sound pitch for stepping effect">
+<pane name="Sound - Electric Loco">
+  <column>
+    <label label="Thyristor control">
+      <label>Thyristor control</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Thyristor control: Sound pitch for stepping effect" label="Sound pitch for stepping effect">
       <label>Thyristor control: Sound pitch for stepping effect</label>
-      </display>
-      <display item="Thyristor control: Sound pitch at medium speed" label="Sound pitch at medium speed">
-        <label>Sound pitch at medium speed</label>
-      </display>
-      <display item="Thyristor control: Sound pitch at maximum speed" label="Sound pitch at maximum speed">
-        <label>Sound pitch at maximum speed</label>
-      </display>
-      <display item="Thyristor control: Speed step for medium speed" label="Speed step for medium speed">
-        <label>Speed step for medium speed</label>
-      </display>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Thyristor control: Volume during acceleration" label="Volume during acceleration">
-        <label>Volume during acceleration</label>
-      </display>
-      <display item="Thyristor control: Volume at steady speed" label="Volume at steady speed">
-        <label>Volume at steady speed</label>
-      </display>
-      <display item="Thyristor control: Volume during deceleration" label="Volume during deceleration">
-        <label>Volume during deceleration</label>
-      </display>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Thyristor Volume at Higher Speed" label="Volume at Higher Speed">
+    </display>
+    <display item="Thyristor control: Sound pitch at medium speed" label="Sound pitch at medium speed">
+      <label>Sound pitch at medium speed</label>
+    </display>
+    <display item="Thyristor control: Sound pitch at maximum speed" label="Sound pitch at maximum speed">
+      <label>Sound pitch at maximum speed</label>
+    </display>
+    <display item="Thyristor control: Speed step for medium speed" label="Speed step for medium speed">
+      <label>Speed step for medium speed</label>
+    </display>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Thyristor control: Volume during acceleration" label="Volume during acceleration">
+      <label>Volume during acceleration</label>
+    </display>
+    <display item="Thyristor control: Volume at steady speed" label="Volume at steady speed">
+      <label>Volume at steady speed</label>
+    </display>
+    <display item="Thyristor control: Volume during deceleration" label="Volume during deceleration">
+      <label>Volume during deceleration</label>
+    </display>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Thyristor Volume at Higher Speed" label="Volume at Higher Speed">
       <label>Thyristor Volume at Higher Speed</label>
-      </display>
-      <display item="Thyristor Volume Change Speed Step" label="Volume Change Speed Step">
+    </display>
+    <display item="Thyristor Volume Change Speed Step" label="Volume Change Speed Step">
       <label>Thyristor Volume Change Speed Step</label>
-      </display>
-      <display item="Thyristor Second Switching Threshold" label="Second Switching Threshold">
+    </display>
+    <display item="Thyristor Second Switching Threshold" label="Second Switching Threshold">
       <label>Thyristor Second Switching Threshold</label>
-      </display>
-    </column>
-    <column>
-      <label label="Motor sound">
-        <label>Motor sound</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Electric Engine Motor sound: highest volume" label="Highest volume">
-        <label>Highest volume</label>
-      </display>
-      <display item="Electric Engine Motor sound: where sound becomes audible" label="Where sound becomes audible">
-        <label>Where sound becomes audible</label>
-      </display>
-      <display item="Electric Engine Motor sound: starting point of full volume" label="Starting point of full volume">
-        <label>Starting point of full volume</label>
-      </display>
-      <display item="Electric Engine Motor sound: dependence of the pitch on speed" label="Dependence of the pitch on speed">
-        <label>Dependence of the pitch on speed</label>
-      </display>
-    </column>
-    <column>
-      <label label="Switchgear sound">
-        <label>Switchgear sound</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Delay of Switchgear sound at startup" label="Delay of Switchgear sound at startup">
+    </display>
+  </column>
+  <column>
+    <label label="Motor sound">
+      <label>Motor sound</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Electric Engine Motor sound: highest volume" label="Highest volume">
+      <label>Highest volume</label>
+    </display>
+    <display item="Electric Engine Motor sound: where sound becomes audible" label="Where sound becomes audible">
+      <label>Where sound becomes audible</label>
+    </display>
+    <display item="Electric Engine Motor sound: starting point of full volume" label="Starting point of full volume">
+      <label>Starting point of full volume</label>
+    </display>
+    <display item="Electric Engine Motor sound: dependence of the pitch on speed" label="Dependence of the pitch on speed">
+      <label>Dependence of the pitch on speed</label>
+    </display>
+  </column>
+  <column>
+    <label label="Switchgear sound">
+      <label>Switchgear sound</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Delay of Switchgear sound at startup" label="Delay of Switchgear sound at startup">
       <label>Delay of Switchgear sound at startup</label>
-      </display>
-      <display item="Switchgear noise Duration at speed change" label="Duration at speed change">
-        <label>Switchgear noise Duration after stop</label>
-      </display>
-      <display item="Switchgear noise Duration after stop" label="Duration after stop">
-        <label>Switchgear noise Duration after stop</label>
-      </display>
-      <display item="Switchgear noise minimum Wait before the next play" label="Minimum Wait before the next play">
-        <label>Switchgear noise minimum Wait before the next play</label>
-      </display>
-      <display item="Switchgear noise Distribution of speed in Switching stages" label="Number of Switching stages">
-        <label>Switchgear noise Distribution of speed in Switching stages</label>
-      </display>
-    </column>
-    <name>Sound - Electric Loco</name>
-  </pane>
+    </display>
+    <display item="Switchgear noise Duration at speed change" label="Duration at speed change">
+      <label>Switchgear noise Duration after stop</label>
+    </display>
+    <display item="Switchgear noise Duration after stop" label="Duration after stop">
+      <label>Switchgear noise Duration after stop</label>
+    </display>
+    <display item="Switchgear noise minimum Wait before the next play" label="Minimum Wait before the next play">
+      <label>Switchgear noise minimum Wait before the next play</label>
+    </display>
+    <display item="Switchgear noise Distribution of speed in Switching stages" label="Number of Switching stages">
+      <label>Switchgear noise Distribution of speed in Switching stages</label>
+    </display>
+  </column>
+  <name>Sound - Electric Loco</name>
+</pane>

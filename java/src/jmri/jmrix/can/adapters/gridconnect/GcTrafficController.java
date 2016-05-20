@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can.adapters.gridconnect;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.*;
 
 import java.io.DataInputStream;
@@ -184,7 +186,7 @@ public class GcTrafficController extends TrafficController {
 
     private int gcState;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GcTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(GcTrafficController.class.getName());
 }
 
 

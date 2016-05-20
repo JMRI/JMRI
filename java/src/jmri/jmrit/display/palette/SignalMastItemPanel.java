@@ -1,5 +1,7 @@
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -10,7 +12,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -41,17 +44,17 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         super.init();
         _table.getSelectionModel().addListSelectionListener(this);
         _showIconsButton.setEnabled(false);
-        _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickRowToShowIcon"));
+        _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
     }
 
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("AddToPanel")));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("DragIconPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("ToolTipPickRowToShowIcon")));
+        blurb.add(new JLabel(Bundle.getMessage("ToolTipPickRowToShowIcon")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -75,7 +78,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _iconFamilyPanel.add(_dragIconPanel);
         JPanel panel = new JPanel();
         if (_mast!=null) {
-            panel.add(new JLabel(ItemPalette.rbp.getString("IconSetName")+" "+
+            panel.add(new JLabel(Bundle.getMessage("IconSetName")+" "+
                                  _mast.getSignalSystem().getSystemName()));
         }
         _iconFamilyPanel.add(panel);
@@ -83,11 +86,11 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _iconPanel.setVisible(false);
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
         }
-        _dragIconPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
 
         NamedIcon icon = getDragIcon();
         JPanel panel = new JPanel();
@@ -97,7 +100,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         JLabel label;
         try {
             label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-            label.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+            label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
             label = new JLabel();
@@ -107,14 +110,14 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         panel.add(label);
         int width = Math.max(100, panel.getPreferredSize().width);
         panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
-        panel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         _dragIconPanel.add(panel);
     }
 
     protected JPanel makeBottom1Panel() {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
-        _showIconsButton = new JButton(ItemPalette.rbp.getString("ShowIcons"));
+        _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (_iconPanel.isVisible()) {
@@ -124,7 +127,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                     }
                 }
             });
-        _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipShowIcons"));
+        _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
         bottomPanel.add(_showIconsButton);
         return bottomPanel;
     }
@@ -153,7 +156,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             return;
         }
         _family = _mast.getSignalSystem().getSystemName();
-        _currentIconMap = new java.util.Hashtable<String, NamedIcon>();
+        _currentIconMap = new HashMap<String, NamedIcon>();
         Enumeration<String> e = _mast.getAppearanceMap().getAspects();
         while (e.hasMoreElements()) {
             String s = _mast.getAppearanceMap().getProperty(e.nextElement(), "imagelink");
@@ -167,12 +170,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     private NamedIcon getDragIcon() {
         if (_currentIconMap!=null) {
-            if (_currentIconMap.contains("Stop")) {
+            if (_currentIconMap.keySet().contains("Stop")) {
                 return _currentIconMap.get("Stop");
             }
-            Enumeration<String> e = _currentIconMap.keys();
-            if (e.hasMoreElements()) {
-                return _currentIconMap.get(e.nextElement());
+            Iterator<String> e = _currentIconMap.keySet().iterator();
+            if (e.hasNext()) {
+                return _currentIconMap.get(e.next());
             }
         }
         String fileName = "resources/icons/misc/X-red.gif";
@@ -202,10 +205,10 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         } else {
             if (_updateButton!=null) {
                 _updateButton.setEnabled(false);
-                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+                _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
             _showIconsButton.setEnabled(false);
-            _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickRowToShowIcon"));
+            _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
         }
         validate();
     }
@@ -236,5 +239,5 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalMastItemPanel.class.getName());
 }

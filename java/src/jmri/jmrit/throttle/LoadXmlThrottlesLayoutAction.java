@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.XmlFile;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -9,7 +11,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import org.jdom.Element;
 
@@ -20,7 +21,6 @@ import org.jdom.Element;
  * @version     $Revision$
  */
 public class LoadXmlThrottlesLayoutAction extends AbstractAction {
-	static final ResourceBundle rb = ThrottleBundle.bundle();
 
 	/**
 	 *  Constructor
@@ -49,7 +49,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (fileChooser == null) {
-			fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+			fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
 			fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
 			fileChooser.setCurrentDirectory(new File(ThrottleFrame.getDefaultThrottleFolder()));
 		}
@@ -61,10 +61,12 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 
 		// if exising frames are open ask to destroy those or merge.
 		if (ThrottleFrameManager.instance().getThrottleWindows().hasNext()) {
-			Object[] possibleValues = { rb.getString("LabelMerge"),	rb.getString("LabelReplace"), rb.getString("LabelCancel") };
-			int selectedValue = JOptionPane.showOptionDialog(null, rb
-					.getString("DialogMergeOrReplace"), rb
-					.getString("OptionLoadingThrottles"),
+			Object[] possibleValues = { Bundle.getMessage("LabelMerge"),	
+			                            Bundle.getMessage("LabelReplace"), 
+			                            Bundle.getMessage("LabelCancel") };
+			int selectedValue = JOptionPane.showOptionDialog(null,
+					Bundle.getMessage("DialogMergeOrReplace"), 
+					Bundle.getMessage("OptionLoadingThrottles"),
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null, possibleValues,
 					possibleValues[0]);
@@ -127,6 +129,6 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	static class ThrottlePrefs extends XmlFile {}
 
 	// initialize logging
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadXmlThrottlesLayoutAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(LoadXmlThrottlesLayoutAction.class.getName());
 
 }

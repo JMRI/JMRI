@@ -1,6 +1,8 @@
 // DefaultCatalogTreeManager.java
 package jmri.jmrit.catalog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CatalogTree;
 
 /**
@@ -162,7 +164,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     }
     private static DefaultCatalogTreeManager _instance;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultCatalogTreeManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
 }
 
 /* @(#)CatalogTreeFSManager.java */

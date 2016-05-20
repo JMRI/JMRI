@@ -14,16 +14,15 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20120221"/>
-<!-- Version 1 inital release 2/18/11-->
-<!-- Version 1.1 release 3/14/11 corrected ops mode enable and speed to position-->
-<!-- Version 1.2 release 2/21/12 corrected CV28 options and added startup delay-->
+  <!-- Version 1 inital release 2/18/11-->
+  <!-- Version 1.1 release 3/14/11 corrected ops mode enable and speed to position-->
+  <!-- Version 1.2 release 2/21/12 corrected CV28 options and added startup delay-->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SC8" lowVersionID="1" comment="SC8 is a stationary decoder, but it can be programmed in the usual way"/>
     </family>
     <programming direct="yes" paged="yes" register="no" ops="yes"/>
-      <variables>
- 
+    <variables>
       <variable label="Servo 1 Address" CV="1" mask="VVVVVVVV" default="1" tooltip="Range 1-2040">
         <splitVal highCV="9" upperMask="XXXXVVVV"/>
         <label>Servo 1 Address</label>
@@ -48,7 +47,6 @@
         <decVal min="1" max="127"/>
         <label>Servo 4 Move Range</label>
       </variable>
-
       <variable label="Test State" CV="7" mask="XXXXXVVV" default="00">
         <enumVal>
           <enumChoice choice="None">
@@ -124,9 +122,8 @@
         <splitVal highCV="27" upperMask="XXXXVVVV"/>
         <label>Servo 8 Address</label>
       </variable>
-      
-     <!-- Status Report variable definition. only send output states are used -->
-     <variable label="Power On Send Input State" CV="28" mask="XXXXXXXV">
+      <!-- Status Report variable definition. only send output states are used -->
+      <variable label="Power On Send Input State" CV="28" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -170,8 +167,7 @@
         </enumVal>
         <label>Interrogate output</label>
       </variable>
-
-<!-- Decoder Configuration variable definition -->
+      <!-- Decoder Configuration variable definition -->
       <variable label="Mode" CV="29" mask="XXXXXXXV" default="00">
         <enumVal>
           <enumChoice choice="Mode 1 - Servos 2 Pos">
@@ -205,7 +201,7 @@
         </enumVal>
         <label>Option 2</label>
       </variable>
-     <variable label="DCC gateway" CV="29" mask="XXXXVXXX">
+      <variable label="DCC gateway" CV="29" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -238,12 +234,9 @@
         </enumVal>
         <label>DCC control</label>
       </variable>
-
- 
- 
       <variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
         <shortAddressVal/>
-<!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
+        <!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
         <label>Ops Mode Address</label>
       </variable>
       <variable label="" item="OS1" CV="33" mask="XXXXXXVV" default="3">
@@ -358,16 +351,12 @@
         </enumVal>
         <label/>
       </variable>
-  
-      
-      <variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" tooltip="Range 1-99"
-         default="1"> <shortAddressVal/>
-<!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
+      <variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" tooltip="Range 1-99" default="1">
+        <shortAddressVal/>
+        <!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
         <label>Ops Mode Address</label>
       </variable>
- 
-<!-- Begin input variable definition -->
-
+      <!-- Begin input variable definition -->
       <variable label="Address" CV="35" mask="VVVVVVVV" item="PA1" default="1">
         <splitVal highCV="36" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
@@ -856,8 +845,7 @@
         <decVal min="0" max="8"/>
         <label>Route Number</label>
       </variable>
-      
-<!-- Begin servo speed variable definition -->
+      <!-- Begin servo speed variable definition -->
       <variable label="Servo 1 Move Speed D1" CV="59" mask="XVVVVVVV" default="18">
         <decVal min="1" max="127"/>
       </variable>
@@ -906,23 +894,20 @@
       <variable label="Servo 8 Move Speed D2" CV="74" mask="XVVVVVVV" default="18">
         <decVal min="1" max="127"/>
       </variable>
-      
-<!-- Startup delay variable definition -->      
-      <variable label="Start up delay" CV="77"  mask="VVVVVVVV" default="4" tooltip="Only in SC8 version 16 and later">
-	    <decVal min="4" max="30"/>
-	    <label>Start up delay</label>
+      <!-- Startup delay variable definition -->
+      <variable label="Start up delay" CV="77" mask="VVVVVVVV" default="4" tooltip="Only in SC8 version 16 and later">
+        <decVal min="4" max="30"/>
+        <label>Start up delay</label>
       </variable>
-      
-<!-- Input Lockout variable definition -->
+      <!-- Input Lockout variable definition -->
       <variable label="Address" CV="75" mask="VVVVVVVV" item="Lockout">
         <splitVal highCV="76" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
-
-<!-- Begin servo behavior variable definition -->
+      <!-- Begin servo behavior variable definition -->
       <variable label="Servo 1 Behavior - Speed to Position" item="Beh1" CV="81" mask="XXXXXXVX" default="0">
         <enumVal>
-            <enumChoice choice="no">
+          <enumChoice choice="no">
           </enumChoice>
           <enumChoice choice="yes">
           </enumChoice>
@@ -938,7 +923,7 @@
       </variable>
       <variable label="Servo 2 Behavior - Speed to Position" item="Beh2" CV="82" mask="VXXXXXVX" default="0">
         <enumVal>
-           <enumChoice choice="no">
+          <enumChoice choice="no">
           </enumChoice>
           <enumChoice choice="yes">
           </enumChoice>
@@ -987,7 +972,6 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
- 
       <variable label="Reverse" item="Rev5" CV="85" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="no">
@@ -998,7 +982,6 @@
           </enumChoice>
         </enumVal>
       </variable>
-       
       <variable label="Reverse" item="Rev6" CV="86" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="no">
@@ -1009,7 +992,6 @@
           </enumChoice>
         </enumVal>
       </variable>
-       
       <variable label="Reverse" item="Rev7" CV="87" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="no">
@@ -1020,7 +1002,6 @@
           </enumChoice>
         </enumVal>
       </variable>
-       
       <variable label="Reverse" item="Rev8" CV="88" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="no">
@@ -1031,7 +1012,6 @@
           </enumChoice>
         </enumVal>
       </variable>
-
       <variable label="Servo 5 Move Range" CV="91" mask="XVVVVVVV" default="35">
         <decVal min="1" max="127"/>
         <label>Servo 5 Move Range</label>
@@ -1048,7 +1028,6 @@
         <decVal min="1" max="127"/>
         <label>Servo 8 Move Range</label>
       </variable>
- 
       <variable label="Servo 5 Center Posiion" CV="95" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
       </variable>
@@ -1060,15 +1039,13 @@
       </variable>
       <variable label="Servo 8 Center Posiion" CV="98" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
-      </variable> 
-
-<!-- Route send delay variable definition -->
-     <variable label="Route send delay" CV="111" mask="XVVVVVVV">
+      </variable>
+      <!-- Route send delay variable definition -->
+      <variable label="Route send delay" CV="111" mask="XVVVVVVV">
         <decVal min="0" max="127"/>
       </variable>
-        
-<!-- Begin route variable definition -->
-     <variable label="Top Address" CV="112" mask="VVVVVVVV" item="Rt Top1">
+      <!-- Begin route variable definition -->
+      <variable label="Top Address" CV="112" mask="VVVVVVVV" item="Rt Top1">
         <splitVal highCV="113" upperMask="XXXXVVVV"/>
         <label>Top Address</label>
       </variable>
@@ -1276,7 +1253,7 @@
         </enumVal>
         <label>Sensor Route Execution</label>
       </variable>
-<!-- Route 1 variable definition -->
+      <!-- Route 1 variable definition -->
       <variable label="Cell 1 Address" CV="128" mask="VVVVVVVV" item="Rt Cell 11">
         <splitVal highCV="129" upperMask="XXXXVVVV"/>
         <label>Cell 1 Address</label>
@@ -2286,13 +2263,12 @@
         <label> </label>
       </label>
       <display item="Mode"/>
-       <label label=" ">
+      <label label=" ">
         <label> </label>
       </label>
       <label label=" ">
         <label> </label>
       </label>
-
       <label label="------  Notes:  ------ ">
         <label>------  Notes:  ------ </label>
       </label>
@@ -2302,7 +2278,7 @@
     </column>
     <name>Basic</name>
   </pane>
-   <pane name="Options">
+  <pane name="Options">
     <column>
       <row>
         <column>
@@ -2373,9 +2349,9 @@
           <label label="This is the same as a Loco address">
           </label>
           <label label=" ">
-          <label> </label>
+            <label> </label>
           </label>
-          <display item="Start up delay" tooltip="Delay start up time 4 to 30 in seconds" />
+          <display item="Start up delay" tooltip="Delay start up time 4 to 30 in seconds"/>
           <label label="In Seconds 4 to 30 ">
             <label> </label>
           </label>
@@ -2388,7 +2364,6 @@
           <label label=" ">
             <label> </label>
           </label>
-
           <label label=" ">
             <label> </label>
           </label>
@@ -2400,14 +2375,13 @@
           <label label=" ">
             <label> </label>
           </label>
- 
           <label label=" "/>
           <display item="Interrogate output"/>
           <label label="Opt2 Send output state at Digitrax interrogation request">
           </label>
           <label label="- Feedback type messages">
-          </label>          
-           </column>
+          </label>
+        </column>
       </row>
     </column>
     <name>Options</name>
@@ -2448,7 +2422,7 @@
     <name>Mfg</name>
   </pane>
   <pane name="Inputs">
-     <column>
+    <column>
       <label label=" ">
         <label> </label>
       </label>
@@ -2800,7 +2774,6 @@
       <label label="---- Servo Configuration ----">
         <label>---- Servo Configuration ----</label>
       </label>
-
       <label label=" ">
         <label> </label>
       </label>
@@ -2820,7 +2793,7 @@
           </row>
         </column>
         <column>
-         <label label="   "/>
+          <label label="   "/>
         </column>
         <column>
           <display item="Servo 5 Move Range" tooltip="Range 1-127"/>
@@ -2856,7 +2829,7 @@
           </row>
         </column>
         <column>
-         <label label="   "/>
+          <label label="   "/>
         </column>
         <column>
           <display item="Servo 6 Move Range" tooltip="Range 1-127"/>
@@ -2891,8 +2864,8 @@
             </column>
           </row>
         </column>
-            <column>
-         <label label="   "/>
+        <column>
+          <label label="   "/>
         </column>
         <column>
           <display item="Servo 7 Move Range" tooltip="Range 1-127"/>
@@ -2927,8 +2900,8 @@
             </column>
           </row>
         </column>
-                <column>
-         <label label="   "/>
+        <column>
+          <label label="   "/>
         </column>
         <column>
           <display item="Servo 8 Move Range" tooltip="Range 1-127"/>
@@ -2948,20 +2921,17 @@
       <label label=" ">
         <label> </label>
       </label>
-
       <label label=" ">
         <label> </label>
       </label>
       <label label="---- Sets the output state to always be the same at power on ----">
         <label>---- Sets the output state to always be the same at power on ----</label>
       </label>
-
       <label label=" ">
         <label> </label>
       </label>
       <display item="Fix Power On State" format="checkbox"/>
-
-       <row>
+      <row>
         <column>
           <label label=" ">
             <label> </label>
@@ -3028,7 +2998,6 @@
             <label> </label>
           </label>
         </column>
- 
         <column>
           <label label="   5">
             <label>   5</label>

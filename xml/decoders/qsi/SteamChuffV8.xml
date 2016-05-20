@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,18 +11,12 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file for QSi V8 files -->
-
 <!-- Steam chuff selections -->
-
 <ienumVal>
-	<ienumChoice choice="Native Chuff" value="1" />
-	<ienumChoice choice="Heavy Chuff 1" />
-	<ienumChoice choice="Heavy Chuff 2" />
-	<ienumChoice choice="Medium Chuff" />
-	<ienumChoice choice="Light Chuff" />
+  <ienumChoice choice="Native Chuff" value="1"/>
+  <ienumChoice choice="Heavy Chuff 1"/>
+  <ienumChoice choice="Heavy Chuff 2"/>
+  <ienumChoice choice="Medium Chuff"/>
+  <ienumChoice choice="Light Chuff"/>
 </ienumVal>
-
- 	  	 

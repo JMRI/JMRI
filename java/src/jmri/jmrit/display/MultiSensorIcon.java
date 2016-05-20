@@ -1,11 +1,12 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Sensor;
-//import jmri.jmrit.picker.PickListModel;
+
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.MultiSensorItemPanel;
 import jmri.jmrit.picker.PickListModel;
 
@@ -20,7 +21,7 @@ import javax.swing.JPopupMenu;
 import jmri.NamedBeanHandle;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 /**
  * An icon to display a status of set of Sensors.
@@ -153,7 +154,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     public String getNameString() {
         String name = "";
         if ((entries == null) || (entries.size() < 1)) 
-            name = rb.getString("NotConnected");
+            name = Bundle.getMessage("NotConnected");
         else {
             name = entries.get(0).namedSensor.getName();
             for (int i = 1; i<entries.size(); i++) {
@@ -201,7 +202,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         displayState();
     }
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     editItem();
@@ -213,7 +214,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     MultiSensorItemPanel _itemPanel;
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor")));
+        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor")));
         _itemPanel = new MultiSensorItemPanel(_paletteFrame, "MultiSensor", _iconFamily,
                                        PickListModel.multiSensorPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -222,12 +223,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             }
         };
         // duplicate _iconMap map with unscaled and unrotated icons
-        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();       
+        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();       
         map.put("SensorStateInactive", inactive);
         map.put("BeanStateInconsistent", inconsistent);
         map.put("BeanStateUnknown", unknown);
         for (int i = 0; i<entries.size(); i++) {
-        	map.put(MultiSensorItemPanel.POSITION[i], entries.get(i).icon);
+        	map.put(MultiSensorItemPanel.getPositionName(i), entries.get(i).icon);
          }     	
         _itemPanel.init(updateAction, map);
         for (int i = 0; i<entries.size(); i++) {
@@ -240,14 +241,13 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
 
     void updateItem() {
-        Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
+    	HashMap <String, NamedIcon> iconMap = _itemPanel.getIconMap();
         ArrayList<NamedBean> selections = _itemPanel.getTableSelections();
         int[] positions = _itemPanel.getPositions();
-        if (selections==null) {
+        if (selections==null || selections.size()<positions.length) {
             JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(
-                        ItemPalette.rbp.getString("NeedPosition"), positions.length), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("NeedPosition", positions.length), 
+                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (iconMap!=null) {
@@ -259,12 +259,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
         entries = new ArrayList<Entry>(selections.size());
         for (int i=0; i<selections.size(); i++) {
-            addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(MultiSensorItemPanel.POSITION[i])));
+            addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(MultiSensorItemPanel.getPositionName(i))));
         }
         _iconFamily = _itemPanel.getFamilyName();
         _itemPanel.clearSelections();
         setUpDown(_itemPanel.getUpDown());
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
+//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();
@@ -273,7 +273,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
         
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor"));
         popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -342,17 +342,17 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
             switch (state) {
             case Sensor.ACTIVE:
-                if (isText()) super.setText(rb.getString("Active"));
+                if (isText()) super.setText(Bundle.getMessage("Active"));
                 if (isIcon()) super.setIcon(e.icon);
                 foundActive = true;
                 displaying = i;
                 break;  // look at the next ones too
             case Sensor.UNKNOWN:
-                if (isText()) super.setText(rb.getString("UnKnown"));
+                if (isText()) super.setText(Bundle.getMessage("UnKnown"));
                 if (isIcon()) super.setIcon(unknown);
                 return;  // this trumps all others
             case Sensor.INCONSISTENT:
-                if (isText()) super.setText(rb.getString("Inconsistent"));
+                if (isText()) super.setText(Bundle.getMessage("Inconsistent"));
                 if (isIcon()) super.setIcon(inconsistent);
                 break;
             default:
@@ -362,7 +362,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         // loop has gotten to here
         if (foundActive) return;  // set active
         // only case left is all inactive
-        if (isText()) super.setText(rb.getString("Inactive"));
+        if (isText()) super.setText(Bundle.getMessage("Inactive"));
         if (isIcon()) super.setIcon(inactive);     
         return;
     }    
@@ -456,5 +456,5 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         NamedIcon icon; 
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(MultiSensorIcon.class.getName());
 }

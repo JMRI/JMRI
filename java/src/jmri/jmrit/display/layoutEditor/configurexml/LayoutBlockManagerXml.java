@@ -2,6 +2,8 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -49,27 +51,29 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         while (iter.hasNext()) {
             String sname = iter.next();
             if (sname==null) log.error("System name null during LayoutBlock store");
-            log.debug("layoutblock system name is "+sname);
-            LayoutBlock b = tm.getBySystemName(sname);
-            if (b.getUseCount()>0) {
-                // save only those LayoutBlocks that are in use--skip abandoned ones
-                Element elem = new Element("layoutblock")
-                            .setAttribute("systemName", sname);
-                elem.addContent(new Element("systemName").addContent(sname));
-                storeCommon(b, elem);
-                if (b.getOccupancySensorName() != "") {
-                    elem.setAttribute("occupancysensor", b.getOccupancySensorName());
-                }
-                elem.setAttribute("occupiedsense", ""+b.getOccupiedSense());
-                elem.setAttribute("trackcolor", LayoutBlock.colorToString(b.getBlockTrackColor()));
-                elem.setAttribute("occupiedcolor", LayoutBlock.colorToString(b.getBlockOccupiedColor()));
-                elem.setAttribute("extracolor", LayoutBlock.colorToString(b.getBlockExtraColor()));
-                layoutblocks.addContent(elem);
-                if (b.getMemoryName() != "") {
-                    elem.setAttribute("memory", b.getMemoryName());
-                }
-                if(!b.useDefaultMetric()){
-                    elem.addContent(new Element("metric").addContent(""+b.getBlockMetric()));
+            else {
+                log.debug("layoutblock system name is "+sname);
+                LayoutBlock b = tm.getBySystemName(sname);
+                if (b.getUseCount()>0) {
+                    // save only those LayoutBlocks that are in use--skip abandoned ones
+                    Element elem = new Element("layoutblock")
+                                .setAttribute("systemName", sname);
+                    elem.addContent(new Element("systemName").addContent(sname));
+                    storeCommon(b, elem);
+                    if (!b.getOccupancySensorName().equals("")) {
+                        elem.setAttribute("occupancysensor", b.getOccupancySensorName());
+                    }
+                    elem.setAttribute("occupiedsense", ""+b.getOccupiedSense());
+                    elem.setAttribute("trackcolor", LayoutBlock.colorToString(b.getBlockTrackColor()));
+                    elem.setAttribute("occupiedcolor", LayoutBlock.colorToString(b.getBlockOccupiedColor()));
+                    elem.setAttribute("extracolor", LayoutBlock.colorToString(b.getBlockExtraColor()));
+                    layoutblocks.addContent(elem);
+                    if (!b.getMemoryName().equals("")) {
+                        elem.setAttribute("memory", b.getMemoryName());
+                    }
+                    if(!b.useDefaultMetric()){
+                        elem.addContent(new Element("metric").addContent(""+b.getBlockMetric()));
+                    }
                 }
             }
 		}
@@ -211,5 +215,5 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LAYOUTBLOCKS);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class.getName());
 }

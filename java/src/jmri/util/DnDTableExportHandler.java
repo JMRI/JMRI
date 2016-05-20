@@ -9,6 +9,8 @@ package jmri.util;
  * @version $Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.TransferHandler;
@@ -45,7 +47,7 @@ public class DnDTableExportHandler extends TransferHandler{
     public void exportDone(JComponent c, Transferable t, int action) {
         if (log.isDebugEnabled()) log.debug("TransferHandler.exportDone ");
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DnDTableExportHandler.class.getName());
+    static Logger log = LoggerFactory.getLogger(DnDTableExportHandler.class.getName());
 }
 
 

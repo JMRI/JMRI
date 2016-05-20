@@ -2,6 +2,8 @@
 
 package apps;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -212,6 +214,6 @@ public class GuiLafConfigPane extends JPanel {
 
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiLafConfigPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(GuiLafConfigPane.class.getName());
 }
 

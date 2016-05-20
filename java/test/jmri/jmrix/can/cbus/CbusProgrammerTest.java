@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.cbus;
 
+import org.apache.log4j.Logger;
 import jmri.Programmer;
 import jmri.ProgListener;
 
@@ -136,7 +137,7 @@ public class CbusProgrammerTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusProgrammerTest.class.getName());
+    static Logger log = Logger.getLogger(CbusProgrammerTest.class.getName());
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }

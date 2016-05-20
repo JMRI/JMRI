@@ -19,6 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import jmri.util.swing.*;
 import java.util.ArrayList;
@@ -64,6 +66,6 @@ public class VSDSoundsPanel extends JmriPanel {
 	}
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDSoundsPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDSoundsPanel.class.getName());
 
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.srcp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Vector;
 
 import jmri.jmrix.AbstractMRListener;
@@ -345,7 +347,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     } // SRCPRcvNotifier
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class.getName());
 }
 
 

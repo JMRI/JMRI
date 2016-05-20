@@ -1,6 +1,8 @@
 // DragJComponent.java
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
@@ -43,7 +45,7 @@ import java.awt.dnd.*;
          int width = Math.max(100, dim.width+20);
          int height = Math.max(65, dim.height+20);
          setPreferredSize(new java.awt.Dimension(width, height));
-         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
          DragSource dragSource = DragSource.getDefaultDragSource();
          dragSource.createDefaultDragGestureRecognizer(this,
                      DnDConstants.ACTION_COPY, this);
@@ -82,7 +84,7 @@ import java.awt.dnd.*;
          return _dataFlavor.equals(flavor);
      }
 
-     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DragJComponent.class.getName());
+     static Logger log = LoggerFactory.getLogger(DragJComponent.class.getName());
 }
 
 

@@ -175,7 +175,12 @@ public interface NamedBean {
      * If no value has been set for that key, returns null.
      */
     public Object getProperty(Object key);
-
+    
+    /**
+     * Remove the key/value pair against the NamedBean.
+     */
+    public void removeProperty(Object key);
+    
     /**
      * Retrieve the complete current set of keys.
      */

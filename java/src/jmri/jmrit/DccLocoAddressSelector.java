@@ -1,5 +1,7 @@
 package jmri.jmrit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -272,5 +274,5 @@ public class DccLocoAddressSelector extends JPanel
     
     final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccLocoAddressSelector.class.getName());
+    static Logger log = LoggerFactory.getLogger(DccLocoAddressSelector.class.getName());
 }

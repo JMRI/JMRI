@@ -1,5 +1,7 @@
 package jmri.jmrit.logix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import javax.swing.Timer;
 
@@ -89,8 +91,15 @@ public class OPath extends jmri.Path  {
 
     public void setName(String name) { 
         if (name == null || name.length()==0) { return; }
-        if (_name.equals(name)) { return; }
-        _name = name; 
+        _name = name;
+        if (_fromPortal!=null) {
+        	if (_fromPortal.addPath(this)) {
+        		return;
+        	}
+        }
+        if (_toPortal!=null) {
+        	_toPortal.addPath(this);
+        }
     }
     
     public String getName() { return _name; }
@@ -203,5 +212,5 @@ public class OPath extends jmri.Path  {
             (_toPortal==null?"":" to portal "+ _toPortal.getName());
     }
        
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OPath.class.getName());
+    static Logger log = LoggerFactory.getLogger(OPath.class.getName());
 }

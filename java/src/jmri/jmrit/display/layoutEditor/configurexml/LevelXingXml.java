@@ -2,6 +2,8 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
@@ -195,28 +197,28 @@ public class LevelXingXml extends AbstractXmlAdapter {
         if (element.getChild("signalAMast")!=null){
             String mast = element.getChild("signalAMast").getText();
             if (mast!=null && !mast.equals("")){
-                l.setSignalAMastName(mast);
+                l.setSignalAMast(mast);
             }
         }
         
         if (element.getChild("signalBMast")!=null){
             String mast = element.getChild("signalBMast").getText();
             if (mast!=null && !mast.equals("")){
-                l.setSignalBMastName(mast);
+                l.setSignalBMast(mast);
             }
         }
         
         if (element.getChild("signalCMast")!=null){
             String mast = element.getChild("signalCMast").getText();
             if (mast!=null && !mast.equals("")){
-                l.setSignalCMastName(mast);
+                l.setSignalCMast(mast);
             }
         }
 
         if (element.getChild("signalDMast")!=null){
             String mast = element.getChild("signalDMast").getText();
             if (mast!=null && !mast.equals("")){
-                l.setSignalDMastName(mast);
+                l.setSignalDMast(mast);
             }
         }
         
@@ -252,5 +254,5 @@ public class LevelXingXml extends AbstractXmlAdapter {
 		p.xingList.add(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LevelXingXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(LevelXingXml.class.getName());
 }

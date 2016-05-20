@@ -6,15 +6,17 @@ package jmri.web.servlet.xmlio;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.ResourceBundle;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.jmrit.XmlFile;
+import jmri.web.xmlio.XmlIO;
 import jmri.web.xmlio.XmlIOFactory;
 import jmri.web.xmlio.XmlIORequestor;
 import jmri.web.xmlio.XmlIOServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -28,15 +30,13 @@ import org.jdom.output.XMLOutputter;
 public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
 
     static XmlIOFactory factory = null;
-//    Thread thread = null;
-    static ResourceBundle htmlStrings = ResourceBundle.getBundle("jmri.web.server.Html");
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlIOServlet.class.getName());
+    static Logger log = LoggerFactory.getLogger(XmlIOServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameterNames().hasMoreElements()) {
-            Document doc = new Document(new Element("xmlio"));
-            Element e = new Element(request.getPathInfo().substring(request.getPathInfo().indexOf("/") + 1));
+            Document doc = new Document(new Element(XmlIO.XMLIO));
+            Element e = new Element(request.getPathInfo().substring(request.getPathInfo().indexOf("/") + 1)); // NOI18N
             Enumeration<String> parameters = request.getParameterNames();
             while (parameters.hasMoreElements()) {
                 String parameter = parameters.nextElement();
@@ -45,7 +45,7 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
             doc.getRootElement().addContent(e);
             this.doXmlIO(request, response, doc);
         } else {
-            response.sendRedirect("/help/en/html/web/XMLIO.shtml");
+            response.sendRedirect("/help/en/html/web/XMLIO.shtml"); // NOI18N
         }
     }
 
@@ -64,17 +64,17 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
     protected void doXmlIO(HttpServletRequest request, HttpServletResponse response, Document doc) throws ServletException, IOException {
         XMLOutputter fmt = new XMLOutputter(org.jdom.output.Format.getCompactFormat());
 
-    	String client = request.getRemoteHost()+":"+request.getRemotePort();
+        String client = request.getRemoteHost() + ":" + request.getRemotePort(); // NOI18N
 
-    	Element root = doc.getRootElement();
+        Element root = doc.getRootElement();
 
-    	if (log.isDebugEnabled()) {
-    		String s = "received "+root.getContentSize()+" elements from "+client;
-    		if (root.getContentSize() < 4) { //append actual xml to debug if only a "few" els
-    			s += " " + fmt.outputString(root.getContent());
-    		}
-    		log.debug(s);
-    	}
+        if (log.isDebugEnabled()) {
+            String s = "received " + root.getContentSize() + " elements from " + client; // NOI18N
+            if (root.getContentSize() < 4) { //append actual xml to debug if only a "few" els
+                s += " " + fmt.outputString(root.getContent()); // NOI18N
+            }
+            log.debug(s);
+        }
 
         // start processing reply
         if (factory == null) {
@@ -84,14 +84,14 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
 
         // if list or throttle elements present, or item elements that do set, do immediate operation
         boolean immediate = false;
-        if (root.getChild("list") != null
-                || root.getChild("throttle") != null) {
+        if (root.getChild(XmlIO.LIST) != null
+                || root.getChild(XmlIO.THROTTLE) != null) {
             immediate = true;
         }
         if (!immediate) {
             for (Object e : root.getChildren()) {
-                if (((Element) e).getAttributeValue("set") != null
-                        || ((Element) e).getChild("set") != null) {
+                if (((Element) e).getAttributeValue(XmlIO.SET) != null
+                        || ((Element) e).getChild(XmlIO.SET) != null) {
                     immediate = true;
                 }
                 break;
@@ -101,39 +101,49 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
             if (immediate) {
                 srv.immediateRequest(root);  // modifies 'doc' in place
                 if (log.isDebugEnabled()) {
-                	String s = "immediate reply "+root.getContentSize()+" elements to "+client;
-                	if (root.getContentSize() < 4) { //append actual xml to debug if only a "few" els
-                		s += " " + fmt.outputString(root.getContent());
-                	}
-                	log.debug(s);
+                    String s = "immediate reply " + root.getContentSize() + " elements to " + client; // NOI18N
+                    if (root.getContentSize() < 4) { //append actual xml to debug if only a "few" els
+                        s += " " + fmt.outputString(root.getContent()); // NOI18N
+                    }
+                    log.debug(s);
                 }
             } else {
-            	Thread thread = Thread.currentThread();
-            	if (log.isDebugEnabled()) log.debug("stalling thread, waiting to reply to " + client);
+                Thread thread = Thread.currentThread();
+                if (log.isDebugEnabled()) {
+                    log.debug("stalling thread, waiting to reply to " + client);
+                }
                 srv.monitorRequest(root, this, client, thread);
 
                 try {
                     //Thread.sleep(10000000000000L);  // really long
                     Thread.sleep(300000);  // not quite so long (5 minutes)
-                    if (log.isDebugEnabled()) log.debug("Thread sleep completed for " + client);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Thread sleep completed for " + client);
+                    }
                 } catch (InterruptedException e) {
-                	if (log.isDebugEnabled()) log.debug("Thread sleep interrupted for " + client);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Thread sleep interrupted for " + client);
+                    }
                 }
-                if (log.isDebugEnabled()) log.debug("thread resumes and replies "+doc.getRootElement().getContentSize()+" elements to "+client);
+                if (log.isDebugEnabled()) {
+                    log.debug("thread resumes and replies " + doc.getRootElement().getContentSize() + " elements to " + client);
+                }
             }
         } catch (jmri.JmriException e1) {
             log.error("JmriException while creating reply: " + e1, e1);
         }
 
-        response.setContentType("text/xml");
+        response.setContentType("text/xml"); // NOI18N
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Cache-Control", "no-cache"); // NOI18N
         response.getWriter().write(fmt.outputString(doc));
     }
 
     @Override
     public void monitorReply(Element e, Thread thread) {
-    	if (log.isDebugEnabled()) log.debug("Interrupting thread " + thread.getName() + " (" + thread.getState() + ")");
-    	thread.interrupt();
+        if (log.isDebugEnabled()) {
+            log.debug("Interrupting thread " + thread.getName() + " (" + thread.getState() + ")");
+        }
+        thread.interrupt();
     }
 }

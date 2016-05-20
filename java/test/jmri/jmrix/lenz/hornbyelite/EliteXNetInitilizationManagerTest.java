@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.hornbyelite.HornbyEliteCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetListenerScaffold;
@@ -65,6 +66,6 @@ public class EliteXNetInitilizationManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetInitilizationManagerTest.class.getName());
+    static Logger log = Logger.getLogger(EliteXNetInitilizationManagerTest.class.getName());
 
 }

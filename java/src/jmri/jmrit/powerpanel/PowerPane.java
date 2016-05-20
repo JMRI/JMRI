@@ -2,6 +2,8 @@
 
 package jmri.jmrit.powerpanel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.PowerManager;
 
@@ -146,6 +148,6 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         if (listening!=null) listening.removePropertyChangeListener(this);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PowerPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
 
 }
