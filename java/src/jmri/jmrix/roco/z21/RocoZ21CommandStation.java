@@ -1,6 +1,3 @@
-/*
- * RocoZ21CommandStation.java
- */
 package jmri.jmrix.roco.z21;
 
 import org.slf4j.Logger;
@@ -337,6 +334,3 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     private final static Logger log = LoggerFactory.getLogger(RocoZ21CommandStation.class.getName());
 
 }
-
-
-/* @(#)RocoCommandStation.java */
