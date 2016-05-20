@@ -3803,7 +3803,4 @@ class BuildFailedException extends Exception {
 	public String getExceptionType() {
 		return type;
 	}
-	
-}
-
 }
