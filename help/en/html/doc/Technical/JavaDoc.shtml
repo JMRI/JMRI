@@ -68,11 +68,15 @@ in documentation is available on the
 <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">"How and When To Deprecate APIs" page</a>.
 
 <p>
-The JavaDoc content is interpreted as HTML 4.01, so it should be valid HTML 4.01.  For example
+The JavaDoc content is interpreted as HTML 4.01, so it should be valid HTML 4.01. If it's not,
+it probably won't display properly when somebody wants to understand your code, so it's in 
+your interest to get the JavaDoc comments right.
+For example, you have to properly handle &amp; and &lt; characters.
+You also have to (sometimes) end your paragraph tags:
 <code><pre>
  * Some text that forms a paragraph
  * &lt;p&gt;
- * Some more text. Note backslash on next line.
+ * Some more text. Note backslash on next line to end paragraph tag.
  * &lt;p/&gt;
  * Last text, start list
  * &lt;ul&gt;
@@ -87,14 +91,19 @@ Some error messages and their translations:
 <li>"bad use of '&gt;'": Probably using '&gt;' as a character, e.g. A -&gt; B. If so, replace with &gt; or wrap the line with @literal
 </ul>
 
-Finally, not that this JavaDoc line is malformed:
+Finally, note that this JavaDoc line is malformed:
 <code><pre>
  * @param foo
 </pre></code>
-because it doesn't include any explanatory text. That line needs to be more like:
+because it doesn't include any explanatory text. The line should be more like:
 <code><pre>
  * @param foo Holds the latest Bar instance
 </pre></code>
+
+We are currently suppressing the "accessibility" class of JavaDoc errors, which is 
+mostly about providing extra information on tables and images, and the "missing" class of 
+errors, which tags it if an @param or @return isn't provided in any places that could have 
+received comments.  There are so many of these that it's not practical to tag them.
 
 <h2>UML and UmlGraph for Developers</h2>
 
