@@ -129,7 +129,7 @@ public class BlockManagerTest extends TestCase {
                 Assert.fail("failed to set speed due to wrong reason: " + ex);
             }
         } finally {
-            jmri.util.JUnitAppender.assertWarnMessage("attempting to set invalid speed: Faster");
+            jmri.util.JUnitAppender.assertWarnMessage("attempting to get speed for invalid name: 'Faster'");
         }
         //Assert.assertEquals("faster block speed", "Faster", InstanceManager.blockManagerInstance().getDefaultSpeed());
         Assert.assertTrue("Expected exception", threw);
