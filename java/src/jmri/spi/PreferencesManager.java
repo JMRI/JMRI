@@ -15,7 +15,7 @@ import jmri.util.prefs.InitializationException;
  * {@link #initialize(jmri.profile.Profile)} is called as the PreferencesManager
  * may be constructed before the {@link jmri.profile.Profile} is known.
  *
- * @see jmri.util.prefs.AbstractPreferencesMananger for an abstract
+ * @see jmri.util.prefs.AbstractPreferencesManager for an abstract
  * implementation that is ready to extend.
  * @author Randall Wood 2015
  */
