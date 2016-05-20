@@ -1748,18 +1748,20 @@
     the repair facility. For example, a random value of 2 would mean that roughly 1 in 50 cars could
     be sent the to RIP track.</p>
 
-   <p>Select from the "Delivery" pull down menu the train timetable when you want
-    the car delivered. Select under "Pickup" when you want the car pulled from the spur.
-    When a train timetable is selected for either delivery or
-    pickup, a car will only be serviced when that train timetable is active. See
-    Trains -&gt; Tools -&gt; <a href="#Timetable">Timetable</a> to select the train Timetable for your
-    session.</p>
-    
+   <p>
+    Select from the "Delivery" pull down menu the train timetable when you want the car delivered,
+    or leave it blank if a car can be delivered at any time. Select under "Pickup" when you want the
+    car pulled from the spur. When a train timetable is selected for either delivery or pickup, a
+    car will only be serviced when that train timetable is active. See Trains -&gt; Tools -&gt; <a
+     href="#Timetable">Timetable</a> to select the train Timetable for your session.
+   </p>
+
    <p>
     You can if you wish specify a particular "Road" for the type of car you entered, or leave it
-    blank if you don't care about the road name. Note
-    only car roads that are accepted by this spur are shown. To review which car roads
-    are available see the <a href="#RoadOptions">road options</a> for this spur.</p>
+    blank if you don't care about the road name. Note only car roads that are accepted by this spur
+    are shown. To review which car roads are available see the <a href="#RoadOptions">road
+     options</a> for this spur.
+   </p>
 
    <p>
     You can also specify the car load received and shipped. Leaving the "Receive" field blank
@@ -1796,7 +1798,7 @@
     delivered any day of the week, the load received can be anything, and the load shipped can be
     the default empty "E" or default load "L". There isn't a destination for the cars, so the
     program can send them anywhere that is willing to accept the boxcars with their new load. And
-    finally the cars can be picked up at anytime.</p>
+    finally the cars can be picked up at any time.</p>
 
    <p>The next line in the schedule is requesting a tankcar with a load of "Oil". Reading the
     entire schedule line for the tankcar, there isn't an random value, the car is only delivered on
@@ -3941,11 +3943,12 @@
    <a name="TrainsTableColors"></a>
    <h4>Train Row Color</h4>
 
-   OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window. You can
-   manually color code your trains, or you can have the program automatically set a train's row
-   color based on the status of the train. For example you could tell the program you want
-   the row colored red if a train fails to build. You can find this feature under "Tools" in the
-   "Trains" window.
+   OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window. You
+   can manually color code your trains, or you can have the program automatically set a train's row
+   color based on the status of the train. For example you could tell the program you want the row
+   colored red if a train fails to build. You can also when using the "Auto" option define a unique
+   color for each train when they are reset. Before switching to "Auto", select the reset row colors
+   for your various trains. You can find this feature under "Tools" in the "Trains" window. 
    
    <a name="Timetable"></a>
    <h4>Timetable</h4>
