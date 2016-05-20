@@ -278,9 +278,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
         for (int i = 0; i < 2; i++) {
             if (bits[i] == '1') {
-                outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.CLOSED);
+                //outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.CLOSED);
             } else if (bits[i] == '0') {
-                outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.THROWN);
+                //outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.THROWN);
             } else if (bits[i] == 'n') {
                 // let pass, extra chars up to 5 are not defined
             } else {

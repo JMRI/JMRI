@@ -52,8 +52,8 @@ public class MatrixSignalMastXml
         e.addContent(unlit);
 
         List<String> outputs = p.getOutputs();
-        // to do: use hashmap directly (change type + convert char[] to xml-storable simple String
-        // max. 5 outputs (either: turnouts (bean names) [ToDo: or DCC addresses (numbers)]
+        // convert char[] to xml-storable simple String
+        // max. 5 outputs (either: turnouts (bean names) [or ToDo: DCC addresses (numbers)]
         if (outputs != null) {
             Element outps = new Element("outputs");
             int i = 1;
@@ -70,9 +70,6 @@ public class MatrixSignalMastXml
             }
         }
 
-        //List<String> bitStrings = p.getBitstrings();
-        //if (bitStrings != null) {
-        // to do: use hashmap directly (change type + convert char[] to xml-storable simple String
         // string of max. 5 chars "00101" describing matrix row per aspect
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if (appMap != null) {
@@ -87,19 +84,6 @@ public class MatrixSignalMastXml
                 }
             }
 
-                //Element bss = new Element("bitStrings");
-            //int i = 1;
-            //for (String _bitstring : bitStrings) {
-                //String key = "aspect" + i; //"Stop"; aspect; // build from names?, copy from dcc mast
-                //Element bs = new Element("bitString");
-                //bs.setAttribute("aspect", key);
-                //bs.addContent(_bitstring);
-                //bss.addContent(bs);
-                //i++;
-            //}
-            //if (bitStrings.size() != 0) {
-            //    e.addContent(bss);
-            //}
         }
         List<String> disabledAspects = p.getDisabledAspects();
         if (disabledAspects != null) {
@@ -118,8 +102,10 @@ public class MatrixSignalMastXml
 
     @Override
     public boolean load(Element shared, Element perNode) { // from XML to mast m
-        SignalMast m;
+        MatrixSignalMast m;
         String sys = getSystemName(shared);
+        m = new jmri.implementation.MatrixSignalMast(sys);
+/*
         try {
             m = InstanceManager.signalMastManagerInstance()
                     .provideSignalMast(sys);
@@ -127,6 +113,7 @@ public class MatrixSignalMastXml
             log.error("An error occured while trying to create the signal '" + sys + "' " + e.toString());
             return false;
         }
+*/
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));
         }
@@ -150,15 +137,13 @@ public class MatrixSignalMastXml
             for (Element outp : list) {
                 String outputname = outp.getAttribute("matrixCol").getValue();
                 String turnout = outp.getChild("output").getText();
-                //m.setTurnout(outputname, turnout, [turnState]);
                 ((MatrixSignalMast) m).setOutput(outp.getAttribute("matrixCol").getValue(), outp.getText());
-                // to do: repeat for i = 0 to 5
             }
         }
 
-        Element e = shared.getChild("disabledAspects"); // multiple
-        if (e != null) {
-            List<Element> list = e.getChildren("disabledAspect"); // singular
+        Element disabled = shared.getChild("disabledAspects"); // multiple
+        if (disabled != null) {
+            List<Element> list = disabled.getChildren("disabledAspect"); // singular
             for (Element asp : list) {
                 ((MatrixSignalMast) m).setAspectDisabled(asp.getText());
             }
@@ -166,8 +151,8 @@ public class MatrixSignalMastXml
         Element bss = shared.getChild("bitStrings"); // multiple
         if (bss != null) {
             List<Element> list = bss.getChildren("bitString"); // singular
-            for (Element asp : list) {
-                ((MatrixSignalMast) m).setBitstring(asp.getAttribute("aspect").getValue(), asp.getText());
+            for (Element bs : list) {
+                ((MatrixSignalMast) m).setBitstring(bs.getAttribute("aspect").getValue(), bs.getText());
             }
         }
         return true;

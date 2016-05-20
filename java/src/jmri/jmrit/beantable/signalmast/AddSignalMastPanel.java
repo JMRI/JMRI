@@ -376,6 +376,8 @@ public class AddSignalMastPanel extends JPanel {
             SignalAppearanceMap appMap = mast.getAppearanceMap();
             MatrixSignalMast xmast = (MatrixSignalMast) mast;
 
+            bitNum = xmast.getBitNum();
+            updateMatrixMastPanel(); // show only the correct amount of columns for existing matrixMast
             if (appMap != null) {
                 java.util.Enumeration<String> aspects = appMap.getAspects();
                 // hashtable/right names?
@@ -395,9 +397,9 @@ public class AddSignalMastPanel extends JPanel {
                     }
                 }
             }
-            // to do: load outputs
+            bitNumSpinner.setValue(bitNum);
             // to do: count them and set bitNum
-            bitNumChanged(bitNum);
+            // bitNumChanged(bitNum); // only sets bitNum so not functional
             // fill in the names of the outputs from mast
             turnoutBox1.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName (1)));
             if (bitNum > 1){
@@ -797,12 +799,14 @@ public class AddSignalMastPanel extends JPanel {
                 }
                 InstanceManager.signalMastManagerInstance().register(dccMast);
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
-                // OK was pressed, check boxes are filled
+                // OK was pressed, check all boxes are filled
                 if (turnoutBox1 == null || bitNum > 1 && turnoutBox2 == null || bitNum > 2 && turnoutBox3 == null || bitNum > 3 && turnoutBox4 == null || bitNum > 4 && turnoutBox5 == null) { //warning dialog
                     int r = JOptionPane.showConfirmDialog(null, "At least one of the outputs has not been defined, please enter all inputs first.",
                             "Empty Input",
                             JOptionPane.ERROR_MESSAGE);
-                    return;
+                    if (r != 0) {
+                        return;
+                    }
                 }
                 //create new MatrixMast with props from panel
                 String name = "IF$xsm:"
@@ -840,7 +844,6 @@ public class AddSignalMastPanel extends JPanel {
                         matrixMast.setAspectEnabled(aspect);
                         matrixMast.setBitsForAspect(aspect, matrixAspect.get(aspect).getAspectBits()); // return as char[]
                     }
-                    //bitNum ++;
                 }
                 //matrixMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel, to do
 
@@ -1977,6 +1980,10 @@ public class AddSignalMastPanel extends JPanel {
             if (cols > 4) {
                 bitCheck5.setSelected(aspectBits[4] == '1');
             }
+            for (int i = cols; i <= 5; i++){
+                // add trailing zeros
+                aspectBits[i-1] = '0';
+            }
             String value = String.valueOf(aspectBits); // convert back from char[] to String
             aspectBitsField.setText(value);
         }
@@ -2016,10 +2023,12 @@ public class AddSignalMastPanel extends JPanel {
                     }
                 });
 
-                bitCheck1.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        setBit1(bitCheck1.isSelected());
-                    }
+                bitCheck1.addItemListener(new ItemListener() { // only sets 1, not 0
+                    public void itemStateChanged(ItemEvent ie) {
+                        JCheckBox cb = (JCheckBox) ie.getItem();
+                        int state = ie.getStateChange();
+                        setBit1(state == ItemEvent.SELECTED);
+                        }
                 });
                 bitCheck2.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -2050,5 +2059,4 @@ public class AddSignalMastPanel extends JPanel {
     private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class.getName());
 }
 
-
-/* @(#)AddSignalMast.java */
+/* @(#)AddSignalMastPanel.java */
