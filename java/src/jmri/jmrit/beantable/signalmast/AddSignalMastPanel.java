@@ -85,6 +85,7 @@ public class AddSignalMastPanel extends JPanel {
     JCheckBox allowUnLit = new JCheckBox();
     JPanel unLitSettingsPanel = new JPanel();
     JScrollPane matrixMastScroll;
+    JPanel matrixMastBitnumPanel = new JPanel();
     JPanel matrixMastPanel = new JPanel();
     //int BitNum;
     char[] bitString;
@@ -177,6 +178,8 @@ public class AddSignalMastPanel extends JPanel {
         dccMastScroll.setBorder(BorderFactory.createEmptyBorder());
         dccMastScroll.setVisible(false);
         add(dccMastScroll);
+
+        add(updateMatrixMastBitnumPanel()); // create and add panel
 
         matrixMastScroll = new JScrollPane(matrixMastPanel);
         matrixMastScroll.setBorder(BorderFactory.createEmptyBorder());
@@ -490,6 +493,7 @@ public class AddSignalMastPanel extends JPanel {
         turnoutMastScroll.setVisible(false);
         disabledAspectsScroll.setVisible(false);
         dccMastScroll.setVisible(false);
+        matrixMastBitnumPanel.setVisible(false);
         matrixMastScroll.setVisible(false);
         if (Bundle.getMessage("TurnCtlMast").equals(signalMastDriver.getSelectedItem())) {
             updateTurnoutAspectPanel();
@@ -507,6 +511,7 @@ public class AddSignalMastPanel extends JPanel {
             dccMastScroll.setVisible(true);
         } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
             updateMatrixMastPanel();
+            matrixMastBitnumPanel.setVisible(true);
             matrixMastScroll.setVisible(true);
         }
         updateUnLit();
@@ -1549,6 +1554,47 @@ public class AddSignalMastPanel extends JPanel {
     int bitNum;
     JSpinner bitNumSpinner = new JSpinner(new SpinnerNumberModel(5, 1, 5, 1));
     // ToDo: add boxes to set DCC Packets (with drop down selection "Output Type": Turnouts/Direct DCC Packets)
+    JComboBox<String> columnChoice = new JComboBox<String>(new String[]{"1","2","3","4","5"});
+    // use bitNumLabel
+
+    /**
+     * bitNumPanel with dop down, separate from the rest for redraw
+     */
+    JPanel updateMatrixMastBitnumPanel() {
+        /**
+         *  @param bitNum int for number of columns in matrix
+         */
+        if (bitNum == 0 || bitNum == -1) {
+            bitNum = 5; // default to 5 col for new mast
+        } else if (bitNum > 0 && bitNum <= 5){
+            bitNumSpinner.setValue(bitNum);
+        }
+        JPanel bitnumpanel = new JPanel();
+        // select number of columns in logic matrix
+        bitnumpanel.add(bitNumLabel);
+        bitnumpanel.add(columnChoice); // drop down
+        bitnumpanel.add(bitNumSpinner);
+        /**
+         * To do: auto refresh to show/hide input (turnout) selection boxes
+         * hide/show checkboxes in matrix (per aspect)
+         */
+        bitNumSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged (ChangeEvent e) {
+                Integer currentValue = (Integer)bitNumSpinner.getValue();
+                // hide/show cols in matrix & outputs ToDo
+                bitNumChanged(currentValue);
+                //updateMatrixBottomPanel(); // doesn't work to redraw outputs & aspects
+            }
+        });
+        columnChoice.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Integer currentValue = (Integer)columnChoice.getSelectedItem();
+                bitNumChanged(currentValue);
+            }
+        });
+        return bitnumpanel;
+    }
 
     /**
      * Build lower half of Add Signal Mast panel, specificically for Matrix Mast
@@ -1572,14 +1618,18 @@ public class AddSignalMastPanel extends JPanel {
             systemPrefixBox.addItem("None");
         }*/
 
-    /**
+/*
+    */
+/**
      *  @param bitNum int for number of columns in matrix
-     */
+     *//*
+
         if (bitNum == 0 || bitNum == -1) {
             bitNum = 5; // default to 5 col for new mast
         } else if (bitNum > 0 && bitNum <= 5){
             bitNumSpinner.setValue(bitNum);
         }
+*/
 
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
@@ -1596,14 +1646,18 @@ public class AddSignalMastPanel extends JPanel {
         matrixMastPanel.removeAll();
         matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(matrixAspect.size() + 3, 2));
 
+/*
         JPanel bitnumpanel = new JPanel();
         // select number of columns in logic matrix
         bitnumpanel.add(bitNumLabel);
+        bitnumpanel.add(columnChoice); // drop down
         bitnumpanel.add(bitNumSpinner);
-        /**
+        */
+/**
          * To do: auto refresh to show/hide input (turnout) selection boxes
          * hide/show checkboxes in matrix (per aspect)
-         */
+         *//*
+
         bitNumSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged (ChangeEvent e) {
@@ -1613,7 +1667,14 @@ public class AddSignalMastPanel extends JPanel {
                 //updateMatrixBottomPanel(); // doesn't work to redraw outputs & aspects
             }
         });
+        columnChoice.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Integer currentValue = Integer.ParseInt(columnChoice.getSelectedItem());
+                bitNumChanged(currentValue);
+            }
+        });
         matrixMastPanel.add(bitnumpanel);
+*/
 
         // sub panels (so we can hide all turnouts with Output Type drop down box later)
         JPanel turnoutpanel = new JPanel();
@@ -1723,7 +1784,8 @@ public class AddSignalMastPanel extends JPanel {
                }
             */
         // hide/show output choices
-        // updateMatrixAspectPanel();
+        //updateMatrixAspectPanel();
+        updateMatrixMastPanel();
     }
 
     //option: write mast name to bean comment?, not on aspect level, called from #1520
