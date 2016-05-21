@@ -365,7 +365,7 @@ public class FnMapPanelESU extends JPanel {
                                     itemLabel[item] = rosterEntry.getSoundLabel(Integer.valueOf(itemName[item][0].substring(("Sound slot" + " ").length())));
                                 } catch (Exception e) {
                                 }
-                            } else if (itemName[item][0].startsWith("F")) {
+                            } else if (itemName[item][0].matches("F\\d+")) {
                                 try {
                                     itemLabel[item] = rosterEntry.getFunctionLabel(Integer.valueOf(itemName[item][0].substring(1)));
                                 } catch (Exception e) {

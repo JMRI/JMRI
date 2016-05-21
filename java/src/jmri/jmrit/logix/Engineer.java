@@ -842,7 +842,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 if (stop) break;
                             }
                             if ((_speedType.equals(Warrant.Stop) || _speedType.equals(Warrant.EStop)) && speed<=0.0f) {
-                                _waitForClear = true;
+                                synchronized(this) {
+                                    _waitForClear = true;
+                                }
                             }
                         }
                     }                   

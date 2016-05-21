@@ -1141,7 +1141,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                             }
                             tempSave.setValue(_trainName);
                             tempSave.setState(tempSave.getState() | OBlock.RUNNING);
-                            tempSave = null;
                         }
                     } else {
                         // starting block allocated to another warrant for the SAME engine

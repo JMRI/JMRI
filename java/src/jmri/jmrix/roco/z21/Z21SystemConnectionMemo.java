@@ -1,6 +1,7 @@
 package jmri.jmrix.roco.z21;
 
 import java.util.ResourceBundle;
+import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
 import org.slf4j.Logger;
@@ -41,7 +42,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         // create and register the ComponentFactory
         InstanceManager.store(componentFactory = new jmri.jmrix.roco.z21.swing.Z21ComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
-
     }
 
     jmri.jmrix.swing.ComponentFactory componentFactory = null;
@@ -105,9 +105,17 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void configureManagers() {
         log.debug("Called Configure Managers");
 
+        if(z21CommandStation == null){
+           setRocoZ21CommandStation(new RocoZ21CommandStation());
+        }
+
         // set the broadcast flags so we get messages we may want to hear
+        z21CommandStation.setXPressNetMessagesFlag(true);
+        z21CommandStation.setXPressNetLocomotiveMessagesFlag(true);
+
+        // and forward the flags to the command station.
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
-                           0x00010001),null);  //right now,just the XPressNet flags.
+                           z21CommandStation.getZ21BroadcastFlags()),null);
 
         // add an XPressNet Tunnel.
         _xnettunnel = new Z21XPressNetTunnel(this);
@@ -117,6 +125,35 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
     }
+
+    /*
+     * Provides access to the Command Station for this particular connection.
+     * NOTE: Command Station defaults to NULL
+     */
+    public CommandStation getCommandStation() {
+        return commandStation;
+    }
+
+    public void setCommandStation(CommandStation c) {
+        commandStation = c;
+    }
+
+    private CommandStation commandStation = null;
+
+    /*
+     * Provides access to the Roco Z21 Command Station for this particular 
+     * connection.
+     * NOTE: Command Station defaults to NULL
+     */
+    public RocoZ21CommandStation getRocoZ21CommandStation() {
+        return z21CommandStation;
+    }
+
+    public void setRocoZ21CommandStation(RocoZ21CommandStation c) {
+        z21CommandStation = c;
+    }
+
+    private RocoZ21CommandStation z21CommandStation = null;
 
     public void dispose() {
         InstanceManager.deregister(this, Z21SystemConnectionMemo.class);

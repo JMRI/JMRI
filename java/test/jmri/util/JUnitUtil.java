@@ -306,5 +306,11 @@ public class JUnitUtil {
         }
     }
 
+    public static void initStartupActionsManager() {
+        InstanceManager.store(
+                new apps.StartupActionsManager(),
+                apps.StartupActionsManager.class);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
 }
