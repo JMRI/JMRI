@@ -40,6 +40,8 @@ public class WebServerPreferences extends Bean {
     public static final String RailRoadName = "railRoadName"; // NOI18N
     public static final String AllowRemoteConfig = "allowRemoteConfig"; // NOI18N
     public static final String ReadonlyPower = "readonlyPower"; // NOI18N
+    public static final String DISABLE_FRAME_SERVER = "disableFrames"; // NOI18N
+    public static final String REDIRECT_FRAMES = "redirectFramesToPanels"; // NOI18N
 
     // Flag that prefs have not been saved:
     private boolean isDirty = false;
@@ -53,6 +55,8 @@ public class WebServerPreferences extends Bean {
     private boolean allowRemoteConfig = false;
     private boolean readonlyPower = true;
     private int port = 12080;
+    private boolean disableFrames = false;
+    private boolean redirectFramesToPanels = true;
     private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
     public WebServerPreferences(String fileName) {
@@ -109,6 +113,8 @@ public class WebServerPreferences extends Bean {
         this.readonlyPower = sharedPreferences.getBoolean(ReadonlyPower, this.readonlyPower);
         this.refreshDelay = sharedPreferences.getInt(RefreshDelay, this.refreshDelay);
         this.useAjax = sharedPreferences.getBoolean(UseAjax, this.useAjax);
+        this.disableFrames = sharedPreferences.getBoolean(DISABLE_FRAME_SERVER, this.disableFrames);
+        this.redirectFramesToPanels = sharedPreferences.getBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         try {
             Preferences frames = sharedPreferences.node(DisallowedFrames);
             if (frames.keys().length != 0) {
@@ -243,6 +249,8 @@ public class WebServerPreferences extends Bean {
         sharedPreferences.putBoolean(AllowRemoteConfig, this.allowRemoteConfig());
         sharedPreferences.putBoolean(ReadonlyPower, this.isReadonlyPower());
         sharedPreferences.put(RailRoadName, getRailRoadName());
+        sharedPreferences.putBoolean(DISABLE_FRAME_SERVER, this.isDisableFrames());
+        sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         Preferences node = sharedPreferences.node(DisallowedFrames);
         this.getDisallowedFrames().stream().forEach((frame) -> {
             node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
@@ -374,6 +382,34 @@ public class WebServerPreferences extends Bean {
      */
     public String getDefaultRailroadName() {
         return Bundle.getMessage("DefaultRailroadName");
+    }
+
+    /**
+     * @return the disableFrames
+     */
+    public boolean isDisableFrames() {
+        return disableFrames;
+    }
+
+    /**
+     * @param disableFrames the disableFrames to set
+     */
+    public void setDisableFrames(boolean disableFrames) {
+        this.disableFrames = disableFrames;
+    }
+
+    /**
+     * @return the redirectFramesToPanels
+     */
+    public boolean isRedirectFramesToPanels() {
+        return redirectFramesToPanels;
+    }
+
+    /**
+     * @param redirectFramesToPanels the redirectFramesToPanels to set
+     */
+    public void setRedirectFramesToPanels(boolean redirectFramesToPanels) {
+        this.redirectFramesToPanels = redirectFramesToPanels;
     }
 
     private static class WebServerPreferencesXml extends XmlFile {

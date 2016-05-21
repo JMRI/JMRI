@@ -38,7 +38,6 @@ import jmri.swing.PreferencesPanel;
 
 public class WebServerPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
-    private static final long serialVersionUID = 6907436730813458420L;
     private JSpinner clickDelaySpinner;
     private JSpinner refreshDelaySpinner;
     private EditableList<String> disallowedFrames;
@@ -48,6 +47,11 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     private final WebServerPreferences preferences;
     private boolean restartRequired = false;
     private JCheckBox startup;
+    private final JCheckBox disableFrames = new JCheckBox();
+    private final JCheckBox redirectFramesToPanels = new JCheckBox();
+    private final JLabel clickDelayLabel = new JLabel(Bundle.getMessage("LabelClickDelay"));
+    private final JLabel refreshDelayLabel = new JLabel(Bundle.getMessage("LabelRefreshDelay"));
+    private final JLabel disallowedFramesLabel = new JLabel(Bundle.getMessage("LabelDisallowedFrames"));
     private ItemListener startupItemListener;
     private int startupActionPosition = -1;
 
@@ -64,20 +68,10 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         add(powerPanel());
         add(startupPanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleDelayPanel")));
+        add(this.disableFramesPanel());
         add(delaysPanel());
     }
 
-    /*
-     private Group webServerPreferences(GroupLayout layout) {
-     railroadName = new JTextField(preferences.getRailRoadName());
-     railroadName.setToolTipText(Bundle.getMessage("ToolTipRailRoadName"));
-     railroadName.setColumns(30);
-     ParallelGroup group = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
-     group.addComponent(new JLabel(Bundle.getMessage("LabelRailRoadName")), GroupLayout.Alignment.TRAILING);
-     group.addComponent(this.railroadName, GroupLayout.Alignment.LEADING);
-     return group;
-     }
-     */
     private void setGUI() {
         clickDelaySpinner.setValue(preferences.getClickDelay());
         refreshDelaySpinner.setValue(preferences.getRefreshDelay());
@@ -91,9 +85,12 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         useAjaxCB.setSelected(preferences.useAjax());
         port.setValue(preferences.getPort());
         readonlyPower.setSelected(preferences.isReadonlyPower());
+        this.disableFrames.setSelected(preferences.isDisableFrames());
+        this.redirectFramesToPanels.setSelected(preferences.isRedirectFramesToPanels());
         InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
             this.startup.setSelected(this.isStartupAction());
         });
+        this.enableFrameControls(this.disableFrames.isSelected());
     }
 
     /**
@@ -117,7 +114,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         preferences.setUseAjax(useAjaxCB.isSelected());
         int portNum;
         try {
-            portNum = (Integer)port.getValue();
+            portNum = (Integer) port.getValue();
         } catch (NumberFormatException NFE) { //  Not a number
             portNum = 0;
         }
@@ -132,6 +129,8 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
             preferences.setPort(portNum);
         }
         preferences.setReadonlyPower(readonlyPower.isSelected());
+        preferences.setDisableFrames(this.disableFrames.isSelected());
+        preferences.setRedirectFramesToPanels(this.redirectFramesToPanels.isSelected());
         return didSet;
     }
 
@@ -165,14 +164,14 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         ((JSpinner.DefaultEditor) clickDelaySpinner.getEditor()).getTextField().setEditable(false);
         clickDelaySpinner.setToolTipText(Bundle.getMessage("ToolTipClickDelay"));
         panel.add(clickDelaySpinner);
-        panel.add(new JLabel(Bundle.getMessage("LabelClickDelay")));
+        panel.add(this.clickDelayLabel);
 
         spinMod = new SpinnerNumberModel(5, 1, 999, 1);
         refreshDelaySpinner = new JSpinner(spinMod);
         ((JSpinner.DefaultEditor) refreshDelaySpinner.getEditor()).getTextField().setEditable(false);
         refreshDelaySpinner.setToolTipText(Bundle.getMessage("ToolTipRefreshDelay"));
         panel.add(refreshDelaySpinner);
-        panel.add(new JLabel(Bundle.getMessage("LabelRefreshDelay")));
+        panel.add(this.refreshDelayLabel);
 
         useAjaxCB = new JCheckBox(Bundle.getMessage("LabelUseAjax"));
         useAjaxCB.setToolTipText(Bundle.getMessage("ToolTipUseAjax"));
@@ -184,7 +183,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         tf.setBorder(BorderFactory.createLineBorder(Color.black));
         disallowedFrames.setListCellEditor(new DefaultListCellEditor<>(tf));
         dfPanel.add(new JScrollPane(disallowedFrames));
-        dfPanel.add(new JLabel(Bundle.getMessage("LabelDisallowedFrames")));
+        dfPanel.add(this.disallowedFramesLabel);
         dfPanel.setToolTipText(Bundle.getMessage("ToolTipDisallowedFrames"));
 
         panel.add(dfPanel);
@@ -215,6 +214,23 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         };
         readonlyPower.addActionListener(listener);
         listener.actionPerformed(null);
+        return panel;
+    }
+
+    private JPanel disableFramesPanel() {
+        JPanel panel = new JPanel();
+
+        this.disableFrames.setText(Bundle.getMessage("LabelDisableFrames"));
+        this.disableFrames.setToolTipText(Bundle.getMessage("ToolTipDisableFrames"));
+        this.disableFrames.addChangeListener((ChangeEvent e) -> {
+            this.enableFrameControls(this.disableFrames.isSelected());
+        });
+        panel.add(this.disableFrames);
+
+        this.redirectFramesToPanels.setText(Bundle.getMessage("LabelRedirectFramesToPanels"));
+        this.redirectFramesToPanels.setToolTipText(Bundle.getMessage("ToolTipRedirectFramesToPanels"));
+        panel.add(this.redirectFramesToPanels);
+
         return panel;
     }
 
@@ -325,13 +341,19 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     private boolean isStartupAction() {
         return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
                 .anyMatch((model) -> (model.getClassName().equals(WebServerAction.class.getName())));
-        // The above is what NetBeans recommended the following be condenced to
-        // It's readable, but different, so including alternate form
-        //for (PerformActionModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class)) {
-        //    if (model.getClassName().equals(WebServerAction.class.getName())) {
-        //        return true;
-        //    }
-        //}
-        //return false;
+    }
+
+    private void enableFrameControls(boolean framesDisabled) {
+        // enabled if frames are disabled
+        this.redirectFramesToPanels.setEnabled(framesDisabled);
+
+        // enabled if frames are enabled
+        this.clickDelaySpinner.setEnabled(!framesDisabled);
+        this.clickDelayLabel.setEnabled(!framesDisabled);
+        this.refreshDelaySpinner.setEnabled(!framesDisabled);
+        this.refreshDelayLabel.setEnabled(!framesDisabled);
+        this.useAjaxCB.setEnabled(!framesDisabled);
+        this.disallowedFrames.setEnabled(!framesDisabled);
+        this.disallowedFramesLabel.setEnabled(!framesDisabled);
     }
 }
