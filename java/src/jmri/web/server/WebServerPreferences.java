@@ -385,28 +385,39 @@ public class WebServerPreferences extends Bean {
     }
 
     /**
-     * @return the disableFrames
+     * @return true if displaying frames in web pages is disabled, false
+     *         otherwise
      */
     public boolean isDisableFrames() {
         return disableFrames;
     }
 
     /**
-     * @param disableFrames the disableFrames to set
+     * Set whether or not frames are returned when requests for frames are made
+     * from web pages.
+     *
+     * @param disableFrames true to prevent frames from being displayed in web
+     *                      pages
      */
     public void setDisableFrames(boolean disableFrames) {
         this.disableFrames = disableFrames;
     }
 
     /**
-     * @return the redirectFramesToPanels
+     * Are requests for frames redirected to panels when frames are disabled?
+     *
+     * @return true if frames should be redirected to panels, false otherwise
      */
     public boolean isRedirectFramesToPanels() {
         return redirectFramesToPanels;
     }
 
     /**
-     * @param redirectFramesToPanels the redirectFramesToPanels to set
+     * Set whether or not requests for frames should be redirected to panels
+     * when frames are disabled.
+     *
+     * @param redirectFramesToPanels true if frames should be redirected to
+     *                               panels, false otherwise
      */
     public void setRedirectFramesToPanels(boolean redirectFramesToPanels) {
         this.redirectFramesToPanels = redirectFramesToPanels;
