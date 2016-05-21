@@ -269,6 +269,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
             outputsToBeans.remove(colname);
         }
         outputsToBeans.put(colname, namedTurnout);
+        // update bitNum? will be circular, set when created/edited/loaded
+        //setBitNum(outputsToBeans.keySet().length());
     }
 
     public void updateOutputs (char[] bits) {

@@ -134,6 +134,11 @@ public class MatrixSignalMastXml
         Element outps = shared.getChild("outputs"); // multiple
         if (outps != null) {
             List<Element> list = outps.getChildren("output"); // singular
+            int i = 0;
+            for (Element outp : list) {
+                i++; // count outputs
+            }
+            ((MatrixSignalMast) m).setBitNum(i); // set char[] size before creating outputs
             for (Element outp : list) {
                 String outputname = outp.getAttribute("matrixCol").getValue();
                 String turnoutname = outp.getText();
