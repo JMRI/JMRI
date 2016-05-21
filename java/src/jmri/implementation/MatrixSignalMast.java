@@ -182,7 +182,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return "";
     }
 
-    public void setBitstring(String aspect, String bitString) {
+    public void setBitstring(String aspect, String bitString) { // receive from xml
         if (aspectToOutput.containsKey(aspect)) {
             log.debug("Aspect " + aspect + " is already defined so will override");
             aspectToOutput.remove(aspect);

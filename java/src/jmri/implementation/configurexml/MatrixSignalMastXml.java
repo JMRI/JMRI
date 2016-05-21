@@ -73,16 +73,20 @@ public class MatrixSignalMastXml
         // string of max. 5 chars "00101" describing matrix row per aspect
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if (appMap != null) {
+            Element bss = new Element("bitStrings");
             java.util.Enumeration<String> aspects = appMap.getAspects();
             while (aspects.hasMoreElements()) {
                 String key = aspects.nextElement();
-                Element el = new Element("bitString");
-                el.setAttribute("aspect", key);
+                Element bs = new Element("bitString");
+                bs.setAttribute("aspect", key);
                 if (p.getBitstring(key) != null) {
-                    el.addContent(p.getBitstring(key));
-                    e.addContent(el);
+                    bs.addContent(p.getBitstring(key));
+                    bss.addContent(bs);
                 }
             }
+            //if (aspects.size() != 0) {
+                e.addContent(bss);
+            //}
 
         }
         List<String> disabledAspects = p.getDisabledAspects();
@@ -104,16 +108,12 @@ public class MatrixSignalMastXml
     public boolean load(Element shared, Element perNode) { // from XML to mast m
         MatrixSignalMast m;
         String sys = getSystemName(shared);
-        m = new jmri.implementation.MatrixSignalMast(sys);
-/*
         try {
-            m = InstanceManager.signalMastManagerInstance()
-                    .provideSignalMast(sys);
+        m = new jmri.implementation.MatrixSignalMast(sys);
         } catch (Exception e) {
             log.error("An error occured while trying to create the signal '" + sys + "' " + e.toString());
             return false;
         }
-*/
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));
         }
@@ -136,8 +136,16 @@ public class MatrixSignalMastXml
             List<Element> list = outps.getChildren("output"); // singular
             for (Element outp : list) {
                 String outputname = outp.getAttribute("matrixCol").getValue();
-                String turnout = outp.getChild("output").getText();
-                ((MatrixSignalMast) m).setOutput(outp.getAttribute("matrixCol").getValue(), outp.getText());
+                String turnoutname = outp.getText();
+                ((MatrixSignalMast) m).setOutput(outputname, turnoutname);
+            }
+        }
+
+        Element bss = shared.getChild("bitStrings"); // multiple
+        if (bss != null) {
+            List<Element> list = bss.getChildren("bitString"); // singular
+            for (Element bs : list) {
+                ((MatrixSignalMast) m).setBitstring(bs.getAttribute("aspect").getValue(), bs.getText());
             }
         }
 
@@ -148,13 +156,7 @@ public class MatrixSignalMastXml
                 ((MatrixSignalMast) m).setAspectDisabled(asp.getText());
             }
         }
-        Element bss = shared.getChild("bitStrings"); // multiple
-        if (bss != null) {
-            List<Element> list = bss.getChildren("bitString"); // singular
-            for (Element bs : list) {
-                ((MatrixSignalMast) m).setBitstring(bs.getAttribute("aspect").getValue(), bs.getText());
-            }
-        }
+        InstanceManager.signalMastManagerInstance().register(m);
         return true;
     }
 
