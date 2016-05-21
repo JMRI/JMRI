@@ -837,6 +837,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Configure from a constant. This is like setRow (which processes a
      * variable Element).
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
+            justification = "null mask parameter to ConstantValue constructor expected.")
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor
         String stdname = e.getAttribute("item").getValue();

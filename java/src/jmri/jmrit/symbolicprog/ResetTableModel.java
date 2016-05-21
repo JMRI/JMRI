@@ -259,10 +259,12 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
             List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
             List<String> validModes = modeVector.get(row);
 
-            String programmerModeList = "";
+            StringBuffer programmerModeListBuffer = new StringBuffer("");
             for (ProgrammingMode m : modes) {
-                programmerModeList = programmerModeList + "," + m.toString();
+                programmerModeListBuffer.append(",");
+                programmerModeListBuffer.append(m.toString());
             }
+            String programmerModeList = programmerModeListBuffer.toString();
             if (programmerModeList.startsWith(",")) {
                 programmerModeList = programmerModeList.substring(1);
             }

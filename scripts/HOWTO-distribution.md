@@ -161,13 +161,13 @@ We roll some general code maintenance items into the release process.  They can 
 ```    
         cd (local web copy)/releasenotes
         git pull 
-        cp jmri4.3.3.shtml jmri4.3.4.shtml
+        cp jmri4.3.7.shtml jmri4.3.8.shtml
         (edit the new release note accordingly)
             change numbers throughout
             move new warnings to old
             remove old-version change notes
-        git add jmri4.3.4.shtml
-        git commit -m"start new 4.3.4 release note" jmri4.3.4.shtml
+        git add jmri4.3.8.shtml
+        git commit -m"start new 4.3.8 release note" jmri4.3.8.shtml
         PR-and-merge (or direct push) and pull back.
         cd (local JMRI copy)
 ```
@@ -196,13 +196,13 @@ We roll some general code maintenance items into the release process.  They can 
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 
 ```
-The release-4.3.5 branch has been created. 
+The release-4.3.7 branch has been created. 
 
-From now on, please document your changes in the [jmri4.3.6.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.6.shtml) release note file.
+From now on, please document your changes in the [jmri4.3.7.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.7.shtml) release note file.
 
-Maintainers, please set the 4.3.6 milestone on pulls from now on.
+Maintainers, please set the 4.5.1 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [new server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/)
+Jenkins will be creating files shortly at the [new server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.7/)
 ````
 
 ================================================================================
@@ -240,7 +240,7 @@ If you're building locally:
 - Get the release in your local work directory
 
 ```
-    git checkout release-4.3.3
+    git checkout release-4.3.7
 ```
 
 - edit release.properties to say release.official=true (last line)
@@ -277,7 +277,7 @@ If you're building locally:
 
 - Announce the file set to jmri-developers with a download URL like:
 
-    http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/
+    http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.6/
 
 - *Wait for some replies* before proceeding
 
@@ -292,7 +292,7 @@ If anybody wants to add a change from here on in, they should
 
    - One to master, as usual
    
-   - One to the release branch e.g. "release-4.3.3".  The comment on this PR should explain why this should be included instead of waiting for the next release.
+   - One to the release branch e.g. "release-4.3.6".  The comment on this PR should explain why this should be included instead of waiting for the next release.
    
   Merging the PR to the master makes those changes available on further developments forever; the one on the release, if accepted, includes the change and kicks off new runs of the various CI and build jobs.
 
@@ -325,13 +325,13 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
 
  - (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
- - (The "./testrelease 4.3.3" local script on shell.sf.net does the following steps, except for the edit, of course)
+ - (The "./testrelease 4.3.6" local script on shell.sf.net does the following steps, except for the edit, of course)
 ```
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.3/ws/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.6/ws/dist/release/*zip*/release.zip"
         (use the following instead if building on second Jenkins server)
-    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.4/ws/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.6/ws/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -344,7 +344,7 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
     (clean up and logout)
 ```
 
-- Create and upload the JavaDocs (as of late 2013, [CloudBees](https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/) was updating these from git weekly, in which case skip; not that this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
+- Create and upload the JavaDocs (As of May 2016, the [Jenkins server](http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/) was updating these from git weekly, in which case just have that run. Note that if you're doing this locally, it this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
 ```
     ant javadoc-uml uploadjavadoc
 ```
@@ -383,7 +383,7 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 ```
    - Description content (really need to automate this!):
 ```    
-[Release notes](http://jmri.org/releasenotes/jmri4.3.3.shtml)
+[Release notes](http://jmri.org/releasenotes/jmri4.3.6.shtml)
 
 Checksums:
 
@@ -396,7 +396,7 @@ File | SHA256 checksum
 
 - Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
 ```
-curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
+curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.6/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
 and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
 ```

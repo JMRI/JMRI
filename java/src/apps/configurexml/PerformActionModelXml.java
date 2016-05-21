@@ -57,12 +57,12 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
             className = "jmri.web.server.WebServerAction";
             log.debug("Updating MiniServerAction to WebServerAction");
         }
-        log.debug("Invoke Action from" + className);
+        log.debug("Invoke Action from {}", className);
         try {
             Action action = (Action) Class.forName(className).newInstance();
             action.actionPerformed(new ActionEvent("prefs", 0, ""));
         } catch (ClassNotFoundException ex1) {
-            log.error("Could not find specified class: " + className);
+            log.error("Could not find specified class: {}", className);
             result = false;
         } catch (IllegalAccessException ex2) {
             log.error("Unexpected access exception for  class: " + className, ex2);

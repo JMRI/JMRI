@@ -37,6 +37,7 @@ public class Z21Test extends TestCase {
         suite.addTest(new TestSuite(Z21XNetTurnoutManagerTest.class));
         suite.addTest(new TestSuite(Z21XNetTurnoutTest.class));
         suite.addTest(jmri.jmrix.roco.z21.simulator.Z21SimulatorTest.suite());
+        suite.addTest(BundleTest.suite());
         return suite;
     }
 

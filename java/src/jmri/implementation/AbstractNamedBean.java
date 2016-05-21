@@ -58,8 +58,8 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
 
     public String getFullyFormattedDisplayName() {
         String name = getUserName();
-        if (name != null && name.length() > 0) {
-            name = name + "(" + getSystemName() + ")";
+        if (name != null && name.length() > 0 && !name.equals(getSystemName())) {
+            name = getSystemName() + "(" + name + ")";
         } else {
             name = getSystemName();
         }
