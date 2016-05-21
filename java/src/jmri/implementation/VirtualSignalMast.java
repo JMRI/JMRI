@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * <li>IF$vsm - defines signal masts of this type
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map
- * <li>($0001) - small ordinal number for telling various virtual signal heads
+ * <li>($0001) - small ordinal number for telling various virtual signal masts
  * apart
  * </ul>
  *

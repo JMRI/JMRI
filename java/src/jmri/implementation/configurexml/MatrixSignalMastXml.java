@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle XML configuration for a DefaultSignalMastManager object.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @author Egbert Broerse Copyright: Copyright (c) 2016
+ * @author Bob Jacobsen Copyright: (C) 2009
+ * @author Egbert Broerse Copyright: (C) 2016
  */
 public class MatrixSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
