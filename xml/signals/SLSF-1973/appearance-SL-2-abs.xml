@@ -32,6 +32,18 @@
         <authorinitials>PAB</authorinitials>
         <revremark>Adapted from NYCS-1937</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2013-07-09</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Add aspect mappings</revremark>
+    </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2013-07-10</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Add Signal Icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SLSF</aspecttable>
@@ -39,7 +51,7 @@
   <reference> As described in the
 July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
   </reference>
-  <description>Appearances for a two-searchlight signal head without other badging</description>
+  <description>Appearances for a two-searchlight signal with an "A" (absolute)</description>
   
   <appearances>
 
@@ -47,8 +59,9 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
-      <reference>Page 16</reference>
+      <reference>Rule 281</reference>
       <imagelink>
+         ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-281.gif
       </imagelink>
     </appearance>
 
@@ -56,8 +69,9 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-      <reference>Page 16</reference>
+      <reference>Rule 282</reference>
       <imagelink>
+         ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-282.gif
       </imagelink>
     </appearance>
 
@@ -65,8 +79,9 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
       <show>green</show>
-      <reference>Page 16</reference>
+      <reference>Rule 284</reference>
       <imagelink>
+         ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-284.gif
       </imagelink>
     </appearance>
 
@@ -74,8 +89,9 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
-      <reference>Page 16</reference>
+      <reference>Rule 285</reference>
       <imagelink>
+         ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-285.gif
       </imagelink>
     </appearance>
 
@@ -83,8 +99,9 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Diverging Clear</aspectname>
       <show>red</show>
       <show>green</show>
-      <reference>Page 18</reference>
+      <reference>Rule 286</reference>
       <imagelink>
+         ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-286.gif
       </imagelink>
     </appearance>
 
@@ -93,8 +110,9 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Diverging Approach</aspectname>
       <show>red</show>
       <show>yellow</show>
-      <reference>Page 18</reference>
+      <reference>Rule 287</reference>
       <imagelink>
+         ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-287.gif
       </imagelink>
     </appearance>
 
@@ -102,8 +120,9 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
       <show>red</show>
-      <reference>Page 18</reference>
+      <reference>Rule 288</reference>
       <imagelink>
+         ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-288-a.gif
       </imagelink>
     </appearance>
 
@@ -111,8 +130,9 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>lunar</show>
-      <reference>Page 18</reference>
+      <reference>Rule 288</reference>
       <imagelink>
+         ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-288-b.gif
       </imagelink>
     </appearance>
 
@@ -120,10 +140,80 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
-      <reference>Page 20</reference>
+      <reference>Rule 291</reference>
       <imagelink>
+         ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-291.gif
       </imagelink>
     </appearance>
 
   </appearances>
+
+        <specificappearances><!-- Start of Specific Appearances list -->
+           <danger>
+              <aspect>Stop</aspect>
+           </danger>
+           <held>
+              <aspect>Stop</aspect>
+           </held>
+    </specificappearances><!-- End of Specific Appearances list -->
+ 
+ 
+    <aspectMappings><!-- Start of Aspect Mapping -->
+
+    <aspectMapping>
+     <advancedAspect>Stop</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Stop and Proceed</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Grade</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Restricting</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Approach</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Clear</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach</advancedAspect>
+     <ourAspect>Advance Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Medium</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Limited</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Advance Approach</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Clear</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+  </aspectMappings><!-- End of Aspect Mapping -->
+
 </appearancetable>  

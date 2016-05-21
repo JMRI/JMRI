@@ -10,8 +10,6 @@ import java.io.IOException;
 
 import java.util.HashMap;
 //import javax.swing.JOptionPane;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
@@ -35,16 +33,7 @@ public class RPSItemPanel extends FamilyItemPanel {
 
     public void init() {
     	if (!_initialized) {
-            JPanel blurb = new JPanel();
-            blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
-            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
-            blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
-            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(Bundle.getMessage("ToAddDeleteModify", "ButtonEditIcons")));
-            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
             JPanel panel = new JPanel();
-            panel.add(blurb);
             add(panel);
             super.init();
     	}

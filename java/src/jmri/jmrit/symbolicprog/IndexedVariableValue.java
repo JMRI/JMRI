@@ -68,6 +68,15 @@ public class IndexedVariableValue extends VariableValue
         return "Decimal: "+_minVal+" - "+_maxVal;
     }
 
+    /** 
+     * Provide a user-readable description of
+     * the CVs accessed by this variable.
+     */
+     
+     public String getCvDescription() {
+        return "CV"+getCvName();
+     }
+     
     String oldContents = "";
 
     void enterField() {
@@ -158,6 +167,13 @@ public class IndexedVariableValue extends VariableValue
             return b;
         }
         else if (format.equals("hslider")) {
+            IndexedVarSlider b = new IndexedVarSlider(this, _minVal, _maxVal);
+            b.setOrientation(JSlider.HORIZONTAL);
+            sliders.add(b);
+            updateRepresentation(b);
+            return b;
+        }
+        else if (format.equals("hslider-percent")) {
             IndexedVarSlider b = new IndexedVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.HORIZONTAL);
             if (_maxVal > 20) {

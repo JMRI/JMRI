@@ -42,8 +42,26 @@ CLASSNAME="@CLASS@"
 # set DEBUG to anything to see debugging output
 # DEBUG=yes
 
-# command execute Java, but default assume command line set up 
-JAVACMD="java"
+
+## ask the user if they want to install Java, and open the Java web site if yes
+OfferJavaDownload() {
+    x=`/usr/bin/osascript << EOT
+    tell application "Finder"
+	activate
+	set myReply to button returned of (display dialog "No Java can be found on the system.\nWould you like to download Java now?" \
+	     buttons { "No", "Yes" } \
+	     with icon stop  \
+	     with title "JMRI Installation Problem")
+    end tell
+EOT
+  `
+    if [ "$x" = "Yes" ]
+    then
+        open http://java.com/
+    fi
+    exit 1
+}
+
 
 if [ -z "$OS" ]
 then
@@ -62,12 +80,50 @@ then
     fi
 fi
 
+#
+# Mac OS X has a bewildering array of possibilities these days
+#
+# The Apple Java 6 runtime might be present, and if it is, then using
+# /usr/libexec/java_home will find the correct version, based on the user's
+# set preferences.   Note that this also works to find a Java 7 JDK, but
+# not the Java 7 JRE.
+#
+# As 10.8 & 10.9 do not ship with a Java runtime, this command will prompt
+# the user and download a JRE as needed.
+#
+# But if the user already has the Oracle Java 7 JRE installed, we should
+# use that instead of forcing a download of Apple's Java 6.
+#
+# * So look for the Oracle Java 7 JRE and use it if found
+# * Otherwise, use java_home if it's present
+# * As a last resort, use the default 'java' command and let the user 
+#   deal with it.  
+
 if [ "$OS" = "macosx" ]; then
     # on Mac OS X, we default to logging, since the Console app make it less visible unless you look for it
     DEBUG=yes
-    # check for Oracle method of directly locating java binaries
-    if [ -x /usr/libexec/java_home ]; then
-        JAVACMD="/usr/libexec/java_home -exec java"
+
+    # this is the current (1.7.0_45ish) location of the Oracle installed Java 7 JRE (but not the JDK)
+    PLUGINDIR="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+    if [ -x "$PLUGINDIR/bin/java" ]
+    then
+        JAVA_HOME="$PLUGINDIR"
+        JAVACMD=("$PLUGINDIR/bin/java")
+
+        export JAVA_HOME
+
+    # check for Apple method of directly locating java binaries (may find a Java 6 JRE or a Java 7 JDK)
+    elif [ -x /usr/libexec/java_home ]; then
+	VERSION=$(/usr/libexec/java_home -exec java -version)
+	if [ $? == 0 ]
+        then
+            JAVACMD=("/usr/libexec/java_home" "-exec" "java")
+        else
+            OfferJavaDownload
+	fi
+    else
+	# this isn't supposed to happen on any Mac that I know of in 2013... but you never know
+        OfferJavaDownload
     fi
 fi
 
@@ -108,18 +164,18 @@ then
       ARCH=`$cmd 2>/dev/null`
       if [ -n "$ARCH" ]
       then
-	    # canonicalize the architecture names where possible
-	    # we currently have AMD64 / X86_64
-	    if [ "$ARCH" = "amd64" ]
-	    then
-	      ARCH="x86_64"
-	    fi
+            # canonicalize the architecture names where possible
+            # we currently have AMD64 / X86_64
+            if [ "$ARCH" = "amd64" ]
+            then
+              ARCH="x86_64"
+            fi
 
             # and all the flavors of ia32 (traditional x86)
-	    if [ "$ARCH" = "i686" -o "$ARCH" = "i586" -o "$ARCH" = "i486" ]
-	    then
-	      ARCH="i386"
-	    fi
+            if [ "$ARCH" = "i686" -o "$ARCH" = "i586" -o "$ARCH" = "i486" ]
+            then
+              ARCH="i386"
+            fi
 
         # Now deal with ARM architecture 
         #   armv6l contains hard-float version, armv5 contains soft-float version
@@ -138,14 +194,14 @@ then
           fi
         fi
 
-	    if [ -d "${SYSLIBPATH}/$ARCH" ]
-	    then
-	       SYSLIBPATH="${SYSLIBPATH}/$ARCH:$SYSLIBPATH"
+            if [ -d "${SYSLIBPATH}/$ARCH" ]
+            then
+               SYSLIBPATH="${SYSLIBPATH}/$ARCH:$SYSLIBPATH"
 
-	       # we're only interested in ONE of these values, so as soon as we find a supported
-	       # architecture directory, continue processing and start up the program
-	       break
-	    fi
+               # we're only interested in ONE of these values, so as soon as we find a supported
+               # architecture directory, continue processing and start up the program
+               break
+            fi
       fi
     done
 fi
@@ -169,9 +225,11 @@ then
     CP="${CP}":/System/Library/Java
 fi
 
+[ -z "${JAVACMD[@]}" ] && JAVACMD=("java")
+
 [ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
-[ -n "${DEBUG}" ] && echo "Java CMD: '${JAVACMD}'"
+[ -n "${DEBUG}" ] && echo "Java CMD: '${JAVACMD[@]}'"
 
 # configuration file name is 1st argument.
 # If not provided, build config file name dynamically
@@ -257,7 +315,7 @@ EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ]
 do
 
-  $JAVACMD "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+  "${JAVACMD[@]}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
   EXIT_STATUS=$?
   [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"

@@ -503,7 +503,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			if (car.hasFred())
 				buf.append(" " + Bundle.getMessage("(F)"));
 			if (car.isPassenger())
-				buf.append(" " + Bundle.getMessage("(P)"));
+				buf.append(" " + Bundle.getMessage("(P)") + " " +car.getBlocking());
 			if (car.isUtility())
 				buf.append(" " + Bundle.getMessage("(U)"));
 			if (car.isHazardous())
@@ -661,8 +661,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
 					+ " new: " + e.getNewValue());	// NOI18N
-		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();
 		}

@@ -3,8 +3,8 @@
 <!-- version 1 - for Unified Software -->
 <pane name="Zimo Specific">
   <column>
-    <display item="Pulse Chain Recognition (LGB)" tooltip="CV 112, bit 2"/>
-    <display item="NMRA" tooltip="CV 112, bit 3"/>
+    <display item="Pulse Chain Recognition (LGB)"/>
+    <display item="NMRA"/>
     <display item="Loco Number Recognition"/>
     <label label=" ">
       <label> </label>
@@ -21,9 +21,9 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Signal Dependent Acceleration" tooltip="CV 49"/>
-        <display item="Signal Dependent Deceleration" tooltip="CV 50"/>
-        <display item="Signal Dependent Reaction Time" tooltip="CV 59"/>
+        <display item="Signal Dependent Acceleration"/>
+        <display item="Signal Dependent Deceleration"/>
+        <display item="Signal Dependent Reaction Time"/>
       </column>
       <column>
         <label label="Signal Dependent Speed Limits">
@@ -33,33 +33,33 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="-1-" label="             -1-" tooltip="CV 51">
+        <display item="-1-" label="             -1-">
           <label>             -1-</label>
         </display>
-        <display item="-U-" tooltip="CV 52"/>
-        <display item="-2-" tooltip="CV 53"/>
-        <display item="-L-" tooltip="CV 54"/>
-        <display item="-3-" tooltip="CV 55"/>
+        <display item="-U-"/>
+        <display item="-2-"/>
+        <display item="-L-"/>
+        <display item="-3-"/>
       </column>
     </row>
     <label label=" ">
       <label> </label>
     </label>
     <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable HLU Signal Control"/>
-    <display item="Distance controlled stopping" tooltip="CV 140"/>
+    <display item="Distance controlled stopping"/>
     <label label=" ">
       <label> </label>
     </label>
     <row>
       <column>
-        <display item="Distance controlled stopping Distance" tooltip="CV 141"/>
-        <display item="Distance controlled stopping speed correction (HLU)" tooltip="CV 143"/>
+        <display item="Distance controlled stopping Distance"/>
+        <display item="Distance controlled stopping speed correction (HLU)"/>
       </column>
       <column>
-        <display item="Distance controlled stopping Distance" label="" format="hslider" tooltip="CV 141">
+        <display item="Distance controlled stopping Distance" label="" format="hslider">
           <label/>
         </display>
-        <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider" tooltip="CV 143">
+        <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider">
           <label/>
         </display>
       </column>

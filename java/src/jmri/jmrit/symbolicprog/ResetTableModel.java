@@ -47,6 +47,8 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         _status = status;
     }
 
+    public void setProgrammer(Programmer p) { mProgrammer = p; }
+    
     public int getRowCount() {
         return rowVector.size();
     }

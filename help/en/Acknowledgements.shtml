@@ -70,6 +70,8 @@
 	<LI>Thomas Beutel, who helped with the early EasyDCC tests
 	<Li>John Bicknell, who worked with Ian Birchenough to update ZTC decoder definitions
 	<Li>Leo Bicknell, who updated the LocoNet monitor
+	<li>Pierre Billon, who translated decoder files to German and French
+	    and provided decoder definitions for Doehler and Haass.
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
 	ZTC decoder definition files, plus the ZTC 4007, and the
 	Lenz Standard decoder.
@@ -227,7 +229,8 @@
     <LI>Bill Gray suggested web page improvements
 	<LI>Michael Greene, who corrected a bug in the SoundTraxx decoder definition;
 	provided our jmri.info, decoderpro.info and packetpro.info domain names;
-	and provided definitions for the E-Z Command and Zimo MX61_N decoders
+	provided definitions for the E-Z Command and Zimo MX61_N decoders;
+	and updated the Digitrax definition for new types.
 	<LI>Walter Griffin, who provided graphics for signals and CTC panels
 	<LI>Mark Gurries, who provided loaner equipment and great ideas. He's currently
 	working on decoder definitions for DecoderPro
@@ -260,6 +263,7 @@
 <a name="J"></A>
 	<LI>John Jabour, who created the excellent LocoBuffer and thereby made 
 	reliable LocoNet communications routine
+	<li>Martin Jahner, who fixed the constant checkboxen
 	<LI>Bob Jacobsen, who wrote some of the early code and does packaging and user support
 	<li>Martin Jahner, who built a replacement library for Mac OS X
 	<li>Jay Janzen, who debugged a RobotThrottle problem
@@ -287,7 +291,9 @@
 	<A href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">a nice clinic</a> on
 	how to start making panels, and contributed numerous icons
 	<LI>Tighe Kuykendall improved documentation.
+	<li>Bjorn Kvisli, who provided Doehler and Haass decoder definitions.
 <a name="L"></A>
+    <li>John Lang, who provided several signal definitions
 	<LI>Al Lautenslager of CVP Products, who loaned some EasyDCC hardware
 	and found answers to programming questions
 	<LI>Jeff Law provided two Umelec decoder definitions
@@ -429,6 +435,7 @@
 	<li>John Stewart, who provided a decoder definition for the Lenz Plus 2010 decoder.
 <a name="T"></A>
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
+	<li>Suzie Tall, who provided several international signal definitions
     <li>Clint Taylor added code to allow function buttons to work within the loconet slot manager.
 	<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
         for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>,

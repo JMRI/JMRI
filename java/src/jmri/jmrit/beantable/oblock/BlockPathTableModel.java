@@ -150,7 +150,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 } else {
                     Portal fromPortal = _block.getPortalByName(tempRow[FROM_PORTAL_COLUMN]);
                     Portal toPortal = _block.getPortalByName(tempRow[TO_PORTAL_COLUMN]);
-                    OPath path = new OPath(strValue, _block, fromPortal, 0, toPortal, 0);
+                    OPath path = new OPath(strValue, _block, fromPortal, toPortal, null);
 
                     if (!_block.addPath(path)) {
                         msg = java.text.MessageFormat.format(

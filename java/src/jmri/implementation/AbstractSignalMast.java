@@ -188,6 +188,16 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     public boolean isAspectDisabled(String aspect){
         return disabledAspects.contains(aspect);
     }
+    
+    boolean allowUnLit = true;
+    
+    public void setAllowUnLit(boolean boo){
+        allowUnLit = boo;
+    }
+    
+    public boolean allowUnLit(){
+        return allowUnLit;
+    }
 
 }
 

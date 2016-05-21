@@ -3,11 +3,11 @@
 <!-- version 1 - for Unified Software -->
 <pane name="Decoder Lock">
   <column>
-    <display item="Service Mode Programming Locked" format="checkbox" tooltip="CV 144 bit 6"/>
+    <display item="Service Mode Programming Locked" format="checkbox"/>
     <label label=" ">
       <label> </label>
     </label>
-    <display item="Software Update Locked" format="checkbox" tooltip="CV 144 bit 7"/>
+    <display item="Software Update Locked" format="checkbox"/>
   </column>
   <name>Decoder Lock</name>
 </pane>

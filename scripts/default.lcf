@@ -11,7 +11,7 @@
 # Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
 
 # The root category is set to log priority INFO and above
-# to the console (A1) , and also to rolling files (T).
+# to the console (A1), to rolling log files (T), and to a single file (R).
 
 # The root category is the only category that is given
 # a default priority. All other categories do not have a default
@@ -19,7 +19,7 @@
 # hierarchy.  See the end of the file for examples of how to 
 # control this at a finer level.
 
-log4j.rootCategory= INFO, A1, T
+log4j.rootCategory= INFO, A1, T, R
 
 # A1 is set to be a ConsoleAppender which outputs to System.out. 
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
@@ -51,26 +51,30 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # Justification, padding and truncation can be controlled e.g. %-5.10p 
 # is left justified, at least 5 and no more than 10 characters wide
 
-log4j.appender.A1.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
+log4j.appender.A1.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
 
 # R is set to output to a single log file. This is defined
-# for systems that can't (or don't want to) have rolling files,
-# but is not active by default
+# for systems that can't (or don't want to) have rolling files.
 log4j.appender.R=org.apache.log4j.FileAppender
-log4j.appender.R.File=${jmri.log.path}example.log
+log4j.appender.R.File=${jmri.log.path}session.log
 log4j.appender.R.Append=false
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
-log4j.appender.R.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
+log4j.appender.R.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
 
 # T is set to output to a rolling file.  This only works for certain systems,
 # but manages files in a convenient way.
+# T is defined to preserve messages between sessions and to keep up to 2
+# previous log files in addition to the current.
 log4j.appender.T=org.apache.log4j.RollingFileAppender
 log4j.appender.T.File=${jmri.log.path}messages.log
-log4j.appender.T.Append=false
+log4j.appender.T.Append=true
 log4j.appender.T.layout=org.apache.log4j.PatternLayout
-log4j.appender.T.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
+log4j.appender.T.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
 log4j.appender.T.MaxFileSize=1000KB
 log4j.appender.T.MaxBackupIndex=2
+
+# Default Jetty server to only logging WARN since it can be verbose at points
+log4j.category.org.eclipse.jetty=WARN
 
 # Examples of changing priority of specific categories (classes, packages):
 #

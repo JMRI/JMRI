@@ -270,15 +270,15 @@ public class RouteManager {
 		newRl.setDepartureTime(oldRl.getDepartureTime());
 		newRl.setComment(oldRl.getComment());
 		if(!invert){
-			newRl.setCanDrop(oldRl.canDrop());
-			newRl.setCanPickup(oldRl.canPickup());
+			newRl.setDropAllowed(oldRl.isDropAllowed());
+			newRl.setPickUpAllowed(oldRl.isPickUpAllowed());
 			newRl.setGrade(oldRl.getGrade());
 			newRl.setTrainDirection(oldRl.getTrainDirection());
 			newRl.setMaxTrainLength(oldRl.getMaxTrainLength());
 		}else{
 			// flip set outs and pick ups
-			newRl.setCanDrop(oldRl.canPickup());
-			newRl.setCanPickup(oldRl.canDrop());
+			newRl.setDropAllowed(oldRl.isPickUpAllowed());
+			newRl.setPickUpAllowed(oldRl.isDropAllowed());
 			// invert train directions
 			int oldDirection = oldRl.getTrainDirection();
 			if (oldDirection == RouteLocation.NORTH)

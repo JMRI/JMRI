@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	
+  <!-- 1 2013/07/31 Creation 
+		First version for Doehler und Haass, contains only analog
+		mode function status for function FL and F9 to F12 (CV14)
+  -->
+	  <variable label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1" exclude="DH06A">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - FL(f)</label>
+      </variable>
+      <variable label="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1" exclude="DH06A">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - FL(r)</label>
+      </variable>
+      <variable label="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX" default="0" exclude="DH06A">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F9</label>
+      </variable>
+      <variable label="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX" default="0" exclude="DH06A">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F10</label>
+      </variable>
+	  <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0" exclude="DH06A">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F11</label>
+      </variable>
+	  <variable label="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0" exclude="DH06A">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F12</label>
+      </variable>
+</variables>

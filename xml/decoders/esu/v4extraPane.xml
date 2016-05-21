@@ -1,4 +1,4 @@
-  <pane name="ESU Extra">
+  <pane name="ESU Misc.">
     <column>
       <separator/>
       <label label="Enabled Protocols"/>
@@ -34,7 +34,7 @@
       <label label=" "/>
         <row>
             <display item="ESU V4 Extra Power Handling Slider 1" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Power Handling Slider 1" layout="above" format="hslider"/>
         </row>
       <label label=" "/>
@@ -51,30 +51,51 @@
       <label label=" "/>
         <row>
             <display item="ESU V4 Extra Miscellaneous Slider 1" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Miscellaneous Slider 1" layout="above" format="hslider"/>
         </row>
       <label label=" "/>
     </column>
     <column>
       <separator/>
+      <label label="Function Output Settings"/>
+      <label label=" "/>
+        <row>
+            <display item="ESU V4 Extra Function Output Settings Slider 1" layout="above" label=""/>
+            <label label=""/>
+            <display item="ESU V4 Extra Function Output Settings Slider 1" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+            <display item="ESU V4 Extra Function Output Settings Slider 2" layout="above" label=""/>
+            <label label=""/>
+            <display item="ESU V4 Extra Function Output Settings Slider 2" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+            <display item="ESU V4 Extra Function Output Settings Slider 3" layout="above" label=""/>
+            <label label=""/>
+            <display item="ESU V4 Extra Function Output Settings Slider 3" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+      <separator/>
       <label label="Auto Uncoupling"/>
       <label label=" "/>
         <row>
             <display item="ESU V4 Extra Auto Uncoupling Slider 1" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Auto Uncoupling Slider 1" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
         <row>
             <display item="ESU V4 Extra Auto Uncoupling Slider 2" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Auto Uncoupling Slider 2" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
         <row>
             <display item="ESU V4 Extra Auto Uncoupling Slider 3" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Auto Uncoupling Slider 3" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
@@ -83,19 +104,19 @@
       <label label=" "/>
         <row>
             <display item="ESU V4 Extra Smoke Unit Slider 1" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Smoke Unit Slider 1" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
         <row>
             <display item="ESU V4 Extra Smoke Unit Slider 2" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Smoke Unit Slider 2" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
         <row>
             <display item="ESU V4 Extra Smoke Unit Slider 3" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Smoke Unit Slider 3" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
@@ -104,22 +125,33 @@
       <label label=" "/>
         <row>
             <display item="ESU V4 Extra Smoke Chuffs Slider 1" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Smoke Chuffs Slider 1" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
         <row>
             <display item="ESU V4 Extra Smoke Chuffs Slider 2" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Smoke Chuffs Slider 2" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
         <row>
             <display item="ESU V4 Extra Smoke Chuffs Slider 3" layout="above" label=""/>
-            <label label=" "/>
+            <label label=""/>
             <display item="ESU V4 Extra Smoke Chuffs Slider 3" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
+      <separator/>
+      <label label="Decoder Information"/>
+      <label label=" "/>
+        <row>
+            <display item="Firmware Major Version"/>
+        </row>
+        <row>
+            <display item="Firmware Minor Version"/>
+        </row>
+        <row>
+            <display item="Firmware Build Number"/>
+        </row>
     </column>
-    <name>ESU Extra</name>
   </pane>

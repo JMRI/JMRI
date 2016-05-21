@@ -1,31 +1,30 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.awt.GridLayout;
-import java.awt.BorderLayout;
-import javax.swing.JOptionPane;
 import java.util.TreeMap;
-
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-
-import jmri.Sensor;
+import jmri.DccThrottle;
 import jmri.InstanceManager;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.Sensor;
+import jmri.ThrottleListener;
 
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
-
-import jmri.ThrottleListener;
-import jmri.DccThrottle;
+import jmri.util.swing.BeanSelectCreatePanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleListener{
@@ -528,6 +527,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedProfilePanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class);
     
 }

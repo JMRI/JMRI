@@ -192,28 +192,26 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     boolean _delete;
     HashMap<String, String> _urlMap = new HashMap<String, String>(); 
     public NamedIcon loadFailed(String msg, String url) {
-        if (_debug) log.debug("loadFailed _ignore= "+_ignore);
+        if (_debug) log.debug("loadFailed _ignore= "+_ignore+" "+msg);
         String goodUrl = _urlMap.get(url);
         if (goodUrl!=null) {
             return NamedIcon.getIconByName(goodUrl);
         }
         if (_ignore) {
             _loadFailed = true;
-            return new NamedIcon(url, url);
+            return NamedIcon.getIconByName(url);
         }
         _newIcon = null;
         _delete = false;
         new UrlErrorDialog(msg, url);
 
         if (_delete) {
-            if (_debug) log.debug("loadFailed _delete= "+_delete);
             return null;
         }
         if (_newIcon==null) {
             _loadFailed = true;
-            _newIcon =new NamedIcon(url, url);
+            _newIcon = NamedIcon.getIconByName(url);
         }
-        if (_debug) log.debug("loadFailed icon null= "+(_newIcon==null));
         return _newIcon;
     }
     class UrlErrorDialog extends JDialog {
@@ -223,14 +221,21 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         UrlErrorDialog(String msg, String url) {
             super(_targetFrame, Bundle.getMessage("BadIcon"), true);
             _badUrl = url;
+            JPanel content = new JPanel();
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            panel.add(javax.swing.Box.createVerticalStrut(10));
             panel.add(new JLabel(java.text.MessageFormat.format(Bundle.getMessage("IconUrlError"), msg)));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt1")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt1A")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt1B")));
             panel.add(javax.swing.Box.createVerticalStrut(10));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt2")));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt3")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt3A")));
+            panel.add(javax.swing.Box.createVerticalStrut(10));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt4")));
+            panel.add(javax.swing.Box.createVerticalStrut(10));
             _urlField = new JTextField(url);
             _urlField.setDragEnabled(true);
             _urlField.setTransferHandler(new jmri.util.DnDStringImportHandler());
@@ -241,7 +246,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _catalog = CatalogPanel.makeDefaultCatalog();
             _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIconToText"));
             panel.add(_catalog);
-            setContentPane(panel);
+            content.add(panel);
+            setContentPane(content);
             setLocation(200, 100);
             pack();
             setVisible(true);
@@ -504,9 +510,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
 
         public void paint(Graphics g) {
-            Graphics2D g2d = (Graphics2D)g;
+        	Graphics2D g2d = (Graphics2D)g;
             g2d.scale(_paintScale, _paintScale);
-            super.paint(g);
+            super.paint(g);           	        	
             paintTargetPanel(g);
             java.awt.Stroke stroke = g2d.getStroke();
             Color color = g2d.getColor();
@@ -519,12 +525,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (_selectionGroup!=null){
                 g2d.setColor(_selectGroupColor);
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
-                if (_selectionGroup!=null){
-                    for(int i=0; i<_selectionGroup.size();i++){
-                    	Positionable p = _selectionGroup.get(i);
-                        if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
-                            g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());                        	
-                        }
+                for(int i=0; i<_selectionGroup.size();i++){
+                	Positionable p = _selectionGroup.get(i);
+                    if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
+                        g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());                        	
                     }
                 }
             }
@@ -952,43 +956,115 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (showAlignPopup(p)) {
             JMenu edit = new JMenu(Bundle.getMessage("EditAlignment"));
             edit.add(new AbstractAction(Bundle.getMessage("AlignX")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroup(true,false);
+                int _x;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(_x, comp.getY());
+                    }
                 }
-            });
+                AbstractAction init(int x) {
+                    _x = x;
+                    return this;
+                }
+            }.init(p.getX()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignMiddleX")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroupMiddle(true,false);
+                int _x;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(_x-comp.getWidth()/2, comp.getY());
+                    }
                 }
-            });
+                AbstractAction init(int x) {
+                    _x = x;
+                    return this;
+                }
+            }.init(p.getX()+p.getWidth()/2));
             edit.add(new AbstractAction(Bundle.getMessage("AlignOtherX")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroupOtherSide(true,false);
+                int _x;
+                 public void actionPerformed(ActionEvent e) { 
+                     if (_selectionGroup==null) { return;}
+                     for (int i=0; i<_selectionGroup.size(); i++) {
+                         Positionable comp = _selectionGroup.get(i);
+                         if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                         comp.setLocation(_x-comp.getWidth(), comp.getY());
+                     }
+                 }
+                AbstractAction init(int x) {
+                    _x = x;
+                    return this;
                 }
-            });
+            }.init(p.getX()+p.getWidth()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignY")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroup(false,false);
+                int _y;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(comp.getX(), _y);
+                    }
                 }
-            });
+                AbstractAction init(int y) {
+                    _y = y;
+                    return this;
+                }
+            }.init(p.getY()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignMiddleY")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroupMiddle(false,false);
+                int _y;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(comp.getX(), _y-comp.getHeight()/2);
+                    }
                 }
-            });
+                AbstractAction init(int y) {
+                    _y = y;
+                    return this;
+                }
+            }.init(p.getY()+p.getHeight()/2));
             edit.add(new AbstractAction(Bundle.getMessage("AlignOtherY")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroupOtherSide(false,false);
+                int _y;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(comp.getX(), _y-comp.getHeight());
+                    }
                 }
-            });
+                AbstractAction init(int y) {
+                    _y = y;
+                    return this;
+                }
+            }.init(p.getY()+p.getHeight()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignXFirst")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroup(true,true);
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    int x = _selectionGroup.get(0).getX();
+                    for (int i=1; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(x, comp.getY());
+                    }
                 }
             });
             edit.add(new AbstractAction(Bundle.getMessage("AlignYFirst")) {
                 public void actionPerformed(ActionEvent e) {
-                    alignGroup(false,true);
+                    if (_selectionGroup==null) { return; }
+                    int y = _selectionGroup.get(0).getX();
+                    for (int i=1; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(comp.getX(), y);
+                    }
                 }
             });
             popup.add(edit);
@@ -1058,6 +1134,29 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }.init(p, showTooltipItem));
         edit.add(showTooltipItem);
         edit.add(CoordinateEdit.getTooltipEditAction(p));
+        jmri.NamedBean bean = p.getNamedBean();
+        if (bean!=null) {
+            edit.add(new AbstractAction(Bundle.getMessage("SetSysNameTooltip")) {
+                Positionable comp;
+                jmri.NamedBean bean;
+                public void actionPerformed(ActionEvent e) { 
+                    ToolTip tip = comp.getTooltip();
+                    if (tip!=null) {
+                    	String uName = bean.getUserName();
+                    	String sName = bean.getSystemName();
+                    	if (uName!=null && uName.length()>0) {
+                    		sName = uName+"("+sName+")";
+                    	}
+                        tip.setText(sName);
+                    }
+                 }
+                AbstractAction init(Positionable pos, jmri.NamedBean b) {
+                    comp = pos;
+                    bean = b;
+                    return this;
+                }
+            }.init(p, bean));
+        }
         popup.add(edit);
     }
 
@@ -1281,7 +1380,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     static final public String[] ICON_EDITORS = {"Sensor", "RightTurnout", "LeftTurnout",
                         "SlipTOEditor", "SignalHead", "SignalMast", "Memory", "Light", 
-                        "Reporter", "Background", "MultiSensor", "Icon", "Text"};
+                        "Reporter", "Background", "MultiSensor", "Icon", "Text", "Block Contents"};
     /**
     * @param name Icon editor's name
     */
@@ -1314,6 +1413,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 addIconEditor();
             } else if ("Text".equals(name)) {
                 addTextEditor();
+            } else if("BlockLabel".equals(name)){
+                addBlockContentsEditor();
             } else {
 //                log.error("No such Icon Editor \""+name+"\"");
                 return null;
@@ -1561,6 +1662,21 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JFrameItem frame = makeAddIconFrame("Memory", true, true, editor);
         _iconEditorFrame.put("Memory", frame);
         editor.setPickList(PickListModel.memoryPickModelInstance());
+        editor.makeIconPanel(true);
+        editor.complete(addIconAction, false, true, false);
+        frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
+    }
+    
+    protected void addBlockContentsEditor(){
+        IconAdder editor = new IconAdder("Block Contents");
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                putBlockContents();
+            }
+        };
+        JFrameItem frame = makeAddIconFrame("BlockLabel", true, true, editor);
+        _iconEditorFrame.put("BlockLabel", frame);
+        editor.setPickList(PickListModel.blockPickModelInstance());
         editor.makeIconPanel(true);
         editor.complete(addIconAction, false, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -1815,6 +1931,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return l;
     }
     
+
+    
     protected MemorySpinnerIcon addMemorySpinner() {
         MemorySpinnerIcon l = new MemorySpinnerIcon(this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
@@ -1830,6 +1948,18 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         MemoryInputIcon l = new MemoryInputIcon(_spinCols.getNumber().intValue(), this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
         l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(MEMORIES);
+        setNextLocation(l);
+        putItem(l);
+        return l;
+    }
+    
+    protected BlockContentsIcon putBlockContents() {
+        BlockContentsIcon l = new BlockContentsIcon(new NamedIcon("resources/icons/misc/X-red.gif",
+                            "resources/icons/misc/X-red.gif"), this);
+        IconAdder blockIconEditor = getIconEditor("BlockLabel");
+        l.setBlock(blockIconEditor.getTableSelection().getDisplayName());
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(MEMORIES);
         setNextLocation(l);
@@ -2460,7 +2590,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             for (int i=0; i<_selectionGroup.size(); i++) {
             	Positionable p = _selectionGroup.get(i);
             	if ( p instanceof PositionableLabel ) {
-                    setAttributes(util, p, isOpaque);           		
+                    setAttributes(util, p, false);           		
             	}
              }
         }
@@ -2550,98 +2680,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    protected void alignGroup(boolean alignX, boolean alignToFirstSelected) {
-        if (_selectionGroup==null) {
-            return;
-        }
-        int ave = getAverage(alignX, alignToFirstSelected);
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignX) {
-                comp.setLocation(ave, comp.getY());
-            } else {
-                comp.setLocation(comp.getX(), ave);
-            }
-        }
-    }
-    
-
-    protected void alignGroupOtherSide(boolean alignX, boolean alignToFirstSelected) {
-        if (_selectionGroup==null) {
-            return;
-        }
-        int ave = getAverage(alignX, alignToFirstSelected);
-        ave += getMax(alignX, alignToFirstSelected);
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignX) {
-                comp.setLocation(ave-comp.getWidth(), comp.getY());
-            } else {
-                comp.setLocation(comp.getX(), ave-comp.getHeight());
-            }
-        }
-    }
-    protected void alignGroupMiddle(boolean alignX, boolean alignToFirstSelected) {
-        if (_selectionGroup==null) {
-            return;
-        }
-        int ave = getAverage(alignX, alignToFirstSelected);
-        int max = getMax(alignX, alignToFirstSelected);
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignX) {
-                comp.setLocation(ave+(max-comp.getWidth()>>>1), comp.getY());
-            } else {
-                comp.setLocation(comp.getX(), ave+(max-comp.getHeight()>>>1));
-            }
-        }
-    }
-    private int getMax(boolean alignX, boolean alignToFirstSelected) {
-        int max = 0;
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignX) {
-                max = Math.max(max, comp.getWidth());
-            } else {
-                max = Math.max(max, comp.getHeight());
-            }
-        }
-        return max;
-    }    
-    private int getAverage(boolean alignX, boolean alignToFirstSelected) {
-    	int sum =0;
-        int cnt = 0;
-        int ave = 0;       
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignToFirstSelected) {
-                if (alignX) {
-                        ave = comp.getX();
-                    } else {
-                        ave = comp.getY();
-                    }
-                    break;
-                } else {
-                    if (alignX) {
-                    sum += comp.getX();
-                } else {
-                    sum += comp.getY();
-                }
-            cnt++;
-            }
-        }
-
-        if (!alignToFirstSelected) {
-            ave = Math.round((float) sum / cnt);
-        }
-    	return ave;
-    }
-    
     public Rectangle getSelectRect() {
     	return _selectRect;
     }

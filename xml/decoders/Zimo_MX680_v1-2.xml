@@ -53,7 +53,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1" tooltip="CV 33">
+      <variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -64,7 +64,7 @@
         </enumVal>
         <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" tooltip="CV 33">
+      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -75,7 +75,7 @@
         </enumVal>
         <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3" tooltip="CV 33">
+      <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -86,7 +86,7 @@
         </enumVal>
         <label>FL(f) controls output 3</label>
       </variable>
-      <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4" tooltip="CV 33">
+      <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -97,7 +97,7 @@
         </enumVal>
         <label>FL(f) controls output 4</label>
       </variable>
-      <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5" tooltip="CV 33">
+      <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -108,7 +108,7 @@
         </enumVal>
         <label>FL(f) controls output 5</label>
       </variable>
-      <variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6" tooltip="CV 33">
+      <variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -119,7 +119,7 @@
         </enumVal>
         <label>FL(f) controls output 6</label>
       </variable>
-      <variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7" tooltip="CV 33">
+      <variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -130,7 +130,7 @@
         </enumVal>
         <label>FL(f) controls output 7</label>
       </variable>
-      <variable label="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8" tooltip="CV 33">
+      <variable label="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -141,7 +141,7 @@
         </enumVal>
         <label>FL(f) controls output 8</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" tooltip="CV 34">
+      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -152,7 +152,7 @@
         </enumVal>
         <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX" minOut="2" tooltip="CV 34">
+      <variable label="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -163,7 +163,7 @@
         </enumVal>
         <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3" tooltip="CV 34">
+      <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -174,7 +174,7 @@
         </enumVal>
         <label>FL(r) controls output 3</label>
       </variable>
-      <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4" tooltip="CV 34">
+      <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -185,7 +185,7 @@
         </enumVal>
         <label>FL(r) controls output 4</label>
       </variable>
-      <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5" tooltip="CV 34">
+      <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -196,7 +196,7 @@
         </enumVal>
         <label>FL(r) controls output 5</label>
       </variable>
-      <variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6" tooltip="CV 34">
+      <variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -207,7 +207,7 @@
         </enumVal>
         <label>FL(r) controls output 6</label>
       </variable>
-      <variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7" tooltip="CV 34">
+      <variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -218,7 +218,7 @@
         </enumVal>
         <label>FL(r) controls output 7</label>
       </variable>
-      <variable label="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8" tooltip="CV 34">
+      <variable label="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -229,7 +229,7 @@
         </enumVal>
         <label>FL(r) controls output 8</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1" tooltip="CV 35">
+      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -240,7 +240,7 @@
         </enumVal>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1" tooltip="CV 35">
+      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -251,7 +251,7 @@
         </enumVal>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F1 controls output 3" CV="35" default="1" mask="XXXXXVXX" minOut="3" minFn="1" tooltip="CV 35">
+      <variable label="F1 controls output 3" CV="35" default="1" mask="XXXXXVXX" minOut="3" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -262,7 +262,7 @@
         </enumVal>
         <label>F1 controls output 3</label>
       </variable>
-      <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1" tooltip="CV 35">
+      <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -273,7 +273,7 @@
         </enumVal>
         <label>F1 controls output 4</label>
       </variable>
-      <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1" tooltip="CV 35">
+      <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -284,7 +284,7 @@
         </enumVal>
         <label>F1 controls output 5</label>
       </variable>
-      <variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1" tooltip="CV 35">
+      <variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -295,7 +295,7 @@
         </enumVal>
         <label>F1 controls output 6</label>
       </variable>
-      <variable label="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1" tooltip="CV 35">
+      <variable label="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -306,7 +306,7 @@
         </enumVal>
         <label>F1 controls output 7</label>
       </variable>
-      <variable label="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1" tooltip="CV 35">
+      <variable label="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -317,7 +317,7 @@
         </enumVal>
         <label>F1 controls output 8</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2" tooltip="CV 36">
+      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -328,7 +328,7 @@
         </enumVal>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2" tooltip="CV 36">
+      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -339,7 +339,7 @@
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2" tooltip="CV 36">
+      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -350,7 +350,7 @@
         </enumVal>
         <label>F2 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 4" CV="36" default="1" mask="XXXXVXXX" minOut="4" minFn="2" tooltip="CV 36">
+      <variable label="F2 controls output 4" CV="36" default="1" mask="XXXXVXXX" minOut="4" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -361,7 +361,7 @@
         </enumVal>
         <label>F2 controls output 4</label>
       </variable>
-      <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2" tooltip="CV 36">
+      <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -372,7 +372,7 @@
         </enumVal>
         <label>F2 controls output 5</label>
       </variable>
-      <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2" tooltip="CV 36">
+      <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -383,7 +383,7 @@
         </enumVal>
         <label>F2 controls output 6</label>
       </variable>
-      <variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2" tooltip="CV 36">
+      <variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -394,7 +394,7 @@
         </enumVal>
         <label>F2 controls output 7</label>
       </variable>
-      <variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2" tooltip="CV 36">
+      <variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -405,7 +405,7 @@
         </enumVal>
         <label>F2 controls output 8</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXVXXXXX" minOut="1" minFn="3" tooltip="CV 37">
+      <variable label="F3 controls output 1" CV="37" mask="XXVXXXXX" minOut="1" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -416,7 +416,7 @@
         </enumVal>
         <label>F3 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XVXXXXXX" minOut="2" minFn="3" tooltip="CV 37">
+      <variable label="F3 controls output 2" CV="37" mask="XVXXXXXX" minOut="2" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -427,7 +427,7 @@
         </enumVal>
         <label>F3 controls output 2</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="VXXXXXXX" minOut="3" minFn="3" tooltip="CV 37">
+      <variable label="F3 controls output 3" CV="37" mask="VXXXXXXX" minOut="3" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -438,7 +438,7 @@
         </enumVal>
         <label>F3 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 4" CV="37" mask="XXXXXXXV" minOut="4" minFn="3" tooltip="CV 37">
+      <variable label="F3 controls output 4" CV="37" mask="XXXXXXXV" minOut="4" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -449,7 +449,7 @@
         </enumVal>
         <label>F3 controls output 4</label>
       </variable>
-      <variable label="F3 controls output 5" CV="37" default="1" mask="XXXXXXVX" minOut="5" minFn="3" tooltip="CV 37">
+      <variable label="F3 controls output 5" CV="37" default="1" mask="XXXXXXVX" minOut="5" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -460,7 +460,7 @@
         </enumVal>
         <label>F3 controls output 5</label>
       </variable>
-      <variable label="F3 controls output 6" CV="37" mask="XXXXXVXX" minOut="6" minFn="3" tooltip="CV 37">
+      <variable label="F3 controls output 6" CV="37" mask="XXXXXVXX" minOut="6" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -471,7 +471,7 @@
         </enumVal>
         <label>F3 controls output 6</label>
       </variable>
-      <variable label="F3 controls output 7" CV="37" mask="XXXXVXXX" minOut="7" minFn="3" tooltip="CV 37">
+      <variable label="F3 controls output 7" CV="37" mask="XXXXVXXX" minOut="7" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -482,7 +482,7 @@
         </enumVal>
         <label>F3 controls output 7</label>
       </variable>
-      <variable label="F3 controls output 8" CV="37" mask="XXXVXXXX" minOut="8" minFn="3" tooltip="CV 37">
+      <variable label="F3 controls output 8" CV="37" mask="XXXVXXXX" minOut="8" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -493,7 +493,7 @@
         </enumVal>
         <label>F3 controls output 8</label>
       </variable>
-      <variable label="F4 controls output 1" CV="38" mask="XXVXXXXX" minOut="1" minFn="4" tooltip="CV 38">
+      <variable label="F4 controls output 1" CV="38" mask="XXVXXXXX" minOut="1" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -504,7 +504,7 @@
         </enumVal>
         <label>F4 controls output 1</label>
       </variable>
-      <variable label="F4 controls output 2" CV="38" mask="XVXXXXXX" minOut="2" minFn="4" tooltip="CV 38">
+      <variable label="F4 controls output 2" CV="38" mask="XVXXXXXX" minOut="2" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -515,7 +515,7 @@
         </enumVal>
         <label>F4 controls output 2</label>
       </variable>
-      <variable label="F4 controls output 3" CV="38" mask="VXXXXXXX" minOut="3" minFn="4" tooltip="CV 38">
+      <variable label="F4 controls output 3" CV="38" mask="VXXXXXXX" minOut="3" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -526,7 +526,7 @@
         </enumVal>
         <label>F4 controls output 3</label>
       </variable>
-      <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4" tooltip="CV 38">
+      <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -537,7 +537,7 @@
         </enumVal>
         <label>F4 controls output 4</label>
       </variable>
-      <variable label="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4" tooltip="CV 38">
+      <variable label="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -548,7 +548,7 @@
         </enumVal>
         <label>F4 controls output 5</label>
       </variable>
-      <variable label="F4 controls output 6" CV="38" default="1" mask="XXXXXVXX" minOut="6" minFn="4" tooltip="CV 38">
+      <variable label="F4 controls output 6" CV="38" default="1" mask="XXXXXVXX" minOut="6" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -559,7 +559,7 @@
         </enumVal>
         <label>F4 controls output 6</label>
       </variable>
-      <variable label="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4" tooltip="CV 38">
+      <variable label="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -570,7 +570,7 @@
         </enumVal>
         <label>F4 controls output 7</label>
       </variable>
-      <variable label="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4" tooltip="CV 38">
+      <variable label="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -581,7 +581,7 @@
         </enumVal>
         <label>F4 controls output 8</label>
       </variable>
-      <variable label="F5 controls output 1" CV="39" mask="XXVXXXXX" minOut="1" minFn="5" tooltip="CV 39">
+      <variable label="F5 controls output 1" CV="39" mask="XXVXXXXX" minOut="1" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -592,7 +592,7 @@
         </enumVal>
         <label>F5 controls output 1</label>
       </variable>
-      <variable label="F5 controls output 2" CV="39" mask="XVXXXXXX" minOut="2" minFn="5" tooltip="CV 39">
+      <variable label="F5 controls output 2" CV="39" mask="XVXXXXXX" minOut="2" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -603,7 +603,7 @@
         </enumVal>
         <label>F5 controls output 2</label>
       </variable>
-      <variable label="F5 controls output 3" CV="39" mask="VXXXXXXX" minOut="3" minFn="5" tooltip="CV 39">
+      <variable label="F5 controls output 3" CV="39" mask="VXXXXXXX" minOut="3" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -614,7 +614,7 @@
         </enumVal>
         <label>F5 controls output 3</label>
       </variable>
-      <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5" tooltip="CV 39">
+      <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -625,7 +625,7 @@
         </enumVal>
         <label>F5 controls output 4</label>
       </variable>
-      <variable label="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5" tooltip="CV 39">
+      <variable label="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -636,7 +636,7 @@
         </enumVal>
         <label>F5 controls output 5</label>
       </variable>
-      <variable label="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5" tooltip="CV 39">
+      <variable label="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -647,7 +647,7 @@
         </enumVal>
         <label>F5 controls output 6</label>
       </variable>
-      <variable label="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" tooltip="CV 39" default="1">
+      <variable label="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -658,7 +658,7 @@
         </enumVal>
         <label>F5 controls output 7</label>
       </variable>
-      <variable label="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5" tooltip="CV 39">
+      <variable label="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -669,7 +669,7 @@
         </enumVal>
         <label>F5 controls output 8</label>
       </variable>
-      <variable label="F6 controls output 1" CV="40" mask="XXVXXXXX" minOut="1" minFn="6" tooltip="CV 40">
+      <variable label="F6 controls output 1" CV="40" mask="XXVXXXXX" minOut="1" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -680,7 +680,7 @@
         </enumVal>
         <label>F6 controls output 1</label>
       </variable>
-      <variable label="F6 controls output 2" CV="40" mask="XVXXXXXX" minOut="2" minFn="6" tooltip="CV 40">
+      <variable label="F6 controls output 2" CV="40" mask="XVXXXXXX" minOut="2" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -691,7 +691,7 @@
         </enumVal>
         <label>F6 controls output 2</label>
       </variable>
-      <variable label="F6 controls output 3" CV="40" mask="VXXXXXXX" minOut="3" minFn="6" tooltip="CV 40">
+      <variable label="F6 controls output 3" CV="40" mask="VXXXXXXX" minOut="3" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -702,7 +702,7 @@
         </enumVal>
         <label>F6 controls output 3</label>
       </variable>
-      <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6" tooltip="CV 40">
+      <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -713,7 +713,7 @@
         </enumVal>
         <label>F6 controls output 4</label>
       </variable>
-      <variable label="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6" tooltip="CV 40">
+      <variable label="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -724,7 +724,7 @@
         </enumVal>
         <label>F6 controls output 5</label>
       </variable>
-      <variable label="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6" tooltip="CV 40">
+      <variable label="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -735,7 +735,7 @@
         </enumVal>
         <label>F6 controls output 6</label>
       </variable>
-      <variable label="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="7" tooltip="CV 40">
+      <variable label="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -746,7 +746,7 @@
         </enumVal>
         <label>F6 controls output 7</label>
       </variable>
-      <variable label="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="7" tooltip="CV 40" default="1">
+      <variable label="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="7" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -757,7 +757,7 @@
         </enumVal>
         <label>F6 controls output 8</label>
       </variable>
-      <variable label="F7 controls output 1" CV="41" mask="XXXXXVXX" minOut="1" minFn="7" tooltip="CV 41">
+      <variable label="F7 controls output 1" CV="41" mask="XXXXXVXX" minOut="1" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -768,7 +768,7 @@
         </enumVal>
         <label>F7 controls output 1</label>
       </variable>
-      <variable label="F7 controls output 2" CV="41" mask="XXXXVXXX" minOut="2" minFn="7" tooltip="CV 41">
+      <variable label="F7 controls output 2" CV="41" mask="XXXXVXXX" minOut="2" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -779,7 +779,7 @@
         </enumVal>
         <label>F7 controls output 2</label>
       </variable>
-      <variable label="F7 controls output 3" CV="41" mask="XXXVXXXX" minOut="3" minFn="7" tooltip="CV 41">
+      <variable label="F7 controls output 3" CV="41" mask="XXXVXXXX" minOut="3" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -790,7 +790,7 @@
         </enumVal>
         <label>F7 controls output 3</label>
       </variable>
-      <variable label="F7 controls output 4" CV="41" mask="XXVXXXXX" minOut="4" minFn="7" tooltip="CV 41">
+      <variable label="F7 controls output 4" CV="41" mask="XXVXXXXX" minOut="4" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -801,7 +801,7 @@
         </enumVal>
         <label>F7 controls output 4</label>
       </variable>
-      <variable label="F7 controls output 5" CV="41" mask="XVXXXXXX" minOut="5" minFn="7" tooltip="CV 41">
+      <variable label="F7 controls output 5" CV="41" mask="XVXXXXXX" minOut="5" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -812,7 +812,7 @@
         </enumVal>
         <label>F7 controls output 5</label>
       </variable>
-      <variable label="F7 controls output 6" CV="41" mask="VXXXXXXX" minOut="6" minFn="7" tooltip="CV 41">
+      <variable label="F7 controls output 6" CV="41" mask="VXXXXXXX" minOut="6" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -823,7 +823,7 @@
         </enumVal>
         <label>F7 controls output 6</label>
       </variable>
-      <variable label="F7 controls output 7" CV="41" mask="XXXXXXXV" minOut="7" minFn="7" tooltip="CV 41">
+      <variable label="F7 controls output 7" CV="41" mask="XXXXXXXV" minOut="7" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -834,7 +834,7 @@
         </enumVal>
         <label>F7 controls output 7</label>
       </variable>
-      <variable label="F7 controls output 8" CV="41" mask="XXXXXXVX" minOut="8" minFn="7" tooltip="CV 41">
+      <variable label="F7 controls output 8" CV="41" mask="XXXXXXVX" minOut="8" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -845,7 +845,7 @@
         </enumVal>
         <label>F7 controls output 8</label>
       </variable>
-      <variable label="F8 controls output 1" CV="42" mask="XXXXXVXX" minOut="1" minFn="8" tooltip="CV 42">
+      <variable label="F8 controls output 1" CV="42" mask="XXXXXVXX" minOut="1" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -856,7 +856,7 @@
         </enumVal>
         <label>F8 controls output 1</label>
       </variable>
-      <variable label="F8 controls output 2" CV="42" mask="XXXXVXXX" minOut="2" minFn="8" tooltip="CV 42">
+      <variable label="F8 controls output 2" CV="42" mask="XXXXVXXX" minOut="2" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -867,7 +867,7 @@
         </enumVal>
         <label>F8 controls output 2</label>
       </variable>
-      <variable label="F8 controls output 3" CV="42" mask="XXXVXXXX" minOut="3" minFn="8" tooltip="CV 42">
+      <variable label="F8 controls output 3" CV="42" mask="XXXVXXXX" minOut="3" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -878,7 +878,7 @@
         </enumVal>
         <label>F8 controls output 3</label>
       </variable>
-      <variable label="F8 controls output 4" CV="42" mask="XXVXXXXX" minOut="4" minFn="8" tooltip="CV 42">
+      <variable label="F8 controls output 4" CV="42" mask="XXVXXXXX" minOut="4" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -889,7 +889,7 @@
         </enumVal>
         <label>F8 controls output 4</label>
       </variable>
-      <variable label="F8 controls output 5" CV="42" mask="XVXXXXXX" minOut="5" minFn="8" tooltip="CV 42">
+      <variable label="F8 controls output 5" CV="42" mask="XVXXXXXX" minOut="5" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -900,7 +900,7 @@
         </enumVal>
         <label>F8 controls output 5</label>
       </variable>
-      <variable label="F8 controls output 6" CV="42" mask="VXXXXXXX" minOut="6" minFn="8" tooltip="CV 42">
+      <variable label="F8 controls output 6" CV="42" mask="VXXXXXXX" minOut="6" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -911,7 +911,7 @@
         </enumVal>
         <label>F8 controls output 6</label>
       </variable>
-      <variable label="F8 controls output 7" CV="42" mask="XXXXXXXV" minOut="7" minFn="8" tooltip="CV 42">
+      <variable label="F8 controls output 7" CV="42" mask="XXXXXXXV" minOut="7" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -922,7 +922,7 @@
         </enumVal>
         <label>F8 controls output 7</label>
       </variable>
-      <variable label="F8 controls output 8" CV="42" mask="XXXXXXVX" minOut="8" minFn="8" tooltip="CV 42">
+      <variable label="F8 controls output 8" CV="42" mask="XXXXXXVX" minOut="8" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -933,7 +933,7 @@
         </enumVal>
         <label>F8 controls output 8</label>
       </variable>
-      <variable label="F9 controls output 1" CV="43" mask="XXXXXVXX" minOut="1" minFn="9" tooltip="CV 43">
+      <variable label="F9 controls output 1" CV="43" mask="XXXXXVXX" minOut="1" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -944,7 +944,7 @@
         </enumVal>
         <label>F9 controls output 1</label>
       </variable>
-      <variable label="F9 controls output 2" CV="43" mask="XXXXVXXX" minOut="2" minFn="9" tooltip="CV 43">
+      <variable label="F9 controls output 2" CV="43" mask="XXXXVXXX" minOut="2" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -955,7 +955,7 @@
         </enumVal>
         <label>F9 controls output 2</label>
       </variable>
-      <variable label="F9 controls output 3" CV="43" mask="XXXVXXXX" minOut="3" minFn="9" tooltip="CV 43">
+      <variable label="F9 controls output 3" CV="43" mask="XXXVXXXX" minOut="3" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -966,7 +966,7 @@
         </enumVal>
         <label>F9 controls output 3</label>
       </variable>
-      <variable label="F9 controls output 4" CV="43" mask="XXVXXXXX" minOut="4" minFn="9" tooltip="CV 43">
+      <variable label="F9 controls output 4" CV="43" mask="XXVXXXXX" minOut="4" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -977,7 +977,7 @@
         </enumVal>
         <label>F9 controls output 4</label>
       </variable>
-      <variable label="F9 controls output 5" CV="43" mask="XVXXXXXX" minOut="5" minFn="9" tooltip="CV 43">
+      <variable label="F9 controls output 5" CV="43" mask="XVXXXXXX" minOut="5" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -988,7 +988,7 @@
         </enumVal>
         <label>F9 controls output 5</label>
       </variable>
-      <variable label="F9 controls output 6" CV="43" mask="VXXXXXXX" minOut="6" minFn="9" tooltip="CV 43">
+      <variable label="F9 controls output 6" CV="43" mask="VXXXXXXX" minOut="6" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -999,7 +999,7 @@
         </enumVal>
         <label>F9 controls output 6</label>
       </variable>
-      <variable label="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9" tooltip="CV 43">
+      <variable label="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1010,7 +1010,7 @@
         </enumVal>
         <label>F9 controls output 7</label>
       </variable>
-      <variable label="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9" tooltip="CV 43">
+      <variable label="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1021,7 +1021,7 @@
         </enumVal>
         <label>F9 controls output 8</label>
       </variable>
-      <variable label="F10 controls output 1" CV="44" mask="XXXXXVXX" minOut="1" minFn="10" tooltip="CV 44">
+      <variable label="F10 controls output 1" CV="44" mask="XXXXXVXX" minOut="1" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1032,7 +1032,7 @@
         </enumVal>
         <label>F10 controls output 1</label>
       </variable>
-      <variable label="F10 controls output 2" CV="44" mask="XXXXVXXX" minOut="2" minFn="10" tooltip="CV 44">
+      <variable label="F10 controls output 2" CV="44" mask="XXXXVXXX" minOut="2" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1043,7 +1043,7 @@
         </enumVal>
         <label>F10 controls output 2</label>
       </variable>
-      <variable label="F10 controls output 3" CV="44" mask="XXXVXXXX" minOut="3" minFn="10" tooltip="CV 44">
+      <variable label="F10 controls output 3" CV="44" mask="XXXVXXXX" minOut="3" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1054,7 +1054,7 @@
         </enumVal>
         <label>F10 controls output 3</label>
       </variable>
-      <variable label="F10 controls output 4" CV="44" mask="XXVXXXXX" minOut="4" minFn="10" tooltip="CV 44">
+      <variable label="F10 controls output 4" CV="44" mask="XXVXXXXX" minOut="4" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1065,7 +1065,7 @@
         </enumVal>
         <label>F10 controls output 4</label>
       </variable>
-      <variable label="F10 controls output 5" CV="44" mask="XVXXXXXX" minOut="5" minFn="10" tooltip="CV 44">
+      <variable label="F10 controls output 5" CV="44" mask="XVXXXXXX" minOut="5" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1076,7 +1076,7 @@
         </enumVal>
         <label>F10 controls output 5</label>
       </variable>
-      <variable label="F10 controls output 6" CV="44" mask="VXXXXXXX" minOut="6" minFn="10" tooltip="CV 44">
+      <variable label="F10 controls output 6" CV="44" mask="VXXXXXXX" minOut="6" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1087,7 +1087,7 @@
         </enumVal>
         <label>F10 controls output 6</label>
       </variable>
-      <variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10" tooltip="CV 44">
+      <variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1098,7 +1098,7 @@
         </enumVal>
         <label>F10 controls output 7</label>
       </variable>
-      <variable label="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10" tooltip="CV 44">
+      <variable label="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1109,7 +1109,7 @@
         </enumVal>
         <label>F10 controls output 8</label>
       </variable>
-      <variable label="F11 controls output 1" CV="45" mask="XXXXXVXX" minOut="1" minFn="11" tooltip="CV 45">
+      <variable label="F11 controls output 1" CV="45" mask="XXXXXVXX" minOut="1" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1120,7 +1120,7 @@
         </enumVal>
         <label>F11 controls output 1</label>
       </variable>
-      <variable label="F11 controls output 2" CV="45" mask="XXXXVXXX" minOut="2" minFn="11" tooltip="CV 45">
+      <variable label="F11 controls output 2" CV="45" mask="XXXXVXXX" minOut="2" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1131,7 +1131,7 @@
         </enumVal>
         <label>F11 controls output 2</label>
       </variable>
-      <variable label="F11 controls output 3" CV="45" mask="XXXVXXXX" minOut="3" minFn="11" tooltip="CV 45">
+      <variable label="F11 controls output 3" CV="45" mask="XXXVXXXX" minOut="3" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1142,7 +1142,7 @@
         </enumVal>
         <label>F11 controls output 3</label>
       </variable>
-      <variable label="F11 controls output 4" CV="45" mask="XXVXXXXX" minOut="4" minFn="11" tooltip="CV 45">
+      <variable label="F11 controls output 4" CV="45" mask="XXVXXXXX" minOut="4" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1153,7 +1153,7 @@
         </enumVal>
         <label>F11 controls output 4</label>
       </variable>
-      <variable label="F11 controls output 5" CV="45" mask="XVXXXXXX" minOut="5" minFn="11" tooltip="CV 45">
+      <variable label="F11 controls output 5" CV="45" mask="XVXXXXXX" minOut="5" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1164,7 +1164,7 @@
         </enumVal>
         <label>F11 controls output 5</label>
       </variable>
-      <variable label="F11 controls output 6" CV="45" mask="VXXXXXXX" minOut="6" minFn="11" tooltip="CV 45">
+      <variable label="F11 controls output 6" CV="45" mask="VXXXXXXX" minOut="6" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1175,7 +1175,7 @@
         </enumVal>
         <label>F11 controls output 6</label>
       </variable>
-      <variable label="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11" tooltip="CV 45">
+      <variable label="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1186,7 +1186,7 @@
         </enumVal>
         <label>F11 controls output 7</label>
       </variable>
-      <variable label="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11" tooltip="CV 45">
+      <variable label="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1197,7 +1197,7 @@
         </enumVal>
         <label>F11 controls output 8</label>
       </variable>
-      <variable label="F12 controls output 1" CV="46" mask="XXXXXVXX" minOut="1" minFn="12" tooltip="CV 46">
+      <variable label="F12 controls output 1" CV="46" mask="XXXXXVXX" minOut="1" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1208,7 +1208,7 @@
         </enumVal>
         <label>F12 controls output 1</label>
       </variable>
-      <variable label="F12 controls output 2" CV="46" mask="XXXXVXXX" minOut="2" minFn="12" tooltip="CV 46">
+      <variable label="F12 controls output 2" CV="46" mask="XXXXVXXX" minOut="2" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1219,7 +1219,7 @@
         </enumVal>
         <label>F12 controls output 2</label>
       </variable>
-      <variable label="F12 controls output 3" CV="46" mask="XXXVXXXX" minOut="3" minFn="12" tooltip="CV 46">
+      <variable label="F12 controls output 3" CV="46" mask="XXXVXXXX" minOut="3" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1230,7 +1230,7 @@
         </enumVal>
         <label>F12 controls output 3</label>
       </variable>
-      <variable label="F12 controls output 4" CV="46" mask="XXVXXXXX" minOut="4" minFn="12" tooltip="CV 46">
+      <variable label="F12 controls output 4" CV="46" mask="XXVXXXXX" minOut="4" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1241,7 +1241,7 @@
         </enumVal>
         <label>F12 controls output 4</label>
       </variable>
-      <variable label="F12 controls output 5" CV="46" mask="XVXXXXXX" minOut="5" minFn="12" tooltip="CV 46">
+      <variable label="F12 controls output 5" CV="46" mask="XVXXXXXX" minOut="5" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1252,7 +1252,7 @@
         </enumVal>
         <label>F12 controls output 5</label>
       </variable>
-      <variable label="F12 controls output 6" CV="46" mask="VXXXXXXX" minOut="6" minFn="12" tooltip="CV 46">
+      <variable label="F12 controls output 6" CV="46" mask="VXXXXXXX" minOut="6" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1263,7 +1263,7 @@
         </enumVal>
         <label>F12 controls output 6</label>
       </variable>
-      <variable label="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12" tooltip="CV 46">
+      <variable label="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1274,7 +1274,7 @@
         </enumVal>
         <label>F12 controls output 7</label>
       </variable>
-      <variable label="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12" tooltip="CV 46">
+      <variable label="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1290,11 +1290,11 @@
         <label>Output Level</label>
         <comment>Controls function output voltage (0/255=high / 1 to 254)</comment>
       </variable>
-      <variable label="Minimum Dimming Value" CV="62" default="0" item="Global lighting option 1" tooltip="CV 62">
+      <variable label="Minimum Dimming Value" CV="62" default="0" item="Global lighting option 1">
         <decVal min="0" max="9"/>
         <label>Minimum Dimming Value</label>
       </variable>
-      <variable label="Light Effects Modifications" CV="63" default="51" item="Global lighting option 2" tooltip="CV 63">
+      <variable label="Light Effects Modifications" CV="63" default="51" item="Global lighting option 2">
         <decVal max="255"/>
         <label>Light Effects Modifications</label>
       </variable>
@@ -2540,7 +2540,7 @@
         </enumVal>
         <label>AltF12 controls output 8</label>
       </variable>
-      <variable label="Ditch Light Off Time" CV="83" default="5" item="Global lighting option 4" tooltip="CV 83">
+      <variable label="Ditch Light Off Time" CV="83" default="5" item="Global lighting option 4">
         <decVal min="0" max="9"/>
         <label>Ditch Light Off Time</label>
       </variable>
@@ -2552,7 +2552,7 @@
         <decVal/>
         <label>User Data #2</label>
       </variable>
-      <variable label="CV programming Acknowledgement" CV="112" tooltip="CV 112 bit 1" mask="XXXXXXVX" default="1">
+      <variable label="CV programming Acknowledgement" CV="112" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -2563,7 +2563,7 @@
         </enumVal>
         <label>CV programming Acknowledgement</label>
       </variable>
-      <variable label="NMRA" CV="112" tooltip="CV 112 bit 3" mask="XXXXVXXX" default="0">
+      <variable label="NMRA" CV="112" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="NMRA/MAN">
             <choice>NMRA/MAN</choice>
@@ -2651,11 +2651,11 @@
         </enumVal>
         <label>Dim function output 4</label>
       </variable>
-      <variable label="Uncoupler" CV="115" default="0" tooltip="CV 115">
+      <variable label="Uncoupler" CV="115" default="0">
         <decVal max="99"/>
         <label>Uncoupler</label>
       </variable>
-      <variable label="Uncouple Movement" CV="116" default="0" tooltip="CV 116">
+      <variable label="Uncouple Movement" CV="116" default="0">
         <decVal max="199"/>
         <label>Uncouple Movement</label>
       </variable>
@@ -2905,7 +2905,7 @@
         </enumVal>
         <label>F7 inverted</label>
       </variable>
-      <variable label="SUSI" CV="124" mask="VXXXXXXX" default="0" item="Function 2 effect generated" tooltip="CV 124 bit 7">
+      <variable label="SUSI" CV="124" mask="VXXXXXXX" default="0" item="Function 2 effect generated">
         <enumVal>
           <enumChoice choice="Activated">
             <choice>Activated</choice>
@@ -2916,7 +2916,7 @@
         </enumVal>
         <label>SUSI</label>
       </variable>
-      <variable label="Front light effect generated" CV="125" mask="VVVVVVXX" tooltip="CV 125" item="Output 1 effect generated">
+      <variable label="Front light effect generated" CV="125" mask="VVVVVVXX" item="Output 1 effect generated">
         <enumVal>
           <enumChoice choice="Standard on/off function output">
             <choice>Standard on/off function output</choice>
@@ -2975,7 +2975,7 @@
         </enumVal>
         <label>Front light effect generated</label>
       </variable>
-      <variable label="Front light behavior" CV="125" mask="XXXXXXVV" tooltip="CV 125" item="Output 1 behavior">
+      <variable label="Front light behavior" CV="125" mask="XXXXXXVV" item="Output 1 behavior">
         <enumVal>
           <enumChoice choice="Both directions">
             <choice>Both directions</choice>
@@ -2989,7 +2989,7 @@
         </enumVal>
         <label>Front light behavior</label>
       </variable>
-      <variable label="Rear light effect generated" CV="126" mask="VVVVVVXX" tooltip="CV 126" item="Output 2 effect generated">
+      <variable label="Rear light effect generated" CV="126" mask="VVVVVVXX" item="Output 2 effect generated">
         <enumVal>
           <enumChoice choice="Standard on/off function output">
             <choice>Standard on/off function output</choice>
@@ -3048,7 +3048,7 @@
         </enumVal>
         <label>Rear light effect generated</label>
       </variable>
-      <variable label="Rear light behavior" CV="126" mask="XXXXXXVV" tooltip="CV 126" item="Output 2 behavior">
+      <variable label="Rear light behavior" CV="126" mask="XXXXXXVV" item="Output 2 behavior">
         <enumVal>
           <enumChoice choice="Both directions">
             <choice>Both directions</choice>
@@ -3062,7 +3062,7 @@
         </enumVal>
         <label>Rear light behavior</label>
       </variable>
-      <variable label="Function output 1 effect generated" CV="127" mask="VVVVVVXX" tooltip="CV 127" item="Output 3 effect generated">
+      <variable label="Function output 1 effect generated" CV="127" mask="VVVVVVXX" item="Output 3 effect generated">
         <enumVal>
           <enumChoice choice="Standard on/off function output">
             <choice>Standard on/off function output</choice>
@@ -3121,7 +3121,7 @@
         </enumVal>
         <label>Function output 1 effect generated</label>
       </variable>
-      <variable label="Function output 1 behavior" CV="127" mask="XXXXXXVV" tooltip="CV 127" item="Output 3 behavior">
+      <variable label="Function output 1 behavior" CV="127" mask="XXXXXXVV" item="Output 3 behavior">
         <enumVal>
           <enumChoice choice="Both directions">
             <choice>Both directions</choice>
@@ -3135,7 +3135,7 @@
         </enumVal>
         <label>Function output 1 behavior</label>
       </variable>
-      <variable label="Function output 2 effect generated" CV="128" mask="VVVVVVXX" tooltip="CV 128" item="Output 4 effect generated">
+      <variable label="Function output 2 effect generated" CV="128" mask="VVVVVVXX" item="Output 4 effect generated">
         <enumVal>
           <enumChoice choice="Standard on/off function output">
             <choice>Standard on/off function output</choice>
@@ -3194,7 +3194,7 @@
         </enumVal>
         <label>Function output 2 effect generated</label>
       </variable>
-      <variable label="Function output 2 behavior" CV="128" mask="XXXXXXVV" tooltip="CV 128" item="Output 4 behavior">
+      <variable label="Function output 2 behavior" CV="128" mask="XXXXXXVV" item="Output 4 behavior">
         <enumVal>
           <enumChoice choice="Both directions">
             <choice>Both directions</choice>
@@ -3208,7 +3208,7 @@
         </enumVal>
         <label>Function output 2 behavior</label>
       </variable>
-      <variable label="Function output 3 effect generated" CV="129" mask="VVVVVVXX" tooltip="CV 129" item="Output 5 effect generated">
+      <variable label="Function output 3 effect generated" CV="129" mask="VVVVVVXX" item="Output 5 effect generated">
         <enumVal>
           <enumChoice choice="Standard on/off function output">
             <choice>Standard on/off function output</choice>
@@ -3267,7 +3267,7 @@
         </enumVal>
         <label>Function output 3 effect generated</label>
       </variable>
-      <variable label="Function output 3 behavior" CV="129" mask="XXXXXXVV" tooltip="CV 129" item="Output 5 behavior">
+      <variable label="Function output 3 behavior" CV="129" mask="XXXXXXVV" item="Output 5 behavior">
         <enumVal>
           <enumChoice choice="Both directions">
             <choice>Both directions</choice>
@@ -3281,7 +3281,7 @@
         </enumVal>
         <label>Function output 3 behavior</label>
       </variable>
-      <variable label="Function output 4 effect generated" CV="130" mask="VVVVVVXX" tooltip="CV 130" item="Output 6 effect generated">
+      <variable label="Function output 4 effect generated" CV="130" mask="VVVVVVXX" item="Output 6 effect generated">
         <enumVal>
           <enumChoice choice="Standard on/off function output">
             <choice>Standard on/off function output</choice>
@@ -3340,7 +3340,7 @@
         </enumVal>
         <label>Function output 4 effect generated</label>
       </variable>
-      <variable label="Function output 4 behavior" CV="130" mask="XXXXXXVV" tooltip="CV 130" item="Output 6 behavior">
+      <variable label="Function output 4 behavior" CV="130" mask="XXXXXXVV" item="Output 6 behavior">
         <enumVal>
           <enumChoice choice="Both directions">
             <choice>Both directions</choice>
@@ -3354,7 +3354,7 @@
         </enumVal>
         <label>Function output 4 behavior</label>
       </variable>
-      <variable label="Function output 5 effect generated" CV="131" mask="VVVVVVXX" tooltip="CV 131" item="Output 7 effect generated">
+      <variable label="Function output 5 effect generated" CV="131" mask="VVVVVVXX" item="Output 7 effect generated">
         <enumVal>
           <enumChoice choice="Standard on/off function output">
             <choice>Standard on/off function output</choice>
@@ -3413,7 +3413,7 @@
         </enumVal>
         <label>Function output 5 effect generated</label>
       </variable>
-      <variable label="Function output 5 behavior" CV="131" mask="XXXXXXVV" tooltip="CV 131" item="Output 7 behavior">
+      <variable label="Function output 5 behavior" CV="131" mask="XXXXXXVV" item="Output 7 behavior">
         <enumVal>
           <enumChoice choice="Both directions">
             <choice>Both directions</choice>
@@ -3427,7 +3427,7 @@
         </enumVal>
         <label>Function output 5 behavior</label>
       </variable>
-      <variable label="Function output 6 effect generated" CV="132" mask="VVVVVVXX" tooltip="CV 132" item="Output 8 effect generated">
+      <variable label="Function output 6 effect generated" CV="132" mask="VVVVVVXX" item="Output 8 effect generated">
         <enumVal>
           <enumChoice choice="Standard on/off function output">
             <choice>Standard on/off function output</choice>
@@ -3486,7 +3486,7 @@
         </enumVal>
         <label>Function output 6 effect generated</label>
       </variable>
-      <variable label="Function output 6 behavior" CV="132" mask="XXXXXXVV" tooltip="CV 132" item="Output 8 behavior">
+      <variable label="Function output 6 behavior" CV="132" mask="XXXXXXVV" item="Output 8 behavior">
         <enumVal>
           <enumChoice choice="Both directions">
             <choice>Both directions</choice>
@@ -3781,7 +3781,7 @@
     <column>
       <row>
         <column>
-          <display item="Uncoupler" tooltip="CV 115"/>
+          <display item="Uncoupler"/>
         </column>
         <column>
           <label label=" ">
@@ -3806,9 +3806,9 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Secondary Short Address" tooltip="Sets the short (2 digit) address CV64"/>
-      <display item="Secondary Long Address" tooltip="Sets the extended (4 digit) address CV67,CV68"/>
-      <display item="Secondary Address Format" tooltip="Determines whether loco will use short or long address CV112 bit 5"/>
+      <display item="Secondary Short Address" tooltip="Sets the short (2 digit) address"/>
+      <display item="Secondary Long Address" tooltip="Sets the extended (4 digit) address"/>
+      <display item="Secondary Address Format" tooltip="Determines whether loco will use short or long address"/>
       <label label=" ">
         <label> </label>
       </label>
@@ -3838,46 +3838,46 @@
           <label label="                                           White  ">
             <label>                                           White  </label>
           </label>
-          <display item="AltFL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)" tooltip="CV 69">
+          <display item="AltFL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
             <label>Forward Headlight F0(f)</label>
           </display>
-          <display item="AltFL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)" tooltip="CV 70">
+          <display item="AltFL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)">
             <label>Reverse Headlight F0(r)</label>
           </display>
-          <display item="AltF1 controls output 1" format="checkbox" label="Function 1         " tooltip="CV 71">
+          <display item="AltF1 controls output 1" format="checkbox" label="Function 1         ">
             <label>Function 1         </label>
           </display>
-          <display item="AltF2 controls output 1" format="checkbox" label="Function 2         " tooltip="CV 72">
+          <display item="AltF2 controls output 1" format="checkbox" label="Function 2         ">
             <label>Function 2         </label>
           </display>
-          <display item="AltF3 controls output 1" format="checkbox" label="Function 3         " tooltip="CV 73">
+          <display item="AltF3 controls output 1" format="checkbox" label="Function 3         ">
             <label>Function 3         </label>
           </display>
-          <display item="AltF4 controls output 1" format="checkbox" label="Function 4         " tooltip="CV 74">
+          <display item="AltF4 controls output 1" format="checkbox" label="Function 4         ">
             <label>Function 4         </label>
           </display>
-          <display item="AltF5 controls output 1" format="checkbox" label="Function 5         " tooltip="CV 75">
+          <display item="AltF5 controls output 1" format="checkbox" label="Function 5         ">
             <label>Function 5         </label>
           </display>
-          <display item="AltF6 controls output 1" format="checkbox" label="Function 6         " tooltip="CV 76">
+          <display item="AltF6 controls output 1" format="checkbox" label="Function 6         ">
             <label>Function 6         </label>
           </display>
-          <display item="AltF7 controls output 1" format="checkbox" label="Function 7         " tooltip="CV 77">
+          <display item="AltF7 controls output 1" format="checkbox" label="Function 7         ">
             <label>Function 7         </label>
           </display>
-          <display item="AltF8 controls output 1" format="checkbox" label="Function 8         " tooltip="CV 78">
+          <display item="AltF8 controls output 1" format="checkbox" label="Function 8         ">
             <label>Function 8         </label>
           </display>
-          <display item="AltF9 controls output 1" format="checkbox" label="Function 9         " tooltip="CV 79">
+          <display item="AltF9 controls output 1" format="checkbox" label="Function 9         ">
             <label>Function 9         </label>
           </display>
-          <display item="AltF10 controls output 1" format="checkbox" label="Function 10         " tooltip="CV 80">
+          <display item="AltF10 controls output 1" format="checkbox" label="Function 10         ">
             <label>Function 10         </label>
           </display>
-          <display item="AltF11 controls output 1" format="checkbox" label="Function 11         " tooltip="CV 81">
+          <display item="AltF11 controls output 1" format="checkbox" label="Function 11         ">
             <label>Function 11         </label>
           </display>
-          <display item="AltF12 controls output 1" format="checkbox" label="Function 12         " tooltip="CV 82">
+          <display item="AltF12 controls output 1" format="checkbox" label="Function 12         ">
             <label>Function 12         </label>
           </display>
         </column>
@@ -3897,46 +3897,46 @@
           <label label="Yellow ">
             <label>Yellow </label>
           </label>
-          <display item="AltFL(f) controls output 2" format="checkbox" label="" tooltip="CV 69">
+          <display item="AltFL(f) controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltFL(r) controls output 2" format="checkbox" label="" tooltip="CV 70">
+          <display item="AltFL(r) controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF1 controls output 2" format="checkbox" label="" tooltip="CV 71">
+          <display item="AltF1 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF2 controls output 2" format="checkbox" label="" tooltip="CV 72">
+          <display item="AltF2 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF3 controls output 2" format="checkbox" label="" tooltip="CV 73">
+          <display item="AltF3 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF4 controls output 2" format="checkbox" label="" tooltip="CV 74">
+          <display item="AltF4 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF5 controls output 2" format="checkbox" label="" tooltip="CV 75">
+          <display item="AltF5 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF6 controls output 2" format="checkbox" label="" tooltip="CV 76">
+          <display item="AltF6 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF7 controls output 2" format="checkbox" label="" tooltip="CV 77">
+          <display item="AltF7 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF8 controls output 2" format="checkbox" label="" tooltip="CV 78">
+          <display item="AltF8 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF9 controls output 2" format="checkbox" label="" tooltip="CV 79">
+          <display item="AltF9 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF10 controls output 2" format="checkbox" label="" tooltip="CV 80">
+          <display item="AltF10 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF11 controls output 2" format="checkbox" label="" tooltip="CV 81">
+          <display item="AltF11 controls output 2" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF12 controls output 2" format="checkbox" label="" tooltip="CV 82">
+          <display item="AltF12 controls output 2" format="checkbox" label="">
             <label/>
           </display>
         </column>
@@ -3956,46 +3956,46 @@
           <label label=" Green ">
             <label> Green </label>
           </label>
-          <display item="AltFL(f) controls output 3" format="checkbox" label="" tooltip="CV 69">
+          <display item="AltFL(f) controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltFL(r) controls output 3" format="checkbox" label="" tooltip="CV 70">
+          <display item="AltFL(r) controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF1 controls output 3" format="checkbox" label="" tooltip="CV 71">
+          <display item="AltF1 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF2 controls output 3" format="checkbox" label="" tooltip="CV 72">
+          <display item="AltF2 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF3 controls output 3" format="checkbox" label="" tooltip="CV 73">
+          <display item="AltF3 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF4 controls output 3" format="checkbox" label="" tooltip="CV 74">
+          <display item="AltF4 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF5 controls output 3" format="checkbox" label="" tooltip="CV 75">
+          <display item="AltF5 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF6 controls output 3" format="checkbox" label="" tooltip="CV 76">
+          <display item="AltF6 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF7 controls output 3" format="checkbox" label="" tooltip="CV 77">
+          <display item="AltF7 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF8 controls output 3" format="checkbox" label="" tooltip="CV 78">
+          <display item="AltF8 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF9 controls output 3" format="checkbox" label="" tooltip="CV 79">
+          <display item="AltF9 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF10 controls output 3" format="checkbox" label="" tooltip="CV 80">
+          <display item="AltF10 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF11 controls output 3" format="checkbox" label="" tooltip="CV 81">
+          <display item="AltF11 controls output 3" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF12 controls output 3" format="checkbox" label="" tooltip="CV 82">
+          <display item="AltF12 controls output 3" format="checkbox" label="">
             <label/>
           </display>
         </column>
@@ -4015,46 +4015,46 @@
           <label label="Brown ">
             <label>Brown </label>
           </label>
-          <display item="AltFL(f) controls output 4" format="checkbox" label="" tooltip="CV 69">
+          <display item="AltFL(f) controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltFL(r) controls output 4" format="checkbox" label="" tooltip="CV 70">
+          <display item="AltFL(r) controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF1 controls output 4" format="checkbox" label="" tooltip="CV 71">
+          <display item="AltF1 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF2 controls output 4" format="checkbox" label="" tooltip="CV 72">
+          <display item="AltF2 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF3 controls output 4" format="checkbox" label="" tooltip="CV 73">
+          <display item="AltF3 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF4 controls output 4" format="checkbox" label="" tooltip="CV 74">
+          <display item="AltF4 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF5 controls output 4" format="checkbox" label="" tooltip="CV 75">
+          <display item="AltF5 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF6 controls output 4" format="checkbox" label="" tooltip="CV 76">
+          <display item="AltF6 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF7 controls output 4" format="checkbox" label="" tooltip="CV 77">
+          <display item="AltF7 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF8 controls output 4" format="checkbox" label="" tooltip="CV 78">
+          <display item="AltF8 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF9 controls output 4" format="checkbox" label="" tooltip="CV 79">
+          <display item="AltF9 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF10 controls output 4" format="checkbox" label="" tooltip="CV 80">
+          <display item="AltF10 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF11 controls output 4" format="checkbox" label="" tooltip="CV 81">
+          <display item="AltF11 controls output 4" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF12 controls output 4" format="checkbox" label="" tooltip="CV 82">
+          <display item="AltF12 controls output 4" format="checkbox" label="">
             <label/>
           </display>
         </column>
@@ -4074,46 +4074,46 @@
           <label label=" Grey ">
             <label> Grey </label>
           </label>
-          <display item="AltFL(f) controls output 5" format="checkbox" label="" tooltip="CV 69">
+          <display item="AltFL(f) controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltFL(r) controls output 5" format="checkbox" label="" tooltip="CV 70">
+          <display item="AltFL(r) controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF1 controls output 5" format="checkbox" label="" tooltip="CV 71">
+          <display item="AltF1 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF2 controls output 5" format="checkbox" label="" tooltip="CV 72">
+          <display item="AltF2 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF3 controls output 5" format="checkbox" label="" tooltip="CV 73">
+          <display item="AltF3 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF4 controls output 5" format="checkbox" label="" tooltip="CV 74">
+          <display item="AltF4 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF5 controls output 5" format="checkbox" label="" tooltip="CV 75">
+          <display item="AltF5 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF6 controls output 5" format="checkbox" label="" tooltip="CV 76">
+          <display item="AltF6 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF7 controls output 5" format="checkbox" label="" tooltip="CV 77">
+          <display item="AltF7 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF8 controls output 5" format="checkbox" label="" tooltip="CV 78">
+          <display item="AltF8 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF9 controls output 5" format="checkbox" label="" tooltip="CV 79">
+          <display item="AltF9 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF10 controls output 5" format="checkbox" label="" tooltip="CV 80">
+          <display item="AltF10 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF11 controls output 5" format="checkbox" label="" tooltip="CV 81">
+          <display item="AltF11 controls output 5" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF12 controls output 5" format="checkbox" label="" tooltip="CV 82">
+          <display item="AltF12 controls output 5" format="checkbox" label="">
             <label/>
           </display>
         </column>
@@ -4133,46 +4133,46 @@
           <label label="Orange">
             <label>Orange</label>
           </label>
-          <display item="AltFL(f) controls output 6" format="checkbox" label="" tooltip="CV 69">
+          <display item="AltFL(f) controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltFL(r) controls output 6" format="checkbox" label="" tooltip="CV 70">
+          <display item="AltFL(r) controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF1 controls output 6" format="checkbox" label="" tooltip="CV 71">
+          <display item="AltF1 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF2 controls output 6" format="checkbox" label="" tooltip="CV 72">
+          <display item="AltF2 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF3 controls output 6" format="checkbox" label="" tooltip="CV 73">
+          <display item="AltF3 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF4 controls output 6" format="checkbox" label="" tooltip="CV 74">
+          <display item="AltF4 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF5 controls output 6" format="checkbox" label="" tooltip="CV 75">
+          <display item="AltF5 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF6 controls output 6" format="checkbox" label="" tooltip="CV 76">
+          <display item="AltF6 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF7 controls output 6" format="checkbox" label="" tooltip="CV 77">
+          <display item="AltF7 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF8 controls output 6" format="checkbox" label="" tooltip="CV 78">
+          <display item="AltF8 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF9 controls output 6" format="checkbox" label="" tooltip="CV 79">
+          <display item="AltF9 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF10 controls output 6" format="checkbox" label="" tooltip="CV 80">
+          <display item="AltF10 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF11 controls output 6" format="checkbox" label="" tooltip="CV 81">
+          <display item="AltF11 controls output 6" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF12 controls output 6" format="checkbox" label="" tooltip="CV 82">
+          <display item="AltF12 controls output 6" format="checkbox" label="">
             <label/>
           </display>
         </column>
@@ -4192,46 +4192,46 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="AltFL(f) controls output 7" format="checkbox" label="" tooltip="CV 69">
+          <display item="AltFL(f) controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltFL(r) controls output 7" format="checkbox" label="" tooltip="CV 70">
+          <display item="AltFL(r) controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF1 controls output 7" format="checkbox" label="" tooltip="CV 71">
+          <display item="AltF1 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF2 controls output 7" format="checkbox" label="" tooltip="CV 72">
+          <display item="AltF2 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF3 controls output 7" format="checkbox" label="" tooltip="CV 73">
+          <display item="AltF3 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF4 controls output 7" format="checkbox" label="" tooltip="CV 74">
+          <display item="AltF4 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF5 controls output 7" format="checkbox" label="" tooltip="CV 75">
+          <display item="AltF5 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF6 controls output 7" format="checkbox" label="" tooltip="CV 76">
+          <display item="AltF6 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF7 controls output 7" format="checkbox" label="" tooltip="CV 77">
+          <display item="AltF7 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF8 controls output 7" format="checkbox" label="" tooltip="CV 78">
+          <display item="AltF8 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF9 controls output 7" format="checkbox" label="" tooltip="CV 79">
+          <display item="AltF9 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF10 controls output 7" format="checkbox" label="" tooltip="CV 80">
+          <display item="AltF10 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF11 controls output 7" format="checkbox" label="" tooltip="CV 81">
+          <display item="AltF11 controls output 7" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF12 controls output 7" format="checkbox" label="" tooltip="CV 82">
+          <display item="AltF12 controls output 7" format="checkbox" label="">
             <label/>
           </display>
         </column>
@@ -4251,46 +4251,46 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="AltFL(f) controls output 8" format="checkbox" label="" tooltip="CV 69">
+          <display item="AltFL(f) controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltFL(r) controls output 8" format="checkbox" label="" tooltip="CV 70">
+          <display item="AltFL(r) controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF1 controls output 8" format="checkbox" label="" tooltip="CV 71">
+          <display item="AltF1 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF2 controls output 8" format="checkbox" label="" tooltip="CV 72">
+          <display item="AltF2 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF3 controls output 8" format="checkbox" label="" tooltip="CV 73">
+          <display item="AltF3 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF4 controls output 8" format="checkbox" label="" tooltip="CV 74">
+          <display item="AltF4 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF5 controls output 8" format="checkbox" label="" tooltip="CV 75">
+          <display item="AltF5 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF6 controls output 8" format="checkbox" label="" tooltip="CV 76">
+          <display item="AltF6 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF7 controls output 8" format="checkbox" label="" tooltip="CV 77">
+          <display item="AltF7 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF8 controls output 8" format="checkbox" label="" tooltip="CV 78">
+          <display item="AltF8 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF9 controls output 8" format="checkbox" label="" tooltip="CV 79">
+          <display item="AltF9 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF10 controls output 8" format="checkbox" label="" tooltip="CV 80">
+          <display item="AltF10 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF11 controls output 8" format="checkbox" label="" tooltip="CV 81">
+          <display item="AltF11 controls output 8" format="checkbox" label="">
             <label/>
           </display>
-          <display item="AltF12 controls output 8" format="checkbox" label="" tooltip="CV 82">
+          <display item="AltF12 controls output 8" format="checkbox" label="">
             <label/>
           </display>
         </column>
@@ -4303,7 +4303,7 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="SUSI" tooltip="CV 124 bit 7"/>
+      <display item="SUSI"/>
       <label label=" ">
         <label> </label>
       </label>
@@ -4315,13 +4315,13 @@
         <column>
           <row>
             <column>
-              <display item="Output Level" tooltip="CV 60"/>
+              <display item="Output Level"/>
               <label label=" ">
                 <label> </label>
               </label>
             </column>
             <column>
-              <display item="Output Level" format="hslider" tooltip="CV 60" label="">
+              <display item="Output Level" format="hslider" label="">
                 <label/>
               </display>
               <label label=" ">
@@ -4331,30 +4331,30 @@
           </row>
           <row>
             <column>
-              <display item="Dim Front Light" format="checkbox" tooltip="CV 114 bit 0"/>
-              <display item="Dim Rear Light" format="checkbox" tooltip="CV 114 bit 1"/>
-              <display item="Dim function output 1" format="checkbox" tooltip="CV 114 bit 2"/>
-              <display item="Dim function output 2" format="checkbox" tooltip="CV 114 bit 3"/>
-              <display item="Dim function output 3" format="checkbox" tooltip="CV 114 bit 4"/>
-              <display item="Dim function output 4" format="checkbox" tooltip="CV 114 bit 5"/>
+              <display item="Dim Front Light" format="checkbox"/>
+              <display item="Dim Rear Light" format="checkbox"/>
+              <display item="Dim function output 1" format="checkbox"/>
+              <display item="Dim function output 2" format="checkbox"/>
+              <display item="Dim function output 3" format="checkbox"/>
+              <display item="Dim function output 4" format="checkbox"/>
             </column>
             <column>
-              <display item="F6 dims front light" format="checkbox" tooltip="CV 119 bit 0"/>
-              <display item="F6 dims rear light" format="checkbox" tooltip="CV 119 bit 1"/>
-              <display item="F6 dims function output 1" format="checkbox" tooltip="CV 119 bit 2"/>
-              <display item="F6 dims function output 2" format="checkbox" tooltip="CV 119 bit 3"/>
-              <display item="F6 dims function output 3" format="checkbox" tooltip="CV 119 bit 4"/>
-              <display item="F6 dims function output 4" format="checkbox" tooltip="CV 119 bit 5"/>
-              <display item="F6 inverted" format="checkbox" tooltip="CV 119 bit 7"/>
+              <display item="F6 dims front light" format="checkbox"/>
+              <display item="F6 dims rear light" format="checkbox"/>
+              <display item="F6 dims function output 1" format="checkbox"/>
+              <display item="F6 dims function output 2" format="checkbox"/>
+              <display item="F6 dims function output 3" format="checkbox"/>
+              <display item="F6 dims function output 4" format="checkbox"/>
+              <display item="F6 inverted" format="checkbox"/>
             </column>
             <column>
-              <display item="F7 dims front light" format="checkbox" tooltip="CV 120 bit 0"/>
-              <display item="F7 dims rear light" format="checkbox" tooltip="CV 120 bit 1"/>
-              <display item="F7 dims function output 1" format="checkbox" tooltip="CV 120 bit 2"/>
-              <display item="F7 dims function output 2" format="checkbox" tooltip="CV 120 bit 3"/>
-              <display item="F7 dims function output 3" format="checkbox" tooltip="CV 120 bit 4"/>
-              <display item="F7 dims function output 4" format="checkbox" tooltip="CV 120 bit 5"/>
-              <display item="F7 inverted" format="checkbox" tooltip="CV 120 bit 7"/>
+              <display item="F7 dims front light" format="checkbox"/>
+              <display item="F7 dims rear light" format="checkbox"/>
+              <display item="F7 dims function output 1" format="checkbox"/>
+              <display item="F7 dims function output 2" format="checkbox"/>
+              <display item="F7 dims function output 3" format="checkbox"/>
+              <display item="F7 dims function output 4" format="checkbox"/>
+              <display item="F7 inverted" format="checkbox"/>
             </column>
             <column>
               <label label="          ">
@@ -4377,7 +4377,7 @@
               </label>
             </column>
             <column>
-              <display item="Flash Rate" tooltip="CV 117"/>
+              <display item="Flash Rate"/>
             </column>
             <column>
               <label label="    ">
@@ -4399,14 +4399,14 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="Flash front light" format="checkbox" tooltip="CV 118 bit 0"/>
-          <display item="Flash rear light" format="checkbox" tooltip="CV 118 bit 1"/>
-          <display item="Flash function output 1" format="checkbox" tooltip="CV 118 bit 2"/>
-          <display item="Flash function output 2" format="checkbox" tooltip="CV 118 bit 3"/>
-          <display item="Flash function output 3" format="checkbox" tooltip="CV 118 bit 4"/>
-          <display item="Flash function output 4" format="checkbox" tooltip="CV 118 bit 5"/>
-          <display item="Inverse Flash Output 2" format="checkbox" tooltip="CV 118 bit 6"/>
-          <display item="Inverse Flash Output 4" format="checkbox" tooltip="CV 118 bit 7"/>
+          <display item="Flash front light" format="checkbox"/>
+          <display item="Flash rear light" format="checkbox"/>
+          <display item="Flash function output 1" format="checkbox"/>
+          <display item="Flash function output 2" format="checkbox"/>
+          <display item="Flash function output 3" format="checkbox"/>
+          <display item="Flash function output 4" format="checkbox"/>
+          <display item="Inverse Flash Output 2" format="checkbox"/>
+          <display item="Inverse Flash Output 4" format="checkbox"/>
           <display item="Flash Rate Off Time"/>
           <display item="Flash Rate On Time"/>
           <label label=" ">
@@ -4423,15 +4423,15 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="Minimum Dimming Value" tooltip="CV 62"/>
+          <display item="Minimum Dimming Value"/>
           <label label=" ">
             <label> </label>
           </label>
-          <display item="Light Effects Modifications" tooltip="CV 63"/>
+          <display item="Light Effects Modifications"/>
           <label label=" ">
             <label> </label>
           </label>
-          <display item="Ditch Light Off Time" tooltip="CV 83"/>
+          <display item="Ditch Light Off Time"/>
           <label label=" ">
             <label> </label>
           </label>
@@ -4464,17 +4464,17 @@
   </pane>
   <pane name="Zimo Specific">
     <column>
-      <display item="NMRA" tooltip="CV 112, bit 3"/>
+      <display item="NMRA"/>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="CV programming Acknowledgement" tooltip="CV112 bit 1"/>
+      <display item="CV programming Acknowledgement"/>
     </column>
     <name>Zimo Specific</name>
   </pane>
   <pane name="Railcom">
     <column>
-      <display item="Enable RailCom" format="checkbox" tooltip="CV 29 bit 3"/>
+      <display item="Enable RailCom" format="checkbox"/>
     </column>
     <name>Railcom</name>
   </pane>
@@ -4482,7 +4482,7 @@
     <column>
       <row>
         <column>
-          <display item="Servo Protocol" format="radiobuttons" tooltip="CV161 bit 0"/>
+          <display item="Servo Protocol" format="radiobuttons"/>
         </column>
         <column>
           <label label="                          ">
@@ -4490,10 +4490,10 @@
           </label>
         </column>
         <column>
-          <display item="Servo Control Wire Active" format="radiobuttons" tooltip="CV161 bit 1"/>
+          <display item="Servo Control Wire Active" format="radiobuttons"/>
         </column>
       </row>
-      <display item="Servo Centering" format="radiobuttons" tooltip="CV161 bit 2"/>
+      <display item="Servo Centering" format="radiobuttons"/>
       <label label=" ">
         <label> </label>
       </label>
@@ -4514,7 +4514,7 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="Servo 1 Function Allocation" label="Function Allocation" tooltip="CV181">
+          <display item="Servo 1 Function Allocation" label="Function Allocation">
             <label>Function Allocation</label>
           </display>
           <label label=" ">
@@ -4522,7 +4522,7 @@
           </label>
           <row>
             <column>
-              <display item="Servo 1 Rotation Speed" label="Rotation Speed" tooltip="CV165">
+              <display item="Servo 1 Rotation Speed" label="Rotation Speed">
                 <label>Rotation Speed</label>
               </display>
             </column>
@@ -4535,13 +4535,13 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="Servo 1 Left Stop" label="Left Stop" tooltip="CV162">
+          <display item="Servo 1 Left Stop" label="Left Stop">
             <label>Left Stop</label>
           </display>
-          <display item="Servo 1 Centre" label="Centre" tooltip="CV164">
+          <display item="Servo 1 Centre" label="Centre">
             <label>Centre</label>
           </display>
-          <display item="Servo 1 Right Stop" label="Right Stop" tooltip="CV163">
+          <display item="Servo 1 Right Stop" label="Right Stop">
             <label>Right Stop</label>
           </display>
           <label label=" ">
@@ -4566,7 +4566,7 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="Servo 2 Function Allocation" label="Function Allocation" tooltip="CV182">
+          <display item="Servo 2 Function Allocation" label="Function Allocation">
             <label>Function Allocation</label>
           </display>
           <label label=" ">
@@ -4574,7 +4574,7 @@
           </label>
           <row>
             <column>
-              <display item="Servo 2 Rotation Speed" label="Rotation Speed" tooltip="CV169">
+              <display item="Servo 2 Rotation Speed" label="Rotation Speed">
                 <label>Rotation Speed</label>
               </display>
             </column>
@@ -4587,13 +4587,13 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="Servo 2 Left Stop" label="Left Stop" tooltip="CV166">
+          <display item="Servo 2 Left Stop" label="Left Stop">
             <label>Left Stop</label>
           </display>
-          <display item="Servo 2 Centre" label="Centre" tooltip="CV168">
+          <display item="Servo 2 Centre" label="Centre">
             <label>Centre</label>
           </display>
-          <display item="Servo 2 Right Stop" label="Right Stop" tooltip="CV167">
+          <display item="Servo 2 Right Stop" label="Right Stop">
             <label>Right Stop</label>
           </display>
           <label label=" ">
@@ -4605,17 +4605,17 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Special Assignment for Live Steam" format="radiobuttons" tooltip="CV185"/>
+      <display item="Special Assignment for Live Steam" format="radiobuttons"/>
     </column>
     <name>Servos</name>
   </pane>
   <pane name="Decoder Lock">
     <column>
-      <display item="Service Mode Programming Locked" format="checkbox" tooltip="CV 144 bit 6"/>
+      <display item="Service Mode Programming Locked" format="checkbox"/>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Software Update Locked" format="checkbox" tooltip="CV 144 bit 7"/>
+      <display item="Software Update Locked" format="checkbox"/>
     </column>
     <name>Decoder Lock</name>
   </pane>

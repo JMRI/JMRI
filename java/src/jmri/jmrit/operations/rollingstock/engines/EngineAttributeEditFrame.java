@@ -4,6 +4,8 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
@@ -97,13 +99,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 		addButtonAction(replaceButton);
 
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true); // NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true); // NOI18N
 
 		pack();
-		if (getWidth() < 300)
-			setSize(300, getHeight());
-		if (getHeight() < 180)
-			setSize(getWidth(), 180);
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
 		setVisible(true);
 	}
 

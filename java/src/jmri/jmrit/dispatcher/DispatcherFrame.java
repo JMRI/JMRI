@@ -1188,6 +1188,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		allocateSection(ar, null);
 	}
 	
+    protected void addDelayedTrain(ActiveTrain at){
+        if(at.getDelayedRestart()==ActiveTrain.TIMEDDELAY){
+            if(!delayedTrains.contains(at)){
+                delayedTrains.add(at);
+            }
+        }
+        else if(at.getDelayedRestart()==ActiveTrain.SENSORDELAY){
+            if(at.getRestartDelaySensor()!=null){
+                at.initializeReStartDelaySensor();
+            }
+        }
+    }
+    
 	/**
 	 * Allocates a Section to an Active Train according to the information in an AllocationRequest
 	 *  If successful, returns an AllocatedSection and removes the AllocationRequest from the queue.
@@ -1206,6 +1219,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		int nextSectionSeqNo = 0;
 		if (ar!=null) {
 			ActiveTrain at = ar.getActiveTrain();
+            if(at.holdAllocation() || at.reachedRestartPoint())
+                return null;
 			Section s = ar.getSection();
 			if (s.getState()!=Section.FREE) { return null; }
 			// skip occupancy check if this is the first allocation and the train is occupying the Section
@@ -1274,35 +1289,38 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				}
 				nextSectionSeqNo = seqNum;
 			}
-			else if (at.getReverseAtEnd() && (!at.isAllocationReversed()) && (s==at.getEndBlockSection()) && 
-						(ar.getSectionSeqNumber()==at.getEndBlockSectionSequenceNumber()) ) {
-				// need to reverse Transit direction when train is in the last Section, set next section.
-				nextSectionSeqNo = at.getEndBlockSectionSequenceNumber()-1;
-				at.setAllocationReversed(true);
-				ArrayList<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
-				if (secList.size()==1) {
-					nextSection = secList.get(0);
-				}
-				else if (secList.size()>1) {
-					if (_AutoAllocate) {
-						nextSection = autoChoice(secList, ar);
-					}
-					else {
-						nextSection = dispatcherChoice(secList, ar);
-					}
-				}
-			}
-			else if ( ( (!at.isAllocationReversed()) && (s==at.getEndBlockSection()) && 
-						(ar.getSectionSeqNumber()==at.getEndBlockSectionSequenceNumber()) ) || 
-						( at.isAllocationReversed() && (ar.getSectionSeqNumber()==1) ) ) {
-				// request to allocate the last block in the Transit, or the Transit is reversed and
-				//      has reached the beginning of the Transit--check for automatic restart
-				if (at.getResetWhenDone()) {
-					nextSection = at.getSecondAllocatedSection();
-					nextSectionSeqNo = 2;
-					at.setAllocationReversed(false);
-				}
-			}
+            else if(at.getReverseAtEnd() && (!at.isAllocationReversed()) && (s==at.getEndBlockSection()) && 
+                    (ar.getSectionSeqNumber()==at.getEndBlockSectionSequenceNumber()) ) {
+                // need to reverse Transit direction when train is in the last Section, set next section.
+                nextSectionSeqNo = at.getEndBlockSectionSequenceNumber()-1;
+                at.setAllocationReversed(true);
+                ArrayList<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
+                if (secList.size()==1) {
+                    nextSection = secList.get(0);
+                }
+                else if (secList.size()>1) {
+                    if (_AutoAllocate) {
+                        nextSection = autoChoice(secList, ar);
+                    }
+                    else {
+                        nextSection = dispatcherChoice(secList, ar);
+                    }
+                }
+            }
+            else if ( ( (!at.isAllocationReversed()) && (s==at.getEndBlockSection()) && 
+                        (ar.getSectionSeqNumber()==at.getEndBlockSectionSequenceNumber()) ) || 
+                        ( at.isAllocationReversed() && (ar.getSectionSeqNumber()==1) ) ) {
+                // request to allocate the last block in the Transit, or the Transit is reversed and
+                //      has reached the beginning of the Transit--check for automatic restart
+                if (at.getResetWhenDone()) {
+                    if(at.getDelayedRestart()!=ActiveTrain.NODELAY){
+                        at.holdAllocation(true);
+                    }
+                    nextSection = at.getSecondAllocatedSection();
+                    nextSectionSeqNo = 2;
+                    at.setAllocationReversed(false);
+                }
+            }
             
             //This might be the location to check to see if we have an intermediate section that we then need to perform extra checks on.
             //Working on the basis that if the nextsection is not null, then we are not at the end of the transit.
@@ -1363,8 +1381,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         Section conflict = checkBlocksNotInAllocatedSection(se, null);
                         if(conflict!=null){
                             //We have a conflicting path 
-                            //log.info("Conflict section " + conflict.getDisplayName() + " " + se.getDisplayName());
-                            //log.info("Blocks in this section are already in an allocated section which is not free therefore will drop out");
                              //We might need to find out if the section which the block is allocated to is one in our transit, and if so is it running in the same direction.
                             return null;
                         } else {
@@ -1708,9 +1724,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 									(at.getStatus()==ActiveTrain.STOPPED) ||
 									  (at.getStatus()==ActiveTrain.READY) || 
 										(at.getMode()==ActiveTrain.MANUAL) ) {
-								// do not autorelease allicated sections from an Active Train that is 
+								// do not autorelease allocated sections from an Active Train that is 
 								//    STOPPED, READY, or WORKING, or is in MANUAL mode.
 								foundOne = false;
+                                //But do so if the active train has reached its restart point
+                                if(at.reachedRestartPoint()){
+                                    foundOne = true;
+                                }
 							}
 							else {
 								if ( (nas.getActiveTrain()!=as.getActiveTrain()) || (!nas.getEntered()) ) {
@@ -1801,7 +1821,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         if (_AutoAllocate) autoAllocate.scanAllocationRequestList(allocationRequests); 
                     }
                 }
-			}
+			} else if(at.getStarted() && at.getStatus()==ActiveTrain.READY && at.reachedRestartPoint()){
+                if (isFastClockTimeGE(at.getRestartDepartHr(), at.getRestartDepartMin())) {
+                    at.restart();
+                    delayedTrains.remove(i);
+                    if (_AutoAllocate) autoAllocate.scanAllocationRequestList(allocationRequests);
+                }
+            }
 		}
 	}
 	private int nowMinutes = 0;    // last read fast clock minutes
@@ -1933,7 +1959,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				log.error ("Exception when setting fast clock sensor");
 			}
 		}
-	}		
+	}
 
 	protected AutoTrainsFrame getAutoTrainsFrame() {return _autoTrainsFrame;}
 	

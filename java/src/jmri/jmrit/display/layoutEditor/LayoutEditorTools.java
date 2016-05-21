@@ -1295,7 +1295,8 @@ public class LayoutEditorTools
 		SignalHead head = jmri.InstanceManager.signalHeadManagerInstance().
 														getSignalHead(signalName);
 		removeAssignment(head);
-		SignalHeadIcon h = null;
+        layoutEditor.removeSignalHead(head);
+		/*SignalHeadIcon h = null;
 		int index = -1;
 		for (int i=0;(i<layoutEditor.signalList.size())&&(index==-1);i++) {
 			h = layoutEditor.signalList.get(i);
@@ -1308,7 +1309,7 @@ public class LayoutEditorTools
 			h.remove();
 			h.dispose();
 			needRedraw = true;
-		}
+		}*/
 	}
 	/* 
 	 * Initializes a BlockBossLogic for creation of a signal logic for the signal
@@ -1381,9 +1382,12 @@ public class LayoutEditorTools
 				if (track.getLayoutBlock()!=t.getLayoutBlock()) {
 					// p is a block boundary - should be signalled
 					String signalName;
-					if (isAtWestEndOfAnchor(t,p)) 
+					if (isAtWestEndOfAnchor(t,p)) {
 						signalName = p.getWestBoundSignal();
-					else signalName = p.getEastBoundSignal();
+                    }
+					else {
+                        signalName = p.getEastBoundSignal();
+                    }
 					if ((signalName==null)||(signalName.equals(""))) return null;
 					return jmri.InstanceManager.signalHeadManagerInstance().
 									getSignalHead(signalName);
@@ -1675,6 +1679,18 @@ public class LayoutEditorTools
 	 *  "point" is an anchor point serving as a block boundary.
 	 */
 	public boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
+        if(p.getType()==PositionablePoint.EDGE_CONNECTOR){
+            if(p.getConnect1()==t){
+                if(p.getConnect1Dir()==jmri.Path.NORTH || p.getConnect1Dir()==jmri.Path.WEST)
+                    return false;
+                return true;
+            } else {
+                if(p.getConnect1Dir()==jmri.Path.NORTH || p.getConnect1Dir()==jmri.Path.WEST)
+                    return true;
+                return false;
+            }
+            
+        }
 		TrackSegment tx = null;
 		if (p.getConnect1()==t)
 			tx = p.getConnect2();
@@ -1750,6 +1766,9 @@ public class LayoutEditorTools
 	private PositionablePoint boundary = null;
 	private SignalHead eastBoundHead = null;
 	private SignalHead westBoundHead = null;
+    
+    private boolean showWest = true;
+    private boolean showEast = true;
 
 	// display dialog for Set Signals at Block Boundary tool
 	public void setSignalsAtBlockBoundaryFromMenu( PositionablePoint p, MultiIconEditor theEditor, 
@@ -1794,9 +1813,11 @@ public class LayoutEditorTools
 			JPanel panel12 = new JPanel(); 
             panel12.setLayout(new FlowLayout());
 			if (boundaryFromMenu) {
-				JLabel block2NameLabel = new JLabel( rb.getString("Block")+" 2 "+
-					rb.getString("Name")+" : "+boundary.getConnect2().getLayoutBlock().getID());
-				panel12.add(block2NameLabel);			
+                if(boundary.getConnect2()!=null){
+                    JLabel block2NameLabel = new JLabel( rb.getString("Block")+" 2 "+
+                        rb.getString("Name")+" : "+boundary.getConnect2().getLayoutBlock().getID());
+                    panel12.add(block2NameLabel);
+                }
 			}
 			else {
 				JLabel block2NameLabel = new JLabel( rb.getString("Block")+" 2 "+
@@ -1820,38 +1841,47 @@ public class LayoutEditorTools
 				});
             getAnchorSavedSignalHeads.setToolTipText( rb.getString("GetSavedHint") );			
 			theContentPane.add(panel2);
-            JPanel panel21 = new JPanel();
-            panel21.setLayout(new FlowLayout());
-			JLabel eastBoundLabel = new JLabel(rb.getString("East/SouthBound")+" : ");
-			panel21.add(eastBoundLabel);
-			panel21.add(eastBoundField);
-			theContentPane.add(panel21);
-			eastBoundField.setToolTipText(rb.getString("SignalHeadEastNameHint"));
-            JPanel panel22 = new JPanel();
-            panel22.setLayout(new FlowLayout());
-			panel22.add(new JLabel("   "));
-			panel22.add(setEastBound);
-			setEastBound.setToolTipText(rb.getString("AnchorPlaceHeadHint"));
-			panel22.add(new JLabel("  "));
-			panel22.add(setupLogicEastBound);
-			setupLogicEastBound.setToolTipText(rb.getString("SetLogicHint"));
-			theContentPane.add(panel22);
-            JPanel panel31 = new JPanel();
-            panel31.setLayout(new FlowLayout());
-			JLabel westBoundLabel = new JLabel(rb.getString("West/NorthBound")+" : ");
-			panel31.add(westBoundLabel);
-			panel31.add(westBoundField);
-			theContentPane.add(panel31);
-			westBoundField.setToolTipText(rb.getString("SignalHeadWestNameHint"));
-            JPanel panel32 = new JPanel();
-            panel32.setLayout(new FlowLayout());
-			panel32.add(new JLabel("   "));
-			panel32.add(setWestBound);
-			setWestBound.setToolTipText(rb.getString("AnchorPlaceHeadHint"));
-			panel32.add(new JLabel("  "));
-			panel32.add(setupLogicWestBound);
-			setupLogicWestBound.setToolTipText(rb.getString("SetLogicHint"));
-			theContentPane.add(panel32);			
+            if(showEast){
+                JPanel panel21 = new JPanel();
+                panel21.setLayout(new FlowLayout());
+                JLabel eastBoundLabel = new JLabel(rb.getString("East/SouthBound")+" : ");
+                panel21.add(eastBoundLabel);
+                panel21.add(eastBoundField);
+                theContentPane.add(panel21);
+                eastBoundField.setToolTipText(rb.getString("SignalHeadEastNameHint"));
+                JPanel panel22 = new JPanel();
+                panel22.setLayout(new FlowLayout());
+                panel22.add(new JLabel("   "));
+                panel22.add(setEastBound);
+                setEastBound.setToolTipText(rb.getString("AnchorPlaceHeadHint"));
+                panel22.add(new JLabel("  "));
+                if(showWest){
+                    panel22.add(setupLogicEastBound);
+                    setupLogicEastBound.setToolTipText(rb.getString("SetLogicHint"));
+                }
+                theContentPane.add(panel22);
+            }
+            if(showWest){
+                JPanel panel31 = new JPanel();
+                panel31.setLayout(new FlowLayout());
+                JLabel westBoundLabel = new JLabel(rb.getString("West/NorthBound")+" : ");
+                panel31.add(westBoundLabel);
+                panel31.add(westBoundField);
+                theContentPane.add(panel31);
+                westBoundField.setToolTipText(rb.getString("SignalHeadWestNameHint"));
+                JPanel panel32 = new JPanel();
+                panel32.setLayout(new FlowLayout());
+                panel32.add(new JLabel("   "));
+                panel32.add(setWestBound);
+                setWestBound.setToolTipText(rb.getString("AnchorPlaceHeadHint"));
+                panel32.add(new JLabel("  "));
+                if(showEast){
+                    panel32.add(setupLogicWestBound);
+                    setupLogicWestBound.setToolTipText(rb.getString("SetLogicHint"));
+                }
+                theContentPane.add(panel32);
+            }
+            
 			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel6 = new JPanel();
             panel6.setLayout(new FlowLayout());
@@ -1891,8 +1921,8 @@ public class LayoutEditorTools
 	}
 	private void getSavedAnchorSignals (ActionEvent a) {
 		if ( !getBlockInformation() ) return;
-		eastBoundField.setText(boundary.getEastBoundSignal());	
-		westBoundField.setText(boundary.getWestBoundSignal());
+        eastBoundField.setText(boundary.getEastBoundSignal());
+        westBoundField.setText(boundary.getWestBoundSignal());
 	}
 	private void setSignalsAtBoundaryCancelPressed (ActionEvent a) {
 		setSignalsAtBoundaryOpen = false;
@@ -1925,14 +1955,14 @@ public class LayoutEditorTools
 				if (eastBoundHead!=getHeadFromName(boundary.getEastBoundSignal())) {
 					removeSignalHeadFromPanel(boundary.getEastBoundSignal());
 					removeAssignment(eastBoundHead);
-					boundary.setEastBoundSignal(eastBoundField.getText().trim());
+                    boundary.setEastBoundSignal(eastBoundField.getText().trim());
 				}
 			}				
 			else {
 				removeSignalHeadFromPanel(boundary.getEastBoundSignal());
 				placeEastBound();
 				removeAssignment(eastBoundHead);
-				boundary.setEastBoundSignal(eastBoundField.getText().trim());
+                boundary.setEastBoundSignal(eastBoundField.getText().trim());
 				needRedraw = true;
 			}		
 		}
@@ -1949,7 +1979,7 @@ public class LayoutEditorTools
 			else {
 				removeSignalHeadFromPanel(boundary.getEastBoundSignal());
 				removeAssignment(eastBoundHead);
-				boundary.setEastBoundSignal(eastBoundField.getText().trim());
+                boundary.setEastBoundSignal(eastBoundField.getText().trim());
 			}
 		}
 		else if ( (eastBoundHead!=null) &&  
@@ -2062,9 +2092,20 @@ public class LayoutEditorTools
 		else 
 			point1 = layoutEditor.getCoords(track1.getConnect1(),track1.getType1());
 		TrackSegment track2 = boundary.getConnect2();
-		Point2D point2;
+		
         if(boundary.getType()==PositionablePoint.END_BUMPER)
             return true;
+        if(boundary.getType()==PositionablePoint.EDGE_CONNECTOR){
+            if(boundary.getConnect1Dir()==jmri.Path.EAST || boundary.getConnect1Dir()==jmri.Path.SOUTH){
+                eastTrack=track2;
+                westTrack=track1;
+            } else {
+                westTrack=track2;
+                eastTrack=track1;
+            }
+            return true;
+        }
+        Point2D point2;
         if (track2.getConnect1()==boundary) 
             point2 = layoutEditor.getCoords(track2.getConnect2(),track2.getType2());
         else 
@@ -2104,7 +2145,7 @@ public class LayoutEditorTools
 			else {
 				eastTrack = track2;
 				westTrack = track1;
-			}						
+			}
 		}
 		return true;
 	}		
@@ -2173,8 +2214,11 @@ public class LayoutEditorTools
 						null,JOptionPane.INFORMATION_MESSAGE);						
 			return;
 		}
+        PositionablePoint p = boundary;
+        if(boundary.getType()==PositionablePoint.EDGE_CONNECTOR && eastTrack!=boundary.getConnect1())
+            p=boundary.getLinkedPoint();
 		SignalHead nextHead = getNextSignalFromObject(eastTrack,
-				boundary, eastBoundField.getText().trim(), setSignalsAtBoundaryFrame);
+				p, eastBoundField.getText().trim(), setSignalsAtBoundaryFrame);
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
@@ -2182,6 +2226,7 @@ public class LayoutEditorTools
 						null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
+        
 		if (!initializeBlockBossLogic(eastBoundField.getText().trim())) return;
 		logic.setMode(BlockBossLogic.SINGLEBLOCK);
 		logic.setSensor1(eastBlockOccupancy.getSystemName());
@@ -2203,8 +2248,11 @@ public class LayoutEditorTools
 						null,JOptionPane.INFORMATION_MESSAGE);			
 			return;
 		}
+        PositionablePoint p = boundary;
+        if(boundary.getType()==PositionablePoint.EDGE_CONNECTOR && westTrack!=boundary.getConnect1())
+            p=boundary.getLinkedPoint();
 		SignalHead nextHead = getNextSignalFromObject(westTrack,
-				boundary, westBoundField.getText().trim(), setSignalsAtBoundaryFrame);
+				p, westBoundField.getText().trim(), setSignalsAtBoundaryFrame);
 		if ( (nextHead==null) && (!reachedEndBumper()) ) {
 			JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
 				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
@@ -2224,6 +2272,30 @@ public class LayoutEditorTools
 		finalizeBlockBossLogic();
 	}
 
+    public void setSignalAtEdgeConnector(PositionablePoint p, MultiIconEditor theEditor, 
+					JFrame theFrame ){
+        boundary = p;
+        if(p.getLinkedPoint()==null || p.getLinkedPoint().getConnect1()==null){
+            if(p.getConnect1Dir()==jmri.Path.EAST || p.getConnect1Dir()==jmri.Path.SOUTH){
+                showWest=false;
+            } else {
+                showEast=false;
+            }
+            block1NameField.setText(boundary.getConnect1().getLayoutBlock().getID());
+        } else {
+            block1NameField.setText(boundary.getConnect1().getLayoutBlock().getID());
+            block2NameField.setText(boundary.getConnect2().getLayoutBlock().getID());
+        }
+        if(p.getConnect1Dir()==jmri.Path.EAST || p.getConnect1Dir()==jmri.Path.WEST)
+            trackHorizontal = true;
+        else if (p.getConnect1Dir()==jmri.Path.NORTH || p.getConnect1Dir()==jmri.Path.SOUTH)
+            trackVertical = true;
+        boundaryFromMenu = true;
+		
+		setSignalsAtBlockBoundary(theEditor,theFrame);
+		return;
+    }
+    
 	/**
 	 * Tool to set signals at a double crossover turnout, including placing the 
 	 *		signal icons and setup of Simple Signal Logic for each signal head
@@ -7846,17 +7918,8 @@ public class LayoutEditorTools
 	{
         if (signalMast==null)
             return;
-		/*for (int i=0;i<layoutEditor.pointList.size();i++) {
-			PositionablePoint po = layoutEditor.pointList.get(i);
-			if ((po.getEastBoundSignalMast()!=null) &&
-					(po.getEastBoundSignalMast()== signalMast) )
-				po.setEastBoundSignalMast(null);
-			if ((po.getWestBoundSignalMast()!=null) &&
-					(po.getWestBoundSignalMast() == signalMast)) 
-				po.setWestBoundSignalMast(null);
-		}*/
         
-                for(PositionablePoint po : layoutEditor.pointList){
+        for(PositionablePoint po : layoutEditor.pointList){
             if ((po.getEastBoundSignalMast()!=null) && po.getEastBoundSignalMast()==signalMast){
                 po.setEastBoundSignalMast(null);
             }

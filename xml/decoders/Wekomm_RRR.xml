@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- $Id: Wekomm_RRR.xml ,v 1.0 2013/02/24 19:01:43 Alain CARASSO $       -->
@@ -15,7 +14,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config showEmptyPanes="no">
+<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Alain Carasso" version="1" lastUpdated="20130224" />
 
 <decoder>
@@ -49,7 +48,7 @@
             item="Manufacturer"
             readOnly="yes"
 			comment="8 to reset"
-            tooltip="CV8  Readonly default=86">
+            tooltip="Readonly default=86">
             <decVal />
     </variable>
 
@@ -58,7 +57,7 @@
             label="Extended Address"
             CV="17"
             item="Long Address"
-            tooltip="CV17 ">
+    >
             <longAddressVal/>
      </variable>
 
@@ -69,7 +68,7 @@
             mask="XVVVVVVV"
             default="0"
             item="Consist Address"
-            tooltip="CV19-XVVVVVVV  (0 -127) default=0">
+            tooltip="XVVVVVVV  (0 -127) default=0">
             <decVal
                 min="0"
                 max="127"
@@ -81,7 +80,7 @@
             label="Consist 2nd Address"
             CV="27"
             item="Secondary Address"
-            tooltip="CV27 ">
+    >
             <longAddressVal/>
      </variable>
 	<!-- CV 29 -->
@@ -91,7 +90,7 @@
             mask="XXXXXXXV"
             default="0"
             item="Locomotive Direction"
-            tooltip="CV29-XXXXXXXV  default=0">
+            tooltip="XXXXXXXV  default=0">
             <enumVal>
                 <enumChoice choice="Normal"></enumChoice>
                 <enumChoice choice="Reverse"></enumChoice>
@@ -103,7 +102,7 @@
             mask="XXXXXXVX"
             default="1"
             item="Speed Step Mode"
-            tooltip="CV29-XXXXXXVX  default=1">
+            tooltip="XXXXXXVX  default=1">
             <enumVal>
                 <enumChoice choice="14"></enumChoice>
                 <enumChoice choice="28/128"></enumChoice>
@@ -115,7 +114,7 @@
             mask="XXXXXVXX"
             default="1"
             item="Analog (DC) Operation"
-            tooltip="CV29-XXXXXVXX  default=1">
+            tooltip="XXXXXVXX  default=1">
             <enumVal>
                 <enumChoice choice="No"></enumChoice>
                 <enumChoice choice="Yes"></enumChoice>
@@ -127,7 +126,7 @@
             mask="XXXXVXXX"
             default="0"
             item="Enable RailCom"
-            tooltip="CV29-XXXXVXXX  default=0">
+            tooltip="XXXXVXXX  default=0">
             <enumVal>
                 <enumChoice choice="Disabled"></enumChoice>
                 <enumChoice choice="Enabled"></enumChoice>
@@ -140,7 +139,7 @@
             mask="XXVXXXXX"
             default="0"
             item="Address Format"
-            tooltip="CV29-XXVXXXXX  default=0">
+            tooltip="XXVXXXXX  default=0">
             <enumVal>
                 <enumChoice choice="One byte (short) address"></enumChoice>
                 <enumChoice choice="Two byte (extended) address"></enumChoice>
@@ -152,7 +151,7 @@
             mask="VXXXXXXX"
             default="0"
             item="Decoder Type"
-            tooltip="CV29-VXXXXXXX  default=0">
+            tooltip="VXXXXXXX  default=0">
             <enumVal>
                 <enumChoice choice="MultiFuncton"></enumChoice>
                 <enumChoice choice="Accessory"></enumChoice>
@@ -229,7 +228,7 @@
             mask="XXXXXXVV"
             default="3"
             item="External Magnet"
-            tooltip="CV110-XXXXXXVV  default=3">
+            tooltip="XXXXXXVV  default=3">
             <enumVal>
                 <enumChoice choice="Magnet active for Consist Address"></enumChoice>
                 <enumChoice choice="Range is F5-F8 / F9-F12"></enumChoice>
@@ -241,7 +240,7 @@
             mask="XXXXXVVV"
 			default="7"
             item="Analog Lights Activated"
-            tooltip="CV116-XXXXXVVV  default=7">
+            tooltip="XXXXXVVV  default=7">
             <enumVal>
 				<enumChoice choice="Cab lights"></enumChoice>
 				<enumChoice choice="Cars lights"></enumChoice>

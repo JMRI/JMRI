@@ -5,7 +5,6 @@ package jmri.jmrit.catalog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
@@ -14,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+//import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.JRadioButton;
 import javax.swing.event.TreeSelectionEvent;
@@ -36,7 +36,6 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.BorderLayout;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.datatransfer.Transferable; 
@@ -46,7 +45,6 @@ import java.awt.dnd.*;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -106,16 +104,21 @@ public class CatalogPanel extends JPanel implements MouseListener {
     public CatalogPanel(String label1, String label2) {
         super(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(new JLabel(Bundle.getMessage(label1)));
+        add(new JLabel(Bundle.getMessage(label2)));
         JPanel p1 = new JPanel();
-        p1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
-        		Bundle.getMessage(label2)));
         p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
         _treePane = new JScrollPane(_dTree);
-        _treePane.getViewport().setPreferredSize(new Dimension(250, 100));
+        _treePane.setMaximumSize(new Dimension(300, 10000));
+        p1.add(new JLabel(Bundle.getMessage(label1)));
         p1.add(_treePane);
-        add(p1);
-        add(makePreviewPanel());
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.add(p1);
+        p.add(makePreviewPanel());
+//        JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, p1, makePreviewPanel());
+//        sp.setResizeWeight(0.2);
+//        add(sp);
+        add(p);
         add(makeButtonPanel());
     }
 
@@ -380,14 +383,9 @@ public class CatalogPanel extends JPanel implements MouseListener {
     private JPanel makePreviewPanel() {
     	JPanel previewPanel = new JPanel();
         previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
-//        JPanel p = new JPanel();
-//        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-//        p.add(_previewLabel);
         previewPanel.add(_previewLabel);
         _preview = new JPanel();
-//        _preview.setPreferredSize(new Dimension(250, 200));
-        JScrollPane js = new JScrollPane(_preview);                       
-        js.getViewport().setPreferredSize(new Dimension(250, 200));
+        JScrollPane js = new JScrollPane(_preview);
         previewPanel.add(js);
         return previewPanel;
     }

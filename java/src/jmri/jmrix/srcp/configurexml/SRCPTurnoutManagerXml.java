@@ -23,7 +23,7 @@ public class SRCPTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
     }
 
     public void setStoreElementClass(Element turnouts) {
-        turnouts.setAttribute("class","jmri.jmrix.srcp.configurexml.SRCPTurnoutManagerXml");
+        turnouts.setAttribute("class",this.getClass().getName());
     }
 
     public void load(Element element, Object o) {

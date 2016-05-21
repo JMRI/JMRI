@@ -8,7 +8,7 @@ h1 {
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
-ul.manifest>li.location {
+ul.manifest>li.location, ul.manifest>li.aboard {
 	font-size: 150%;
 }
 ul.manifest>li.location:hover {
@@ -30,14 +30,28 @@ ul.manifest>li.location:hover {
 ul.manifest>li.location>ul:hover {
 	font-style: normal;
 }
-ul.manifest>li.location>ul {
+ul.manifest>li.location>ul, ul.manifest>li.aboard>ul {
 	font-size: 75%;
 }
 ul.manifest {
 	white-space: nowrap;
 }
-ul.manifest>span.comment {
+ul.manifest>span.comment, ul.manifest>li.aboard {
 	font-style: italic;
+}
+ul.manifest>li.aboard>ul {
+	font-style: normal;
+}
+ul.manifest>li.aboard {
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #EEECF6;
+    border-color: #BEBFD7 -moz-use-text-color;
+    border-image: none;
+    border-style: dotted none;
+    border-width: 1px 0;
 }
 ul.manifest>li.location>ul.cars>li.car>span.roadNumber {
 	font-size: 125%;
@@ -64,6 +78,11 @@ ul.manifest li.car.actionCompleted img.actionComplete {
 }
 ul.manifest>li>ul>li {
 	list-style: none;
+}
+ul.manifest li.location.complete {
+	font-size: 130%;
+    line-height: 100%;
+    opacity: 0.5;
 }
 
 #operationsFooter {

@@ -43,7 +43,10 @@
             <choice>Ditch light type 2</choice>
             <choice xml:lang="it">Luce Ditch tipo 2</choice>
           </ienumChoice>
-          <ienumChoice choice="Flash light" value="12">
+          <ienumChoice choice="Oscillating headlight">
+            <choice>Oscillating headlight</choice>
+          </ienumChoice>
+          <ienumChoice choice="Flash light">
             <choice>Flash light</choice>
             <choice xml:lang="it">Luce a Flash</choice>
           </ienumChoice>
@@ -55,12 +58,28 @@
             <choice>Gyra light</choice>
             <choice xml:lang="it">Luce rotante Gyra</choice>
           </ienumChoice>
-          <ienumChoice choice="End of train flasher"> <!-- from LokPilotV4.0 -->
+          <ienumChoice choice="End of train flasher">
             <choice>End of train flasher</choice>
             <choice xml:lang="it">lampeggiante Fine Treno (FRED)</choice>
+          </ienumChoice>
+          <ienumChoice choice="Flourescent light">
+            <choice>Flourescent light</choice>
+          </ienumChoice>
+          <ienumChoice choice="Energy saving light">
+            <choice>Energy saving light</choice>
+          </ienumChoice>
+          <ienumChoice choice="Sound controlled smoke unit" value="22">
+          </ienumChoice>
+          <ienumChoice choice="Fan control" value="23">
+          </ienumChoice>
+          <ienumChoice choice="Seuthe smoke unit" value="24">
+          </ienumChoice>
+          <ienumChoice choice="Trigger smoke chuff" value="25">
           </ienumChoice>
           <ienumChoice choice="Coupler function" value="28">
             <choice>Coupler function</choice> <!-- not in LokSoundSelect? -->
             <choice xml:lang="it">Funzione Gancio</choice>
+          </ienumChoice>
+          <ienumChoice choice="Roco coupler" value="29">
           </ienumChoice>
         </ienumVal>

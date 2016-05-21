@@ -33,6 +33,18 @@ public class TurnoutSignalMastXml
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, e);
+        Element unlit = new Element("unlit");
+        if(p.allowUnLit()){
+            unlit.setAttribute("allowed", "yes");
+            unlit.addContent(new Element("turnout").addContent(p.getUnLitTurnoutName()));
+            if(p.getUnLitTurnoutState()==Turnout.CLOSED)
+                unlit.addContent(new Element("turnoutstate").addContent("closed"));
+            else
+                unlit.addContent(new Element("turnoutstate").addContent("thrown"));
+        } else {
+            unlit.setAttribute("allowed", "no");
+        }
+        e.addContent(unlit);
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if(appMap!=null){
             java.util.Enumeration<String> aspects = appMap.getAspects();
@@ -79,6 +91,23 @@ public class TurnoutSignalMastXml
             m.setUserName(getUserName(element));
         
         loadCommon(m, element);
+        
+        if(element.getChild("unlit")!=null){
+            Element unlit = element.getChild("unlit");
+            if(unlit.getAttribute("allowed")!=null){
+                if(unlit.getAttribute("allowed").getValue().equals("no")){
+                    m.setAllowUnLit(false);
+                } else {
+                    m.setAllowUnLit(true);
+                    String turnout = unlit.getChild("turnout").getText();
+                    String turnoutState = unlit.getChild("turnoutstate").getText();
+                    int turnState = Turnout.THROWN;
+                    if(turnoutState.equals("closed"))
+                        turnState = Turnout.CLOSED;
+                    m.setUnLitTurnout(turnout, turnState);
+                }
+            }
+        }
         
         List<Element> list = element.getChildren("aspect");
         for (int i = 0; i < list.size(); i++) {

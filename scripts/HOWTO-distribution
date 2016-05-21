@@ -145,14 +145,26 @@ Third, we do any necessary release-specific updates.
 ====================================================================================
 For local builds, these are the build instructions; CI builds will already be running)
 
-( ) ant -Dnsis.home="" packages
+( ) edit  release.properties to say release.official=true (last line)
 
+( ) setenv SVN_REVISION 23699
+    ant -Dnsis.home="" clean packages
+
+    (You can get the SVN_REVISION from http://sourceforge.net/p/jmri/code/HEAD/tree/branches/jmri/releases ; don't prefix an 'r')
+    
     Ant will do the various builds, construct the distribution
     directories, and finally construct the Linux, Mac OS X and Windows
     distribution files in dist/releases/
 
 ( ) Put the Linux, Mac OS X and Windows files where developers can
     take a quick look, send an email, and WAIT FOR SOME REPLIES
+    
+    The main JMRI web site gets completely overwritten by Jenkins, so another approach:
+        ssh user,jmri@shell.sf.net create
+        scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
+    puts them at
+        http://user.users.sf.net/release
+    (The user has to have put the htdocs link in their SF.net account)
 
 ====================================================================================
 Final release steps:
@@ -163,14 +175,12 @@ Final release steps:
     then do (replace "user" with your SourceForge.net user name; must have SSH
     keys for SourceForge.net set up)
 
-    (SourceForge may have disabled CURL in their shell servers, in which
-    case do this somewhere else with good connectivity; the upload from Jenkins
-    will be slow in any case)
     (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.4/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.5.3/ws/jmri/dist/release/*zip*/release.zip"
+    rm release/JMRI*
     unzip release.zip
     cd release
     scp JMRI.* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"    
@@ -184,19 +194,18 @@ Final release steps:
 	cd xml/XSLT
 	ant xslt upload
 
-( ) Format the release note page, change date, etc
+( ) Format the release note page: change date, comment out "draft release", make links work
 
 ( ) Wait until the downloads have propagated to the mirrors; check
     by trying to download each file
+
 
 ( ) Commit release note files to the web site SVN directory
 
 ( ) Complete all the above before continuing
 
 ( ) Update the web site front page and downloads page:
-     index.html download/Sidebar download/index.shtml
-
-( ) Update the "releaselist" file at the top of the web directory
+     index.html download/Sidebar download/index.shtml releaselist
 
 ( ) If the decoder definitions have changed, make a .zip file and send to:
     Graham Plowman: gppsoftware@gppsoftware.com

@@ -378,11 +378,13 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.setStatus(block, state);
         if ((state & OBlock.OCCUPIED)!=0) {
-            _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);        	
+            _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);        	
             repaint();
         }
-        if (_status.equals("DontUseTrack")) {
+        if ((block.getState() & OBlock.OUT_OF_SERVICE)!=0) {
         	setControlling(false);
+        } else {
+        	setControlling(true);
         }
     }
 
@@ -472,6 +474,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     public void dispose() {
         if (namedOccSensor != null) {
             getOccSensor().removePropertyChangeListener(this);
+        }
+        if (namedOccBlock != null) {
+            getOccBlock().removePropertyChangeListener(this);
         }
         namedOccSensor = null;
         namedOccSensor = null;

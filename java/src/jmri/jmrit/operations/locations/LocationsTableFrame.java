@@ -68,7 +68,7 @@ public class LocationsTableFrame extends OperationsFrame {
     	controlPanel.add(sortById);
     	controlPanel.add(textSep);
 		controlPanel.add (addButton);
-		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
+		controlPanel.setMaximumSize(new Dimension(Control.widePanelWidth, 50));
 	   	
 		getContentPane().add(controlPanel);
 	   	
@@ -95,8 +95,10 @@ public class LocationsTableFrame extends OperationsFrame {
 		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);	// NOI18N
     	
-    	pack();
-    	if ((getWidth()<670)) setSize(670, getHeight());
+    	initMinimumSize();
+		// make panel a bit wider than minimum if the very first time opened
+		if (getWidth() == Control.panelWidth)
+			setSize(850, getHeight());
     	
      	// now load the cars and engines
     	CarManagerXml.instance();

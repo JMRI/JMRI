@@ -46,6 +46,15 @@ public class IndexedEnumVariableValue extends VariableValue
             _cvVector.elementAt(_row)};
     }
 
+    /** 
+     * Provide a user-readable description of
+     * the CVs accessed by this variable.
+     */
+     
+     public String getCvDescription() {
+        return "CV"+getCvName();
+     }
+     
     public void nItems(int n) {
         _itemArray = new String[n];
         _valueArray = new int[n];

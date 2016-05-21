@@ -69,8 +69,6 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
     }
     public int getMode() { return Programmer.CBUSNODEVARMODE; }
 
-    public boolean getCanRead() { return true; }
-
     // notify property listeners - see AbstractProgrammer for more
 
     @SuppressWarnings("unchecked")

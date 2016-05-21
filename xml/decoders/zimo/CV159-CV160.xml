@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-  <variable label="Function output 7 effect generated" CV="159" mask="VVVVVVXX" tooltip="CV 159" item="Output 9 effect generated" minOut="9">
+  <variable label="Function output 7 effect generated" CV="159" mask="VVVVVVXX" item="Output 9 effect generated" minOut="9">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -67,7 +67,7 @@
     </enumVal>
     <label>Function output 7 effect generated</label>
   </variable>
-  <variable label="Function output 7 behavior" CV="159" mask="XXXXXXVV" tooltip="CV 159" item="Output 9 behavior" minOut="9">
+  <variable label="Function output 7 behavior" CV="159" mask="XXXXXXVV" item="Output 9 behavior" minOut="9">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>
@@ -81,7 +81,7 @@
     </enumVal>
     <label>Function output 7 behavior</label>
   </variable>
-  <variable label="Function output 8 effect generated" CV="160" mask="VVVVVVXX" tooltip="CV 160" item="Output 10 effect generated" minOut="10">
+  <variable label="Function output 8 effect generated" CV="160" mask="VVVVVVXX" item="Output 10 effect generated" minOut="10">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -146,7 +146,7 @@
     </enumVal>
     <label>Function output 8 effect generated</label>
   </variable>
-  <variable label="Function output 8 behavior" CV="160" mask="XXXXXXVV" tooltip="CV 160" item="Output 10 behavior" minOut="10">
+  <variable label="Function output 8 behavior" CV="160" mask="XXXXXXVV" item="Output 10 behavior" minOut="10">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>

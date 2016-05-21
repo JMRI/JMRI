@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -18,23 +16,20 @@ import javax.swing.AbstractAction;
  */
 public class OptionAction extends AbstractAction {
 
-    public OptionAction(String s) {
-    	super(s);
-    }
+	public OptionAction(String s) {
+		super(s);
+	}
 
-    OptionFrame f = null;
-    public void actionPerformed(ActionEvent e) {
-        // create a settings frame
-    	if (f == null || !f.isVisible()){
-    		f = new OptionFrame();
-    		f.initComponents();
-    	}
-        f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	
-    }
-    
-	static Logger log = LoggerFactory
-	.getLogger(OptionAction.class.getName());
+	OptionFrame f = null;
+
+	public void actionPerformed(ActionEvent e) {
+		if (f == null || !f.isVisible()) {
+			f = new OptionFrame();
+			f.initComponents();
+		}
+		f.setExtendedState(Frame.NORMAL);
+		f.setVisible(true); // this also brings the frame into focus
+	}
 }
 
 /* @(#)OptionAction.java */

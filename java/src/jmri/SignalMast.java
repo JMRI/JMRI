@@ -90,5 +90,15 @@ public interface SignalMast extends NamedBean {
     public void setHeld(boolean newHeld);
     
     public boolean isAspectDisabled(String aspect);
+    
+    /**
+    * Sets whether the Signal Mast is allowed or configured to show an
+    * unlit aspect, or if it is always lit.
+    * @param boo Set true to allow the UnLit to be used, set false it is not
+    *            supported or allowed.
+    */
+    public void setAllowUnLit(boolean boo);
+    
+    public boolean allowUnLit();
 }
 /* @(#)SignalMast.java */

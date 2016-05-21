@@ -593,7 +593,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		List<String> tracks = loc.getTrackIdsByNameList(null);
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = loc.getTrackById(tracks.get(i));
-			if (!track.acceptsTypeName(carType) || track.getLocType().equals(Track.STAGING)
+			if (!track.acceptsTypeName(carType) || track.getTrackType().equals(Track.STAGING)
 					|| (!carRoad.equals("") && !track.acceptsRoadName(carRoad))
 					|| (!carLoad.equals("") && !track.acceptsLoad(carLoad, carType)))
 				cb.removeItem(track);

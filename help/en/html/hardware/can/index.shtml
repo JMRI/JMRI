@@ -114,9 +114,24 @@ set the appropriate baud rate under advanced preferences.  The TCH Technology
 adapter does this automatically, so no setting is required.
 
 <p>
-It's also possible to attach via a TCP/IP connection (EtherNet or WiFi), 
-but you'll have to make your own connection for this.
+It's also possible to attach via a TCP/IP connection (EtherNet or WiFi).
+This can either go to another JMRI instance running e.g. an OpenLCB hub, 
+or directly to an IP-CAN adapter. To configure one of these, open the 
+preferences and select:
+<ul>
+<li>Select your system manufacturer, e.g. OpenLCB
+<li>For System Connection, select "CAN via GridConnect Network Interface"
+<li>Under settings, enter the IP address and TCP/UDP port for the destination.
 
+<p>OpenLCB CAN Adapters advertise under mDNS/Bonjour, so you can use that
+to specify the IP address if JMRI is on the same network segment
+as your adapter.  In that case, put "openlcbcan.local." (note trailing period!)
+in the IP address field.
+<p>The port number for OpenLCB adapters is 23 by default.
+<li>Set the connection protocol as desired, e.g. "OpenLCB", and the
+Connection Prefix (usually "M") and Connection Name as needed.
+<li>Click Save, and restart.
+</ul>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

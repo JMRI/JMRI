@@ -203,28 +203,22 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
 
         /**
-		 * If an error occurs, either in the input or output thread, the display of a message
-		 * is queued in the SWING thread. Since the input and output streams are not connected
-		 * any more and the input and output threads will soon exit, user must save possible
-		 * changes, quit, fix the problem and then restart JMRI.
+         * If an error occurs, either in the input or output thread, 
+         * set the connection status to disconnected.  This status will
+         * be reset once a TCP/IP connection is re-established via 
+         * the reconnection routines defined in the parent classes.
          */
 	synchronized protected void xnTcpError()
         {
-			// If the error message was already posted to the SWING thread
-			// simply ignore this call
-			if(opened) {
-			// Post an error message routine to the SWING thread
-				javax.swing.SwingUtilities.invokeLater( new Runnable() {
-					public void run() {
-					ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
-					ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.xntcp.XnTcpBundle");
-					javax.swing.JOptionPane.showMessageDialog(null,rb.getString("Error1"), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-				}}) ;
-				// Clear open status, in order to avoid issuing the error message
-				// more than than once.
-				opened = false;
-				log.debug("XnTcpError: TCP/IP communication dropped");
-			}
+	   // If the error message was already posted, simply ignore this call
+	   if(opened) {
+	      ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+	      // Clear open status, in order to avoid issuing the error 
+              // message more than than once.
+	      opened = false;
+	      if(log.isDebugEnabled())
+                 log.debug("XnTcpError: TCP/IP communication dropped");
+	   }
         }
 
         /**

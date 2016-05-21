@@ -18,6 +18,8 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
     public XNetNetworkPortController(){
        super();
        adaptermemo = new XNetSystemConnectionMemo();
+       allowConnectionRecovery = true; // all classes derived from this class
+                                       // can recover from a connection failure
     }
 
     /**
@@ -63,6 +65,15 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
         mDisabled = disabled;
         if(adaptermemo!=null)
             adaptermemo.setDisabled(disabled);
+    }
+
+    /**
+     * Customizable method to deal with resetting a system connection after
+     * a sucessful recovery of a connection.
+     */
+    @Override
+    protected void resetupConnection() {
+         adaptermemo.getXNetTrafficController().connectPort(this);
     }
 
 

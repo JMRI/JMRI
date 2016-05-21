@@ -4,33 +4,33 @@
 <pane name="ABC">
   <column>
     <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable ABC Signal Control"/>
-    <display item="Direction Dependent stops with asymmetrical DCC" tooltip="CV27"/>
+    <display item="Direction Dependent stops with asymmetrical DCC"/>
     <label label=" ">
       <label> </label>
     </label>
-    <display item="Distance controlled stopping" tooltip="CV 140"/>
+    <display item="Distance controlled stopping"/>
     <label label=" ">
       <label> </label>
     </label>
     <row>
       <column>
-        <display item="Distance controlled stopping Distance" tooltip="CV 141"/>
+        <display item="Distance controlled stopping Distance"/>
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Distance controlled stopping speed correction (ABC)" tooltip="CV142"/>
+        <display item="Distance controlled stopping speed correction (ABC)"/>
         <label label=" ">
           <label> </label>
         </label>
       </column>
       <column>
-        <display item="Distance controlled stopping Distance" format="hslider" label="" tooltip="CV141">
+        <display item="Distance controlled stopping Distance" format="hslider" label="">
           <label/>
         </display>
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="" tooltip="CV 142">
+        <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="">
           <label/>
         </display>
         <label label=" ">
@@ -43,12 +43,12 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Signal Dependent Acceleration" tooltip="CV 49"/>
-        <display item="Signal Dependent Deceleration" tooltip="CV 50"/>
+        <display item="Signal Dependent Acceleration"/>
+        <display item="Signal Dependent Deceleration"/>
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Signal Dependent Reaction Time" tooltip="CV 59"/>
+        <display item="Signal Dependent Reaction Time"/>
         <label label=" ">
           <label> </label>
         </label>
@@ -78,7 +78,7 @@
     </row>
     <row>
       <column>
-        <display item="Asymmetrical DCC Threshold" tooltip="CV 134"/>
+        <display item="Asymmetrical DCC Threshold"/>
         <label label=" ">
           <label> </label>
         </label>

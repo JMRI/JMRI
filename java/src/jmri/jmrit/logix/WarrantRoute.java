@@ -158,6 +158,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected JPanel makeBlockPanels() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel oPanel = makeEndPoint("OriginBlock", makeBlockBox(_originBlockBox, "OriginToolTip"), 
                                      makeLabelCombo("PathName", _originPathBox, "OriginToolTip"), 
@@ -188,8 +189,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     private JPanel makeEndPoint(String title, JPanel p0, JPanel p1, JPanel p2, String tooltip) {
         JPanel oPanel = new JPanel();
-        oPanel.setLayout(new BoxLayout(oPanel, BoxLayout.Y_AXIS));
-        oPanel.add(new JLabel(Bundle.getMessage(title)));
+        oPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                Bundle.getMessage(title),
+                javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.TOP));
         JPanel hPanel = new JPanel();
         hPanel.setLayout(new BoxLayout(hPanel, BoxLayout.X_AXIS));
         hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -209,7 +212,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         hPanel.setToolTipText(Bundle.getMessage(tooltip));
         oPanel.setToolTipText(Bundle.getMessage(tooltip));
         oPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        oPanel.setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK));
         return oPanel;
     }
     

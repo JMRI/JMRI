@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
@@ -125,7 +126,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 		addRadioButtonAction(destinationsInclude);
 		addRadioButtonAction(destinationsExclude);
 
-		// road fields and enable buttons
+		// load fields and enable buttons
 		if (_track != null) {
 			_track.addPropertyChangeListener(this);
 			trackName.setText(_track.getName());
@@ -135,6 +136,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 		}
 		
 		updateDestinations();
+		
+		locationManager.addPropertyChangeListener(this);
 
 		// build menu
 		// JMenuBar menuBar = new JMenuBar();
@@ -142,9 +145,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 		// menuBar.add(_toolMenu);
 		// setJMenuBar(menuBar);
 
-		setMinimumSize(new Dimension(500, Control.panelHeight));
-		pack();
-		setVisible(true);
+		initMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
 	}
 
 	// Save, Delete, Add
@@ -211,7 +212,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 			return;
 		Location loc = locationManager.getLocationByName(b.getText());
 		if (loc != null) {
-			if (b.isSelected())
+			if (b.isSelected() ^ _track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS))
 				_track.addDestination(loc);
 			else
 				_track.deleteDestination(loc);
@@ -221,6 +222,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 	public void dispose() {
 		if (_track != null)
 			_track.removePropertyChangeListener(this);
+		locationManager.removePropertyChangeListener(this);
 		super.dispose();
 	}
 
@@ -228,6 +230,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
 					+ e.getNewValue()); // NOI18N
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
+			updateDestinations();
+		}
 	}
 
 	static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrame.class.getName());

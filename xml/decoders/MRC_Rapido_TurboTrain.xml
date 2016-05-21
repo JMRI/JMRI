@@ -29,32 +29,32 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Range 1 - 127" item="Short Address" default="3" tooltip="CV1 sets the Short or 2-digit address [range 1-127]" mask="VVVVVVVV">
+      <variable label="Primary Address" CV="1" comment="Range 1 - 127" item="Short Address" default="3" tooltip="sets the Short or 2-digit address [range 1-127]" mask="VVVVVVVV">
         <shortAddressVal/>
         <label>Primary Address</label>
         <comment>Range 1 - 127</comment>
       </variable>
-      <variable label="Start Volts" CV="2" comment="Range 0-32" item="Vstart" default="0" tooltip="CV2 sets the motor voltage at Speed Step 1 [range 0-32]" mask="VVVVVVVV">
+      <variable label="Start Volts" CV="2" comment="Range 0-32" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" mask="VVVVVVVV">
         <decVal max="32"/>
         <label>Start Volts</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Acceleration" CV="3" comment="Range 0-32" item="Accel" default="0" tooltip="CV3 sets the acceleration rate [range 0-32]" mask="VVVVVVVV">
+      <variable label="Acceleration" CV="3" comment="Range 0-32" item="Accel" default="0" tooltip="sets the acceleration rate [range 0-32]" mask="VVVVVVVV">
         <decVal max="32"/>
         <label>Acceleration</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Deceleration" CV="4" item="Decel" default="0" tooltip="CV4 sets the deceleration rate [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
+      <variable label="Deceleration" CV="4" item="Decel" default="0" tooltip="sets the deceleration rate [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
         <decVal max="32"/>
         <label>Deceleration</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Max Voltage" CV="5" item="Vhigh" default="32" tooltip="CV5 sets the motor voltage at the top Speed Step [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
+      <variable label="Max Voltage" CV="5" item="Vhigh" default="32" tooltip="sets the motor voltage at the top Speed Step [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
         <decVal max="32"/>
         <label>Max Voltage</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Speed Curve Select" CV="6" item="Speed Table/Mid Range Cab Speed Step" default="0" tooltip="CV6 sets Speed Curve">
+      <variable label="Speed Curve Select" CV="6" item="Speed Table/Mid Range Cab Speed Step" default="0" tooltip="sets Speed Curve">
         <enumVal>
           <enumChoice choice="Linear">
             <choice>Linear</choice>
@@ -68,11 +68,11 @@
         </enumVal>
         <label>Speed Curve Select</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" tooltip="CV7 is the Decoder ID, Read Only" item="Decoder Version">
+      <variable label="Version ID" CV="7" readOnly="yes" tooltip="is the Decoder ID, Read Only" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="CV8 is the Manufacturer ID, MRC=143, Read Only" item="Manufacturer">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="is the Manufacturer ID, MRC=143, Read Only" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
@@ -80,7 +80,7 @@
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
-      <variable label="Advanced Consist address" CV="19" item="Consist Address" default="0" tooltip="CV19 set the Advanced Consist address, range 0-127" mask="XVVVVVVV">
+      <variable label="Advanced Consist address" CV="19" item="Consist Address" default="0" tooltip="set the Advanced Consist address, range 0-127" mask="XVVVVVVV">
         <decVal max="127"/>
         <label>Advanced Consist address</label>
       </variable>
@@ -95,7 +95,7 @@
         </enumVal>
         <label>Locomotive Direction In Consist</label>
       </variable>
-      <variable label="Consist Function" CV="21" item="Functions Respond To" default="0" tooltip="CV21 selects the address accessory functions will respond to" mask="XXXXXXXV">
+      <variable label="Consist Function" CV="21" item="Functions Respond To" default="0" tooltip="selects the address accessory functions will respond to" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Functions respond to Locomotive Address Only">
             <choice>Functions respond to Locomotive Address Only</choice>
@@ -193,11 +193,11 @@
         </enumVal>
         <label>American/Canadian version</label>
       </variable>
-      <variable label="User ID #1" CV="105" item="User Id #1" default="0" tooltip="CV105 sets the User ID #1 [range 0-255]" mask="VVVVVVVV">
+      <variable label="User ID #1" CV="105" item="User Id #1" default="0" tooltip="sets the User ID #1 [range 0-255]" mask="VVVVVVVV">
         <decVal max="255" min="0"/>
         <label>User ID #1</label>
       </variable>
-      <variable label="User ID #2" CV="106" item="User Id #2" default="0" tooltip="CV106 sets the User ID #2 [range 0-255]" mask="VVVVVVVV">
+      <variable label="User ID #2" CV="106" item="User Id #2" default="0" tooltip="sets the User ID #2 [range 0-255]" mask="VVVVVVVV">
         <decVal max="255" min="0"/>
         <label>User ID #2</label>
       </variable>

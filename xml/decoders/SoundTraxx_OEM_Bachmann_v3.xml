@@ -194,7 +194,7 @@
       <variable label="Consist Braking Rate (0-127)" CV="24" mask="XVVVVVVV" item="Consist Deceleration Adjustment" default="0" comment="Additional consist braking (combined with CV4)" tooltip="When loco is in a consist, it's baseline braking rate is modified by this amount">
         <decVal max="127"/>
       </variable>
-      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
+      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
         <enumVal>
           <enumChoice choice="Disabled, Speed Curves not used"/>
           <enumChoice choice="Disabled, Speed Curves not used"/>

@@ -341,7 +341,7 @@
         </enumVal>
         <label>Analog Acceleration and Deceleration</label>
       </variable>
-      <variable label="Automatic Speed Step Detection" CV="51" default="1" tooltip="CV51, auto-detection of the decoders speed step configuration">
+      <variable label="Automatic Speed Step Detection" CV="51" default="1" tooltip="auto-detection of the decoders speed step configuration">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -352,7 +352,7 @@
         </enumVal>
         <label>Automatic Speed Step Detection</label>
       </variable>
-      <variable label="BEMF Configuration Slow" CV="52" default="1" item="DC Brake Momentum" tooltip="CV52: 0=OFF, 1=slow speed, 2=OFF, 3=normal speed">
+      <variable label="BEMF Configuration Slow" CV="52" default="1" item="DC Brake Momentum" tooltip=": 0=OFF, 1=slow speed, 2=OFF, 3=normal speed">
         <decVal max="3"/>
         <label>BEMF Configuration Slow</label>
       </variable>
@@ -422,18 +422,18 @@
     <column>
       <row>
         <column>
-          <display item="Effects Output F1 Dimm Rate-1" tooltip="CV53, Sets the switch ON dimming of F1"/>
-          <display item="Effects Output F1 Dimm Rate-2" tooltip="CV54, Sets the switch OFF dimming of F1"/>
-          <display item="Effects Output F1 Symmetry" tooltip="CV56, Sets the symmetry of F1"/>
+          <display item="Effects Output F1 Dimm Rate-1" tooltip="Sets the switch ON dimming of F1"/>
+          <display item="Effects Output F1 Dimm Rate-2" tooltip="Sets the switch OFF dimming of F1"/>
+          <display item="Effects Output F1 Symmetry" tooltip="Sets the symmetry of F1"/>
         </column>
         <column>
-          <display item="Effects Output F1 Dimm Rate-1" format="hslider" label="" tooltip="CV53, Sets the switch ON dimming of F1">
+          <display item="Effects Output F1 Dimm Rate-1" format="hslider" label="" tooltip="Sets the switch ON dimming of F1">
             <label/>
           </display>
-          <display item="Effects Output F1 Dimm Rate-2" format="hslider" label="" tooltip="CV54, Sets the switch OFF dimming of F1">
+          <display item="Effects Output F1 Dimm Rate-2" format="hslider" label="" tooltip="Sets the switch OFF dimming of F1">
             <label/>
           </display>
-          <display item="Effects Output F1 Symmetry" format="hslider" label="" tooltip="CV56, Sets the symmetry of F1">
+          <display item="Effects Output F1 Symmetry" format="hslider" label="" tooltip="Sets the symmetry of F1">
             <label/>
           </display>
         </column>
@@ -445,29 +445,29 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Effects Output F1 Frequency and Mode" tooltip="CV55, Sets the frequency and mode of F1"/>
+      <display item="Effects Output F1 Frequency and Mode" tooltip="Sets the frequency and mode of F1"/>
     </column>
     <name>Output Handling</name>
   </pane>
   <pane name="HKE Special">
     <column>
-      <display item="Package Timeout" tooltip="CV 11"/>
+      <display item="Package Timeout"/>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Automatic Speed Step Detection" tooltip="CV 51"/>
+      <display item="Automatic Speed Step Detection"/>
     </column>
     <column>
-      <display item="Running Hour Meter1" tooltip="CV 57"/>
-      <display item="Running Hour Meter2" tooltip="CV 58"/>
-      <display item="Running Hour Meter3" tooltip="CV 59"/>
+      <display item="Running Hour Meter1"/>
+      <display item="Running Hour Meter2"/>
+      <display item="Running Hour Meter3"/>
       <separator/>
-      <display item="Decoder Production Date1" tooltip="CV 60"/>
-      <display item="Decoder Production Date2" tooltip="CV 61"/>
+      <display item="Decoder Production Date1"/>
+      <display item="Decoder Production Date2"/>
       <separator/>
-      <display item="Decoder Serial Number1" tooltip="CV 62"/>
-      <display item="Decoder Serial Number2" tooltip="CV 63"/>
-      <display item="Decoder Serial Number3" tooltip="CV 64"/>
+      <display item="Decoder Serial Number1"/>
+      <display item="Decoder Serial Number2"/>
+      <display item="Decoder Serial Number3"/>
     </column>
     <name>HKE Special</name>
   </pane>

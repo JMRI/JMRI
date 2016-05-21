@@ -156,7 +156,9 @@
     </ul>
     <h3><a id="checkoutWithCommitAllowed">Configuring NetBeans SVN to allow both Check-out and Commit</a></h3> 
     <p>If you have a sourceforge.net account and are a member of the sourceforge.net 
-        JMRI project, <i>and you wish to be able to check out and submit changes to 
+        JMRI project (which means you've been given write-access to the SVN
+        repository; this does not apply to most people), 
+        <i>and you wish to be able to check out and submit changes to 
         the JMRI SVN repository at sourceforge.net</i>, then it is necessary to follow 
         a different process than listed above.</p>
     <p>Start NetBeans and perform the steps shown below.  In the description, text 

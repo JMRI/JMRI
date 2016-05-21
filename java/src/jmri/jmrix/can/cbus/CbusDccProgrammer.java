@@ -76,11 +76,6 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     @Override
     public int getMode() { return _mode; }
 
-    @Override
-    public boolean getCanRead() {
-        return true;
-    }
-
     // notify property listeners - see AbstractProgrammer for more
 
     @SuppressWarnings("unchecked")

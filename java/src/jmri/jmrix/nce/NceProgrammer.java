@@ -61,8 +61,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
      * @return True if paged or register mode
      */
     public boolean hasMode(int mode) {
-    	if (tc != null && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3){
-    		log.debug("NCE USB-SB3 hasMode returns false on mode "+mode);
+    	if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB &&
+    			tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE){
+    		log.debug("NCE USB-SB3/SB5/TWIN hasMode returns false on mode "+mode);
     		return false;
     	}
         if ( mode == Programmer.PAGEMODE ||
@@ -81,13 +82,32 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
     public int getMode() { return _mode; }
 
+    @Override
     public boolean getCanRead() {
-    	if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3)
+    	if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB &&
+    			tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
     		return false;
     	else
     		return true;
     	}
 
+    public boolean getCanWrite(int mode, String cv) {
+       if ((Integer.parseInt(cv) > 256) &&
+               ((mode == Programmer.PAGEMODE) ||
+                   (mode == Programmer.DIRECTBYTEMODE) ||
+                   (mode == Programmer.REGISTERMODE)
+               ) && ((tc != null) && (
+                       (tc.getCommandOptions() == NceTrafficController.OPTION_1999) |
+                       (tc.getCommandOptions() == NceTrafficController.OPTION_2004) |
+                       (tc.getCommandOptions() == NceTrafficController.OPTION_2006))
+                   )
+               ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
     // notify property listeners - see AbstractProgrammer for more
 
     @SuppressWarnings("unchecked")
@@ -119,6 +139,18 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
         useProgrammer(p);
+        // prevent writing Op mode CV > 255 on PowerHouse 2007C and earlier
+        if ((CV > 256) && 
+        		((getMode() == Programmer.PAGEMODE) ||
+    				(getMode() == Programmer.DIRECTBYTEMODE) ||
+    				(getMode() == Programmer.REGISTERMODE)
+        		) && ((tc != null) && (
+        				(tc.getCommandOptions() == NceTrafficController.OPTION_1999) | 
+    					(tc.getCommandOptions() == NceTrafficController.OPTION_2004) | 
+    					(tc.getCommandOptions() == NceTrafficController.OPTION_2006))
+					)
+				)
+        	throw new jmri.ProgrammerException("CV number not supported");
         _progRead = false;
         // set state
         progState = COMMANDSENT;

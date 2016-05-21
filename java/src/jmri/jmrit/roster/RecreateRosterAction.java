@@ -9,10 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 import javax.swing.Icon;
-
-import jmri.util.FileUtil;
 
 import org.jdom.Element;
 

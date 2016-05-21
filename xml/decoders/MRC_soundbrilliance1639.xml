@@ -142,7 +142,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-      <variable label="Sound On/Off" CV="49" mask="XXXXXXXV" tooltip="CV49, F0 double-click also selects" default="1" item="Sound Option 1">
+      <variable label="Sound On/Off" CV="49" mask="XXXXXXXV" tooltip="F0 double-click also selects" default="1" item="Sound Option 1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -153,7 +153,7 @@
         </enumVal>
         <label>Sound On/Off</label>
       </variable>
-      <variable label="Whistle Type" CV="50" item="Sound Option 2" default="3" tooltip="CV50, range 0-11, F19 also selects whistle type" comment="Range 0-11">
+      <variable label="Whistle Type" CV="50" item="Sound Option 2" default="3" tooltip="range 0-11, F19 also selects whistle type" comment="Range 0-11">
         <decVal max="11"/>
         <label>Whistle Type</label>
         <comment>Range 0-11</comment>
@@ -163,7 +163,7 @@
         <label>Whistle Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Bell Type" CV="52" item="Sound Option 3" default="3" tooltip="CV52, range 0-3" comment="Range 0-3">
+      <variable label="Bell Type" CV="52" item="Sound Option 3" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Bell Type</label>
         <comment>Range 0-3</comment>
@@ -173,12 +173,12 @@
         <label>Bell Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Bell Ring Rate" CV="54" item="Sound Group 3 Option 4" default="3" tooltip="CV54, range 0-50, lower is faster" comment="Range 0-50">
+      <variable label="Bell Ring Rate" CV="54" item="Sound Group 3 Option 4" default="3" tooltip="range 0-50, lower is faster" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
         <comment>Range 0-50</comment>
       </variable>
-      <variable label="Chuff type" item="Sound Option 4" CV="55" default="0" tooltip="CV55, range 0-5 single chuff, 6-13 double chuff, F12 for on/off" comment="Range 0-13">
+      <variable label="Chuff type" item="Sound Option 4" CV="55" default="0" tooltip="range 0-5 single chuff, 6-13 double chuff, F12 for on/off" comment="Range 0-13">
         <decVal max="13"/>
         <label>Chuff type</label>
         <comment>Range 0-13</comment>
@@ -257,7 +257,7 @@
         <label>Brake Release Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Auto brake squeal" item="Sound Option 5" CV="115" default="1" tooltip="CV115, F5 also sounds brake squeal">
+      <variable label="Auto brake squeal" item="Sound Option 5" CV="115" default="1" tooltip="F5 also sounds brake squeal">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -289,12 +289,12 @@
         <label>Coupling Fire Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Chuff Rate" CV="120" item="Sound Group 3 Option 5" default="20" tooltip="CV120, range 0-30, default 20" comment="Range 0-30">
+      <variable label="Chuff Rate" CV="120" item="Sound Group 3 Option 5" default="20" tooltip="range 0-30, default 20" comment="Range 0-30">
         <decVal max="40"/>
         <label>Chuff Rate</label>
         <comment>Range 0-30</comment>
       </variable>
-      <variable label="Chuff Start Point" CV="121" item="Sound Group 3 Option 6" default="0" tooltip="CV121, range 0-5" comment="Range 0-5">
+      <variable label="Chuff Start Point" CV="121" item="Sound Group 3 Option 6" default="0" tooltip="range 0-5" comment="Range 0-5">
         <decVal max="5"/>
         <label>Chuff Start Point</label>
         <comment>Range 0-5</comment>

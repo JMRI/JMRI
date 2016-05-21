@@ -171,9 +171,11 @@ public class PrintCarRosterAction extends AbstractAction {
 				if (printCarTrain.isSelected())
 					// pad out train to half of its maximum
 					train = padAttribute(car.getTrainName().trim(), Control.max_len_string_train_name / 2);
-				if (printCarDestination.isSelected())
-					destination = padAttribute(car.getDestinationName().trim(),
-							Control.max_len_string_location_name);
+				if (printCarDestination.isSelected()) {
+					if (car.getDestination() != null)
+						destination = car.getDestinationName().trim() + " - " + car.getDestinationTrackName();
+					destination = padAttribute(destination, Control.max_len_string_location_name);
+				}
 				if (printCarFinalDestination.isSelected()) {
 					if (car.getFinalDestination() != null)
 						finalDestination = car.getFinalDestinationName().trim() + " - "

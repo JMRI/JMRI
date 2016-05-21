@@ -48,7 +48,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="no"/>
     <!-- not sure if it can do ops-mode, but few command stations can do accessory ops-mode -->
     <variables>
-      <variable label="Low 7 bytes of Address CV1" CV="1" default="01" tooltip="CV1">
+      <variable label="Low 7 bytes of Address CV1" CV="1" default="01">
         <!--  in decoder address mode, takes values 0-63, ie, bits 0 to 5 
 			        in output address mode, takes values 0-255, ie. all bits -->
         <decVal/>
@@ -75,7 +75,7 @@
 			<decVal/>
 		</variable>
 		
-      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV" tooltip="CV9">
+      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV">
         <!-- uses same bits in both addressing modes -->
         <decVal min="0" max="7"/>
       </variable>
@@ -542,11 +542,11 @@
 	  </variable>
 
 	  
-	  <variable label="Firmware version" CV="113" readOnly="yes" default="0" item="Product Number" tooltip="Firmware version (read only)CV112">
+	  <variable label="Firmware version" CV="113" readOnly="yes" default="0" item="Product Number" tooltip="Firmware version (read only)">
 	   <hexVal/>
       </variable>	  
 	  <!--  firmware version is actually CV112 and CV113, CV112 being usually value E0.  But a SplitVal with HEX formatting doesn't work.
-	  <variable label="Firmware sub-version" CV="113" readOnly="yes" default="0" item="User Id #1" tooltip="Firmware sub-version (read only)CV113">
+	  <variable label="Firmware sub-version" CV="113" readOnly="yes" default="0" item="User Id #1" tooltip="Firmware sub-version (read only)">
         <splitVal highCV="112" upperMask="VVVVVVVV" /> 
       </variable>
 	  -->

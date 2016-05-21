@@ -265,11 +265,11 @@
         <decVal/>
         <label>Blinking time_constant</label>
       </variable>
-      <variable label="Offset Register" CV="65" default="0" readOnly="yes" item="Advanced Group 2 Option 1" tooltip="CV65 read only,used with Motorola programming">
+      <variable label="Offset Register" CV="65" default="0" readOnly="yes" item="Advanced Group 2 Option 1" tooltip="read only,used with Motorola programming">
         <decVal/>
         <label>Offset Register</label>
       </variable>
-      <variable label="Page Register" CV="66" default="0" readOnly="yes" item="Advanced Group 2 Option 2" tooltip="CV66 read only,used with Motorola programming">
+      <variable label="Page Register" CV="66" default="0" readOnly="yes" item="Advanced Group 2 Option 2" tooltip="read only,used with Motorola programming">
         <decVal/>
         <label>Page Register</label>
       </variable>

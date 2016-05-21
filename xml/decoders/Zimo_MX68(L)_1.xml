@@ -2448,28 +2448,28 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="FL(f) output 1" format="checkbox" label="Output 1" tooltip="CV 69, bit 0">
+          <display item="FL(f) output 1" format="checkbox" label="Output 1">
             <label>Output 1</label>
           </display>
-          <display item="FL(f) output 2" format="checkbox" label="Output 2" tooltip="CV 69, bit 1">
+          <display item="FL(f) output 2" format="checkbox" label="Output 2">
             <label>Output 2</label>
           </display>
-          <display item="FL(f) output 3" format="checkbox" label="Output 3" tooltip="CV 69, bit 2">
+          <display item="FL(f) output 3" format="checkbox" label="Output 3">
             <label>Output 3</label>
           </display>
-          <display item="FL(f) output 4" format="checkbox" label="Output 4" tooltip="CV 69, bit 3">
+          <display item="FL(f) output 4" format="checkbox" label="Output 4">
             <label>Output 4</label>
           </display>
-          <display item="FL(f) output 5" format="checkbox" label="Output 5" tooltip="CV 69, bit 4">
+          <display item="FL(f) output 5" format="checkbox" label="Output 5">
             <label>Output 5</label>
           </display>
-          <display item="FL(f) output 6" format="checkbox" label="Output 6" tooltip="CV 69, bit 5">
+          <display item="FL(f) output 6" format="checkbox" label="Output 6">
             <label>Output 6</label>
           </display>
-          <display item="FL(f) output 7" format="checkbox" label="Output 7" tooltip="CV 69, bit 6">
+          <display item="FL(f) output 7" format="checkbox" label="Output 7">
             <label>Output 7</label>
           </display>
-          <display item="FL(f) output 8" format="checkbox" label="Output 8" tooltip="CV 69, bit 7">
+          <display item="FL(f) output 8" format="checkbox" label="Output 8">
             <label>Output 8</label>
           </display>
         </column>
@@ -2481,28 +2481,28 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="FL(r) output 1" format="checkbox" label=" 1 " tooltip="CV 70, bit 0">
+          <display item="FL(r) output 1" format="checkbox" label=" 1 ">
             <label> 1 </label>
           </display>
-          <display item="FL(r) output 2" format="checkbox" label=" 2 " tooltip="CV 70, bit 1">
+          <display item="FL(r) output 2" format="checkbox" label=" 2 ">
             <label> 2 </label>
           </display>
-          <display item="FL(r) output 3" format="checkbox" label=" 3 " tooltip="CV 70, bit 2">
+          <display item="FL(r) output 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="FL(r) output 4" format="checkbox" label=" 4 " tooltip="CV 70, bit 3">
+          <display item="FL(r) output 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="FL(r) output 5" format="checkbox" label=" 5 " tooltip="CV 70, bit 4">
+          <display item="FL(r) output 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="FL(r) output 6" format="checkbox" label=" 6 " tooltip="CV 70, bit 5">
+          <display item="FL(r) output 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="FL(r) output 7" format="checkbox" label=" 7 " tooltip="CV 70, bit 6">
+          <display item="FL(r) output 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="FL(r) output 8" format="checkbox" label=" 8 " tooltip="CV 70, bit 7">
+          <display item="FL(r) output 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2514,28 +2514,28 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F1 output 1" format="checkbox" label=" 1 " tooltip="CV 71, bit 0">
+          <display item="F1 output 1" format="checkbox" label=" 1 ">
             <label> 1 </label>
           </display>
-          <display item="F1 output 2" format="checkbox" label=" 2 " tooltip="CV 71, bit 1">
+          <display item="F1 output 2" format="checkbox" label=" 2 ">
             <label> 2 </label>
           </display>
-          <display item="F1 output 3" format="checkbox" label=" 3 " tooltip="CV 71, bit 2">
+          <display item="F1 output 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F1 output 4" format="checkbox" label=" 4 " tooltip="CV 71, bit 3">
+          <display item="F1 output 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F1 output 5" format="checkbox" label=" 5 " tooltip="CV 71, bit 4">
+          <display item="F1 output 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F1 output 6" format="checkbox" label=" 6 " tooltip="CV 71, bit 5">
+          <display item="F1 output 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F1 output 7" format="checkbox" label=" 7 " tooltip="CV 71, bit 6">
+          <display item="F1 output 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F1 output 8" format="checkbox" label=" 8 " tooltip="CV 71, bit 7">
+          <display item="F1 output 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2547,28 +2547,28 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F2 output 1" format="checkbox" label=" 1 " tooltip="CV 72, bit 0">
+          <display item="F2 output 1" format="checkbox" label=" 1 ">
             <label> 1 </label>
           </display>
-          <display item="F2 output 2" format="checkbox" label=" 2 " tooltip="CV 72, bit 1">
+          <display item="F2 output 2" format="checkbox" label=" 2 ">
             <label> 2 </label>
           </display>
-          <display item="F2 output 3" format="checkbox" label=" 3 " tooltip="CV 72, bit 2">
+          <display item="F2 output 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F2 output 4" format="checkbox" label=" 4 " tooltip="CV 72, bit 3">
+          <display item="F2 output 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F2 output 5" format="checkbox" label=" 5 " tooltip="CV 72, bit 4">
+          <display item="F2 output 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F2 output 6" format="checkbox" label=" 6 " tooltip="CV 72, bit 5">
+          <display item="F2 output 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F2 output 7" format="checkbox" label=" 7 " tooltip="CV 72, bit 6">
+          <display item="F2 output 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F2 output 8" format="checkbox" label=" 8 " tooltip="CV 72, bit 7">
+          <display item="F2 output 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2580,22 +2580,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F3 output 3" format="checkbox" label=" 3 " tooltip="CV 73, bit 0">
+          <display item="F3 output 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F3 output 4" format="checkbox" label=" 4 " tooltip="CV 73, bit 1">
+          <display item="F3 output 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F3 output 5" format="checkbox" label=" 5 " tooltip="CV 73, bit 2">
+          <display item="F3 output 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F3 output 6" format="checkbox" label=" 6 " tooltip="CV 73, bit 3">
+          <display item="F3 output 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F3 output 7" format="checkbox" label=" 7 " tooltip="CV 73, bit 4">
+          <display item="F3 output 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F3 output 8" format="checkbox" label=" 8 " tooltip="CV 73, bit 5">
+          <display item="F3 output 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2607,22 +2607,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F4 output 3" format="checkbox" label=" 3 " tooltip="CV 74, bit 0">
+          <display item="F4 output 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F4 output 4" format="checkbox" label=" 4 " tooltip="CV 74, bit 1">
+          <display item="F4 output 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F4 output 5" format="checkbox" label=" 5 " tooltip="CV 74, bit 2">
+          <display item="F4 output 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F4 output 6" format="checkbox" label=" 6 " tooltip="CV 74, bit 3">
+          <display item="F4 output 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F4 output 7" format="checkbox" label=" 7 " tooltip="CV 74, bit 4">
+          <display item="F4 output 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F4 output 8" format="checkbox" label=" 8 " tooltip="CV 74, bit 5">
+          <display item="F4 output 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2634,22 +2634,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F5 output 3" format="checkbox" label=" 3 " tooltip="CV 75, bit 0">
+          <display item="F5 output 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F5 output 4" format="checkbox" label=" 4 " tooltip="CV 75, bit 1">
+          <display item="F5 output 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F5 output 5" format="checkbox" label=" 5 " tooltip="CV 75, bit 2">
+          <display item="F5 output 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F5 output 6" format="checkbox" label=" 6 " tooltip="CV 75, bit 3">
+          <display item="F5 output 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F5 output 7" format="checkbox" label=" 7 " tooltip="CV 75, bit 4">
+          <display item="F5 output 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F5 output 8" format="checkbox" label=" 8 " tooltip="CV 75, bit 5">
+          <display item="F5 output 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2661,22 +2661,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F6 output 3" format="checkbox" label=" 3 " tooltip="CV 76, bit 0">
+          <display item="F6 output 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F6 output 4" format="checkbox" label=" 4 " tooltip="CV 76, bit 1">
+          <display item="F6 output 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F6 output 5" format="checkbox" label=" 5 " tooltip="CV 76, bit 2">
+          <display item="F6 output 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F6 output 6" format="checkbox" label=" 6 " tooltip="CV 76, bit 3">
+          <display item="F6 output 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F6 output 7" format="checkbox" label=" 7 " tooltip="CV 76, bit 4">
+          <display item="F6 output 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F6 output 8" format="checkbox" label=" 8 " tooltip="CV 76, bit 5">
+          <display item="F6 output 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2688,22 +2688,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F7 output 3" format="checkbox" label=" 3 " tooltip="CV 77, bit 0">
+          <display item="F7 output 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F7 output 4" format="checkbox" label=" 4 " tooltip="CV 77, bit 1">
+          <display item="F7 output 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F7 output 5" format="checkbox" label=" 5 " tooltip="CV 77, bit 2">
+          <display item="F7 output 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F7 output 6" format="checkbox" label=" 6 " tooltip="CV 77, bit 3">
+          <display item="F7 output 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F7 output 7" format="checkbox" label=" 7 " tooltip="CV 77, bit 4">
+          <display item="F7 output 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F7 output 8" format="checkbox" label=" 8 " tooltip="CV 77, bit 5">
+          <display item="F7 output 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2730,28 +2730,28 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="FL(f) setting 1" format="checkbox" label="Output 1" tooltip="CV 78, bit 0">
+          <display item="FL(f) setting 1" format="checkbox" label="Output 1">
             <label>Output 1</label>
           </display>
-          <display item="FL(f) setting 2" format="checkbox" label="Output 2" tooltip="CV 78, bit 1">
+          <display item="FL(f) setting 2" format="checkbox" label="Output 2">
             <label>Output 2</label>
           </display>
-          <display item="FL(f) setting 3" format="checkbox" label="Output 3" tooltip="CV 78, bit 2">
+          <display item="FL(f) setting 3" format="checkbox" label="Output 3">
             <label>Output 3</label>
           </display>
-          <display item="FL(f) setting 4" format="checkbox" label="Output 4" tooltip="CV 78, bit 3">
+          <display item="FL(f) setting 4" format="checkbox" label="Output 4">
             <label>Output 4</label>
           </display>
-          <display item="FL(f) setting 5" format="checkbox" label="Output 5" tooltip="CV 78, bit 4">
+          <display item="FL(f) setting 5" format="checkbox" label="Output 5">
             <label>Output 5</label>
           </display>
-          <display item="FL(f) setting 6" format="checkbox" label="Output 6" tooltip="CV 78, bit 5">
+          <display item="FL(f) setting 6" format="checkbox" label="Output 6">
             <label>Output 6</label>
           </display>
-          <display item="FL(f) setting 7" format="checkbox" label="Output 7" tooltip="CV 78, bit 6">
+          <display item="FL(f) setting 7" format="checkbox" label="Output 7">
             <label>Output 7</label>
           </display>
-          <display item="FL(f) setting 8" format="checkbox" label="Output 8" tooltip="CV 78, bit 7">
+          <display item="FL(f) setting 8" format="checkbox" label="Output 8">
             <label>Output 8</label>
           </display>
         </column>
@@ -2763,28 +2763,28 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="FL(r) setting 1" format="checkbox" label=" 1 " tooltip="CV 79, bit 0">
+          <display item="FL(r) setting 1" format="checkbox" label=" 1 ">
             <label> 1 </label>
           </display>
-          <display item="FL(r) setting 2" format="checkbox" label=" 2 " tooltip="CV 79, bit 1">
+          <display item="FL(r) setting 2" format="checkbox" label=" 2 ">
             <label> 2 </label>
           </display>
-          <display item="FL(r) setting 3" format="checkbox" label=" 3 " tooltip="CV 79, bit 2">
+          <display item="FL(r) setting 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="FL(r) setting 4" format="checkbox" label=" 4 " tooltip="CV 79, bit 3">
+          <display item="FL(r) setting 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="FL(r) setting 5" format="checkbox" label=" 5 " tooltip="CV 79, bit 4">
+          <display item="FL(r) setting 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="FL(r) setting 6" format="checkbox" label=" 6 " tooltip="CV 79, bit 5">
+          <display item="FL(r) setting 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="FL(r) setting 7" format="checkbox" label=" 7 " tooltip="CV 79, bit 6">
+          <display item="FL(r) setting 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="FL(r) setting 8" format="checkbox" label=" 8 " tooltip="CV 79, bit 7">
+          <display item="FL(r) setting 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2796,28 +2796,28 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F1 setting 1" format="checkbox" label=" 1 " tooltip="CV 80, bit 0">
+          <display item="F1 setting 1" format="checkbox" label=" 1 ">
             <label> 1 </label>
           </display>
-          <display item="F1 setting 2" format="checkbox" label=" 2 " tooltip="CV 80, bit 1">
+          <display item="F1 setting 2" format="checkbox" label=" 2 ">
             <label> 2 </label>
           </display>
-          <display item="F1 setting 3" format="checkbox" label=" 3 " tooltip="CV 80, bit 2">
+          <display item="F1 setting 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F1 setting 4" format="checkbox" label=" 4 " tooltip="CV 80, bit 3">
+          <display item="F1 setting 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F1 setting 5" format="checkbox" label=" 5 " tooltip="CV 80, bit 4">
+          <display item="F1 setting 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F1 setting 6" format="checkbox" label=" 6 " tooltip="CV 80, bit 5">
+          <display item="F1 setting 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F1 setting 7" format="checkbox" label=" 7 " tooltip="CV 80, bit 6">
+          <display item="F1 setting 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F1 setting 8" format="checkbox" label=" 8 " tooltip="CV 80, bit 7">
+          <display item="F1 setting 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2829,28 +2829,28 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F2 setting 1" format="checkbox" label=" 1 " tooltip="CV 81, bit 0">
+          <display item="F2 setting 1" format="checkbox" label=" 1 ">
             <label> 1 </label>
           </display>
-          <display item="F2 setting 2" format="checkbox" label=" 2 " tooltip="CV 81, bit 1">
+          <display item="F2 setting 2" format="checkbox" label=" 2 ">
             <label> 2 </label>
           </display>
-          <display item="F2 setting 3" format="checkbox" label=" 3 " tooltip="CV 81, bit 2">
+          <display item="F2 setting 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F2 setting 4" format="checkbox" label=" 4 " tooltip="CV 81, bit 3">
+          <display item="F2 setting 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F2 setting 5" format="checkbox" label=" 5 " tooltip="CV 81, bit 4">
+          <display item="F2 setting 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F2 setting 6" format="checkbox" label=" 6 " tooltip="CV 81, bit 5">
+          <display item="F2 setting 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F2 setting 7" format="checkbox" label=" 7 " tooltip="CV 81, bit 6">
+          <display item="F2 setting 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F2 setting 8" format="checkbox" label=" 8 " tooltip="CV 81, bit 7">
+          <display item="F2 setting 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2862,22 +2862,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F3 setting 3" format="checkbox" label=" 3 " tooltip="CV 82, bit 0">
+          <display item="F3 setting 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F3 setting 4" format="checkbox" label=" 4 " tooltip="CV 82, bit 1">
+          <display item="F3 setting 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F3 setting 5" format="checkbox" label=" 5 " tooltip="CV 82, bit 2">
+          <display item="F3 setting 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F3 setting 6" format="checkbox" label=" 6 " tooltip="CV 82, bit 3">
+          <display item="F3 setting 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F3 setting 7" format="checkbox" label=" 7 " tooltip="CV 82, bit 4">
+          <display item="F3 setting 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F3 setting 8" format="checkbox" label=" 8 " tooltip="CV 82, bit 5">
+          <display item="F3 setting 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2889,22 +2889,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F4 setting 3" format="checkbox" label=" 3 " tooltip="CV 83, bit 0">
+          <display item="F4 setting 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F4 setting 4" format="checkbox" label=" 4 " tooltip="CV 83, bit 1">
+          <display item="F4 setting 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F4 setting 5" format="checkbox" label=" 5 " tooltip="CV 83, bit 2">
+          <display item="F4 setting 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F4 setting 6" format="checkbox" label=" 6 " tooltip="CV 83, bit 3">
+          <display item="F4 setting 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F4 setting 7" format="checkbox" label=" 7 " tooltip="CV 83, bit 4">
+          <display item="F4 setting 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F4 setting 8" format="checkbox" label=" 8 " tooltip="CV 83, bit 5">
+          <display item="F4 setting 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2916,22 +2916,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F5 setting 3" format="checkbox" label=" 3 " tooltip="CV 84, bit 0">
+          <display item="F5 setting 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F5 setting 4" format="checkbox" label=" 4 " tooltip="CV 84, bit 1">
+          <display item="F5 setting 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F5 setting 5" format="checkbox" label=" 5 " tooltip="CV 84, bit 2">
+          <display item="F5 setting 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F5 setting 6" format="checkbox" label=" 6 " tooltip="CV 84, bit 3">
+          <display item="F5 setting 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F5 setting 7" format="checkbox" label=" 7 " tooltip="CV 84, bit 4">
+          <display item="F5 setting 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F5 setting 8" format="checkbox" label=" 8 " tooltip="CV 84, bit 5">
+          <display item="F5 setting 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2943,22 +2943,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F6 setting 3" format="checkbox" label=" 3 " tooltip="CV 85, bit 0">
+          <display item="F6 setting 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F6 setting 4" format="checkbox" label=" 4 " tooltip="CV 85, bit 1">
+          <display item="F6 setting 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F6 setting 5" format="checkbox" label=" 5 " tooltip="CV 85, bit 2">
+          <display item="F6 setting 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F6 setting 6" format="checkbox" label=" 6 " tooltip="CV 85, bit 3">
+          <display item="F6 setting 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F6 setting 7" format="checkbox" label=" 7 " tooltip="CV 85, bit 4">
+          <display item="F6 setting 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F6 setting 8" format="checkbox" label=" 8 " tooltip="CV 85, bit 5">
+          <display item="F6 setting 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>
@@ -2970,22 +2970,22 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="F7 setting 3" format="checkbox" label=" 3 " tooltip="CV 86, bit 0">
+          <display item="F7 setting 3" format="checkbox" label=" 3 ">
             <label> 3 </label>
           </display>
-          <display item="F7 setting 4" format="checkbox" label=" 4 " tooltip="CV 86, bit 1">
+          <display item="F7 setting 4" format="checkbox" label=" 4 ">
             <label> 4 </label>
           </display>
-          <display item="F7 setting 5" format="checkbox" label=" 5 " tooltip="CV 86, bit 2">
+          <display item="F7 setting 5" format="checkbox" label=" 5 ">
             <label> 5 </label>
           </display>
-          <display item="F7 setting 6" format="checkbox" label=" 6 " tooltip="CV 86, bit 3">
+          <display item="F7 setting 6" format="checkbox" label=" 6 ">
             <label> 6 </label>
           </display>
-          <display item="F7 setting 7" format="checkbox" label=" 7 " tooltip="CV 86, bit 4">
+          <display item="F7 setting 7" format="checkbox" label=" 7 ">
             <label> 7 </label>
           </display>
-          <display item="F7 setting 8" format="checkbox" label=" 8 " tooltip="CV 86, bit 5">
+          <display item="F7 setting 8" format="checkbox" label=" 8 ">
             <label> 8 </label>
           </display>
         </column>

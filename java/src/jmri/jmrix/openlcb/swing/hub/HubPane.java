@@ -61,6 +61,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
 
+        // This hears OpenLCB traffic at packet level from traffic controller
         memo.getTrafficController().addCanListener(this);
         
         // add GUI components
@@ -73,16 +74,18 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         
         startHubThread(hub.getPort());
     }
-     
+    
+    Thread t;
+    
     void startHubThread(int port) {
-        Thread t = new Thread(){
+        t = new Thread(){
             public void run() {
                 hub.start();
             }
         };
         t.setDaemon(true);
         
-        // add forwarder
+        // add forwarder for internal JMRI traffic
         hub.addForwarder(new Hub.Forwarding() {
             public void forward(Hub.Memo m) {
                 if (m.source == null) return;  // was from this
@@ -98,16 +101,18 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
                 for (int i = 0; i<m.line.length(); i++) {
                     msg.setElement(i, bytes[i]);
                 }
-                CanReply r = msg.createReply();
+                workingReply = msg.createReply();
                 
-                CanMessage result = new CanMessage(r.getNumDataElements(), r.getHeader());
-                for (int i = 0; i<r.getNumDataElements(); i++) {
-                    result.setElement(i, r.getElement(i));
+                CanMessage result = new CanMessage(workingReply.getNumDataElements(), workingReply.getHeader());
+                for (int i = 0; i<workingReply.getNumDataElements(); i++) {
+                    result.setElement(i, workingReply.getElement(i));
                 }
-                result.setExtended(r.isExtended());
+                result.setExtended(workingReply.isExtended());
                 
-                memo.getTrafficController().sendCanMessage(result, null);
-                
+                // Send over outbound link
+                memo.getTrafficController().sendCanMessage(result, HubPane.this);
+                // And send into JMRI
+                memo.getTrafficController().distributeOneReply(workingReply, HubPane.this);
             }
         });
         
@@ -115,7 +120,17 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         
         advertise(port);
     }
-       
+    
+    // For testing
+    void stopHubThread() {
+        if (t != null) {
+            t.stop();
+            t = null;
+        }
+    }
+
+    CanReply workingReply;
+    
     void advertise(int port) {
         jmri.util.zeroconf.ZeroConfService.create("_openlcb-can._tcp.local.", port).publish();
     }
@@ -132,15 +147,17 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     }
 
     public synchronized void message(CanMessage l) {  // receive a message and log it
-        log.debug("message :"+l);
         GridConnectMessage gm = new GridConnectMessage(l);
+        if (log.isDebugEnabled()) log.debug("message "+gm.toString());
         hub.putLine(gm.toString());
     }
 
-    public synchronized void reply(CanReply l) {  // receive a reply and log it
-        log.debug("reply :"+l);
-        GridConnectMessage gm = new GridConnectMessage(new CanMessage(l));
-        hub.putLine(gm.toString());
+    public synchronized void reply(CanReply reply) {
+        if (reply !=workingReply) {
+            GridConnectMessage gm = new GridConnectMessage(new CanMessage(reply));
+            if (log.isDebugEnabled()) log.debug("reply "+gm.toString());
+            hub.putLine(gm.toString());
+        }
     }
     
     /**

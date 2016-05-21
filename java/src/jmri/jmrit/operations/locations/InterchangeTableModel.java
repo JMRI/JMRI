@@ -26,7 +26,7 @@ public class InterchangeTableModel extends TrackTableModel {
 
 	public String getColumnName(int col) {
 		switch (col) {
-		case NAMECOLUMN:
+		case NAME_COLUMN:
 			return Bundle.getMessage("InterchangeName");
 		}
 		return super.getColumnName(col);
@@ -52,7 +52,7 @@ public class InterchangeTableModel extends TrackTableModel {
 					+ " new: " + e.getNewValue());	// NOI18N
 		super.propertyChange(e);
 		if (e.getSource().getClass().equals(Track.class)) {
-			String type = ((Track) e.getSource()).getLocType();
+			String type = ((Track) e.getSource()).getTrackType();
 			if (type.equals(Track.INTERCHANGE)) {
 				String interchangeId = ((Track) e.getSource()).getId();
 				int row = tracksList.indexOf(interchangeId);

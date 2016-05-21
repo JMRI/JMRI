@@ -8,14 +8,14 @@ import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
- * Frame for user edit of manifest and switch list print options
+ * Frame for user edit of additional manifest print options
  * 
  * @author Dan Boudreau Copyright (C) 2012
  * @version $Revision: 21846 $
@@ -24,8 +24,6 @@ import jmri.jmrit.operations.OperationsFrame;
 public class PrintMoreOptionFrame extends OperationsFrame {
 
 	// labels
-	JLabel textBuildReport = new JLabel(Bundle.getMessage("BuildReport"));
-	JLabel logoURL = new JLabel("");
 
 	// major buttons
 	JButton saveButton = new JButton(Bundle.getMessage("Save"));
@@ -78,7 +76,7 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 		addButtonAction(saveButton);
 
 		// build menu
-		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true); // NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_ManifestPrintOptionsTools", true); // NOI18N
 
 		pack();
 		setVisible(true);
@@ -91,7 +89,10 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 			Setup.setTablength(Integer.parseInt(tabTextField.getText()));
 
 			OperationsSetupXml.instance().writeOperationsFile();
-			// Check font if user selected tab output
+			
+			// recreate all train manifests
+			TrainManager.instance().setTrainsModified();
+
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}

@@ -73,7 +73,7 @@
 <!ATTLIST model nmraWarrantEnd CDATA #IMPLIED >  <!-- end date of current warrant, if any -->
 <!-- wiring specification -->
 <!ATTLIST model connector ( unspecified | NMRAsmall | 9pin | NMRAmedium | NMRAlarge |
-							 21MTC | PluX8 | PluX16 | PluX22 | other ) "unspecified" >
+							 21MTC | PluX8 | PluX16 | PluX22 | NEM651 | NEM652 | 16pin | 21pin | other ) "unspecified" >
 <!-- type of extended function packets accepted (not all combinations valid) -->
 <!ATTLIST model extFnsNmraF13 ( no | yes ) "no" >  <!-- RP packets for F13-F20 -->
 <!ATTLIST model extFnsNmraBSC ( no | yes ) "no" >  <!-- "Binary State Control" -->

@@ -3907,7 +3907,7 @@
           <display item="Servo1 Cascade Trigger" label="Trigger">
             <label>Trigger</label>
           </display>
-          <display item="Servo1 Cascade Action" label="Action" tooltip="Cascade turnout action.">
+          <display item="Servo1 Cascade Action" label="Action" tooltip="Cascade turnout action">
             <label>Action</label>
           </display>
           <display item="Servo1 Cascade Turnout" label="Turnout" tooltip="Cascade turnout number">
@@ -4112,7 +4112,7 @@
           <display item="Servo2 Cascade Trigger" label="Trigger">
             <label>Trigger</label>
           </display>
-          <display item="Servo2 Cascade Action" label="Action" tooltip="Cascade turnout action.">
+          <display item="Servo2 Cascade Action" label="Action" tooltip="Cascade turnout action">
             <label>Action</label>
           </display>
           <display item="Servo2 Cascade Turnout" label="Turnout" tooltip="Cascade turnout number">
@@ -4317,7 +4317,7 @@
           <display item="Servo3 Cascade Trigger" label="Trigger">
             <label>Trigger</label>
           </display>
-          <display item="Servo3 Cascade Action" label="Action" tooltip="Cascade turnout action.">
+          <display item="Servo3 Cascade Action" label="Action" tooltip="Cascade turnout action">
             <label>Action</label>
           </display>
           <display item="Servo3 Cascade Turnout" label="Turnout" tooltip="Cascade turnout number">
@@ -4522,7 +4522,7 @@
           <display item="Servo4 Cascade Trigger" label="Trigger">
             <label>Trigger</label>
           </display>
-          <display item="Servo4 Cascade Action" label="Action" tooltip="Cascade turnout action.">
+          <display item="Servo4 Cascade Action" label="Action" tooltip="Cascade turnout action">
             <label>Action</label>
           </display>
           <display item="Servo4 Cascade Turnout" label="Turnout" tooltip="Cascade turnout number">

@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
@@ -70,6 +71,23 @@ public class FacelessServer implements DeviceListener, DeviceManager {
 
         service = ZeroConfService.create("_withrottle._tcp.local.", port);
         service.publish();
+
+        if (service.isPublished()) {
+        	String addressText = "";
+            //show the ip addresses found on this system in the log
+            try {
+            	for (Inet4Address addr : service.serviceInfo().getInet4Addresses()) {
+            		if (addr != null && !addr.isLoopbackAddress()) {
+            			addressText += addr.getHostAddress() + " ";
+            		}
+            	}
+            	log.info("WiThrottle found these local addresses: " + addressText);
+            } catch (Exception except) {
+            	log.error("Failed to determine this system's IP address: " + except.toString());
+            }
+        } else {
+            log.error("WiThrottle did not start ZeroConf (JmDNS)");
+        }
             
         while (isListen){ //Create DeviceServer threads
             DeviceServer device;

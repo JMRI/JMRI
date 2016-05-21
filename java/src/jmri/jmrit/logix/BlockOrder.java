@@ -91,7 +91,14 @@ public class BlockOrder  {
     protected OPath getPath() { return _block.getPathByName(_pathName); }
 
     protected String setPath(Warrant warrant) {
-        return _block.setPath(getPathName(), warrant);
+    	String msg = _block.setPath(getPathName(), warrant);
+    	if (msg==null) {
+        	Portal p = getEntryPortal();
+        	if (p!=null) {
+        		p.setEntryState(_block);
+        	}
+    	}
+        return msg;
     }
 
     protected void setBlock(OBlock block) { _block = block; }

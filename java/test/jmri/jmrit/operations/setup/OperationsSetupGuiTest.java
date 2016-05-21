@@ -12,9 +12,13 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.extensions.jfcunit.eventdata.*;
+import junit.extensions.jfcunit.finder.AbstractButtonFinder;
+import junit.extensions.jfcunit.finder.DialogFinder;
 import jmri.jmrit.display.LocoIcon;
+import jmri.util.JmriJFrame;
 
 import java.io.File;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -78,6 +82,8 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		f.localComboBox.setSelectedItem(LocoIcon.YELLOW);
 
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+		// confirm delete dialog window should appear
+		pressDialogButton(f, "OK");
 		//done
 		f.dispose();
 	}
@@ -186,7 +192,20 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		f.dispose();
 	}
 	
-
+	@SuppressWarnings("unchecked")
+	private void pressDialogButton(JmriJFrame f, String buttonName){
+		//  (with JfcUnit, not pushing this off to another thread)			                                            
+		// Locate resulting dialog box
+        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
+        javax.swing.JDialog d = dialogList.get(0);
+        Assert.assertNotNull("dialog not found", d); 
+        // Find the button
+        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
+        javax.swing.JButton button = ( javax.swing.JButton ) finder.find( d, 0);
+        Assert.assertNotNull("button not found", button);   
+        // Click button
+        getHelper().enterClickAndLeave( new MouseEventData( this, button ) );		
+	}
 	
 	// Ensure minimal setup for log4J
 	@Override

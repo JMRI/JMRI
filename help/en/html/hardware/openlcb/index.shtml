@@ -52,7 +52,10 @@ See also the
 including links to various general tools, and the
 page on the 
 <a href="Details.shtml">technical details</a>
-of JMRI's OpenLCB support.
+of JMRI's OpenLCB support. There's
+also a page on 
+how to 
+<a href="Connections.shtml">connect JMRI to an OpenLCB installation</a>.
 
 <h2>Naming</h2>
 

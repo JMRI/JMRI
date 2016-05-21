@@ -1,21 +1,15 @@
 package jmri.jmrit.roster;
 
-import java.util.LinkedHashMap;
-import java.util.TreeMap;
-import java.util.Map;
 import java.util.LinkedList;
-
-import java.awt.event.ActionEvent;
-
-import org.jdom.Element;
 import java.util.List;
-
-import jmri.DccThrottle;
-import jmri.Section;
+import java.util.TreeMap;
 import jmri.Block;
+import jmri.DccThrottle;
 import jmri.NamedBean;
-
-import java.beans.PropertyChangeListener;
+import jmri.Section;
+import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A simple class to store a speed profile for a given loco
@@ -440,8 +434,8 @@ public class RosterSpeedProfile {
         if(_throttle.getIsForward()){
             float extraAsDouble = (getOverRunTimeForward()+extraDelay)/1000;
             if(log.isDebugEnabled()){
-                log.debug("Over run time to remove (Forward) " + getOverRunTimeForward());
-                log.debug(extraAsDouble);
+                log.debug("Over run time to remove (Forward) {}", getOverRunTimeForward());
+                log.debug("{}", extraAsDouble);
             }
             float olddistance = getDistanceTravelled(true, _throttle.getSpeedSetting(), extraAsDouble);
             distance = distance - olddistance;
@@ -450,8 +444,8 @@ public class RosterSpeedProfile {
         } else {
             float extraAsDouble = (getOverRunTimeReverse()+extraDelay)/1000;
             if(log.isDebugEnabled()){
-                log.debug("Over run time to remove (Reverse) " + getOverRunTimeReverse());
-                log.debug(extraAsDouble);
+                log.debug("Over run time to remove (Reverse) {}", getOverRunTimeReverse());
+                log.debug("{}", extraAsDouble);
             }
             float olddistance = getDistanceTravelled(false, _throttle.getSpeedSetting(), extraAsDouble);
             distance = distance - olddistance;
@@ -604,5 +598,5 @@ public class RosterSpeedProfile {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterSpeedProfile.class.getName());
+    static Logger log = LoggerFactory.getLogger(RosterSpeedProfile.class);
 }

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-07-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2013-07-14</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added large icons</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>InfraBel-2013</aspecttable>
+  <name>3-lamp Home signal</name>
+  <reference>http://en.wikipedia.org/wiki/Belgian_railway_signalling</reference>
+  <description>Appearances for a three lamp home signal</description>
+  <appearances>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Home-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home-R.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Home-G.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home-G.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Home-RW.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home-RW.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Home-D.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home-D.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

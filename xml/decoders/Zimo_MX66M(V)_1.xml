@@ -2187,19 +2187,19 @@
   </decoder>
   <pane name="Sound">
     <column>
-      <display item="Sound Dependency" tooltip="CV 112, bit 0"/>
+      <display item="Sound Dependency"/>
     </column>
     <column>
-      <display item="Sound Speed Table" tooltip="CV 112, bit 0"/>
+      <display item="Sound Speed Table"/>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Sound Loco Stopped" tooltip="CV 62"/>
-      <display item="Sound Lowest Speed" tooltip="CV 63"/>
-      <display item="Sound Maximum Speed" tooltip="CV 64"/>
+      <display item="Sound Loco Stopped"/>
+      <display item="Sound Lowest Speed"/>
+      <display item="Sound Maximum Speed"/>
     </column>
     <column>
-      <display item="Pulse Chain LGB-Sound" tooltip="CV 112, bit 7"/>
+      <display item="Pulse Chain LGB-Sound"/>
     </column>
     <name>Sound</name>
   </pane>

@@ -32,6 +32,10 @@ var $showTrainList = function(){
 			}
 			$('div#displayArea').html($h).hide().show(); //put output on page (hide+show needed on Android to force redraw)
 		},
+		error: function($r, $s, $x){
+		    $err = JSON && JSON.parse($r.responseText) || $.parseJSON($r.responseText);  //extract JMRI error message from responseText
+			$('div#displayArea').html("ERROR retrieving train list: " + $err.data.message).hide().show(); //put output on page (hide+show needed on Android to force redraw)
+		},
 		dataType: 'json' //<--dataType
 	});
 };

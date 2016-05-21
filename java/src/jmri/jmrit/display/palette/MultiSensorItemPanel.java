@@ -159,11 +159,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
     	_dialog.sizeLocate();
     }
 
-    protected void createNewFamily(String type) {
+/*    protected void createNewFamily(String type) {
     	_newFamilyDialog = new MultiSensorIconDialog(_itemType, null, this, null);
     	_newFamilyDialog.sizeLocate();
     }
-    
+*/    
     /**
     * Used by Panel Editor to make updates the icon(s)
     * into the user's Panel.

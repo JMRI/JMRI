@@ -46,7 +46,7 @@
       <variable label="Decoder Version No: " CV="7" readOnly="yes" item="Decoder Version" default="7">
         <decVal/>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" default="131" item="Manufacturer" readOnly="yes" tooltip="CV8  Readonly default=131">
+      <variable label="Manufacturer ID: " CV="8" default="131" item="Manufacturer" readOnly="yes" tooltip="Readonly default=131">
         <decVal/>
       </variable>
       <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0">
@@ -98,19 +98,19 @@
         </enumVal>
       </variable>
       <!-- CV 14 -->
-      <variable label="F9-F15 Mapping on DC-not used" CV="14" default="1" item="Mapping" tooltip="CV14  (0 -255) default=1">
+      <variable label="F9-F15 Mapping on DC-not used" CV="14" default="1" item="Mapping" tooltip="(0 -255) default=1">
         <decVal min="0" max="255"/>
       </variable>
       <!-- CV 17 -->
-      <variable label="Extended Address" CV="17" item="Long Address" tooltip="CV17 ">
+      <variable label="Extended Address" CV="17" item="Long Address">
         <longAddressVal/>
       </variable>
       <!-- CV 19 -->
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" default="0" item="Consist Address" tooltip="CV19-XVVVVVVV  (0 -127) default=0">
+      <variable label="Consist Address" CV="19" mask="XVVVVVVV" default="0" item="Consist Address" tooltip="XVVVVVVV  (0 -127) default=0">
         <decVal min="0" max="127"/>
       </variable>
       <!-- CV 19 -->
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" default="0" item="Consist Direction" tooltip="CV19-VXXXXXXX  default=0">
+      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" default="0" item="Consist Direction" tooltip="VXXXXXXX  default=0">
         <enumVal>
           <enumChoice choice="Forward"/>
           <enumChoice choice="Reverse"/>
@@ -165,47 +165,47 @@
         </enumVal>
       </variable>
       <!-- CV 22 -->
-      <variable label="F9-F15 Mapping on UM-not used" CV="22" default="0" item="Mapping" tooltip="CV22  (0 -255) default=0">
+      <variable label="F9-F15 Mapping on UM-not used" CV="22" default="0" item="Mapping" tooltip="(0 -255) default=0">
         <decVal min="0" max="255"/>
       </variable>
       <!-- CV 29 -->
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="CV29-XXXXXXXV  default=0">
+      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="XXXXXXXV  default=0">
         <enumVal>
           <enumChoice choice="Normal"/>
           <enumChoice choice="Reverse"/>
         </enumVal>
       </variable>
-      <variable label="Speed Step Mode" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="CV29-XXXXXXVX  default=1">
+      <variable label="Speed Step Mode" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="XXXXXXVX  default=1">
         <enumVal>
           <enumChoice choice="14"/>
           <enumChoice choice="28/128"/>
         </enumVal>
       </variable>
-      <variable label="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="CV29-XXXXXVXX  default=1">
+      <variable label="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="XXXXXVXX  default=1">
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes"/>
         </enumVal>
       </variable>
-      <variable label="Enable RailCom" CV="29" mask="XXXXVXXX" default="0" item="Enable RailCom" tooltip="CV29-XXXXVXXX  default=0">
+      <variable label="Enable RailCom" CV="29" mask="XXXXVXXX" default="0" item="Enable RailCom" tooltip="XXXXVXXX  default=0">
         <enumVal>
           <enumChoice choice="Disabled"/>
           <enumChoice choice="Enabled"/>
         </enumVal>
       </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="CV29-XXXVXXXX  default=0">
+      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="XXXVXXXX  default=0">
         <enumVal>
           <enumChoice choice="Vstart/mid/high"/>
           <enumChoice choice="Use Speed Table"/>
         </enumVal>
       </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="CV29-XXVXXXXX  default=0">
+      <variable label="Address Format" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="XXVXXXXX  default=0">
         <enumVal>
           <enumChoice choice="One byte (short) address"/>
           <enumChoice choice="Two byte (extended) address"/>
         </enumVal>
       </variable>
-      <variable label="Decoder Type" CV="29" mask="VXXXXXXX" default="0" item="Decoder Type" tooltip="CV29-VXXXXXXX  default=0">
+      <variable label="Decoder Type" CV="29" mask="VXXXXXXX" default="0" item="Decoder Type" tooltip="VXXXXXXX  default=0">
         <enumVal>
           <enumChoice choice="MultiFuncton"/>
           <enumChoice choice="Accessory"/>

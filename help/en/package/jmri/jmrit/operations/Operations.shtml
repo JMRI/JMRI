@@ -67,10 +67,18 @@
     <LI><A HREF="#BuildReportDetails">Build Report Options</A></LI>
     <LI><A HREF="#Locations">Locations</A>
      <UL>
+      <LI><A HREF="#LocationTools">Location Tools</A>
+      <UL>
+      <LI><A HREF="#CopyTrack">Copy Track</A></LI>
+      <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
+      <LI><A HREF="#ShowCars">Show Cars</A></LI>
+      <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
+      </UL></LI>
       <LI><A HREF="#Yards">Yards</A></LI>
       <LI><A HREF="#Sidings">Spurs</A>
        <UL>
         <LI><A HREF="#Schedules">Schedules</A></LI>
+        <LI><A HREF="#AlternateTrack">Alternate Track</A></LI>
         <LI><A HREF="#SchedulesAndLoads">Schedules and Loads</A></LI>
         <LI><A HREF="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</A></LI>
        </UL></LI>
@@ -94,7 +102,8 @@
       <LI><A HREF="#CarsEdit">Adding Cars to your Roster</A></LI>
       <LI><A HREF="#CarLoad">Car Loads</A></LI>
       <LI><A HREF="#Kernel">Kernel, or Group of Cars</A></LI>
-      <LI><A HREF="#EditCarAttributes">Edit Car Attributes</A></LI>
+      <LI><A HREF="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
+        Kernel, Owner)</A></LI>
       <LI><A HREF="#EditCarLoads">Edit Car Loads</A></LI>
       <LI><A HREF="#CarsSet">Set Car</A></LI>
      </UL></LI>
@@ -119,6 +128,8 @@
      <UL>
       <LI><A HREF="#TrainReset">Reset Train</A></LI>
       <LI><A HREF="#TrainBuildOptions">Train Build Options</A></LI>
+      <LI><A HREF="#TrainLoadOptions">Train Load Options</A></LI>
+      <LI><A HREF="#TrainRoadOptions">Train Road Options</A></LI>
       <LI><A HREF="#TrainManifestOptions">Train Manifest Options</A></LI>
       <LI><A HREF="#TrainScripts">Scripts</A></LI>
       <LI><A HREF="#TrainShowCarTypesServiced">Show Car Types Serviced</A></LI>
@@ -140,7 +151,8 @@
 
    <A NAME="newUserAdvice"></A>
    <H3>New User Advice</H3>
-
+   
+   The program has been designed to create car movements that make sense to you and your operators.
    If you've never used a computer program to generate manifests and switch lists, we recommend that
    you load and use the
    <A HREF="#demo">demo files</A> provided. Please read the <A
@@ -167,8 +179,8 @@
     cars. If you do decide to use schedules, the first thing to understand is that you don't need
     schedules for all of your industries. So again start off small and only do a couple of
     industries and see what the results are. Adding schedules can not increase car movement, and in
-    most cases will reduce car movement! So our advice is please learn to walk before your try to
-    run.
+    most cases will reduce car movement! So our advice is start off using the basic features of the
+    program and later once you get good car movement, try the more advanced features.
    </P>
 
    <A NAME="demo"></A>
@@ -177,7 +189,7 @@
    The operations program provides a set of demo files to help introduce you to the some of the
    features and capabilities of this program. To load the demo files, first open the Operations
    Settings window "Tools-&gt;Operations-&gt;Settings", and in the upper left corner of the Setting
-   window is the Tools menu, select "Load Demo Files". The program will create a <A
+   window is the "Tools" menu, select "Load Demo Files". The program will create a <A
     HREF="#BackupRestore">backup</A> of your current configuration if you have one, and then loads
    the demo files. Restart JMRI to complete the demo load process.
 
@@ -267,11 +279,12 @@
    </P>
 
    <P>
-    If you want a caboose or car with FRED for your train, first configure some of your cars to be a
-    caboose by selecting the caboose or FRED <A HREF="#CabooseFredHazardous">checkbox</A> in the
-    Edit Car window. Now change the Optional train requirements radio button to Caboose or FRED. Be
-    sure that the last location on your trains route has a track that will accept the caboose car or
-    the train will not build properly.
+    If you want a caboose or car with FRED for your train, first configure some of the cars to be
+    the last car in the train by selecting the "Caboose" or "FRED"
+    <A HREF="#CabooseFredHazardous">checkbox</A> in the "Edit Car" window. Now change the optional
+    train requirements radio button to "Caboose" or "FRED" in the Edit Train window. Be sure that
+    the last location in your trains route has a track that will accept the caboose car or the train
+    will not build properly.
    </P>
 
    <P>
@@ -284,8 +297,12 @@
    </P>
 
    <P>
-    You should now be well on your way with regards to JMRI operations. Help is also available at
-    the <A HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list</A>
+    You should now be well on your way with regards to JMRI operations. Each window in operations
+    has a "Help" item on the menu bar which will direct you to the section in this document that
+    covers that window's capabilities. Help is also available at the
+    <A HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list.</A> And finally under the
+    "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
+    contents of the window.
    </P>
 
    <A NAME="BritishRailways"></A>
@@ -330,10 +347,21 @@
    <A NAME="MaximumTrainLength"></A>
    <H3>Maximum Train Length</H3>
 
-   Now enter the default "Maximum Train Length" you desire for your trains. This field provides the
-   maximum default train length between stations. Later you can override this length if you wish a
-   shorter train between any two locations. A 1000 foot train can carry approximately 20 cars, and
-   is of course dependent on the car lengths assigned to the train.
+   Now enter the "Maximum Train Length" you desire for your trains. This field provides the maximum
+   scale train length between stations. Later you can override this length if you wish a shorter
+   train between any two locations. A 1000 foot train can carry approximately 20 cars, and is of
+   course dependent on the car lengths assigned to the train.
+
+   <P>
+    Note that if you increase the "Maximum Train Length" that it doesn't affect train routes that
+    you've already created. Once you increase the maximum train length, you can manually increase
+    the departure length of a train by editing the train's route. See <A HREF="#EditRoute">Edit Route</A>
+    for more details.
+   </P>
+
+   <P>If you decrease the "Maximum Train Length" the program will prompt you to modify your
+    existing routes, and you can optionally have the program reduce all of your train's routes to
+    the new shorter train length.</P>
 
    <H3>Maximum Number of Locomotives</H3>
 
@@ -396,7 +424,7 @@
    available in JMRI.
 
    <P>
-    The "Enable Train Icon SetX&amp;Y" when selected allows you to teach the operations program
+    The "Enable Icon SetX&amp;Y" when selected allows you to teach the operations program
     where to place the train icon on your panel when moving your train from location to location.
     Deselect this feature after your done teaching the program to prevent accidentally changing the
     train icon's position on your panel. If you also want the lead locomotive number as part of your
@@ -431,8 +459,8 @@
     is done.</p>
 
    <p>Regular backups are done only when the user requests it by either clicking the "Backup"
-    button on the Settings page, or by selecting the "Backup" option on the Tools menu of the
-    Operations Settings page. The Backup button will copy the files to the Regular Backup Store
+    button on the Settings page, or by selecting the "Backup" option from the "Tools" menu of the
+    Operations Settings window. The Backup button will copy the files to the Regular Backup Store
     under the user's JMRI home directory as described above, while the Backup menu option will allow
     the user to specify any directory. This can be useful when making an archive copy that you want
     to move somewhere else for safekeeping.</p>
@@ -451,7 +479,7 @@
     Automatic Backup is done just before the restore copies the files, "just in case".</p>
 
    <p>Backup Sets can be restored from either the Automatic Store or the Regular Store using the
-    "Restore" button on the Settings page. Alternatively, the "Restore" menu option on the Tools
+    "Restore" button on the Settings page. Alternatively, the "Restore" menu option in the "Tools"
     menu of the Operations Settings page allows you to navigate to any directory, and would be used
     to restore an archived Backup Set.</p>
 
@@ -467,7 +495,7 @@
    <H3>Reset Database</H3>
 
    <p>To reset the operation database and remove all operation files, use the "Reset Database" option on the
-    Tools menu of the Operations Settings page. An automatic backup copy of the current operation
+    "Tools" menu of the Operations Settings page. An automatic backup copy of the current operation
     files will be made before deleting the main files. The results will be that the settings, cars,
     locomotives, locations, and trains files will be purged. Note that after this is done and
     JMRI restarts, the "Operations" menu item on the main menu will no longer be visible, as there
@@ -517,7 +545,7 @@
    <A NAME="TypeRoadLoadRestrictionsStaging"></A>
    <H4>Enable Type, Road and Load Restrictions into Staging</H4>
 
-   The next option is restricting trains to staging tracks that only accept the train's rolling
+   The next option restricts trains to staging tracks that only accept the train's rolling
    stock type, road and load names. When "Enable Type, Road and Load Restrictions into Staging" is
    selected, the program will only deliver a train to a staging track has the same rolling stock,
    road and load name restrictions. This is useful when you want trains delivered to staging tracks
@@ -532,9 +560,9 @@
    <A NAME="MakeDepartureTrackAvailable"></A>
    <H4>Make departure track available after train is built</H4>
 
-   When selected the departure track in staging becomes available for other trains immediately after
-   the departure train is built. For trains that return to same staging location, this option allows
-   the train to return to the same track it departed on. This option is only available when using
+   This option when selected makes the departure track in staging available for other trains immediately after
+   the departing train is built. For trains that return to the same staging location, this option allows
+   the train to use the same track it departed on. This option is only available when using
    the <A HREF="#BuildOptions">aggressive</A> mode for building trains. 
    
    <A NAME="AllowCarsToReturnToStaging"></A>
@@ -577,15 +605,21 @@
 
    When car routing is enabled, the program will use multiple trains to deliver a car to it final
    destination. It is recommended that you leave this option enabled. With car routing enabled, you
-   can use a <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car
-   routing algorithm will search for the most efficient route for the car to travel. The algorithm
-   will attempt to use interchanges and then yards to move cars. If you don't want the router to use
-   yards, you can deselect the "Enable Car Routing via Yards" check box. Routing through staging is
-   disabled by default. The algorithm will try and find a route using a maximum of five trains to
-   complete the car move. Note that the program never gives up trying to route a car. If a car has
-   been assigned a <A HREF="#CarsSet">Final Destination</A> the program will try and route the car
-   after every move. 
-   
+   can use a
+   <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car routing
+   algorithm will search for the most efficient route for the car to travel. The algorithm will
+   attempt to use classification/interchange tracks and then yards to move cars. If you don't want
+   the router to use yards, you can deselect the "Enable Car Routing via Yards" checkbox. Routing
+   through staging is disabled by default. The algorithm will try and find a route using a maximum
+   of five trains to complete the car move. Note that the program never gives up trying to route a
+   car. If a car has been assigned a
+   <A HREF="#CarsSet">Final Destination</A> or <A HREF="#EditCarLoads">Custom Load</A> the program
+   will try and route the car after every move.
+
+   <P>The last routing option "Use all Trains when Routing" when selected instructs the program
+    to use all of your trains to route a car. If you only want the router to use the trains that
+    you've selected in the "Build" column of the "Trains" window, then deselect this option.</P>
+
    <A NAME="LoggingOptions"></A>
    <H3>Logging Options</H3>
 
@@ -846,9 +880,16 @@
 
    <H3>Message Format</H3>
 
-   If you would like your manifest and switch lists printed in a tabular format select the tabular
-   checkbox. Only equally spaced fonts like "Courier New" or "Monospaced" are shown in the Font
-   selection box.
+   If you would like your manifest and switch lists printed in a tabular (columns) format select the
+   "Tabular" checkbox. The "Two Column" format creates manifests with two major columns, the left
+   column shows the car pick ups for a location, and the right column shows the set outs. The "Two
+   Column" only uses half the page for the car information, so you might have to limit the number of
+   car attributes (see
+   <A HREF="#MessageFormats">Message Formats</A> below) in order get the data to fit. The text color
+   options for set outs, pick ups, and local move are not available for the "Two Column" format.
+   <P>The "Tabular" and "Two Column" formats use equally spaced fonts like "Courier New" or
+    "Monospaced" so only equally spaced fonts are shown in the "Font" selection box when either
+    option is selected.</P>
 
    <H3>Set Out Text Color</H3>
 
@@ -863,7 +904,7 @@
    <H3>Local Move Text Color</H3>
 
    You can select the text color of your manifest when the operation is to move a car from one track
-   to another at the same location. The car in this case in not added to the train. Select the
+   to another at the same location. The car in this case is not added to the train. Select the
    desired color from the drop down box.
 
    <H3>Switch List Format</H3>
@@ -872,18 +913,20 @@
    switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
    your switch lists.
 
+  <A NAME="MessageFormats"></A>
    <H3>Message Formats</H3>
 
    You can customize the pick up, set out, and local move messages for your manifests and switch
-   lists by selecting the appropriate drop down menus. To remove an attribute select blank. You can
-   also edit and or replace the "[ ] Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular
-   prefixes are "Spot" and "Pull" for set outs and pick ups respectively. If you want to use the
-   text color options, the set out, pick up, and move prefixes must be unique. 
+   lists by selecting the appropriate drop down menus. To remove a loco or car attribute (Road,
+   Number, Type, Length, Color, Load, etc.) select blank. You can also edit and or replace the "[ ]
+   Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular prefixes are "Spot" and "Pull" for
+   set outs and pick ups respectively. If you want to use the text color options, the set out, pick
+   up, and move prefixes must be unique. 
    
    <A NAME="ManifestComments"></A>
    <H3>Manifests Options</H3>
 
-   The program allows you to customize your train manifest to your liking. There are eight optional
+   The program allows you to customize your train manifest to your liking. There are nine optional
    checkboxes and their functions are described below.
    <P>The "Print Valid" checkbox causes the program to print date and time the train was built,
     which isn't the same as when the manifest was printed. The print time is always shown at the top
@@ -936,7 +979,18 @@
    The program will add the "Hazardous Comment" to the manifests and switch lists when a car has the
    <A HREF="#CabooseFredHazardous">Hazardous</A> checkbox selected in the "Car Edit" window and the
    "Hazardous" message format is selected in your manifest and switch lists print options. You can
-   change the comment if desired, and press "Save" to keep the change. 
+   change the comment if desired, and press "Save" to keep the change.
+
+   <A NAME="ManifestPrintOptionsTools"></A>
+   <H3>Manifest Print Options Tools</H3>
+
+   The menu bar of the "Manifest Print Options" provides several options listed under "Tools". The
+   first is the ability to control the length of the tab character when using the "Tabular" feature.
+   The other two options "Edit Manifest Text" and "Edit Switch List Text" allow you to modify any of
+   the text found in a manifest or switch list. Each text line used by the program is shown along
+   with a text box with the same message. Edit the text box to change the default message to your
+   liking and press "Save" to complete your change. You can always return the text to the original
+   settings by pressing the "Reset" button followed by "Save". 
    
    <A NAME="BuildReportDetails"></A>
    <H3>Build Report Options</H3>
@@ -968,6 +1022,16 @@
     report. For information on the content of the build report please see <A
      HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A>.
    </p>
+
+   <P>The build report options window can also control the amount of information provided with
+    regards to routing a car with a custom load or final destination. If you're not using schedules,
+    leave the "Router Detail Level" option set to "Normal". You can change this option from "Normal"
+    to "Detailed" or "Very Detailed" when you want to understand why a certain train or trains won't
+    route a car. This set of radio buttons works differently than the "Detail Level" radio buttons
+    in that it controls the amount of information created during the train build process. You will
+    quickly find that the "Detailed" and "Very Detailed" modes can create many extra lines of text
+    in the build report, and unless you have a routing issue, it is best to keep the "Router Detail
+    Level" set to "Normal".</P>
 
    <A NAME="Locations"></A>
    <H2>Locations</H2>
@@ -1012,7 +1076,7 @@
     Staging tracks represent distant locations where trains can travel between to service the
     layout.
    <P>For a train to service a location, there must be at least one track for that location. See
-    below how to add tracks to your location.</P>
+    below for more information on how to add <A HREF="#Yards">tracks</A> to your location.</P>
 
    <P>The tables show the length of the tracks, the amount of track that is occupied (Used) by
     cars and locomotives, the amount of track that is reserved, the total number of cars and
@@ -1044,6 +1108,47 @@
    You can enter an optional comment for your location. If you want the comment to print on your
    manifests you must select the print location comments <A HREF="#ManifestComments">option</A>. 
    
+   <A NAME="LocationTools"></A>
+   <H3>Location Tools</H3>
+
+   <A NAME="CopyTrack"></A>
+   <H4>Copy Track</H4>
+
+   From the "Tools" menu found in "Edit Location" window you can access several useful functions.
+   The first is "Copy Track". From the copy track window, you can select any existing track and
+   create a new track with the same attributes as the existing one. You can also transfer all of the
+   rolling stock from the existing track to the new track, and if you wish, delete the original
+   track. Select the operations you want and then press the "Copy" button to create a new track,
+   move cars and locos, and delete the original track. If you're pleased with the results, press the
+   "Save" button to make your copy permanent.
+
+   <P>When using the copy track feature, it is recommended that you reset or terminate any built
+    trains as the copy track will not transfer rolling stock from a track that has a scheduled pick
+    up or set out from a built train. This restriction also applies to deleting the original track.</P>
+
+   <A NAME="ModifyLocationByCarType"></A>
+   <H4>Modify Location by Car Type</H4>
+
+   The next tool feature is "Modify Location by Car Type" which allows you to select a car type and
+   decide which tracks will service that car type for this location. See
+   <A HREF="#ModifyLocationsByCarType">Modify Locations by Car Type</A> for more info.
+   
+   <A NAME="ShowCars"></A>
+   <H4>Show Cars</H4>
+
+   <P>If you only want to see cars for this location, select "Show Cars" from the "Tools" menu.
+    This tool is also useful when you want to print out cars for a specific location.</P>
+
+   <A NAME="ChangeTrackTypeLocation"></A>
+   <H4>Change Track Type</H4>
+
+   <P>
+    The last tool is "Change Track Type". This tool allows you to change all of the tracks at this
+    location to the same type. Available track types are spur, yard, classification/interchange or
+    staging. You can also change the track type for a specific track, see <A HREF="#ChangeTrackType">Change
+     Track Type</A> for a track.
+   </P>
+
    <A NAME="Yards"></A>
    <H3>Yards</H3>
 
@@ -1199,43 +1304,27 @@
     did select a track, that track would become unavailable for other cars. To prevent overloading a
     spur with cars with custom loads from staging, the program will normally limit the number of
     cars in route to a track with a schedule to the available track space. So if you have space for
-    three cars, the most the program would normally generate for you from staging is three cars.
-    However, if you need to adjust the number of cars in route to a spur with a schedule, select in
-    the edit schedule window "Tools-&gt;Options". A new window should appear, and adjust the
-    "Percentage of custom loads generated by staging". The default value is 100% which means only
-    generate enough cars to fill 100% of the available track space. If you only want half of your
-    car loads to come from staging, set the value to 50%, and if you don't want staging to ever
-    generate a custom load car for the spur, set the value to 0%. Sometimes it is appropriate to
-    overload a spur with cars, if you want this, increase the value up to 1000%. BTW 1000% means
-    send 10 times the available space in cars to this spur. If you enter this value, you hopefully
-    have 10 times the spur's available track space in a storage yard that is near by!
+    three cars, the most the program would normally generate for you from staging is three cars.</P>
+
+   <P>However, if you need to adjust the number of cars in route to a spur with a schedule,
+    select in the edit schedule window "Tools-&gt;Options". A new window should appear with two
+    options, the ability to control how many car loads the program will generate from staging, and
+    if the spur has an alternate track. The first option, "Percentage of custom loads generated by
+    staging", has a default value of 100% which means only generate enough cars to fill 100% of the
+    available track space. If you only want half of your car loads to come from staging, set the
+    value to 50%, and if you don't want staging to ever generate a custom load car for the spur, set
+    the value to 0%. Sometimes it is appropriate to overload a spur with cars, if you want this,
+    increase the value up to 1000%. BTW 1000% means send 10 times the available space in cars to
+    this spur. If you enter this value, you hopefully have 10 times the spur's available track space
+    in a storage yard that is near by!</P>
+
+   <P>
+    The second option is the ability to specify an alternate track. The program when it finds a spur
+    full will try to send cars to the alternate track. If you don't specify an alternate, the
+    program will try to send the cars to a yard at that location. The alternate track feature can be
+    used to create an "Off Spot" track for your cars. See <A HREF="#AlternateTrack">Alternate
+     Track</A> below for more details.
    </P>
-
-   <P>The other option in the edit schedule tools menu is the ability to specify an alternate
-    track. The program when it finds a spur full will send new cars to the track you specify in the
-    alternate track pull down menu. If you don't specify an alternate, the program will try to find
-    a yard at that location. The alternate track feature can be used to create an "Off Spot" track
-    for your cars. To prevent the program from placing cars on the off spot track that aren't
-    destined to your industry, use the "Select loads serviced by track" to only accept cars with
-    loads that your industry is demanding.</P>
-
-   <P>Specifying an alternate track for a schedule also changes the behavior of cars with custom
-    loads but without a final destination. When the program finds a car with a custom load, it will
-    search all spurs for a schedule that is demanding that car's type and load, and if found will
-    route the car there. However, if the track was full, the program would continue to search for a
-    track/schedule that can accept the car. If all tracks are full and no alternate track is
-    specified for any of the track/schedules, the program will attempt to move the car to another
-    location. If there's an alternate track specified, the program will only move the car when one
-    of the spurs can accept a new car, i.e. the track is no longer full.</P>
-
-   <P>Another feature of using an alternate track for cars with custom loads but without a final
-    destination, is that the program will try and forward some number of cars to the spur demanding
-    that car type and load. The program refers to these cars as "inbound" to the spur/industry. For
-    a car to be "inbound" is has to be transported by trains that don't directly service the
-    spur/industry. The maximum number of inbound cars to a spur with an alternate track is
-    determined by the length of the spur and the alternate track. So if the spur could hold 6 cars,
-    and the alternate track 5, then the program would allow a maximum of 11 cars to be in route to
-    the spur.</P>
 
    <P>Schedules can operate in one of two modes, sequential as described above, or in match
     mode. Match mode eliminates the sequential aspects of a schedule. In match mode, the program
@@ -1251,17 +1340,46 @@
     the next car type when adding a car type. This makes it easy to quickly add car types to the
     table.</P>
 
-   <P>You can also access your schedules from the Locations Tools menu. The Schedules table
+   <P>You can also access your schedules from the Locations "Tools" menu. The Schedules table
     provides status for each schedule. Since you can assign a schedule to multiple spurs, the table
     also provides additional status for each of the spurs that use that particular schedule. The
     table also allows you the edit a schedule once its been assigned to a spur.</P>
 
    <P>
     A very useful tool is the <A HREF="#ShowSchedulesByCarTypeAndLoad">show schedules by car
-     type and load</A> which can be found under Tools in the Schedules window. This tool allows you to
+     type and load</A> which can be found under "Tools" in the Schedules window. This tool allows you to
     select a car type and the car's load to quickly see which spurs with schedules will ship and
     receive cars with those loads.
    </P>
+
+   <A NAME="AlternateTrack"></A>
+   <H3>Alternate Track</H3>
+
+   You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur
+   or the edit schedule windows. The program when it finds a spur full will send cars to the track
+   you specify as the alternate track. If you don't specify an alternate, the program will try to
+   find a yard at that location for the cars. The alternate track feature can be used to create an
+   "Off Spot" track for your cars. To prevent the program from placing cars on the off spot track
+   that aren't destined to your industry, use the "Select loads serviced by track" to only accept
+   cars with loads that your industry is demanding.
+
+   <P>Specifying an alternate track for a schedule also changes the behavior of cars with custom
+    loads but without a final destination. When the program finds a car with a custom load, it will
+    search all spurs for a schedule that is demanding that car's type and load, and if found will
+    route the car there. However, if the track was full, the program will continue to search for a
+    track/schedule that can accept the car. If all tracks are full and no alternate track is
+    specified for any of the track/schedules, the program will attempt to move the car to another
+    location, which can be staging. However, if there's an alternate track specified, the program will only
+    move the car when one of the spurs can accept a new car, i.e. the track is no longer full.</P>
+
+   <P>Another feature of using an alternate track for cars with custom loads but without a final
+    destination, is that the program will try and forward some number of cars to the spur demanding
+    that car type and load. The program refers to these cars as "inbound" to the spur/industry. For
+    a car to be "inbound" is has to be transported by trains that don't directly service the
+    spur/industry. The maximum number of inbound cars to a spur with an alternate track is
+    determined by the length of the spur and the alternate track. So if the spur could hold 6 cars,
+    and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to
+    the spur.</P>
 
    <A NAME="SchedulesAndLoads"></A>
    <H3>Schedules and Loads</H3>
@@ -1341,7 +1459,7 @@
     location are receiving or shipping that specific car load.</P>
 
    <P>If you want a list of custom car loads for each of your car types, you can use the "Print
-    Car Loads" or "Preview Car Loads" found under Tools in the "Show schedules by car type and load"
+    Car Loads" or "Preview Car Loads" found under the "Tools" menu in the "Show schedules by car type and load"
     window.</P>
 
    <A NAME="Interchange"></A>
@@ -1376,19 +1494,34 @@
    <A NAME="CreateClassificationYard"></A>
    <H3>How to Create a Classification Yard</H3>
 
-   A classification yard is used to sort cars into various trains. Normally a yard track is assigned
-   to a specific train and cars are delivered to that track until there are enough cars to complete
-   a train. To create a classification yard, you need to assign a <A HREF="#Interchange">classification/interchange
-    track</A> to each of the trains that will depart your yard. For each track, allow any train to set
-   out cars, but assign only one train to pick them up. You should configure the classification
-   track to service the same car types and roads that the train services, otherwise you could end up
-   with orphan cars.
+   A classification yard is used to sort cars into various destinations or trains. Normally a yard
+   track is assigned to a specific destination or train and cars are delivered to that track until a
+   train comes along to pull the cars. To create a working classification yard, you don't need
+   schedules or custom loads for your cars.
 
    <P>
-    Note that it is okay to create more classification tracks then there are physical tracks in your
-    classification yard. The cars can share the same "slough" track until its time to finally sort
-    them into their various trains. You can also use the <A HREF="#Pools">Track Pools</A> feature to
-    share the track space in your yard.
+    To create a classification yard sorted by trains, you need to assign a <A HREF="#Interchange">classification/interchange
+     track</A> to each of the trains that will depart your yard. For each track, allow any train to set
+    out cars, but assign only one train to pick them up. You should configure the classification
+    track to service the same car types, loads and roads that the train services, otherwise you
+    could end up with stranded cars. When sorting cars in a yard by train, some use the label "Cars
+    for train xyz" as the track name.
+   </P>
+
+   <P>You can also create a classification yard that sorts cars by destinations. Again using the
+    C/I track type, there's an option under tools in the edit track window to set "Track
+    Destinations". So for example if your classification yard serviced four destinations, you could
+    create four "virtual" tracks, one for each destination, and the program would sort cars in your
+    yard to each of those destinations for you. With regards to the track name, some folks would use
+    a track name similar to "Cars to Boston" for cars going to Boston. You can if you wish break
+    down any destination to trains that serve that destination, really up to you how you want to
+    sort your cars.</P>
+
+   <P>
+    Note that it is okay to create more classification tracks or "virtual tracks" then there are
+    physical tracks in your classification yard. The cars can share the same "slough" track until
+    its time to finally sort them into their various destinations or trains. You can also use the <A
+     HREF="#Pools">Track Pools</A> feature to share the track space in your yard.
    </P>
 
    <A NAME="Staging"></A>
@@ -1470,7 +1603,7 @@
    <H3>Staging and Car loads</H3>
 
    Staging tracks can optionally swap the car default loads from empty to loaded, and loaded to
-   empty. Select the "Swap default Loads and Empties" if you want your cars loads to change when
+   empty. Select the "Swap default loads and empties" if you want your cars loads to change when
    arriving at the staging track. You can if you want, ask the program to empty cars as they enter
    staging. Select the "Empty cars with default loads" to change a car's load status to empty. If
    you're using custom loads, you can remove the custom load when the cars arrive at the staging
@@ -1482,8 +1615,8 @@
     train". If the first option is selected, the program will only check spurs with schedules along
     the departure train's route. The program will only generate enough car loads to fill the spur's
     track. When the first option is selected, the program ignores values over 100% for the
-    schedule's "Percentage of custom loads generated by staging" and doesn't use the "Alternate
-    Track" feature.</P>
+    schedule's "Percentage of custom loads generated by staging" and doesn't use the <A
+     HREF="#AlternateTrack">Alternate Track</A> feature.</P>
 
    <P>If the second option is selected, "Generate custom loads for any spur (multiple trains)",
     the program will check all spurs with a schedule for a request. The program when determining now
@@ -1503,10 +1636,11 @@
 
    <P>
     To restrict which loads the program will place into your cars, you can use the staging track's
-    load control features. See in the menu under Tools "Load Options". You can also control which
-    types of loads the program will place by restricting the types of loads the train departing from
-    staging is allowed to service. See "Select loads serviced by this train" under Edit-&gt;Train,
-    then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.
+    load control features. Under the "Tools" menu in the "Edit Track" window find "Load Options".
+    You can also control which types of loads the program will place by restricting the types of
+    loads the train departing from staging is allowed to service. To control which loads a train
+    will service, select under the "Edit Train" window menu "Tools" <A HREF="#TrainLoadOptions">Train
+     Load Options</A>.
    </P>
 
    <P>The program provides another feature with regards to car loads. If the train departs from
@@ -1642,9 +1776,9 @@
    <A NAME="ModifyLocationsByCarType"></A>
    <H3>Modify Locations by Car Type</H3>
 
-   This tool can be found under Locations-&gt;Tools. Use this tool to quickly modify the type of
-   cars your locations and tracks will service. Very useful when adding a new car type to your
-   roster.
+   This feature can be found under the "Tools" menu in the Locations window. Use this tool to quickly
+   modify the type of cars your locations and tracks will service. Very useful when adding a new car
+   type to your roster.
 
    <P>
     <img src="images/ModifyLocationsByCarType.png">
@@ -1683,7 +1817,7 @@
    card "*" when entering a car number. For example if you want to find all cars with numbers that
    ended with 345, enter *345, and press find. Each time you press find, the next car with a road
    number ending with "345" will be highlighted. 
-   
+     
    <A NAME="ImportingCars"></A>
    <H3>Importing Cars from a File</H3>
 
@@ -1795,6 +1929,16 @@
    transporting hazardous materials. Your railroad's policy regarding hazardous materials can than
    be applied to this car!
 
+   <P>When the passenger checkbox is selected, a new field called "Passenger Car Blocking Order"
+    will appear. The text box allows you to enter a number between 0 and 100 and this gives you
+    control where in the train's manifest a car will be placed. Lower numbers will place the car
+    near the front of the train, and higher numbers towards the rear. We recommend that you start
+    off using numbers cleanly divisible by 10. For example, you might what to place an observation
+    car at the end of the train, a value of "90" would be appropriate. If you wanted a baggage car
+    to be the first car in the passenger train, a value of "10" would be a good value, cars in the
+    middle of the train could use "50".  Later you can fine turn your passenger trains by using
+    the other numbers that are available.</P>
+
    <P>When the utility checkbox is selected, it instructions the program when printing manifests
     and switch lists to not show the individual car's road and road number, but rather the quantity
     of cars needed of that type. For example, prototype trains when shipping coal don't normally
@@ -1816,12 +1960,14 @@
    <H3>Car Loads</H3>
 
    You can optionally set the load state of the car. Select E for empty or L for loaded. You can
-   also create your own custom <A HREF="#EditCarLoads">car loads</A>, but there are restrictions.
-   Normally spurs with <A HREF="#Schedules">Schedules</A> are used to load or unload cars with
-   custom loads that you've created. You can also use <A HREF="#StagingAndCarLoads">staging
-    tracks</A> to load or unload your car with custom loads. It is also suggested that you use a format
-   similar to L(commodity) to describe your loads. For example a load of tools could be entered as
-   "L(Tools)" or just "Tools" if desired. 
+   also create your own custom
+   <A HREF="#EditCarLoads">car loads</A>, but there are restrictions. Normally spurs with
+   <A HREF="#Schedules">Schedules</A> are used to load or unload cars with custom loads that you've
+   created. You can also use
+   <A HREF="#StagingAndCarLoads">staging tracks</A> to load or unload your car with custom loads. It
+   is also suggested that you use a format similar to L(commodity) to describe your loads so it
+   looks good on your manifests and switch lists. For example a load of tools could be entered as
+   "L(Tools)" or just "Tools" if desired.
    
    <A NAME="Kernel"></A>
    <H3>Kernel, or Group of Cars</H3>
@@ -1835,14 +1981,28 @@
 
    <H3>Optional Fields</H3>
 
-   Finally you can optionally enter the color, build date, owner and comment for this car. The build
+   Finally you can optionally enter the color, built date, owner and comment for this car. The built
    date can be entered as a four digit year, or in the format of month-year.
+   
+   <H3>Moves, Built, Owner, Wait and Last</H3>
+
+   You can edit the number of times a car has been moved by the program, built date, owner, wait
+   count, or last time the car was moved directly from the "Cars" window. Double click on the cell
+   in the Cars window to change.
+
+   <H3>Add</H3>
+
+   Press the "Add" button to enter a new car into your roster. If you have similar cars, you can
+   select an existing car using the "Edit" button in the "Cars" window, and then modify the car's
+   road number, and any other car attributes, followed by pressing the "Add" button to create another
+   car for your roster. Pressing the "Add" button also causes the new car to be saved. See the
+   "Save" button below.
 
    <H3>Save</H3>
 
-   Press "Save" to store the car's settings. The program will create a file
-   (OperationsCarRoster.xml) in your JMRI directory in a folder called "operations". A backup file
-   with the last settings for all of your cars is also created each time the "Save" button is
+   Press "Save" to store the car's attributes after you've made changes. The program will create a
+   file (OperationsCarRoster.xml) in your JMRI directory in a folder called "operations". A backup
+   file with the last settings for all of your cars is also created each time the "Save" button is
    pressed. 
    
    <A NAME="EditCarAttributes"></A>
@@ -1854,6 +2014,11 @@
    <P>
     <img src="images/EditCarAttribute.png">
    </P>
+
+   Under "Tools" you will find two items, "Show the number of cars with this attribute" and "Delete
+   unused attributes". The first will show a count in front of the menu box. The count is the number
+   of'cars that have this particular attribute. The delete option will prompt you to delete any
+   attribute that hasn't been assigned to a car.
 
    <H3>Add Button</H3>
 
@@ -1979,7 +2144,7 @@
    other selected cars will have the same settings as the default car. Be sure to press "Save" in
    the Cars window if you want to keep your changes.
 
-   <H3>Tools</H3>
+   <H3>Cars Tools</H3>
 
    The cars "Tools" menu allows you to perform some useful functions to your car roster. In addition
    to "Import from file" feature described earlier, you can also export your cars to a comma
@@ -2011,7 +2176,7 @@
    <H2>Locomotives</H2>
 
    The locomotives window allows you to edit your locomotive roster. You can enter a locomotive's
-   number, road, model, type, and length. You can optionally add the locomotive's build date and
+   number, road, model, type, and length. You can optionally add the locomotive's built date and
    owner. If you want a group of locomotives to be assigned as a unit, you can create a "consist".
    The locomotive type is used by the program to determine where locomotives are picked up and or
    stored at the various locations on your layout. Some of default locomotive types are electric,
@@ -2083,7 +2248,7 @@
    <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
     the location to none (blank space). If wish this locomotive to be part of a consist, press
     "Edit" across from "Consist" and enter a consist name. Then select the consist name from the
-    menu box. Finally you can optionally enter the build date, owner and comment for this
+    menu box. Finally you can optionally enter the built date, owner and comment for this
     locomotive.</P>
 
    <A NAME="LocomotiveModels"></A>
@@ -2153,16 +2318,23 @@
    <A NAME="EditRoute"></A>
    <H3>Edit Route</H3>
 
-   Each location has the train's departure direction, number of desired car moves, and whether car
-   pick ups and or car set outs are allowed at that location. A car move can be a car pick up or car
-   set out at that location. For example, 5 moves can be 5 pick ups, or 5 set outs, or any
-   combination of 5 pick ups or set outs. Picking up or dropping off a group of cars or a <A
-    HREF="#Kernel">kernel</A> represents one move. To modify the number of moves for a location,
-   click directly on the cell in the route table. When entering the desired number of car moves,
-   enter reasonable numbers that reflect what you want the program to do for you. For example, if
-   you want your train to depart with 15 cars, then 15 is the correct value for your moves at the
-   start of the route. At the end of the route, if you want 12 cars in the train when it terminates,
-   then 12 is the right value for the move count for the last location in your train's route.
+   You can modify any location in a train's route by selecting an item in one of the menu boxes or by
+   doubling clicking one of the cells and entering a new value. Press "Save Route" to complete your
+   change.
+
+   <P>
+    Each location has the train's departure direction, number of desired car moves, and whether car
+    pick ups and or car set outs are allowed at that location. A car move can be a car pick up or
+    car set out at that location. For example, 5 moves can be 5 pick ups, or 5 set outs, or any
+    combination of 5 pick ups or set outs. Picking up or dropping off a group of cars or a <A
+     HREF="#Kernel">kernel</A> represents one move. To modify the number of moves for a location,
+    double click directly on the cell in the route table. When entering the desired number of car
+    moves, enter reasonable numbers that reflect what you want the program to do for you. For
+    example, if you want your train to depart with 15 cars, then 15 is the correct value for your
+    moves at the start of the route. At the end of the route, if you want 12 cars in the train when
+    it terminates, then 12 is the right value for the move count for the last location in your
+    train's route.
+   </P>
 
    <P>If you want to delay the departure of the train from a location or increase the train's
     travel time, enter the number of minutes desired in the "Wait" cell. Another choice is to
@@ -2171,8 +2343,19 @@
 
    <P>
     You can also adjust the <A HREF="#MaximumTrainLength">maximum train length</A> using <A
-     HREF="#UnitOfLength">(feet or meters)</A> that can depart each location. The grade is optional
-    and is used to determine how many locomotives the train will require for that segment.
+     HREF="#UnitOfLength">(feet or meters)</A> that can depart each location. For example, if you
+    limited the train's departure length to 500 feet, then approximately 10 cars would depart in the
+    train from that location. When first starting out, it is recommended that you leave the
+    departure train lengths to the maximum and adjust the number of cars in the train by changing
+    the car move counts in the train's route. Later if you find that your train is too long, you should
+    first reduce the car move counts and then the maximum train lengths to get your trains to build to
+    your liking.
+   </P>
+
+   <P>
+    The grade is optional and is used to determine how many locomotives the train will require for
+    that segment when using the train <A HREF="#TrainRequires">Auto</A> locomotive assignment
+    feature. Enter the maximum grade that the train will encounter between the two locations.
    </P>
 
    <P>
@@ -2269,19 +2452,20 @@
    <P>
     <img src="images/Trains.png">
    </P>
-   <P>The "Trains" window shows all of your trains. For each train, the there's a checkbox to
-    select which trains to build, print, and terminate using the buttons on the bottom of the page.
-    You can also modify an existing train using the "Edit" button. For each train there's also an
-    action button. You can select one of four actions for your train. The 'Move" action causes a
-    built train to depart its current location and move to the next location in the train's route.
-    The "Conductor" action opens a window that provides the train's manifest for each location in
-    the train's route. The last two actions are "Terminate" and "Reset", pressing "Terminate" moves
-    a built train to the last location in the train's route, and completes the work assigned to the
+   <P>The "Trains" window shows all of your trains. For each train, the there's a checkbox in
+    the "Build" column used to select which trains to build, print, and terminate. The buttons on
+    the bottom of the page will build, print or terminate the trains selected. You can also modify
+    an existing train using the "Edit" button for that train. For each train there's also an action
+    button. You can select one of four actions for your train. The 'Move" action causes a built
+    train to depart its current location and move to the next location in the train's route. The
+    "Conductor" action opens a window that provides the train's manifest for each location in the
+    train's route. The last two actions are "Terminate" and "Reset", pressing "Terminate" moves a
+    built train to the last location in the train's route, and completes the work assigned to the
     train. "Reset" is used to release all cars assigned to a built train. You can only reset a train
     that hasn't been moved.</P>
 
    <P>There are several checkboxes along the bottom of the Trains window. The "Show All" when
-    selects shows all trains in your roster. When deselected, only trains that have the "Build"
+    selected shows all trains in your roster. When deselected, only trains that have the "Build"
     checkbox selected are shown. The "Messages" checkbox when selected will present a dialog box
     whenever a train build failure occurs explaining why the train didn't build. The "Build Report"
     checkbox when selected provides a report detailing how the train was built by the program. Use
@@ -2289,7 +2473,18 @@
     provides a "Report" button under the "Action" column for a train that fails to build.</P>
 
    <P>The "Preview" checkbox when selected, allows you to preview rather than printing your
-    train's manifest or build report.</P>
+    train's manifest or build report.</p>
+
+   <P>
+    If you select the "Generate CSV Manifest" from the <A HREF="#ManifestOptions">Options</A> window
+    found under "Tools" in the Settings or Trains window, two additional checkboxes will appear
+    labeled "Open" and "Run". If the "Open" checkbox is selected the "Function" button for a built
+    train will become "Open" rather than "Print" or "Preview". Pressing a train's "Open" button will
+    allow you to examine the train's comma separated value file. If you select the "Run" checkbox,
+    the function button for a built train becomes "Run". Pressing a train's "Run" button will start
+    the Excel program configured by the "Setup Excel Program (Manifest Creator)" window found in the
+    Trains "Tools" menu .
+   </P>
 
    <P>One of the most important buttons is the "Save Builds" button. When pressed, the program
     saves all the files that have been modified by building and moving your trains. Pressing this
@@ -2317,7 +2512,7 @@
 
    <H3>Train Rolling Stock</H3>
 
-   You can determine what type of cars and locomotives the train will service. Select the rolling
+   You can decide what type of cars and locomotives the train will service. Select the rolling
    stock the train will carry by clicking on the appropriate checkboxes. A checked box means the
    train will service this type of rolling stock. 
    
@@ -2356,10 +2551,9 @@
    <H3>Train Build Options</H3>
 
    In the edit train window menu under "Tools-&gt;Train Build Options" are additional options for
-   building a train. You can control which car roads, load, owners, and built dates the train will
-   service.
-
-   <P>You can also specify a locomotive change in route or add helper locomotives.</P>
+   building a train. You can control which car owners, and built dates the train will service, and
+   have up two locomotive and caboose changes in the train's route. You can also add a request for
+   helper locomotives. Press the "Save Train" button after you've completed your changes.
 
    <P>
     <img src="images/TrainBuildOptions.png">
@@ -2376,9 +2570,9 @@
 
    <H4>Send all car pick ups to terminal</H4>
 
-   You can also request that all car pick ups are sent to the last location in your route
-   (terminal). Useful if you don't want your cars picked up and set out at various locations in your
-   train's route.
+   You can also request that all car pick ups along the train's route are sent to the last location
+   in the train's route (terminal). Useful if you don't want your cars picked up and set out at
+   various locations in your train's route.
 
    <H4>Allow cars to return to staging if needed</H4>
 
@@ -2407,39 +2601,26 @@
 
    Normally the program allows cars to travel from the train's departure location (origin) to its
    last location (terminal). Deselect this option if you don't want the train to carry cars from the
-   train's origin to the terminal. 
-   
-   <A NAME="TrainRoadNames"></A>
-   <H3>Train Road Names</H3>
+   train's origin to the terminal.
 
-   You can control the road names that the train will service. Select under the "Edit
-   Train-&gt;Tools" menu the "Train Build Options". This will bring up a new window with several
-   options.
+   <H4>Service all cars with a final destination</H4>
 
-   <P>If the train will service any road name, select the "Accept all" radio button. If you want
-    to accept only some road names, select "Accept only" radio button. Then use the menu of road
-    names and "Add Road" button to make a list of road names that the train will service. To remove
-    a road name from your list, select the road name from the menu and use the "Delete Road" button.</P>
-
-   <P>To build a list of road names that the train will not service, select the "Exclude" radio
-    button. Use the menu of road names and the "Add Road" button to build a list of roads that this
-    train will not service.</P>
-
-   <P>Press the "Save Train" button to update the train build options and close the window when
-    your done.</P>
-
-   <H3>Train Car Loads</H3>
-
-   You can decide which car loads the train will service. There are two pull down menus, the first
-   one is the type of car, and the second the type of load serviced by the car type selected. Use
-   the "Add Load" button to build a list of loads that the train will either service or exclude. The
-   "Delete All" button will remove all loads from the list. You can also associate a load with a
-   particular car type, select the "Use car type and load" checkbox if you want this feature.
+   This option when selected tells the program to pull cars with a final destination even if the train
+   being built doesn't provide the most efficient route for the car. Useful if you want the train
+   being built to move cars "closer" to their final destination, even if other trains could do it
+   more efficiently. The term "closer" has to be taken with a grain of salt, as the program doesn't
+   really understand distances, only the number of trains needed to move a car. So there will be cases
+   where the train pulls the car, and it will in fact be physically farther from the car's final
+   destination. This option does two things, it will add cars to the train being built that wouldn't
+   normally travel on the train, thus freeing up track space. And second creates more work for your
+   operators as this option can and will increase the number of trains needed to move the car to its
+   final destination.
 
    <H3>Train Owners</H3>
 
-   You can decide which rolling stock the train will service by owner name. The control is similar
-   to <A HREF="#TrainRoadNames">Train Road Names</A>, see above.
+   You can decide which rolling stock the train will service by owner name. Select which owners
+   names you want the train to carry. The control is similar to
+   <A HREF="#TrainRoadOptions">Train Road Options</A>, see below.
 
    <H3>Train Built Dates</H3>
 
@@ -2469,12 +2650,50 @@
     starting at the location you select, and removes the helper service at the second location
     specified by you.</P>
 
+   <A NAME="TrainLoadOptions"></A>
+   <H3>Train Load Options</H3>
+
+   You can decide which car loads the train will service. Select under the "Edit
+   Train-&gt;Tools-&gt;Train Load Options". This will bring up a new window with several
+   options.
+
+   <P>If the train will service any load name, select the "Accept all" radio button. If you want
+    the train to service only some load names, select "Accept only" radio button. To build a list of
+    load names that the train will not service, select the "Exclude" radio button.</P>
+
+   <p>There are two pull down menus, the first one is the type
+   of car, and the second the type of load serviced by the car type selected. Use the "Add Load"
+   button to build a list of loads that the train will either service or exclude. The "Delete All"
+   button will remove all loads from the list. You can also associate a load with a particular car
+   type, select the "Use car type and load" checkbox if you want this feature.</p>
+   
+   <A NAME="TrainRoadOptions"></A>
+   <H3>Train Road Options</H3>
+
+   You can control the road names that the train will service. Select under the "Edit
+   Train-&gt;Tools-&gt;Train Road Options". This will bring up a new window with several
+   options.
+
+   <P>If the train will service any road name, select the "Accept all" radio button. If you want
+    to accept only some road names, select "Accept only" radio button. Then use the menu of road
+    names and "Add Road" button to make a list of road names that the train will service. To remove
+    a road name from your list, select the road name from the menu and use the "Delete Road" button.</P>
+
+   <P>To build a list of road names that the train will not service, select the "Exclude" radio
+    button. The use the menu of road names and the "Add Road" button to build a list of roads that this
+    train will not service.</P>
+
    <A NAME="TrainManifestOptions"></A>
    <H3>Train Manifest Options</H3>
 
    You can optionally have a unique railroad name and logo for each train in your roster. You can
    also decide if your manifests show the train's arrival and departure times. Use the "Edit
    Train-&gt;Tools-&gt;Manifest Options" to set these options. 
+   
+   <A NAME="CopyTrain"></A>
+   <H3>Copy Train</H3>
+   
+   Use this tool to make a copy of an existing train.  You will need to enter a name for the new train.
    
    <A NAME="TrainScripts"></A>
    <H3>Scripts</H3>
@@ -2486,7 +2705,17 @@
     Included in the <a HREF="http://jmri.org/jython/operations">jython directory</a> are several
     examples of operation oriented scripts.
    </P>
+   
+   <A NAME="SetupExcelProgram"></A>
+   <H3>Setup Excel Program (Manifest Creator)</H3>
 
+   You can use an external program like Excel to create your own custom manifests. Dan Foltz who is
+   a JMRI user/programmer has developed the "Manifest Creator". You can find a copy of the program
+   at the
+   <a HREF="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations">Yahoo.com JMRI users
+    files Operations</a> Install the program "MC4JMRI.xls" in the JMRI/operations/csvManifest
+   directory. You can of course create your own program and also place it in the csvManifest directory. 
+   
    <A NAME="TrainShowCarTypesServiced"></A>
    <H3>Show Car Types Serviced</H3>
    <P>This diagnostic tool can help you determine why a train will not service a particular car
@@ -2586,6 +2815,10 @@
      <td>The track doesn't service the train's route</td>
     </tr>
     <tr>
+     <td>X (Track Destination)</td>
+     <td>The track doesn't service the car's final destination</td>
+    </tr>
+    <tr>
      <td>X (Dir Loc)</td>
      <td>Based on the train's departure direction, the location doesn't allow set outs or pick
       ups</td>
@@ -2660,7 +2893,7 @@
    route) will by default never move a car from a spur to a spur or yard to a yard, only yard to
    spur or spur to yard. This rule also applies to interchanges. This restriction helps prevent
    unrealistic car movements between spurs (industries). However, if you want a spur to spur move,
-   use a <A HREF="#Schedules">Schedule</A> to force the car move. You can also disable this
+   use a <A HREF="#Schedules">Schedule</A> to create the car move. You can also disable this
    restriction see <A HREF="#AllowLocalCarMovements">Options. </A> 
    
    <A NAME="BuildingTrains"></A>
@@ -2675,7 +2908,7 @@
    train, select the trains that you want built and press the "Build" button found at the bottom of
    the trains window. The program will then build manifests for all of the selected trains.
 
-   <P>If a train fails to build, the "Move" button will change its text to "Report". Pressing
+   <P>If a train fails to build, the "Action" button will change its text to "Report". Pressing
     "Report" will print or preview the build report for this train. Whenever a train fails to build,
     a build failure message will appear. If you want to disable this feature deselect the checkbox
     "Build Messages".</P>
@@ -2715,7 +2948,7 @@
 
    The program when building a train creates a build report and saves it to disk. Normally you would
    access the build report from the <A HREF="#BuildingTrains">Trains</A> window or from the edit
-   train Tools menu. The text files can be found in the JMRI-&gt;operations-&gt;buildstatus
+   train "Tools" menu. The text files can be found in the JMRI-&gt;operations-&gt;buildstatus
    directory. The build report shows the steps the operations program goes through while building a
    train. The first page provides the route the train will travel and the number of car moves
    requested for each location. The report then shows the car type and locomotive types that the
@@ -2724,6 +2957,13 @@
    build can't resolve, the build will fail. To understand why a build failed, go to the last page
    of the build report and by working backwards from the last line, you should be able to understand
    why a train failed to build.
+
+   <P>
+    You can if you wish use a text editor instead of the print preview window. A text editor allows
+    you to search the report for a specific car or issue. You can select this option from the <A
+     HREF="#BuildReportDetails">Build Report Options</A> under "Tools" in the Setup or Trains
+    window.
+   </P>
 
    <H3>More Build Report Details</H3>
 
@@ -2762,19 +3002,32 @@
     In <A HREF="#SettingsOptions">aggressive mode</A> , the program when figuring out destinations
     for cars, will do two passes when determining where to place cars. The first pass does 50% of
     the available moves for each location, and the second pass does the remainder. By doing two
-    passes, the program can "free" up some spurs that already have cars there, thus increasing the
+    passes, the program can "free" up some tracks that already have cars there, thus increasing the
     number of cars that the train can service. Once a car has been given a destination in aggressive
     mode, the car's current track space is available for other trains to use.
    </P>
 
-   <P>If a car has a final destination that was set by a schedule, the program will try and move
-    the car to that destination, or if not possible, it will try and move the car closer to that
-    final destination.</P>
+   <P>
+    There is an exception when departing staging in aggressive mode, the program will skip searching
+    for destinations for cars out of staging on the first pass unless the "Use normal mode when
+    building this train" is selected. The thinking is that car pick ups along the train's route will
+    free up space which should provide more possibilities for cars out of staging. However, if you
+    have tight train length restrictions along the train's route, the program might not
+    find destinations for cars out of staging while keeping the train length in check. If you find
+    in the build report that the train length is an issue for cars out of staging, try building the
+    train using the "Use normal mode when building this train" found under <A
+     HREF="#TrainBuildOptions">Train Build Options</A> in the "Tools" menu under Edit Train.
+   </P>
+
+   <P>When a car has a final destination that was set by a schedule, the program will try and
+    "route" the car to that destination. If the program can't find a train or series of trains that
+    can deliver the car to the destination, it will try and move the car in an attempt to find a way
+    to get the car to the destination.</P>
 
    <P>
     If a car has a custom load without a destination, the program will search for a spur with a
     schedule demanding that car type and load, the program will then "route" the car to that
-    destination. The program will use up to five trains to get the car to a destination. The program
+    destination. The program will use up to five trains to route a car to a destination. The program
     when determining how many cars an industry can serve considers the length of the spur serving
     the industry, and the length of the alternate track if one is specified. If the car is departing
     staging with a custom load, the "Percentage of custom loads generated by staging" is used to
@@ -2785,7 +3038,7 @@
    <P>
     Sometimes reading the build report can get tedious. A text editor allows you to search the
     report, you can select this option from the <A HREF="#BuildReportDetails">Build Report
-     Options</A> under Tools in the Setup or Trains window.
+     Options</A> under "Tools" in the Setup or Trains window.
    </P>
 
    <A NAME="PrintingManifests"></A>
@@ -2800,8 +3053,8 @@
    for all of the selected trains. You can modify the look of your manifests from the <A
     HREF="#PrintOptions">Manifest Print Options</A> window.
 
-   <p>You can also access a train's manifest and build report from the Tools menu in the edit
-    train window. The Tools menu option allows you to recover the manifest and build report for a
+   <p>You can also access a train's manifest and build report from the "Tools" menu in the edit
+    train window. The "Tools" menu option allows you to recover the manifest and build report for a
     train that has been terminated. Useful if you've accidentally terminated a train before printing
     out the train's manifest.</p>
 
@@ -2814,8 +3067,12 @@
 
    A switch list shows the work required to service all of the trains visiting that location.
    Normally a switch list is given to the person in charge of a yard or a location with many spurs
-   or industries. You can modify the look of your switch lists from the <A HREF="#PrintOptions">Manifest
-    Print Options</A> window.
+   or industries. You can modify the look of your switch lists from the
+   <A HREF="#PrintOptions">Manifest Print Options</A> window.
+
+   <P>
+    <img src="images/SwitchList.png">
+   </P>
 
    <P>Press the "Switch List" button found at the bottom of the "Trains" window if you want a
     switch list for a given location. A menu will appear that allows you to select which locations
@@ -2834,18 +3091,19 @@
    <H3>Switch List Options</H3>
 
    There are three options for adjusting the switch lists to your liking. The first checkbox option
-   when selected tells the program to print all trains that visit a location, even if the train
-   doesn't have any work. If you deselect this option, then the program only prints out trains that
-   have work at that location.
+   "All Trains" when selected tells the program to print all trains that visit a location, even if
+   the train doesn't have any work. If you deselect this option, then the program only prints out
+   trains that have work at that location.
 
-   <P>The next option when selected causes the program to print a train's switch list on a new
-    page for each train. This way your operators when completing the work for a train, can simply
-    discard the paperwork for that train. This mode is also useful if you have more than one
-    operator working a location, this way they can easily hand out the work by train.</P>
+   <P>The next option "Page per Train" when selected causes the program to print a train's
+    switch list on a new page for each train. This way your operators when completing the work for a
+    train, can simply discard the paperwork for that train. This mode is also useful if you have
+    more than one operator working a location, this way they can easily hand out the work by train.</P>
 
-   <P>The last option is whether you want your switch lists in real time or consolidation mode.
-    Normally you would generate your switch lists in real time. In this mode the switch list for a
-    location shows the work planned for trains that are built and not yet terminated.</P>
+   <P>The last option "Real Time" is whether you want your switch lists in real time or
+    consolidation mode. Normally you would generate your switch lists in real time. In this mode the
+    switch list for a location shows the work planned for trains that are built and not yet
+    terminated.</P>
 
    <P>If you only want to print out work for new trains, then deselect the real time option.
     Once you've printed out the switch list for a location, when new work is created by building
@@ -2880,9 +3138,10 @@
     is a copy of the last one printed. This allows you to print more than one copy of the switch
     list if needed.</P>
 
-   <P>
-    <img src="images/SwitchList.png">
-   </P>
+   <P>If you select or deselect any of the switch list options, you will need to press the
+    "Save" button to activate them.</P>
+
+
    <A NAME="TrainMove"></A>
    <H3>Moving Trains</H3>
 

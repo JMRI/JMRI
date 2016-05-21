@@ -71,6 +71,15 @@ the Signal Head Table before they may be included in a SSL entry or Logix.
 from an individual output (called a turnout) line. 
 Each aspect change requires that three commands be sent.
 
+<dt><b>Triple Output RGB</b> 
+<dd>A signal head that uses just three output lines to indicate 5 signal aspects.
+Usually these aspects will be Clear, Approach, Stop, Restricting and Dark. 
+The output coding is such that 
+one turnout thrown (on) controls the stop and another thrown (on) controls the clear. 
+Both of these outputs thrown (on) controls the
+approach, all three on controls the restricting, and all three closed (off) are dark. 
+Each aspect change requires that three commands be sent.
+
 <dt><b>Double Output</b> 
 <dd>A signal head that uses just two output lines to indicate 4 signal aspects.
 Usually these aspects will be Clear, Approach, Stop, and Dark. 

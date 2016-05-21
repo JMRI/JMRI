@@ -7,19 +7,26 @@ import java.util.List;
 
 import jmri.Block;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 
 /**
- * An Portal is a boundary between two Blocks.
+ * A Portal is a boundary between two Blocks.
  * 
  * <P>
  * A Portal has Lists of the OPaths that connect through it.
+ * The direction of trains passing through the portal is managed from the BlockOrders of the Warrant
+ * the train is running under.  The Portal fires a PropertyChangeEvent that a PortIcon can listen for
+ * to set direction arrows for a given route.
+ * 
+ * The Portal also supplies speed information from any signals set at its location that the Warrant 
+ * passes on the Engineer.
  *
  * @author	Pete Cressman  Copyright (C) 2009
  */
-public class Portal  {
+public class Portal extends jmri.implementation.AbstractNamedBean {
 
     private ArrayList <OPath> _fromPaths = new ArrayList <OPath>();
     private OBlock      _fromBlock;
@@ -29,11 +36,22 @@ public class Portal  {
     private OBlock      _toBlock;
     private NamedBean   _toSignal;          // may be either SignalHead or SignalMast
     private long        _toSignalDelay;
-    private String      _portalName;
+    //private String      _portalName;
+    private int 		_state = UNKNOWN;
+
+    //public static final int UNKNOWN      = 0x01;
+    //public static final int INCONSISTENT = 0x08;
+    public static final int ENTER_TO_BLOCK = 0x02;
+    public static final int ENTER_FROM_BLOCK = 0x04;
+    
+    public Portal(String sName, String uName) {
+        super(sName.toUpperCase(), uName);
+    }
     
     public Portal(OBlock fromBlock, String portalName, OBlock toBlock) {
+    	super(portalName, portalName);
         _fromBlock = fromBlock;
-        _portalName = portalName;
+ //       _portalName = portalName;
         _toBlock = toBlock;
         if (_fromBlock!=null) _fromBlock.addPortal(this);
         if (_toBlock!=null) _toBlock.addPortal(this);
@@ -56,15 +74,12 @@ public class Portal  {
             return false;
         }
         if (_fromBlock != null && _fromBlock.equals(block)) {
-            if (!_fromPaths.contains(path))  {
-                return addPath(_fromPaths, path);
-            }
+            return addPath(_fromPaths, path);
         } else if (_toBlock != null && _toBlock.equals(block)) {
-            if (!_toPaths.contains(path))  {
-                return addPath(_toPaths, path);
-            }
+            return addPath(_toPaths, path);
         }
-        // path already in one of the path lists
+        // portal is incomplete or path block not in this portal
+        // to do!!! fix this so it may return false.  Need true for bogus load
         return true;
     }
 
@@ -72,14 +87,16 @@ public class Portal  {
     *  Utility for both path lists
     */
     private boolean addPath(List <OPath> list, OPath path) {
-        String pName =path.getName();
-        for (int i=0; i<list.size(); i++) {
-            if (pName.equals(list.get(i).getName())) { log.error("Path \""+path.getName()+
-                "\" is duplicate name for another path in Portal \""+_portalName+"\".");
-                return false; 
+        if (!list.contains(path))  {
+            String pName =path.getName();
+            for (int i=0; i<list.size(); i++) {
+                if (pName.equals(list.get(i).getName())) { log.error("Path \""+path.getName()+
+                    "\" is duplicate name for another path in Portal \""+getUserName()+"\".");
+                    return false; 
+                }
             }
+            list.add(path);
         }
-        list.add(path);
         return true;
     }
 
@@ -107,14 +124,14 @@ public class Portal  {
     */
     public String setName(String name) {
         if (name == null || name.length()==0) { return null; }
-        if (_portalName.equals(name)) { return null; }
+        if (getUserName().equals(name)) { return null; }
 
         String msg = checkName(name, _fromBlock);
         if (msg==null) {
             msg = checkName(name, _toBlock);
         }
         if (msg==null) {
-            _portalName = name;
+        	setUserName(name);
         } else {
             msg = Bundle.getMessage("DuplicatePortalName", msg, name); 
         }
@@ -130,7 +147,7 @@ public class Portal  {
         return null;
     }
 
-    public String getName() { return _portalName; }
+    public String getName() { return getUserName(); }
 
     /**
     * Set block name. Verify that all toPaths are contained in the block.
@@ -283,6 +300,31 @@ public class Portal  {
     }
 
     /**
+     * Call is from BlockOrder when setting the path
+     * @param block
+     */
+    protected void setEntryState(OBlock block) {
+    	try {
+        	if (block==null) {
+        		_state = UNKNOWN;
+        	}
+        	else if (block.equals(_fromBlock)) {
+        		setState(ENTER_FROM_BLOCK);
+            } else if (block.equals(_toBlock)) {
+            	setState(ENTER_TO_BLOCK);
+            }    		
+    	} catch (jmri.JmriException ex) {}
+    }
+    public void setState(int s) throws JmriException {
+    	int old = _state;
+    	_state = s;
+    	firePropertyChange("Direction", old, _state);
+    }    
+    public int getState() {
+    	return _state;
+    }
+
+    /**
     * @param block is the direction of entry
     * @return signal protecting block
     */
@@ -304,6 +346,7 @@ public class Portal  {
     */
     public String getPermissibleEntranceSpeed(OBlock block) {
         String speed = null;
+    	String blockName = block.getDisplayName();
         if (block.equals(_toBlock)) {
             if (_fromSignal!=null) {
                 if (_fromSignal instanceof SignalHead) {
@@ -321,8 +364,10 @@ public class Portal  {
                 }
             }
         } else {
-            log.error("Block \""+block.getDisplayName()+"\" is not in Portal \""+_portalName+"\".");
+            	log.error("Block \""+blockName+"\" is not in Portal \""+getUserName()+"\".");
         }
+        if (log.isDebugEnabled() && speed!=null) log.debug("Portal \""+getUserName()+"\"," +
+        		" has ENTRANCE speed= "+speed+" into \""+blockName+"\" from signal."); 
         // no signals, proceed at recorded speed
         return speed;
     }
@@ -348,6 +393,7 @@ public class Portal  {
     */
     public String getPermissibleExitSpeed(OBlock block) {
         String speed = null;
+    	String blockName = block.getDisplayName();
         if (block.equals(_toBlock)) {
             if (_fromSignal!=null) {
                 if (_fromSignal instanceof SignalHead) {
@@ -365,12 +411,13 @@ public class Portal  {
                 }
             }
         } else {
-            log.error("Block \""+block.getDisplayName()+"\" is not in Portal \""+_portalName+"\".");
+            log.error("Block \""+blockName+"\" is not in Portal \""+getUserName()+"\".");
         }
+        if (log.isDebugEnabled() && speed!=null) log.debug("Portal \""+getUserName()+"\"," +
+        		" has EXIT speed= "+speed+" into \""+blockName+"\" from signal."); 
         // no signals, proceed at recorded speed
         return speed;
     }
-
 
     private String getPermissibleSignalEntranceSpeed(SignalHead signal) {
         int appearance = signal.getAppearance();
@@ -474,11 +521,11 @@ public class Portal  {
 
     public String getDescription() {
         return Bundle.getMessage("PortalDescription",
-                        _portalName, getFromBlockName(), getToBlockName());
+        		getUserName(), getFromBlockName(), getToBlockName());
     }
     
     public String toString() {
-        return ("Portal \""+_portalName+"\" from block \""+getFromBlockName()+"\" to block \""+getToBlockName()+"\""); 
+        return ("Portal \""+getUserName()+"\" from block \""+getFromBlockName()+"\" to block \""+getToBlockName()+"\""); 
     }
     
     static Logger log = LoggerFactory.getLogger(Portal.class.getName());

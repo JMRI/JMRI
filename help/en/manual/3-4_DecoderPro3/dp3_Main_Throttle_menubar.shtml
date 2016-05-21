@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Throttle.shtml 18167 2011-08-13 11:22:06Z dat7719 $ -->
+
+
+
+
+
+<title>DecoderPro Throttle</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>DecoderPro3® Main Menu Bar</h1>
+<h1>JMRI® Throttle Window Menu Bar</h1>
+
+<div align="right">
+<p><a href="dp3_Main_Throttle.shtml">Back </a></p>
+</div>
+
+<hr>
+<p>Throttle Window Menu Bar<br>
+</p><div style="text-align: center;"><img src="images/Main_Throttle_menu.png" alt="menu bar" height="89" width="384"></div><p></p>
+<h3><strong>File</strong>
+</h3>
+<ul>
+  <li><strong>New Throttle...</strong></li>
+  <blockquote>
+    <p>Opens new copy of the throttle</p>
+  </blockquote>
+  <li><strong>Open Throttle</strong>
+    <blockquote><div style="text-align: center;">
+      </div><p style="text-align: center;"><img src="images/ThrottleOpen.png" alt="open throttle" height="360" width="508"></p>
+      <p>Select a saved throttle XML: file.</p>
+    </blockquote>
+  </li>
+  <li><strong>Save Current Throttle</strong>
+    <blockquote>
+      <p>Save a throttle file that has been opened and modified</p>
+</blockquote>
+  </li>
+  <li><strong>Save Current Throttle As...</strong></li>
+<blockquote><div style="text-align: center;">
+    </div><p style="text-align: center;"><img src="images/ThrottleSaveCurrenAs.png" alt="save current" height="360" width="508"></p>
+  </blockquote>
+</ul>
+<ul>
+  <blockquote>
+    <p>Opens the Save dialog to allow you to save the Throttle XML file in the location you select and using the name you specify</p>
+  </blockquote>
+</ul>
+<blockquote>
+  <hr>
+</blockquote>
+<ul>
+  <li>Open Throttles Layout...
+    <blockquote>
+      <p>Opens Throttle layout that you select.</p>
+    </blockquote>
+  </li>
+
+  <li>Save Throttles Layout...
+    <blockquote>
+      <p>Save Throttles Layout to file in Throttle Folder</p>
+    </blockquote>
+  </li>
+</ul>
+<blockquote>
+  <hr>
+</blockquote>
+<ul>
+  <li>Load Default Throttles Layout
+    <blockquote>
+      <p>Load the default throttle layout from Throttle Folder</p>
+    </blockquote>
+  </li>
+
+  <li>Save As Default Throttles Layout
+    <blockquote>
+      <p>Save as the default throttle layout from Throttle Folder</p>
+    </blockquote>
+  </li>
+</ul>
+<blockquote>
+  <hr>
+</blockquote>
+<ul><li><a name="Wi"></a>Start <a style="font-weight: bold;" href="WiThrottle.shtml">WiThrottle</a>
+
+  </li>
+</ul>
+<h3><strong>Edit</strong>
+</h3>
+<ul>
+  <li><a href="dp3_Main_Throttle_FrameProperties.shtml"><strong>Frame Properties</strong></a></li>
+  <blockquote>
+    <p>Opens the <strong>Edit Throttle Frame</strong> dialog and allows you to edit the current throttle window title and selected Frame properties.</p>
+  </blockquote>
+  <li><strong>Export Current Throttle Customization to roster</strong><br>
+  </li>
+  <blockquote><div style="text-align: center;">
+    </div><p style="text-align: center;"><img src="images/Main_Throttle_menu_UpdateRoster.png" alt="Update Roster" height="121" width="361"></p>
+  </blockquote>
+  <li><strong><a href="Start_Preferences.shtml#Throttle">Throttle Prefereces</a></strong></li>
+</ul>
+<h3><strong>View
+    </strong></h3>
+<blockquote>
+  <p>Allows you to select which of the three panels of
+the throttle are being shown. Place a check mark in each of the panels
+that your want to display. </p>
+</blockquote>
+<ul>
+  <li>
+    <input name="checkbox" id="checkbox" checked="checked" type="checkbox">      
+    <strong>Address Panel</strong></li>
+  <li><strong>
+    <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox"> 
+    Control Panel
+  </strong></li>
+  <li><strong>
+    <input name="checkbox3" id="checkbox3" checked="checked" type="checkbox"> 
+    Function Panel</strong><br>
+    <br>      </li>
+  <blockquote>
+    <p>You
+may ask yourself, &#8220;Why would I want to turn off any of these
+panels?&#8221;&nbsp; As only one example, let&#8217;s say we have an observation
+car at the rear of a passenger train.&nbsp; We could equip this car
+with a function only decoder to control:</p>
+    <ol>
+      <li> Interior lights, </li>
+      <li> Rear marker lights, and</li>
+      <li>A rear  Drum light.&nbsp; </li>
+    </ol>
+    <p>We have no need for the  speed control pane and only need three function buttons for this  &#8220;Throttle&#8221;.&nbsp; <br>
+With a whole passenger train equipped like this, lots of screen space
+can be conserved by using the throttle set-up files to optimize the <strong>Throttle</strong>
+windows. Then you could turn off the lights in the kitchen and lower
+the lights in the dining area so the passengers can enjoy the sunset as
+they transit the Rockies enjoying the beautiful sunset sipping Cognac&#8230;.
+but I digress.&nbsp; You get the idea.</p><p><img src="images/separator.png" alt="separator" height="4" width="340"></p>
+  </blockquote>
+  <li><strong>Reset  Function Buttons</strong></li>
+  <blockquote>
+    <p>Resets all the Function buttons to the default settings, 
+      <input name="button14" id="button14" value="F1" type="button">
+      , 
+      <input name="button15" id="button15" value="F2" type="button">
+    , etc.</p>
+  </blockquote>
+  <li><strong>Get all current throttle components in bounds</strong><br>
+    <br>
+    <blockquote>
+      <p>Returns all the throttle panels to the throttle frame.</p></blockquote></li></ul><div style="margin-left: 40px;"><img src="images/separator.png" alt="separator" height="4" width="340"></div><ul>
+  <li><strong>Switch Throttle frame view mode</strong><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Toggles the Throttle frames on/off
+  <blockquote>
+    <p>Frames on.</p>
+    <p style="margin-left: 40px; text-align: center;"><img src="images/Throttle_FrameMode.png" alt="frames" height="313" width="318"></p>
+    <p>Frames off</p>
+    <p style="text-align: center;"><img src="images/Throttle_FrameModeOff.png" alt="frame off" height="313" width="318"></p>
+  </blockquote>
+  </li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+  <li><strong>Show/Hide Throttles list window<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; </strong> Toggles the<a href="dp3_Main_Throttle_List.shtml"><strong> Local JMRI throttles</strong></a> list window on or off<br>
+  </li>
+</ul>
+<h3><strong>Power</strong> (<em>track power control, if supported by your system)</em> </h3>
+<ul>
+  <li><strong>Power On</strong>  </li>
+  <li><strong>Power Off</strong></li>
+</ul>
+<h3><strong>Window</strong>
+</h3>
+<ul>
+  <li><strong>Minimize</strong>  </li>
+  <li>Lists all open
+DecoderPro windows.&nbsp; If one of the windows is clicked it will be
+brought to the front so that you can minimize it to the system tray. </li>
+</ul>
+<h3><strong>Help</strong>
+</h3>
+<ul>
+  <li><strong>Window Help...</strong></li>
+  <li><strong>General Help...</strong></li>
+  <li><strong>License...</strong></li>
+  <li><strong>Locations...</strong></li>
+  <li><strong>Context</strong></li>
+  <li><strong>System Console</strong></li>
+  <li><strong>Upload Debugging Info..</strong>.</li>
+</ul>
+<div>
+  <div align="right"></div>
+</div>
+<hr>
+
+<div align="right">
+<p><a href="dp3_Main_Throttle.shtml">Back </a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div></body></html>

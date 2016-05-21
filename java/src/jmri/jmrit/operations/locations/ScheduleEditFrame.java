@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -97,11 +98,13 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		// Layout the panel by rows
 		JPanel p1 = new JPanel();
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-		JScrollPane p1Pane = new JScrollPane(p1);
-		p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-		p1Pane.setMinimumSize(new Dimension(300,
-				3 * scheduleNameTextField.getPreferredSize().height));
-		p1Pane.setBorder(BorderFactory.createTitledBorder(""));
+		p1.setMaximumSize(new Dimension(2000, 200));
+		
+//		JScrollPane p1Pane = new JScrollPane(p1);
+//		p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+//		p1Pane.setMinimumSize(new Dimension(300,
+//				3 * scheduleNameTextField.getPreferredSize().height));
+//		p1Pane.setBorder(BorderFactory.createTitledBorder(""));
 
 		// row 1a name
 		JPanel pName = new JPanel();
@@ -148,18 +151,21 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		group.add(addLocAtTop);
 		group.add(addLocAtBottom);
 		addLocAtBottom.setSelected(true);
+		
+		p3.setMaximumSize(new Dimension(2000, 200));
 
 		// row 11 buttons
 		JPanel pB = new JPanel();
 		pB.setLayout(new GridBagLayout());
 		pB.setBorder(BorderFactory.createTitledBorder(""));
+		pB.setMaximumSize(new Dimension(2000, 200));
 
 		// row 13
 		addItem(pB, deleteScheduleButton, 0, 0);
 		addItem(pB, addScheduleButton, 1, 0);
 		addItem(pB, saveScheduleButton, 3, 0);
 
-		getContentPane().add(p1Pane);
+		getContentPane().add(p1);
 		getContentPane().add(schedulePane);
 		getContentPane().add(p3);
 		getContentPane().add(pB);
@@ -192,10 +198,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		_track.addPropertyChangeListener(this);
 
 		// set frame size and schedule for display
-		pack();
-		if (getWidth() < Control.panelWidth)
-			setSize(Control.panelWidth, getHeight());
-		setVisible(true);
+		initMinimumSize();
+		if (getWidth() < Control.widePanelWidth)
+			setSize(Control.widePanelWidth, getHeight());
 	}
 
 	// Save, Delete, Add

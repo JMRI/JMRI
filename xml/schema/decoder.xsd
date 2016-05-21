@@ -65,6 +65,44 @@
 
       <xs:element name="programming" minOccurs="1" maxOccurs="1" >
         <xs:complexType>
+          <xs:sequence>
+            <xs:element name="capability" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+              Indicate programmer facades to be added. 
+              Later ones work through earlier ones.
+              </xs:documentation></xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="name" minOccurs="1" maxOccurs="1">
+                    <xs:annotation><xs:documentation>
+                    Required name of the particular facade to instantiate
+                    </xs:documentation></xs:annotation>
+                  </xs:element>
+                  <xs:sequence>
+                    <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation><xs:documentation>
+                      Parameter values for a specific facade.
+                      </xs:documentation></xs:annotation>
+                      <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="name" type="xs:string" >
+                            <xs:annotation><xs:documentation>
+                            Name of the particular attribute being set.
+                            Whether this is required is defined by a 
+                            particular facade; facades may take their
+                            parameters in a specified order instead of using names.  
+                            </xs:documentation></xs:annotation>
+                          </xs:attribute>
+                        </xs:extension>
+                      </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
           <xs:attribute name="direct" default="no" >
             <xs:simpleType>
               <xs:restriction base="xs:token">
@@ -247,6 +285,10 @@
                 <xs:enumeration value="PluX8"/>
                 <xs:enumeration value="PluX16"/>
                 <xs:enumeration value="PluX22"/>
+                <xs:enumeration value="NEM651"/>
+                <xs:enumeration value="NEM652"/>
+                <xs:enumeration value="16pin"/>
+                <xs:enumeration value="21pin"/>
                 <xs:enumeration value="other"/>
               </xs:restriction>
             </xs:simpleType>
@@ -735,7 +777,20 @@
     </xs:sequence>
     <xs:attribute name="item" type="xs:string"/>
     <xs:attribute name="label" type="xs:string"/>
-    <xs:attribute name="format" type="xs:string"/>
+    <xs:attribute name="format">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="default" />
+                <xs:enumeration value="vslider" />
+                <xs:enumeration value="hslider" />
+                <xs:enumeration value="hslider-percent" />
+                <xs:enumeration value="radiobuttons" />
+                <xs:enumeration value="checkbox" />
+                <xs:enumeration value="onradiobutton" />
+                <xs:enumeration value="offradiobutton" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
     <xs:attribute name="layout" type="xs:string"/>
     <xs:attribute name="tooltip" type="xs:string"/>
   </xs:complexType>

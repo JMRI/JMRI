@@ -4,6 +4,8 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -124,11 +126,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarAttributes", true);	// NOI18N
 
 		pack();
-
-		if (getWidth() < 300)
-			setSize(300, getHeight());
-		if (getHeight() < 180)
-			setSize(getWidth(), 180);
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
 		setVisible(true);
 	}
 
@@ -486,7 +484,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 			CarLengths.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY))
 			CarOwners.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY))
 			manager.updateKernelComboBox(comboBox);
 		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY))
 			updateCarQuanity();

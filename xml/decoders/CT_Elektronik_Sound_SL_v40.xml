@@ -1554,7 +1554,7 @@
 			<enumVal><enumChoice choice="Off"/><enumChoice choice="On"/></enumVal>
 		</variable>
 -->
-      <variable label="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL51,SL74" default="4" tooltip="CV49, bits 0-3">
+      <variable label="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL51,SL74" default="4">
         <enumVal>
           <enumChoice choice="4 cyl steam, auto pulse" value="0">
             <choice>4 cyl steam, auto pulse</choice>
@@ -1574,7 +1574,7 @@
         </enumVal>
         <label>Steam/Diesel sound types</label>
       </variable>
-      <variable label="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL75" default="0" tooltip="CV49, bits 0-3">
+      <variable label="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL75" default="0">
         <enumVal>
           <enumChoice choice="4 Cylinder steam, auto pulse">
             <choice>4 Cylinder steam, auto pulse</choice>
@@ -1656,12 +1656,12 @@
         <label>I adjustment</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Decoder Lock" CV="53" default="0" tooltip="CV53 Lock=66 Unlock=77" comment="also used for Lokmouse programming">
+      <variable label="Decoder Lock" CV="53" default="0" tooltip="Lock=66 Unlock=77" comment="also used for Lokmouse programming">
         <decVal/>
         <label>Decoder Lock</label>
         <comment>also used for Lokmouse programming</comment>
       </variable>
-      <variable label="PWM Function Outputs" CV="54" default="50" tooltip="CV 54 Dimming Outputs 0 - 100%">
+      <variable label="PWM Function Outputs" CV="54" default="50" tooltip="Dimming Outputs 0 - 100%">
         <decVal min="0" max="100"/>
         <label>PWM Function Outputs</label>
       </variable>
@@ -1674,7 +1674,7 @@
         <decVal/>
         <label>Uncoupler Pulse Time</label>
       </variable>
-      <variable label="Dimming Output FL(f)" CV="57" mask="XXXXXXXV" default="0" tooltip="CV57 Bit0">
+      <variable label="Dimming Output FL(f)" CV="57" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1685,7 +1685,7 @@
         </enumVal>
         <label>Dimming Output FL(f)</label>
       </variable>
-      <variable label="Dimming Output FL(r)" CV="57" mask="XXXXXXVX" default="0" tooltip="CV57 Bit1">
+      <variable label="Dimming Output FL(r)" CV="57" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1696,7 +1696,7 @@
         </enumVal>
         <label>Dimming Output FL(r)</label>
       </variable>
-      <variable label="Dimming Output F 1" CV="57" mask="XXXXXVXX" default="0" tooltip="CV57 Bit2">
+      <variable label="Dimming Output F 1" CV="57" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1707,7 +1707,7 @@
         </enumVal>
         <label>Dimming Output F 1</label>
       </variable>
-      <variable label="Dimming Output F 2" CV="57" mask="XXXXVXXX" default="0" tooltip="CV57 Bit3">
+      <variable label="Dimming Output F 2" CV="57" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1718,7 +1718,7 @@
         </enumVal>
         <label>Dimming Output F 2</label>
       </variable>
-      <variable label="Dimming Output F 3" CV="57" mask="XXXVXXXX" default="0" tooltip="CV57 Bit4">
+      <variable label="Dimming Output F 3" CV="57" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1729,7 +1729,7 @@
         </enumVal>
         <label>Dimming Output F 3</label>
       </variable>
-      <variable label="Dimming Output F 4" CV="57" mask="XXVXXXXX" default="0" tooltip="CV57 Bit5">
+      <variable label="Dimming Output F 4" CV="57" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1740,7 +1740,7 @@
         </enumVal>
         <label>Dimming Output F 4</label>
       </variable>
-      <variable label="Dimming Output F 5" CV="57" mask="XVXXXXXX" default="0" tooltip="CV57 Bit6">
+      <variable label="Dimming Output F 5" CV="57" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1751,7 +1751,7 @@
         </enumVal>
         <label>Dimming Output F 5</label>
       </variable>
-      <variable label="Dimming Output F 6" CV="57" mask="VXXXXXXX" default="0" tooltip="CV57 Bit7">
+      <variable label="Dimming Output F 6" CV="57" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1762,7 +1762,7 @@
         </enumVal>
         <label>Dimming Output F 6</label>
       </variable>
-      <variable label="Output Uncoupler FL(f)" CV="58" mask="XXXXXXXV" default="0" tooltip="CV58 Bit0">
+      <variable label="Output Uncoupler FL(f)" CV="58" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1773,7 +1773,7 @@
         </enumVal>
         <label>Output Uncoupler FL(f)</label>
       </variable>
-      <variable label="Output Uncoupler FL(r)" CV="58" mask="XXXXXXVX" default="0" tooltip="CV58 Bit1">
+      <variable label="Output Uncoupler FL(r)" CV="58" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1784,7 +1784,7 @@
         </enumVal>
         <label>Output Uncoupler FL(r)</label>
       </variable>
-      <variable label="Output Uncoupler F 1" CV="58" mask="XXXXXVXX" default="0" tooltip="CV58 Bit2">
+      <variable label="Output Uncoupler F 1" CV="58" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1795,7 +1795,7 @@
         </enumVal>
         <label>Output Uncoupler F 1</label>
       </variable>
-      <variable label="Output Uncoupler F 2" CV="58" mask="XXXXVXXX" default="0" tooltip="CV58 Bit 3">
+      <variable label="Output Uncoupler F 2" CV="58" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1806,7 +1806,7 @@
         </enumVal>
         <label>Output Uncoupler F 2</label>
       </variable>
-      <variable label="Output Uncoupler F 3" CV="58" mask="XXXVXXXX" default="0" tooltip="CV58 Bit 4">
+      <variable label="Output Uncoupler F 3" CV="58" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1817,7 +1817,7 @@
         </enumVal>
         <label>Output Uncoupler F 3</label>
       </variable>
-      <variable label="Output Uncoupler F 4" CV="58" mask="XXVXXXXX" default="0" tooltip="CV58 Bit 5">
+      <variable label="Output Uncoupler F 4" CV="58" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1828,7 +1828,7 @@
         </enumVal>
         <label>Output Uncoupler F 4</label>
       </variable>
-      <variable label="Output Uncoupler F 5" CV="58" mask="XVXXXXXX" default="0" tooltip="CV58 Bit 6">
+      <variable label="Output Uncoupler F 5" CV="58" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1839,7 +1839,7 @@
         </enumVal>
         <label>Output Uncoupler F 5</label>
       </variable>
-      <variable label="Output Uncoupler F 6" CV="58" mask="VXXXXXXX" default="0" tooltip="CV58 Bit 7">
+      <variable label="Output Uncoupler F 6" CV="58" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1864,7 +1864,7 @@
         <decVal/>
         <label>ZIMO Signal Controlled Acc Reaction</label>
       </variable>
-      <variable label="Brake Sound Trigger" CV="62" default="00" tooltip="CV62 rate of speed change to trigger brake noise slots 120 to 122">
+      <variable label="Brake Sound Trigger" CV="62" default="00" tooltip="rate of speed change to trigger brake noise slots 120 to 122">
         <decVal max="255"/>
         <label>Brake Sound Trigger</label>
       </variable>
@@ -1877,19 +1877,19 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="ZIMO Course influence F-L" CV="96" tooltip="CV96 selected speed between F L (MX9 and/or HLU) from version 52, see CV59, 60">
+      <variable label="ZIMO Course influence F-L" CV="96" tooltip="selected speed between F L (MX9 and/or HLU) from version 52, see CV59, 60">
         <decVal/>
         <label>ZIMO Course influence F-L</label>
       </variable>
-      <variable label="ZIMO Course influence L-U" CV="97" tooltip="CV97 selected speed between L U (MX9 and/or HLU) from version 52, see CV59, 60">
+      <variable label="ZIMO Course influence L-U" CV="97" tooltip="selected speed between L U (MX9 and/or HLU) from version 52, see CV59, 60">
         <decVal/>
         <label>ZIMO Course influence L-U</label>
       </variable>
-      <variable label="ZIMO Course influence U" CV="98" tooltip="CV98 selected speed between U Stop (MX9 and/or HLU) from version 52, see CV59, 60">
+      <variable label="ZIMO Course influence U" CV="98" tooltip="selected speed between U Stop (MX9 and/or HLU) from version 52, see CV59, 60">
         <decVal/>
         <label>ZIMO Course influence U</label>
       </variable>
-      <variable label="Braking Threshold Finish" CV="104" tooltip="CV104 some elements from version 100">
+      <variable label="Braking Threshold Finish" CV="104" tooltip="some elements from version 100">
         <decVal/>
         <label>Braking Threshold Finish</label>
       </variable>
@@ -2113,15 +2113,15 @@
         </enumVal>
         <label>Random Running Slot 8</label>
       </variable>
-      <variable label="PWM Light Effects Outputs" CV="114" default="0" tooltip="CV 114 Dimming Light Effects Outputs 0 - 100%">
+      <variable label="PWM Light Effects Outputs" CV="114" default="0" tooltip="Dimming Light Effects Outputs 0 - 100%">
         <decVal min="0" max="100"/>
         <label>PWM Light Effects Outputs</label>
       </variable>
-      <variable label="Time Between Effects" CV="115" default="0" tooltip="CV 115 Time Between Effects">
+      <variable label="Time Between Effects" CV="115" default="0" tooltip="Time Between Effects">
         <decVal/>
         <label>Time Between Effects</label>
       </variable>
-      <variable label="Switching 1" CV="116" mask="XXXXXXXV" default="0" tooltip="CV 116 bit0">
+      <variable label="Switching 1" CV="116" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2132,7 +2132,7 @@
         </enumVal>
         <label>Switching 1</label>
       </variable>
-      <variable label="Switching 2" CV="116" mask="XXXXXXVX" default="0" tooltip="CV 116 bit1">
+      <variable label="Switching 2" CV="116" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2143,7 +2143,7 @@
         </enumVal>
         <label>Switching 2</label>
       </variable>
-      <variable label="Switching 3" CV="116" mask="XXXXXVXX" default="0" tooltip="CV 116 bit2">
+      <variable label="Switching 3" CV="116" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2160,7 +2160,7 @@ CV116 = 0 is not used, must always be 0 (when using the brake module also allows
 CV116 = 64 means that the Rangierfunktion acts as a command button that is, that the ATC has (or braking diode and HLU) NOT! (equivalent to the MAN key = manual) 
 CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself. Sound speed back to normal
 -->
-      <variable label="Diode Braking" CV="116" mask="XXXXVXXX" default="0" tooltip="CV 116 bit3 diode brake (ABC)">
+      <variable label="Diode Braking" CV="116" mask="XXXXVXXX" default="0" tooltip="diode brake (ABC)">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2171,7 +2171,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Diode Braking</label>
       </variable>
-      <variable label="Diode Braking non-Directional" CV="116" mask="XXXVXXXX" default="0" tooltip="CV 116 bit4">
+      <variable label="Diode Braking non-Directional" CV="116" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2182,7 +2182,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Diode Braking non-Directional</label>
       </variable>
-      <variable label="Yard Mode disable auto braking" CV="116" mask="XVXXXXXX" default="0" tooltip="CV 116 bit6">
+      <variable label="Yard Mode disable auto braking" CV="116" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2193,7 +2193,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Yard Mode disable auto braking</label>
       </variable>
-      <variable label="F-Button Used For Dimming" CV="117" default="0" tooltip="CV 117 F-Button Used For Dimming">
+      <variable label="F-Button Used For Dimming" CV="117" default="0" tooltip="F-Button Used For Dimming">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2325,11 +2325,11 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Dim F 6</label>
       </variable>
-      <variable label="PWM Dimming" CV="119" default="0" tooltip="CV 119 PWM Dimming 0 - 100%">
+      <variable label="PWM Dimming" CV="119" default="0" tooltip="PWM Dimming 0 - 100%">
         <decVal min="0" max="100"/>
         <label>PWM Dimming</label>
       </variable>
-      <variable label="Time Effect ON" CV="120" default="0" tooltip="CV 120 Time Effect ON">
+      <variable label="Time Effect ON" CV="120" default="0" tooltip="Time Effect ON">
         <decVal/>
         <label>Time Effect ON</label>
       </variable>
@@ -2939,13 +2939,13 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>Sound slot 8 function repetition</label>
       </variable>
       <!-- CV129 moved to CV146 SL75 from V40 upwards !! -->
-      <variable label="Strong Time" CV="129" default="4" include="SL51,SL74" comment="Position 00-03 in Filelist" tooltip="CV129 Strong reduction of sound after acceleration, Position 00-03 in Filelist">
+      <variable label="Strong Time" CV="129" default="4" include="SL51,SL74" comment="Position 00-03 in Filelist" tooltip="Strong reduction of sound after acceleration, Position 00-03 in Filelist">
         <decVal/>
         <label>Strong Time</label>
         <comment>Position 00-03 in Filelist</comment>
       </variable>
       <!-- See also CV129/146 for matching CV for "strong" time -->
-      <variable label="Weak Time" CV="130" default="4" comment="Position 08-11 in Filelist" tooltip="CV130 Slightly reduction of sound after breaking, Position 08-11 in Filelist">
+      <variable label="Weak Time" CV="130" default="4" comment="Position 08-11 in Filelist" tooltip="Slightly reduction of sound after breaking, Position 08-11 in Filelist">
         <decVal/>
         <label>Weak Time</label>
         <comment>Position 08-11 in Filelist</comment>
@@ -3042,7 +3042,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>Zimo speed control HLU</label>
         <comment>Zimo HLU</comment>
       </variable>
-      <variable label="Start Sound before motor" CV="137" default="0" mask="XXVXXXXX" tooltip="CV137 bit 5">
+      <variable label="Start Sound before motor" CV="137" default="0" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -3053,7 +3053,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Start Sound before motor</label>
       </variable>
-      <variable label="LGB F4 Impulse" CV="137" default="0" mask="XVXXXXXX" tooltip="CV137 bit 6">
+      <variable label="LGB F4 Impulse" CV="137" default="0" mask="XVXXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -3064,7 +3064,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>LGB F4 Impulse</label>
       </variable>
-      <variable label="CV137 Motor frequency" CV="137" item="DC Brake Momentum" default="0" mask="VXXXXXXX" tooltip="CV137 bit 7" comment="using DC Brake Momentum as feature to get this option onto Motor control pane">
+      <variable label="CV137 Motor frequency" CV="137" item="DC Brake Momentum" default="0" mask="VXXXXXXX" comment="using DC Brake Momentum as feature to get this option onto Motor control pane">
         <enumVal>
           <enumChoice choice="Std 150Hz/16kHz">
             <choice>Std 150Hz/16kHz</choice>
@@ -3110,7 +3110,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>Slow Cut Off Motor</label>
         <comment>Slow Cut off Motor</comment>
       </variable>
-      <variable label="Sound Loop" CV="145" default="0" tooltip="CV145 bitwise looping of sound slots if sound is spread over five elements, see manual">
+      <variable label="Sound Loop" CV="145" default="0" tooltip="bitwise looping of sound slots if sound is spread over five elements, see manual">
         <decVal/>
         <label>Sound Loop</label>
       </variable>
@@ -3215,7 +3215,7 @@ Default = 12
 Unclear how to use this in practise, as Function Map appears to duplicate the same.
 Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapping ??
 		<variable label="Sound/Function Assignment" CV="146" default="12"
-						tooltip="CV146 assigns sound or function output, see manual">
+						tooltip="assigns sound or function output, see manual">
 			<decVal />
 		</variable>
 		<variable label="Output Z3 with function F7" CV="146" minOut="5" mask="XXXXXXXV" default="0">
@@ -3236,74 +3236,74 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
 		   <enumVal><enumChoice choice="Off"/><enumChoice choice="Yes"/></enumVal></variable>
 -->
       <!-- SL75 manual implies CV146 is replacement for CV129 from V40 onwards -->
-      <variable label="Strong Time" CV="146" default="4" include="SL75" comment="Position 00-03 in Filelist" tooltip="CV146 Strong reduction of sound after acceleration, Position 00-03 in Filelist">
+      <variable label="Strong Time" CV="146" default="4" include="SL75" comment="Position 00-03 in Filelist" tooltip="Strong reduction of sound after acceleration, Position 00-03 in Filelist">
         <decVal/>
         <label>Strong Time</label>
         <comment>Position 00-03 in Filelist</comment>
       </variable>
       <!-- Special CVs for automatically uncoupling, available from version 33 -->
-      <variable label="Speed Step Coupling Release" CV="147" default="20" tooltip="CV147">
+      <variable label="Speed Step Coupling Release" CV="147" default="20">
         <decVal max="127"/>
         <label>Speed Step Coupling Release</label>
       </variable>
-      <variable label="Speed Step Uncoupled" CV="148" default="50" tooltip="CV148">
+      <variable label="Speed Step Uncoupled" CV="148" default="50">
         <decVal max="127"/>
         <label>Speed Step Uncoupled</label>
       </variable>
-      <variable label="Time Driving Backwards" CV="149" default="5" tooltip="CV149, Unit 0.1 sec">
+      <variable label="Time Driving Backwards" CV="149" default="5" tooltip="Unit 0.1 sec">
         <decVal/>
         <label>Time Driving Backwards</label>
       </variable>
-      <variable label="Time Driving Forwards" CV="150" default="10" tooltip="CV150, Unit 0.1 sec">
+      <variable label="Time Driving Forwards" CV="150" default="10" tooltip="Unit 0.1 sec">
         <decVal/>
         <label>Time Driving Forwards</label>
       </variable>
-      <variable label="F-Button Used For Autouncoupling" CV="151" default="3" tooltip="CV151, Functions 1 to 12 possible">
+      <variable label="F-Button Used For Autouncoupling" CV="151" default="3" tooltip="Functions 1 to 12 possible">
         <decVal max="12"/>
         <label>F-Button Used For Autouncoupling</label>
       </variable>
-      <variable label="Engine FWD, Uncoupling BWD" CV="152" default="4" tooltip="CV152, Engine FWD, output wire for rear uncoupler, values either 1,2,3,4, or 1,2,4,8">
+      <variable label="Engine FWD, Uncoupling BWD" CV="152" default="4" tooltip="Engine FWD, output wire for rear uncoupler, values either 1,2,3,4, or 1,2,4,8">
         <decVal/>
         <label>Engine FWD, Uncoupling BWD</label>
       </variable>
-      <variable label="Engine BWD, Uncoupling FWD" CV="153" default="8" tooltip="CV153, Engine BWD, output wire for front uncoupler, values either 1,2,3,4, or 1,2,4,8">
+      <variable label="Engine BWD, Uncoupling FWD" CV="153" default="8" tooltip="Engine BWD, output wire for front uncoupler, values either 1,2,3,4, or 1,2,4,8">
         <decVal/>
         <label>Engine BWD, Uncoupling FWD</label>
       </variable>
       <!-- Tran Light Effects  -->
-      <variable label="Light Effects FL(f)" CV="154" default="0" tooltip="CV154, Light Effects FL(f), see manual">
+      <variable label="Light Effects FL(f)" CV="154" default="0" tooltip="Light Effects FL(f), see manual">
         <decVal/>
         <label>Light Effects FL(f)</label>
       </variable>
-      <variable label="Light Effects FL(r)" CV="155" default="0" tooltip="CV155, Light Effects FL(r), see manual">
+      <variable label="Light Effects FL(r)" CV="155" default="0" tooltip="Light Effects FL(r), see manual">
         <decVal/>
         <label>Light Effects FL(r)</label>
       </variable>
-      <variable label="Light Effects F 1" CV="156" default="0" tooltip="CV156, Light Effects F 1, see manual">
+      <variable label="Light Effects F 1" CV="156" default="0" tooltip="Light Effects F 1, see manual">
         <decVal/>
         <label>Light Effects F 1</label>
       </variable>
-      <variable label="Light Effects F 2" CV="157" default="0" tooltip="CV157, Light Effects F 2, see manual">
+      <variable label="Light Effects F 2" CV="157" default="0" tooltip="Light Effects F 2, see manual">
         <decVal/>
         <label>Light Effects F 2</label>
       </variable>
-      <variable label="Light Effects F 3" CV="158" default="0" tooltip="CV158, Light Effects F 3, see manual">
+      <variable label="Light Effects F 3" CV="158" default="0" tooltip="Light Effects F 3, see manual">
         <decVal/>
         <label>Light Effects F 3</label>
       </variable>
-      <variable label="Light Effects F 4" CV="159" default="0" tooltip="CV159, Light Effects F 4, see manual">
+      <variable label="Light Effects F 4" CV="159" default="0" tooltip="Light Effects F 4, see manual">
         <decVal/>
         <label>Light Effects F 4</label>
       </variable>
-      <variable label="Light Effects F 5" CV="160" default="0" tooltip="CV160, Light Effects F 5, see manual">
+      <variable label="Light Effects F 5" CV="160" default="0" tooltip="Light Effects F 5, see manual">
         <decVal/>
         <label>Light Effects F 5</label>
       </variable>
-      <variable label="Light Effects F 6" CV="161" default="0" tooltip="CV161, Light Effects F 6, see manual">
+      <variable label="Light Effects F 6" CV="161" default="0" tooltip="Light Effects F 6, see manual">
         <decVal/>
         <label>Light Effects F 6</label>
       </variable>
-      <variable label="Light Effects F0F" CV="154" mask="XXXVVVVV" default="0" tooltip="CV154, Effects on F0F">
+      <variable label="Light Effects F0F" CV="154" mask="XXXVVVVV" default="0" tooltip="Effects on F0F">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -3344,7 +3344,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects F0F</label>
       </variable>
-      <variable label="Light Effects Direction F0F" CV="154" mask="VVXXXXXX" tooltip="CV154 bits 6,7">
+      <variable label="Light Effects Direction F0F" CV="154" mask="VVXXXXXX">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -3358,7 +3358,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects Direction F0F</label>
       </variable>
-      <variable label="Light Effects F0R" CV="155" mask="XXXVVVVV" default="0" tooltip="CV155, Effects on F0R">
+      <variable label="Light Effects F0R" CV="155" mask="XXXVVVVV" default="0" tooltip="Effects on F0R">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -3399,7 +3399,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects F0R</label>
       </variable>
-      <variable label="Light Effects Direction F0R" CV="155" mask="VVXXXXXX" tooltip="CV155 bits 6,7">
+      <variable label="Light Effects Direction F0R" CV="155" mask="VVXXXXXX">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -3413,7 +3413,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects Direction F0R</label>
       </variable>
-      <variable label="Light Effects F1" CV="156" mask="XXXVVVVV" default="0" tooltip="CV156, Effects on F1" minOut="3">
+      <variable label="Light Effects F1" CV="156" mask="XXXVVVVV" default="0" tooltip="Effects on F1" minOut="3">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -3454,7 +3454,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects F1</label>
       </variable>
-      <variable label="Light Effects Direction F1" CV="156" mask="VVXXXXXX" tooltip="CV156 bits 6,7" minOut="3">
+      <variable label="Light Effects Direction F1" CV="156" mask="VVXXXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -3468,7 +3468,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects Direction F1</label>
       </variable>
-      <variable label="Light Effects F2" CV="157" mask="XXXVVVVV" default="0" minOut="4" tooltip="CV157, Effects on F2">
+      <variable label="Light Effects F2" CV="157" mask="XXXVVVVV" default="0" minOut="4" tooltip="Effects on F2">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -3509,7 +3509,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects F2</label>
       </variable>
-      <variable label="Light Effects Direction F2" CV="157" mask="VVXXXXXX" tooltip="CV156 bits 6,7" minOut="4">
+      <variable label="Light Effects Direction F2" CV="157" mask="VVXXXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -3523,7 +3523,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects Direction F2</label>
       </variable>
-      <variable label="Diode Sensitivity" CV="162" default="0" tooltip="CV162, diode sensitivity for Diode Braking (suggest 10-20)">
+      <variable label="Diode Sensitivity" CV="162" default="0" tooltip="diode sensitivity for Diode Braking (suggest 10-20)">
         <decVal max="255"/>
         <label>Diode Sensitivity</label>
       </variable>
@@ -4694,7 +4694,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F12 controls output G8</label>
       </variable>
-      <variable label="Acceleration Sound Trigger" CV="177" default="00" tooltip="CV177 rate of speed change to trigger accel noise slots 123-125">
+      <variable label="Acceleration Sound Trigger" CV="177" default="00" tooltip="rate of speed change to trigger accel noise slots 123-125">
         <decVal max="255"/>
         <label>Acceleration Sound Trigger</label>
       </variable>
@@ -4742,7 +4742,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <label label="divider for number of chuff pulses per wheel revolution">
             <label>divider for number of chuff pulses per wheel revolution</label>
           </label>
-          <display item="Full Speed Exhaust Interval" tooltip="CV132"/>
+          <display item="Full Speed Exhaust Interval"/>
           <!-- <display item="Full Speed Exhaust Interval" format="hslider" label="" />  -->
           <label label="  ">
             <label>  </label>
@@ -4751,14 +4751,14 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
             <label>Low speed chuff rate (two byte number)</label>
           </label>
           <display item="Speed Step 1 Exhaust Interval"/>
-          <display item="Logical Exhaust Interval" tooltip="lowbytes CV133" label="lowbytes of above">
+          <display item="Logical Exhaust Interval" label="lowbytes of above">
             <label>lowbytes of above</label>
           </display>
-          <!-- <display item="Logical Exhaust Interval" tooltip="lowbytes CV133" format="hslider" label="" /> -->
-          <display item="Time Between Beats" tooltip="highbytes CV134" label="highbytes of above">
+          <!-- <display item="Logical Exhaust Interval" format="hslider" label="" /> -->
+          <display item="Time Between Beats" label="highbytes of above">
             <label>highbytes of above</label>
           </display>
-          <!-- <display item="Time Between Beats" tooltip="highbytes CV134" format="hslider" label="" />  -->
+          <!-- <display item="Time Between Beats" format="hslider" label="" />  -->
           <label label="  ">
             <label>  </label>
           </label>
@@ -4768,11 +4768,11 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <label label="and decelleration sounds to be heard  ">
             <label>and decelleration sounds to be heard  </label>
           </label>
-          <display item="Strong Time" tooltip="CV53, acceleration noise triggered by this setting"/>
-          <!-- <display item="Strong Time" format="hslider" label="" tooltip="CV53, Sets the switch ON dimming of F1" /> -->
+          <display item="Strong Time" tooltip="acceleration noise triggered by this setting"/>
+          <!-- <display item="Strong Time" format="hslider" label="" tooltip="Sets the switch ON dimming of F1" /> -->
           <!-- <label label="  "/>  -->
-          <display item="Weak Time" tooltip="CV56, coasting noise triggered by this setting"/>
-          <!-- <display item="Weak Time" format="hslider" label="" tooltip="CV56, Sets the symmetry of F1" /> -->
+          <display item="Weak Time" tooltip="coasting noise triggered by this setting"/>
+          <!-- <display item="Weak Time" format="hslider" label="" tooltip="Sets the symmetry of F1" /> -->
           <label label="  ">
             <label>  </label>
           </label>
@@ -4798,20 +4798,20 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         <column>
           <!-- 
 				<display item="Decoder Properties/Synchropulses" label="Wheel Synch Pulse input" 
-							tooltip="CV 49 Bit 0: pulses OFF/ON, set pulses per rev in CV133"  format="checkbox" />
-				<display item="Diesel and E Locosound" tooltip="CV 49 Bit 1:OFF/ON"  format="checkbox" />
-				<display item="2 Cylinder Steam" tooltip="CV 49 Bit 2:OFF/ON"  format="checkbox" />
-				<display item="3 Cylinder Steam" tooltip="CV 49 Bit 3:OFF/ON"  format="checkbox" />
+							tooltip=": pulses OFF/ON, set pulses per rev in CV133"  format="checkbox" />
+				<display item="Diesel and E Locosound" tooltip=":OFF/ON"  format="checkbox" />
+				<display item="2 Cylinder Steam" tooltip=":OFF/ON"  format="checkbox" />
+				<display item="3 Cylinder Steam" tooltip=":OFF/ON"  format="checkbox" />
 				-->
           <label label="Sound options">
             <label>Sound options</label>
           </label>
-          <display item="No Steam Exhaust Downhill" tooltip="CV 49 Bit 4:OFF/ON" format="checkbox"/>
-          <display item="Continuous Sound CV 10, F 1" label="evaluate the LGB-pulse from F1" tooltip="CV 49 Bit 5:OFF/ON" format="checkbox">
+          <display item="No Steam Exhaust Downhill" tooltip=":OFF/ON" format="checkbox"/>
+          <display item="Continuous Sound CV 10, F 1" label="evaluate the LGB-pulse from F1" tooltip=":OFF/ON" format="checkbox">
             <label>evaluate the LGB-pulse from F1</label>
           </display>
-          <display item="No Sound stop to moving (whistle)" tooltip="CV49 Bit 6" format="checkbox"/>
-          <display item="No Sound moving to stop (brake squeal)" tooltip="CV49 Bit 7" format="checkbox"/>
+          <display item="No Sound stop to moving (whistle)" format="checkbox"/>
+          <display item="No Sound moving to stop (brake squeal)" format="checkbox"/>
           <label label="  ">
             <label>  </label>
           </label>
@@ -4822,17 +4822,17 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <label label="Sound Frequency, alters apparent size of locomotive">
             <label>Sound Frequency, alters apparent size of locomotive</label>
           </label>
-          <display item="High Frequency Limit" tooltip="CV 136"/>
-          <display item="Low Frequency Limit" tooltip="CV 135"/>
+          <display item="High Frequency Limit"/>
+          <display item="Low Frequency Limit"/>
           <label label="  ">
             <label>  </label>
           </label>
           <label label="  ">
             <label>  </label>
           </label>
-          <display item="Load Dependant Sound Variation" tooltip="CV 110, values 0 - 15"/>
-          <display item="F1 strong/normal/weak if CV110 active" tooltip="CV 137 Bit2" format="checkbox"/>
-          <display item="F2 strong/normal/weak if CV110 active" tooltip="CV 137 Bit3" format="checkbox"/>
+          <display item="Load Dependant Sound Variation" tooltip="values 0 - 15"/>
+          <display item="F1 strong/normal/weak if CV110 active" format="checkbox"/>
+          <display item="F2 strong/normal/weak if CV110 active" format="checkbox"/>
           <label label="  ">
             <label>  </label>
           </label>
@@ -4891,7 +4891,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <label label="  ">
             <label>  </label>
           </label>
-          <display item="Random Interval Aux Sounds" tooltip="CV 131" label="Random time between sounds selected below (0.5sec)">
+          <display item="Random Interval Aux Sounds" label="Random time between sounds selected below (0.5sec)">
             <label>Random time between sounds selected below (0.5sec)</label>
           </display>
           <label label="  ">
@@ -4926,7 +4926,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </display>
         </column>
         <column>
-          <display item="Loop Sound Slot 1" format="checkbox" label="  Fn Loop " tooltip="CV145 Only if sound spread over five slots">
+          <display item="Loop Sound Slot 1" format="checkbox" label="  Fn Loop " tooltip="Only if sound spread over five slots">
             <label>  Fn Loop </label>
           </display>
         </column>
@@ -4958,7 +4958,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </display>
         </column>
         <column>
-          <display item="Loop Sound Slot 2" format="checkbox" label="  Fn Loop " tooltip="CV145 Only if sound spread over five slots">
+          <display item="Loop Sound Slot 2" format="checkbox" label="  Fn Loop " tooltip="Only if sound spread over five slots">
             <label>  Fn Loop </label>
           </display>
         </column>
@@ -4990,7 +4990,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </display>
         </column>
         <column>
-          <display item="Loop Sound Slot 3" format="checkbox" label="  Fn Loop " tooltip="CV145 Only if sound spread over five slots">
+          <display item="Loop Sound Slot 3" format="checkbox" label="  Fn Loop " tooltip="Only if sound spread over five slots">
             <label>  Fn Loop </label>
           </display>
         </column>
@@ -5022,7 +5022,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </display>
         </column>
         <column>
-          <display item="Loop Sound Slot 4" format="checkbox" label="  Fn Loop " tooltip="CV145 Only if sound spread over five slots">
+          <display item="Loop Sound Slot 4" format="checkbox" label="  Fn Loop " tooltip="Only if sound spread over five slots">
             <label>  Fn Loop </label>
           </display>
         </column>
@@ -5054,7 +5054,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </display>
         </column>
         <column>
-          <display item="Loop Sound Slot 5" format="checkbox" label="  Fn Loop " tooltip="CV145 Only if sound spread over five slots">
+          <display item="Loop Sound Slot 5" format="checkbox" label="  Fn Loop " tooltip="Only if sound spread over five slots">
             <label>  Fn Loop </label>
           </display>
         </column>
@@ -5086,7 +5086,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </display>
         </column>
         <column>
-          <display item="Loop Sound Slot 6" format="checkbox" label="  Fn Loop " tooltip="CV145 Only if sound spread over five slots">
+          <display item="Loop Sound Slot 6" format="checkbox" label="  Fn Loop " tooltip="Only if sound spread over five slots">
             <label>  Fn Loop </label>
           </display>
         </column>
@@ -5118,7 +5118,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </display>
         </column>
         <column>
-          <display item="Loop Sound Slot 7" format="checkbox" label="  Fn Loop " tooltip="CV145 Only if sound spread over five slots">
+          <display item="Loop Sound Slot 7" format="checkbox" label="  Fn Loop " tooltip="Only if sound spread over five slots">
             <label>  Fn Loop </label>
           </display>
         </column>
@@ -5150,7 +5150,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </display>
         </column>
         <column>
-          <display item="Loop Sound Slot 8" format="checkbox" label="  Fn Loop " tooltip="CV145 Only if sound spread over five slots">
+          <display item="Loop Sound Slot 8" format="checkbox" label="  Fn Loop " tooltip="Only if sound spread over five slots">
             <label>  Fn Loop </label>
           </display>
         </column>
@@ -5164,13 +5164,13 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         <label>Yard Mode (select function key in function map)</label>
       </label>
       <separator/>
-      <display item="Switching 1" label="Shunting CV3 and 4 disabled" tooltip="CV 116, Bit 0" format="checkbox">
+      <display item="Switching 1" label="Shunting CV3 and 4 disabled" format="checkbox">
         <label>Shunting CV3 and 4 disabled</label>
       </display>
-      <display item="Switching 2" label="Shunting max.half speed forw+rev" tooltip="CV 116, Bit 1" format="checkbox">
+      <display item="Switching 2" label="Shunting max.half speed forw+rev" format="checkbox">
         <label>Shunting max.half speed forw+rev</label>
       </display>
-      <display item="Switching 3" label="Rev.max.speed 65% indep. of Yard mode" tooltip="CV 116, Bit 2" format="checkbox">
+      <display item="Switching 3" label="Rev.max.speed 65% indep. of Yard mode" format="checkbox">
         <label>Rev.max.speed 65% indep. of Yard mode</label>
       </display>
       <label label=" ">
@@ -5234,17 +5234,17 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         <label>Uncoupler Assignment</label>
       </label>
       <separator/>
-      <display item="Uncoupler Holding Current" tooltip="CV 55 reduced current or off if 0"/>
-      <display item="Uncoupler Pulse Time" tooltip="CV 56 in 1/20 sec"/>
+      <display item="Uncoupler Holding Current" tooltip="reduced current or off if 0"/>
+      <display item="Uncoupler Pulse Time" tooltip="in 1/20 sec"/>
       <separator/>
-      <display item="Output Uncoupler FL(f)" tooltip="CV 58, Bit 0" format="checkbox"/>
-      <display item="Output Uncoupler FL(r)" tooltip="CV 58, Bit 1" format="checkbox"/>
-      <display item="Output Uncoupler F 1" tooltip="CV 58, Bit 2" format="checkbox"/>
-      <display item="Output Uncoupler F 2" tooltip="CV 58, Bit 3" format="checkbox"/>
-      <display item="Output Uncoupler F 3" tooltip="CV 58, Bit 4" format="checkbox"/>
-      <display item="Output Uncoupler F 4" tooltip="CV 58, Bit 5" format="checkbox"/>
-      <display item="Output Uncoupler F 5" tooltip="CV 58, Bit 6" format="checkbox"/>
-      <display item="Output Uncoupler F 6" tooltip="CV 58, Bit 7" format="checkbox"/>
+      <display item="Output Uncoupler FL(f)" format="checkbox"/>
+      <display item="Output Uncoupler FL(r)" format="checkbox"/>
+      <display item="Output Uncoupler F 1" format="checkbox"/>
+      <display item="Output Uncoupler F 2" format="checkbox"/>
+      <display item="Output Uncoupler F 3" format="checkbox"/>
+      <display item="Output Uncoupler F 4" format="checkbox"/>
+      <display item="Output Uncoupler F 5" format="checkbox"/>
+      <display item="Output Uncoupler F 6" format="checkbox"/>
       <label label=" ">
         <label> </label>
       </label>
@@ -5403,9 +5403,9 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <label label=" ">
         <label> </label>
       </label>
-      <display item="ZIMO Signal Controlled Speed L" tooltip="CV 59"/>
-      <display item="ZIMO Signal Controlled Speed U" tooltip="CV 60"/>
-      <display item="ZIMO Signal Controlled Acc Reaction" tooltip="CV 61"/>
+      <display item="ZIMO Signal Controlled Speed L"/>
+      <display item="ZIMO Signal Controlled Speed U"/>
+      <display item="ZIMO Signal Controlled Acc Reaction"/>
       <label label=" ">
         <label> </label>
       </label>
@@ -5415,13 +5415,13 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <label label="  ">
         <label>  </label>
       </label>
-      <display item="Function selection 8 or 14/MAN Bit" tooltip="CV 137 Bit 0"/>
+      <display item="Function selection 8 or 14/MAN Bit"/>
       <label label="  ">
         <label>  </label>
       </label>
-      <display item="Zimo address pulse" tooltip="CV 137 Bit 1"/>
-      <display item="Zimo speed control HLU" tooltip="CV 137 Bit 4"/>
-      <display item="ZIMO Brake Time HLU" tooltip="cv 138"/>
+      <display item="Zimo address pulse"/>
+      <display item="Zimo speed control HLU"/>
+      <display item="ZIMO Brake Time HLU"/>
     </column>
     <column>
       <label label="LGB Features">
@@ -5430,7 +5430,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <label label=" ">
         <label> </label>
       </label>
-      <display item="LGB Continuous Manual Sound Bitmask" tooltip="CV 108"/>
+      <display item="LGB Continuous Manual Sound Bitmask"/>
       <display item="LGB F4 Impulse"/>
       <label label="  ">
         <label>  </label>
@@ -5445,8 +5445,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <display item="Select CV Set 1 or 2" tooltip=" Selects CV Set 1(OFF) or 2(ON)"/>
     </column>
     <column>
-      <display item="ACK Pulse" tooltip="CV 111"/>
-      <display item="Error Diagnosis" tooltip="CV 30"/>
+      <display item="ACK Pulse"/>
+      <display item="Error Diagnosis"/>
     </column>
     <name>Roco LGB Zimo CT</name>
   </pane>
@@ -5463,9 +5463,9 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <label label="  ">
         <label>  </label>
       </label>
-      <display item="Direct Cut Off Function Outputs" tooltip="CV 139"/>
-      <display item="Fast Cut Off Function Outputs" tooltip="CV 140"/>
-      <display item="Slow Cut Off Function Outputs" tooltip="CV 141"/>
+      <display item="Direct Cut Off Function Outputs"/>
+      <display item="Fast Cut Off Function Outputs"/>
+      <display item="Slow Cut Off Function Outputs"/>
       <label label="  ">
         <label>  </label>
       </label>
@@ -5473,9 +5473,9 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <label label="  ">
         <label>  </label>
       </label>
-      <display item="Direct Cut Off Motor" tooltip="CV 142"/>
-      <display item="Fast Cut Off Motor" tooltip="CV 143"/>
-      <display item="Slow Cut Off Motor" tooltip="CV 144"/>
+      <display item="Direct Cut Off Motor"/>
+      <display item="Fast Cut Off Motor"/>
+      <display item="Slow Cut Off Motor"/>
       <label label="  ">
         <label>  </label>
       </label>

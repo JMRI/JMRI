@@ -11,6 +11,7 @@ import java.util.List;
 import org.jdom.Element;
 import org.jdom.Attribute;
 import jmri.util.jdom.LocaleSelector;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 
 /**
  * Provide a graphical representation of the NMRA S&RP mapping between cab functions
@@ -145,6 +146,8 @@ public class FnMapPanel extends JPanel {
                     if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
                     varsUsed.add(Integer.valueOf(iVar));
                     JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
+                    VariableValue var = _varModel.getVariable(iVar);
+                    j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
                     int row = firstFn+iFn;
                     int column = firstOut+iOut;
                     saveAt(row, column, j);

@@ -221,6 +221,7 @@ bar:</p>
 	<li><b>Track Segment</b> - selects a piece of straight track</li>
 	<li><b>End Bumper</b> - selects a connection point at the end of a track</li>
 	<li><b>Anchor Point</b> - selects a connection point between two track segments</li>
+    <li><b>Edge Connector</b> - selects a connection point between two track segments on different panels</li>
 	<li><b>Text Label</b> - selects a label showing the content of the entry field </li>
 	<li><b>Memory Label</b> - selects a label showing the contents of the memory whose name is 
 	entered on the right</li>
@@ -230,6 +231,8 @@ bar:</p>
 	<li><b>Sensor Icon</b> - selects a sensor icon showing the sensor whose name is entered on
 	 the right.</li>
 	<li><b>Signal Icon</b> - selects a signal head icon showing the signal head whose name is 
+	entered on the right</li>
+    <li><b>Signal Mast Icon</b> - selects a signal mast icon showing the signal mast whose name is 
 	entered on the right</li>
 	<li><b>Icon Label</b> - selects a general purpose icon</li>
 </ul></p>
@@ -252,7 +255,7 @@ To add all items except Track Segment:
 </ol></p>
 <p>
 A Track Segment is a piece of straight track connecting two connection points (red 
-squares on a turnout, anchor point, end bumper, or level crossing).  Before you can
+squares on a turnout, anchor point, end bumper, edge connector or level crossing).  Before you can
 add a Track Segment, two red connection points must be visible on the panel. To add 
 a Track Segment connecting two red connection points:
 </p>
@@ -383,13 +386,13 @@ selection is described below.
 	grid is displayed in edit  mode.</li>
 	<li><b>Snap to Grid when Adding</b> - If this item is checked, when an item is 
 	added to the panel, its coordinates are constrained to grid points. For 
-	track diagram items (turnouts, anchor points, end bumpers, and level crossings,
+	track diagram items (turnouts, anchor points, end bumpers, edge connectors and level crossings,
 	the coordinates of center points are constrained to grid points. For icons 
 	and labels, the coordinates of upper left corners are constrained to grid 
 	points.</li>
 	<li><b>Snap to Grid when Moving</b> - If this item is checked, when an item is 
 	moved on the panel, its coordinates are constrained to grid points. For 
-	track diagram items (turnouts, anchor points, end bumpers, and level crossings),
+	track diagram items (turnouts, anchor points, end bumpers, edge connectors, and level crossings),
 	the coordinates of center points are constrained to grid points. If connection 
 	points of turnouts or level crossings are moved, their coordinates are also 
 	constrained to grid points. For icons and labels, the coordinates of upper 
@@ -726,7 +729,7 @@ recorder, or background): on Windows systems, right-click on the icon; on Macint
 systems, control-click on the icon (hold down the control key and click the mouse 
 button on any point within the icon). Drawn items are similar, except for where you 
 click. For turnouts, level crossings, or track segments, control-click or right-click 
-inside the circle at the center of the item. For anchor points or end bumpers, 
+inside the circle at the center of the item. For anchor points, end bumpers or edge connectors
 control-click or right-click inside the square showing the connection point.</p>
 <p>
 To delete an item from a panel, select <b>Remove</b> in that item's popup menu. 
@@ -881,11 +884,14 @@ point in a clockwise direction.</p>
 
 A <b>Track Segment</b> is a piece of straight track stretching between two
 connection points. Connection points are drawn as small red or green squares.
-Connection points are found on turnouts, anchor points, end bumpers, and 
+Connection points are found on turnouts, anchor points, end bumpers, edge connectors, and 
 level crossings. Each turnout has three or four connection points, 
 each accepting one connection. Each anchor point has one connection point that 
 can accept two connections. An end bumper is similar, but only accepts one
-connection. Level crossings have four connection points, each accepting one
+connection. 
+An Edge Connector will only accept one connection, and is used to mark the "Edge" of 
+the current panel.
+Level crossings have four connection points, each accepting one
 connection. A connection point that can accept a connecting track segment is 
 drawn red.  When a connection point has its capacity of connections, its color 
 is changed to green. When all connection points are green, a track diagram is
@@ -923,6 +929,18 @@ creating each track segment, or by entering a block name in the Edit Track Segme
 dialog at a later time. The Edit Track Segment dialog also allows a Create/Edit 
 Block dialog to be requested, so information for the track segment's block may be 
 entered or changed. (Blocks are discussed more fully below.)</p>
+<p>
+An <b>Edge Connector</b> is used to denote that the current track finished on this panel 
+and can continue on another one.  The connector uses the same red/green states of an 
+Anchor point, along with a third blue state which means that the connector has not been 
+linked with a track segment on a different panel.  To do the linking, right click on the 
+edge connector and select "edit link", the dialogue box which appears will be populated 
+with a list of available layout panels, and any valid edge connectors.  
+A valid edge connector is defined as one that is not already linked, is connected to a track 
+segment that is configured with a block, which is not the same as the block our connected 
+track segment is configured as (ie the edge connector becomes a block boundary). And that the 
+two track segments are going in the same direction.
+<p>
 
 <a name="xing"><h2>Level Crossings</h2>
 

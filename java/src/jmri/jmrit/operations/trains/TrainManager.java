@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -29,7 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Manages trains.
  * 
  * @author Bob Jacobsen Copyright (C) 2003
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013
  * @version $Revision$
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
@@ -262,9 +263,11 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 	}
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	public void dispose() {
 		_trainHashTable.clear();
 		_id = 0;
+		_instance = null;	// we need to reset the instance for testing purposes
 	}
 
 	// stores known Train instances by id
@@ -388,6 +391,14 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * @return Train that can service car from its current location to the its destination.
 	 */
 	public Train getTrainForCar(Car car, PrintWriter buildReport) {
+		log.debug("Find train for car (" + car.toString() + ") location (" + car.getLocationName() + ", " // NOI18N
+				+ car.getTrackName() + ") destination (" + car.getDestinationName() + ", " // NOI18N
+				+ car.getDestinationTrackName() + ")"); // NOI18N
+		if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
+			TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle
+					.getMessage("trainFindForCar"), new Object[] { car.toString(), car.getLocationName(),
+					car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName() }));
+		}
 		List<String> trains = getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = getTrainById(trains.get(i));
@@ -754,22 +765,37 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Sets the flag that all of the build trains have updated switch lists 
+	 * Sets the switch list status for all built trains.  Used for
+	 * switch lists in consolidated mode.
 	 */
-	public void setTrainsPrintedSwitchLists() {
+	public void setTrainsSwitchListStatus(String status) {
 		List<String> trains = getTrainsByTimeList();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = getTrainById(trains.get(i));
 			if (!train.isBuilt())
-				continue; // train wasn't built so skip
-			train.setSwitchListStatus(Train.PRINTED);
+				continue; // train isn't built so skip
+			train.setSwitchListStatus(status);
+		}
+	}
+	
+	/**
+	 * Sets all built trains manifests to modified.  This causes the
+	 * train's manifest to be recreated.
+	 */
+	public void setTrainsModified() {
+		List<String> trains = getTrainsByTimeList();
+		for (int i = 0; i < trains.size(); i++) {
+			Train train = getTrainById(trains.get(i));
+			if (!train.isBuilt() || train.isTrainInRoute())
+				continue; // train wasn't built or in route, so skip
+			train.setModified(true);
 		}
 	}
 	
 	public void load(Element root) {
 		if (root.getChild(Xml.OPTIONS) != null) {
 			Element options = root.getChild(Xml.OPTIONS);
-			CustomManifest.load(options);
+			TrainCustomManifest.load(options);
 			Element e = options.getChild(Xml.TRAIN_OPTIONS);
 			Attribute a;
 			if (e != null) {
@@ -885,7 +911,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			options.addContent(es);
 		}
 		
-		CustomManifest.store(options);	// save custom manifest elements
+		TrainCustomManifest.store(options);	// save custom manifest elements
 		
 		root.addContent(options);
 

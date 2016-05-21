@@ -62,6 +62,7 @@ public class Xml {
 	static final String CAR_ROUTING_VIA_STAGING = "carRoutingViaStaging"; // NOI18N
 	static final String FORWARD_TO_YARD = "forwardToYard"; // NOI18N
 	static final String ONLY_ACTIVE_TRAINS = "onlyActiveTrains"; // NOI18N
+	static final String CHECK_CAR_DESTINATION = "checkCarDestination"; // NOI18N
 	
 	static final String LOGGER = "logger"; // NOI18N
 	static final String CAR_LOGGER = "carLogger"; // NOI18N
@@ -116,6 +117,9 @@ public class Xml {
 	
 	static final String TAB = "tab"; // NOI18N
 	static final String ENABLED = "enabled"; // NOI18N
+	
+	static final String COLUMN_FORMAT = "columnFormat"; // NOI18N
+	static final String TWO_COLUMNS = "twoColumns"; // NOI18N
 	
 	static final String TRUNCATE = "truncate"; // NOI18N
 	static final String USE_DEPARTURE_TIME = "useDepartureTime"; // NOI18N

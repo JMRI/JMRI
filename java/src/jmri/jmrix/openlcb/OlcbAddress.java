@@ -32,7 +32,7 @@ public class OlcbAddress {
     static final int GROUP_FULL_HEX = 1; // xhhhhhh
     static final int GROUP_DOT_HEX = 3; // dotted hex form
 
-    static final String singleAddressPattern = "(x(\\p{XDigit}\\p{XDigit}){1,8})|((\\p{XDigit}?\\p{XDigit}.){7}\\p{XDigit}?\\p{XDigit})";
+    static final String singleAddressPattern = "([xX](\\p{XDigit}\\p{XDigit}){1,8})|((\\p{XDigit}?\\p{XDigit}.){7}\\p{XDigit}?\\p{XDigit})";
     
 	private Matcher hCode = Pattern.compile("^"+singleAddressPattern+"$").matcher("");
 

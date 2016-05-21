@@ -42,14 +42,11 @@ public class PackageTest extends TestCase {
 		suite.addTest(jmri.PathTest.suite());
 		suite.addTest(jmri.PushbuttonPacketTest.suite());
 		suite.addTest(jmri.TurnoutTest.suite());
-                suite.addTest(jmri.ApplicationTest.suite());
-                suite.addTest(jmri.AudioTest.suite());
-                suite.addTest(jmri.IdTagTest.suite());
-                suite.addTest(jmri.VersionTest.suite());
-        
-        if (!System.getProperty("jmri.headlesstest","false").equals("true"))
-            suite.addTest(jmri.progdebugger.PackageTest.suite());
-        
+        suite.addTest(jmri.ApplicationTest.suite());
+        suite.addTest(jmri.AudioTest.suite());
+        suite.addTest(jmri.IdTagTest.suite());
+        suite.addTest(jmri.VersionTest.suite());
+        suite.addTest(jmri.progdebugger.PackageTest.suite());
         suite.addTest(jmri.configurexml.PackageTest.suite());
 		suite.addTest(jmri.implementation.PackageTest.suite());
         suite.addTest(jmri.managers.PackageTest.suite());

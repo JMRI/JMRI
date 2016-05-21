@@ -2,20 +2,19 @@
 
 package jmri.jmrit.beantable.beanedit;
 
-import jmri.NamedBean;
-import javax.swing.*;
 import java.awt.*;
-import javax.swing.AbstractAction;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
-import jmri.util.JmriJFrame;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-
-import java.awt.BorderLayout;
+import jmri.NamedBean;
+import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides the basic information and structure for
@@ -526,5 +525,5 @@ abstract class BeanEditAction extends AbstractAction {
 		}
 	}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanEditAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(BeanEditAction.class);
 }

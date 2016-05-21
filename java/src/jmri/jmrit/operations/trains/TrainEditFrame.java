@@ -338,6 +338,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
 		toolMenu.add(new TrainEditBuildOptionsAction(Bundle.getMessage("MenuItemBuildOptions"), this));
+		toolMenu.add(new TrainLoadOptionsAction(Bundle.getMessage("MenuItemLoadOptions"), this));
+		toolMenu.add(new TrainRoadOptionsAction(Bundle.getMessage("MenuItemRoadOptions"), this));
 		toolMenu.add(new TrainManifestOptionAction(Bundle.getMessage("MenuItemOptions"), this));
 		if (_train != null)
 			toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy"), _train.getName()));
@@ -844,7 +846,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					else if (i == locations.size() - 1)
 						services = true;
 					// check can drop and pick up, and moves > 0
-					if (services && (rl.canDrop() || rl.canPickup()) && rl.getMaxCarMoves() > 0)
+					if (services && (rl.isDropAllowed() || rl.isPickUpAllowed()) && rl.getMaxCarMoves() > 0)
 						checkBox.setSelected(!_train.skipsLocation(rl.getId()));
 					else
 						checkBox.setEnabled(false);
@@ -894,12 +896,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void packFrame() {
 		setVisible(false);
-		setMinimumSize(new Dimension(550, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
 		pack();
-		if (getWidth() < 550)
-			setSize(550, getHeight());
-		if (getHeight() < Control.panelHeight)
-			setSize(getWidth(), Control.panelHeight);
 		setVisible(true);
 	}
 

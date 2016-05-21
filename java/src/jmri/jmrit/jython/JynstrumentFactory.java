@@ -35,7 +35,7 @@ public class JynstrumentFactory {
 		try {
 			interp.execfile(jyFile);
 			interp.exec(instanceName+" = "+className+"()");		// instantiate one
-			jyns = (Jynstrument)interp.get(instanceName, Jynstrument.class); // get it
+			jyns = interp.get(instanceName, Jynstrument.class); // get it
 			interp.exec("del "+instanceName);  // delete reference in Jython interpreter
 		}
 		catch (Exception e) {

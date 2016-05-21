@@ -29,7 +29,8 @@ public class ShowCarsInTrainAction extends AbstractAction {
     		f = new ShowCarsInTrainFrame();
     		f.initComponents(train);
     	} else {
-    		f.setExtendedState(Frame.NORMAL); 
+    		f.setExtendedState(Frame.NORMAL);
+    	   	f.setVisible(true);	// this also brings the frame into focus
     	}
     }
 }

@@ -67,11 +67,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         PositionablePopupUtil util = p.getPopupUtility();
         element.setAttribute("size", ""+util.getFontSize());
         element.setAttribute("style", ""+util.getFontStyle());
-        if (!util.getForeground().equals(Color.black)) {
-            element.setAttribute("red", ""+util.getForeground().getRed());
-            element.setAttribute("green", ""+util.getForeground().getGreen());
-            element.setAttribute("blue", ""+util.getForeground().getBlue());
-        }
+
+        // always write the foreground (text) color
+        element.setAttribute("red", ""+util.getForeground().getRed());
+        element.setAttribute("green", ""+util.getForeground().getGreen());
+        element.setAttribute("blue", ""+util.getForeground().getBlue());
+
         if(p.isOpaque() || p.getSaveOpaque()){
             element.setAttribute("redBack", ""+util.getBackground().getRed());
             element.setAttribute("greenBack", ""+util.getBackground().getGreen());
@@ -132,7 +133,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         ToolTip tip = p.getTooltip();
         String txt = tip.getText();
         if (txt!=null) {
-            Element elem = new Element("toolTip").addContent(txt);
+            Element elem = new Element("tooltip").addContent(txt); // was written as "toolTip" 3.5.1 and before
             element.addContent(elem);
         }        
         if (p.getDegrees()!=0) {
@@ -416,7 +417,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             } catch (org.jdom.DataConversionException dce) {}
         }
         
-        Element elem = element.getChild("toolTip");
+        Element elem = element.getChild("tooltip");
+        if (elem == null) elem = element.getChild("toolTip"); // pre JMRI 3.5.2
         if (elem!=null) {
             ToolTip tip = l.getTooltip();
             if (tip!=null) {

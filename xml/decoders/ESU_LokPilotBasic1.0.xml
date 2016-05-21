@@ -48,31 +48,31 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="Only if CV29, Bit5=0 CV1">
+      <variable label="Short Address" CV="1" default="3" item="Short Address">
         <shortAddressVal/>
         <label>Short Address</label>
       </variable>
-      <variable label="Starting Voltage" CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-63. CV2">
+      <variable label="Starting Voltage" CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-63">
         <decVal min="1" max="63"/>
         <label>Starting Voltage</label>
       </variable>
-      <variable label="Acceleration" CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.5 gives the time from stop to maximum speed, range 1-63. CV3">
+      <variable label="Acceleration" CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.5 gives the time from stop to maximum speed, range 1-63">
         <decVal min="1" max="63"/>
         <label>Acceleration</label>
       </variable>
-      <variable label="Deceleration" CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 1-63. CV4">
+      <variable label="Deceleration" CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 1-63">
         <decVal min="1" max="64"/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Maximum Speed" CV="5" default="63" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-63. CV5">
+      <variable label="Maximum Speed" CV="5" default="63" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-63">
         <decVal min="1" max="63"/>
         <label>Maximum Speed</label>
       </variable>
-      <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only) CV7">
+      <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
         <label>Software Version Number</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only) CV8">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
@@ -81,7 +81,7 @@
         <label>Long Address</label>
         <comment>4 digit address (Range 0001-9999)</comment>
       </variable>
-      <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward CV29">
+      <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
           <enumChoice choice="Normal direction of travel">
             <choice>Normal direction of travel</choice>
@@ -92,7 +92,7 @@
         </enumVal>
         <label>Direction of Travel</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically CV29">
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -103,7 +103,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion) CV29">
+      <variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
         <enumVal>
           <enumChoice choice="Digital Operation Only">
             <choice>Digital Operation Only</choice>
@@ -114,7 +114,7 @@
         </enumVal>
         <label>Analogue mode</label>
       </variable>
-      <variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address CV29">
+      <variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
         <enumVal>
           <enumChoice choice="Short Address (CV1)">
             <choice>Short Address (CV1)</choice>
@@ -125,7 +125,7 @@
         </enumVal>
         <label>Selection of address</label>
       </variable>
-      <variable label="BEMF control" CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config" tooltip="CV49">
+      <variable label="BEMF control" CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -136,7 +136,7 @@
         </enumVal>
         <label>BEMF control</label>
       </variable>
-      <variable label="Brake mode control" CV="51" mask="XXXXXXXV" default="1" item="Dither option" tooltip="CV51">
+      <variable label="Brake mode control" CV="51" mask="XXXXXXXV" default="1" item="Dither option">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -147,15 +147,15 @@
         </enumVal>
         <label>Brake mode control</label>
       </variable>
-      <variable label="Load control parameter K" CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects, range 0-63. CV54">
+      <variable label="Load control parameter K" CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects, range 0-63">
         <decVal min="0" max="63"/>
         <label>Load control parameter K</label>
       </variable>
-      <variable label="Load control parameter I" CV="55" default="24" item="EMF Droop Config" tooltip="Determines the momentum of the motor, range 0-63. CV55">
+      <variable label="Load control parameter I" CV="55" default="24" item="EMF Droop Config" tooltip="Determines the momentum of the motor, range 0-63">
         <decVal min="0" max="63"/>
         <label>Load control parameter I</label>
       </variable>
-      <variable label="Lamp brightness" CV="63" default="7" item="Global lighting option 1" tooltip="Defines the brightness of the function outputs, range 0-7, CV63">
+      <variable label="Lamp brightness" CV="63" default="7" item="Global lighting option 1" tooltip="Defines the brightness of the function outputs, range 0-7">
         <decVal min="0" max="7"/>
         <label>Lamp brightness</label>
       </variable>

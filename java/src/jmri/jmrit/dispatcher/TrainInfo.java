@@ -44,7 +44,11 @@ public class TrainInfo {
 	String departureTimeHr = "08";
 	String departureTimeMin = "00";
     String delaySensor = null;
+    int delayedRestart = ActiveTrain.NODELAY;
+    String restartDelaySensor = null;
+    String delayedRestartTime = "0";
 	String trainType = "";
+    boolean terminateWhenDone = false;
 	
 	// instance variables for automatic operation
 	String speedFactor = ""+1.0f;
@@ -78,6 +82,8 @@ public class TrainInfo {
 	protected boolean getTrainFromTrains() {return trainFromTrains;}
 	protected void setTrainFromUser(boolean b) {trainFromUser = b;}
 	protected boolean getTrainFromUser() {return trainFromUser;}
+	protected void setTerminateWhenDone(boolean b) {terminateWhenDone = b;}
+	protected boolean getTerminateWhenDone() {return terminateWhenDone;}
 	protected void setPriority(String s) {priority = s;}
 	protected String getPriority() {return priority;}
 	protected void setRunAuto(boolean b) {autoRun = b;}
@@ -96,7 +102,14 @@ public class TrainInfo {
     protected String getDelaySensor() {return delaySensor; }
 	protected void setTrainType(String s) {trainType = s;}
 	protected String getTrainType() {return trainType;}
-	
+    
+    protected void setDelayedRestart(int ds) {delayedRestart = ds;}
+	protected int getDelayedRestart() {return delayedRestart;}
+    protected void setRestartDelaySensor(String sen) { restartDelaySensor = sen; }
+    protected String getRestartDelaySensor() {return restartDelaySensor; }
+    protected void setRestartDelayTime(String s) {delayedRestartTime = s;}
+	protected String getRestartDelayTime() {return delayedRestartTime;}
+    
 	/**
      * Access methods for automatic operation instance variables
      */

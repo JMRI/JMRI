@@ -181,16 +181,16 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 		CSSoftwareVersion.setText("" + tc.getCommandStation()
                                                  .getCommandStationSoftwareVersion());
                 int cs_type=tc.getCommandStation().getCommandStationType();
-                if(cs_type==0x00) {
+                if(cs_type==jmri.jmrix.lenz.XNetConstants.CS_TYPE_LZ100) {
 			CSType.setText("LZ100/LZV100");
 		}
-		else if(cs_type==0x01) {
+		else if(cs_type==jmri.jmrix.lenz.XNetConstants.CS_TYPE_LH200) {
 			CSType.setText("LH200");
 		     }
-		else if(cs_type==0x02) {
+		else if(cs_type==jmri.jmrix.lenz.XNetConstants.CS_TYPE_COMPACT) {
 			CSType.setText("Compact or Other");
 		     }
-		else if(cs_type==0x10) {
+		else if(cs_type==jmri.jmrix.lenz.XNetConstants.CS_TYPE_MULTIMAUS) {
 			CSType.setText("multiMAUS");
 		     }
         else CSType.setText("<unknown>");

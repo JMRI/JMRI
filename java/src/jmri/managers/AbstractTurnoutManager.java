@@ -82,7 +82,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 			if ((s.getUserName() == null) && (userName != null))
 				s.setUserName(userName);
             else if (userName != null) log.warn("Found turnout via system name ("+systemName
-                                    +") with non-null user name ("+userName+")");
+                    +") with non-null user name ("+s.getUserName()+"). Turnout \""+
+                    systemName+"("+userName+")\" cannot be used.");
             return s;
         }
 

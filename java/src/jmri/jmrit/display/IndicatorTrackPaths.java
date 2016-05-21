@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -25,7 +24,7 @@ import jmri.jmrit.logix.OBlock;
 	class IndicatorTrackPaths  {
 
 	protected ArrayList <String> _paths;      // list of paths that this icon displays
-	protected boolean _showTrain; 		// this track icon should display _loco when occupied
+	private boolean _showTrain; 		// this track icon should display _loco when occupied
 	private LocoLable _loco = null;
 
 	protected IndicatorTrackPaths() {
@@ -77,6 +76,7 @@ import jmri.jmrit.logix.OBlock;
 	protected boolean showTrain() {
         return _showTrain;
     }
+	
 	protected String setStatus(OBlock block, int state) {
         String pathName = block.getAllocatedPathName();
         String status;
@@ -97,8 +97,8 @@ import jmri.jmrit.logix.OBlock;
             }
         } else if ((state & OBlock.OCCUPIED)!=0) {
            	status = "OccupiedTrack";       	
-        } else if ((state & Sensor.UNKNOWN)!=0) {
-            status = "DontUseTrack";
+//        } else if ((state & Sensor.UNKNOWN)!=0) {
+//            status = "DontUseTrack";
         } else {
         	status = "ClearTrack";             	       	
         }
@@ -112,11 +112,13 @@ import jmri.jmrit.logix.OBlock;
         }    	
     }
 
-    protected void setLocoIcon(String trainName, Point pt, Dimension size, Editor ed) {
+    protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
         if (!_showTrain) {
+        	removeLocoIcon();
             return;
         }
-        if (trainName==null) {
+    	String trainName = (String)block.getValue();
+    	if (trainName==null) {
         	removeLocoIcon();
             return;
         }
@@ -125,17 +127,20 @@ import jmri.jmrit.logix.OBlock;
         }
         trainName = trainName.trim();
     	_loco = new LocoLable(ed);
-        FontMetrics metrics = ed.getFontMetrics(ed.getFont());
-    	int width = metrics.stringWidth(trainName);
-    	int height = metrics.getHeight();
+        Font font = block.getMarkerFont();
+        if (font==null) {
+            font = ed.getFont();
+        }
+    	int width = ed.getFontMetrics(font).stringWidth(trainName);
+    	int height = ed.getFontMetrics(ed.getFont()).getHeight();	// limit height to locoIcon height
     	_loco.setLineWidth(1);
-    	_loco.setLineColor(Color.RED);
-    	_loco.setAlpha(150);
-    	_loco.setFillColor(Color.WHITE);
-    	_loco.setText(trainName);
+    	_loco.setLineColor(Color.BLACK);
+    	_loco.setAlpha(255);
+    	_loco.setFillColor(block.getMarkerBackground());
+    	_loco.setBlock(block);
     	_loco.setWidth(width+height/2);
-    	_loco.setHeight(height);
-    	_loco.setCornerRadius(height/2);
+    	_loco.setHeight(height+2);
+    	_loco.setCornerRadius(height);
     	_loco.makeShape();
     	_loco.setDisplayLevel(Editor.MARKERS);
         _loco.updateSize();
@@ -144,7 +149,7 @@ import jmri.jmrit.logix.OBlock;
         _loco.setLocation(pt);
         ed.putItem(_loco);
     }
-
+    
     protected String setStatus(int state) {
     	String status;
         if (state==Sensor.ACTIVE) {
@@ -161,7 +166,7 @@ import jmri.jmrit.logix.OBlock;
     
     static class LocoLable extends PositionableRoundRect {
     	
-    	String _text;
+    	OBlock _block;
     	
         public LocoLable(Editor editor) {
         	super(editor);
@@ -171,22 +176,30 @@ import jmri.jmrit.logix.OBlock;
            	super(editor, shape);
         }
         
-        public void setText(String text) {
-        	_text = text;        	
+        public void setBlock(OBlock b) {
+        	_block = b;        	
         }
         
         public void paint(Graphics g) {
         	super.paint(g);
+        	String trainName = (String)_block.getValue();
+        	if (trainName==null) {
+        		return;
+        	}
             Graphics2D g2d = (Graphics2D)g;
-            g2d.setFont(getFont().deriveFont(Font.BOLD));
-        	int textWidth = getFontMetrics(getFont()).stringWidth(_text);
-        	int textHeight = getFontMetrics(getFont()).getHeight();
+            Font font = _block.getMarkerFont();
+            if (font==null) {
+            	font = getFont();
+            }
+        	g2d.setFont(font);
+        	int textWidth = getFontMetrics(font).stringWidth(trainName);
+        	int textHeight = getFontMetrics(font).getHeight();
     		int hOffset = Math.max((maxWidth()-textWidth)/2, 0);
-    		int vOffset = Math.max((maxHeight()-textHeight)/2, 0) + getFontMetrics(getFont()).getAscent();
-            g2d.setColor(Color.BLACK);
-            g2d.drawString(_text, hOffset, vOffset);
+    		int vOffset = Math.max((maxHeight()-textHeight)/2, 0) + getFontMetrics(font).getAscent();
+            g2d.setColor(_block.getMarkerForeground());
+            g2d.drawString(trainName, hOffset, vOffset);
         }
     }
-      
+     
     static Logger log = LoggerFactory.getLogger(IndicatorTrackPaths.class.getName());
  }

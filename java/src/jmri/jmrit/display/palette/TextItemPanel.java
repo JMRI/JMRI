@@ -33,8 +33,8 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */{
 //    JTextField _text;
     DecoratorPanel _decorator;
 	
-    public TextItemPanel(ItemPalette parentFrame, String  type, String family, Editor editor) {
-        super(parentFrame,  type, family, editor);
+    public TextItemPanel(ItemPalette parentFrame, String  type, Editor editor) {
+        super(parentFrame,  type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragText"));
     }
 

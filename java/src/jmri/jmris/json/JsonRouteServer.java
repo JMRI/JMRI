@@ -55,7 +55,7 @@ public class JsonRouteServer extends AbstractRouteServer {
     public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
         String name = data.path(NAME).asText();
         JsonUtil.setRoute(name, data);
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMemory(name)));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRoute(name)));
         this.addRouteToList(name);
     }
 }

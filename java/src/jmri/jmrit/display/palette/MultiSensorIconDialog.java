@@ -25,7 +25,7 @@ public class MultiSensorIconDialog extends IconDialog {
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
-    public MultiSensorIconDialog(String type, String family, ItemPanel parent, 
+    public MultiSensorIconDialog(String type, String family, FamilyItemPanel parent, 
     						HashMap <String, NamedIcon> iconMap) {
         super(type, family, parent, iconMap); 
     }

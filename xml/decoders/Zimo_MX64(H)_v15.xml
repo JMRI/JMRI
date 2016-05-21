@@ -1888,15 +1888,15 @@
   </pane>
   <pane name="Zimo Specific">
     <column>
-      <display item="Signal Dependent Acceleration" tooltip="CV 49"/>
-      <display item="Signal Dependent Deceleration" tooltip="CV 50"/>
-      <display item="Signal Dependent Reaction Time" tooltip="CV 59"/>
+      <display item="Signal Dependent Acceleration"/>
+      <display item="Signal Dependent Deceleration"/>
+      <display item="Signal Dependent Reaction Time"/>
     </column>
     <column>
-      <display item="Address Pulse" tooltip="CV 112, bit 2"/>
-      <display item="NMRA" tooltip="CV 112, bit 3"/>
-      <display item="PWM Frequency" tooltip="CV 112, bit 5"/>
-      <display item="Measurement 1/4" tooltip="CV 112, bit 7"/>
+      <display item="Address Pulse"/>
+      <display item="NMRA"/>
+      <display item="PWM Frequency"/>
+      <display item="Measurement 1/4"/>
     </column>
     <column>
       <label label="Signal Dependent Speed Limits">
@@ -1906,13 +1906,13 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="-1-" label="             -1-" tooltip="CV 51">
+      <display item="-1-" label="             -1-">
         <label>             -1-</label>
       </display>
-      <display item="-U-" tooltip="CV 52"/>
-      <display item="-2-" tooltip="CV 53"/>
-      <display item="-L-" tooltip="CV 54"/>
-      <display item="-3-" tooltip="CV 55"/>
+      <display item="-U-"/>
+      <display item="-2-"/>
+      <display item="-L-"/>
+      <display item="-3-"/>
     </column>
     <name>Zimo Specific</name>
   </pane>

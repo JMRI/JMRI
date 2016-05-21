@@ -39,7 +39,10 @@ abstract public class AbstractRouteServer {
     synchronized protected void addRouteToList(String routeName) {
         if (!routes.contains(routeName)) {
             routes.add(routeName);
-            InstanceManager.routeManagerInstance().getRoute(routeName).getTurnoutsAlgdSensor().addPropertyChangeListener(new RouteListener(routeName));
+            Sensor tas = InstanceManager.routeManagerInstance().getRoute(routeName).getTurnoutsAlgdSensor();
+            if (tas != null) {  //only add listener if there is a turnout-aligned sensor defined
+            	tas.addPropertyChangeListener(new RouteListener(routeName));
+            }
         }
     }
 

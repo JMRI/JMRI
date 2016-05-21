@@ -33,9 +33,12 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     }
 
     public void init() {
-        add(initTablePanel(_model, _editor));
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel);
+    	if (!_initialized) {
+        	add(initTablePanel(_model, _editor));
+        	initIconFamiliesPanel();
+            add(_iconFamilyPanel);    		
+        	_initialized = true;
+    	}
     }
 
     protected JPanel instructions() {
@@ -64,7 +67,6 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     */
     MemoryIcon      	_readMem;
     MemoryInputIcon 	_writeMem;
-    JPanel 				_writePanel;
     MemorySpinnerIcon   _spinMem;
     MemoryComboIcon 	_comboMem;
 
@@ -164,8 +166,6 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
 
         Integer nCols = (Integer)_spinner.getValue();
         _writeMem.setNumColumns(nCols.intValue());
-//        _writeMem.validate();
-        _writePanel.validate();
     }
 
     /**

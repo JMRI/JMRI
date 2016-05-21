@@ -32,31 +32,31 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" tooltip="CV1 sets the Short, Primary or 2-digit address [range 1-127]" item="Short Address" default="3">
+      <variable label="Short Address" CV="1" tooltip="sets the Short, Primary or 2-digit address [range 1-127]" item="Short Address" default="3">
         <shortAddressVal/>
         <label>Short Address</label>
       </variable>
-      <variable label="Start Voltage" CV="2" tooltip="CV2 sets the motor voltage at Speed Step 1 [range 0-32]" item="Vstart" default="0">
+      <variable label="Start Voltage" CV="2" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" item="Vstart" default="0">
         <decVal max="32"/>
         <label>Start Voltage</label>
       </variable>
-      <variable label="Acceleration" CV="3" tooltip="CV3 sets the acceleration rate (delay) [range 0-32]" item="Accel" default="0">
+      <variable label="Acceleration" CV="3" tooltip="sets the acceleration rate (delay) [range 0-32]" item="Accel" default="0">
         <decVal max="32"/>
         <label>Acceleration</label>
       </variable>
-      <variable label="Deceleration" CV="4" tooltip="CV4 sets the deceleration rate (delay) [range 0-32]" item="Decel" default="0">
+      <variable label="Deceleration" CV="4" tooltip="sets the deceleration rate (delay) [range 0-32]" item="Decel" default="0">
         <decVal max="32"/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Top Voltage" CV="5" tooltip="CV5 sets the motor voltage at the top Speed Step [range 0-32]" item="Vhigh" default="32">
+      <variable label="Top Voltage" CV="5" tooltip="sets the motor voltage at the top Speed Step [range 0-32]" item="Vhigh" default="32">
         <decVal max="32"/>
         <label>Top Voltage</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" tooltip="CV7 is the Decoder ID,  Read Only" item="Decoder Version">
+      <variable label="Version ID" CV="7" readOnly="yes" tooltip="is the Decoder ID,  Read Only" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="CV8 is the Manufacturer ID, MRC-143, Read Only" item="Manufacturer" default="143">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="is the Manufacturer ID, MRC-143, Read Only" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
@@ -64,7 +64,7 @@
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
-      <variable label="Advanced Consist Address" CV="19" tooltip="CV19 sets the Advanced Consist address, [range 0-127]" mask="XVVVVVVV" item="Consist Address" default="0">
+      <variable label="Advanced Consist Address" CV="19" tooltip="sets the Advanced Consist address, [range 0-127]" mask="XVVVVVVV" item="Consist Address" default="0">
         <decVal max="127"/>
         <label>Advanced Consist Address</label>
       </variable>
@@ -79,7 +79,7 @@
         </enumVal>
         <label>Locomotive Direction In Consist</label>
       </variable>
-      <variable label="Consist Function" CV="21" tooltip="CV21 selects the address accessory functions will respond to" mask="XXXXXXXV" item="Functions Respond To" default="0">
+      <variable label="Consist Function" CV="21" tooltip="selects the address accessory functions will respond to" mask="XXXXXXXV" item="Functions Respond To" default="0">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>

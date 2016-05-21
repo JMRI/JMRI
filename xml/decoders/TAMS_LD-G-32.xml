@@ -168,7 +168,7 @@
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Marklin Brake mode" CV="27" mask="XXVVXXXX" default="1" item="EMF Option 1" tooltip="Brake on DC detect CV27 Bits 4,5">
+      <variable label="Marklin Brake mode" CV="27" mask="XXVVXXXX" default="1" item="EMF Option 1" tooltip="Brake on DC detect">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -570,7 +570,7 @@
         </enumVal>
         <label>Main Motor Control</label>
       </variable>
-      <variable label="Shunting gear mode F1" CV="49" mask="XXXXXXVX" tooltip="CV49 Bit 1" item="F1 controls output 4">
+      <variable label="Shunting gear mode F1" CV="49" mask="XXXXXXVX" item="F1 controls output 4">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -581,7 +581,7 @@
         </enumVal>
         <label>Shunting gear mode F1</label>
       </variable>
-      <variable label="Shunting gear mode F2" CV="49" mask="XXXXXVXX" tooltip="CV49 Bit 2" item="F2 controls output 4">
+      <variable label="Shunting gear mode F2" CV="49" mask="XXXXXVXX" item="F2 controls output 4">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -592,7 +592,7 @@
         </enumVal>
         <label>Shunting gear mode F2</label>
       </variable>
-      <variable label="Shunting gear mode F3" CV="49" mask="XXXXVXXX" tooltip="CV49 Bit 3" item="F3 controls output 4">
+      <variable label="Shunting gear mode F3" CV="49" mask="XXXXVXXX" item="F3 controls output 4">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -603,7 +603,7 @@
         </enumVal>
         <label>Shunting gear mode F3</label>
       </variable>
-      <variable label="Shunting gear mode F4" CV="49" mask="XXXVXXXX" tooltip="CV49 Bit 4" item="F4 controls output 4">
+      <variable label="Shunting gear mode F4" CV="49" mask="XXXVXXXX" item="F4 controls output 4">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -614,7 +614,7 @@
         </enumVal>
         <label>Shunting gear mode F4</label>
       </variable>
-      <variable label="Enable Acceleration delay on F3" CV="49" mask="XXVXXXXX" tooltip="CV49 Bit 5" item="F4 controls output 3">
+      <variable label="Enable Acceleration delay on F3" CV="49" mask="XXVXXXXX" item="F4 controls output 3">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -625,7 +625,7 @@
         </enumVal>
         <label>Enable Acceleration delay on F3</label>
       </variable>
-      <variable label="Enable Acceleration delay on F4" CV="49" mask="XVXXXXXX" tooltip="CV49 Bit 6" item="F4 controls output 3">
+      <variable label="Enable Acceleration delay on F4" CV="49" mask="XVXXXXXX" item="F4 controls output 3">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -648,7 +648,7 @@
         <decVal max="255"/>
         <label>BEMF Kd</label>
       </variable>
-      <variable label="X1 output mode" item="Output 1 behavior" CV="53" mask="XXXXXXVV" default="1" tooltip="CV53 Bits 0-1">
+      <variable label="X1 output mode" item="Output 1 behavior" CV="53" mask="XXXXXXVV" default="1">
         <enumVal>
           <enumChoice choice="always on" value="0">
             <choice>always on</choice>
@@ -665,7 +665,7 @@
         </enumVal>
         <label>X1 output mode</label>
       </variable>
-      <variable label="X1 output blinking" item="Output 1 effect generated" CV="53" mask="VVVVVXXX" default="0" tooltip="CV53 Bits 3-7">
+      <variable label="X1 output blinking" item="Output 1 effect generated" CV="53" mask="VVVVVXXX" default="0">
         <enumVal>
           <enumChoice choice="NONE" value="0">
             <choice>NONE</choice>
@@ -680,7 +680,7 @@
         </enumVal>
         <label>X1 output blinking</label>
       </variable>
-      <variable label="X2 output mode" item="Output 2 behavior" CV="54" mask="XXXXXXVV" default="1" tooltip="CV54 Bits 0-1">
+      <variable label="X2 output mode" item="Output 2 behavior" CV="54" mask="XXXXXXVV" default="1">
         <enumVal>
           <enumChoice choice="always on" value="0">
             <choice>always on</choice>
@@ -697,7 +697,7 @@
         </enumVal>
         <label>X2 output mode</label>
       </variable>
-      <variable label="X2 output blinking" item="Output 2 effect generated" CV="54" mask="VVVVVXXX" default="0" tooltip="CV54 Bits 3-7">
+      <variable label="X2 output blinking" item="Output 2 effect generated" CV="54" mask="VVVVVXXX" default="0">
         <enumVal>
           <enumChoice choice="NONE" value="0">
             <choice>NONE</choice>
@@ -762,7 +762,7 @@
         <decVal min="1" max="126"/>
         <label>Start Diming at speed</label>
       </variable>
-      <variable label="X1 output is shunting light" item="Output 1 options" CV="115" mask="XXXXXXXV" default="0" tooltip="CV115 Bit 0">
+      <variable label="X1 output is shunting light" item="Output 1 options" CV="115" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="OFF" value="0">
             <choice>OFF</choice>
@@ -773,7 +773,7 @@
         </enumVal>
         <label>X1 output is shunting light</label>
       </variable>
-      <variable label="X2 output is shunting light" item="Output 2 options" CV="115" mask="XXXXXXVX" default="0" tooltip="CV115 Bit 1">
+      <variable label="X2 output is shunting light" item="Output 2 options" CV="115" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="OFF" value="0">
             <choice>OFF</choice>
@@ -833,11 +833,11 @@
         </enumVal>
         <label>Speed related Diming enabled for X2</label>
       </variable>
-      <variable label="alternative Dimming Intensity, Output X1 (0-15)" CV="118" mask="XXXXVVVV" default="15" item="Global lighting option 3" tooltip="Sets intensity of dimmed headlight (larger number = brighter light) Used when CV 116 and CV113">
+      <variable label="alternative Dimming Intensity, Output X1 (0-15)" CV="118" mask="XXXXVVVV" default="15" item="Global lighting option 3" tooltip="Sets intensity of dimmed headlight (larger number = brighter light) Used when CV 116 and">
         <decVal min="0" max="15"/>
         <label>alternative Dimming Intensity, Output X1 (0-15)</label>
       </variable>
-      <variable label="alternative Dimming Intensity, Output X2 (0-15)" CV="118" mask="VVVVXXXX" default="15" item="Global lighting option 4" tooltip="Sets intensity of dimmed headlight (larger number = brighter light) Used when CV 116 and CV113">
+      <variable label="alternative Dimming Intensity, Output X2 (0-15)" CV="118" mask="VVVVXXXX" default="15" item="Global lighting option 4" tooltip="Sets intensity of dimmed headlight (larger number = brighter light) Used when CV 116 and">
         <decVal min="0" max="15"/>
         <label>alternative Dimming Intensity, Output X2 (0-15)</label>
       </variable>

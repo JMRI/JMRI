@@ -29,7 +29,8 @@ public class Car extends RollingStock {
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
 	protected int _wait = 0;
-	protected int _order = 0; // interchange service ordering
+	protected int _order = 0; // track service ordering
+	protected int _blocking = 0;
 
 	protected Location _rweDestination = null; // return when empty destination
 	protected Track _rweDestTrack = null; // return when empty track
@@ -50,6 +51,8 @@ public class Car extends RollingStock {
 	public static final String FINAL_DESTINATION_CHANGED_PROPERTY = "Car final destination changed"; // NOI18N
 	public static final String FINAL_DESTINATION_TRACK_CHANGED_PROPERTY = "Car final destination track changed"; // NOI18N
 	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Car return when empty changed"; // NOI18N
+	public static final String SCHEDULE_ID_CHANGED_PROPERTY = "car schedule id changed"; // NOI18N
+	public static final String KERNEL_NAME_CHANGED_PROPERTY = "kernel name changed"; // NOI18N
 
 	public Car() {
 
@@ -59,6 +62,19 @@ public class Car extends RollingStock {
 		super(road, number);
 		log.debug("New car " + road + " " + number);
 		addPropertyChangeListeners();
+	}
+	
+	public Car copy() {
+		Car car = new Car();
+		car.setBuilt(_built);
+		car.setColor(_color);
+		car.setLength(_length);
+		car.setLoadName(_load);
+		car.setNumber(_number);
+		car.setOwner(_owner);
+		car.setRoadName(_road);
+		car.setTypeName(_type);	
+		return car;
 	}
 
 	public void setHazardous(boolean hazardous) {
@@ -104,6 +120,16 @@ public class Car extends RollingStock {
 	public String getLoadName() {
 		return _load;
 	}
+	
+	@Deprecated // saved for scripts
+	public void setLoad(String load) {
+		setLoadName(load);
+	}
+	
+	@Deprecated // saved for scripts
+	public String getLoad() {
+		return getLoadName();
+	}
 
 	/**
 	 * Gets the car load's priority.
@@ -133,7 +159,7 @@ public class Car extends RollingStock {
 		String old = _scheduleId;
 		_scheduleId = id;
 		if (!old.equals(id))
-			firePropertyChange("car schedule id changed", old, id); // NOI18N
+			firePropertyChange(SCHEDULE_ID_CHANGED_PROPERTY, old, id);
 	}
 
 	public String getScheduleId() {
@@ -213,6 +239,17 @@ public class Car extends RollingStock {
 	public int getOrder() {
 		return _order;
 	}
+	
+	public void setBlocking(int number) {
+		int old = _blocking;
+		_blocking = number;
+		if (old != number)
+			firePropertyChange("car blocking changed", old, number); // NOI18N
+	}
+
+	public int getBlocking() {
+		return _blocking;
+	}
 
 	public void setNextWait(int count) {
 		int old = _nextWait;
@@ -242,6 +279,11 @@ public class Car extends RollingStock {
 		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
 			firePropertyChange(FINAL_DESTINATION_CHANGED_PROPERTY, old, destination);
 	}
+	
+	@Deprecated // available for old scripts
+	public void setNextDestination(Location destination) {
+		setFinalDestination(destination);
+	}
 
 	public Location getFinalDestination() {
 		return _finalDestination;
@@ -269,6 +311,11 @@ public class Car extends RollingStock {
 			}
 			firePropertyChange(FINAL_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
 		}
+	}
+	
+	@Deprecated // available for old scripts
+	public void setNextDestinationTrack(Track track) {
+		setFinalDestinationTrack(track);
 	}
 
 	public Track getFinalDestinationTrack() {
@@ -392,7 +439,7 @@ public class Car extends RollingStock {
 			newName = _kernel.getName();
 		}
 		if (!old.equals(newName))
-			firePropertyChange("kernel name changed", old, newName); // NOI18N
+			firePropertyChange(KERNEL_NAME_CHANGED_PROPERTY, old, newName); // NOI18N
 	}
 
 	public Kernel getKernel() {
@@ -499,7 +546,7 @@ public class Car extends RollingStock {
 		// update wait count
 		setWait(getNextWait());
 		setNextWait(0);
-		if (destTrack != null && destTrack.getLocType().equals(Track.SPUR)) {
+		if (destTrack != null && destTrack.getTrackType().equals(Track.SPUR)) {
 			if (!getNextLoadName().equals("")) {
 				setLoadName(getNextLoadName());
 				setNextLoadName("");
@@ -515,7 +562,7 @@ public class Car extends RollingStock {
 				setLoadEmpty();
 		}
 		// update load optionally when car reaches staging
-		if (destTrack != null && destTrack.getLocType().equals(Track.STAGING)) {
+		if (destTrack != null && destTrack.getTrackType().equals(Track.STAGING)) {
 			if (destTrack.isLoadSwapEnabled()) {
 				if (getLoadName().equals(carLoads.getDefaultEmptyName())) {
 					setLoadName(carLoads.getDefaultLoadName());
@@ -523,16 +570,17 @@ public class Car extends RollingStock {
 					setLoadEmpty();
 				}
 			}
-			if (destTrack.isSetLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
+			if (destTrack.isLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
 				setLoadEmpty();
 			}
-			// empty car if it has a schedule load
-			if (destTrack.isRemoveLoadsEnabled() && !getLoadName().equals(carLoads.getDefaultEmptyName())
+			// empty car if it has a custom load
+			if (destTrack.isRemoveCustomLoadsEnabled() && !getLoadName().equals(carLoads.getDefaultEmptyName())
 					&& !getLoadName().equals(carLoads.getDefaultLoadName())) {
-				setLoadEmpty();
 				// remove this car's final destination if it has one
 				setFinalDestination(null);
 				setFinalDestinationTrack(null);
+				// note that RWE sets the car's final destination
+				setLoadEmpty();
 			}
 		}
 	}
@@ -549,7 +597,7 @@ public class Car extends RollingStock {
 		}
 	}
 
-	protected void reset() {
+	public void reset() {
 		setScheduleId(getPreviousScheduleId());	// revert to previous
 		setNextLoadName("");
 		setNextWait(0);
@@ -652,6 +700,9 @@ public class Car extends RollingStock {
 		if ((a = e.getAttribute(Xml.ORDER)) != null) {
 			_order = Integer.parseInt(a.getValue());
 		}
+		if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
+			_blocking = Integer.parseInt(a.getValue());
+		}
 		addPropertyChangeListeners();
 	}
 
@@ -721,6 +772,9 @@ public class Car extends RollingStock {
 		}
 
 		e.setAttribute(Xml.ORDER, Integer.toString(getOrder()));
+		
+		if (getBlocking() != 0)
+			e.setAttribute(Xml.BLOCKING, Integer.toString(getBlocking()));
 
 		return e;
 	}

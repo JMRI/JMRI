@@ -107,6 +107,7 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
      * but maybe later.
      * @return always false for now
      */
+    @Override
     public boolean getCanRead() {
         return false;
     }

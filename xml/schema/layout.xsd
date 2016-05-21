@@ -143,6 +143,7 @@ signals - obsolete, EMPTY, never used
                 <xs:attribute name="class" type="classType" use="required"/>
                 <xs:attribute name="verifyBeforeWrite" type="yesNoType" default="no"/>
                 <xs:attribute name="showEmptyPanes" type="yesNoType" default="yes" />
+                <xs:attribute name="showCvNumbers" type="yesNoType" default="no" />
                 <xs:attribute name="defaultFile" type="xs:string" default="Basic.xml"/>
             </xs:complexType>
         </xs:element>

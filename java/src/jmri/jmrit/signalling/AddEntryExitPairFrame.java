@@ -4,10 +4,8 @@ package jmri.jmrit.signalling;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;

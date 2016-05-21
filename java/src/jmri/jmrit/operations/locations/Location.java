@@ -226,7 +226,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		Enumeration<Track> en = _trackHashTable.elements();
 		while (en.hasMoreElements()) {
 			track = en.nextElement();
-			if (track.getLocType().equals(trackType))
+			if (track.getTrackType().equals(trackType))
 				return true;
 		}
 		return false;
@@ -316,7 +316,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * was printed or CSV generated.
 	 * 
 	 */
-	public void setStatus() {
+	public void setStatusModified() {
 		if (getStatus().equals(PRINTED) || getStatus().equals(CSV_GENERATED) || !Setup.isSwitchListRealTime())
 			setStatus(MODIFIED);
 	}
@@ -349,6 +349,10 @@ public class Location implements java.beans.PropertyChangeListener {
 			setDirtyAndFirePropertyChange("SwitchListState", old, state); // NOI18N
 	}
 
+	/**
+	 * Returns the state of the switch list for this location.
+	 * @return Location.SW_CREATE, Location.SW_PRINTED or Location.SW_APPEND
+	 */
 	public int getSwitchListState() {
 		return _switchListState;
 	}
@@ -544,7 +548,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		if (track == null) {
 			_IdNumber++;
 			String id = _id + "s" + Integer.toString(_IdNumber);
-			log.debug("adding new " + type + " to " + getName() + " id: " + id);
+			log.debug("adding new " + type + " to " + getName() + " track name: "+ name +" id: " + id);
 			track = new Track(id, name, type, this);
 			register(track);
 		}
@@ -591,7 +595,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 *            track's name
 	 * @param type
 	 *            track type
-	 * @return track location
+	 * @return track at location
 	 */
 
 	public Track getTrackByName(String name, String type) {
@@ -602,7 +606,7 @@ public class Location implements java.beans.PropertyChangeListener {
 			if (type == null) {
 				if (track.getName().equals(name))
 					return track;
-			} else if (track.getName().equals(name) && track.getLocType().equals(type))
+			} else if (track.getName().equals(name) && track.getTrackType().equals(type))
 				return track;
 		}
 		return null;
@@ -658,13 +662,13 @@ public class Location implements java.beans.PropertyChangeListener {
 				trackOut = getTrackById(out.get(j));
 				String outLocName = trackOut.getName();
 				if (locName.compareToIgnoreCase(outLocName) < 0
-						&& (type != null && track.getLocType().equals(type) || type == null)) {
+						&& (type != null && track.getTrackType().equals(type) || type == null)) {
 					out.add(j, sortList.get(i));
 					locAdded = true;
 					break;
 				}
 			}
-			if (!locAdded && (type != null && track.getLocType().equals(type) || type == null)) {
+			if (!locAdded && (type != null && track.getTrackType().equals(type) || type == null)) {
 				out.add(sortList.get(i));
 			}
 		}
@@ -695,13 +699,13 @@ public class Location implements java.beans.PropertyChangeListener {
 			for (int j = 0; j < moveList.size(); j++) {
 				trackOut = getTrackById(moveList.get(j));
 				int outLocMoves = trackOut.getMoves();
-				if (moves < outLocMoves && (type != null && track.getLocType().equals(type) || type == null)) {
+				if (moves < outLocMoves && (type != null && track.getTrackType().equals(type) || type == null)) {
 					moveList.add(j, sortList.get(i));
 					locAdded = true;
 					break;
 				}
 			}
-			if (!locAdded && (type != null && track.getLocType().equals(type) || type == null)) {
+			if (!locAdded && (type != null && track.getTrackType().equals(type) || type == null)) {
 				moveList.add(sortList.get(i));
 			}
 		}
@@ -778,7 +782,7 @@ public class Location implements java.beans.PropertyChangeListener {
 			} else {
 				status = rs.testLocation(this, track);
 			}
-			if (status.equals(Track.OKAY) && (!destination || !track.getLocType().equals(Track.STAGING))) {
+			if (status.equals(Track.OKAY) && (!destination || !track.getTrackType().equals(Track.STAGING))) {
 				box.setSelectedItem(track);
 				log.debug("Available track: " + track.getName() + " for location: " + getName());
 			} else {
@@ -880,6 +884,66 @@ public class Location implements java.beans.PropertyChangeListener {
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = getTrackById(tracks.get(i));
 			if (track.getIgnoreUsedLengthPercentage() > 0)
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Used to determine if there are any load restrictions at this location.
+	 * 
+	 * @return True if there are load restrictions
+	 */
+	public boolean hasLoadRestrications() {
+		List<String> tracks = getTrackIdsByIdList();
+		for (int i = 0; i < tracks.size(); i++) {
+			Track track = getTrackById(tracks.get(i));
+			if (!track.getLoadOption().equals(Track.ALL_LOADS))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Used to determine if there are any load ship restrictions at this location.
+	 * 
+	 * @return True if there are load ship restrictions
+	 */
+	public boolean hasShipLoadRestrications() {
+		List<String> tracks = getTrackIdsByIdList();
+		for (int i = 0; i < tracks.size(); i++) {
+			Track track = getTrackById(tracks.get(i));
+			if (!track.getShipLoadOption().equals(Track.ALL_LOADS))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Used to determine if there are any road restrictions at this location.
+	 * 
+	 * @return True if there are road restrictions
+	 */
+	public boolean hasRoadRestrications() {
+		List<String> tracks = getTrackIdsByIdList();
+		for (int i = 0; i < tracks.size(); i++) {
+			Track track = getTrackById(tracks.get(i));
+			if (!track.getRoadOption().equals(Track.ALL_ROADS))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Used to determine if there are any road restrictions at this location.
+	 * 
+	 * @return True if there are road restrictions
+	 */
+	public boolean hasDestinationRestrications() {
+		List<String> tracks = getTrackIdsByIdList();
+		for (int i = 0; i < tracks.size(); i++) {
+			Track track = getTrackById(tracks.get(i));
+			if (!track.getDestinationOption().equals(Track.ALL_DESTINATIONS))
 				return true;
 		}
 		return false;

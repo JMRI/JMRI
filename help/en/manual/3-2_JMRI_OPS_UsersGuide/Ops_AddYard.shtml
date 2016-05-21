@@ -40,9 +40,9 @@ of the Yard location, note most of the window is greyed out until the location i
   <strong>Yards</strong>, then press the
   <input type="submit" name="button" id="button" value="Add Location">
 at the bottom of the window.</p>
-<p align="left"><img src="images/Ops_addLocationYard03.png" width="766" height="545" alt="yard"></p>
+<p align="left"><img src="images/Ops_addLocationYard03.png" width="772" height="640" alt="add Yard"></p>
 <p align="left">Opens the <strong>Add Location</strong> window with options activated.</p>
-<p align="left"><img src="images/Ops_AddLocationYard.png" width="763" height="600" alt="yard"></p>
+<p align="left"><img src="images/Ops_AddLocationYard.png" width="772" height="640" alt="add Yard"></p>
 <p>A <strong>classification yard </strong>(US and Canada) or <strong>marshalling yard</strong> (UK and Canada)(including <strong>hump yards</strong>) is a railroad yard found at some freight stations, used to separate railroad cars on to one of several tracks. First the cars are taken to a track, sometimes called a <strong>lead</strong> or a <strong>drill</strong>. From there the cars are sent through a series of switches called a <strong>ladder</strong> onto the classification tracks. Larger yards tend to put the lead on an artificially built hill called a <strong>hump</strong> to use the force of gravity to propel the cars through the ladder.</p>
 <p>Freight trains that consist of isolated cars must be made into  trains and divided according to their destinations. Thus the cars must  be shunted several times along their route in contrast to a unit train, which carries, for example, automobiles from the plant to a port or coal from a mine to the power plant.  This shunting is done partly at the starting and final destinations and  partly (for long-distance-hauling) in classification yards.</p>
 <p align="left">A yard will contain several tracks that must be defined. </p>
@@ -125,7 +125,7 @@ and the <strong>Add Yard Track</strong> window opens.</p>
   </tr>
 </table>
 <p>The <strong>Add Location</strong> window shows one Yard track at the North Yard.</p>
-<p><img src="images/Ops_AddSidingTrack03.png" width="773" height="354" alt="track"></p>
+<p><img src="images/Ops_AddSidingTrack03.png" width="777" height="466" alt="add siding"></p>
 <p>Let's add some more tracks to the yard.</p>
 <p><img src="images/Ops_AddSidingTrack04.png" width="772" height="408" alt="add track"></p>
 <p>If you want to change information for any track entry, press 

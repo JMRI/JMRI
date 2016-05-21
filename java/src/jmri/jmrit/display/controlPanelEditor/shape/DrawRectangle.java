@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -126,8 +127,15 @@ public class DrawRectangle extends DrawFrame{
      */
     protected void updateFigure(PositionableShape p) {
     	PositionableRectangle pos = (PositionableRectangle)p;
+    	try {
+        	p._width = Integer.parseInt(_widthText.getText());
+    		p._height = Integer.parseInt(_heightText.getText());
+    		pos.makeShape();
+    	} catch (NumberFormatException nfe) {
+    		JOptionPane.showMessageDialog(this, nfe,
+    				Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+    	}
 		setPositionableParams(pos);
-//		pos.makeShape();
     }
    
     static Logger log = LoggerFactory.getLogger(DrawRectangle.class.getName());

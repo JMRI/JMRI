@@ -70,6 +70,9 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
                 && !inLine.startsWith("  <paneleditor class="))   // outfile writes class for backward compatibility
                     Assert.assertEquals(inLine, outLine);
         }
+        
+        inFileStream.close();
+        outFileStream.close();
     }
 
     public void testLoadStoreOld() throws Exception {

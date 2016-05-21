@@ -27,7 +27,7 @@ JMRI:  Powerline Controllers
 </h2>
 
 This page talks about how to configure JMRI to talk
-to powerline controllers, e.g. X10. 
+to powerline controllers, e.g. X10, Insteon. 
 
 <p>
 See also the associated
@@ -56,6 +56,9 @@ is set to "THROWN", a command is sent to the remote device to
 set it to "BRIGHT".  This is an immediate, full-power on.  When the Turnout
 is set to "CLOSED", the remote device is sent a command to go "OFF".  Depending
 on the X10 hardware, this may be either an immediate off, or be slowly dimmed. 
+</p>
+</div>
+</div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

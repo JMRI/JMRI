@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -16,6 +17,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.davidflanagan.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -432,7 +434,7 @@ public class PrintLocationsAction extends AbstractAction {
 			Track track = location.getTrackById(tracks.get(k));
 			String name = track.getName();
 			try {
-				String s = TAB + name + getDirection(track.getTrainDirections());
+				String s = TAB + name + getDirection(location.getTrainDirections() & track.getTrainDirections());
 				writer.write(s);
 				writer.write(getTrackTypes(location, track));
 				writer.write(getTrackRoads(track));
@@ -441,6 +443,7 @@ public class PrintLocationsAction extends AbstractAction {
 				writer.write(getCarOrder(track));
 				writer.write(getSetOutTrains(track));
 				writer.write(getPickUpTrains(track));
+				writer.write(getDestinations(track));
 				writer.write(getSchedule(track));
 			} catch (IOException we) {
 				log.error("Error printing PrintLocationAction: " + we);
@@ -527,12 +530,12 @@ public class PrintLocationsAction extends AbstractAction {
 	}
 
 	private String getTrackRoads(Track track) {
-		if (track.getRoadOption().equals(Track.ALLROADS)) {
+		if (track.getRoadOption().equals(Track.ALL_ROADS)) {
 			return TAB + TAB + Bundle.getMessage("AcceptsAllRoads") + NEW_LINE;
 		}
 		
 		String op = Bundle.getMessage("RoadsServicedTrack");
-		if (track.getRoadOption().equals(Track.EXCLUDEROADS))
+		if (track.getRoadOption().equals(Track.EXCLUDE_ROADS))
 			op = Bundle.getMessage("ExcludeRoadsTrack");
 
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
@@ -553,12 +556,12 @@ public class PrintLocationsAction extends AbstractAction {
 	}
 
 	private String getTrackLoads(Track track) {
-		if (track.getLoadOption().equals(Track.ALLLOADS)) {
+		if (track.getLoadOption().equals(Track.ALL_LOADS)) {
 			return TAB + TAB + Bundle.getMessage("AcceptsAllLoads") + NEW_LINE;
 		}
 		
 		String op = Bundle.getMessage("LoadsServicedTrack");
-		if (track.getLoadOption().equals(Track.EXCLUDELOADS))
+		if (track.getLoadOption().equals(Track.EXCLUDE_LOADS))
 			op = Bundle.getMessage("ExcludeLoadsTrack");
 
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
@@ -580,13 +583,13 @@ public class PrintLocationsAction extends AbstractAction {
 	
 	private String getTrackShipLoads(Track track) {
 		// only staging has the ship load control
-		if (!track.getLocType().equals(Track.STAGING))
+		if (!track.getTrackType().equals(Track.STAGING))
 			return "";
-		if (track.getShipLoadOption().equals(Track.ALLLOADS)) {
+		if (track.getShipLoadOption().equals(Track.ALL_LOADS)) {
 			return TAB + TAB + Bundle.getMessage("ShipsAllLoads") + NEW_LINE;
 		}
 		String op = Bundle.getMessage("LoadsShippedTrack");
-		if (track.getShipLoadOption().equals(Track.EXCLUDELOADS))
+		if (track.getShipLoadOption().equals(Track.EXCLUDE_LOADS))
 			op = Bundle.getMessage("ExcludeLoadsShippedTrack");
 		
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
@@ -608,7 +611,7 @@ public class PrintLocationsAction extends AbstractAction {
 
 	private String getCarOrder(Track track) {
 		// only yards and interchanges have the car order option
-		if (track.getLocType().equals(Track.SPUR) || track.getLocType().equals(Track.STAGING)
+		if (track.getTrackType().equals(Track.SPUR) || track.getTrackType().equals(Track.STAGING)
 				|| track.getServiceOrder().equals(Track.NORMAL))
 			return "";
 		if (track.getServiceOrder().equals(Track.FIFO))
@@ -716,10 +719,38 @@ public class PrintLocationsAction extends AbstractAction {
 		buf.append(NEW_LINE);
 		return buf.toString();
 	}
+	
+	private String getDestinations(Track track) {
+		if (track.getDestinationOption().equals(Track.ALL_DESTINATIONS))
+			return "";
+		String op = Bundle.getMessage("AcceptOnly") + " " + track.getDestinationListSize() + " "
+				+ Bundle.getMessage("Destinations") + ":";
+		if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS))
+			op = Bundle.getMessage("Exclude") + " " + (LocationManager.instance().getLocationsByIdList().size() - track.getDestinationListSize()) + " "
+					+ Bundle.getMessage("Destinations") + ":";
+		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
+		String[] destIds = track.getDestinationIds();
+		int charCount = 0;
+		for (int i=0; i<destIds.length; i++) {
+			Location location = manager.getLocationById(destIds[i]);
+			if (location == null)
+				continue;
+			charCount += location.getName().length() + 2;
+			if (charCount > characters) {
+				buf.append(NEW_LINE + TAB + TAB);
+				charCount = location.getName().length() + 2;
+			}
+			buf.append(location.getName() + ", ");
+		}
+		if (buf.length() > 2)
+			buf.setLength(buf.length() - 2); // remove trailing separators
+		buf.append(NEW_LINE);
+		return buf.toString();
+	}
 
 	private String getSchedule(Track track) {
 		// only spurs have schedules
-		if (!track.getLocType().equals(Track.SPUR) || track.getSchedule() == null)
+		if (!track.getTrackType().equals(Track.SPUR) || track.getSchedule() == null)
 			return "";
 		StringBuffer buf = new StringBuffer(TAB
 				+ TAB

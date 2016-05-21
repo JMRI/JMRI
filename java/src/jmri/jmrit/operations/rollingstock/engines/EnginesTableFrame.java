@@ -196,8 +196,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true); // NOI18N
 
-		pack();
-		setVisible(true);
+		initMinimumSize();
 
 		// create ShutDownTasks
 		createShutDownTask();
@@ -280,7 +279,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			f = new EngineEditFrame();
 			f.initComponents();
 			f.setTitle(Bundle.getMessage("TitleEngineAdd"));
-			f.setVisible(true);
 		}
 		if (ae.getSource() == saveButton) {
 			if (enginesTable.isEditing()) {

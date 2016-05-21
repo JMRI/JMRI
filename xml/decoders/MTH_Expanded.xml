@@ -13,10 +13,12 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20120228"/>
+  <version author="Michael Mosher" version="1" lastUpdated="20131122"/>
   <!-- Version 1 - new file -->
+  <!-- Version 2 - bug fix -->
   <decoder>
     <family name="MTH HO Expanded PS3" mfg="Mikes Train House">
-      <model model="MTH HO Expanded PS3" lowVersionID="1"/>
+      <model model="MTH HO Expanded PS3" lowVersionID="1" highVersionID="2" />
     </family>
     <programming direct="yes" paged="yes" register="no" ops="yes"/>
     <variables>
@@ -33,7 +35,7 @@
         <decVal max="255"/>
         <label>PWM Deceleration Rate</label>
       </variable>
-      <variable label="PWM Max voltage" CV="2" item="Vhigh" tooltip="PWM mode only">
+      <variable label="PWM Max voltage" CV="5" item="Vhigh" tooltip="PWM mode only">
         <decVal/>
         <label>PWM max voltage</label>
       </variable>
@@ -80,8 +82,8 @@
       </variable>
       <variable label="PWM Speed Table Selection" CV="25" item="Speed Table Selection" default="0" tooltip="PWM mode only">
         <enumVal>
-          <enumChoice choice="User Defined Speed Table">
-            <choice>User Defined Speed Table</choice>
+          <enumChoice choice="Default">
+            <choice>Default</choice>
           </enumChoice>
           <enumChoice choice="User Defined Speed Table">
             <choice>User Defined Speed Table</choice>

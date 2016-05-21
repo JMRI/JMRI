@@ -1,4 +1,4 @@
-//TrainsScheduleEditAction.java
+//TrainsScheduleEditFrame.java
 
 package jmri.jmrit.operations.trains;
 
@@ -11,7 +11,12 @@ import javax.swing.*;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
-
+/**
+ * Used to edit train timetable.
+ * @author Daniel Boudreau Copyright (C)
+ * @version $Revision: 23749 $
+ *
+ */
 public class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 	
 	// text box

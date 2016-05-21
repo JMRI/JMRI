@@ -46,6 +46,7 @@ public class PositionableShape extends PositionableJComponent
     private int	_degrees;
     protected AffineTransform _transform;
     private NamedBeanHandle<Sensor> _controlSensor = null;
+    private boolean _show = true;
     // GUI resizing params
     private Rectangle[] _handles;
     protected int _hitIndex = -1;
@@ -58,16 +59,18 @@ public class PositionableShape extends PositionableJComponent
 	static final int RIGHT	=1;
 	static final int BOTTOM	=2;
 	static final int LEFT	=3;    
-    static final int SIZE = 10;
+    static final int SIZE = 8;
     
     public PositionableShape(Editor editor) {
     	super(editor);
     	setName("Graphic");
+    	setShowTooltip(false);
     }
 
     public PositionableShape(Editor editor, Shape shape) {
        	this(editor);
         _shape = shape;
+    	setShowTooltip(false);
     }
     
     public PathIterator getPathIterator(AffineTransform at) {
@@ -159,8 +162,11 @@ public class PositionableShape extends PositionableJComponent
 
     public void paint(Graphics g) {
 //		if (log.isDebugEnabled())
-//			log.debug("PositionalShape Paint: " +this.getClass().getName()+" Hidden= "+isHidden());        
+/*			log.debug("PositionalShape Paint: " +this.getClass().getName()+" Hidden= "+isHidden());        
     	if (!getEditor().isEditable() && isHidden()) {
+    		return;
+    	}*/
+    	if (!getEditor().isEditable() && !_show) {
     		return;
     	}
         Graphics2D g2d = (Graphics2D)g;
@@ -190,7 +196,7 @@ public class PositionableShape extends PositionableJComponent
     }
     
     protected void paintHandles(Graphics2D g2d) {
-        if (_handles!=null) {
+        if (_editor.isEditable() && _handles!=null) {
             g2d.setColor(Editor.HIGHLIGHT_COLOR);
             g2d.setStroke(new java.awt.BasicStroke(2.0f));
             Rectangle r = getBounds();
@@ -296,6 +302,7 @@ public class PositionableShape extends PositionableJComponent
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
+                    removeHandles();
                     _editFrame.closingEvent();
                 }
         });
@@ -317,8 +324,9 @@ public class PositionableShape extends PositionableJComponent
 					+ evt.getNewValue()+" from "+evt.getSource().getClass().getName());
         
         if (evt.getPropertyName().equals("KnownState")) {
-            setHidden(((Integer)evt.getNewValue()).intValue()==Sensor.INACTIVE);
-            setEditable(true);
+        	//setHidden(((Integer)evt.getNewValue()).intValue()==Sensor.INACTIVE);
+//            setEditable(true);
+        	_show = ((Integer)evt.getNewValue()).intValue()==Sensor.ACTIVE;
             Rectangle bd = getBounds();
 //            repaint(0, 0, 0, bd.width+2*_lineWidth, bd.height+2*_lineWidth);
             repaint(0, -_lineWidth, -_lineWidth, bd.width+2*_lineWidth, bd.height+2*_lineWidth);
@@ -337,7 +345,8 @@ public class PositionableShape extends PositionableJComponent
         if (InstanceManager.sensorManagerInstance()!=null) {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
-           	 setControlSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));                
+            	setControlSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
+            	setHidden(false);
             } else {
                 log.error("PositionalShape Control Sensor '"+pName+"' not available, shape won't see changes");
             }
@@ -348,12 +357,13 @@ public class PositionableShape extends PositionableJComponent
     public void setControlSensorHandle(NamedBeanHandle<Sensor> senHandle) {
         if (_controlSensor != null) {
        	 getControlSensor().removePropertyChangeListener(this);
+       	_show = true;
         }
         _controlSensor = senHandle;
         if (_controlSensor != null) {
             Sensor sensor = getControlSensor();
             sensor.addPropertyChangeListener(this, _controlSensor.getName(), "PositionalShape");
-            setHidden(sensor.getKnownState()==Sensor.INACTIVE);
+            _show = (sensor.getKnownState()==Sensor.ACTIVE);
         } 
     }
     public Sensor getControlSensor() {
@@ -369,12 +379,14 @@ public class PositionableShape extends PositionableJComponent
        	 getControlSensor().removePropertyChangeListener(this);
         }
         _controlSensor = null;
+        _show = true;
     }
     
     protected void removeHandles() {
-      	 _handles = null;
-       	 invalidate();
-    }
+    	_handles = null;
+//    	invalidate();
+ 		repaint();
+   }
     
     protected void drawHandles() {
     	_handles = new Rectangle[4];
@@ -399,6 +411,9 @@ public class PositionableShape extends PositionableJComponent
     
     public void doMousePressed(MouseEvent event) {
     	_hitIndex=-1;
+    	if (!_editor.isEditable()) {
+    		return;
+    	}
     	if (_handles!=null) {   		
       	   	 _lastX = event.getX();
        	   	 _lastY = event.getY();
@@ -420,7 +435,7 @@ public class PositionableShape extends PositionableJComponent
     }
    
     protected boolean doHandleMove(MouseEvent event) {
-    	if (_hitIndex>=0) {
+    	if (_hitIndex>=0 && _editor.isEditable()) {
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;
         	switch (_hitIndex) {

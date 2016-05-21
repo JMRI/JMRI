@@ -470,6 +470,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * figure out from who and copy their value.
      */
 	public void goingActive() {
+        if(getState()==OCCUPIED)
+            return;
         // index through the paths, counting
         int count = 0;
         Path next = null;
@@ -477,7 +479,6 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         int currPathCnt = paths.size();
         Path pList[] = new Path[currPathCnt];
         boolean isSet[] = new boolean[currPathCnt];
-        Sensor pSensor[] = new Sensor[currPathCnt];
         boolean isActive[] = new boolean[currPathCnt];
         int pDir[] = new int[currPathCnt];
         int pFromDir[] = new int[currPathCnt];
@@ -486,20 +487,18 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             isSet[i] = pList[i].checkPathSet();
             Block b = pList[i].getBlock();
             if (b != null) {
-                pSensor[i] = b.getSensor();
-                if (pSensor[i] != null) {
-                    isActive[i] = pSensor[i].getState() == Sensor.ACTIVE;
-                } else {
-                    isActive[i] = false;
+                if(b.getState()== OCCUPIED){
+                    isActive[i] = true;
                 }
+                else 
+                    isActive[i] = false;
                 pDir[i] = b.getDirection();
             } else {
-                pSensor[i] = null;
                 isActive[i] = false;
                 pDir[i] = -1;
             }
             pFromDir[i] = pList[i].getFromBlockDirection();
-            if (isSet[i] && pSensor[i] != null && isActive[i]) {
+            if (isSet[i] && isActive[i]) {
                 count++;
                 next = pList[i];
             }
@@ -527,7 +526,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             next = null;
             count = 0;
             for (int i = 0; i < currPathCnt; i++) {
-                if (isSet[i] && pSensor[i] != null && isActive[i] && (pDir[i] == pFromDir[i])) {
+                if (isSet[i] && isActive[i] && (pDir[i] == pFromDir[i])) {
                     count++;
                     next = pList[i];
                 } 
@@ -563,7 +562,6 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         int currPathCnt = paths.size();
         Path pList[] = new Path[currPathCnt];
         boolean isSet[] = new boolean[currPathCnt];
-        Sensor pSensor[] = new Sensor[currPathCnt];
         boolean isActive[] = new boolean[currPathCnt];
         int pDir[] = new int[currPathCnt];
         int pFromDir[] = new int[currPathCnt];
@@ -572,20 +570,18 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             isSet[i] = pList[i].checkPathSet();
             Block b = pList[i].getBlock();
             if (b != null) {
-                pSensor[i] = b.getSensor();
-                if (pSensor[i] != null) {
-                    isActive[i] = pSensor[i].getState() == Sensor.ACTIVE;
-                } else {
-                    isActive[i] = false;
+                if(b.getState()== OCCUPIED){
+                    isActive[i] = true;
                 }
+                else 
+                    isActive[i] = false;
                 pDir[i] = b.getDirection();
             } else {
-                pSensor[i] = null;
                 isActive[i] = false;
                 pDir[i] = -1;
             }
             pFromDir[i] = pList[i].getFromBlockDirection();
-            if (isSet[i] && pSensor[i] != null && isActive[i]) {
+            if (isSet[i] && isActive[i]) {
                 count++;
                 next = pList[i];
             }
@@ -600,7 +596,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             next = null;
             count = 0;
             for (int i = 0; i < currPathCnt; i++) {
-                if (isSet[i] && pSensor[i] != null && isActive[i] && (pDir[i] == pFromDir[i])) {
+                if (isSet[i] && isActive[i] && (pDir[i] == pFromDir[i])) {
                     count++;
                     next = pList[i];
                 } 

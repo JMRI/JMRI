@@ -9,8 +9,6 @@ import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 
-import java.io.*;
-
 import jmri.util.zeroconf.ZeroConfClient;
 
 /**
@@ -37,9 +35,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
                                                             // to send a message
                                                             // Must be < 60s.
 
-	private DataOutputStream pout=null; // for output to other classes
-    	private DataInputStream pin = null; // for input from other classes
-
         public LIUSBEthernetAdapter(){
 	    super();
             if(log.isDebugEnabled()) log.debug("Constructor Called");
@@ -53,20 +48,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     public void connect() throws Exception {
         super.connect();
         if(log.isDebugEnabled()) log.debug("openPort called");
-        // open the port in XPressNet mode
-        try {
-            pout=getOutputStream();
-            PipedOutputStream tempPipeO=new PipedOutputStream();
-            pin = new DataInputStream(new PipedInputStream(tempPipeO));
-        }
-        catch (java.io.IOException e) {
-              log.error("init (pipe): Exception: "+e.toString());
-        }
-        catch (Exception ex) {
-            log.error("init (connect): Exception: "+ex.toString());
-        }
         keepAliveTimer();
-        //return null; // normal operation
     }
 
         /**
@@ -79,7 +61,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         }
    
         @Override
-    public boolean status() {return (pout!=null && pin!=null);}
+    public boolean status() {return (opened);}
     
 	/**
 	 * set up all of the other objects to operate with a LIUSB Ethernet 

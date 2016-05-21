@@ -19,6 +19,10 @@ public class Source {
     JMenu entryExitPopUp = null;
     JMenuItem clear = null;
     JMenuItem cancel = null;
+    JMenuItem editCancel = null;
+    JMenuItem editClear = null;
+    JMenuItem editOneClick = null;
+    JMenuItem oneClick = null;
 
     NamedBean sourceObject = null;
     NamedBean sourceSignal = null;
@@ -66,15 +70,15 @@ public class Source {
     void createPopUpMenu(){
         if(entryExitPopUp!=null)
             return;
-        entryExitPopUp = new JMenu("Entry Exit");
-        JMenuItem editClear = new JMenuItem("Clear Route");
+        entryExitPopUp = new JMenu(Bundle.getMessage("MenuEntryExit"));
+        editClear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));
         editClear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancelClearInterlockFromSource(EntryExitPairs.CLEARROUTE);
             }
         });
         entryExitPopUp.add(editClear);
-        JMenuItem editCancel = new JMenuItem("Cancel Route");
+        editCancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));
         editCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 cancelClearInterlockFromSource(EntryExitPairs.CANCELROUTE);
@@ -82,23 +86,39 @@ public class Source {
         });
         entryExitPopUp.add(editCancel);
         
-        clear = new JMenuItem("Clear Route");
+        editOneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));
+        editOneClick.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                new ManuallySetRoute(pd);
+            }
+        });
+        entryExitPopUp.add(editOneClick);
+        
+        clear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));
         clear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancelClearInterlockFromSource(EntryExitPairs.CLEARROUTE);
             }
         });
 
-        cancel = new JMenuItem("Cancel Route");
+        cancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 cancelClearInterlockFromSource(EntryExitPairs.CANCELROUTE);
             }
         });
         
+        oneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));
+        oneClick.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                new ManuallySetRoute(pd);
+            }
+        });
+        
         pd.getPanel().addToPopUpMenu(pd.getSensor(), entryExitPopUp, jmri.jmrit.display.Editor.EDITPOPUPONLY);
         pd.getPanel().addToPopUpMenu(pd.getSensor(), clear, jmri.jmrit.display.Editor.VIEWPOPUPONLY);
         pd.getPanel().addToPopUpMenu(pd.getSensor(), cancel, jmri.jmrit.display.Editor.VIEWPOPUPONLY);
+        pd.getPanel().addToPopUpMenu(pd.getSensor(), oneClick, jmri.jmrit.display.Editor.VIEWPOPUPONLY);
         setMenuEnabled(false);
     }
     
@@ -111,14 +131,18 @@ public class Source {
     }
     
     void setMenuEnabled(boolean boo){
-        if (entryExitPopUp!=null)
-            entryExitPopUp.setEnabled(boo);
         if (clear!=null)
             clear.setEnabled(boo);
         if (cancel!=null)
             cancel.setEnabled(boo);
-        
-    
+        if (editClear!=null)
+            editClear.setEnabled(boo);
+        if (editCancel!=null)
+            editCancel.setEnabled(boo);
+        if (oneClick!=null)
+            oneClick.setEnabled(!boo);
+        if (editOneClick!=null)
+            editOneClick.setEnabled(!boo);
     }
     
     PointDetails getPoint(){

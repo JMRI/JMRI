@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.trains.TrainManifestText;
+import jmri.jmrit.operations.trains.TrainSwitchListText;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -67,6 +69,10 @@ public class OperationsSetupXml extends OperationsXml {
      
 	        // add top-level elements	        
 	        root.addContent(Setup.store());
+	        // add manifest text strings
+	        root.addContent(TrainManifestText.store());
+	        // add switch list text strings
+	        root.addContent(TrainSwitchListText.store());
 	        // add control elements
 	        root.addContent(Control.store());
 
@@ -88,7 +94,11 @@ public class OperationsSetupXml extends OperationsXml {
 			log.debug(name + " file could not be read");
 			return;
 		}
-		Setup.load(root);		
+		Setup.load(root);
+		// load manifest text strings
+		TrainManifestText.load(root);
+		// load switch list text strings
+		TrainSwitchListText.load(root);
         // load control settings
         Control.load(root);
 	}

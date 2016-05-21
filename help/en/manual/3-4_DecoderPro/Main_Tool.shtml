@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Tool.shtml 18146 2011-08-09 11:51:16Z dat7719 $ -->
+
+
+
+
+
+<title>DecoderPro Tool Menu</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>DecoderPro® Main Window</h1>
+<h1>Tools Menu </h1>
+
+<div align="right">
+<p><a href="Main_Edit.shtml">Previous | </a><a href="Main_Roster.shtml">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<h3><strong>Programmers</strong> <img src="images/arrow.gif" alt="arrow" height="9" width="20"></h3>
+<ul>
+  <li>    <strong>Single CV Programmer</strong>  </li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">Opens the <a href="Programmer_SingleCV.shtml">Simple Programmer </a></p>
+</blockquote>
+<ul>
+  <li>    <strong>Service Mode Programmer  </strong></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">	Opens the <a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a>.</p>
+</blockquote>
+<ul>
+  <li><strong>Ops-Mode Programmer</strong></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">Opens the <a href="Programmer_OpsMode.shtml">Ops-Mode Programmer. </a></p>
+</blockquote>
+<ul>
+  <li><strong>Multi-Decoder Control</strong></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">Opens the <a href="Programmer_Multi_Decoder.shtml">Multi-Decoder Control</a> window.</p>
+</blockquote>
+<h3><strong>Tables </strong><img src="images/arrow.gif" alt="arrow" height="9" width="20"> (advanced users, beyond the scope of this manual)</h3>
+<blockquote>
+  <p>A	series of tables that are used with PanelPro Panels to automate your layout.</p>
+</blockquote>
+<h3><strong>Throttles</strong> <img src="images/arrow.gif" alt="arrow" height="9" width="20"></h3>
+<ul>
+  <li><strong>New Throttle</strong>...</li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">Opens a <a href="Main_Throttle.shtml">Throttle </a>window (more than one throttle may be in use at a time)</p>
+</blockquote>
+<ul>
+  <li><strong>Throttles List Window</strong></li>
+  <ul><p>Opens the Local JMRI throttles Window,<br>
+</p></ul>
+  <table align="center" border="1" cellpadding="2" cellspacing="1" width="50%">
+    <tbody><tr>
+      <td rowspan="4" width="29%"><ul>
+        <div align="center"><img src="images/Main_Tool02.png" alt="local JMRI throttles" height="207" width="313"></div>
+      </ul></td>
+      <td width="6%"><div align="center"><img src="images/Main_Tool_Throttle01.png" alt="icon1" height="44" width="45"></div></td>
+      <td width="65%">Opens a new Thottle</td>
+    </tr>
+    <tr>
+      <td><div align="center"><img src="images/Main_Tool_Throttle02.png" alt="icon" height="44" width="49"></div></td>
+      <td>Emergency stop for all  Throttles under JMRI control</td>
+    </tr>
+    <tr>
+      <td><div align="center"><img src="images/Main_Tool_Throttle03.png" alt="icon3" height="43" width="41"></div></td>
+      <td>Track power control</td>
+    </tr>
+    <tr>
+      <td><div align="center"><img src="images/Main_Tool_Throttle04.png" alt="icon4" height="43" width="42"></div></td>
+      <td>Opens the Throttles preferences window</td>
+    </tr>
+  </tbody></table>
+  <ul><p>Use Throttles preferences window to set the desired preferences.</p></ul>
+  <p align="center"><img src="images/Main_Tool01.png" alt="throttle prefernxces" height="432" width="755"></p><p style="text-align: left;"><img src="images/separator.png" alt="sep" height="4" width="340"></p>
+  <li><strong>Save Throttle Layout...</strong></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">Displays the  <strong>Save</strong>
+dialog box to save your throttle as an XML file to the default folder,
+in Windows XP: C:\Document and Settings\userName,\JMRI,\throttles. This
+can be changed in the save dialog box.</p>
+</blockquote>
+<ul>
+  <li><strong>Open Throttle Layout...</strong></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">Displays  the <strong>Open</strong>
+dialog box allowing you to select a throttle file that has been saved
+in the default folder above, or the location of your choice.</p></blockquote><p style="margin-left: 40px;"><img src="images/separator.png" alt="sep" height="4" width="340"></p>
+<ul>
+  <li><strong>Save as Default Throttle Layout</strong></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">Saves your current Thottle as the default layout	</p>
+</blockquote>
+<ul>
+  <li><strong>Load Default Throttle Layout</strong></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">Loads the Throttle that you saved as the default</p></blockquote><div style="margin-left: 40px;"><img src="images/separator.png" alt="sep" height="4" width="340"></div>
+<ul>
+  <li><strong>Start WiThrottle</strong></li>
+</ul>
+<blockquote>
+  <p><img src="images/Main_Throttle_Wi.png" alt="Wi Throttle" height="271" width="331"></p>
+</blockquote>
+<h3><a name="Consist"></a><span class="style1"><a href="Main_ConsistControl.shtml">Consisting Tool..</a>.</span></h3>
+<blockquote>
+  <p>Opens the Consist Control window.</p>
+</blockquote>
+<h3><strong><a name="Clocks"></a>Clocks </strong><img src="images/arrow.gif" alt="arrow" height="9" width="20"></h3>
+<ul style="font-weight: bold;">
+  <li><a href="Main_FastClockSetup.shtml">Setup fast Clock...</a></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;">Opens Fast Clock Setup window</p>
+</blockquote>
+<ul style="font-weight: bold;">
+  <li>Nixie Clocks</li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;"><img src="images/Main_FastClock_02.png" alt="nixie clock" border="4" height="79" width="129"></p>
+</blockquote>
+<ul>
+  <li><strong>LCD Clock</strong></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;"><img src="images/Main_FastClock_03.png" alt="LCD clock" border="4" height="74" width="128"></p>
+</blockquote>
+<ul>
+  <li><strong>Analog Clock</strong></li>
+</ul>
+<blockquote>
+  <p style="margin-left: 40px;"><img src="images/Main_FastClock_04.png" alt="Analog clock" border="4" height="145" width="152"></p>
+</blockquote>
+<h3><strong>Power Control...</strong></h3>
+<p>Opens the Power Control Panel, which allows you to turn the power to layout ON/OFF</p>
+<blockquote>
+  <p><img src="images/main_Tool_PowerControl.png" alt="power control" height="111" width="211"></p>
+</blockquote>
+<h3><strong><a name="Turnout"></a><a href="Main_TurnoutControl.shtml">Turnout Control...</a></strong></h3>
+<h3><strong>Simple Signal Logic </strong>(advanced users, beyond the scope of this manual)</h3>
+<h3><strong>Sensor Groups.</strong>... (advanced users, beyond the scope of this manual)</h3>
+<h3><strong><a name="Speedometer"></a><a href="Main_Speeometer.shtml">Speedometer...</a></strong></h3>
+<h3><strong><a name="Light"></a><a href="Main_lightControl.shtml">Light Control...</a></strong></h3>
+<h3><strong>Dispatcher</strong>... (advanced users, beyond the scope of this manual)</h3>
+<p><img src="images/separator.png" alt="sep" height="4" width="340"><br>
+</p>
+<h3><strong>Send DCC Packet...</strong> (not covered in this manual)</h3>
+<p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
+<h3><strong>USS CTC Tool</strong> <img src="images/arrow.gif" alt="arrow" height="9" width="20">(advanced users, beyond the scope of this manual)</h3>
+<p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
+<h3><a name="Ops"></a><strong>Operations<img src="images/arrow.gif" alt="arrow" height="9" width="20"></strong> (See the JMRI® Operations User's Guide )</h3>
+<ul>
+  <li><strong>Settings</strong></li>
+  <li><strong>Locations</strong></li>
+  <li><strong>Cars</strong></li>
+  <li><strong>Locomotives</strong></li>
+  <li><strong>Routes</strong></li>
+  <li><strong>Trains</strong></li>
+</ul>
+<h3>Start JMRI Web Server</h3>
+<blockquote>
+  <p>Starts a Web Server on your computer. You can access the Index.shtml page using the URL displayed in the dialog.</p>
+  <p>The <a href="http://jmri.org/help/en/html/web/index.shtml">JMRI  web server </a>is
+meant to be a quick and easy way for model railroaders, not Masters of
+the Web, to get a web connection to JMRI up and running.</p>
+</blockquote>
+<p align="center"><img src="images/Main_Debug03.png" alt="mini server" height="70" width="428"></p>
+<hr>
+
+<div align="right">
+<p><a href="Main_Roster.shtml"></a><a href="Main_Edit.shtml">Previous | </a><a href="Main_Roster.shtml">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div></body></html>

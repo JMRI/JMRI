@@ -182,7 +182,7 @@ public class WarrantManagerXml //extends XmlFile
 
             Warrant warrant = manager.createNewWarrant(sysName, userName);
             if (warrant==null) {
-                log.error("Warrant already exists with names: sysName= "+sysName+" userName= "+userName);
+                log.info("Warrant \""+sysName+"("+userName+")\" previously loaded. This version not loaded.");
                 continue;
             }
             List<Element> orders = elem.getChildren("blockOrder");

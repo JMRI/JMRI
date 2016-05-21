@@ -40,6 +40,8 @@ public class OptionFrame extends OperationsFrame {
 	// check boxes
 	JCheckBox routerCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRouting"));
 	JCheckBox routerYardCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRoutingYard"));
+	JCheckBox routerAllTrainsBox = new JCheckBox(Bundle.getMessage("AllTrains"));
+	
 	JCheckBox valueCheckBox = new JCheckBox(Bundle.getMessage("EnableValue"));
 	JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
 	JCheckBox carLoggerCheckBox = new JCheckBox(Bundle.getMessage("EnableCarLogging"));
@@ -86,6 +88,7 @@ public class OptionFrame extends OperationsFrame {
 		// router
 		routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
 		routerYardCheckBox.setSelected(Setup.isCarRoutingViaYardsEnabled());
+		routerAllTrainsBox.setSelected(!Setup.isOnlyActiveTrainsEnabled());
 		// logging options
 		carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
 		engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
@@ -154,6 +157,7 @@ public class OptionFrame extends OperationsFrame {
 		pRouter.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutRouterOptions")));
 		addItemLeft(pRouter, routerCheckBox, 1, 0);
 		addItemLeft(pRouter, routerYardCheckBox, 1, 1);
+		addItemLeft(pRouter, routerAllTrainsBox, 1, 2);
 
 		// Logger panel
 		JPanel pLogger = new JPanel();
@@ -205,12 +209,7 @@ public class OptionFrame extends OperationsFrame {
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true); // NOI18N
 
-		pack();
-		if (getWidth() < 450)
-			setSize(450, getHeight());
-		if (getHeight() < Control.panelHeight)
-			setSize(getWidth(), Control.panelHeight);
-		setVisible(true);
+		initMinimumSize();
 	}
 
 	private void setBuildOption() {
@@ -248,6 +247,7 @@ public class OptionFrame extends OperationsFrame {
 			// Car routing enabled?
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			Setup.setCarRoutingViaYardsEnabled(routerYardCheckBox.isSelected());
+			Setup.setOnlyActiveTrainsEnabled(!routerAllTrainsBox.isSelected());
 			// Options
 			TrainManager.instance().setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
 			Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());

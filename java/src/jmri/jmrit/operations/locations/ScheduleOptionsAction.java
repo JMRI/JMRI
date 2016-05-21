@@ -4,6 +4,8 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.*;
 
@@ -11,6 +13,7 @@ import javax.swing.*;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -89,8 +92,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
 
 		setTitle(Bundle.getMessage("MenuItemScheduleOptions"));
 		pack();
-		if (getWidth() < 300 || getHeight() < 200)
-			setSize(300, 200);
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
 		setVisible(true);
 	}
 

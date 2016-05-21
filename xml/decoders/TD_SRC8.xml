@@ -25,11 +25,11 @@
         <decVal/>
         <label>Base Address CV1</label>
       </variable>
-      <variable label="Output Addresses" CV="1" mask="XVVVVVVV" default="1" tooltip="This address will be within a range as determined by CV1">
+      <variable label="Output Addresses" CV="1" mask="XVVVVVVV" default="1" tooltip="This address will be within a range as determined by">
         <splitVal highCV="100" factor="8" offset="-7"/>
         <label>Output Addresses</label>
       </variable>
-      <variable label="through" CV="1" mask="XVVVVVVV" default="8" tooltip="This address will be within a range as determined by CV1">
+      <variable label="through" CV="1" mask="XVVVVVVV" default="8" tooltip="This address will be within a range as determined by">
         <splitVal highCV="100" factor="8" offset="0"/>
         <label>through</label>
       </variable>

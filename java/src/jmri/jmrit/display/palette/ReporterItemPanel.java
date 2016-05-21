@@ -3,6 +3,7 @@ package jmri.jmrit.display.palette;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
@@ -30,18 +31,16 @@ public class ReporterItemPanel extends TableItemPanel {
 
     public void init() {
     	if (!_initialized) {
-            add(initTablePanel(_model, _editor));        // NORTH Panel
-            initIconFamiliesPanel();
-            add(_iconFamilyPanel);
-         	}
+            super.init();
+    	}
    }
 
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
-        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("PickRowReporter")));
+        blurb.add(new JLabel(Bundle.getMessage("DragReporter")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -54,8 +53,9 @@ public class ReporterItemPanel extends TableItemPanel {
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
+        _iconPanel = new JPanel(new FlowLayout());
+        _iconFamilyPanel.add(_iconPanel);
         makeDndIconPanel(null, null);
-
         _iconFamilyPanel.add(_dragIconPanel);
     }
 
@@ -83,6 +83,10 @@ public class ReporterItemPanel extends TableItemPanel {
          _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
      }
 
+    protected JPanel makeItemButtonPanel() {
+    	return new JPanel();
+    }
+    
     /**
     *  ListSelectionListener action from table
     */

@@ -246,8 +246,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		box.addItem("");
 		List<String> schs = getSchedulesByNameList();
 		for (int i = 0; i < schs.size(); i++) {
-			String id = schs.get(i);
-			box.addItem(getScheduleById(id));
+			box.addItem(getScheduleById(schs.get(i)));
 		}
 	}
 

@@ -10,8 +10,8 @@
         </label>
         <row>
           <column>
-            <display item="Acceleration" tooltip="CV 3"/>
-            <display item="Deceleration" tooltip="CV 4"/>
+            <display item="Acceleration"/>
+            <display item="Deceleration"/>
             <label label=" ">
               <label> </label>
             </label>
@@ -20,8 +20,8 @@
             <label>      </label>
           </label>
           <column>
-            <display item="Acceleration Trim" tooltip="CV 23 bits 0-6"/>
-            <display item="Acceleration Trim Sign" tooltip="CV 23 bit 7"/>
+            <display item="Acceleration Trim"/>
+            <display item="Acceleration Trim Sign"/>
             <label label=" ">
               <label> </label>
             </label>
@@ -30,8 +30,8 @@
             <label>    </label>
           </label>
           <column>
-            <display item="Deceleration Trim" tooltip="CV 24 bit 0-6"/>
-            <display item="Deceleration Trim Sign" tooltip="CV 24 bit 7"/>
+            <display item="Deceleration Trim"/>
+            <display item="Deceleration Trim Sign"/>
             <label label=" ">
               <label> </label>
             </label>
@@ -82,7 +82,7 @@
     <separator/>
     <row>
       <column>
-        <display item="Motor Frequency and EMF sample Rate" tooltip="CV 9"/>
+        <display item="Motor Frequency and EMF sample Rate"/>
       </column>
       <label label="    ">
         <label>    </label>
@@ -125,8 +125,8 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Exponential Acceleration" tooltip="CV 121"/>
-        <display item="Exponential Deceleration" tooltip="CV 122"/>
+        <display item="Exponential Acceleration"/>
+        <display item="Exponential Deceleration"/>
         <label label=" ">
           <label> </label>
         </label>
@@ -167,7 +167,7 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Adaptive Acceleration/Deceleration" tooltip="CV 123"/>
+        <display item="Adaptive Acceleration/Deceleration"/>
         <label label=" ">
           <label> </label>
         </label>

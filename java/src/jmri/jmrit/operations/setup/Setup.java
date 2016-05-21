@@ -118,6 +118,7 @@ public class Setup {
 	public static final String DESTINATION = Bundle.getMessage("Destination");
 	public static final String DEST_TRACK = Bundle.getMessage("DestAndTrack");
 	public static final String FINAL_DEST = Bundle.getMessage("FinalDestination");
+	public static final String FINAL_DEST_TRACK = Bundle.getMessage("FinalDestAndTrack");
 	public static final String LOCATION = Bundle.getMessage("Location");
 	public static final String CONSIST = Bundle.getMessage("Consist");
 	public static final String KERNEL = Bundle.getMessage("Kernel");
@@ -204,8 +205,9 @@ public class Setup {
 	private static String iconLocalColor ="";
 	private static String iconTerminateColor ="";
 	
-	private static boolean tab = false;						// when true, tab out manifest and switch lists
+	private static boolean tab = false;						// when true, tab out manifest and switch lists	
 	private static int tabCharLength = Control.max_len_string_attibute;
+	private static boolean twoColumnFormat = false;			// when true, use two columns for work at a location
 	private static boolean manifestEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean switchListSameManifest = true;	// when true switch list format is the same as the manifest
 	private static boolean manifestTruncated = false;		// when true, manifest is truncated if switch list is available
@@ -233,6 +235,7 @@ public class Setup {
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
 	private static boolean forwardToYardEnabled = true;	//when true forward car to yard if track is full
 	private static boolean onlyActiveTrains	= false;	//when true only active trains are used for routing
+	private static boolean checkCarDestination = false;	//when true check car's track for valid destination
 	
 	private static boolean carLogger = false;			//when true car logger is enabled
 	private static boolean engineLogger = false;		//when true engine logger is enabled
@@ -377,6 +380,14 @@ public class Setup {
 	
 	public static void setOnlyActiveTrainsEnabled(boolean enabled){
 		onlyActiveTrains = enabled;
+	}
+	
+	public static boolean isCheckCarDestinationEnabled(){
+		return checkCarDestination;
+	}
+	
+	public static void setCheckCarDestinationEnabled(boolean enabled){
+		checkCarDestination = enabled;
 	}
 	
 	public static boolean isBuildAggressive(){
@@ -847,6 +858,14 @@ public class Setup {
 		tabCharLength = length;
 	}
 	
+	public static boolean isTwoColumnFormatEnabled(){
+		return twoColumnFormat;
+	}
+	
+	public static void setTwoColumnFormatEnabled(boolean enable){
+		twoColumnFormat = enable;
+	}
+	
 	public static boolean isCarLoggerEnabled(){
 		return carLogger;
 	}
@@ -914,6 +933,19 @@ public class Setup {
 		localPrefix = prefix;
 	}
 	
+	public static int getManifestPrefixLength() {
+		int maxLength = getPickupEnginePrefix().length();
+		if (getDropEnginePrefix().length() > maxLength)
+			maxLength = getDropEnginePrefix().length();
+		if (getPickupCarPrefix().length() > maxLength)
+			maxLength = getPickupCarPrefix().length();
+		if (getDropCarPrefix().length() > maxLength)
+			maxLength = getDropCarPrefix().length();
+		if (getLocalPrefix().length() > maxLength)
+			maxLength = getLocalPrefix().length();
+		return maxLength;
+	}
+	
 	public static String getSwitchListPickupCarPrefix(){
 		if (isSwitchListFormatSameAsManifest())
 			return pickupCarPrefix;
@@ -945,6 +977,15 @@ public class Setup {
 	
 	public static void setSwitchListLocalPrefix(String prefix){
 		switchListLocalPrefix = prefix;
+	}
+	
+	public static int getSwitchListPrefixLength() {
+		int maxLength = getSwitchListPickupCarPrefix().length();
+		if (getSwitchListDropCarPrefix().length() > maxLength)
+			maxLength = getSwitchListDropCarPrefix().length();
+		if (getSwitchListLocalPrefix().length() > maxLength)
+			maxLength = getSwitchListLocalPrefix().length();
+		return maxLength;
 	}
 	
 	public static String[] getPickupEngineMessageFormat(){
@@ -1338,6 +1379,7 @@ public class Setup {
 		box.addItem(DESTINATION);
 		box.addItem(DEST_TRACK);
 		box.addItem(FINAL_DEST);
+		box.addItem(FINAL_DEST_TRACK);
 		box.addItem(COMMENT);
 		box.addItem(DROP_COMMENT);
 		box.addItem(PICKUP_COMMENT);
@@ -1569,6 +1611,9 @@ public class Setup {
     	values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
     	
+    	e.addContent(values = new Element(Xml.COLUMN_FORMAT));
+    	values.setAttribute(Xml.TWO_COLUMNS, isTwoColumnFormatEnabled()?Xml.TRUE:Xml.FALSE);
+    	
         if (!getManifestLogoURL().equals("")){
         	values = new Element(Xml.MANIFEST_LOGO);
         	values.setAttribute(Xml.NAME, getManifestLogoURL());
@@ -1605,6 +1650,7 @@ public class Setup {
     	values.setAttribute(Xml.CAR_ROUTING_VIA_STAGING, isCarRoutingViaStagingEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.FORWARD_TO_YARD, isForwardToYardEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.ONLY_ACTIVE_TRAINS, isOnlyActiveTrainsEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.CHECK_CAR_DESTINATION, isCheckCarDestinationEnabled()?Xml.TRUE:Xml.FALSE);
     	
     	// new format for logger options
     	e.addContent(values = new Element(Xml.LOGGER));
@@ -2014,7 +2060,14 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("manifest hazardousMsg: "+message);
         		setHazardousMsg(message);
         	}
-        }     
+        } 
+        if ((operations.getChild(Xml.COLUMN_FORMAT) != null)){ 
+        	if((a = operations.getChild(Xml.COLUMN_FORMAT).getAttribute(Xml.TWO_COLUMNS))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("two columns: "+enable);
+        		setTwoColumnFormatEnabled(enable.equals(Xml.TRUE));
+        	}
+        }
        	// get manifest logo
         if ((operations.getChild(Xml.MANIFEST_LOGO) != null)){ 
         	if((a = operations.getChild(Xml.MANIFEST_LOGO).getAttribute(Xml.NAME))!= null){
@@ -2131,6 +2184,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("onlyActiveTrains: "+enable);
         		setOnlyActiveTrainsEnabled(enable.equals(Xml.TRUE));
+        	}
+        	if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.CHECK_CAR_DESTINATION))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("checkCarDestination: "+enable);
+        		setCheckCarDestinationEnabled(enable.equals(Xml.TRUE));
         	}
         } else if (operations.getChild(Xml.SETTINGS) != null) {
          	// the next four items are for backwards compatibility

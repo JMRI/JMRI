@@ -12,6 +12,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
+import java.util.Hashtable;
 
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -179,6 +180,35 @@ public class DecVariableValue extends VariableValue
             sliders.add(b);
             reps.add(b);
             updateRepresentation(b);
+            return b;
+        }
+        else if (format.equals("hslider-percent")) {
+            DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
+            b.setOrientation(JSlider.HORIZONTAL);
+            if (_maxVal > 20) {
+                b.setMajorTickSpacing(_maxVal/2);
+                b.setMinorTickSpacing((_maxVal+1)/8);
+            } else {
+                b.setMajorTickSpacing(5);
+                b.setMinorTickSpacing(1); // because JSlider does not SnapToValue
+                b.setSnapToTicks(true);   // like it should, we fake it here
+            }
+            b.setSize(b.getWidth(),28);
+            Hashtable<Integer,JLabel> labelTable = new Hashtable<Integer,JLabel>();
+            labelTable.put( Integer.valueOf( 0 ), new JLabel("0%") );
+            if ( _maxVal == 63 ) {   // this if for the QSI mute level, not very universal, needs work
+                labelTable.put( Integer.valueOf( _maxVal/2 ), new JLabel("25%") );
+                labelTable.put( Integer.valueOf( _maxVal ), new JLabel("50%") );
+            } else {
+                labelTable.put( Integer.valueOf( _maxVal/2 ), new JLabel("50%") );
+                labelTable.put( Integer.valueOf( _maxVal ), new JLabel("100%") );
+            }
+            b.setLabelTable( labelTable );
+            b.setPaintTicks(true);
+            b.setPaintLabels(true);
+            sliders.add(b);
+            updateRepresentation(b);
+            if (!getAvailable()) b.setVisible(false);
             return b;
         }
         else {

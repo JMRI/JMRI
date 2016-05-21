@@ -2917,7 +2917,7 @@ public class LogixTableAction extends AbstractTableAction {
                                 Conditional.ITEM_TO_CLOCK_ACTION, actionType)+1);
                 if (actionType==Conditional.ACTION_SET_FAST_CLOCK_TIME) {
                     int time = _curAction.getActionData();
-                    _shortActionString.setText(formatTime(time / 60, time - ((time / 60) * 60)));
+                    _longActionString.setText(formatTime(time / 60, time - ((time / 60) * 60)));
                     _actionNameField.setText("");
                 }
                 break;
@@ -4122,7 +4122,7 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ITEM_TYPE_CLOCK:
                 actionType = Conditional.ITEM_TO_CLOCK_ACTION[selection-1];
                 if (actionType==Conditional.ACTION_SET_FAST_CLOCK_TIME) {
-                    int time = parseTime(actionString);
+                    int time = parseTime(_longActionString.getText().trim());
                     if ( time<0 ) {
                         return (false);
                     }
@@ -4654,7 +4654,7 @@ public class LogixTableAction extends AbstractTableAction {
             if (index > 0)
             {
                 hour = s.substring(0, index);
-                if (index > 1)
+                if (index >= 1)
 
                     minute = s.substring(index+1);
                 else

@@ -6,24 +6,24 @@
 -->
 <pane name="Smoke">
   <column>
-    <display item="Smoke Characteristic" tooltip="CV112 bit 0"/>
+    <display item="Smoke Characteristic"/>
     <label label=" ">
       <label> </label>
     </label>
     <row>
       <column>
-        <display item="Smoke PWM at standstill" tooltip="CV137"/>
-        <display item="Smoke PWM at minimum speed" tooltip="CV138"/>
-        <display item="Smoke PWM at max speed" tooltip="CV139"/>
+        <display item="Smoke PWM at standstill"/>
+        <display item="Smoke PWM at minimum speed"/>
+        <display item="Smoke PWM at max speed"/>
       </column>
       <column>
-        <display item="Smoke PWM at standstill" format="hslider" tooltip="CV137" label="">
+        <display item="Smoke PWM at standstill" format="hslider" label="">
           <label/>
         </display>
-        <display item="Smoke PWM at minimum speed" format="hslider" tooltip="CV138" label="">
+        <display item="Smoke PWM at minimum speed" format="hslider" label="">
           <label/>
         </display>
-        <display item="Smoke PWM at max speed" format="hslider" tooltip="CV139" label="">
+        <display item="Smoke PWM at max speed" format="hslider" label="">
           <label/>
         </display>
       </column>
@@ -48,7 +48,7 @@
     <label label=" ">
       <label> </label>
     </label>
-    <display item="Function Output as virtual Cam or Smoke Fan" tooltip="CV 133"/>
+    <display item="Function Output as virtual Cam or Smoke Fan"/>
     <label label=" ">
       <label> </label>
     </label>

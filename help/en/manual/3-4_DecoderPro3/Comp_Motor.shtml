@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009, 2010 -->
+<!-- $Id: Comp_Motor.shtml 18120 2011-08-07 11:49:22Z dat7719 $ -->
+<TITLE>
+DecoderPro&reg; Comprehensive Programmer
+</TITLE>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>DecoderPro3&reg; Comprehensive Programmer</h1>
+<h1>Motor Control Pane</h1>
+
+<div align=right>
+<p><a href="Comp_Basic.shtml"> Previous | </a>
+  <a href="Comp_Speed.shtml">Next</a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a></div>
+
+<hr>
+<p><strong>Motor  </strong>control is divided into three separate panes.&nbsp;  The<strong> Motor Control pane</strong> deals with CV&rsquo;s for simulating locomotive weight or  inertia.&nbsp; The <a href="Comp_Speed.shtml" target="_parent"><strong>Basic Speed Control pane</strong></a><a href="Comp_Basic.shtml" target="_parent"></a> deals with basic  motor control CV&rsquo;s and the third <a href="Comp_Speed_Talble.shtml" target="_parent"><strong>Speed Table pane</strong></a> covers those dealing with the <strong>Speed Table</strong> method of controlling the motor.&nbsp; These  last two  methods of motor control  are mutually exclusive.&nbsp; The selection is made with a radio button at  the top of each of those two panes.&nbsp; The  default selection is <strong>Basic Speed Control.</strong>
+<p><strong>The  Motor Pane </strong></p>
+<h1><img src="images/Comp_03_Motor.png" width="804" height="478" alt="motor"></h1>
+
+<p>The contents of the  Motor pane will vary significantly between different brands and models of decoders.  In the  case of the  decoder shown in the illustration:</p>
+
+<p><strong>Acceleration Rate</strong> and <strong>Deceleration  Rate </strong> help simulate a  locomotive under load - but don't 
+use them unless you have very clean track, because an  interruption of power can make a 
+locomotive stop and cycle through the acceleration curve  again!  On the latest Tsunami Diesel sound decoders the firmware has been changed. The  decoder now returns to the last speed setting before the power interruption but it has no knowledge of where it was in the acceleration curve.&nbsp; So if you  have been in the habit of using lots of momentum and setting speed to maximum  to get the sound of a notch 8 motor, be aware that if the loco loses power for  just an instant from a dirt spot on the rails, it will resume at the top speed  step and appear to be running away. </p>
+<p>High  deceleration rates can make station stops and switching realistic, but very  challenging!</p>
+<p><strong>Back EMF </strong>or <strong>Speed stabilization</strong> is implemented differently by  each manufacturer.. See your 
+decoder documentation for the best ways to implement these variables,  and be prepared to 
+do a lot of experimenting! However they do it and whatever they call it,  you should find it 
+in this pane. </p>
+<hr>
+<div align=right>
+<p><a href="Comp_Speed.shtml"></a>
+  <a href="Comp_Basic.shtml">Previous | </a> <a href="Comp_Speed.shtml">Next</a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a></div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

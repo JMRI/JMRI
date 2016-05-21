@@ -3,10 +3,10 @@
 <!-- version 1 - for Unified Software -->
 <pane name="Load Code">
   <column>
-    <display item="Decoder ID 1" tooltip="CV 250"/>
-    <display item="Decoder ID 2" tooltip="CV 251"/>
-    <display item="Decoder ID 3" tooltip="CV 252"/>
-    <display item="Decoder ID 4" tooltip="CV 253"/>
+    <display item="Decoder ID 1"/>
+    <display item="Decoder ID 2"/>
+    <display item="Decoder ID 3"/>
+    <display item="Decoder ID 4"/>
     <label label=" ">
       <label> </label>
     </label>
@@ -20,9 +20,9 @@
     <label label=" ">
       <label> </label>
     </label>
-    <display item="Load Code 1" tooltip="CV 260"/>
-    <display item="Load Code 2" tooltip="CV 261"/>
-    <display item="Load Code 3" tooltip="CV 262"/>
-    <display item="Load Code 4" tooltip="CV 263"/>
+    <display item="Load Code 1"/>
+    <display item="Load Code 2"/>
+    <display item="Load Code 3"/>
+    <display item="Load Code 4"/>
   </column>
 </pane>

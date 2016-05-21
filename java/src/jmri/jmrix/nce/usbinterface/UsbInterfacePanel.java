@@ -284,7 +284,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
      
         if (foundCabId == 0) {
-            statusText.setText(rb.getString("StatusNotFound"));
+            statusText.setText(rb.getString("StatusReadingNotFound"));
         } else {
         	oldCabId.setText(Integer.toString(foundCabId));
         }

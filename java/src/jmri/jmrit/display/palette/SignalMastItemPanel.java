@@ -28,6 +28,7 @@ import jmri.util.JmriJFrame;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.SignalMast;
+import jmri.SignalAppearanceMap;
 
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -45,6 +46,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _table.getSelectionModel().addListSelectionListener(this);
         _showIconsButton.setEnabled(false);
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
+        initIconFamiliesPanel();
+        add(_iconFamilyPanel, 1);
     }
 
     protected JPanel instructions() {
@@ -84,8 +87,9 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _iconFamilyPanel.add(panel);
         _iconFamilyPanel.add(_iconPanel);
         _iconPanel.setVisible(false);
+        hideIcons();
     }
-
+    
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
@@ -114,9 +118,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _dragIconPanel.add(panel);
     }
 
-    protected JPanel makeBottom1Panel() {
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());
+    protected void makeBottomPanel() {
+        JPanel panel = new JPanel();
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -128,13 +131,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                 }
             });
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
-        bottomPanel.add(_showIconsButton);
-        return bottomPanel;
+        panel.add(_showIconsButton);
+        JPanel bottomPanel = new JPanel(new FlowLayout());
+        bottomPanel.add(panel);
+        add(bottomPanel);
     }
 
-    protected JPanel makeBottom2Panel() {
-        return new JPanel();
-    }
     private void getIconMap(int row) {
         if (row<0) {
             _currentIconMap = null;
@@ -157,12 +159,14 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
         _family = _mast.getSignalSystem().getSystemName();
         _currentIconMap = new HashMap<String, NamedIcon>();
+    	SignalAppearanceMap appMap = _mast.getAppearanceMap();
         Enumeration<String> e = _mast.getAppearanceMap().getAspects();
         while (e.hasMoreElements()) {
-            String s = _mast.getAppearanceMap().getProperty(e.nextElement(), "imagelink");
+        	String aspect = e.nextElement();
+        	String s = appMap.getProperty(aspect, "imagelink");
             s = s.substring(s.indexOf("resources"));
             NamedIcon n = new NamedIcon(s,s);
-            _currentIconMap.put(s, n);
+            _currentIconMap.put(aspect, n);
         }
         if (log.isDebugEnabled()) log.debug("getIconMap: for "+_family+
                                             " size= "+_currentIconMap.size());
@@ -228,7 +232,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             }
             NamedBean bean = getNamedBean();
             if (bean==null) {
-                log.error("IconDragJLabel.getTransferData: NamedBean is null!");
+            	JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"), 
+                  		Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 

@@ -95,6 +95,7 @@ public class DrawRoundRect extends DrawRectangle {
 	 */
 	protected void updateFigure(PositionableShape p) {
 	   PositionableRoundRect pos = (PositionableRoundRect)p;
+	   super.updateFigure(p);
 	   setPositionableParams(pos);
 //	   pos.makeShape();
 	}

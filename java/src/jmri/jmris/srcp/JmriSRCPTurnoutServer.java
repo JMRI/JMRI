@@ -2,7 +2,6 @@
 package jmri.jmris.srcp;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.*;
 import jmri.InstanceManager;
 import jmri.Turnout;

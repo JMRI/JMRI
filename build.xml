@@ -70,7 +70,7 @@
 
     <!--
     # Set this to the directory where Findbugs is installed
-    findbugs.home=C:/findbugs-1.3.8
+    findbugs.home=
 
     # Set this to the directory where nsis is found (if it's not in $PATH).
     # Make sure the trailing / is present, since the usage is ${nsis.home}makensis,
@@ -142,16 +142,17 @@
         <pathelement location="${libdir}/jackson-core-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-databind-2.0.6.jar"/>
-        <pathelement location="${libdir}/jetty-continuation-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-http-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-security-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-server-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-servlet-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-util-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-io-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-websocket-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/slf4j-api-1.7.2.jar"/>
-        <pathelement location="${libdir}/slf4j-log4j12-1.7.2.jar"/>
+        <pathelement location="${libdir}/jetty-continuation-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-http-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-security-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-server-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-servlet-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-util-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-io-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-websocket-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/slf4j-api-1.7.5.jar"/>
+        <pathelement location="${libdir}/slf4j-log4j12-1.7.5.jar"/>
+        <pathelement location="${libdir}/xbee-api-0.9.jar"/>
     </path>
 
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
@@ -819,6 +820,21 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
             <jvmarg value="-Xrunhprof:cpu=samples,heap=sites,file=log.txt,depth=10"/>
+        </java>
+    </target>
+
+    <target name="quicktest" depends="tests, runtime-library-selection" description="build and run test suite">
+        <java classname="apps.tests.AllTest"
+          dir="."
+          fork="yes" >
+            <classpath refid="test.class.path"/>
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <sysproperty key="jmri.headlesstest" value="true"/>
+            <arg value="${antargline}"/>
         </java>
     </target>
 

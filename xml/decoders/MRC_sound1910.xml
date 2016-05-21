@@ -189,7 +189,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-      <variable label="Sound On/Off" CV="49" mask="XXXXXXXV" tooltip="CV49, F12 also sets sound on/off" default="1" item="Sound Option 1">
+      <variable label="Sound On/Off" CV="49" mask="XXXXXXXV" tooltip="F12 also sets sound on/off" default="1" item="Sound Option 1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>

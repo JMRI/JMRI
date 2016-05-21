@@ -1386,103 +1386,103 @@
   </decoder>
   <pane name="Switching">
     <column>
-      <display item="Switching 1" tooltip="CV 116, Bit 0"/>
-      <display item="Switching 2" tooltip="CV 116, Bit 1"/>
-      <display item="Switching 3" tooltip="CV 116, Bit 2"/>
+      <display item="Switching 1"/>
+      <display item="Switching 2"/>
+      <display item="Switching 3"/>
     </column>
     <name>Switching</name>
   </pane>
   <pane name="Shortcircuit Threshholds">
     <column>
-      <display item="Direct Cut Off" tooltip="CV 139"/>
-      <display item="Fast Cut Off" tooltip="CV 140"/>
-      <display item="Slow Cut Off" tooltip="CV 141"/>
-      <display item="Direct Cut Off Motor" tooltip="CV 142"/>
-      <display item="Fast Cut Off Motor" tooltip="CV 143"/>
-      <display item="Slow Cut Off Motor" tooltip="CV 144"/>
+      <display item="Direct Cut Off"/>
+      <display item="Fast Cut Off"/>
+      <display item="Slow Cut Off"/>
+      <display item="Direct Cut Off Motor"/>
+      <display item="Fast Cut Off Motor"/>
+      <display item="Slow Cut Off Motor"/>
     </column>
     <name>Shortcircuit Threshholds</name>
   </pane>
   <pane name="Sound Tools 1">
     <column>
-      <display item="Decoder Properties/Synchropulses" tooltip="CV 49 Bit 0: Synchropulses OFF/ON"/>
-      <display item="Diesel and E Locosound" tooltip="CV 49 Bit 1:OFF/ON"/>
-      <display item="2 Cylinder Steam" tooltip="CV 49 Bit 2:OFF/ON"/>
-      <display item="3 Cylinder Steam" tooltip="CV 49 Bit 3:OFF/ON"/>
-      <display item="No Steamexhaust Downhill" tooltip="CV 49 Bit 4:OFF/ON"/>
-      <display item="Continuous Sound CV 10, F 1" tooltip="CV 49 Bit 5:OFF/ON"/>
+      <display item="Decoder Properties/Synchropulses" tooltip=": Synchropulses OFF/ON"/>
+      <display item="Diesel and E Locosound" tooltip=":OFF/ON"/>
+      <display item="2 Cylinder Steam" tooltip=":OFF/ON"/>
+      <display item="3 Cylinder Steam" tooltip=":OFF/ON"/>
+      <display item="No Steamexhaust Downhill" tooltip=":OFF/ON"/>
+      <display item="Continuous Sound CV 10, F 1" tooltip=":OFF/ON"/>
     </column>
     <column>
-      <display item="Chuff Sound Levels" tooltip="CV 121"/>
-      <display item="Full Speed Exhaust Interval" tooltip="CV132"/>
-      <display item="Logical Exhaust Interval" tooltip="CV 133"/>
-      <display item="Time Between Beats" tooltip="CV 134"/>
-      <display item="Random Interval Aux Sounds" tooltip="CV 131"/>
-      <display item="Random Aux Sound 1" tooltip="CV 112"/>
-      <display item="Random Aux Sound 2" tooltip="CV 113"/>
+      <display item="Chuff Sound Levels"/>
+      <display item="Full Speed Exhaust Interval"/>
+      <display item="Logical Exhaust Interval"/>
+      <display item="Time Between Beats"/>
+      <display item="Random Interval Aux Sounds"/>
+      <display item="Random Aux Sound 1"/>
+      <display item="Random Aux Sound 2"/>
     </column>
     <column>
-      <display item="F2 Repetitions" tooltip="cv 122"/>
-      <display item="F3 Repetitions" tooltip="cv 123"/>
-      <display item="F4 Repetitions" tooltip="cv 124"/>
-      <display item="F5 Repetitions" tooltip="cv 125"/>
-      <display item="F6 Repetitions" tooltip="cv 126"/>
-      <display item="F7 Repetitions" tooltip="cv 127"/>
-      <display item="F8 Repetitions" tooltip="cv 128"/>
+      <display item="F2 Repetitions"/>
+      <display item="F3 Repetitions"/>
+      <display item="F4 Repetitions"/>
+      <display item="F5 Repetitions"/>
+      <display item="F6 Repetitions"/>
+      <display item="F7 Repetitions"/>
+      <display item="F8 Repetitions"/>
     </column>
     <name>Sound Tools 1</name>
   </pane>
   <pane name="CT Elektroniks">
     <column>
-      <display item="ACK Pulse" tooltip="CV 111"/>
-      <display item="Reference Voltage" tooltip="CV 64"/>
-      <display item="Special CV" tooltip="CV 137"/>
-      <display item="Error Diagnosis" tooltip="CV 30"/>
+      <display item="ACK Pulse"/>
+      <display item="Reference Voltage"/>
+      <display item="Special CV"/>
+      <display item="Error Diagnosis"/>
     </column>
     <name>CT Elektroniks</name>
   </pane>
   <pane name="Frequency Roll Off">
     <column>
-      <display item="High Frequency Limit" tooltip="CV 136"/>
-      <display item="Low Frequency Limit" tooltip="CV 135"/>
+      <display item="High Frequency Limit"/>
+      <display item="Low Frequency Limit"/>
     </column>
     <name>Frequency Roll Off</name>
   </pane>
   <pane name="BEMF">
     <column>
-      <display item="BEMF Power" tooltip="CV 50"/>
-      <display item="BEMF P-Value" tooltip="CV 51"/>
-      <display item="BEMF I-Value" tooltip="CV 52"/>
+      <display item="BEMF Power"/>
+      <display item="BEMF P-Value"/>
+      <display item="BEMF I-Value"/>
     </column>
     <name>BEMF</name>
   </pane>
   <pane name="Uncoupler">
     <column>
-      <display item="Uncoupler Fader Mask 1" tooltip="CV 58, Bit 0"/>
-      <display item="Uncoupler Fader Mask 2" tooltip="CV 58, Bit 1"/>
-      <display item="Uncoupler Fader Mask 3" tooltip="CV 58, Bit 2"/>
-      <display item="Uncoupler Fader Mask 4" tooltip="CV 58, Bit 3"/>
-      <display item="Uncoupler Fader Mask 5" tooltip="CV 58, Bit 4"/>
-      <display item="Uncoupler Fader Mask 6" tooltip="CV 58, Bit 5"/>
-      <display item="Uncoupler Fader Mask 7" tooltip="CV 58, Bit 6"/>
-      <display item="Uncoupler Fader Mask 8" tooltip="CV 58, Bit 7"/>
+      <display item="Uncoupler Fader Mask 1"/>
+      <display item="Uncoupler Fader Mask 2"/>
+      <display item="Uncoupler Fader Mask 3"/>
+      <display item="Uncoupler Fader Mask 4"/>
+      <display item="Uncoupler Fader Mask 5"/>
+      <display item="Uncoupler Fader Mask 6"/>
+      <display item="Uncoupler Fader Mask 7"/>
+      <display item="Uncoupler Fader Mask 8"/>
     </column>
     <column>
-      <display item="Uncoupler Holding Current" tooltip="CV 55"/>
-      <display item="Uncoupler Pulse Time" tooltip="CV 56"/>
+      <display item="Uncoupler Holding Current"/>
+      <display item="Uncoupler Pulse Time"/>
     </column>
     <name>Uncoupler</name>
   </pane>
   <pane name="Roco LGB Zimo">
     <column>
-      <display item="ZIMO Signal Controlled Speed L" tooltip="CV 59"/>
-      <display item="ZIMO Signal Controlled Speed U" tooltip="CV 60"/>
-      <display item="ZIMO Signal Controlled Acc Reaction" tooltip="CV 61"/>
-      <display item="ZIMO Brake Time HLU" tooltip="cv 138"/>
+      <display item="ZIMO Signal Controlled Speed L"/>
+      <display item="ZIMO Signal Controlled Speed U"/>
+      <display item="ZIMO Signal Controlled Acc Reaction"/>
+      <display item="ZIMO Brake Time HLU"/>
     </column>
     <column>
-      <display item="LGB Continuous Manual Sound Bitmask" tooltip="CV 108"/>
-      <display item="Locmaus Addressing" tooltip="CV 53"/>
+      <display item="LGB Continuous Manual Sound Bitmask"/>
+      <display item="Locmaus Addressing"/>
     </column>
     <name>Roco LGB Zimo</name>
   </pane>

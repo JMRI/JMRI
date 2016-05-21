@@ -20,8 +20,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-
 import java.io.File;
 import javax.swing.Box;
 import javax.swing.BoxLayout;

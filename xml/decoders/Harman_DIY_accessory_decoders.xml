@@ -24,7 +24,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="no"/>
     <!-- not sure if it can do ops-mode, but few command stations can do accessory ops-mode -->
     <variables>
-      <variable label="Low 7 bytes of Address CV1" CV="1" default="01" tooltip="CV1">
+      <variable label="Low 7 bytes of Address CV1" CV="1" default="01">
         <!--  in decoder address mode, takes values 0-63, ie, bits 0 to 5 
 			        in output address mode, takes values 0-255, ie. all bits -->
         <decVal/>
@@ -37,7 +37,7 @@
 			<decVal/>
 		</variable>
 		-->
-      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV" tooltip="CV9">
+      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV">
         <!-- uses same bits in both addressing modes -->
         <decVal min="0" max="7"/>
       </variable>

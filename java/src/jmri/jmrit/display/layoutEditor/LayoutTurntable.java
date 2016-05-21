@@ -347,7 +347,8 @@ public class LayoutTurntable
 			return;
 		}
         rayPopup.add("Turntable Ray " + index);
-        rayPopup.add(ray.getTurnout().getDisplayName() + " (" + ray.getTurnoutState() + ")");
+        if(ray.getTurnout()!=null)
+            rayPopup.add(ray.getTurnout().getDisplayName() + " (" + ray.getTurnoutState() + ")");
         rayPopup.show(e.getComponent(), e.getX(), e.getY());
     }
     

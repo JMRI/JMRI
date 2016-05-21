@@ -8,6 +8,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 
 import jmri.jmrit.display.palette.IndicatorItemPanel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -44,7 +45,6 @@ public class IndicatorTrackIcon extends PositionableIcon
     private IndicatorTrackPaths _pathUtil;
     private IndicatorItemPanel _trackPanel;
     private String _status;     // is a key for _iconMap
-
 
     public IndicatorTrackIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -217,11 +217,13 @@ public class IndicatorTrackIcon extends PositionableIcon
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.setStatus(block, state);
         if ((state & OBlock.OCCUPIED)!=0) {
-            _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);        	
-            repaint();
+            _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);        	
         }
-        if (_status.equals("DontUseTrack")) {
+        repaint();
+        if ((block.getState() & OBlock.OUT_OF_SERVICE)!=0) {
         	setControlling(false);
+        } else {
+        	setControlling(true);
         }
     }
 
@@ -334,14 +336,21 @@ public class IndicatorTrackIcon extends PositionableIcon
             getOccSensor().removePropertyChangeListener(this);
         }
         namedOccSensor = null;
-
         if (namedOccBlock != null) {
             getOccBlock().removePropertyChangeListener(this);
         }
         namedOccBlock = null;
-
         _iconMap = null;
         super.dispose();
+    }
+    
+    public jmri.NamedBean getNamedBean() {
+    	if (namedOccBlock!=null) {
+            return namedOccBlock.getBean();     		
+    	} else if (namedOccSensor!=null) {
+            return namedOccSensor.getBean();    		
+    	}
+    	return null;
     }
     
     static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class.getName());

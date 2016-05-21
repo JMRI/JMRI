@@ -50,8 +50,9 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
 		super.initComponents(location, track);
 
 		_toolMenu.add(new AlternateTrackAction(this));
-		_toolMenu.add(new ChangeTrackTypeAction(this));
 		_toolMenu.add(new IgnoreUsedTrackAction(this));
+		_toolMenu.add(new ChangeTrackTypeAction(this));
+		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Sidings", true); // NOI18N
 
 		// override text strings for tracks
@@ -147,7 +148,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
 					+ " new: " + e.getNewValue());	// NOI18N
 		if (e.getPropertyName().equals(ScheduleManager.LISTLENGTH_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY)) {
+				|| e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
 			updateScheduleComboBox();
 		}
 		super.propertyChange(e);

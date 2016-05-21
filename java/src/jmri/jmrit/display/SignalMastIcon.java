@@ -172,7 +172,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             name = getSignalMast().getUserName()+" ("+getSignalMast().getSystemName()+")";
         return name;
     }
-
+    
+    ButtonGroup litButtonGroup = null;
+    
     /**
      * Pop-up just displays the name
      */
@@ -208,6 +210,35 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             else r.setSelected(false);
             clickMenu.add(r);
             popup.add(clickMenu);
+            
+            // add menu to select handling of lit parameter
+            JMenu litMenu = new JMenu(Bundle.getMessage("WhenNotLit"));
+            litButtonGroup = new ButtonGroup();
+            r = new JRadioButtonMenuItem(Bundle.getMessage("ShowAppearance"));
+            r.setIconTextGap(10);
+            r.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) { 
+                    setLitMode(false);
+                    displayState(mastState());
+                }
+            });
+            litButtonGroup.add(r);
+            if (!litMode)  r.setSelected(true);
+            else r.setSelected(false);
+            litMenu.add(r);
+            r = new JRadioButtonMenuItem(Bundle.getMessage("ShowDarkIcon"));
+            r.setIconTextGap(10);
+            r.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setLitMode(true);
+                    displayState(mastState());
+                }
+            });
+            litButtonGroup.add(r);
+            if (litMode)  r.setSelected(true);
+            else r.setSelected(false);
+            litMenu.add(r);
+            popup.add(litMenu);
             
             java.util.Enumeration<String> en = getSignalMast().getSignalSystem().getImageTypeList();
             if(en.hasMoreElements()){
@@ -443,7 +474,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 if ((getSignalMast().getHeld()) && (getSignalMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
                     s = getSignalMast().getAppearanceMap().getImageLink("$held", useIconSet);
                 }
-                else if((getSignalMast().getLit()) && (getSignalMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
+                else if(getLitMode() && !getSignalMast().getLit() && (getSignalMast().getAppearanceMap().getImageLink("$dark", useIconSet)!=null)) {
                     s = getSignalMast().getAppearanceMap().getImageLink("$dark", useIconSet);
                 }
                 if(s.equals("")){
@@ -513,15 +544,13 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      * <P>
      * False means ignore (always show R/Y/G/etc appearance on screen);
      * True means show DefaultSignalAppearanceMap.DARK if lit is set false.
-     * <P>
-     * Note that setting the appearance "DefaultSignalAppearanceMap.DARK" explicitly
-     * will show the dark icon regardless of how this is set.
      */
     protected boolean litMode = false;
     
     public void setLitMode(boolean mode) {
         litMode = mode;
     }
+    
     public boolean getLitMode() {
         return litMode;
     }

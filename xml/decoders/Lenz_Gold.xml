@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="6" lastUpdated="20130724"/>
   <version author="Bob Jacobsen" version="5" lastUpdated="20121227"/>
   <version author="Paul Bender" version="4" lastUpdated="20050814"/>
   <version author="Mark Schutzer mark.schutzer@sbcglobal.net" version="3" lastUpdated="20050814"/>
@@ -22,19 +23,30 @@
 						   - and removed SUSI varible support for Gold Mini-->
   <!-- Version 4 - added factory reset menu items (Paul Bender) -->
   <!-- Version 5 - XInclude (Bob Jacobsen) -->
+  <!-- Version 6 - Added GOLD maxi, changed high version for family to 72, removed writeOnly from CV127 (Jeff Schmaltz) -->
   <!-- These are the Gold decoders, with "6th gen BEMF", "Precision Braking Control" -->
   <!-- and "Low Gear Switching Drive" -->
   <decoder>
-    <family name="Lenz Gold with 6th gen BEMF" mfg="Lenz" highVersionID="61" lowVersionID="60" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
-      <model model="Gold Mini" numOuts="2" numFns="8" lowVersionID="60" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N">
+    <family name="Lenz Gold with 6th gen BEMF" mfg="Lenz" highVersionID="72" lowVersionID="60" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
+      <model model="Gold Mini" numOuts="2" numFns="10" lowVersionID="60" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N">
         <output name="1" label="A - White"/>
         <output name="2" label="B - Yellow"/>
       </model>
-      <model model="Gold" numOuts="4" numFns="12" lowVersionID="61" nmraWarrant="yes" nmraWarrantStart="200604" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
+      <model model="Gold" numOuts="4" numFns="14" lowVersionID="61" nmraWarrant="yes" nmraWarrantStart="200604" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
         <output name="1" label="A - White"/>
         <output name="2" label="B - Yellow"/>
         <output name="3" label="C - Green"/>
         <output name="4" label="D - Violet"/>
+      </model>
+      <model model="Gold Maxi" numOuts="8" numFns="14" lowVersionID="72" maxMotorCurrent="3.0A (peak=5.0A)" formFactor="G">
+        <output name="1" label="A"/>
+        <output name="2" label="B"/>
+        <output name="3" label="C"/>
+        <output name="4" label="D"/>
+        <output name="5" label="E"/>
+        <output name="6" label="F"/>
+        <output name="7" label="G"/>
+        <output name="8" label="H"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -42,14 +54,13 @@
       <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>
-      <variable label="Decoder Version No: " CV="7" readOnly="yes" item="Decoder Version" default="61">
+      <variable label="Version Number (CV7, read only)" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Decoder Version No: </label>
         <label xml:lang="it">No versione decoder: </label>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer" default="99">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
-        <label>Manufacturer ID: </label>
         <label xml:lang="it">ID Costruttore: </label>
       </variable>
       <variable label="Manufacturer ID - Reset" CV="8" item="Reset" comment="Writing a value of 8 or 33 will reset decoder to factory defaults">
@@ -186,12 +197,20 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
-      <variable label="Dimming Intensity, Outputs A and C (0-255)" CV="55" item="Global lighting option 1" default="255" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
+
+      <variable label="Signal stop activated with external contact" CV="51" mask="XVXXXXXX" item="Signal stop activated with external contact" minOut="8" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
+      <variable label="Push-pull operation activated with external contact" CV="51" mask="VXXXXXXX" item="Push-pull operation activated with external contact" minOut="8" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
+
+      <variable label="Dimming Intensity, Outputs A and C (0-255)" CV="55" item="Global lighting option 1" default="255" tooltip="Sets intensity of output A and C (larger number = brighter light)">
         <decVal min="0" max="255"/>
         <label>Dimming Intensity, Outputs A and C (0-255)</label>
         <label xml:lang="it">Intensità attenuazione Uscite A e C (0-255)</label>
       </variable>
-      <variable label="Dimming Intensity, Outputs B and D (0-255)" CV="56" item="Global lighting option 2" default="255" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
+      <variable label="Dimming Intensity, Outputs B and D (0-255)" CV="56" item="Global lighting option 2" default="255" tooltip="Sets intensity of output B and D (larger number = brighter light)">
         <decVal min="0" max="255"/>
         <label>Dimming Intensity, Outputs B and D (0-255)</label>
         <label xml:lang="it">Intensità attenuazione Uscite B e D (0-255)</label>
@@ -237,14 +256,14 @@
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori da 0 a 255</comment>
       </variable>
-      <variable label="CV transport device for SUSI" CV="127" writeOnly="yes" minOut="4" item="SUSI transport" default="0" comment="Range 0-255">
+      <variable label="CV transport device for SUSI (read fails if no SUSI device attached)" CV="127" minOut="4" item="SUSI transport" default="0" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>CV transport device for SUSI</label>
         <label xml:lang="it">Dispositivo trasferimento SUSI</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori da 0 a 255</comment>
       </variable>
-      <variable label="Decoder Software Version (read only): " CV="128" readOnly="yes" item="Decoder Software Version" default="5">
+      <variable label="Service Number (CV128, read only)" CV="128" readOnly="yes" item="Product Number">
         <decVal/>
         <label>Decoder Software Version (read only): </label>
         <label xml:lang="it">Versione Software Decoder (sola lettura)</label>

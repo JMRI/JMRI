@@ -223,6 +223,12 @@ public class AutoActiveTrain implements ThrottleListener {
 	private ArrayList<AllocatedSection> _allocatedSectionList = new ArrayList<AllocatedSection>();
 	private jmri.jmrit.display.layoutEditor.LayoutBlockManager _lbManager = null;
 	private AllocatedSection _lastAllocatedSection = null;
+    protected Section getLastAllocatedSection(){
+        AllocatedSection as = _allocatedSectionList.get(_allocatedSectionList.size()-1);
+        if(as!=null)
+            return as.getSection();
+        return null;
+    }
 	private boolean _initialized = false;
 	private Section _nextSection = null;	                     // train has not reached this Section yet
 	private volatile AllocatedSection _currentAllocatedSection = null;    // head of the train is in this Section
@@ -301,6 +307,13 @@ public class AutoActiveTrain implements ThrottleListener {
 						// entered start block of Transit, must stop and reset for continuing
 						stopInCurrentSection(BEGINNING_RESET);						
 					}
+                    else if ((_currentBlock==_activeTrain.getEndBlock()) && 
+							_activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart()!=ActiveTrain.NODELAY &&
+							(as.getSequence()==_activeTrain.getEndBlockSectionSequenceNumber()) ) {
+						// entered start block of Transit, must stop and reset for continuing
+						stopInCurrentSection(BEGINNING_RESET);
+                        removeCurrentSignal();
+                    }
 					else {
 						setupNewCurrentSignal();
 					}
@@ -336,6 +349,10 @@ public class AutoActiveTrain implements ThrottleListener {
 		}
 		_autoTrainAction.handleBlockStateChange(as,b);
 	}
+    
+    protected void restart(){
+        setupNewCurrentSignal();
+    }
 
 	/**
 	 * support methods
@@ -435,7 +452,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		return false;
 	}
 	private void removeCurrentSignal() {
-		if (_conSignalListener!=null) {		
+		if (_conSignalListener!=null) {
 			_controllingSignal.removePropertyChangeListener(_conSignalListener);
 			_conSignalListener = null;
 		}
@@ -446,8 +463,9 @@ public class AutoActiveTrain implements ThrottleListener {
         
         }
         _controllingSignalMast = null;
-	}	
-	private synchronized void setupNewCurrentSignal() {
+	}
+    
+	protected synchronized void setupNewCurrentSignal() {
 		removeCurrentSignal();
         if(DispatcherFrame.instance().getSignalType()==DispatcherFrame.SIGNALHEAD){
             SignalHead sh = _lbManager.getFacingSignalHead(_currentBlock,_nextBlock);
@@ -500,7 +518,6 @@ public class AutoActiveTrain implements ThrottleListener {
             }
             // Note: null signal head will result when exiting throat-to-throat blocks.
             else if (log.isDebugEnabled()) log.debug("new current signalmast is null - sometimes OK");
-            
         }
 	}
 	private Block getNextBlock(Block b, AllocatedSection as) {
@@ -540,8 +557,8 @@ public class AutoActiveTrain implements ThrottleListener {
 			// check if new next Section exists but is not allocated to this train
 			if ( (_nextSection!=null) && !isSectionInAllocatedList(_nextSection) ) {
 				// next section is not allocated to this train, must not enter it, even if signal is OK.
-				stopInCurrentSection(NO_TASK);
-				_needSetSpeed = false;
+                stopInCurrentSection(NO_TASK);
+                _needSetSpeed = false;
 			}
 		}
 	}
@@ -682,7 +699,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		}	
 	}
 	private synchronized void stopInCurrentSection(int task) {
-		if (_currentAllocatedSection==null) {
+        if (_currentAllocatedSection==null) {
 			log.error("Current allocated section null on entry to stopInCurrentSection");
 			setStopNow();
 			return;
@@ -836,7 +853,11 @@ public class AutoActiveTrain implements ThrottleListener {
                 _previousBlock = _currentBlock;
 				_activeTrain.setTransitReversed(true);
 				_activeTrain.reverseAllAllocatedSections();
-				setEngineDirection();
+                setEngineDirection();
+                if ( (_nextSection!=null) && !isSectionInAllocatedList(_nextSection) ) {
+                    DispatcherFrame.instance().forceScanOfAllocation();
+                    break;
+                }
 				setupNewCurrentSignal();
 				setSpeedBySignal();
 				break;
@@ -847,11 +868,17 @@ public class AutoActiveTrain implements ThrottleListener {
                         if the first block we come to has a stopped or held signal*/
                         _previousBlock = _currentBlock;
                     }
-					_activeTrain.setTransitReversed(false);
-					_activeTrain.resetAllAllocatedSections();
-					setEngineDirection();
-					setupNewCurrentSignal();
-					setSpeedBySignal();
+                    if(_activeTrain.getDelayedRestart()==ActiveTrain.NODELAY){
+                        _activeTrain.setTransitReversed(false);
+                        _activeTrain.resetAllAllocatedSections();
+                        setEngineDirection();
+                        if ( (_nextSection!=null) && !isSectionInAllocatedList(_nextSection) ) {
+                            DispatcherFrame.instance().forceScanOfAllocation();
+                            break;
+                        }
+                        setupNewCurrentSignal();
+                        setSpeedBySignal();
+                    }
 				}
 				else {
 					// dispatcher cancelled auto restart while train was stopping?
@@ -908,6 +935,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		}
 		else if(useSpeedProfile){
             _targetSpeed = _speedRatio[aspect];
+            _stoppingUsingSpeedProfile=true;
             _autoEngineer.slowToStop(true);
         } else {
 			_targetSpeed = _speedRatio[aspect];
@@ -1247,6 +1275,9 @@ public class AutoActiveTrain implements ThrottleListener {
 						}
 					}
 				}
+                if (useSpeedProfile && _currentAllocatedSection!=null && _currentAllocatedSection!=_lastAllocatedSection){
+                    _lastAllocatedSection = _currentAllocatedSection;
+                }
 				// delay
 				synchronized(this) {
 					try {
