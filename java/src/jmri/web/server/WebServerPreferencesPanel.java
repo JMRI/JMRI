@@ -2,8 +2,7 @@ package jmri.web.server;
 
 /**
  * @author Steve Todd Copyright (C) 2011
- * @author Randall Wood Copyright (C) 2012, 2014
- * @version $Revision$
+ * @author Randall Wood Copyright (C) 2012, 2014, 2016
  */
 import apps.PerformActionModel;
 import apps.StartupActionsManager;
