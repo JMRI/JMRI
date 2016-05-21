@@ -110,12 +110,14 @@ public interface Sensor extends NamedBean {
     public long getSensorDebounceGoingInActiveTimer();
 
     /**
-     * Use the timers specified in the Sensor manager, for the debounce delay
+     * Use the timers specified in the Sensor manager for the debounce delay
+     * @param flag set to current defaults if true now and not previously true
      */
-    public void useDefaultTimerSettings(boolean boo);
+    public void useDefaultTimerSettings(boolean flag);
 
     /**
-     * Does this sensor use the default timers for
+     * Does this sensor use the default timers values?
+     * (A remarkably unfortunate name given the one above)
      */
     public boolean useDefaultTimerSettings();
 

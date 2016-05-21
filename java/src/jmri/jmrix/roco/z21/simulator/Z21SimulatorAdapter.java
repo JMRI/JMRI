@@ -231,7 +231,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
     private Z21Reply getZ21SerialNumberReply(){
         Z21Reply reply = new Z21Reply();
-        reply.setLength(0x0004);
+        reply.setLength(0x0008);
         reply.setOpCode(0x0010);
         reply.setElement(4,0x00);
         reply.setElement(5,0x00);
@@ -242,7 +242,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
     private Z21Reply getZ21BroadCastFlagsReply(){
         Z21Reply reply = new Z21Reply();
-        reply.setLength(0x0004);
+        reply.setLength(0x0008);
         reply.setOpCode(0x0051);
         reply.setElement(4,flags[0]);
         reply.setElement(5,flags[1]);
