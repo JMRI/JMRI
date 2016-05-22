@@ -36,6 +36,9 @@ import jmri.Turnout.LOCKED         as LOCKED
 import jmri.Sensor.ACTIVE          as ACTIVE
 import jmri.Sensor.INACTIVE        as INACTIVE
 
+import jmri.Light.ON               as ON
+import jmri.Light.OFF              as OFF
+
 import jmri.NamedBean.UNKNOWN      as UNKNOWN
 import jmri.NamedBean.INCONSISTENT as INCONSISTENT
 
