@@ -2,6 +2,8 @@
 
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -203,6 +205,10 @@ abstract public class AbstractManager
         for (i=0; i<arr.length; i++) out.add(arr[i]);
         return out;
     }
+    
+    public List<NamedBean> getNamedBeanList() {
+        return new ArrayList<NamedBean>(_tsys.values());
+    }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
@@ -213,7 +219,7 @@ abstract public class AbstractManager
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractManager.class.getName());
 
 }
 

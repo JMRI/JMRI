@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumVal>
+  <enumChoice choice="Standard on/off function output">
+    <choice>Standard on/off function output</choice>
+  </enumChoice>
+  <enumChoice choice="Firebox flicker">
+    <choice>Firebox flicker</choice>
+  </enumChoice>
+  <enumChoice choice="Mars light">
+    <choice>Mars light</choice>
+  </enumChoice>
+  <enumChoice choice="Rotary beacon">
+    <choice>Rotary beacon</choice>
+  </enumChoice>
+  <enumChoice choice="Gyralight">
+    <choice>Gyralight</choice>
+  </enumChoice>
+  <enumChoice choice="Double strobe">
+    <choice>Double strobe</choice>
+  </enumChoice>
+  <enumChoice choice="Strobe A">
+    <choice>Strobe A</choice>
+  </enumChoice>
+  <enumChoice choice="Strobe B (alternates with strobe A)">
+    <choice>Strobe B (alternates with strobe A)</choice>
+  </enumChoice>
+  <enumChoice choice="Dim when F0 and F4 on, otherwise bright">
+    <choice>Dim when F0 and F4 on, otherwise bright</choice>
+  </enumChoice>
+  <enumChoice choice="Dim when F0 and F8 on, otherwise bright">
+    <choice>Dim when F0 and F8 on, otherwise bright</choice>
+  </enumChoice>
+  <enumChoice choice="Dim in forward, bright in reverse">
+    <choice>Dim in forward, bright in reverse</choice>
+  </enumChoice>
+  <enumChoice choice="Dim in reverse, bright in forward">
+    <choice>Dim in reverse, bright in forward</choice>
+  </enumChoice>
+  <enumChoice choice="Type 2 right ditch light, effect on if F2 on, output off otherwise">
+    <choice>Type 2 right ditch light, effect on if F2 on, output off otherwise</choice>
+  </enumChoice>
+  <enumChoice choice="Type 2 left ditch light, effect on if F2 on, output off otherwise">
+    <choice>Type 2 left ditch light, effect on if F2 on, output off otherwise</choice>
+  </enumChoice>
+  <enumChoice choice="Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off">
+    <choice>Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off</choice>
+  </enumChoice>
+  <enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off">
+    <choice>Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off</choice>
+  </enumChoice>
+</enumVal>

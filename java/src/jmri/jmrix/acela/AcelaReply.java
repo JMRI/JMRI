@@ -2,6 +2,9 @@
 
 package jmri.jmrix.acela;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Contains the data payload of a Acela reply packet
  *
@@ -34,7 +37,7 @@ public class AcelaReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaReply.class.getName());
 }
 
 /* @(#)AcelaReply.java */

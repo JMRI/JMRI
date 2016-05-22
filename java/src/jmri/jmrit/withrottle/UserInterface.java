@@ -11,6 +11,8 @@ package jmri.jmrit.withrottle;
  */
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GraphicsEnvironment;
@@ -46,12 +48,13 @@ import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
+import jmri.util.FileUtil;
 
 
 //	listen() has to run in a separate thread.
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager {
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UserInterface.class.getName());
+    static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     JMenuBar menuBar;
@@ -147,7 +150,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         panel.add(vLabel, con);
 */
         JLabel icon;
-        java.net.URL imageURL = ClassLoader.getSystemResource("resources/IconForWiThrottle.gif");
+        java.net.URL imageURL = FileUtil.findURL("resources/IconForWiThrottle.gif");
 
         if (imageURL != null) {
             ImageIcon image = new ImageIcon(imageURL);
@@ -429,7 +432,7 @@ class ServerThread extends Thread {
         log.debug("Leaving serverThread.run()");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ServerThread.class.getName());
+    static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
 }
 
  	  	 

@@ -1,5 +1,7 @@
 package jmri.jmrix.nce.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -31,5 +33,5 @@ public class NceSensorManagerXml extends jmri.managers.configurexml.AbstractSens
         return loadSensors(sensors);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceSensorManagerXml.class.getName());
 }

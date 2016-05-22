@@ -1,5 +1,7 @@
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -21,7 +23,7 @@ import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
 
 import jmri.util.JmriJFrame;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -35,17 +37,19 @@ import javax.swing.JPanel;
 
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.CatalogPanel;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PositionableLabel;
+import jmri.jmrit.display.LinkingLabel;
 
 /**
 *  ItemPanel for for plain icons and backgrounds 
 */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 
-    Hashtable<String, NamedIcon> _iconMap;
-    Hashtable<String, NamedIcon> _tmpIconMap;
+    HashMap<String, NamedIcon> _iconMap;
+    HashMap<String, NamedIcon> _tmpIconMap;
     JPanel _iconPanel;
     JButton _catalogButton;
     CatalogPanel _catalog;
@@ -58,36 +62,46 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     */
     public IconItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame,  type, family, editor);
-        setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
     public void init() {
     	if (!_initialized) {
-        	Thread.yield();
-            add(instructions());
-            initIconFamiliesPanel();
-            initButtonPanel();
-            _catalog = CatalogPanel.makeDefaultCatalog();
-            add(_catalog);
-           _catalog.setVisible(false);
-            _catalog.setToolTipText(ItemPalette.rbp.getString("ToolTipDragCatalog"));
-            setSize(getPreferredSize());
+    		Thread.yield();
+    		init(false);
+    		setSize(getPreferredSize());
             super.init();
     	}
     }
+   public void init(boolean isBackGround) {
+       add(instructions(isBackGround));
+       initIconFamiliesPanel();
+       if (!isBackGround) {
+           initLinkPanel();            	
+       }
+       initButtonPanel();
+       _catalog = CatalogPanel.makeDefaultCatalog();
+       add(_catalog);
+      _catalog.setVisible(false);
+       _catalog.setToolTipText(Bundle.getMessage("ToolTipDragCatalog"));
+    }
 
-    protected JPanel instructions() {
+    protected JPanel instructions(boolean isBackGround) {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("AddToPanel")));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("DragIconPanel")));
-        blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("DragIconCatalog"), 
-                                        ItemPalette.rbp.getString("ButtonShowCatalog"))));
+        blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconCatalog", "ButtonShowCatalog")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("ToAddDeleteModify")));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("ToChangeName")));
-        blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("ToDeleteIcon"), 
-                						ItemPalette.rbp.getString("deleteIcon"))));
+        blurb.add(new JLabel(Bundle.getMessage("ToAddDeleteModify")));
+        blurb.add(new JLabel(Bundle.getMessage("ToChangeName")));
+        blurb.add(new JLabel(Bundle.getMessage("ToDeleteIcon", "deleteIcon")));
+        if (!isBackGround) {
+            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+            blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Icon")));
+            blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
+            blurb.add(new JLabel(Bundle.getMessage("enterURL")));
+        }
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -99,7 +113,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     * Override for plain icon & background and put all icons here
     */
     protected void initIconFamiliesPanel() {
-        Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
+        HashMap <String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
             if (families.size()!=1) {
                 log.warn("ItemType \""+_itemType+"\" has "+families.size()+" families.");
@@ -119,7 +133,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     /**
     *  Note caller must create _iconPanel before calling
     */
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         _iconPanel = new JPanel();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -134,7 +148,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
                label.setName(borderName);
                panel.add(label);
                if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
-                   label.setText(ItemPalette.rbp.getString("invisibleIcon"));
+                   label.setText(Bundle.getMessage("invisibleIcon"));
                    label.setForeground(Color.lightGray);
                } else {
                    icon.reduceTo(50, 80, 0.2);
@@ -175,39 +189,39 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
 
-        _catalogButton = new JButton(ItemPalette.rbp.getString("ButtonShowCatalog"));
+        _catalogButton = new JButton(Bundle.getMessage("ButtonShowCatalog"));
         _catalogButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (_catalog.isVisible()) {
                         hideCatalog();
                     } else {
                         _catalog.setVisible(true);
-                        _catalogButton.setText(ItemPalette.rbp.getString("HideCatalog"));
+                        _catalogButton.setText(Bundle.getMessage("HideCatalog"));
                     }
                     repaint();
                 }
         });
-        _catalogButton.setToolTipText(ItemPalette.rbp.getString("ToolTipCatalog"));
+        _catalogButton.setToolTipText(Bundle.getMessage("ToolTipCatalog"));
         bottomPanel.add(_catalogButton);
 
-        JButton addIconButton = new JButton(ItemPalette.rbp.getString("addIcon"));
+        JButton addIconButton = new JButton(Bundle.getMessage("addIcon"));
         addIconButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                 	addNewIcon();
                 }
         });
-        addIconButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddIcon"));
+        addIconButton.setToolTipText(Bundle.getMessage("ToolTipAddIcon"));
         bottomPanel.add(addIconButton);
 
         add(bottomPanel);
 
-        deleteIconButton = new JButton(ItemPalette.rbp.getString("deleteIcon"));
+        deleteIconButton = new JButton(Bundle.getMessage("deleteIcon"));
         deleteIconButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                 	deleteIcon();
                 }
         });
-        deleteIconButton.setToolTipText(ItemPalette.rbp.getString("ToolTipDeleteIcon"));
+        deleteIconButton.setToolTipText(Bundle.getMessage("ToolTipDeleteIcon"));
         bottomPanel.add(deleteIconButton);
         deleteIconButton.setEnabled(false);
 
@@ -216,7 +230,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
     void hideCatalog() {
         _catalog.setVisible(false);
-        _catalogButton.setText(ItemPalette.rbp.getString("ButtonShowCatalog"));
+        _catalogButton.setText(Bundle.getMessage("ButtonShowCatalog"));
     }
 
     /**
@@ -224,11 +238,11 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     */
     protected void addNewIcon() {
         if (log.isDebugEnabled()) log.debug("addNewIcon Action: iconMap.size()= "+_iconMap.size());
-        String name = ItemPalette.rbp.getString("RedX");
+        String name = Bundle.getMessage("RedX");
         if (_iconMap.get(name)!=null) {
             JOptionPane.showMessageDialog(this,
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateIconName"), name),
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("DuplicateIconName", name),
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             name = setIconName(name);
             if ( name==null || _iconMap.get(name)!= null) {
             	return;
@@ -262,16 +276,16 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     
     protected String setIconName(String name) {   	
     	name = JOptionPane.showInputDialog(this,
-    			ItemPalette.rbp.getString("NoIconName"), name);
+    			Bundle.getMessage("NoIconName"), name);
         if ( name==null || name.trim().length()==0) {
         	return null;
         }
         while (_iconMap.get(name)!=null) {
             JOptionPane.showMessageDialog(this,
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateIconName"), name),
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("DuplicateIconName", name),
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
         	name = JOptionPane.showInputDialog(this,
-        			ItemPalette.rbp.getString("NoIconName"), name);
+        			Bundle.getMessage("NoIconName"), name);
             if ( name==null || name.trim().length()==0) {
             	return null;
             }
@@ -342,7 +356,13 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             }
             String url = ((NamedIcon)getIcon()).getURL();
             if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferData url= "+url);
-            PositionableLabel l = new PositionableLabel(NamedIcon.getIconByName(url), _editor);
+            String link = _linkName.getText().trim();
+            PositionableLabel l;
+            if (link.length()==0) {
+                l = new PositionableLabel(NamedIcon.getIconByName(url), _editor);            	
+            } else {            	
+                l = new LinkingLabel(NamedIcon.getIconByName(url), _editor, link);
+            }
             l.setPopupUtility(null);        // no text 
             l.setLevel(level);
             return l;
@@ -391,13 +411,16 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             if (log.isDebugEnabled()) log.debug("accept drop for "+label.getName()+
                                                  ", "+newIcon.getURL());
             if (newIcon==null || newIcon.getIconWidth()<1 || newIcon.getIconHeight()<1) {
-                label.setText(ItemPalette.rbp.getString("invisibleIcon"));
+                label.setText(Bundle.getMessage("invisibleIcon"));
                 label.setForeground(Color.lightGray);
             } else {
                 newIcon.reduceTo(100, 100, 0.2);
                 label.setText(null);
             }
             _iconMap.put(label.getName(), newIcon);
+            if (!_update) {		// only prompt for save from palette
+            	ImageIndexEditor.indexChanged(true);
+            }
             removeIconFamiliesPanel();
             addIconsToPanel(_iconMap);
             e.dropComplete(true);
@@ -406,5 +429,5 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         }    
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IconItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(IconItemPanel.class.getName());
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import jmri.Scale;
@@ -106,14 +108,20 @@ public class OptionsMenu extends JMenu {
 	JRadioButton trainsFromRoster = new JRadioButton(rb.getString("TrainsFromRoster"));
 	JRadioButton trainsFromTrains = new JRadioButton(rb.getString("TrainsFromTrains"));
 	JRadioButton trainsFromUser = new JRadioButton(rb.getString("TrainsFromUser"));
+    JComboBox signalTypeBox;
 	JCheckBox detectionCheckBox = new JCheckBox(rb.getString("DetectionBox"));
 	JCheckBox shortNameCheckBox = new JCheckBox(rb.getString("ShortNameBox"));
 	JCheckBox nameInBlockCheckBox = new JCheckBox(rb.getString("NameInBlockBox"));
+	JCheckBox rosterInBlockCheckBox = new JCheckBox(rb.getString("RosterInBlockBox"));
 	JCheckBox extraColorForAllocatedCheckBox = new JCheckBox(rb.getString("ExtraColorForAllocatedBox"));
 	JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(rb.getString("NameInAllocatedBlockBox"));
+    JCheckBox supportVSDecoderCheckBox = new JCheckBox(rb.getString("SupportVSDecoder"));
 	JComboBox layoutScaleBox = new JComboBox();
 	JRadioButton scaleFeet = new JRadioButton(rb.getString("ScaleFeet"));
 	JRadioButton scaleMeters = new JRadioButton(rb.getString("ScaleMeters"));
+    JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
+    
+    String[] signalTypes = {"SignalHeads/SSL", "SignalMasts"};
 	
 	private void optionWindowRequested(ActionEvent e) {
 		if (optionsFrame == null) {
@@ -127,6 +135,9 @@ public class OptionsMenu extends JMenu {
 			useConnectivityCheckBox.setToolTipText(rb.getString("UseConnectivityHint"));
 			p1.add(layoutEditorBox);
 			layoutEditorBox.setToolTipText(rb.getString("LayoutEditorHint"));
+            signalTypeBox = new JComboBox(signalTypes);
+            p1.add(signalTypeBox);
+            signalTypeBox.setToolTipText(rb.getString("SignalTypeHint"));
 			optionsPane.add(p1);
 			JPanel p2 = new JPanel();
 			p2.setLayout(new FlowLayout());
@@ -134,13 +145,30 @@ public class OptionsMenu extends JMenu {
 			p2.add(trainsFromRoster);
 			trainsFromRoster.setToolTipText(rb.getString("TrainsFromRosterHint"));
 			trainsGroup.add(trainsFromRoster);
+            
+            ActionListener useRosterEntryListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if(trainsFromRoster.isSelected()){
+                        rosterInBlockCheckBox.setEnabled(true);
+                        if(nameInBlockCheckBox.isSelected()  && e.getSource()==nameInBlockCheckBox)
+                            rosterInBlockCheckBox.setSelected(false);
+                        else if (rosterInBlockCheckBox.isSelected() && e.getSource()==rosterInBlockCheckBox)
+                            nameInBlockCheckBox.setSelected(false);
+                    } else {
+                        rosterInBlockCheckBox.setEnabled(false);
+                    }
+                }
+            };
+            trainsFromRoster.addActionListener(useRosterEntryListener);
 			p2.add(new JLabel("     "));
 			p2.add(trainsFromTrains);
 			trainsFromTrains.setToolTipText(rb.getString("TrainsFromTrainsHint"));
+            trainsFromTrains.addActionListener(useRosterEntryListener);
 			trainsGroup.add(trainsFromTrains);
 			p2.add(new JLabel("     "));
 			p2.add(trainsFromUser);
 			trainsFromUser.setToolTipText(rb.getString("TrainsFromUserHint"));
+            trainsFromUser.addActionListener(useRosterEntryListener);
 			trainsGroup.add(trainsFromUser);
 			optionsPane.add(p2);
 			JPanel p3 = new JPanel();
@@ -167,7 +195,15 @@ public class OptionsMenu extends JMenu {
 			p7.setLayout(new FlowLayout());
 			p7.add(nameInBlockCheckBox);
 			nameInBlockCheckBox.setToolTipText(rb.getString("NameInBlockBoxHint"));
+            nameInBlockCheckBox.addActionListener(useRosterEntryListener);
 			optionsPane.add(p7);
+			JPanel p7b = new JPanel();
+			p7b.setLayout(new FlowLayout());
+			p7b.add(rosterInBlockCheckBox);
+			rosterInBlockCheckBox.setToolTipText(rb.getString("RosterInBlockBoxHint"));
+            rosterInBlockCheckBox.addActionListener(useRosterEntryListener);
+			optionsPane.add(p7b);
+            
 			JPanel p10 = new JPanel();
 			p10.setLayout(new FlowLayout());
 			p10.add(extraColorForAllocatedCheckBox);
@@ -178,6 +214,11 @@ public class OptionsMenu extends JMenu {
 			p11.add(nameInAllocatedBlockCheckBox);
 			nameInAllocatedBlockCheckBox.setToolTipText(rb.getString("NameInAllocatedBlockBoxHint"));
 			optionsPane.add(p11);
+			JPanel p13 =new JPanel();
+			p13.setLayout(new FlowLayout());
+			p13.add(supportVSDecoderCheckBox);
+			supportVSDecoderCheckBox.setToolTipText(rb.getString("SupportVSDecoderBoxHint"));
+			optionsPane.add(p13);
 			JPanel p8 = new JPanel();
 			initializeScaleCombo();
 			p8.add(new JLabel(rb.getString("LayoutScale")+":"));
@@ -196,6 +237,14 @@ public class OptionsMenu extends JMenu {
 			scaleMeters.setToolTipText(rb.getString("ScaleMetersHint"));
 			scaleGroup.add(scaleMeters);
 			optionsPane.add(p12);
+            
+            JPanel p14 = new JPanel();
+			p14.setLayout(new FlowLayout());
+			p14.add(openDispatcherWithPanel);
+			openDispatcherWithPanel.setToolTipText(Bundle.getMessage("OpenDispatcherWithPanelBoxHint"));
+			optionsPane.add(p14);
+            
+            
 			optionsPane.add(new JSeparator());
 			JPanel p9 = new JPanel();
 			p9.setLayout(new FlowLayout());
@@ -227,6 +276,7 @@ public class OptionsMenu extends JMenu {
 			layoutEditorBox.setVisible(false);
 		}
 		useConnectivityCheckBox.setSelected(dispatcher.getUseConnectivity());
+        signalTypeBox.setSelectedIndex(dispatcher.getSignalType());
 		trainsFromRoster.setSelected(dispatcher.getTrainsFromRoster());
 		trainsFromTrains.setSelected(dispatcher.getTrainsFromTrains());
 		trainsFromUser.setSelected(dispatcher.getTrainsFromUser());
@@ -235,10 +285,13 @@ public class OptionsMenu extends JMenu {
 		autoTurnoutsCheckBox.setSelected(dispatcher.getAutoTurnouts());
 		shortNameCheckBox.setSelected(dispatcher.getShortActiveTrainNames());
 		nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());
+		rosterInBlockCheckBox.setSelected(dispatcher.getRosterEntryInBlock());
 		extraColorForAllocatedCheckBox.setSelected(dispatcher.getExtraColorForAllocated());
 		nameInAllocatedBlockCheckBox.setSelected(dispatcher.getNameInAllocatedBlock());
+		supportVSDecoderCheckBox.setSelected(dispatcher.getSupportVSDecoder());
 		scaleMeters.setSelected(dispatcher.getUseScaleMeters());
 		scaleFeet.setSelected(!dispatcher.getUseScaleMeters());
+        openDispatcherWithPanel.setSelected(jmri.jmrit.display.layoutEditor.LayoutEditor.getOpenDispatcherOnLoad());
 		optionsFrame.pack();
 		optionsFrame.setVisible(true);
 	}
@@ -255,6 +308,7 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setAutoAllocate(autoAllocateCheckBox.isSelected());
 		autoDispatchItem.setSelected(autoAllocateCheckBox.isSelected());
 		dispatcher.setAutoTurnouts(autoTurnoutsCheckBox.isSelected());
+        dispatcher.setSignalType(signalTypeBox.getSelectedIndex());
 		autoTurnoutsItem.setSelected(autoTurnoutsCheckBox.isSelected());
 		if (autoTurnoutsCheckBox.isSelected() && ( (layoutEditorList.size()==0) ||
 								(!useConnectivityCheckBox.isSelected()) ) ) {
@@ -265,8 +319,11 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setShortNameInBlock(nameInBlockCheckBox.isSelected());
 		dispatcher.setExtraColorForAllocated(extraColorForAllocatedCheckBox.isSelected());
 		dispatcher.setNameInAllocatedBlock(nameInAllocatedBlockCheckBox.isSelected());
+		dispatcher.setRosterEntryInBlock(rosterInBlockCheckBox.isSelected());
+		dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
 		dispatcher.setScale(layoutScaleBox.getSelectedIndex()+1);
 		dispatcher.setUseScaleMeters(scaleMeters.isSelected());
+        jmri.jmrit.display.layoutEditor.LayoutEditor.setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
 		optionsFrame.setVisible(false);	
 		optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
 		optionsFrame = null;
@@ -318,7 +375,7 @@ public class OptionsMenu extends JMenu {
 		layoutScaleBox.setSelectedIndex(dispatcher.getScale()-1);
 	}
    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OptionsMenu.class.getName());
+    static Logger log = LoggerFactory.getLogger(OptionsMenu.class.getName());
 }
 
 /* @(#)OptionsMenu.java */

@@ -1,11 +1,17 @@
 <?xml version="1.0"?>
-<pane name="Speed Table">
+<pane name="Speed Table" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name xml:lang="ca">Taula de velocitat</name>
     <column>
         <row>
             <column>
-                <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control"/>
-                <label label="            To turn off, use Basic Speed Control pane"/>
+                <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
+                   <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
+                   <label xml:lang="ca">Selecciona aquest botÛ per fer servir taula de velocitats</label>
+                </display>
+                <label label="            To turn off, use Basic Speed Control pane">
+                <label xml:lang="it">Per disabilitare usare il Pannello Semplificato per il controllo Velocità</label>
+                <label xml:lang="ca">Per desconnectar, utilitza la pestanya Control B‡sic de Velocitat</label>
+                </label> 
             </column>
         </row>
         <row>
@@ -17,7 +23,10 @@
         <row>
             <column>
                 <label label=" "/>
-                <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table"/>
+                <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table">
+                    <tooltip xml:lang="it">Seleziona Tabella Velocità del Costruttore o Tabella Personalizzata</tooltip>
+                    <tooltip xml:lang="ca">Selecciona taula de velocitats del fabricant o de l'usuari</tooltip>
+                </display>
             </column>
         </row>
         <row>
@@ -29,7 +38,10 @@
 <row>
             <column>
                 <label label=" "/>
-                <display item="Forward Trim" tooltip="Fine tune the forward voltage levels"/>
+                <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
+                   <tooltip xml:lang="it">Impostazione Fine Tensione motore in Avanti</tooltip>
+                   <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enreda</tooltip>
+                </display>
                 <label label=" "/>
             </column>
             <column>
@@ -37,7 +49,10 @@
             </column>
             <column>
                 <label label=" "/>
-                <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels"/>
+                <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
+                  <tooltip xml:lang="it">Impostazione Fine Tensione motore in Indietro</tooltip>
+                   <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enreda</tooltip>
+                </display>
                 <label label=" "/>
             </column>
         </row>

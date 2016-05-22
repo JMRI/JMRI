@@ -35,26 +35,6 @@
     </xs:documentation>
   </xs:annotation>
 
-  <xs:attribute name="lang" xmlns:xml="http://www.w3.org/XML/1998/namespace" type="xs:language">
-    <xs:annotation>
-      <xs:documentation>
-      Specify the natural language for an element.
-      This is a global attribute, schema-valid in 
-      any JMRI element, but may not be processed in all 
-      of them.
-      For more information on use, see the 
-      <a href="http://www.w3.org/International/questions/qa-when-xmllang">W3C I8N page</a>.
-      </xs:documentation>
-    </xs:annotation>
-<!-- 
-    <xs:simpleType>
-      <xs:restriction base="xs:token">
-          <xs:pattern value="[a-z][a-z]|[a-z][a-z]_[A-Z][A-Z]"/>
-      </xs:restriction>
-    </xs:simpleType>
- -->
-  </xs:attribute>
-
   <xs:complexType name="NamedBeanType">
     <xs:sequence>
       <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
@@ -247,6 +227,19 @@
     <xs:restriction base="xs:token">
       <xs:enumeration value="yes"/>
       <xs:enumeration value="no"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="yesNoMaybeType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's either "yes", "no" or "maybe".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+      <xs:enumeration value="maybe"/>
     </xs:restriction>
   </xs:simpleType>
 

@@ -19,11 +19,12 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import java.io.File;
-import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 
 /**
  * Create a new VSDecoder Pane.
@@ -72,5 +73,5 @@ public class VSDecoderCreationAction extends AbstractAction {
 	tf.toFront();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderCreationAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class.getName());
 }

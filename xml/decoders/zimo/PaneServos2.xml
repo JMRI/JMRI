@@ -1,126 +1,123 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
 <pane name="Servos">
-    <column>
-      <row>
-        <column>
-          <display item="Servo Protocol" format="radiobuttons" tooltip="CV161 bit 0"/>
-        </column>
-        <column>
-          <label label="                          ">
-            <label>                          </label>
-          </label>
-        </column>
-        <column>
-          <display item="Servo Control Signal" format="radiobuttons" tooltip="CV161 bit 1"/>
-        </column>
-      </row>
-      <display item="Servo Centering" format="radiobuttons" tooltip="CV161 bit 2"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <separator/>
-      <row>
-        <column>
-          <label label="Servo 1        ">
-            <label>Servo 1        </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Servo 1 Function Allocation" label="Function Allocation" tooltip="CV181">
-            <label>Function Allocation</label>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <column>
-              <display item="Servo 1 Rotation Speed" label="Rotation Speed" tooltip="CV165">
-                <label>Rotation Speed</label>
-              </display>
-            </column>
-            <column>
-              <label label="Tenths of a second">
-                <label>Tenths of a second</label>
-              </label>
-            </column>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Servo 1 Left Stop" label="Left Stop" tooltip="CV162">
-            <label>Left Stop</label>
-          </display>
-          <display item="Servo 1 Centre" label="Centre" tooltip="CV164">
-            <label>Centre</label>
-          </display>
-          <display item="Servo 1 Right Stop" label="Right Stop" tooltip="CV163">
-            <label>Right Stop</label>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <label label="Servo 2        ">
-            <label>Servo 2        </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Servo 2 Function Allocation" label="Function Allocation" tooltip="CV182">
-            <label>Function Allocation</label>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <column>
-              <display item="Servo 2 Rotation Speed" label="Rotation Speed" tooltip="CV169">
-                <label>Rotation Speed</label>
-              </display>
-            </column>
-            <column>
-              <label label="Tenths of a second">
-                <label>Tenths of a second</label>
-              </label>
-            </column>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Servo 2 Left Stop" label="Left Stop" tooltip="CV166">
-            <label>Left Stop</label>
-          </display>
-          <display item="Servo 2 Centre" label="Centre" tooltip="CV168">
-            <label>Centre</label>
-          </display>
-          <display item="Servo 2 Right Stop" label="Right Stop" tooltip="CV167">
-            <label>Right Stop</label>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>Servos</name>
-  </pane>
+  <column>
+    <row>
+      <column>
+        <display item="Servo Protocol" format="radiobuttons" tooltip="CV161 bit 0"/>
+      </column>
+      <column>
+        <label label="                          ">
+          <label>                          </label>
+        </label>
+      </column>
+      <column>
+        <display item="Servo Control Signal" format="radiobuttons" tooltip="CV161 bit 1"/>
+      </column>
+    </row>
+    <display item="Servo Centering" format="radiobuttons" tooltip="CV161 bit 2"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <separator/>
+    <row>
+      <column>
+        <label label="Servo 1        ">
+          <label>Servo 1        </label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 1 Function Allocation" label="Function Allocation" tooltip="CV181">
+          <label>Function Allocation</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <column>
+            <display item="Servo 1 Rotation Speed" label="Rotation Speed" tooltip="CV165">
+              <label>Rotation Speed</label>
+            </display>
+          </column>
+          <column>
+            <label label="Tenths of a second">
+              <label>Tenths of a second</label>
+            </label>
+          </column>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 1 Left Stop" label="Left Stop" tooltip="CV162">
+          <label>Left Stop</label>
+        </display>
+        <display item="Servo 1 Centre" label="Centre" tooltip="CV164">
+          <label>Centre</label>
+        </display>
+        <display item="Servo 1 Right Stop" label="Right Stop" tooltip="CV163">
+          <label>Right Stop</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <label label="Servo 2        ">
+          <label>Servo 2        </label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 2 Function Allocation" label="Function Allocation" tooltip="CV182">
+          <label>Function Allocation</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <column>
+            <display item="Servo 2 Rotation Speed" label="Rotation Speed" tooltip="CV169">
+              <label>Rotation Speed</label>
+            </display>
+          </column>
+          <column>
+            <label label="Tenths of a second">
+              <label>Tenths of a second</label>
+            </label>
+          </column>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Servo 2 Left Stop" label="Left Stop" tooltip="CV166">
+          <label>Left Stop</label>
+        </display>
+        <display item="Servo 2 Centre" label="Centre" tooltip="CV168">
+          <label>Centre</label>
+        </display>
+        <display item="Servo 2 Right Stop" label="Right Stop" tooltip="CV167">
+          <label>Right Stop</label>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>Servos</name>
+</pane>

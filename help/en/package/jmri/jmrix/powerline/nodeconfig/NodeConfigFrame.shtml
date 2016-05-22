@@ -23,14 +23,13 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Configure Powerline Devices
-</H1>
+<H1>Configure Powerline Devices</H1>
     
 This is the help/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame help page
 
 <p>
 Poweline devices need to be configured before input works.
-
+</p>
 <p>
 The node software comes in ... separate varieties:
 <dl>
@@ -38,7 +37,10 @@ The node software comes in ... separate varieties:
 <dd>(comment explaining what the type is in more detail)</dd>
 
 </dl>
+
 <!--#include virtual="/Footer" -->
+	</div>
+  </div>
 </body>
 </html>
 

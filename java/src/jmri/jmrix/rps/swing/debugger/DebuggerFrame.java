@@ -2,6 +2,8 @@
  
  package jmri.jmrix.rps.swing.debugger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.*;
 
 import javax.swing.*;
@@ -328,5 +330,5 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     com.csvreader.CsvReader measurementInput = null;
     final javax.swing.JFileChooser measurementFileChooser = new JFileChooser("rps/positions.csv");
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebuggerFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(DebuggerFrame.class.getName());
 }

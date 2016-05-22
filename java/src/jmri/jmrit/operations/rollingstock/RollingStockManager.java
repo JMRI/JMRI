@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -25,7 +27,7 @@ public class RollingStockManager {
 
 	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>(); //RollingStock by id
 
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength";
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength"; // NOI18N
 
     public RollingStockManager() {
     }
@@ -72,7 +74,7 @@ public class RollingStockManager {
     	Enumeration<String> en = _hashTable.keys();
     	while (en.hasMoreElements()) { 
     		RollingStock rs = getById(en.nextElement());
-    		if(rs.getType().equals(type) && rs.getRoad().equals(road))
+    		if(rs.getTypeName().equals(type) && rs.getRoadName().equals(road))
     			return rs;
     	}
     	return null;
@@ -296,7 +298,7 @@ public class RollingStockManager {
     	List<String> out = new ArrayList<String>();
     	for (int i=0; i<l.size(); i++){
     		RollingStock rs = getById(l.get(i));
-    		if (rs.getType().equals(type))
+    		if (rs.getTypeName().equals(type))
     			out.add(l.get(i));
     	}
     	return out;
@@ -331,7 +333,9 @@ public class RollingStockManager {
      * @return list of RollingStock ids ordered by trains
      */
     public List<String> getByTrainList() {
-    	return getByList(getByLocationList(), BY_TRAIN);
+    	List<String> byDest = getByList(getByIdList(), BY_DESTINATION);
+    	List<String> byLoc = getByList(byDest, BY_LOCATION);
+    	return getByList(byLoc, BY_TRAIN);
     }
     
     /**
@@ -372,6 +376,14 @@ public class RollingStockManager {
      */
     public List<String> getByRfidList() {
     	return getByList(getByIdList(), BY_RFID);
+    }
+    
+    /**
+     * Sort by rolling stock last date used
+     * @return list of RollingStock ids ordered by last date
+     */
+    public List<String> getByLastDateList() {
+    	return getByList(getByIdList(), BY_LAST);
     }
     
     private static final int pageSize = 64;
@@ -439,6 +451,7 @@ public class RollingStockManager {
     }
     
     // The various sort options for RollingStock
+    // see CarManager and EngineManger for other values
     protected static final int BY_NUMBER = 0;
     protected static final int BY_ROAD = 1;
     protected static final int BY_TYPE = 2;
@@ -456,12 +469,13 @@ public class RollingStockManager {
     // BY_FINAL_DEST = 14
     protected static final int BY_VALUE = 15;
     // BY_WAIT = 16
+    protected static final int BY_LAST = 17;
     
     protected Object getRsAttribute(RollingStock rs, int attribute){
     	switch (attribute){
     	case BY_NUMBER: return rs.getNumber();
-    	case BY_ROAD: return rs.getRoad();
-    	case BY_TYPE: return rs.getType();
+    	case BY_ROAD: return rs.getRoadName();
+    	case BY_TYPE: return rs.getTypeName();
     	case BY_COLOR: return rs.getColor();
     	case BY_LOCATION: return rs.getStatus() + rs.getLocationName() + rs.getTrackName();
     	case BY_DESTINATION: return rs.getDestinationName() + rs.getDestinationTrackName();
@@ -471,7 +485,8 @@ public class RollingStockManager {
     	case BY_OWNER: return rs.getOwner();
     	case BY_RFID: return rs.getRfid();
     	case BY_VALUE: return rs.getValue();
-    	default: return "unknown";	
+    	case BY_LAST: return convertLastDate(rs.getLastDate());
+    	default: return "unknown";	 // NOI18N
     	}
     }
     
@@ -488,6 +503,29 @@ public class RollingStockManager {
     		}
     	return date;
     }
+    
+	/**
+	 * The input format is month/day/year time. The problem is month and day can be a single character, and the order is
+	 * all wrong so sorting doesn't work well. This converts the format to yyyy/mm/dd time for proper sorting.
+	 * 
+	 * @param date
+	 * @return
+	 */
+	private String convertLastDate(String date) {
+		String[] newDate = date.split("/");
+		if (newDate.length < 3)
+			return date;
+		String month = newDate[0];
+		String day = newDate[1];
+		if (newDate[0].length() == 1)
+			month = "0" + month;
+		if (newDate[1].length() == 1)
+			day = "0" + day;
+		String[] yearTime = newDate[2].split(" ");
+		String year = yearTime[0];
+		String time = yearTime[1];
+		return month = year + "/" + month + "/" + day + " " + time;
+	}
     
     /**
 	 * Return a list available rolling stock (no assigned train or rolling stock already assigned
@@ -544,7 +582,7 @@ public class RollingStockManager {
     	// move high priority ids to the start
     	for (int i=0; i<list.size(); i++){
     		rs = getById(list.get(i));
-    		if (rs.getPriority().equals(CarLoad.PRIORITY_HIGH)){
+    		if (rs.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)){
     			out.add(list.get(i));
     			list.remove(i);
     			i--;   			
@@ -601,7 +639,7 @@ public class RollingStockManager {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RollingStockManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(RollingStockManager.class.getName());
 
 }
 

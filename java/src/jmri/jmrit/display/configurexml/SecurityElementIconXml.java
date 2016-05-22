@@ -1,5 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SecurityElementIcon;
@@ -80,6 +82,6 @@ public class SecurityElementIconXml extends AbstractXmlAdapter {
         ed.putItem(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(TurnoutIconXml.class.getName());
 
 }

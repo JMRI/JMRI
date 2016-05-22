@@ -117,7 +117,7 @@
     <li>Stephen Brooks, who did the initial testing of the Grapevine 
     and Maple support
 	<LI>Bill Brown, whose layout was used for the first NCE tests
-	<LI>Graeme Brown, who helped debug the MacOS X disk images and startup scripts for 10.4
+	<LI>Graeme Brown, who helped debug the Mac OS X disk images and startup scripts for 10.4
 	    and provided updates for NCE decoders
     <LI>Bob Bucklew, who as an early CTC-builder showed the way to better functionality,
         provided images, and keeps use moving toward better CTC models.
@@ -129,6 +129,7 @@
         added the Light Control, provided sample scripts, 
         improved the titling of throttle windows, 
         and created the InstallTest app.
+    <LI>Paco Cañada, who provided decoder definitions for <a href="http://www.ppp-digital.es/">PpP decoders</a>.
     <LI>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger decoders
     <LI>Joan Carrancà, who provided the German DB signal set.
     <LI>Alain Carraso, who provided decoder definition for Arnold and Mistral Train decoders
@@ -198,7 +199,7 @@
 	<LI>Dave Falkenburg created the original DecoderPro application (and
 	found the perfect name for it!)
 	He created our
-	Mac Classic and MacOS X icons and worked on the PanelPro logo.
+	Mac Classic and Mac OS X icons and worked on the PanelPro logo.
 	He also updated the NCE support to work with new NCE EPROMs
 	that require binary commands, and made it work with TCS decoders.
 	He's helped with networking and various Macintosh issues,
@@ -274,7 +275,7 @@
 <a name="K"></A>
     <LI>Georg Kautzsch, who provided a decoder definition for the Uhlenbrock 67800 servo decoder.
     <LI>Scott Kitts, who helped debug the new communications library for 
-    MacOS X
+    Mac OS X
     <LI>Michael Kneebone, who gave permission to allow us to use his SliderSnap
         class that corrects the behavior of JSliders, making them snap whilst
         sliding rather than afterwards.
@@ -347,7 +348,7 @@
 <a name="O"></A>
 	<LI>Glen Oberhauser, who added LocoNet throttles
 	<li>David Phillip Oster provided key information and a useful tool
-	    to help get USB working on MacOS X
+	    to help get USB working on Mac OS X
 <a name="P"></A>
 	<LI>Howard G. Penny provided info on the NCE D14SR decoder, then went on to 
 	become an active developer, including providing the code for indexed CVs (ala QSI),
@@ -376,7 +377,7 @@
 	and decoder definitions for Team Digital products,
 	helped fix a problem with overrunning LocoNet command stations,
 	and provided example web pages for layout control via the mini-webserver.
-    <LI>Mark Rogerson, who provided the RXTX (Java communications library) for MacOS X machines with Intel processors
+    <LI>Mark Rogerson, who provided the RXTX (Java communications library) for Mac OS X machines with Intel processors
 	<LI>Wim Ros, who provide help with the direct connection to the Intellibox
 	<LI>Klaus Ruebsam, who is hosting German and English JMRI discussion
 	groups on his 
@@ -467,7 +468,7 @@
     <LI>Ken Weygandt, who provided the default values for the SoundTraxx Tsunami decoder definition and 45-degree icons for panels,
         and helped fix a problem with over-running LocoNet command stations.
     <li>Denny Whitaker, who wrote a great 
-            <a href="http://www.mgbrr.org/Tips/Lessons%20Learned%20on%20Hares-Wabbits%20v1.pdf">description of how to program Hare and Wabbit controllers</a> using JMRI.
+            <a href="http://www.mgbrr.org/tips/lessons-learned-on-hares-wabbits-v1.pdf">description of how to program Hare and Wabbit controllers</a> using JMRI.
 	<LI>Rich White II, who provided the images for our small Nixie tube clock
     <li>Simon White, who added support for FindBugs and EMMA to our build tools.
     <li>Stephen Williams, who improved the LocoNet slot monitor,

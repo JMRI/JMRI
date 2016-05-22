@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 import jmri.configurexml.*;
 import jmri.jmrit.display.configurexml.*;
@@ -48,6 +50,6 @@ public class LayoutPositionableLabelXml extends AbstractXmlAdapter {
         tmp.load(element, o);
 	}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutPositionableLabelXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutPositionableLabelXml.class.getName());
 
 }

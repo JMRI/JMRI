@@ -2,6 +2,8 @@
 
 package jmri.jmrit.progsupport;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import javax.swing.*;
 import jmri.*;
@@ -103,7 +105,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
         });
 
         // create the set frame
-        setFrame = new JFrame("Set programming mode");
+        setFrame = new JFrame(Bundle.getMessage("TitleSetProgrammingMode"));
         setFrame.getContentPane().add(servicePane);
         setFrame.pack();
 
@@ -133,12 +135,12 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
 
     private String decodeMode(int mode) {
         switch (mode) {
-        case Programmer.ADDRESSMODE:    return "Address mode programming      ";
-        case Programmer.DIRECTBITMODE:  return "Direct bit mode programming   ";
-        case Programmer.DIRECTBYTEMODE: return "Direct byte mode programming  ";
-        case Programmer.PAGEMODE:       return "Page mode programming         ";
-        case Programmer.REGISTERMODE:   return "Register mode programming     ";
-        default:                        return "Unknown programming mode      ";
+        case Programmer.ADDRESSMODE:    return Bundle.getMessage("AddressMode");
+        case Programmer.DIRECTBITMODE:  return Bundle.getMessage("DirectBit");
+        case Programmer.DIRECTBYTEMODE: return Bundle.getMessage("DirectByte");
+        case Programmer.PAGEMODE:       return Bundle.getMessage("PagedMode");
+        case Programmer.REGISTERMODE:   return Bundle.getMessage("RegisterMode");
+        default:                        return Bundle.getMessage("UnknownMode");
         }
     }
 
@@ -169,5 +171,5 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgDeferredServiceModePane.class.getName());
+    static Logger log = LoggerFactory.getLogger(ProgDeferredServiceModePane.class.getName());
 }

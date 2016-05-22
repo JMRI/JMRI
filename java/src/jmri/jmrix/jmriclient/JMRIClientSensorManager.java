@@ -2,6 +2,8 @@
 
 package jmri.jmrix.jmriclient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 
 /**
@@ -34,7 +36,17 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
         return t;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientSensorManager.class.getName());
+    /*
+     * JMRIClient Sensors can take arbitrary names to match the names used
+     * on the server.
+     */
+    @Override
+    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException{
+        return prefix+typeLetter()+curAddress;
+    }
+
+
+    static Logger log = LoggerFactory.getLogger(JMRIClientSensorManager.class.getName());
 
 }
 

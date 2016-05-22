@@ -2,11 +2,14 @@
 
 package jmri.jmrit.roster;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.ImageIcon;
@@ -14,10 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -51,7 +54,7 @@ import org.jdom.Element;
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
-public class RosterEntry implements jmri.BasicRosterEntry{
+public class RosterEntry implements jmri.BasicRosterEntry {
     // members to remember all the info
     protected String _fileName = null;
 
@@ -85,9 +88,11 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     
     java.util.TreeMap<String,String> attributePairs;
     
-    protected String _imageFilePath = XmlFile.resourcesDir() ; // at DndImagePanel init will
-    protected String _iconFilePath = XmlFile.resourcesDir() ;  // force image copy to that folder
+    protected String _imageFilePath = FileUtil.getUserResourcePath() ; // at DndImagePanel init will
+    protected String _iconFilePath = FileUtil.getUserResourcePath() ;  // force image copy to that folder
     protected String _URL = "";
+    
+    protected RosterSpeedProfile _sp = null;
     
 	/**
      * Construct a blank object.
@@ -152,7 +157,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     public void setId(String s) {
         String oldID = _id;
         _id = s;
-        if (! oldID.equals(s)) {
+        if (oldID == null || ! oldID.equals(s)) {
             Roster.instance().entryIdChanged(this);
             firePropertyChange("id", oldID, s);
         }
@@ -252,6 +257,18 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         else
             _protocol=LocoAddress.Protocol.DCC_SHORT;
         firePropertyChange("longaddress", old, Boolean.valueOf(b));
+    }
+    
+    public RosterSpeedProfile getSpeedProfile(){
+        return _sp;
+    }
+    
+    public void setSpeedProfile(RosterSpeedProfile sp){
+        if(sp.getRosterEntry()!=this){
+            log.error("Attempting to set a speed profile against the wrong roster entry");
+            return;
+        }
+        _sp=sp;
     }
 
     public boolean isLongAddress() {
@@ -385,8 +402,8 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         if ((a = e.getAttribute("dccAddress")) != null )  _dccAddress = a.getValue();
         
         // file path were saved without default xml config path 
-        if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = XmlFile.resourcesDir()+a.getValue();
-        if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = XmlFile.resourcesDir()+a.getValue();
+        if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = FileUtil.getUserResourcePath()+a.getValue();
+        if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = FileUtil.getUserResourcePath()+a.getValue();
         if ((a = e.getAttribute("URL")) != null )  _URL = a.getValue();
         if ((a = e.getAttribute("IsShuntingOn")) != null )  _isShuntingOn = a.getValue();
         if ((a = e.getAttribute("maxSpeed")) != null )  
@@ -438,6 +455,11 @@ public class RosterEntry implements jmri.BasicRosterEntry{
 
         loadFunctions(e.getChild("functionlabels"));
         loadAttributes(e.getChild("attributepairs"));
+        
+        if(e.getChild("speedprofile")!=null){
+            _sp = new RosterSpeedProfile(this);
+            _sp.load(e.getChild("speedprofile"));
+        }
 
     }
     
@@ -466,9 +488,9 @@ public class RosterEntry implements jmri.BasicRosterEntry{
                     this.setFunctionLockable(num, lock.equals("true"));
                     Attribute a;
                     if ((a = fn.getAttribute("functionImage")) != null)
-                    	this.setFunctionImage(num, XmlFile.resourcesDir()+a.getValue());
+                    	this.setFunctionImage(num, FileUtil.getUserResourcePath()+a.getValue());
                     if ((a = fn.getAttribute("functionImageSelected")) != null)
-                    	this.setFunctionSelectedImage(num, XmlFile.resourcesDir()+a.getValue());              
+                    	this.setFunctionSelectedImage(num, FileUtil.getUserResourcePath()+a.getValue());              
                 }
             }
         }
@@ -522,7 +544,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     public String getFunctionImage(int fn) {
     	if ((functionImages != null) && (functionImages[fn] != null))
     		return functionImages[fn];
-    	return XmlFile.resourcesDir() ; 
+    	return FileUtil.getUserResourcePath(); 
     }
     
     public void setFunctionSelectedImage(int fn, String s) {
@@ -534,7 +556,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     public String getFunctionSelectedImage(int fn) {
     	if ((functionSelectedImages != null) && (functionSelectedImages[fn] != null))
     		return functionSelectedImages[fn];
-    	return XmlFile.resourcesDir() ; 
+    	return FileUtil.getUserResourcePath(); 
     }
     /**
      * Define whether a specific function is lockable.
@@ -628,12 +650,12 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         e.setAttribute("maxSpeed", (Integer.valueOf(getMaxSpeedPCT()).toString()));
         // file path are saved without default xml config path
         try {
-        	e.setAttribute("imageFilePath", getImagePath().substring( XmlFile.resourcesDir().length() ));
+        	e.setAttribute("imageFilePath", getImagePath().substring( FileUtil.getUserResourcePath().length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
         	e.setAttribute("imageFilePath", "");
         }
         try {
-        e.setAttribute("iconFilePath", getIconPath().substring( XmlFile.resourcesDir().length() ));
+        e.setAttribute("iconFilePath", getIconPath().substring( FileUtil.getUserResourcePath().length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
         	e.setAttribute("iconFilePath", "");
         }
@@ -648,7 +670,6 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         d.setAttribute("comment",getDecoderComment());
 
         e.addContent(d);
-
         if (_dccAddress.equals("")) {
             e.addContent( (new jmri.configurexml.LocoAddressXml()).store(null));  // store a null address
         } else {
@@ -668,14 +689,14 @@ public class RosterEntry implements jmri.BasicRosterEntry{
                         fne.setAttribute("lockable", lockable ? "true" : "false");
                         if ((functionImages!=null) && (functionImages[i]!=null)) {
                         	try {
-                        		fne.setAttribute("functionImage", functionImages[i].substring( XmlFile.resourcesDir().length() ));
+                        		fne.setAttribute("functionImage", functionImages[i].substring( FileUtil.getUserResourcePath().length() ));
                         	} catch (StringIndexOutOfBoundsException eob) {
                         		fne.setAttribute("functionImage", "");
                         	} 
                         }
                         if ((functionSelectedImages!=null) && (functionSelectedImages[i]!=null)) {
                         	try {
-                        		fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring( XmlFile.resourcesDir().length() ));
+                        		fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring( FileUtil.getUserResourcePath().length() ));
                         	} catch (StringIndexOutOfBoundsException eob) {
                         		fne.setAttribute("functionImageSelected", "");
                         	} 
@@ -707,6 +728,9 @@ public class RosterEntry implements jmri.BasicRosterEntry{
                 e.addContent(d);
             }
         }
+        if(_sp!=null){
+            _sp.store(e);
+        }
         return e;
     }
 
@@ -733,7 +757,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
 
     /**
      * Write the contents of this RosterEntry back to a file,
-     * preserving all existing decoder content.
+     * preserving all existing decoder CV content.
      * <p>
      * This writes the file back in place, with the same decoder-specific
      * content.
@@ -759,7 +783,10 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         } catch (Exception e) {
             log.error("error during locomotive file output", e);
             try {
-                JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")+"\n"+e.getMessage(), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"), 
+                        JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
@@ -780,7 +807,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         LocoFile df = new LocoFile();
 
         // do I/O
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        FileUtil.createDirectory(LocoFile.getFileLocation());
 
         try {
             String fullFilename = LocoFile.getFileLocation()+getFileName();
@@ -797,7 +824,10 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         } catch (Exception e) {
             log.error("error during locomotive file output", e);
             try {
-                JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")+"\n"+e.getMessage(), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"), 
+                        JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
@@ -825,14 +855,23 @@ public class RosterEntry implements jmri.BasicRosterEntry{
      * @param cvModel Model to load, must exist
      */
     public void loadCvModel(CvTableModel cvModel, IndexedCvTableModel iCvModel) {
-        if (cvModel == null) log.error("loadCvModel must be given a non-null argument");
-        if (mRootElement == null) log.error("loadCvModel called before readFile() succeeded");
+        if (cvModel == null) {
+            log.error("loadCvModel must be given a non-null argument");
+            return;
+        }
+        if (mRootElement == null) {
+            log.error("loadCvModel called before readFile() succeeded");
+            return;
+        }
         try{
-            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel);
+            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel, getDecoderFamily());
         } catch (Exception ex){
             log.error("Error reading roster entry", ex);
             try {
-                JOptionPane.showMessageDialog(null,  "An error occured while trying to read the roster entry " + getId() + "\nPlease check the console for more information", "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,  
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorReadingText"), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorReadingTitle"), 
+                        JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
@@ -1147,6 +1186,6 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntry.class.getName());
+    static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
 
 }

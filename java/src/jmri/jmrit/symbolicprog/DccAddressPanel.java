@@ -2,14 +2,17 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 
 /**
  * Provide a graphical representation of the DCC address, either long or short
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2012
  * @version			$Revision$
  */
 public class DccAddressPanel extends JPanel {
@@ -28,7 +31,7 @@ public class DccAddressPanel extends JPanel {
      * status information needed.
      */
     public DccAddressPanel(VariableTableModel mod) {
-        this(mod, "Active DCC Address: ");
+        this(mod, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextDccAddress"));
     }
     public DccAddressPanel(VariableTableModel mod, String label) {
         variableModel = mod;
@@ -60,7 +63,7 @@ public class DccAddressPanel extends JPanel {
 
         // show address field
         add(new JLabel(label));
-        val.setToolTipText("This field shows the DCC address currently in use. CV1 provides the short address; CV17 & 18 provide the long address");
+        val.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ToolTipDccAddress"));
         add(val);
 
         // update initial contents & color
@@ -193,6 +196,6 @@ public class DccAddressPanel extends JPanel {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccAddressPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(DccAddressPanel.class.getName());
 
 }

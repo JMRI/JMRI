@@ -32,8 +32,7 @@ import java.awt.event.ActionEvent;
      }
      
      public SimpleProgAction() {
-        this(java.util.ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle")
-            .getString("MenuItemSingleCVProgrammer"));
+        this(Bundle.getMessage("MenuItemSingleCVProgrammer"));
      }
      
      public void actionPerformed(ActionEvent e) {

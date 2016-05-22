@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
@@ -765,7 +767,7 @@ public class DefaultLogix extends AbstractNamedBean
                 
             case LISTENER_TYPE_WARRANT:
 				Warrant w = InstanceManager.warrantManagerInstance().
-										provideWarrant(listener.getDevName());
+										getWarrant(listener.getDevName());
 				if (w==null) {
 					msg= "warrant";
 					break;
@@ -778,7 +780,7 @@ public class DefaultLogix extends AbstractNamedBean
 				return;
             case LISTENER_TYPE_OBLOCK:
 				OBlock b = InstanceManager.oBlockManagerInstance().
-										provideOBlock(listener.getDevName());
+										getOBlock(listener.getDevName());
 				if (b==null) {
 					msg= "oblock";
 					break;
@@ -877,7 +879,7 @@ public class DefaultLogix extends AbstractNamedBean
                     return;
                 case LISTENER_TYPE_WARRANT:
                     Warrant w = InstanceManager.warrantManagerInstance().
-                                            provideWarrant(listener.getDevName());
+                                            getWarrant(listener.getDevName());
                     if (w==null) {
                         msg= "warrant";
                         break;
@@ -891,7 +893,7 @@ public class DefaultLogix extends AbstractNamedBean
                     return;
                 case LISTENER_TYPE_OBLOCK:
                     OBlock b = InstanceManager.oBlockManagerInstance().
-                                            provideOBlock(listener.getDevName());
+                                            getOBlock(listener.getDevName());
                     if (b==null) {
                         msg= "oblock";
                         break;
@@ -1130,7 +1132,7 @@ public class DefaultLogix extends AbstractNamedBean
         return;
     }
 	
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultLogix.class.getName());
+    static final Logger log = LoggerFactory.getLogger(DefaultLogix.class.getName());
 }
 
 /* @(#)DefaultLogix.java */

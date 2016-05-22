@@ -1,7 +1,12 @@
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import jmri.util.PhysicalLocation;
 
 /**
  * Represents a particular piece of track, more informally a "Block".
@@ -92,7 +97,7 @@ import java.util.List;
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
-public class Block extends jmri.implementation.AbstractNamedBean {
+public class Block extends jmri.implementation.AbstractNamedBean implements PhysicalLocationReporter {
 
     public Block(String systemName) {
         super(systemName.toUpperCase());
@@ -110,16 +115,20 @@ public class Block extends jmri.implementation.AbstractNamedBean {
 	static final public int GRADUAL = 0x01;
 	static final public int TIGHT = 0x02;
 	static final public int SEVERE = 0x04;
-    
-    public void setSensor(String pName){
+
+	/*
+	 * return true if a Sensor is set
+	 */
+    public boolean setSensor(String pName){
         if(pName==null || pName.equals("")){
             setNamedSensor(null);
-            return;
+            return false;
         }
         if (InstanceManager.sensorManagerInstance()!=null) {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
                 setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
+                return true;
             } else {
                 setNamedSensor(null);
                 log.error("Sensor '"+pName+"' not available");
@@ -127,6 +136,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         } else {
             log.error("No SensorManager for this protocol");
         }
+        return false;
     }
     
     public void setNamedSensor(NamedBeanHandle<Sensor> s) {
@@ -537,6 +547,187 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         // in any case, go OCCUPIED
         setState(OCCUPIED);
     }
-       
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Block.class.getName());
+
+    /**
+     * Find which path this Block became Active, without actually
+     * modifying the state of this block.
+     *
+     * (this is largely a copy of the 'Search' part of the logic
+     * from goingActive())
+     */
+    public Path findFromPath() {
+        // index through the paths, counting
+        int count = 0;
+        Path next = null;
+        // get statuses of everything once
+        int currPathCnt = paths.size();
+        Path pList[] = new Path[currPathCnt];
+        boolean isSet[] = new boolean[currPathCnt];
+        Sensor pSensor[] = new Sensor[currPathCnt];
+        boolean isActive[] = new boolean[currPathCnt];
+        int pDir[] = new int[currPathCnt];
+        int pFromDir[] = new int[currPathCnt];
+        for (int i = 0; i < currPathCnt; i++) {
+	    pList[i] = paths.get(i);
+            isSet[i] = pList[i].checkPathSet();
+            Block b = pList[i].getBlock();
+            if (b != null) {
+                pSensor[i] = b.getSensor();
+                if (pSensor[i] != null) {
+                    isActive[i] = pSensor[i].getState() == Sensor.ACTIVE;
+                } else {
+                    isActive[i] = false;
+                }
+                pDir[i] = b.getDirection();
+            } else {
+                pSensor[i] = null;
+                isActive[i] = false;
+                pDir[i] = -1;
+            }
+            pFromDir[i] = pList[i].getFromBlockDirection();
+            if (isSet[i] && pSensor[i] != null && isActive[i]) {
+                count++;
+                next = pList[i];
+            }
+        }
+        // sort on number of neighbors
+        if ((count == 0) || (count == 1)){
+	    // do nothing.  OK to return null from this function.  "next" is already set.
+	} else {  
+	    // count > 1, check for one with proper direction
+            // this time, count ones with proper direction
+	    if (log.isDebugEnabled()) log.debug ("Block "+getSystemName()+"- count of active linked blocks = "+count);
+            next = null;
+            count = 0;
+            for (int i = 0; i < currPathCnt; i++) {
+                if (isSet[i] && pSensor[i] != null && isActive[i] && (pDir[i] == pFromDir[i])) {
+                    count++;
+                    next = pList[i];
+                } 
+            }
+            if (next == null)
+            	if (log.isDebugEnabled()) log.debug("next is null!");
+            if (next != null && count == 1) {
+                // found one block with proper direction, assume that
+            } else {
+                // no unique path with correct direction - this happens frequently from noise in block detectors!!
+                log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName());
+            }
+        }
+        // in any case, go OCCUPIED
+	if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+(next!=null ? next.getBlock().getSystemName() : "(no next block)")+ "(informational. No state change)");
+	return(next);
+    }
+    
+    /*
+     * This allows the layout block to inform any listerners to the block that the higher level layout block has been set to "useExtraColor" which is an 
+     * indication that it has been allocated to a section by the AutoDispatcher.  The value set is not retained in any form by the block, it is purely to
+     * trigger a propertyChangeEvent.
+     */
+    public void setAllocated(Boolean boo){
+        firePropertyChange("allocated", !boo, boo);
+    }
+
+    // Methods to implmement PhysicalLocationReporter Interface
+    //
+    // If we have a Reporter that is also a PhysicalLocationReporter,
+    // we will defer to that Reporter's methods.
+    // Else we will assume a LocoNet style message to be parsed.
+
+    /** Parse a given string and return the LocoAddress value that is presumed stored
+     * within it based on this object's protocol.
+     * The Class Block implementationd defers to its associated Reporter, if it exists.
+     *
+     * @param rep String to be parsed
+     * @return LocoAddress address parsed from string, or null if this Block isn't associated
+     *         with a Reporter, or is associated with a Reporter that is not also a
+     *         PhysicalLocationReporter
+     */
+    public LocoAddress getLocoAddress(String rep) {
+	// Defer parsing to our associated Reporter if we can.
+	if (rep == null) { 
+	    log.warn("String input is null!");
+	    return(null);
+	}
+	if ((this.getReporter() != null) && (this.getReporter() instanceof PhysicalLocationReporter)) {
+	    return(((PhysicalLocationReporter)this.getReporter()).getLocoAddress(rep));
+	} else {
+	    // Assume a LocoNet-style report.  This is (nascent) support for handling of Faller cars
+	    // for Dave Merrill's project.
+	    log.debug("report string: " + rep);
+	    // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+	    Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+	    Matcher m = ln_p.matcher(rep);
+	    if ((m != null) && m.find()) {
+		log.debug("Parsed address: " + m.group(1));
+		return(new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
+	    } else {
+		return(null);
+	    }
+	}
+    }
+     
+    /** Parses out a (possibly old) LnReporter-generated report string to extract the direction from
+     * within it based on this object's protocol.
+     * The Class Block implementationd defers to its associated Reporter, if it exists.
+     *
+     * @param rep String to be parsed
+     * @return PhysicalLocationReporter.Direction direction parsed from string, or null if 
+     *         this Block isn't associated with a Reporter, or is associated with a Reporter 
+     *         that is not also a PhysicalLocationReporter
+     */
+    public PhysicalLocationReporter.Direction getDirection(String rep) {
+	if (rep == null) { 
+	    log.warn("String input is null!");
+	    return(null);
+	}
+	// Defer parsing to our associated Reporter if we can.
+	if ((this.getReporter() != null) && (this.getReporter() instanceof PhysicalLocationReporter)) {
+	    return(((PhysicalLocationReporter)this.getReporter()).getDirection(rep));
+	} else {
+	    log.debug("report string: " + rep);
+	    // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+	    Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+	    Matcher m = ln_p.matcher(rep);
+	    if (m.find()) {
+		log.debug("Parsed direction: " + m.group(2));
+		if (m.group(2).equals("enter")) {
+		    // LocoNet Enter message
+		    return(PhysicalLocationReporter.Direction.ENTER);
+		} else if (m.group(2).equals("seen")) {
+		    // Lissy message.  Treat them all as "entry" messages.
+		    return(PhysicalLocationReporter.Direction.ENTER);
+		} else {
+		    return(PhysicalLocationReporter.Direction.EXIT);
+		}
+	    } else {
+		return(PhysicalLocationReporter.Direction.UNKNOWN);
+	    }
+	}
+    }
+
+    /** Return this Block's physical location, if it exists.
+     * Defers actual work to the helper methods in class PhysicalLocation
+     *
+     * @return PhysicalLocation : this Block's location.
+     */
+    public PhysicalLocation getPhysicalLocation() {
+	// We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
+	return(PhysicalLocation.getBeanPhysicalLocation(this));
+    }
+
+    /** Return this Block's physical location, if it exists.
+     * Does not use the parameter s
+     * Defers actual work to the helper methods in class PhysicalLocation
+     *
+     * @param s (this parameter is ignored)
+     * @return PhysicalLocation : this Block's location.
+     */
+    public PhysicalLocation getPhysicalLocation(String s) {
+	// We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
+	// Intentionally ignore the String s
+	return(PhysicalLocation.getBeanPhysicalLocation(this));
+    }
+
+    static Logger log = LoggerFactory.getLogger(Block.class.getName());
 }

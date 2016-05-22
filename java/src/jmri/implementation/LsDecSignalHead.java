@@ -14,6 +14,8 @@
 
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -189,6 +191,6 @@ public class LsDecSignalHead extends DefaultSignalHead {
     public void setFlashGreenState(int i) {mFlashGreenState = i;}
     public void setDarkState(int i) {mDarkState = i;}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LsDecSignalHead.class.getName());
+    static Logger log = LoggerFactory.getLogger(LsDecSignalHead.class.getName());
     
 }

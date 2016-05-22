@@ -1,5 +1,7 @@
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.NamedBeanHandle;
 
 /**
@@ -329,5 +331,5 @@ public interface SignalGroup extends NamedBean {
     static final int ONCLOSED = 2;    // route fires if turnout goes closed
     static final int ONTHROWN = 4;  // route fires if turnout goes thrown
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalGroup.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalGroup.class.getName());
 }

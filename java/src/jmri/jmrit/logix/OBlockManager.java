@@ -2,6 +2,8 @@
 
 package jmri.jmrit.logix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractManager;
 
 /**
@@ -32,7 +34,7 @@ import jmri.managers.AbstractManager;
  * @version     $Revision$
  */
 public class OBlockManager extends AbstractManager
-    implements java.beans.PropertyChangeListener {
+    implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
     public OBlockManager() {
         super();
@@ -112,7 +114,7 @@ public class OBlockManager extends AbstractManager
         return (_instance);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OBlockManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(OBlockManager.class.getName());
 }
 
 /* @(#)OBlockManager.java */

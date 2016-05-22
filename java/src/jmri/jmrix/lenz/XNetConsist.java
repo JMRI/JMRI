@@ -10,11 +10,13 @@
 
 package jmri.jmrix.lenz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 
-public class XNetConsist extends jmri.DccConsist implements XNetListener {
+public class XNetConsist extends jmri.implementation.DccConsist implements XNetListener {
 
 	// We need to wait for replies before completing consist 
 	// operations
@@ -523,6 +525,6 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
         tc.sendXNetMessage(msg,this);
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetConsist.class.getName());
+	static Logger log = LoggerFactory.getLogger(XNetConsist.class.getName());
 
 }

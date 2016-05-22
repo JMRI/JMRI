@@ -1,348 +1,345 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
-  <pane name="Alt Function Map">
-    <column>
-      <display item="FO3 + FO4 directional setting" tooltip="CV152 bit 6"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Special Function Mapping" format="radiobuttons" tooltip="CV 61"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label="           Description                                      Output wire or operation">
-        <label>           Description                                      Output wire or operation</label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <column>
-          <label label="                                               1">
-            <label>                                               1</label>
-          </label>
-          <label label="                                           Front  ">
-            <label>                                           Front  </label>
-          </label>
-          <label label="                                           Light  ">
-            <label>                                           Light  </label>
-          </label>
-          <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)" tooltip="CV 33">
-            <label>Forward Headlight F0(f)</label>
-          </display>
-          <display item="FL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)" tooltip="CV 34">
-            <label>Reverse Headlight F0(r)</label>
-          </display>
-          <display item="F1 controls output 1" format="checkbox" label="Function 1         " tooltip="CV 35">
-            <label>Function 1         </label>
-          </display>
-          <display item="F2 controls output 1" format="checkbox" label="Function 2         " tooltip="CV 36">
-            <label>Function 2         </label>
-          </display>
-          <display item="AltF3 controls output 1" format="checkbox" label="Function 3         " tooltip="CV 37">
-            <label>Function 3         </label>
-          </display>
-          <display item="AltF4 controls output 1" format="checkbox" label="Function 4         " tooltip="CV 38">
-            <label>Function 4         </label>
-          </display>
-          <display item="AltF5 controls output 1" format="checkbox" label="Function 5         " tooltip="CV 39">
-            <label>Function 5         </label>
-          </display>
-          <display item="AltF6 controls output 1" format="checkbox" label="Function 6         " tooltip="CV 40">
-            <label>Function 6         </label>
-          </display>
-          <display item="AltF7 controls output 1" format="checkbox" label="Function 7         " tooltip="CV 41">
-            <label>Function 7         </label>
-          </display>
-          <display item="AltF8 controls output 1" format="checkbox" label="Function 8         " tooltip="CV 42">
-            <label>Function 8         </label>
-          </display>
-          <display item="AltF9 controls output 1" format="checkbox" label="Function 9         " tooltip="CV 43">
-            <label>Function 9         </label>
-          </display>
-          <display item="AltF10 controls output 1" format="checkbox" label="Function 10         " tooltip="CV 44">
-            <label>Function 10         </label>
-          </display>
-          <display item="AltF11 controls output 1" format="checkbox" label="Function 11         " tooltip="CV 45">
-            <label>Function 11         </label>
-          </display>
-          <display item="AltF12 controls output 1" format="checkbox" label="Function 12         " tooltip="CV 46">
-            <label>Function 12         </label>
-          </display>
-        </column>
-        <column>
-          <label label="    2 ">
-            <label>    2 </label>
-          </label>
-          <label label=" Rear ">
-            <label> Rear </label>
-          </label>
-          <label label=" Light ">
-            <label> Light </label>
-          </label>
-          <display item="FL(f) controls output 2" format="checkbox" label="" tooltip="CV 33">
-            <label/>
-          </display>
-          <display item="FL(r) controls output 2" format="checkbox" label="" tooltip="CV 34">
-            <label/>
-          </display>
-          <display item="F1 controls output 2" format="checkbox" label="" tooltip="CV 35">
-            <label/>
-          </display>
-          <display item="F2 controls output 2" format="checkbox" label="" tooltip="CV 36">
-            <label/>
-          </display>
-          <display item="AltF3 controls output 2" format="checkbox" label="" tooltip="CV 37">
-            <label/>
-          </display>
-          <display item="AltF4 controls output 2" format="checkbox" label="" tooltip="CV 38">
-            <label/>
-          </display>
-          <display item="AltF5 controls output 2" format="checkbox" label="" tooltip="CV 39">
-            <label/>
-          </display>
-          <display item="AltF6 controls output 2" format="checkbox" label="" tooltip="CV 40">
-            <label/>
-          </display>
-          <display item="AltF7 controls output 2" format="checkbox" label="" tooltip="CV 41">
-            <label/>
-          </display>
-          <display item="AltF8 controls output 2" format="checkbox" label="" tooltip="CV 42">
-            <label/>
-          </display>
-          <display item="AltF9 controls output 2" format="checkbox" label="" tooltip="CV 43">
-            <label/>
-          </display>
-          <display item="AltF10 controls output 2" format="checkbox" label="" tooltip="CV 44">
-            <label/>
-          </display>
-          <display item="AltF11 controls output 2" format="checkbox" label="" tooltip="CV 45">
-            <label/>
-          </display>
-          <display item="AltF12 controls output 2" format="checkbox" label="" tooltip="CV 46">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <label label="    3 ">
-            <label>    3 </label>
-          </label>
-          <label label="  FO 1 ">
-            <label>  FO 1 </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="FL(f) controls output 3" format="checkbox" label="" tooltip="CV 33">
-            <label/>
-          </display>
-          <display item="FL(r) controls output 3" format="checkbox" label="" tooltip="CV 34">
-            <label/>
-          </display>
-          <display item="F1 controls output 3" format="checkbox" label="" tooltip="CV 35">
-            <label/>
-          </display>
-          <display item="F2 controls output 3" format="checkbox" label="" tooltip="CV 36">
-            <label/>
-          </display>
-          <display item="AltF3 controls output 3" format="checkbox" label="" tooltip="CV 37">
-            <label/>
-          </display>
-          <display item="AltF4 controls output 3" format="checkbox" label="" tooltip="CV 38">
-            <label/>
-          </display>
-          <display item="AltF5 controls output 3" format="checkbox" label="" tooltip="CV 39">
-            <label/>
-          </display>
-          <display item="AltF6 controls output 3" format="checkbox" label="" tooltip="CV 40">
-            <label/>
-          </display>
-          <display item="AltF7 controls output 3" format="checkbox" label="" tooltip="CV 41">
-            <label/>
-          </display>
-          <display item="AltF8 controls output 3" format="checkbox" label="" tooltip="CV 42">
-            <label/>
-          </display>
-          <display item="AltF9 controls output 3" format="checkbox" label="" tooltip="CV 43">
-            <label/>
-          </display>
-          <display item="AltF10 controls output 3" format="checkbox" label="" tooltip="CV 44">
-            <label/>
-          </display>
-          <display item="AltF11 controls output 3" format="checkbox" label="" tooltip="CV 45">
-            <label/>
-          </display>
-          <display item="AltF12 controls output 3" format="checkbox" label="" tooltip="CV 46">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <label label="    4 ">
-            <label>    4 </label>
-          </label>
-          <label label=" FO 2 ">
-            <label> FO 2 </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="FL(f) controls output 4" format="checkbox" label="" tooltip="CV 33">
-            <label/>
-          </display>
-          <display item="FL(r) controls output 4" format="checkbox" label="" tooltip="CV 34">
-            <label/>
-          </display>
-          <display item="F1 controls output 4" format="checkbox" label="" tooltip="CV 35">
-            <label/>
-          </display>
-          <display item="F2 controls output 4" format="checkbox" label="" tooltip="CV 36">
-            <label/>
-          </display>
-          <display item="AltF3 controls output 4" format="checkbox" label="" tooltip="CV 37">
-            <label/>
-          </display>
-          <display item="AltF4 controls output 4" format="checkbox" label="" tooltip="CV 38">
-            <label/>
-          </display>
-          <display item="AltF5 controls output 4" format="checkbox" label="" tooltip="CV 39">
-            <label/>
-          </display>
-          <display item="AltF6 controls output 4" format="checkbox" label="" tooltip="CV 40">
-            <label/>
-          </display>
-          <display item="AltF7 controls output 4" format="checkbox" label="" tooltip="CV 41">
-            <label/>
-          </display>
-          <display item="AltF8 controls output 4" format="checkbox" label="" tooltip="CV 42">
-            <label/>
-          </display>
-          <display item="AltF9 controls output 4" format="checkbox" label="" tooltip="CV 43">
-            <label/>
-          </display>
-          <display item="AltF10 controls output 4" format="checkbox" label="" tooltip="CV 44">
-            <label/>
-          </display>
-          <display item="AltF11 controls output 4" format="checkbox" label="" tooltip="CV 45">
-            <label/>
-          </display>
-          <display item="AltF12 controls output 4" format="checkbox" label="" tooltip="CV 46">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <label label="     5 ">
-            <label>     5 </label>
-          </label>
-          <label label=" FO 3 ">
-            <label> FO 3 </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="FL(f) controls output 5" format="checkbox" label="" tooltip="CV 33">
-            <label/>
-          </display>
-          <display item="FL(r) controls output 5" format="checkbox" label="" tooltip="CV 34">
-            <label/>
-          </display>
-          <display item="F1 controls output 5" format="checkbox" label="" tooltip="CV 35">
-            <label/>
-          </display>
-          <display item="F2 controls output 5" format="checkbox" label="" tooltip="CV 36">
-            <label/>
-          </display>
-          <display item="AltF3 controls output 5" format="checkbox" label="" tooltip="CV 37">
-            <label/>
-          </display>
-          <display item="AltF4 controls output 5" format="checkbox" label="" tooltip="CV 38">
-            <label/>
-          </display>
-          <display item="AltF5 controls output 5" format="checkbox" label="" tooltip="CV 39">
-            <label/>
-          </display>
-          <display item="AltF6 controls output 5" format="checkbox" label="" tooltip="CV 40">
-            <label/>
-          </display>
-          <display item="AltF7 controls output 5" format="checkbox" label="" tooltip="CV 41">
-            <label/>
-          </display>
-          <display item="AltF8 controls output 5" format="checkbox" label="" tooltip="CV 42">
-            <label/>
-          </display>
-          <display item="AltF9 controls output 5" format="checkbox" label="" tooltip="CV 43">
-            <label/>
-          </display>
-          <display item="AltF10 controls output 5" format="checkbox" label="" tooltip="CV 44">
-            <label/>
-          </display>
-          <display item="AltF11 controls output 5" format="checkbox" label="" tooltip="CV 45">
-            <label/>
-          </display>
-          <display item="AltF12 controls output 5" format="checkbox" label="" tooltip="CV 46">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <label label="    6">
-            <label>    6</label>
-          </label>
-          <label label=" FO 4">
-            <label> FO 4</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="FL(f) controls output 6" format="checkbox" label="" tooltip="CV 33">
-            <label/>
-          </display>
-          <display item="FL(r) controls output 6" format="checkbox" label="" tooltip="CV 34">
-            <label/>
-          </display>
-          <display item="F1 controls output 6" format="checkbox" label="" tooltip="CV 35">
-            <label/>
-          </display>
-          <display item="F2 controls output 6" format="checkbox" label="" tooltip="CV 36">
-            <label/>
-          </display>
-          <display item="AltF3 controls output 6" format="checkbox" label="" tooltip="CV 37">
-            <label/>
-          </display>
-          <display item="AltF4 controls output 6" format="checkbox" label="" tooltip="CV 38">
-            <label/>
-          </display>
-          <display item="AltF5 controls output 6" format="checkbox" label="" tooltip="CV 39">
-            <label/>
-          </display>
-          <display item="AltF6 controls output 6" format="checkbox" label="" tooltip="CV 40">
-            <label/>
-          </display>
-          <display item="AltF7 controls output 6" format="checkbox" label="" tooltip="CV 41">
-            <label/>
-          </display>
-          <display item="AltF8 controls output 6" format="checkbox" label="" tooltip="CV 42">
-            <label/>
-          </display>
-          <display item="AltF9 controls output 6" format="checkbox" label="" tooltip="CV 43">
-            <label/>
-          </display>
-          <display item="AltF10 controls output 6" format="checkbox" label="" tooltip="CV 44">
-            <label/>
-          </display>
-          <display item="AltF11 controls output 6" format="checkbox" label="" tooltip="CV 45">
-            <label/>
-          </display>
-          <display item="AltF12 controls output 6" format="checkbox" label="" tooltip="CV 46">
-            <label/>
-          </display>
-        </column>
-      </row>
-    </column>
-    <name>Alt Function Map</name>
-  </pane>
+<pane name="Alt Function Map">
+  <column>
+    <display item="FO3 + FO4 directional setting" tooltip="CV152 bit 6"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Special Function Mapping" format="radiobuttons" tooltip="CV 61"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label="           Description                                      Output wire or operation">
+      <label>           Description                                      Output wire or operation</label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <column>
+        <label label="                                               1">
+          <label>                                               1</label>
+        </label>
+        <label label="                                           Front  ">
+          <label>                                           Front  </label>
+        </label>
+        <label label="                                           Light  ">
+          <label>                                           Light  </label>
+        </label>
+        <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)" tooltip="CV 33">
+          <label>Forward Headlight F0(f)</label>
+        </display>
+        <display item="FL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)" tooltip="CV 34">
+          <label>Reverse Headlight F0(r)</label>
+        </display>
+        <display item="F1 controls output 1" format="checkbox" label="Function 1         " tooltip="CV 35">
+          <label>Function 1         </label>
+        </display>
+        <display item="F2 controls output 1" format="checkbox" label="Function 2         " tooltip="CV 36">
+          <label>Function 2         </label>
+        </display>
+        <display item="AltF3 controls output 1" format="checkbox" label="Function 3         " tooltip="CV 37">
+          <label>Function 3         </label>
+        </display>
+        <display item="AltF4 controls output 1" format="checkbox" label="Function 4         " tooltip="CV 38">
+          <label>Function 4         </label>
+        </display>
+        <display item="AltF5 controls output 1" format="checkbox" label="Function 5         " tooltip="CV 39">
+          <label>Function 5         </label>
+        </display>
+        <display item="AltF6 controls output 1" format="checkbox" label="Function 6         " tooltip="CV 40">
+          <label>Function 6         </label>
+        </display>
+        <display item="AltF7 controls output 1" format="checkbox" label="Function 7         " tooltip="CV 41">
+          <label>Function 7         </label>
+        </display>
+        <display item="AltF8 controls output 1" format="checkbox" label="Function 8         " tooltip="CV 42">
+          <label>Function 8         </label>
+        </display>
+        <display item="AltF9 controls output 1" format="checkbox" label="Function 9         " tooltip="CV 43">
+          <label>Function 9         </label>
+        </display>
+        <display item="AltF10 controls output 1" format="checkbox" label="Function 10         " tooltip="CV 44">
+          <label>Function 10         </label>
+        </display>
+        <display item="AltF11 controls output 1" format="checkbox" label="Function 11         " tooltip="CV 45">
+          <label>Function 11         </label>
+        </display>
+        <display item="AltF12 controls output 1" format="checkbox" label="Function 12         " tooltip="CV 46">
+          <label>Function 12         </label>
+        </display>
+      </column>
+      <column>
+        <label label="    2 ">
+          <label>    2 </label>
+        </label>
+        <label label=" Rear ">
+          <label> Rear </label>
+        </label>
+        <label label=" Light ">
+          <label> Light </label>
+        </label>
+        <display item="FL(f) controls output 2" format="checkbox" label="" tooltip="CV 33">
+          <label/>
+        </display>
+        <display item="FL(r) controls output 2" format="checkbox" label="" tooltip="CV 34">
+          <label/>
+        </display>
+        <display item="F1 controls output 2" format="checkbox" label="" tooltip="CV 35">
+          <label/>
+        </display>
+        <display item="F2 controls output 2" format="checkbox" label="" tooltip="CV 36">
+          <label/>
+        </display>
+        <display item="AltF3 controls output 2" format="checkbox" label="" tooltip="CV 37">
+          <label/>
+        </display>
+        <display item="AltF4 controls output 2" format="checkbox" label="" tooltip="CV 38">
+          <label/>
+        </display>
+        <display item="AltF5 controls output 2" format="checkbox" label="" tooltip="CV 39">
+          <label/>
+        </display>
+        <display item="AltF6 controls output 2" format="checkbox" label="" tooltip="CV 40">
+          <label/>
+        </display>
+        <display item="AltF7 controls output 2" format="checkbox" label="" tooltip="CV 41">
+          <label/>
+        </display>
+        <display item="AltF8 controls output 2" format="checkbox" label="" tooltip="CV 42">
+          <label/>
+        </display>
+        <display item="AltF9 controls output 2" format="checkbox" label="" tooltip="CV 43">
+          <label/>
+        </display>
+        <display item="AltF10 controls output 2" format="checkbox" label="" tooltip="CV 44">
+          <label/>
+        </display>
+        <display item="AltF11 controls output 2" format="checkbox" label="" tooltip="CV 45">
+          <label/>
+        </display>
+        <display item="AltF12 controls output 2" format="checkbox" label="" tooltip="CV 46">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <label label="    3 ">
+          <label>    3 </label>
+        </label>
+        <label label="  FO 1 ">
+          <label>  FO 1 </label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="FL(f) controls output 3" format="checkbox" label="" tooltip="CV 33">
+          <label/>
+        </display>
+        <display item="FL(r) controls output 3" format="checkbox" label="" tooltip="CV 34">
+          <label/>
+        </display>
+        <display item="F1 controls output 3" format="checkbox" label="" tooltip="CV 35">
+          <label/>
+        </display>
+        <display item="F2 controls output 3" format="checkbox" label="" tooltip="CV 36">
+          <label/>
+        </display>
+        <display item="AltF3 controls output 3" format="checkbox" label="" tooltip="CV 37">
+          <label/>
+        </display>
+        <display item="AltF4 controls output 3" format="checkbox" label="" tooltip="CV 38">
+          <label/>
+        </display>
+        <display item="AltF5 controls output 3" format="checkbox" label="" tooltip="CV 39">
+          <label/>
+        </display>
+        <display item="AltF6 controls output 3" format="checkbox" label="" tooltip="CV 40">
+          <label/>
+        </display>
+        <display item="AltF7 controls output 3" format="checkbox" label="" tooltip="CV 41">
+          <label/>
+        </display>
+        <display item="AltF8 controls output 3" format="checkbox" label="" tooltip="CV 42">
+          <label/>
+        </display>
+        <display item="AltF9 controls output 3" format="checkbox" label="" tooltip="CV 43">
+          <label/>
+        </display>
+        <display item="AltF10 controls output 3" format="checkbox" label="" tooltip="CV 44">
+          <label/>
+        </display>
+        <display item="AltF11 controls output 3" format="checkbox" label="" tooltip="CV 45">
+          <label/>
+        </display>
+        <display item="AltF12 controls output 3" format="checkbox" label="" tooltip="CV 46">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <label label="    4 ">
+          <label>    4 </label>
+        </label>
+        <label label=" FO 2 ">
+          <label> FO 2 </label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="FL(f) controls output 4" format="checkbox" label="" tooltip="CV 33">
+          <label/>
+        </display>
+        <display item="FL(r) controls output 4" format="checkbox" label="" tooltip="CV 34">
+          <label/>
+        </display>
+        <display item="F1 controls output 4" format="checkbox" label="" tooltip="CV 35">
+          <label/>
+        </display>
+        <display item="F2 controls output 4" format="checkbox" label="" tooltip="CV 36">
+          <label/>
+        </display>
+        <display item="AltF3 controls output 4" format="checkbox" label="" tooltip="CV 37">
+          <label/>
+        </display>
+        <display item="AltF4 controls output 4" format="checkbox" label="" tooltip="CV 38">
+          <label/>
+        </display>
+        <display item="AltF5 controls output 4" format="checkbox" label="" tooltip="CV 39">
+          <label/>
+        </display>
+        <display item="AltF6 controls output 4" format="checkbox" label="" tooltip="CV 40">
+          <label/>
+        </display>
+        <display item="AltF7 controls output 4" format="checkbox" label="" tooltip="CV 41">
+          <label/>
+        </display>
+        <display item="AltF8 controls output 4" format="checkbox" label="" tooltip="CV 42">
+          <label/>
+        </display>
+        <display item="AltF9 controls output 4" format="checkbox" label="" tooltip="CV 43">
+          <label/>
+        </display>
+        <display item="AltF10 controls output 4" format="checkbox" label="" tooltip="CV 44">
+          <label/>
+        </display>
+        <display item="AltF11 controls output 4" format="checkbox" label="" tooltip="CV 45">
+          <label/>
+        </display>
+        <display item="AltF12 controls output 4" format="checkbox" label="" tooltip="CV 46">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <label label="     5 ">
+          <label>     5 </label>
+        </label>
+        <label label=" FO 3 ">
+          <label> FO 3 </label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="FL(f) controls output 5" format="checkbox" label="" tooltip="CV 33">
+          <label/>
+        </display>
+        <display item="FL(r) controls output 5" format="checkbox" label="" tooltip="CV 34">
+          <label/>
+        </display>
+        <display item="F1 controls output 5" format="checkbox" label="" tooltip="CV 35">
+          <label/>
+        </display>
+        <display item="F2 controls output 5" format="checkbox" label="" tooltip="CV 36">
+          <label/>
+        </display>
+        <display item="AltF3 controls output 5" format="checkbox" label="" tooltip="CV 37">
+          <label/>
+        </display>
+        <display item="AltF4 controls output 5" format="checkbox" label="" tooltip="CV 38">
+          <label/>
+        </display>
+        <display item="AltF5 controls output 5" format="checkbox" label="" tooltip="CV 39">
+          <label/>
+        </display>
+        <display item="AltF6 controls output 5" format="checkbox" label="" tooltip="CV 40">
+          <label/>
+        </display>
+        <display item="AltF7 controls output 5" format="checkbox" label="" tooltip="CV 41">
+          <label/>
+        </display>
+        <display item="AltF8 controls output 5" format="checkbox" label="" tooltip="CV 42">
+          <label/>
+        </display>
+        <display item="AltF9 controls output 5" format="checkbox" label="" tooltip="CV 43">
+          <label/>
+        </display>
+        <display item="AltF10 controls output 5" format="checkbox" label="" tooltip="CV 44">
+          <label/>
+        </display>
+        <display item="AltF11 controls output 5" format="checkbox" label="" tooltip="CV 45">
+          <label/>
+        </display>
+        <display item="AltF12 controls output 5" format="checkbox" label="" tooltip="CV 46">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <label label="    6">
+          <label>    6</label>
+        </label>
+        <label label=" FO 4">
+          <label> FO 4</label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="FL(f) controls output 6" format="checkbox" label="" tooltip="CV 33">
+          <label/>
+        </display>
+        <display item="FL(r) controls output 6" format="checkbox" label="" tooltip="CV 34">
+          <label/>
+        </display>
+        <display item="F1 controls output 6" format="checkbox" label="" tooltip="CV 35">
+          <label/>
+        </display>
+        <display item="F2 controls output 6" format="checkbox" label="" tooltip="CV 36">
+          <label/>
+        </display>
+        <display item="AltF3 controls output 6" format="checkbox" label="" tooltip="CV 37">
+          <label/>
+        </display>
+        <display item="AltF4 controls output 6" format="checkbox" label="" tooltip="CV 38">
+          <label/>
+        </display>
+        <display item="AltF5 controls output 6" format="checkbox" label="" tooltip="CV 39">
+          <label/>
+        </display>
+        <display item="AltF6 controls output 6" format="checkbox" label="" tooltip="CV 40">
+          <label/>
+        </display>
+        <display item="AltF7 controls output 6" format="checkbox" label="" tooltip="CV 41">
+          <label/>
+        </display>
+        <display item="AltF8 controls output 6" format="checkbox" label="" tooltip="CV 42">
+          <label/>
+        </display>
+        <display item="AltF9 controls output 6" format="checkbox" label="" tooltip="CV 43">
+          <label/>
+        </display>
+        <display item="AltF10 controls output 6" format="checkbox" label="" tooltip="CV 44">
+          <label/>
+        </display>
+        <display item="AltF11 controls output 6" format="checkbox" label="" tooltip="CV 45">
+          <label/>
+        </display>
+        <display item="AltF12 controls output 6" format="checkbox" label="" tooltip="CV 46">
+          <label/>
+        </display>
+      </column>
+    </row>
+  </column>
+  <name>Alt Function Map</name>
+</pane>

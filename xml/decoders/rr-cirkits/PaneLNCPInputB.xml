@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,334 +11,326 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file includes for LNCP files -->
-
 <!-- Panes to show Masts -->
-
-  <pane name="Input B">
-    <column>
-      <row>
-        <column>
-          <label label="Control Point Input Port Configuration settings. All numbers are entered as">
+<pane name="Input B">
+  <column>
+    <row>
+      <column>
+        <label label="Control Point Input Port Configuration settings. All numbers are entered as">
           </label>
-          <label label="their actual event numbers. For example LS9 is entered as event number 9.">
+        <label label="their actual event numbers. For example LS9 is entered as event number 9.">
           </label>
-          <label label="Paired inputs respond only to the first line's event numbers. The other event numbers are ignored.">
+        <label label="Paired inputs respond only to the first line's event numbers. The other event numbers are ignored.">
           </label>
-        </column>
-      </row>
-      <separator/>
-      <separator/>
-      <row>
-        <column>
-          <display item="In5 Paired" label="Input #5  (Pin 4)             Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="In5 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="In5 Effect" label="      Effect">
-          </display>
-        </column>
-        <column>
-          <display item="IP5 Type" label="Type" tooltip="Line #5 is paired with Line #6">
-            <label>IP5 Type</label>
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In5 Base Address" label="Primary event #" tooltip="CV161-2">
-          </display>
-        </column>
-        <column>
-          <display item="In5 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="In5 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="In5 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In5 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="In5 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="In5 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="In5 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In5 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="In5 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="In5 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="In5 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="In6 Paired" label="Input #6  (Pin 3)             Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="In6 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="In6 Effect" label="      Effect">
-          </display>
-        </column>
-        <column>
-          <display item="IP5 Type" label="Type" tooltip="Line #6 is paired with Line #5">
-            <label>IP6 Type</label>
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In6 Base Address" label="Primary event #" tooltip="CV169-70">
-          </display>
-        </column>
-        <column>
-          <display item="In6 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="In6 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="In6 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In6 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="In6 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="In6 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="In6 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In6 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="In6 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="In6 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="In6 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="In7 Paired" label="Input #7  (Pin 2)             Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="In7 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="In7 Effect" label="      Effect">
-          </display>
-        </column>
-        <column>
-          <display item="IP7 Type" label="Type" tooltip="Line #7 is paired with Line #8">
-            <label>IP7 Type</label>
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In7 Base Address" label="Primary event #" tooltip="CV177-8">
-          </display>
-        </column>
-        <column>
-          <display item="In7 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="In7 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="In7 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In7 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="In7 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="In7 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="In7 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In7 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="In7 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="In7 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="In7 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="In8 Paired" label="Input #8  (Pin 1)             Action" tooltip="Action when triggered">
-          </display>
-        </column>
-        <column>
-          <display item="In8 Timing" label="   Timing">
-          </display>
-        </column>
-        <column>
-          <display item="In8 Effect" label="      Effect">
-          </display>
-        </column>
-        <column>
-          <display item="IP7 Type" label="Type" tooltip="Line #8 is paired with Line #7">
-            <label>IP7 Type</label>
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In8 Base Address" label="Primary event #" tooltip="CV185-6">
-          </display>
-        </column>
-        <column>
-          <display item="In8 Input Direction" label="Polarity" tooltip="Direction for active message">
-          </display>
-        </column>
-        <column>
-          <display item="In8 Mode" label="">
-          </display>
-        </column>
-        <column>
-          <display item="In8 Transition" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In8 Secondary 1 Address" label="Second Event #">
-          </display>
-        </column>
-        <column>
-          <display item="In8 Secondary 1 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="In8 Secondary 1 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="In8 Secondary 1" label="message">
-          </display>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="In8 Secondary 2 Address" label="   Third Event #">
-          </display>
-        </column>
-        <column>
-          <display item="In8 Secondary 2 Polarity" label="Polarity">
-          </display>
-        </column>
-        <column>
-          <display item="In8 Secondary 2 Type" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <display item="In8 Secondary 2" label="message">
-          </display>
-        </column>
-      </row>
-      <separator/>
-      <separator/>
-    </column>
-  </pane>
-
-
-      
- 	  	 
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="In5 Paired" label="Input #5  (Pin 4)             Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="In5 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="In5 Effect" label="      Effect">
+          </display>
+      </column>
+      <column>
+        <display item="IP5 Type" label="Type" tooltip="Line #5 is paired with Line #6">
+          <label>IP5 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In5 Base Address" label="Primary event #" tooltip="CV161-2">
+          </display>
+      </column>
+      <column>
+        <display item="In5 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="In5 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="In5 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In5 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="In5 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="In5 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="In5 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In5 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="In5 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="In5 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="In5 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="In6 Paired" label="Input #6  (Pin 3)             Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="In6 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="In6 Effect" label="      Effect">
+          </display>
+      </column>
+      <column>
+        <display item="IP5 Type" label="Type" tooltip="Line #6 is paired with Line #5">
+          <label>IP6 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In6 Base Address" label="Primary event #" tooltip="CV169-70">
+          </display>
+      </column>
+      <column>
+        <display item="In6 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="In6 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="In6 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In6 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="In6 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="In6 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="In6 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In6 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="In6 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="In6 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="In6 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="In7 Paired" label="Input #7  (Pin 2)             Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="In7 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="In7 Effect" label="      Effect">
+          </display>
+      </column>
+      <column>
+        <display item="IP7 Type" label="Type" tooltip="Line #7 is paired with Line #8">
+          <label>IP7 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In7 Base Address" label="Primary event #" tooltip="CV177-8">
+          </display>
+      </column>
+      <column>
+        <display item="In7 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="In7 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="In7 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In7 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="In7 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="In7 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="In7 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In7 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="In7 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="In7 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="In7 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="In8 Paired" label="Input #8  (Pin 1)             Action" tooltip="Action when triggered">
+          </display>
+      </column>
+      <column>
+        <display item="In8 Timing" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="In8 Effect" label="      Effect">
+          </display>
+      </column>
+      <column>
+        <display item="IP7 Type" label="Type" tooltip="Line #8 is paired with Line #7">
+          <label>IP7 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In8 Base Address" label="Primary event #" tooltip="CV185-6">
+          </display>
+      </column>
+      <column>
+        <display item="In8 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="In8 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="In8 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In8 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="In8 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="In8 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="In8 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="In8 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="In8 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="In8 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="In8 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+  </column>
+</pane>

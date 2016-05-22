@@ -2,15 +2,16 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
 import java.awt.event.*;
 
 import javax.swing.*;
 
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Setup;
 
 
 /**
@@ -19,13 +20,11 @@ import jmri.jmrit.operations.OperationsXml;
  * @version     $Revision: 17977 $
  */
 public class AlternateTrackAction extends AbstractAction {
-		
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+			
 	private TrackEditFrame _tef;
 	
 	public AlternateTrackAction(TrackEditFrame tef){
-		super(rb.getString("AlternateTrack"));
+		super(Bundle.getMessage("AlternateTrack"));
 		_tef = tef;
 	}
 	
@@ -36,16 +35,14 @@ public class AlternateTrackAction extends AbstractAction {
 }
 
 class AlternateTrackFrame extends OperationsFrame{
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+		
 	// combo boxes
 	JComboBox trackBox = new JComboBox();
 	
 	// radio buttons
 	
     // major buttons
-    JButton saveButton = new JButton(rb.getString("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("Save"));
     
     Track _track;
 	
@@ -67,7 +64,7 @@ class AlternateTrackFrame extends OperationsFrame{
 
 		_track.getLocation().updateComboBox(trackBox);
 		trackBox.removeItem(_track);	// remove this track from consideration
-		trackBox.setSelectedItem(_track.getAlternativeTrack());
+		trackBox.setSelectedItem(_track.getAlternateTrack());
 
 		JPanel pControls = new JPanel();
 		pControls.add(saveButton);
@@ -78,7 +75,7 @@ class AlternateTrackFrame extends OperationsFrame{
     	getContentPane().add(pAlternate);
     	getContentPane().add(pControls);
     	
-    	setTitle(rb.getString("AlternateTrack"));
+    	setTitle(Bundle.getMessage("AlternateTrack"));
     	pack();
     	if (getWidth() < 300 || getHeight() < 100)
     		setSize(300, 100);
@@ -88,13 +85,15 @@ class AlternateTrackFrame extends OperationsFrame{
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){
 			if (trackBox.getSelectedItem() != null && !trackBox.getSelectedItem().equals(""))
-				_track.setAlternativeTrack((Track)trackBox.getSelectedItem());
+				_track.setAlternateTrack((Track)trackBox.getSelectedItem());
 			else 
-				_track.setAlternativeTrack(null);
+				_track.setAlternateTrack(null);
 			OperationsXml.save();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}		
 	}
 	
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackEditFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(TrackEditFrame.class.getName());
 }

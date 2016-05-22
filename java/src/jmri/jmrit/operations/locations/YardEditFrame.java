@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.BorderFactory;
 
 /**
@@ -12,7 +14,7 @@ import javax.swing.BorderFactory;
  */
 
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
-	
+
 	public YardEditFrame() {
 		super();
 	}
@@ -20,23 +22,23 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 	public void initComponents(Location location, Track track) {
 		_type = Track.YARD;
 		super.initComponents(location, track);
-		
-		_toolMenu.add(new ChangeTrackTypeAction (this));
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true);
-		
+
+		_toolMenu.add(new ChangeTrackTypeAction(this));
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true); // NOI18N
+
 		// override text strings for tracks
-		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainYard")));
-		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesYard")));
-		deleteTrackButton.setText(rb.getString("DeleteYard"));
-		addTrackButton.setText(rb.getString("AddYard"));
-		saveTrackButton.setText(rb.getString("SaveYard"));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainYard")));
+		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesYard")));
+		deleteTrackButton.setText(Bundle.getMessage("DeleteYard"));
+		addTrackButton.setText(Bundle.getMessage("AddYard"));
+		saveTrackButton.setText(Bundle.getMessage("SaveYard"));
 		// finish
-		dropPanel.setVisible(false);	// don't show drop and pick up panel
+		dropPanel.setVisible(false); // don't show drop and pick up panel
 		pickupPanel.setVisible(false);
-		packFrame();
+		pack();
 		setVisible(true);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(YardEditFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(YardEditFrame.class
+			.getName());
 }

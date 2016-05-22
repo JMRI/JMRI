@@ -1,5 +1,5 @@
 # This is an example script for invoking an AppleScript from
-# JMRI on MacOS X.
+# JMRI on Mac OS X.
 #
 # Author: Bob Jacobsen, Copyright 2008
 # Part of the JMRI distribution

@@ -4,6 +4,9 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Defines the routines that differentiate a Hornby Elite Command Station
@@ -27,7 +30,7 @@ public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStatio
     /*
      * We need to register for logging
      */
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HornbyEliteCommandStation.class.getName());
+    static Logger log = LoggerFactory.getLogger(HornbyEliteCommandStation.class.getName());
     
 }
 

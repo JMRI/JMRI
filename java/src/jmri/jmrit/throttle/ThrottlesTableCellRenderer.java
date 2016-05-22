@@ -3,7 +3,6 @@ package jmri.jmrit.throttle;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,7 +16,6 @@ import jmri.Throttle;
 import jmri.jmrit.roster.RosterIconFactory;
 
 public class ThrottlesTableCellRenderer implements TableCellRenderer {
-    private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
     private static final ImageIcon fwdIcon = new ImageIcon("resources/icons/throttles/up-green.png");
     private static final ImageIcon bckIcon = new ImageIcon("resources/icons/throttles/down-green.png");
     private static final ImageIcon estopIcon = new ImageIcon("resources/icons/throttles/estop24.png");
@@ -40,14 +38,14 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             text = tf.getAddressPanel().getRosterEntry().getId();
         } else if ((tf.getAddressPanel().getCurrentAddress() != null) && (tf.getAddressPanel().getThrottle() != null)) {
             if (tf.getAddressPanel().getCurrentAddress().getNumber() == 0) {
-                text = throttleBundle.getString("ThrottleDCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
+                text = Bundle.getMessage("ThrottleDCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
             } else if (tf.getAddressPanel().getCurrentAddress().getNumber() == 3) {
-                text = throttleBundle.getString("ThrottleDCCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
+                text = Bundle.getMessage("ThrottleDCCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
             } else {
-                text = throttleBundle.getString("ThrottleAddress") + " " + tf.getAddressPanel().getCurrentAddress();
+                text = Bundle.getMessage("ThrottleAddress") + " " + tf.getAddressPanel().getCurrentAddress();
             }
         } else {
-            text = throttleBundle.getString("ThrottleNotAssigned");
+            text = Bundle.getMessage("ThrottleNotAssigned");
         }
         if (icon != null) {
             icon.setImageObserver(jtable);
@@ -73,9 +71,9 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
                 }
             } else {
                 if (thr.getIsForward()) {
-                    dir.setText(throttleBundle.getString("ButtonForward"));
+                    dir.setText(Bundle.getMessage("ButtonForward"));
                 } else {
-                    dir.setText(throttleBundle.getString("ButtonReverse"));
+                    dir.setText(Bundle.getMessage("ButtonReverse"));
                 }
             }
             dir.setVerticalAlignment(JLabel.CENTER);
@@ -99,7 +97,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             } else {
                 JLabel speedLabel = new JLabel("");
                 if (thr.getSpeedSetting()==-1) {
-                     speedLabel.setText(" "+throttleBundle.getString("ButtonEStop")+" ");
+                     speedLabel.setText(" "+Bundle.getMessage("ButtonEStop")+" ");
                 } else {
                     speedLabel.setText(" "+(int)(thr.getSpeedSetting() * 100f)+"% ");
                 }

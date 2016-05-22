@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -62,6 +63,6 @@ public class DecVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( DecVariableValueTest.class.getName());
+    static Logger log = Logger.getLogger( DecVariableValueTest.class.getName());
 
 }

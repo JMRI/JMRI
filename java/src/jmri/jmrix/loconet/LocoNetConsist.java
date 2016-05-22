@@ -10,6 +10,8 @@
 
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
@@ -17,7 +19,7 @@ import jmri.ThrottleListener;
 
 import java.util.ArrayList;
 
-public class LocoNetConsist extends jmri.DccConsist implements SlotListener,ThrottleListener {
+public class LocoNetConsist extends jmri.implementation.DccConsist implements SlotListener,ThrottleListener {
 
 	private SlotManager slotManager=null;
 	private LnTrafficController trafficController=null;
@@ -437,6 +439,6 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 	    consistRequestState=IDLESTATE;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetConsist.class.getName());
+	static Logger log = LoggerFactory.getLogger(LocoNetConsist.class.getName());
 
 }

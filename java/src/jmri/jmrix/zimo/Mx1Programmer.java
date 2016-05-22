@@ -6,6 +6,8 @@
 
 package jmri.jmrix.zimo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 import java.util.Vector;
@@ -278,7 +280,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
             }
         }
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1Programmer.class.getName());
+   static Logger log = LoggerFactory.getLogger(Mx1Programmer.class.getName());
 
 }
 

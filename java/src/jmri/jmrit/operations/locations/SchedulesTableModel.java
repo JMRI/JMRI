@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.*;
 
 import javax.swing.*;
@@ -10,8 +12,6 @@ import javax.swing.table.TableColumnModel;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
@@ -25,8 +25,6 @@ import java.util.Hashtable;
  * @version   $Revision$
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
    
     ScheduleManager manager;						// There is only one manager
  
@@ -34,8 +32,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     private static final int IDCOLUMN = 0;
     private static final int NAMECOLUMN = IDCOLUMN+1;
     private static final int SCH_STATUSCOLUMN = NAMECOLUMN+1;
-    private static final int SIDINGSCOLUMN = SCH_STATUSCOLUMN+1;
-    private static final int STATUSCOLUMN = SIDINGSCOLUMN+1;
+    private static final int SPURCOLUMN = SCH_STATUSCOLUMN+1;
+    private static final int STATUSCOLUMN = SPURCOLUMN+1;
     private static final int EDITCOLUMN = STATUSCOLUMN+1;
     private static final int DELETECOLUMN = EDITCOLUMN+1;
     
@@ -107,7 +105,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
 		table.getColumnModel().getColumn(SCH_STATUSCOLUMN).setPreferredWidth(80);
-		table.getColumnModel().getColumn(SIDINGSCOLUMN).setPreferredWidth(350);
+		table.getColumnModel().getColumn(SPURCOLUMN).setPreferredWidth(350);
 		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(90);
@@ -119,14 +117,14 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     public String getColumnName(int col) {
         switch (col) {
-        case IDCOLUMN: return rb.getString("Id");
-        case NAMECOLUMN: return rb.getString("Name");
-        case SCH_STATUSCOLUMN: return rb.getString("Status");
-        case SIDINGSCOLUMN: return rb.getString("Sidings");
-        case STATUSCOLUMN: return rb.getString("StatusSiding");
-        case EDITCOLUMN: return rb.getString("Edit");
-        case DELETECOLUMN: return rb.getString("Delete");
-        default: return "unknown";
+        case IDCOLUMN: return Bundle.getMessage("Id");
+        case NAMECOLUMN: return Bundle.getMessage("Name");
+        case SCH_STATUSCOLUMN: return Bundle.getMessage("Status");
+        case SPURCOLUMN: return Bundle.getMessage("Spurs");
+        case STATUSCOLUMN: return Bundle.getMessage("StatusSpur");
+        case EDITCOLUMN: return Bundle.getMessage("Edit");
+        case DELETECOLUMN: return Bundle.getMessage("Delete");
+        default: return "unknown"; // NOI18N
         }
     }
 
@@ -135,7 +133,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         case IDCOLUMN: return String.class;
         case NAMECOLUMN: return String.class;
         case SCH_STATUSCOLUMN: return String.class;
-        case SIDINGSCOLUMN: return JComboBox.class;
+        case SPURCOLUMN: return JComboBox.class;
         case STATUSCOLUMN: return String.class;
         case EDITCOLUMN: return JButton.class;
         case DELETECOLUMN: return JButton.class;
@@ -147,7 +145,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         switch (col) {
         case EDITCOLUMN: 
         case DELETECOLUMN:
-        case SIDINGSCOLUMN:
+        case SPURCOLUMN:
         	return true;
         default: 
         	return false;
@@ -164,27 +162,27 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     		sef.requestFocus();
     	}
        	if (row >= sysList.size())
-    		return "ERROR row "+row;
+    		return "ERROR row "+row; // NOI18N
     	String id = sysList.get(row);
     	Schedule s = manager.getScheduleById(id);
        	if (s == null)
-    		return "ERROR schedule unknown "+row;
+    		return "ERROR schedule unknown "+row; // NOI18N
         switch (col) {
         case IDCOLUMN: return s.getId();
         case NAMECOLUMN: return s.getName();
         case SCH_STATUSCOLUMN: return getScheduleStatus(row);
-        case SIDINGSCOLUMN: {
-        	JComboBox box = manager.getSidingsByScheduleComboBox(s);
+        case SPURCOLUMN: {
+        	JComboBox box = manager.getSpursByScheduleComboBox(s);
         	String index = comboSelect.get(sysList.get(row));
         	if (index != null){
         		box.setSelectedIndex(Integer.parseInt(index));
         	}
         	return box;
         }
-        case STATUSCOLUMN: return getSidingStatus(row);
-        case EDITCOLUMN: return rb.getString("Edit");
-        case DELETECOLUMN: return rb.getString("Delete");
-        default: return "unknown "+col;
+        case STATUSCOLUMN: return getSpurStatus(row);
+        case EDITCOLUMN: return Bundle.getMessage("Edit");
+        case DELETECOLUMN: return Bundle.getMessage("Delete");
+        default: return "unknown "+col; // NOI18N
         }
     }
 
@@ -194,7 +192,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         	break;
         case DELETECOLUMN: deleteSchedule(row);
     		break;
-        case SIDINGSCOLUMN: selectJComboBox(value, row);
+        case SPURCOLUMN: selectJComboBox(value, row);
         	break;
         default:
             break;
@@ -212,13 +210,13 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	if (ltp == null){
     		log.debug("Need location track pair");
 			JOptionPane.showMessageDialog(null,
-					MessageFormat.format(rb.getString("AssignSchedule"),new Object[]{s.getName()}),
-					MessageFormat.format(rb.getString("CanNotSchedule"),new Object[]{rb.getString("Edit")}),
+					MessageFormat.format(Bundle.getMessage("AssignSchedule"),new Object[]{s.getName()}),
+					MessageFormat.format(Bundle.getMessage("CanNotSchedule"),new Object[]{Bundle.getMessage("Edit")}),
 					JOptionPane.ERROR_MESSAGE);
     		return;
     	}
        	sef = new ScheduleEditFrame();
-    	sef.setTitle(MessageFormat.format(rb.getString("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
+    	sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
     	sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
     	focusSef = true;
     }
@@ -227,8 +225,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	log.debug("Delete schedule");
     	Schedule s = manager.getScheduleById(sysList.get(row));
     	if (JOptionPane.showConfirmDialog(null,
-    			MessageFormat.format(rb.getString("DoYouWantToDeleteSchedule"),new Object[]{s.getName()}),
-    			rb.getString("DeleteSchedule?"),
+    			MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteSchedule"),new Object[]{s.getName()}),
+    			Bundle.getMessage("DeleteSchedule?"),
     			JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
     		manager.deregister(s);
     		OperationsXml.save();
@@ -245,7 +243,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     
     private LocationTrackPair getLocationTrackPair(int row){
        	Schedule s = manager.getScheduleById(sysList.get(row));
-       	JComboBox box = manager.getSidingsByScheduleComboBox(s);
+       	JComboBox box = manager.getSpursByScheduleComboBox(s);
     	String index = comboSelect.get(sysList.get(row));
     	LocationTrackPair ltp;
     	if (index != null){
@@ -258,24 +256,24 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     
     private String getScheduleStatus(int row){
     	Schedule sch = manager.getScheduleById(sysList.get(row));
-       	JComboBox box = manager.getSidingsByScheduleComboBox(sch); 
+       	JComboBox box = manager.getSpursByScheduleComboBox(sch); 
        	for (int i=0; i<box.getItemCount(); i++){
            	LocationTrackPair ltp = (LocationTrackPair)box.getItemAt(i);
            	String status = ltp.getTrack().checkScheduleValid();
            	if (!status.equals(""))
-           		return rb.getString("Error");
+           		return Bundle.getMessage("Error");
        	}
-       	return rb.getString("Okay");
+       	return Bundle.getMessage("Okay");
     }
     
-    private String getSidingStatus(int row){
+    private String getSpurStatus(int row){
      	LocationTrackPair ltp = getLocationTrackPair(row);
     	if (ltp == null)
     		return "";
     	String status = ltp.getTrack().checkScheduleValid();
     	if (!status.equals(""))
     		return status;
-    	return rb.getString("Okay");
+    	return Bundle.getMessage("Okay");
     }
     
     private void removePropertyChangeSchedules() {
@@ -314,6 +312,6 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
     
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SchedulesTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(SchedulesTableModel.class.getName());
 }
 

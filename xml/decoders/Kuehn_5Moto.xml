@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Kuehn_5Moto.xml 22078 2012-12-29 00:39:28Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -831,10 +831,7 @@
         </enumVal>
         <label>F8 controls output 4</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="0">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <variable label="User Private ID #1" CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>

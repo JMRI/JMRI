@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
 import jmri.util.FileUtil;
 import net.java.games.joal.AL;
@@ -188,6 +190,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             return "unknown format";
     }
 
+    @Override
     protected boolean loadBuffer(InputStream stream) {
         if (!_initialised) {
             return false;
@@ -207,9 +210,10 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             return false;
         }
 
-	return(this.processBuffer());
+        return(this.processBuffer());
     }
     
+    @Override
     protected boolean loadBuffer() {
         if (!_initialised) {
             return false;
@@ -230,11 +234,33 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             return false;
         }
 
+        return(this.processBuffer());
+    }
+
+    @Override
+    public boolean loadBuffer(ByteBuffer b, int format, int freq) {
+	if (!_initialised) {
+	    return false;
+	}
+	
+        // Reset buffer state
+        // Use internal methods to postpone loop buffer generation
+        setStartLoopPoint(0, false);
+        setEndLoopPoint(0, false);
+        this.setState(STATE_EMPTY);
+
+	// Load the buffer data.
+	_data[0] = b;
+	_format[0] = format;
+	_freq[0] = freq;
+	_size[0] = b.limit();
+
 	return(this.processBuffer());
+
     }
 
     private boolean processBuffer() {
-	// Processing steps common to both loadBuffer(InputStream) and loadBuffer()
+        // Processing steps common to both loadBuffer(InputStream) and loadBuffer()
 
         // Store the actual data in the buffer
         al.alBufferData(_dataStorageBuffer[0], _format[0], _data[0], _size[0], _freq[0]);
@@ -256,6 +282,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         return true;
     }
 
+    @Override
     protected boolean generateStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled())
@@ -263,12 +290,14 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         return true;
     }
 
+    @Override
     protected void removeStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled()) 
             log.debug("Method removeStreamingBuffers() called for JoalAudioBuffer " + this.getSystemName());
     }
 
+    @Override
     protected void generateLoopBuffers(int which) {
         if ((which==LOOP_POINT_START)||(which==LOOP_POINT_BOTH)) {
             // Create start loop buffer
@@ -282,6 +311,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             log.debug("Method generateLoopBuffers() called for JoalAudioBuffer " + this.getSystemName());
     }
 
+    @Override
     public int getFormat() {
         switch (this._format[0]) {
             case AL.AL_FORMAT_MONO8:
@@ -321,14 +351,21 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             return FORMAT_UNKNOWN;
     }
     
+    @Override
     public long getLength() {
-        return (long) this._size[0] / this.getFrameSize();
+	if (this.getFrameSize() == 0) {
+	    return(0);
+	} else {
+	    return (long) this._size[0] / this.getFrameSize();
+	}
     }
     
+    @Override
     public int getFrequency() {
         return this._freq[0];
     }
 
+    @Override
     protected void cleanUp() {
         if (_initialised) {
             al.alDeleteBuffers(1, _dataStorageBuffer, 0);
@@ -337,7 +374,8 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         this.dispose();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JoalAudioBuffer.class.getName());
+
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioBuffer.class.getName());
 
 }
 

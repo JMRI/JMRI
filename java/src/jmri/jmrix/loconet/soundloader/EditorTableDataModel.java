@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.soundloader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -16,6 +18,7 @@ import java.awt.Font;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
+import jmri.util.FileUtil;
 
 
 /**
@@ -201,7 +204,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     static JFileChooser chooser;  // shared across all uses
     
     void replWavButtonPressed(Object value, int row, int col) {
-        if (chooser == null) chooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+        if (chooser == null) chooser = new JFileChooser(FileUtil.getUserFilesPath());
         chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
@@ -441,6 +444,6 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorTableDataModel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(EditorTableDataModel.class.getName());
 
 }

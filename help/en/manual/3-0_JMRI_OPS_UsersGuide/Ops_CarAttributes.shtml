@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Ops_CarAttributes.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
+<title>Operations-Car Attributes</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Edit Car Attributes</h1>
+
+<div align=right>
+<p><a href="Ops_AddCars.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>To the right of each of the car attributes (<strong>Road</strong>, <strong>Type</strong>, <strong>Length</strong>, <strong>Color</strong>,  <strong>Kernel</strong>, <strong>Load</strong>, <strong>Owner</strong>)there is an 
+  <input type="submit" name="button" id="button" value="Edit">
+  that displays the Edit (attribute) dialog to allow you to edit the list of attributes available to use for Car definition. Use this to 
+  <input type="submit" name="button2" id="button2" value="Add">
+  ,
+  <input type="submit" name="button3" id="button3" value="Delete">
+  or 
+  <input type="submit" name="button4" id="button4" value="Replace">
+  the available attributes for a car.</p>
+<p><img src="images/Ops_EditAttributes.png" width="254" height="163" alt="Edit Car Attributes"></p>
+<p><strong>Tools menu</strong></p>
+<blockquote>
+  <p><strong>Show the number of cars with this attribute</strong></p>
+  <p><img src="images/Ops_EditAttributes_number.png" width="300" height="180" alt="Edit"></p>
+  <p><strong>Delete unused attributes.</strong></p>
+  <p>Prompt to delete unused attributes.</p>
+  <p><img src="images/Ops_DeleteAttributes.png" width="292" height="122" alt="delete"></p>
+</blockquote>
+<p>
+  <input type="submit" name="button5" id="button5" value="Add">
+  To add a new car attribute, enter the desired text in the text box and  press 
+  <input type="submit" name="button6" id="button6" value="Add">
+.  When you first enter a new car attribute it will  show up at the start of the list.  Later when your restart the program it  will be sorted in the correct order.</p>
+<p>
+  <input type="submit" name="button7" id="button7" value="Delete">
+  To delete a car attribute, select the attribute you want to delete in  the menu box and press
+  <input type="submit" name="button8" id="button8" value="Delete">
+.</p>
+<p> 
+  <input type="submit" name="button9" id="button9" value="Replace">
+If you need to change a specific car attribute (road, type, color, etc)  in your entire car roster, you can use the 
+<input type="submit" name="button10" id="button10" value="Replace">
+found at the  bottom right of the edit car attribute panel. </p>
+<p><img src="images/Ops_Replace.png" width="269" height="119" alt="Replace"></p>
+<p>For example, if you wish  to change the car road name attribute "UP" to "UPS" for all of your  cars. Press
+  <input type="submit" name="button11" id="button11" value="Replace">
+  for any of your cars in the Cars panel,  and the Replace All? dialog will display with a 
+  <input type="submit" name="button13" id="button13" value="Yes">
+or 
+<input type="submit" name="button14" id="button14" value="No">
+option.  Enter the new road "UPS" in the text box, select "UP" in the menu  box, and press 
+<input type="submit" name="button12" id="button12" value="Replace">
+. All cars with "UP" as their road will now have  "UPS" as their road name.</p>
+<p>&nbsp;</p>
+
+<hr>
+
+<div align=right>
+<p><a href="Ops_AddCars.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

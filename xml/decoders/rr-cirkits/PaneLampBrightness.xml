@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - new file includes for Signalman files -->
+<!-- version 1.1 - Add Strobe length -->
+
+<!-- Panes to show Lamp Brightness -->
+
+
+  <pane name="Brightness">
+    <column>
+      <row>
+      <column>
+        <display item="LB4" layout="above" label="Lamp L-H1">
+        </display>
+        <display item="LB4" layout="above" format="vslider" label=" "/>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB3" layout="above" label="Lamp R-H1">
+        </display>
+        <display item="LB3" layout="above" format="vslider" label=" "/>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB2" layout="above" label="Lamp Y-H1">
+        </display>
+        <display item="LB2" layout="above" format="vslider" label=" "/>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB1" layout="above" label="Lamp G-H1">
+        </display>
+        <display item="LB1" layout="above" format="vslider" label=" "/>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+      <label label="            ">
+        <label> </label>
+      </label>
+      </column>
+      <column>
+        <display item="LB8" layout="above" label="Lamp L-H2">
+        </display>
+        <display item="LB8" layout="above" format="vslider" label=" "/>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB7" layout="above" label="Lamp R-H2">
+        </display>
+        <display item="LB7" layout="above" format="vslider" label=" "/>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB6" layout="above" label="Lamp Y-H2">
+        </display>
+        <display item="LB6" layout="above" format="vslider" label=" "/>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB5" layout="above" label="Lamp G-H2">
+        </display>
+        <display item="LB5" layout="above" format="vslider" label=" "/>
+      </column>
+      </row>
+      <row>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </row>
+      <row>
+          <label label=" "/>
+      </row>
+      <row></row>
+      <row>
+      <column>
+        <display item="LB9" layout="below" format="vslider" label=" "/>
+        <display item="LB9" layout="below" label="Lamp G-H3">
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB10" layout="below" format="vslider" label=" "/>
+        <display item="LB10" layout="below" label="Lamp Y-H3">
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB11" layout="below" format="vslider" label=" "/> 
+        <display item="LB11" layout="below" label="Lamp R-H3">
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB12" layout="below" format="vslider" label=" "/>
+        <display item="LB12" layout="below" label="Lamp L-H3">
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+      <label label="            ">
+        <label> </label>
+      </label>
+      </column>
+      <column>
+        <display item="LB13" layout="below" format="vslider" label=" "/>
+        <display item="LB13" layout="below" label="Lamp G-H4">
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB14" layout="below" format="vslider" label=" "/>
+        <display item="LB14" layout="below" label="Lamp Y-H4">
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB15" layout="below" format="vslider" label=" "/>
+        <display item="LB15" layout="below" label="Lamp R-H4">
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <column>
+        <display item="LB16" layout="below" format="vslider" label=" "/>
+        <display item="LB16" layout="below" label="Lamp L-H4">
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      </row> 
+      <row>
+      <column>
+        <display item="Strobe Length" layout="left" label="Strobe Length x 10ms"/>
+      </column>
+      <column>
+        <display item="Strobe Length" layout="left" format="hslider" label=""/>
+      </column>
+      </row>
+      <row>
+          <label label=" "/>
+      </row>
+      <row>
+          <label label="Lamps are shown above in the order that they appear on the SignalMan connectors. Brightness Values range from 1-48"/>
+      </row>
+      <row>
+          <label label="Lamp colors are for label reference only. Actual lamps may be any color that you have connected."/>
+      </row>
+    </column>
+    <name>Brightness</name>
+  </pane>
+
+
+      
+ 	  	 

@@ -44,9 +44,29 @@ our JavaDoc pages.
 <h2>JavaDoc for Developers</h2>
 
 The 
-<a href="http://java.sun.com/j2se/javadoc/writingdoccomments/">JavaDoc tutorial</a>
+<a href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html/">JavaDoc tutorial</a>
 is a good, but somewhat long, 
-<a href="http://java.sun.com/j2se/javadoc/writingdoccomments/">introduction to JavaDoc</a>.
+<a href="hhttp://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">introduction to JavaDoc</a>.
+A brief summary of the formatting and tags can be found in 
+<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">the reference</a>.
+
+<p>
+Traditionally, the Java packages in JMRI have used
+<code>package.html</code> files to contain any needed package-level 
+documentation.
+It's now <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">recommended</a>
+that any significant Java package contain a 
+<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment"><code>package-info.java</code></a>
+file for this. 
+Only a few of these have been included in JMRI so far, and 
+it's not a high priority to replace existing <code>package.html</code> files,
+but new packages should include a <code>package-info.java</code>
+copied from <code>java/package-info.java</code>.
+
+<p>
+A nice discussion of how to use the "deprecated" label
+in documentation is available on the
+<a href="http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">"How and When To Deprecate APIs" page</a>.
 
 <h2>UML and UmlGraph for Developers</h2>
 
@@ -60,17 +80,18 @@ Many UML tutorials are available on the web.  In particular,
 a good starting point is the 
 <a href="http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf">Object Mentor introduction to class diagrams</a>.
 For more detail, please see 
-<a href="http://atlas.kennesaw.edu/~dbraun/csis4650/A&D/UML_tutorial/">Atlas UML course</a>
+<a href="http://web.archive.org/web/20110704185440/http://atlas.kennesaw.edu/~dbraun/csis4650/A&D/UML_tutorial/class.htm">Atlas UML course</a>
 or
 <a href="http://edn.embarcadero.com/article/31863">Embarcadero Software introduction</a>.
 
 <h2>Processing</h2>
 
-The standard JMRI Ant build provide three documentation targets:
+The standard JMRI Ant build provides three documentation targets:
 <dl>
 <dt>javadoc<dd>Create the text JavaDocs in the local doc/ directory.  Open doc/index.html for access.
 <dt>javadoc-uml<dd>Create the UML diagrams and JavaDocs in the local doc/ directory.  Open doc/index.html for access.
 <dt>uploadjavadoc<dd>Upload the current documentation in the local doc/ directory to the jmri.org web site.
+This is done automatically by the <a href="ContinuousIntegration.shtml">CI system</a>, so you generally don't have to deal with it.
 </dl>
 
 <h3>Manual Diagrams</h3>

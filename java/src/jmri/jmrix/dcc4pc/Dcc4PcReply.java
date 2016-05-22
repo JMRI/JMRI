@@ -1,6 +1,8 @@
 // Dcc4PcReply.java
 package jmri.jmrix.dcc4pc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRReply;
 //import jmri.jmrix.dcc4pc.Dcc4PcConstants.Dcc4PcState;
 
@@ -44,8 +46,10 @@ public class Dcc4PcReply extends AbstractMRReply {
 	@SuppressWarnings("null")
 	public  Dcc4PcReply(Dcc4PcReply m) {
           this();
-		if (m == null)
+		if (m == null){
 			log.error("copy ctor of null message");
+                        return;
+                }
 		_nDataChars = m._nDataChars;
                 if (m.isUnsolicited()) super.setUnsolicited();
 		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
@@ -136,7 +140,7 @@ public class Dcc4PcReply extends AbstractMRReply {
     
     public int maxSize() { return maxSize; }
     
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcReply.class.getName());
+   static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class.getName());
 
 }
 

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -19,6 +21,11 @@ import jmri.util.swing.*;
 public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7955184289782860199L;
+
+	/**
      * Enhanced constructor for placing the pane in various 
      * GUIs
      */
@@ -49,7 +56,7 @@ public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceNamedPaneAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceNamedPaneAction.class.getName());
 }
 
 /* @(#)NceNamedPaneAction.java */

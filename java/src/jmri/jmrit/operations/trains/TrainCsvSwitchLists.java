@@ -2,13 +2,15 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -26,8 +28,6 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class TrainCsvSwitchLists extends TrainCsvCommon {
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	
 	TrainManager trainManager = TrainManager.instance();
 	
 	// builds a switch list for a location
@@ -39,17 +39,19 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		PrintWriter fileOut;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file)), true);
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
+					"UTF-8")), true);	// NOI18N
 		} catch (IOException e) {
 			log.error("can not open cvs switchlist file");
 			return;
 		}
 		// build header
 		addLine(fileOut, HEADER);
-		addLine(fileOut, RN+"\""+Setup.getRailroadName()+"\"");
+		addLine(fileOut, RN+ESC+Setup.getRailroadName()+ESC);
 
-		addLine(fileOut, LN+"\""+splitString(location.getName())+"\"");
-		addLine(fileOut, VT+getDate());
+		addLine(fileOut, LN+ESC+splitString(location.getName())+ESC);
+		addLine(fileOut, PRNTR + ESC + location.getDefaultPrinterName() + ESC);
+		addLine(fileOut, VT+getDate(true));
 		
 		// get a list of trains
 		List<String> trains = trainManager.getTrainsByTimeList();
@@ -76,7 +78,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 				RouteLocation rl = route.getLocationById(routeList.get(r));
 				if (splitString(rl.getName()).equals(splitString(location.getName()))){
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-					if (expectedArrivalTime.equals("-1")){
+					if (expectedArrivalTime.equals("-1")){ // NOI18N
 						trainDone = true;
 					}
 					// First time a train stops at a location provide:
@@ -100,10 +102,10 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 							addLine(fileOut, DL+splitString(splitString(train.getTrainDepartsName())));
 							addLine(fileOut, DT+train.getDepartureTime());
 							if (r == 0 && routeList.size()>1)
-								addLine(fileOut, TD+splitString(rl.getName())+del+rl.getTrainDirectionString());
+								addLine(fileOut, TD+splitString(rl.getName())+DEL+rl.getTrainDirectionString());
 							if (r != 0){
 								addLine(fileOut, ETA+expectedArrivalTime);
-								addLine(fileOut, TA+splitString(rl.getName())+del+rl.getTrainDirectionString());
+								addLine(fileOut, TA+splitString(rl.getName())+DEL+rl.getTrainDirectionString());
 							}
 						}
 						if (r == routeList.size()-1)
@@ -125,7 +127,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 							} else {						
 								addLine(fileOut, ETA+expectedArrivalTime);
 							}
-							addLine(fileOut, TA+splitString(rl.getName())+del+rl.getTrainDirectionString());
+							addLine(fileOut, TA+splitString(rl.getName())+DEL+rl.getTrainDirectionString());
 							if (r == routeList.size()-1)
 								addLine(fileOut, TT+splitString(rl.getName()));
 						} else {
@@ -190,6 +192,6 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		fileOut.close();
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(TrainCsvSwitchLists.class.getName());
 }

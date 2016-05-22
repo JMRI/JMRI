@@ -2,6 +2,8 @@
 
 package jmri.jmrix.oaktree.nodeconfig;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.util.ResourceBundle;
 
@@ -466,6 +468,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         return (addr);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeConfigFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
 
 }

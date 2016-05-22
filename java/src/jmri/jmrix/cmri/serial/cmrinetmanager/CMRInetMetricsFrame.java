@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javax.swing.border.Border;
 import javax.swing.*;
 import javax.swing.table.*;
+import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -58,7 +59,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
     JButton saveMetricsButton = new JButton(rb.getString("SaveMetricsButtonText") );
     JButton resetAllMetricsButton = new JButton(rb.getString("ResetAllMetricsButtonText") );
 
-    final JFileChooser metricsSaveChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    final JFileChooser metricsSaveChooser = jmri.jmrit.XmlFile.userFileChooser();
 
     public CMRInetMetricsFrame() {
         super();

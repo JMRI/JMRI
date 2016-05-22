@@ -2,6 +2,9 @@
 
 package jmri.jmrix.srcp.parser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /* This class provides an interface between the JavaTree/JavaCC 
  * parser for the SRCP protocol and the JMRI front end.
  * @author Paul Bender Copyright (C) 2011
@@ -235,6 +238,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
 
 
 
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPClientVisitor.class.getName());
+  static Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class.getName());
 
 }

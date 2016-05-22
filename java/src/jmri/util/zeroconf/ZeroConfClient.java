@@ -1,5 +1,7 @@
 package jmri.util.zeroconf;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
@@ -55,6 +57,6 @@ public class ZeroConfClient {
            System.out.println();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZeroConfClient.class.getName());
+    static Logger log = LoggerFactory.getLogger(ZeroConfClient.class.getName());
 
 }

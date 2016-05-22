@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -38,5 +40,5 @@ public class OlcbSensorManagerXml extends jmri.managers.configurexml.AbstractSen
 		return result;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXml.class.getName());
 }

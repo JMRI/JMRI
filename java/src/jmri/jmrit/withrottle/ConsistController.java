@@ -1,5 +1,7 @@
 package jmri.jmrit.withrottle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +46,7 @@ public class ConsistController extends AbstractController implements ProgListene
             } else {
                 file = new ConsistFile();
                 try {
-                    file.ReadFile();
+                    file.readFile();
                 } catch (Exception e) {
                     log.warn("error reading consist file: " + e);
                 }
@@ -361,9 +363,9 @@ public class ConsistController extends AbstractController implements ProgListene
     private void writeFile(){
         try{
             if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
-                file.WriteFile(manager.getConsistList(), WiFiConsistFile.getFileLocation()+"wifiConsist.xml");
+                file.writeFile(manager.getConsistList(), WiFiConsistFile.getFileLocation()+"wifiConsist.xml");
             } else {
-                file.WriteFile(manager.getConsistList());
+                file.writeFile(manager.getConsistList());
             }
         }catch(IOException e){
             log.warn("Consist file could not be written!");
@@ -449,6 +451,6 @@ public class ConsistController extends AbstractController implements ProgListene
         throw new UnsupportedOperationException("Not used.");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistController.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConsistController.class.getName());
 
 }

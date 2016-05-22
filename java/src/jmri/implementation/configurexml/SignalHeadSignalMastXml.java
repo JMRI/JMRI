@@ -1,5 +1,7 @@
 package jmri.implementation.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.SignalHeadSignalMast;
@@ -52,9 +54,13 @@ public class SignalHeadSignalMastXml
     public boolean load(Element element) {
         SignalMast m;
         String sys = getSystemName(element);
-        m = InstanceManager.signalMastManagerInstance()
+        try {
+            m = InstanceManager.signalMastManagerInstance()
                     .provideSignalMast(sys);
-        
+        } catch (Exception e){
+            log.error("An error occured while trying to create the signal '"+sys+"' " + e.toString());
+            return false;
+        }
         if (getUserName(element) != null)
             m.setUserName(getUserName(element));
         
@@ -75,5 +81,5 @@ public class SignalHeadSignalMastXml
         log.error("Invalid method called");
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMastXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastXml.class.getName());
 }

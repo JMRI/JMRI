@@ -2,6 +2,8 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.util.Enumeration;
@@ -15,6 +17,7 @@ import org.jdom.ProcessingInstruction;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import jmri.util.FileUtil;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -222,7 +225,7 @@ public class DecoderIndexFile extends XmlFile {
         log.info("update decoder index");
         // make sure we're using only the default manufacturer info
         // to keep from propagating wrong, old stuff
-        File oldfile = new File(XmlFile.prefsDir()+File.separator+"decoderIndex.xml");
+        File oldfile = new File(FileUtil.getUserFilesPath() + "decoderIndex.xml");
         if (oldfile.exists()) {
             log.debug("remove existing user decoderIndex.xml file");
             if (!oldfile.delete())  // delete file, check for success
@@ -236,8 +239,8 @@ public class DecoderIndexFile extends XmlFile {
         ArrayList<String> al = new ArrayList<String>();
         String[] sp = null;
         int i=0;
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+DecoderFile.fileLocation);
-        File fp = new File(XmlFile.prefsDir()+DecoderFile.fileLocation);
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + DecoderFile.fileLocation);
+        File fp = new File(FileUtil.getUserFilesPath() + DecoderFile.fileLocation);
         if (fp.exists()) {
             sp = fp.list();
             for (i=0; i<sp.length; i++) {
@@ -245,7 +248,7 @@ public class DecoderIndexFile extends XmlFile {
                     al.add(sp[i]);
             }
         } else {
-            log.warn(XmlFile.prefsDir()+"decoders was missing, though tried to create it");
+            log.warn(FileUtil.getUserFilesPath()+"decoders was missing, though tried to create it");
         }
         // create an array of file names from xml/decoders, count entries
         String[] sx = (new File(XmlFile.xmlDir()+DecoderFile.fileLocation)).list();
@@ -358,6 +361,7 @@ public class DecoderIndexFile extends XmlFile {
         String filename = family.getAttribute("file").getValue();
         String parentLowVersID = ((attr = family.getAttribute("lowVersionID"))     != null ? attr.getValue() : null );
         String parentHighVersID = ((attr = family.getAttribute("highVersionID"))     != null ? attr.getValue() : null );
+        String replacementFamilyName   = ((attr = family.getAttribute("replacementFamily"))     != null ? attr.getValue() : null );
         String familyName   = ((attr = family.getAttribute("name"))     != null ? attr.getValue() : null );
         String mfg   = ((attr = family.getAttribute("mfg"))     != null ? attr.getValue() : null );
         String mfgID = null;
@@ -384,7 +388,8 @@ public class DecoderIndexFile extends XmlFile {
                                parentLowVersID, parentHighVersID,
                                familyName,
                                filename,
-                               -1, -1, modelElement); // numFns, numOuts, XML element equal
+                               -1, -1, modelElement, 
+                               replacementFamilyName, replacementFamilyName); // numFns, numOuts, XML element equal
                                             // to the first decoder
         decoderList.add(vFamilyDecoderFile);
 
@@ -394,11 +399,14 @@ public class DecoderIndexFile extends XmlFile {
             Element decoder = l.get(i);
             String loVersID = ( (attr = decoder.getAttribute("lowVersionID"))     != null ? attr.getValue() : parentLowVersID);
             String hiVersID = ( (attr = decoder.getAttribute("highVersionID"))     != null ? attr.getValue() : parentHighVersID);
+            String replacementModelName   = ((attr = decoder.getAttribute("replacementModel"))     != null ? attr.getValue() : null );
+            replacementFamilyName   = ((attr = decoder.getAttribute("replacementFamily"))     != null ? attr.getValue() : replacementFamilyName );
             int numFns   = ((attr = decoder.getAttribute("numFns"))     != null ? Integer.valueOf(attr.getValue()).intValue() : -1 );
             int numOuts   = ((attr = decoder.getAttribute("numOuts"))     != null ? Integer.valueOf(attr.getValue()).intValue() : -1 );
             DecoderFile df = new DecoderFile( mfg, mfgID,
                                               ( (attr = decoder.getAttribute("model"))     != null ? attr.getValue() : null ),
-                                              loVersID, hiVersID, familyName, filename, numFns, numOuts, decoder);
+                                              loVersID, hiVersID, familyName, filename, numFns, numOuts, decoder,
+                                              replacementModelName, replacementFamilyName);
             // and store it
             decoderList.add(df);
             // if there are additional version numbers defined, handle them too
@@ -416,7 +424,7 @@ public class DecoderIndexFile extends XmlFile {
     public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws java.io.IOException {
         if (log.isDebugEnabled()) log.debug("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
-        File file = new File(prefsDir()+name);
+        File file = new File(FileUtil.getUserFilesPath() + name);
 
         // create root element and document
         Element root = new Element("decoderIndex-config");
@@ -507,6 +515,6 @@ public class DecoderIndexFile extends XmlFile {
 
     static final protected String decoderIndexFileName = "decoderIndex.xml";
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderIndexFile.class.getName());
+    static private Logger log = LoggerFactory.getLogger(DecoderIndexFile.class.getName());
 
 }

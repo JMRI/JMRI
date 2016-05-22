@@ -54,18 +54,14 @@ states:  "Commanded" state and "Known" state.  The commanded state is "This is
 what was asked for last".  The known state is "This is what's 
 actually correct on the layout as far as I know".
 
-<P>
-Built into both LocoNet and XPressNet are limited abilities to monitor what 
-is happening on their networks and adapt to messages about Turnout 
-state changes. All the other protocols normally use a "you told it to 
-change, so it did" logic.  In other words, 
-when something in the code 
-(the Turnout Tool or a script) commands a state change from closed 
-to thrown, the default is for both
-both the commanded state and the known state to change 
-to "thrown".
-
-<P>
+<P>Built into into LocoNet and XPressNet are limited abilities to monitor what is happening on their
+    networks and adapt to messages about Turnout state changes. The NCE Powerhouse Pro can provide
+    the last known state of a turnout that was changed by a cab or macro. All the other protocols
+    normally use a "you told it to change, so it did" logic. In other words, when something in the
+    code (the Turnout Tool or a script) commands a state change from closed to thrown, the default
+    is for both both the commanded state and the known state to change to "thrown".</P>
+    
+    <P>
 But it is also possible to control this in more detail if you have 
 wired your layout to allow it.
 
@@ -75,7 +71,7 @@ the program to understand the known state properly, given my
 layout hardware?"
 
 <P>
-If you go to the "Turnout Table" tool, you'll find it has four columns
+If you go to the <A HREF="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</A> tool, you'll find it has four columns
 associated with feedback:
 <DL>
 <DT>"Feedback"</DT><DD>This is the "known state".  You can't change it, but this 
@@ -112,7 +108,7 @@ either end of the turnout's throw bar. When Sensor 1 is active, the
 turnout is known to be thrown.  When Sensor 2 is active, the turnout 
 is known to be closed (normal).</DD>
 
-<DT>MONITORING</DT><DD>Default for LocoNet and XPressNet turnouts, 
+<DT>MONITORING</DT><DD>Default for LocoNet and XPressNet turnouts, and available for NCE,
 this means the network is monitored for messages about the 
 status of the turnout.  This mode is only available for certain 
 protocols, i.e. some protocols can't do the monitoring properly, 

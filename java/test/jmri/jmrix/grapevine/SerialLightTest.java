@@ -2,6 +2,7 @@
 
 package jmri.jmrix.grapevine;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractLightTest;
 import junit.framework.*;
 
@@ -53,6 +54,6 @@ public class SerialLightTest extends AbstractLightTest {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightTest.class.getName());
+	 static Logger log = Logger.getLogger(SerialLightTest.class.getName());
 
 }

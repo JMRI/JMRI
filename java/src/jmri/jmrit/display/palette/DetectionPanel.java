@@ -1,6 +1,8 @@
 
 package jmri.jmrit.display.palette;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -55,7 +57,7 @@ public class DetectionPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(makeSensorPanel(_occDetectorName, "OccupancySensor", "ToolTipOccupancySensor"));
-        _openPicklistButton = new JButton(ItemPalette.rbp.getString("OpenPicklist"));
+        _openPicklistButton = new JButton(Bundle.getMessage("OpenPicklist"));
         _openPicklistButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (_pickFrame==null) {
@@ -65,10 +67,10 @@ public class DetectionPanel extends JPanel {
                     }
                 }
         });
-        _openPicklistButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickLists"));
+        _openPicklistButton.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
         JPanel p = new JPanel();
         p.add(_openPicklistButton);
-        p.setToolTipText(ItemPalette.rbp.getString("ToolTipPickLists"));
+        p.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
         panel.add(p);
         add(panel);
 
@@ -78,19 +80,19 @@ public class DetectionPanel extends JPanel {
         _blockPathPanel = new JPanel();
         _blockPathPanel.setLayout(new BoxLayout(_blockPathPanel, BoxLayout.Y_AXIS));
         p = new JPanel();
-        p.add(new JLabel(ItemPalette.rbp.getString("SelectPathIcons")));
+        p.add(new JLabel(Bundle.getMessage("SelectPathIcons")));
         _blockPathPanel.add(p);
         _checkBoxPanel = new JPanel();
         _blockPathPanel.add(_checkBoxPanel);
         _blockPathPanel.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         _blockPathPanel.setVisible(false);
-        _blockPathPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipSelectPathIcons"));
+        _blockPathPanel.setToolTipText(Bundle.getMessage("ToolTipSelectPathIcons"));
         add(_blockPathPanel);
     }
 
     JPanel makeSensorPanel(JTextField field, String text, String toolTip) {
         JPanel panel = new JPanel();
-        JLabel label = new JLabel(ItemPalette.rbp.getString(text));
+        JLabel label = new JLabel(Bundle.getMessage(text));
         panel.add(label);
         java.awt.Dimension dim = field.getPreferredSize();
         dim.width = 500;
@@ -100,9 +102,9 @@ public class DetectionPanel extends JPanel {
         field.setColumns(20);
         field.setDragEnabled(true);
         field.setTransferHandler(new jmri.util.DnDStringImportHandler());
-        label.setToolTipText(ItemPalette.rbp.getString(toolTip));
-        field.setToolTipText(ItemPalette.rbp.getString(toolTip));
-        panel.setToolTipText(ItemPalette.rbp.getString(toolTip));
+        label.setToolTipText(Bundle.getMessage(toolTip));
+        field.setToolTipText(Bundle.getMessage(toolTip));
+        panel.setToolTipText(Bundle.getMessage(toolTip));
         panel.add(field);
         return panel;
     }
@@ -115,8 +117,8 @@ public class DetectionPanel extends JPanel {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("DragOccupancyName")));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("DragErrorName")));
+        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName")));
+        blurb.add(new JLabel(Bundle.getMessage("DragErrorName")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -136,22 +138,22 @@ public class DetectionPanel extends JPanel {
         _pickFrame.toFront();
         _pickFrame.setVisible(true);
         _pickFrame.pack();
-        _openPicklistButton.setText(ItemPalette.rbp.getString("ClosePicklist"));
+        _openPicklistButton.setText(Bundle.getMessage("ClosePicklist"));
     }
 
     void closePickList() {
         _pickFrame.dispose();
         _pickFrame = null;
-        _openPicklistButton.setText(ItemPalette.rbp.getString("OpenPicklist"));
+        _openPicklistButton.setText(Bundle.getMessage("OpenPicklist"));
     }
 
     private JPanel makeTrainIdPanel() {
         JPanel panel = new JPanel();
-        _showTrainName = new JCheckBox(ItemPalette.rbp.getString("ShowTrainName"));
-        _showTrainName.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
+        _showTrainName = new JCheckBox(Bundle.getMessage("ShowTrainName"));
+        _showTrainName.setToolTipText(Bundle.getMessage("ToolTipShowTrainName"));
         JPanel p = new JPanel();
         p.add(_showTrainName);
-        p.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
+        p.setToolTipText(Bundle.getMessage("ToolTipShowTrainName"));
         panel.add(p);
         return panel;
     }
@@ -242,9 +244,9 @@ public class DetectionPanel extends JPanel {
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
                 if (sensor==null) {
-                    JOptionPane.showMessageDialog(_parent._paletteFrame, java.text.MessageFormat.format(
-                        ItemPalette.rbp.getString("InvalidOccDetector"), name), 
-                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(_parent._paletteFrame, 
+                    		Bundle.getMessage("InvalidOccDetector", name), 
+                            Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);
                 }
                 _blockPathPanel.setVisible(false);
@@ -261,7 +263,7 @@ public class DetectionPanel extends JPanel {
         _checkBoxPanel = new JPanel();
         _checkBoxPanel.setLayout(new BoxLayout(_checkBoxPanel, BoxLayout.Y_AXIS));
         _checkBoxPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.black), 
-                                                         ItemPalette.rbp.getString("circuitPaths")));
+                                                         Bundle.getMessage("circuitPaths")));
         _block = block;
         _pathBoxes = new ArrayList<JCheckBox>();
         List<Path> paths = _block.getPaths();
@@ -286,6 +288,6 @@ public class DetectionPanel extends JPanel {
         _blockPathPanel.setVisible(true);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DetectionPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(DetectionPanel.class.getName());
 }
 

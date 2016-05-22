@@ -698,8 +698,9 @@ acts as a connectivity data base, supplying connectivity information as needed t
 Dispatcher or the Auto Active Train's <i>virtual engineer</i>.</p>
 </li>
 <li><p>Hardware signals on the layout need not be present, but signals and signal 
-logic must be configured in the Layout Editor panel. Auto Active Trains follow 
-signals, requiring signals on the Layout Editor panel.</p>
+logic (Either SignalHeads & SSL or SignalMasts & SML) must be configured in the 
+Layout Editor panel. Auto Active Trains follow signals, requiring signals on the 
+Layout Editor panel.</p>
 </li>
 <li><p>Sections and Transits must be set up for the layout. This is also required 
 for manual running of Active Trains. Sections must be configured so that Sections 
@@ -707,22 +708,23 @@ interconnect only once in each direction.  This impacts the way Blocks are set
 up.</p>
 </li>
 <li><p>All entry points and exit points from Sections in the Transit must have 
-signals on the Layout Editor panel. Boundaries between Blocks in Sections should 
-be signalled on the Layout Editor panel. Portions of the layout that are not 
-in Sections in Transits only need those signals that are necessary to allow 
-setup of signal logic for signals in Sections of the Transit. Use of the 
-Layout Editor tools to configure signals on the Layout Editor panel is 
-required (this is how Layout Editor knows which signals apply to which turnout, 
-block boundary, etc.). Use of these tools to set up signal logic is strongly 
-recommended. When checking for direction sensors in signal logic, Dispatcher 
-looks in the SSL (Simple Signal Logic) of each signal head (see below). If 
-signal logic is set up without use of the Layout Editor tools, make sure each 
-SSL is configured correctly</p> 
+signals on the Layout Editor panel. If Using Signal Heads/SSL then boundaries between 
+Blocks in Sections should be signalled on the Layout Editor panel. 
+Portions of the layout that are not in Sections in Transits only need those 
+signals that are necessary to allow setup of signal logic, either SSL (Simple Signal Logic) 
+or SML (Signal Mast Logic) for signals in Sections of the Transit. 
+Use of the Layout Editor tools to configure signals on the Layout Editor panel 
+is required (this is how Layout Editor knows which signals apply to which turnout, block boundary, etc.). 
+Use of these tools to set up signal logic is strongly recommended. 
+When checking for direction sensors in signal logic, Dispatcher 
+looks in the SSL of each signal head (see below). 
+If signal logic is set up without use of the Layout Editor tools, make sure each 
+SSL or SML is configured correctly</p> 
 </li>
 <li><p>All Sections must be configured with direction Sensors. When an Auto Active 
 Train is created, Dispatcher will check that direction Sensors are present and 
 are configured in signal logic of signals in all Sections of the Transit. 
-Dispatcher will place direction Sensors in signal logic if they are not found. 
+Dispatcher will place direction Sensors in (SSL Only) signal logic if they are not found. 
 <b>Note:</b> Direction Sensors may be cleared from signal logic using a tool in 
 the Section Table when not running automatic trains.</p>
 </li>

@@ -162,6 +162,7 @@ Top Level Elements not brought over from DTD
       <xs:sequence>
 	<xs:element name="fade-in-time" type="xs:string" minOccurs="0" maxOccurs="1" />
 	<xs:element name="fade-out-time" type="xs:string" minOccurs="0" maxOccurs="1" />
+	<xs:element name="idle-notch" type="xs:integer" minOccurs="0" maxOccurs="1" />
 	<xs:element name="start-sound">
 	  <xs:complexType>
 	    <xs:all>

@@ -9,6 +9,8 @@
 
 package jmri.jmrix.lenz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.PowerManager;
 
@@ -140,7 +142,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
         }
 
 	// Initialize logging information
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetPowerManager.class.getName());
+	static Logger log = LoggerFactory.getLogger(XNetPowerManager.class.getName());
 
 }
 

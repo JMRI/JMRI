@@ -30,10 +30,14 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.Audio;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,6 +46,7 @@ import java.util.Iterator;
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.vsdecoder.VSDecoderEvent;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.locations.Location;
 
@@ -57,6 +62,8 @@ public class VSDecoder implements PropertyChangeListener {
     private boolean is_default = false;  // This decoder is the default for its file
 
     private VSDConfig config;
+
+    private float tunnelVolume = 0.5f;
 
     // List of registered event listeners
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -129,6 +136,16 @@ public class VSDecoder implements PropertyChangeListener {
 	// our own setAddress() to register the throttle listener
 	this.setAddress(config.getLocoAddress());
 	this.enable();
+
+	if (log.isDebugEnabled()) {
+	    log.debug("VSDecoder Init Complete.  Audio Objects Created:");
+	    for (String s : InstanceManager.audioManagerInstance().getSystemNameList(Audio.SOURCE)) {
+		log.debug("\tSource: " + s);
+	    }
+	    for (String s : InstanceManager.audioManagerInstance().getSystemNameList(Audio.BUFFER)) {
+		log.debug("\tBuffer: " + s);
+	    }
+	}
     }
 
     /**
@@ -177,6 +194,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     private boolean _init() {
 	// Do nothing for now
+	this.enable();
 	return(true);
     }
 
@@ -207,7 +225,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Set the VSD File path for this VSDecoder to use
      *
      * @param p  (String) path to VSD File
-     * @return void
      */
     public void setVSDFilePath(String p) {
 	config.setVSDPath(p);
@@ -231,8 +248,7 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Add a listener for this object's events
      *
-     * @param (VSDecoderListener) listener handle
-     * @return void
+     * @param listener handle
      */
     public void addEventListener(VSDecoderListener listener) {
 	listenerList.add(VSDecoderListener.class, listener);
@@ -243,8 +259,7 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Remove a listener for this object's events
      *
-     * @param (VSDecoderListener) listener handle
-     * @return void
+     * @param listener handle
      */
     public void removeEventListener(VSDecoderListener listener) {
 	listenerList.remove(VSDecoderListener.class, listener);
@@ -262,8 +277,7 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Handle Window events from this VSDecoder's GUI window.
      *
-     * @param e  (java.awt.event.WindowEvent) the window event to handle
-     * @return void
+     * @param e the window event to handle
      */
     public void windowChange(java.awt.event.WindowEvent e) {
 	log.debug("decoder.windowChange() - " + e.toString());
@@ -280,7 +294,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Shut down this VSDecoder and all of its associated sounds.
      *
-     * @return void
      */
     public void shutdown() {
 	log.debug("Shutting down sounds...");
@@ -296,7 +309,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Handle the details of responding to a PropertyChangeEvent from a throttle.
      *
      * @param event (PropertyChangeEvent) Throttle event to respond to
-     * @return void
      */
     protected void throttlePropertyChange(PropertyChangeEvent event) {
 	//WARNING: FRAGILE CODE
@@ -349,13 +361,12 @@ public class VSDecoder implements PropertyChangeListener {
      * events from the throttle with this address.
      *
      * @param l  (LocoAddress) LocoAddress to be followed
-     * @return void
      */
     public void setAddress(LocoAddress l) {
 	// Hack for ThrottleManager Dcc dependency
 	config.setLocoAddress(l);
-	DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
-	jmri.InstanceManager.throttleManagerInstance().attachListener(dl, new PropertyChangeListener() {
+	//DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
+	jmri.InstanceManager.throttleManagerInstance().attachListener(config.getDccAddress(), new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent event) {
 		    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
 		    throttlePropertyChange(event);
@@ -392,7 +403,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Set the current master volume setting for this VSDecoder
      *
      * @param vol (float) volume level (0.0 - 1.0)
-     * @return void
      */
     public void setMasterVolume(float vol) {
 	log.debug("VSD: float volume = " + vol);
@@ -419,7 +429,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Mute or un-mute this VSDecoder
      *
      * @param m (boolean) true to mute, false to un-mute
-     * @return void
      */
     public void mute(boolean m) {
 	for (VSDSound vs : sound_list.values()) {
@@ -438,7 +447,6 @@ public class VSDecoder implements PropertyChangeListener {
      * USER's chosen origin) is always the OpenAL Context's origin.
      *
      * @param p (PhysicalLocation) location relative to the user's chosen Origin.
-     * @return void
      */
     public void setPosition(PhysicalLocation p) {
 	// Store the actual position relative to the user's Origin locally.
@@ -455,6 +463,17 @@ public class VSDecoder implements PropertyChangeListener {
 	for (VSDSound s : sound_list.values()) {
 	    //s.setPosition(PhysicalLocation.translate(p, ref));
 	    s.setPosition(p);
+	}
+	// Set (relative) volume for this location (in case we're in a tunnel)
+	float tv = config.getVolume();
+	if (p.isTunnel()) {
+	    tv *= tunnelVolume;
+	    log.debug("VSD: Tunnel volume: " + tv);
+	} else {
+	    log.debug("VSD: Not in tunnel. Volume = " + tv);
+	}
+	for (VSDSound vs : sound_list.values()) {
+	    vs.setVolume(tv);
 	}
 	fireMyEvent(new VSDecoderEvent(this, VSDecoderEvent.EventType.LOCATION_CHANGE, p));
     }
@@ -476,18 +495,21 @@ public class VSDecoder implements PropertyChangeListener {
      * Respond to property change events from this VSDecoder's GUI
      *
      * @param evt (PropertyChangeEvent) event to respond to
-     * @return void
      */
     @SuppressWarnings("cast")
     public void propertyChange(PropertyChangeEvent evt) {
+	String property = evt.getPropertyName();
 	// Respond to events from the new GUI.
 	if (evt.getSource() instanceof VSDControl) {
-	    // Nothing to do... yet...
+	    if (property.equals(VSDControl.PCIDMap.get(VSDControl.PropertyChangeID.OPTION_CHANGE))) {
+		Train selected_train = TrainManager.instance().getTrainByName((String)evt.getNewValue());
+		if (selected_train != null)
+		    selected_train.addPropertyChangeListener(this);
+	    }
 	    return;
 	}
 
 	// Respond to events from the old GUI.
-	String property = evt.getPropertyName();
 	if ((property.equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.MUTE))) ||
 	    (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.MUTE)))) {
 	    // Either GUI Mute button
@@ -583,7 +605,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the bell sound on/off
      *
-     * @return void
      */
     public void toggleBell() {
 	VSDSound snd = sound_list.get("BELL");
@@ -598,7 +619,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the horn sound on/off
      *
-     * @return void
      */
     public void toggleHorn() {
 	VSDSound snd = sound_list.get("HORN");
@@ -613,7 +633,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the horn sound on
      *
-     * @return void
      */
     public void playHorn() {
 	VSDSound snd = sound_list.get("HORN");
@@ -625,7 +644,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the horn sound on (Short burst)
      *
-     * @return void
      */
     public void shortHorn() {
 	VSDSound snd = sound_list.get("HORN");
@@ -637,7 +655,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the horn sound off
      *
-     * @return void
      */
     public void stopHorn() {
 	VSDSound snd = sound_list.get("HORN");
@@ -652,7 +669,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Set the profile name to the given string
      *
      * @param pn (String) : name of the profile to set
-     * @return void
      */
     public void setProfileName(String pn) {
 	config.setProfileName(pn);
@@ -674,7 +690,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Enable this VSDecoder
      *
-     * @return void
      */
     public void enable() {
 	enabled = true;
@@ -685,7 +700,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Disable this VSDecoder
      *
-     * @return void
      */
     public void disable() {
 	enabled = false;
@@ -720,7 +734,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Set whether this is the default VSDecoder or not
      *
      * @param d (boolean) True to set this as the default, False if not.
-     * @return void
      */
     public void setDefault(boolean d) {
 	is_default = d;
@@ -787,7 +800,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * @param vf (VSDFile) : VSD File to pull the XML from
      * @param pn (String) : Parameter Name to find within the VSD File.
-     * @return void
      */
     @SuppressWarnings({"unchecked", "cast"})
     public void setXml(VSDFile vf, String pn) {
@@ -913,9 +925,18 @@ public class VSDecoder implements PropertyChangeListener {
 	}
 
 	// Handle other types of children similarly here.
-	
+
+	// Check for an existing throttle and update speed if it exists.
+	Float s = (Float) InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), "SpeedSetting");
+	if (s != null) {
+	    // Mimic a throttlePropertyChange to propagate the current (init) speed setting of the throttle.
+	    log.debug("Existing Throttle found.  Speed = " + s);
+	    this.throttlePropertyChange(new PropertyChangeEvent(this, "SpeedSetting", null, s));
+	} else {
+	    log.debug("No existing throttle found.");
+	}
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoder.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoder.class.getName());
 
 }

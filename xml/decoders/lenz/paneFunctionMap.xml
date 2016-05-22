@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id: accelDecel.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<pane name="Lenz Function Map" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2012-12-27</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+    </revision>
+  </revhistory>
+
+    <column>
+      <row>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Select which function">
+            <label>Select which function</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
+          </label>
+          <label label="disables momentum:">
+            <label>disables momentum:</label>
+            <label xml:lang="it">Disabilita l'Inerzia:</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Disable momentum with F1" format="checkbox"/>
+          <display item="Disable momentum with F2" format="checkbox"/>
+          <display item="Disable momentum with F3" format="checkbox"/>
+          <display item="Disable momentum with F4" format="checkbox"/>
+          <display item="Disable momentum with F5" format="checkbox"/>
+          <display item="Disable momentum with F6" format="checkbox"/>
+          <display item="Disable momentum with F7" format="checkbox"/>
+          <display item="Disable momentum with F8" format="checkbox"/>
+        </column>
+        <column>
+          <label label="        ">
+            <label>        </label>
+          </label>
+        </column>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Select which function">
+            <label>Select which function</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
+          </label>
+          <label label="enables switching gear:">
+            <label>enables switching gear:</label>
+            <label xml:lang="it">Abilita velocità da manovra:</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Enable Low Speed with F1" format="checkbox"/>
+          <display item="Enable Low Speed with F2" format="checkbox"/>
+          <display item="Enable Low Speed with F3" format="checkbox"/>
+          <display item="Enable Low Speed with F4" format="checkbox"/>
+          <display item="Enable Low Speed with F5" format="checkbox"/>
+          <display item="Enable Low Speed with F6" format="checkbox"/>
+          <display item="Enable Low Speed with F7" format="checkbox"/>
+          <display item="Enable Low Speed with F8" format="checkbox"/>
+        </column>
+        <column>
+          <label label="        ">
+            <label>        </label>
+          </label>
+        </column>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Select which function enables">
+            <label>Select which function enables</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
+          </label>
+          <label label="light dimming for A and B outputs:">
+            <label>light dimming for A and B outputs:</label>
+            <label xml:lang="it">attenua le luci per uscite A e B:</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Enable dimming with F1" format="checkbox"/>
+          <display item="Enable dimming with F2" format="checkbox"/>
+          <display item="Enable dimming with F3" format="checkbox"/>
+          <display item="Enable dimming with F4" format="checkbox"/>
+          <display item="Enable dimming with F5" format="checkbox"/>
+          <display item="Enable dimming with F6" format="checkbox"/>
+          <display item="Enable dimming with F7" format="checkbox"/>
+          <display item="Enable dimming with F8" format="checkbox"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Select which function toggles">
+            <label>Select which function toggles</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
+          </label>
+          <label label="lighting effects on/off for outputs A and B:">
+            <label>lighting effects on/off for outputs A and B:</label>
+            <label xml:lang="it">commuta on/off le uscite A e B:</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Toggle effect (outputs A/B) with F1" format="checkbox"/>
+          <display item="Toggle effect (outputs A/B) with F2" format="checkbox"/>
+          <display item="Toggle effect (outputs A/B) with F3" format="checkbox"/>
+          <display item="Toggle effect (outputs A/B) with F4" format="checkbox"/>
+          <display item="Toggle effect (outputs A/B) with F5" format="checkbox"/>
+          <display item="Toggle effect (outputs A/B) with F6" format="checkbox"/>
+          <display item="Toggle effect (outputs A/B) with F7" format="checkbox"/>
+          <display item="Toggle effect (outputs A/B) with F8" format="checkbox"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+        <column>
+          <label label="        ">
+            <label>        </label>
+          </label>
+        </column>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Select which function toggles">
+            <label>Select which function toggles</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
+          </label>
+          <label label="lighting effects on/off for outputs C and D:">
+            <label>lighting effects on/off for outputs C and D:</label>
+            <label xml:lang="it">commuta on/off le uscite C e D:</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Toggle effect (outputs C/D) with F1" format="checkbox"/>
+          <display item="Toggle effect (outputs C/D) with F2" format="checkbox"/>
+          <display item="Toggle effect (outputs C/D) with F3" format="checkbox"/>
+          <display item="Toggle effect (outputs C/D) with F4" format="checkbox"/>
+          <display item="Toggle effect (outputs C/D) with F5" format="checkbox"/>
+          <display item="Toggle effect (outputs C/D) with F6" format="checkbox"/>
+          <display item="Toggle effect (outputs C/D) with F7" format="checkbox"/>
+          <display item="Toggle effect (outputs C/D) with F8" format="checkbox"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+      </row>
+    </column>
+    <name>Lenz Function Map</name>
+    <name xml:lang="it">Mappatura Funzioni Lenz</name>
+</pane>

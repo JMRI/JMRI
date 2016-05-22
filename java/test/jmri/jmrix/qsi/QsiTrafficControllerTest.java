@@ -2,6 +2,7 @@
 
 package jmri.jmrix.qsi;
 
+import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -214,7 +215,7 @@ public class QsiTrafficControllerTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiTrafficControllerTest.class.getName());
+	 static Logger log = Logger.getLogger(QsiTrafficControllerTest.class.getName());
 
 
 }

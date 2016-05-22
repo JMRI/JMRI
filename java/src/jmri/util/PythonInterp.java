@@ -2,6 +2,8 @@
 
 package jmri.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 
 /**
@@ -42,8 +44,7 @@ public class PythonInterp {
 
      static public void execFile(String filename) {
         // if windows, need to process backslashes in filename
-        String os = System.getProperty("os.name");
-        if ( os != null && os.startsWith("Window"))
+        if (SystemType.isWindows())
             filename = filename.replaceAll("\\\\", "\\\\\\\\");
         
         execCommand("execfile(\""+filename+"\")");
@@ -185,7 +186,7 @@ public class PythonInterp {
     static String defaultContextFile = "jython/jmri_defaults.py";
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PythonInterp.class.getName());
+    static Logger log = LoggerFactory.getLogger(PythonInterp.class.getName());
 
 }
 

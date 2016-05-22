@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.XmlFile;
 import java.util.Hashtable;
 import java.util.List;
@@ -114,6 +116,6 @@ public class NameFile extends XmlFile {
 	static String fileLocation  = "";
 	static String nameFileName = "names.xml";
 	// initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NameFile.class.getName());
+    static private Logger log = LoggerFactory.getLogger(NameFile.class.getName());
 
 }

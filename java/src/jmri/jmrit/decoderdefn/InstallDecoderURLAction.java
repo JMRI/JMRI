@@ -2,6 +2,8 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.*;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
@@ -14,6 +16,7 @@ import javax.swing.*;
 import java.net.URL;
 
 import java.util.*;
+import jmri.util.FileUtil;
 import org.jdom.*;
 
 /**
@@ -83,14 +86,10 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         log.debug("["+temp.toString()+"]");
         
         // ensure directories exist
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"decoders");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "decoders");
 
         // output file
-        File toFile = new File(
-                XmlFile.prefsDir()+File.separator
-                +"decoders"+File.separator
-                +temp.getName()
-            );
+        File toFile = new File(FileUtil.getUserFilesPath() + "decoders" + File.separator + temp.getName());
         log.debug("["+toFile.toString()+"]");
                         
         // first do the copy, but not if source and output files are the same
@@ -110,34 +109,22 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         JOptionPane.showMessageDialog(who,rb.getString("CompleteOK"));
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="OBL_UNSATISFIED_OBLIGATION", justification="Looks like false positive")
     boolean copyfile(URL from, File toFile, JPanel who) {
         InputStream in = null;
         OutputStream out = null;
         try {
-            try {
-                in = from.openConnection().getInputStream();
-              
-                // open for overwrite
-                out = new FileOutputStream(toFile);
-        
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0){
-                    out.write(buf, 0, len);
-                }
-                // done
-                return true;
-            
-            }
-            finally {
-                try {
-                    if (in != null) in.close();
-                } catch (IOException e1) { log.error("exception closing in stream", e1);}
-                try {
-                    if (out != null) out.close();
-                } catch (IOException e2) { log.error("exception closing out stream", e2);}
-            }
+            in = from.openConnection().getInputStream();
           
+            // open for overwrite
+            out = new FileOutputStream(toFile);
+    
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0){
+                out.write(buf, 0, len);
+            }
+            // done - finally cleans up
         }
         catch(FileNotFoundException ex){
             log.debug(""+ex);
@@ -149,6 +136,16 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             JOptionPane.showMessageDialog(who,rb.getString("CopyError2"));
             return false;     
         }
+        finally {
+            try {
+                if (in != null) in.close();
+            } catch (IOException e1) { log.error("exception closing in stream", e1);}
+            try {
+                if (out != null) out.close();
+            } catch (IOException e2) { log.error("exception closing out stream", e2);}
+        }
+               
+        return true;      
       }
   
       boolean checkFile(URL url, JPanel who) {
@@ -186,5 +183,5 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstallDecoderURLAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(InstallDecoderURLAction.class.getName());
 }

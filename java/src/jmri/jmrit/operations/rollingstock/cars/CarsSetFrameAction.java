@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JTable;
 
@@ -16,28 +14,24 @@ import javax.swing.JTable;
  * @version $Revision$
  */
 public class CarsSetFrameAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
-    CarsTableModel _carsTableModel;
-    JTable _carsTable;
-    
-    public CarsSetFrameAction(String s) {
-    	super(s);
-    }
+	CarsTableModel _carsTableModel;
+	JTable _carsTable;
 
-    public CarsSetFrameAction(CarsTableModel carsTableModel, JTable carsTable){
-    	this(rb.getString("TitleSetCars"));
-    	_carsTableModel = carsTableModel;
-    	_carsTable = carsTable;
-    }
+	public CarsSetFrameAction(String s) {
+		super(s);
+	}
 
-    public void actionPerformed(ActionEvent e) {
-        // create a car table frame
-        CarsSetFrame csf = new CarsSetFrame();
-        csf.initComponents(_carsTableModel, _carsTable);
-    	csf.setTitle(rb.getString("TitleSetCars"));
-    	csf.setVisible(true);
-    }
+	public CarsSetFrameAction(JTable carsTable) {
+		this(Bundle.getMessage("TitleSetCars"));
+		_carsTable = carsTable;
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		// create a car table frame
+		CarsSetFrame csf = new CarsSetFrame();
+		csf.initComponents(_carsTable);
+	}
 }
 
 /* @(#)CarsSetFrameAction.java */

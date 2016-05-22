@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.Sensor;
 
@@ -99,7 +101,7 @@ public class NceAIU {
         return sensorArray[index];
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceAIU.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceAIU.class.getName());
 }
 
 /* @(#)NceAIU.java */

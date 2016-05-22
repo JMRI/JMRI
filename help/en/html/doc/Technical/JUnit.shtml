@@ -270,7 +270,7 @@ it's been displayed!
 
 <p>
 Because we run tests in "headless" mode during the
-<a href="ContinousIntegration.shtml">continuous integration builds</a>,
+<a href="ContinuousIntegration.shtml">continuous integration builds</a>,
 it's important that Swing (and AWT) access in tests
 be enclosed within a mode check:
 <pre><code>

@@ -41,7 +41,7 @@ for more information on maintaining JMRI code.
 
 <A name="cvstool"><h3>How do I get a copy of CVS?</h3></a>
 
-Many computers come with CVS installed, including Linux and MacOS X.
+Many computers come with CVS installed, including Linux and Mac OS X.
 If you're using Windows, you will need to install a CVS "client" program like
 <A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467">WinCVS</a>.
 A recent version can be downloaded from: 
@@ -133,7 +133,7 @@ see any real error messages.
 <h3>What are these messages about .DS_Store files?</h3>
 </a>
 
-If you're using MacOS X, CVS may give you messages about ".DS_Store" files. These
+If you're using Mac OS X, CVS may give you messages about ".DS_Store" files. These
 are used to keep track of window layouts, etc.  To suppress these messages,
 just create a file in your home directory called ".cvsignore" and add a line 
 of ".DS_Store" to it (no quotes). CVS will then ignore all .DS_Store files in 

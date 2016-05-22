@@ -2,6 +2,8 @@
 
 package jmri.jmrix.cmri.serial;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
@@ -119,7 +121,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
     static SerialLightManager _instance = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
 

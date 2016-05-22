@@ -1,10 +1,13 @@
 package jmri.jmrit.roster.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
@@ -161,14 +164,14 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         if (action != null) {
             if (newWindowMenuItemAction == null) {
                 MenuActionListener ml = new MenuActionListener();
-                JMenuItem mi = new JMenuItem("Open in New Window");
+                JMenuItem mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuOpenInNewWindow"));
                 mi.addActionListener(ml);
                 mi.setActionCommand("newWindow");
                 groupsMenu.insert(mi, 0);
                 groupsMenu.insert(new JSeparator(), 1);
                 // create the menu item twice because a menu item can only
                 // be attached to a single menu
-                mi = new JMenuItem("Open in New Window");
+                mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuOpenInNewWindow"));
                 mi.addActionListener(ml);
                 mi.setActionCommand("newWindow");
                 allEntriesMenu.insert(mi, 0);
@@ -329,7 +332,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     private JPopupMenu defaultMenu(int menu) {
         JPopupMenu pm = new JPopupMenu();
         MenuActionListener ml = new MenuActionListener();
-        JMenuItem mi = new JMenuItem("Export...");
+        JMenuItem mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Exportddd"));
         mi.addActionListener(ml);
         mi.setActionCommand("export");
         pm.add(mi);
@@ -375,7 +378,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             WindowInterface wi = (WindowInterface) scrollPane.getTopLevelAncestor();
             if (g.isDescendant(_tree.getSelectionPath())) {
                 if (e.getActionCommand().equals("export")) {
-                    new FullBackupExportAction("Export...", wi).actionPerformed(e);
+                    new FullBackupExportAction(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Exportddd"), wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("rename")) {
                     new RenameRosterGroupAction("Rename", wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("duplicate")) {
@@ -385,7 +388,10 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                 } else if (e.getActionCommand().equals("newWindow") && newWindowMenuItemAction != null) {
                     newWindowMenuItemAction.actionPerformed(e);
                 } else {
-                    JOptionPane.showMessageDialog((JComponent) e.getSource(), "Not Implemented", "Not Implemented", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog((JComponent) e.getSource(), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NotImplemented"), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NotImplemented"), 
+                        JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -537,7 +543,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
         @Override
         public void treeWillExpand(TreeExpansionEvent e) throws ExpandVetoException {
-            log.debug(_tree.getSelectionRows());
+            log.debug("Selected rows ", _tree.getSelectionRows());
         }
 
         @Override
@@ -586,5 +592,5 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterGroupsPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(RosterGroupsPanel.class.getName());
 }

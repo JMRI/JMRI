@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 /**
  * An icon to display a status of a Memory.<P>
  */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 import javax.swing.JOptionPane;
@@ -211,6 +213,6 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
 }
 

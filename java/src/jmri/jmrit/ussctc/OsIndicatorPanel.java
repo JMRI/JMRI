@@ -2,6 +2,8 @@
 
 package jmri.jmrit.ussctc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -106,6 +108,6 @@ public class OsIndicatorPanel extends BasePanel {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OsIndicatorPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(OsIndicatorPanel.class.getName());
 
 }

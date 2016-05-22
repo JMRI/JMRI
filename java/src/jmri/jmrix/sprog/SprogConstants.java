@@ -53,12 +53,14 @@ public final class SprogConstants {
   /* Mode word bit masks */
   public final static int UNLOCK_BIT = 0x0001;      /* Unlock bootloader */
   public final static int CALC_BIT = 0x0008;        /* Add error byte */
+  protected final static int POWER_BIT = 0x0010;       /* Track power */
   public final static int ZTC_BIT = 0x0020;         /* Old ZTC bit timing */
   public final static int BLUE_BIT = 0x0040;        /* Use direct byte for Blueline */
   public final static int STEP_MASK = 0x0E00;       /* Mask for speed step bits */
   public final static int STEP14_BIT = 0x0200;
   public final static int STEP28_BIT = 0x0400;
   public final static int STEP128_BIT = 0x0800;
+  protected final static int LONG_ADD = 0x1000;
   
   public final static int DEFAULT_I = 996;
 

@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -504,6 +506,6 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(CbusThrottle.class.getName());
 
 }

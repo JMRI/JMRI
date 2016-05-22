@@ -2,12 +2,15 @@
 
 package jmri.jmrit.jython;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import java.io.*;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
+import jmri.util.FileUtil;
 
 /**
  * This Action runs a script by invoking a Jython interpreter.
@@ -87,7 +90,7 @@ public class RunJythonScript extends JmriAbstractAction {
     File selectFile() {
         if (fci==null) {
             //fci = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"jython");
-            fci = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
+            fci = new JFileChooser(FileUtil.getScriptsPath());
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
             filt.addExtension("py");
             fci.setFileFilter(filt);
@@ -117,7 +120,7 @@ public class RunJythonScript extends JmriAbstractAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RunJythonScript.class.getName());
+    static Logger log = LoggerFactory.getLogger(RunJythonScript.class.getName());
 
 }
 

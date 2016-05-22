@@ -1,416 +1,413 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
 <pane name="Swiss Mapping">
-	<column>
-          <row>
-            <column>
-            <label label="The F-Key operates the selected outputs"/>
-            <label label=" "/>
-            <label label="If the M-Key is enabled the selected outputs are on when both the M-Key and F-Key are operated"/>
-            <label label=" "/>
-          	<label label="                                                                                                         Function Output"/>
-            <label label="                                                     M-Key"/>
-            </column>
-          </row>
-          <row>
-            <column>       
-          	  <label label="                      F-Key"/>
-              <display item="Swiss Mapping Group 1 F-key" label="Group 1   ">
-              <label>Swiss Mapping Group 1 F-key</label>
-              </display>
-            </column>
-            <column>     
-          	  <label label="    M-Key"/>
-              <display item="Swiss Mapping Group 1 M-key" label="">
-              <label>Swiss Mapping Group 1 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>       
-          	  <label label="enable"/>
-              <display item="Swiss Mapping Group 1" label="" format="checkbox">
-              <label>Swiss Mapping Group 1</label>
-              </display>
-            </column>       
-            <column>       
-          	  <label label="     A1 Forward"/>
-              <display item="Swiss Mapping Group 1 A1 Fw" label="">
-              <label>Swiss Mapping Group 1 A1 Fw</label>
-              </display>              
-            </column>
-            <column>       
-          	  <label label="     A2 Forward"/>
-              <display item="Swiss Mapping Group 1 A2 Fw" label="">
-              <label>Swiss Mapping Group 1 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>       
-          	  <label label="     A1 Reverse"/>
-              <display item="Swiss Mapping Group 1 A1 Rw" label="">
-              <label>Swiss Mapping Group 1 A1 Rw</label>
-              </display>              
-            </column>
-            <column>       
-          	  <label label="     A2 Reverse"/>
-              <display item="Swiss Mapping Group 1 A2 Rw" label="">
-              <label>Swiss Mapping Group 1 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-          <row>
-            <column>
-              <display item="Swiss Mapping Group 2 F-key" label="Group 2   ">
-              <label>Swiss Mapping Group 2 F-key</label>
-              </display>
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 2 M-key" label="">
-              <label>Swiss Mapping Group 2 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>
-              <display item="Swiss Mapping Group 2" label="" format="checkbox">
-              <label>Swiss Mapping Group 2</label>
-              </display>
-            </column>
-            <label label="    "/>              
-            <column>
-              <display item="Swiss Mapping Group 2 A1 Fw" label="">
-              <label>Swiss Mapping Group 2 A1 Fw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 2 A2 Fw" label="">
-              <label>Swiss Mapping Group 2 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>
-              <display item="Swiss Mapping Group 2 A1 Rw" label="">
-              <label>Swiss Mapping Group 2 A1 Rw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 2 A2 Rw" label="">
-              <label>Swiss Mapping Group 2 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-          <row>
-            <column>
-              <display item="Swiss Mapping Group 3 F-key" label="Group 3   ">
-              <label>Swiss Mapping Group 3 F-key</label>
-              </display>
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 3 M-key" label="">
-              <label>Swiss Mapping Group 3 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>
-              <display item="Swiss Mapping Group 3" label="" format="checkbox">
-              <label>Swiss Mapping Group 3</label>
-              </display>
-            </column>
-            <label label="    "/>              
-            <column>
-              <display item="Swiss Mapping Group 3 A1 Fw" label="">
-              <label>Swiss Mapping Group 3 A1 Fw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 3 A2 Fw" label="">
-              <label>Swiss Mapping Group 3 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>
-              <display item="Swiss Mapping Group 3 A1 Rw" label="">
-              <label>Swiss Mapping Group 3 A1 Rw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 3 A2 Rw" label="">
-              <label>Swiss Mapping Group 3 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-          <row>
-            <column>
-              <display item="Swiss Mapping Group 4 F-key" label="Group 4   ">
-              <label>Swiss Mapping Group 4 F-key</label>
-              </display>
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 4 M-key" label="">
-              <label>Swiss Mapping Group 4 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>
-              <display item="Swiss Mapping Group 4" label="" format="checkbox">
-              <label>Swiss Mapping Group 4</label>
-              </display>
-            </column>
-            <label label="    "/>              
-            <column>
-              <display item="Swiss Mapping Group 4 A1 Fw" label="">
-              <label>Swiss Mapping Group 4 A1 Fw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 4 A2 Fw" label="">
-              <label>Swiss Mapping Group 4 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>
-              <display item="Swiss Mapping Group 4 A1 Rw" label="">
-              <label>Swiss Mapping Group 4 A1 Rw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 4 A2 Rw" label="">
-              <label>Swiss Mapping Group 4 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-          <row>
-            <column>
-              <display item="Swiss Mapping Group 5 F-key" label="Group 5   ">
-              <label>Swiss Mapping Group 5 F-key</label>
-              </display>
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 5 M-key" label="">
-              <label>Swiss Mapping Group 5 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>
-              <display item="Swiss Mapping Group 5" label="" format="checkbox">
-              <label>Swiss Mapping Group 5</label>
-              </display>
-            </column>
-            <label label="    "/>              
-            <column>
-              <display item="Swiss Mapping Group 5 A1 Fw" label="">
-              <label>Swiss Mapping Group 5 A1 Fw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 5 A2 Fw" label="">
-              <label>Swiss Mapping Group 5 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>
-              <display item="Swiss Mapping Group 5 A1 Rw" label="">
-              <label>Swiss Mapping Group 5 A1 Rw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 5 A2 Rw" label="">
-              <label>Swiss Mapping Group 5 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-          <row>
-            <column>
-              <display item="Swiss Mapping Group 6 F-key" label="Group 6   ">
-              <label>Swiss Mapping Group 6 F-key</label>
-              </display>
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 6 M-key" label="">
-              <label>Swiss Mapping Group 6 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>
-              <display item="Swiss Mapping Group 6" label="" format="checkbox">
-              <label>Swiss Mapping Group 6</label>
-              </display>
-            </column>
-            <label label="    "/>              
-            <column>
-              <display item="Swiss Mapping Group 6 A1 Fw" label="">
-              <label>Swiss Mapping Group 6 A1 Fw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 6 A2 Fw" label="">
-              <label>Swiss Mapping Group 6 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>
-              <display item="Swiss Mapping Group 6 A1 Rw" label="">
-              <label>Swiss Mapping Group 6 A1 Rw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 6 A2 Rw" label="">
-              <label>Swiss Mapping Group 6 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-          <row>
-            <column>
-              <display item="Swiss Mapping Group 7 F-key" label="Group 7   ">
-              <label>Swiss Mapping Group 7 F-key</label>
-              </display>
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 7 M-key" label="">
-              <label>Swiss Mapping Group 7 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>
-              <display item="Swiss Mapping Group 7" label="" format="checkbox">
-              <label>Swiss Mapping Group 7</label>
-              </display>
-            </column>
-            <label label="    "/>              
-            <column>
-              <display item="Swiss Mapping Group 7 A1 Fw" label="">
-              <label>Swiss Mapping Group 7 A1 Fw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 7 A2 Fw" label="">
-              <label>Swiss Mapping Group 7 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>
-              <display item="Swiss Mapping Group 7 A1 Rw" label="">
-              <label>Swiss Mapping Group 7 A1 Rw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 7 A2 Rw" label="">
-              <label>Swiss Mapping Group 7 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-          <row>
-            <column>
-              <display item="Swiss Mapping Group 8 F-key" label="Group 8   ">
-              <label>Swiss Mapping Group 8 F-key</label>
-              </display>
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 8 M-key" label="">
-              <label>Swiss Mapping Group 8 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>
-              <display item="Swiss Mapping Group 8" label="" format="checkbox">
-              <label>Swiss Mapping Group 8</label>
-              </display>
-            </column>
-            <label label="    "/>              
-            <column>
-              <display item="Swiss Mapping Group 8 A1 Fw" label="">
-              <label>Swiss Mapping Group 8 A1 Fw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 8 A2 Fw" label="">
-              <label>Swiss Mapping Group 8 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>
-              <display item="Swiss Mapping Group 8 A1 Rw" label="">
-              <label>Swiss Mapping Group 8 A1 Rw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 8 A2 Rw" label="">
-              <label>Swiss Mapping Group 8 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-          <row>
-            <column>
-              <display item="Swiss Mapping Group 9 F-key" label="Group 9   ">
-              <label>Swiss Mapping Group 9 F-key</label>
-              </display>
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 9 M-key" label="">
-              <label>Swiss Mapping Group 9 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>
-              <display item="Swiss Mapping Group 9" label="" format="checkbox">
-              <label>Swiss Mapping Group 9</label>
-              </display>
-            </column>
-            <label label="    "/>              
-            <column>
-              <display item="Swiss Mapping Group 9 A1 Fw" label="">
-              <label>Swiss Mapping Group 9 A1 Fw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 9 A2 Fw" label="">
-              <label>Swiss Mapping Group 9 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>
-              <display item="Swiss Mapping Group 9 A1 Rw" label="">
-              <label>Swiss Mapping Group 9 A1 Rw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 9 A2 Rw" label="">
-              <label>Swiss Mapping Group 9 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-          <row>
-            <column>
-              <display item="Swiss Mapping Group 10 F-key" label="Group 10">
-              <label>Swiss Mapping Group 10 F-key</label>
-              </display>
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 10 M-key" label="">
-              <label>Swiss Mapping Group 10 M-key</label>
-              </display>
-            </column>
-            <label label="  "/>
-            <column>
-              <display item="Swiss Mapping Group 10" label="" format="checkbox">
-              <label>Swiss Mapping Group 10</label>
-              </display>
-            </column>
-            <label label="    "/>              
-            <column>
-              <display item="Swiss Mapping Group 10 A1 Fw" label="">
-              <label>Swiss Mapping Group 10 A1 Fw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 10 A2 Fw" label="">
-              <label>Swiss Mapping Group 10 A2 Fw</label>
-              </display>              
-            </column>              
-            <column>
-              <display item="Swiss Mapping Group 10 A1 Rw" label="">
-              <label>Swiss Mapping Group 10 A1 Rw</label>
-              </display>              
-            </column>
-            <column>
-              <display item="Swiss Mapping Group 10 A2 Rw" label="">
-              <label>Swiss Mapping Group 10 A2 Rw</label>
-              </display>              
-            </column>   
-          </row>
-        </column>
+  <column>
+    <row>
+      <column>
+        <label label="The F-Key operates the selected outputs"/>
+        <label label=" "/>
+        <label label="If the M-Key is enabled the selected outputs are on when both the M-Key and F-Key are operated"/>
+        <label label=" "/>
+        <label label="                                                                                                         Function Output"/>
+        <label label="                                                     M-Key"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label label="                      F-Key"/>
+        <display item="Swiss Mapping Group 1 F-key" label="Group 1   ">
+          <label>Swiss Mapping Group 1 F-key</label>
+        </display>
+      </column>
+      <column>
+        <label label="    M-Key"/>
+        <display item="Swiss Mapping Group 1 M-key" label="">
+          <label>Swiss Mapping Group 1 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <label label="enable"/>
+        <display item="Swiss Mapping Group 1" label="" format="checkbox">
+          <label>Swiss Mapping Group 1</label>
+        </display>
+      </column>
+      <column>
+        <label label="     A1 Forward"/>
+        <display item="Swiss Mapping Group 1 A1 Fw" label="">
+          <label>Swiss Mapping Group 1 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <label label="     A2 Forward"/>
+        <display item="Swiss Mapping Group 1 A2 Fw" label="">
+          <label>Swiss Mapping Group 1 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <label label="     A1 Reverse"/>
+        <display item="Swiss Mapping Group 1 A1 Rw" label="">
+          <label>Swiss Mapping Group 1 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <label label="     A2 Reverse"/>
+        <display item="Swiss Mapping Group 1 A2 Rw" label="">
+          <label>Swiss Mapping Group 1 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Swiss Mapping Group 2 F-key" label="Group 2   ">
+          <label>Swiss Mapping Group 2 F-key</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 2 M-key" label="">
+          <label>Swiss Mapping Group 2 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <display item="Swiss Mapping Group 2" label="" format="checkbox">
+          <label>Swiss Mapping Group 2</label>
+        </display>
+      </column>
+      <label label="    "/>
+      <column>
+        <display item="Swiss Mapping Group 2 A1 Fw" label="">
+          <label>Swiss Mapping Group 2 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 2 A2 Fw" label="">
+          <label>Swiss Mapping Group 2 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 2 A1 Rw" label="">
+          <label>Swiss Mapping Group 2 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 2 A2 Rw" label="">
+          <label>Swiss Mapping Group 2 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Swiss Mapping Group 3 F-key" label="Group 3   ">
+          <label>Swiss Mapping Group 3 F-key</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 3 M-key" label="">
+          <label>Swiss Mapping Group 3 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <display item="Swiss Mapping Group 3" label="" format="checkbox">
+          <label>Swiss Mapping Group 3</label>
+        </display>
+      </column>
+      <label label="    "/>
+      <column>
+        <display item="Swiss Mapping Group 3 A1 Fw" label="">
+          <label>Swiss Mapping Group 3 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 3 A2 Fw" label="">
+          <label>Swiss Mapping Group 3 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 3 A1 Rw" label="">
+          <label>Swiss Mapping Group 3 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 3 A2 Rw" label="">
+          <label>Swiss Mapping Group 3 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Swiss Mapping Group 4 F-key" label="Group 4   ">
+          <label>Swiss Mapping Group 4 F-key</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 4 M-key" label="">
+          <label>Swiss Mapping Group 4 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <display item="Swiss Mapping Group 4" label="" format="checkbox">
+          <label>Swiss Mapping Group 4</label>
+        </display>
+      </column>
+      <label label="    "/>
+      <column>
+        <display item="Swiss Mapping Group 4 A1 Fw" label="">
+          <label>Swiss Mapping Group 4 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 4 A2 Fw" label="">
+          <label>Swiss Mapping Group 4 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 4 A1 Rw" label="">
+          <label>Swiss Mapping Group 4 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 4 A2 Rw" label="">
+          <label>Swiss Mapping Group 4 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Swiss Mapping Group 5 F-key" label="Group 5   ">
+          <label>Swiss Mapping Group 5 F-key</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 5 M-key" label="">
+          <label>Swiss Mapping Group 5 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <display item="Swiss Mapping Group 5" label="" format="checkbox">
+          <label>Swiss Mapping Group 5</label>
+        </display>
+      </column>
+      <label label="    "/>
+      <column>
+        <display item="Swiss Mapping Group 5 A1 Fw" label="">
+          <label>Swiss Mapping Group 5 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 5 A2 Fw" label="">
+          <label>Swiss Mapping Group 5 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 5 A1 Rw" label="">
+          <label>Swiss Mapping Group 5 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 5 A2 Rw" label="">
+          <label>Swiss Mapping Group 5 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Swiss Mapping Group 6 F-key" label="Group 6   ">
+          <label>Swiss Mapping Group 6 F-key</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 6 M-key" label="">
+          <label>Swiss Mapping Group 6 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <display item="Swiss Mapping Group 6" label="" format="checkbox">
+          <label>Swiss Mapping Group 6</label>
+        </display>
+      </column>
+      <label label="    "/>
+      <column>
+        <display item="Swiss Mapping Group 6 A1 Fw" label="">
+          <label>Swiss Mapping Group 6 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 6 A2 Fw" label="">
+          <label>Swiss Mapping Group 6 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 6 A1 Rw" label="">
+          <label>Swiss Mapping Group 6 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 6 A2 Rw" label="">
+          <label>Swiss Mapping Group 6 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Swiss Mapping Group 7 F-key" label="Group 7   ">
+          <label>Swiss Mapping Group 7 F-key</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 7 M-key" label="">
+          <label>Swiss Mapping Group 7 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <display item="Swiss Mapping Group 7" label="" format="checkbox">
+          <label>Swiss Mapping Group 7</label>
+        </display>
+      </column>
+      <label label="    "/>
+      <column>
+        <display item="Swiss Mapping Group 7 A1 Fw" label="">
+          <label>Swiss Mapping Group 7 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 7 A2 Fw" label="">
+          <label>Swiss Mapping Group 7 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 7 A1 Rw" label="">
+          <label>Swiss Mapping Group 7 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 7 A2 Rw" label="">
+          <label>Swiss Mapping Group 7 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Swiss Mapping Group 8 F-key" label="Group 8   ">
+          <label>Swiss Mapping Group 8 F-key</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 8 M-key" label="">
+          <label>Swiss Mapping Group 8 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <display item="Swiss Mapping Group 8" label="" format="checkbox">
+          <label>Swiss Mapping Group 8</label>
+        </display>
+      </column>
+      <label label="    "/>
+      <column>
+        <display item="Swiss Mapping Group 8 A1 Fw" label="">
+          <label>Swiss Mapping Group 8 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 8 A2 Fw" label="">
+          <label>Swiss Mapping Group 8 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 8 A1 Rw" label="">
+          <label>Swiss Mapping Group 8 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 8 A2 Rw" label="">
+          <label>Swiss Mapping Group 8 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Swiss Mapping Group 9 F-key" label="Group 9   ">
+          <label>Swiss Mapping Group 9 F-key</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 9 M-key" label="">
+          <label>Swiss Mapping Group 9 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <display item="Swiss Mapping Group 9" label="" format="checkbox">
+          <label>Swiss Mapping Group 9</label>
+        </display>
+      </column>
+      <label label="    "/>
+      <column>
+        <display item="Swiss Mapping Group 9 A1 Fw" label="">
+          <label>Swiss Mapping Group 9 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 9 A2 Fw" label="">
+          <label>Swiss Mapping Group 9 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 9 A1 Rw" label="">
+          <label>Swiss Mapping Group 9 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 9 A2 Rw" label="">
+          <label>Swiss Mapping Group 9 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Swiss Mapping Group 10 F-key" label="Group 10">
+          <label>Swiss Mapping Group 10 F-key</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 10 M-key" label="">
+          <label>Swiss Mapping Group 10 M-key</label>
+        </display>
+      </column>
+      <label label="  "/>
+      <column>
+        <display item="Swiss Mapping Group 10" label="" format="checkbox">
+          <label>Swiss Mapping Group 10</label>
+        </display>
+      </column>
+      <label label="    "/>
+      <column>
+        <display item="Swiss Mapping Group 10 A1 Fw" label="">
+          <label>Swiss Mapping Group 10 A1 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 10 A2 Fw" label="">
+          <label>Swiss Mapping Group 10 A2 Fw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 10 A1 Rw" label="">
+          <label>Swiss Mapping Group 10 A1 Rw</label>
+        </display>
+      </column>
+      <column>
+        <display item="Swiss Mapping Group 10 A2 Rw" label="">
+          <label>Swiss Mapping Group 10 A2 Rw</label>
+        </display>
+      </column>
+    </row>
+  </column>
 </pane>

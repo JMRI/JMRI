@@ -8,6 +8,7 @@
 
 package jmri.jmrix.easydcc.easydccmon;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 
 import junit.framework.Assert;
@@ -126,6 +127,6 @@ public class EasyDccMonFrameTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccMonFrameTest.class.getName());
+	static Logger log = Logger.getLogger(EasyDccMonFrameTest.class.getName());
 
 }

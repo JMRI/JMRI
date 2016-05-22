@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 
 /**
@@ -46,6 +47,6 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTest {
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightTest.class.getName());
+	static Logger log = Logger.getLogger(XNetLightTest.class.getName());
 
 }

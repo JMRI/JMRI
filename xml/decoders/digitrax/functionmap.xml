@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: functionmap.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +15,7 @@
 <!-- no need to translate the following, as it generally only appears -->
 <!-- in the function map selection pane -->
 <!-- differs from 0NMRA.xml version only in default values -->
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
     <holder>JMRI</holder>
@@ -42,13 +42,16 @@
       <revremark>Revision in original Digitrax_1x3.xml file</revremark>
     </revision>
   </revhistory>
-<!-- no need to translate the following, as it generally only appears -->
-<!-- in the function map selection pane -->
+  <!-- no need to translate the following, as it generally only appears -->
+  <!-- in the function map selection pane -->
   <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
     <enumVal>
       <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
+      <enumChoice choice="Yes">
+        <choice xml:lang="it">Si</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">FL(f) Uscita 1</label>
   </variable>
   <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
     <enumVal>

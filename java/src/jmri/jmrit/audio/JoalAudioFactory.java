@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import jmri.Audio;
@@ -387,19 +389,23 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         ALut.alutExit();
     }
 
+    @Override
     public AudioBuffer createNewBuffer(String systemName, String userName) {
         return new JoalAudioBuffer(systemName, userName);
     }
 
+    @Override
     public AudioListener createNewListener(String systemName, String userName) {
         activeAudioListener = new JoalAudioListener(systemName, userName);
         return activeAudioListener;
     }
 
+    @Override
     public AudioListener getActiveAudioListener() {
         return activeAudioListener;
     }
 
+    @Override
     public AudioSource createNewSource(String systemName, String userName) {
         return new JoalAudioSource(systemName, userName);
     }
@@ -542,7 +548,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         }
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JoalAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioFactory.class.getName());
 
 }
 

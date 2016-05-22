@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JOptionPane;
 
 import jmri.jmrix.ConnectionStatus;
@@ -85,7 +87,7 @@ public class NceAIUChecker implements NceListener {
 			log.warn("wrong number of read bytes for revision check");
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(NceAIUChecker.class.getName());
 
 }

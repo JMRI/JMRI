@@ -2,6 +2,8 @@
 
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 
@@ -28,6 +31,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
+import jmri.util.FileUtil;
 import jmri.jmrix.cmri.serial.serialmon.SerialFilterFrame;
 import jmri.jmrix.cmri.serial.serialmon.SerialMonFrame;
 
@@ -103,7 +107,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     AbstractMonFrame self;
 
     // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
     public AbstractMonFrame() {
         super();
@@ -131,7 +135,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         monTextPane.setToolTipText("Command and reply monitoring information appears here");
         monTextPane.setEditable(false);
 
-       // Add document listener to scroll to end when modified if required
+        // Add document listener to scroll to end when modified if required
         monTextPane.getDocument().addDocumentListener(new DocumentListener() {
 
             // References to the JTextArea and JCheckBox
@@ -248,16 +252,32 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         pane1.add(clearButton);
         pane1.add(freezeButton);
+        pane1.add(rawCheckBox);
+        pane1.add(timeCheckBox);
+        pane1.add(alwaysOnTopCheckBox);
         
         pane1.add(Box.createRigidArea(new Dimension(50,0)));
         pane1.add(doneButton);
         paneA.add(pane1);
-        
+
         JPanel pane4 = new JPanel();
-        pane4.setLayout(new BoxLayout(pane4, BoxLayout.X_AXIS));
-        pane4.add(enterButton);
-        pane4.add(entryField);
+        pane4.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
+        pane4.add(openFileChooserButton);
+        pane4.add(startLogButton);
+        pane4.add(stopLogButton);
         paneA.add(pane4);
+
+        JPanel pane5 = new JPanel();
+        pane5.setLayout(new BoxLayout(pane3, BoxLayout.X_AXIS));
+        pane5.add(enterButton);
+        pane5.add(entryField);
+        paneA.add(pane5);
+        
+        JPanel pane6 = new JPanel();
+        pane6.setLayout(new BoxLayout(pane4, BoxLayout.X_AXIS));
+        pane6.add(enterButton);
+        pane6.add(entryField);
+        paneA.add(pane6);
 
         getContentPane().add(paneA);
 
@@ -612,5 +632,5 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
     StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500 ;
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMonFrame.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class.getName());
 }

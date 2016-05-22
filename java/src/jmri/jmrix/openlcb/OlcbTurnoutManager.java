@@ -2,6 +2,8 @@
 
 package jmri.jmrix.openlcb;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -91,7 +93,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
         return range;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(OlcbTurnoutManager.class.getName());
 }
 
 /* @(#)OlcbTurnoutManager.java */

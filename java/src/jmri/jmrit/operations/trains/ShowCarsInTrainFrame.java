@@ -2,12 +2,12 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -33,8 +33,6 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-
 	Train _train = null;
 	CarManager carManager = CarManager.instance();
 	TrainCommon trainCommon = new TrainCommon();
@@ -46,9 +44,9 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 	JLabel textLocationName = new JLabel();
 	JLabel textNextLocationName = new JLabel();
 	JLabel textStatus = new JLabel();
-	JLabel textPickUp = new JLabel(rb.getString("Pickup"));
-	JLabel textInTrain = new JLabel(rb.getString("InTrain"));
-	JLabel textSetOut = new JLabel(rb.getString("SetOut"));
+	JLabel textPickUp = new JLabel(Bundle.getMessage("Pickup"));
+	JLabel textInTrain = new JLabel(Bundle.getMessage("InTrain"));
+	JLabel textSetOut = new JLabel(Bundle.getMessage("SetOut"));
 	
 
 	// major buttons
@@ -74,7 +72,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 	    
        	carPane = new JScrollPane(pCars);
-       	carPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Cars")));
+       	carPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Cars")));
        	carPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	//carPane.setPreferredSize(new Dimension(200, 300));
        	
@@ -88,7 +86,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
        	
 		// row 2a (train name)
        	JPanel pTrainName = new JPanel();
-       	pTrainName.setBorder(BorderFactory.createTitledBorder(rb.getString("Train")));
+       	pTrainName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Train")));
        	pTrainName.add(textTrainName);
        	
        	pRow2.add(pTrainName);
@@ -108,7 +106,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
        	
       	// row 10c (next location name)
        	JPanel pNextLocationName = new JPanel();
-       	pNextLocationName.setBorder(BorderFactory.createTitledBorder(rb.getString("NextLocation")));
+       	pNextLocationName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("NextLocation")));
        	pNextLocationName.add(textNextLocationName);
        	
        	pRow10.add(pLocationName);
@@ -136,7 +134,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
        	update();
 		
 		if (_train != null){			
-			setTitle(rb.getString("TitleShowCarsInTrain") + " ("+_train.getName()+")");
+			setTitle(Bundle.getMessage("TitleShowCarsInTrain") + " ("+_train.getName()+")");
 
 			// listen for train changes
 			_train.addPropertyChangeListener(this);
@@ -145,7 +143,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
 //		//	build menu
 //		JMenuBar menuBar = new JMenuBar();
-//		JMenu toolMenu = new JMenu(rb.getString("Tools"));			
+//		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));			
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);
 //		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
@@ -195,18 +193,26 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
 				textStatus.setText(getStatus(rl));
 			} else {
-				textStatus.setText(MessageFormat.format(rb.getString("TrainTerminatesIn"), new Object[] { _train.getTrainTerminatesName()}));
+				textStatus.setText(MessageFormat.format(Bundle.getMessage("TrainTerminatesIn"), new Object[] { _train.getTrainTerminatesName()}));
 			}
 			pCars.repaint();
 		}
 	}
 	
 	private String getStatus(RouteLocation rl){
-		return MessageFormat.format(rb.getString("TrainDepartsCars"),
-				new Object[] { rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
-						_train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
+		if (Setup.isPrintLoadsAndEmptiesEnabled()) {
+			int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
+			return MessageFormat.format(Bundle.getMessage("TrainDepartsLoads"), new Object[] {
+				TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+				_train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
+				Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
+		} else {
+			return MessageFormat.format(Bundle.getMessage("TrainDepartsCars"),
+					new Object[] { rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
+				_train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
+		}
 	}
-    
+
     private void packFrame(){
     	setVisible(false);
  		pack();
@@ -225,20 +231,15 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 		super.dispose();
 	}
 
-	public void propertyChange(java.beans.PropertyChangeEvent e){
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		//if (Control.showProperty && log.isDebugEnabled()) 
 		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
-				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)){
-			// Move property change to end of list so car updates happen before this window determines train length, etc.
-			_train.removePropertyChangeListener(this);
-			_train.addPropertyChangeListener(this);
-			update();
-		}
-		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY))
+				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue()); // NOI18N
+		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY) 
+				|| e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY))
 			update();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(ShowCarsInTrainFrame.class.getName());
 }

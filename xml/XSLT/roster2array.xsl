@@ -5,7 +5,7 @@
 
 <!-- Used by default when the roster file is displayed in a web browser -->
 
-<!-- This file is part of JMRI. Copyright 2007. -->
+<!-- This file is part of JMRI. Copyright 2007 - 2013. -->
 <!-- -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under -->
 <!-- the terms of version 2 of the GNU General Public License as published -->

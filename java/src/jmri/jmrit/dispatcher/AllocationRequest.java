@@ -2,6 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -107,18 +109,84 @@ public class AllocationRequest {
 	 */
 	private void handleSectionChange(java.beans.PropertyChangeEvent e) {
 		DispatcherFrame.instance().sectionOccupancyChanged();
+        //This forces us to rescan the allocation list if the section has gone unoccupied, thus this might get re-allocated
+        if (e.getPropertyName().equals("occupancy")) {
+            if(((Integer) e.getNewValue()).intValue()==jmri.Section.UNOCCUPIED){
+                DispatcherFrame.instance().forceScanOfAllocation();
+            }
+        }
 	}
 		
 	public void dispose() {
-		if ( (mSectionListener!=null) && (mSection!=null) ) {
+        if ( (mSectionListener!=null) && (mSection!=null) ) {
 			mSection.removePropertyChangeListener(mSectionListener);
 		}
+        
+        if ( (mSignalMastListener!=null) && (mWaitingForSignalMast!=null) ) {
+            mWaitingForSignalMast.removePropertyChangeListener(mSignalMastListener);
+        }
+        
+        if ( (mWaitingOnBlock!=null) && (mWaitingOnBlockListener!=null) ) {
+            mWaitingOnBlock.removePropertyChangeListener(mWaitingOnBlockListener);
+        }
+        mWaitingOnBlock=null;
+        mWaitingOnBlockListener = null;
+        mSignalMastListener = null;
+        mWaitingForSignalMast = null;
 		mSectionListener = null;
 		mSection = null;
 		mActiveTrain = null;
     }
-			    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AllocationRequest.class.getName());
+    
+    private java.beans.PropertyChangeListener mSignalMastListener = null;
+    
+    private jmri.SignalMast mWaitingForSignalMast = null;
+    
+    public void setWaitingForSignalMast(jmri.SignalMast sm){
+        if(mSignalMastListener == null){
+            mSignalMastListener = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) { 
+                    if (e.getPropertyName().equals("Held")) {
+                        if(!((Boolean) e.getNewValue()).booleanValue()){
+                            mWaitingForSignalMast.removePropertyChangeListener(mSignalMastListener);
+                            DispatcherFrame.instance().forceScanOfAllocation();
+                        }
+                    }
+                }
+            };
+        }
+        if(mWaitingForSignalMast!=null)
+            mWaitingForSignalMast.removePropertyChangeListener(mSignalMastListener);
+        mWaitingForSignalMast = sm;
+        if(mWaitingForSignalMast!=null)
+            mWaitingForSignalMast.addPropertyChangeListener(mSignalMastListener);
+    }
+    
+    jmri.Block mWaitingOnBlock = null;
+    private java.beans.PropertyChangeListener mWaitingOnBlockListener = null;
+    
+    protected void setWaitingOnBlock(jmri.Block b){
+        if(mWaitingOnBlockListener == null){
+            mWaitingOnBlockListener = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) { 
+                    if (e.getPropertyName().equals("state")) {
+                        if(((Integer) e.getNewValue()).intValue()==jmri.Block.UNOCCUPIED){
+                            mWaitingOnBlock.removePropertyChangeListener(mWaitingOnBlockListener);
+                            DispatcherFrame.instance().forceScanOfAllocation();
+                        }
+                    }
+                }
+            };
+        }
+        if(mWaitingOnBlock!=null)
+            mWaitingOnBlock.removePropertyChangeListener(mWaitingOnBlockListener);
+        mWaitingOnBlock = b;
+        if(mWaitingOnBlock!=null)
+            mWaitingOnBlock.addPropertyChangeListener(mWaitingOnBlockListener);
+        
+    }
+    
+    static Logger log = LoggerFactory.getLogger(AllocationRequest.class.getName());
 }
 
 /* @(#)AllocationRequest.java */

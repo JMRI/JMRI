@@ -2,8 +2,9 @@
 
 package jmri.util.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.tree.*;
-import java.io.File;
 import org.jdom.*;
 
 /**
@@ -20,12 +21,12 @@ import org.jdom.*;
 public class JTreeUtil extends GuiUtilBase {
 
     /**
-     * @param file XML file to be read and processed
+     * @param name XML file to be read and processed
      * @param wi WindowInterface to be passed to the nodes in the tree
      * @param context Blind context Object passed to the nodes in the tree
      */
-    static public DefaultMutableTreeNode loadTree(File file, WindowInterface wi, Object context) {
-        Element root = rootFromFile(file);
+    static public DefaultMutableTreeNode loadTree(String name, WindowInterface wi, Object context) {
+        Element root = rootFromName(name);
 
         return treeFromElement(root, wi, context);
     }
@@ -49,5 +50,5 @@ public class JTreeUtil extends GuiUtilBase {
         return node;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JTreeUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(JTreeUtil.class.getName());
 }

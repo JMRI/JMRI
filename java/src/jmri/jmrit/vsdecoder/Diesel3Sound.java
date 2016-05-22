@@ -19,12 +19,13 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18481 $
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import jmri.Audio;
@@ -68,6 +69,11 @@ class Diesel3Sound extends EngineSound {
 	log.debug("New Diesel3Sound name(param) = " + name + " name(val) " + this.getName());
     }
 
+    private void startThread() {
+	_loopThread = new D3LoopThread(this, notch_sounds.get(current_notch), _soundName, true);
+	log.debug("Loop Thread Started.  Sound name = " + _soundName);
+    }
+
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     @Override
     public void play() {
@@ -82,7 +88,7 @@ class Diesel3Sound extends EngineSound {
 	    // Really, nothing to do here.  The engine should be started/stopped through
 	    // the startEngine() and stopEngine() calls.  Maybe should clean that up or have
 	    // play() == loop() == startEngine() and stop == stopEngine() some time.
-	    if(_loopThread.isRunning())
+	    if((_loopThread != null) && (_loopThread.isRunning()))
 		_loopThread.setRunning(true);
 	}
     }
@@ -92,16 +98,12 @@ class Diesel3Sound extends EngineSound {
 	// Stop the loop thread, in case it's running
 	if (_loopThread != null)
 	    _loopThread.setRunning(false);
-	// Stop the loop timer, in case it's running
-	//if (t != null)
-	//    t.stop();
-	//if (_sound != null)
-	//    _sound.stop();
 	is_looping = false;
     }
 
     @Override
     public void handleSpeedChange(Float s, EnginePane e) {
+	//log.debug("Handling SpeedSetting event. speed = " + s);
 	throttle_setting = s;
 	if (!changing_speed) 
 	    changeSpeed(s, e);
@@ -110,7 +112,8 @@ class Diesel3Sound extends EngineSound {
     // Responds to "CHANGE" trigger
     public void changeThrottle(float s) {
 	// This is all we have to do.  The loop thread will handle everything else.
-	_loopThread.setThrottle(s);
+	if (_loopThread != null)
+	    _loopThread.setThrottle(s);
     }
 
     protected void changeSpeed(Float s, EnginePane e) {
@@ -125,14 +128,15 @@ class Diesel3Sound extends EngineSound {
     @Override
     public void startEngine() {
 	log.debug("startEngine.  ID = " + this.getName());
-	_loopThread = new D3LoopThread(this, notch_sounds.get(current_notch), _soundName, true);
+	//_loopThread = new D3LoopThread(this, notch_sounds.get(current_notch), _soundName, true);
 	_loopThread.startEngine(start_buffer);
     }
 
     @Override
     public void stopEngine() {
 	log.debug("stopEngine.  ID = " + this.getName());
-	_loopThread.stopEngine(stop_buffer);
+	if (_loopThread != null)
+	    _loopThread.stopEngine(stop_buffer);
     }			      
 
     @Override
@@ -142,20 +146,20 @@ class Diesel3Sound extends EngineSound {
 
     @Override
     public void mute(boolean m) {
-	_loopThread.mute(m);
-	//	_sound.mute(m);
+	if (_loopThread != null)
+	    _loopThread.mute(m);
     }
 
     @Override
     public void setVolume(float v) {
-	_loopThread.setVolume(v);
-	//_sound.setVolume(v);
+	if (_loopThread != null)
+	    _loopThread.setVolume(v);
     }
 
     @Override
     public void setPosition(PhysicalLocation p) {
-	_loopThread.setPosition(p);
-	//_sound.setPosition(p);
+	if (_loopThread != null)
+	    _loopThread.setPosition(p);
     }
 
     protected Timer newTimer(long time, boolean repeat, ActionListener al) {
@@ -187,9 +191,17 @@ class Diesel3Sound extends EngineSound {
 	super.setXml(e, vf);
 	
 	//log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
-	_soundName = this.getName() + ":" + e.getAttributeValue("name");
+	_soundName = this.getName() + ":LoopSound";
 	log.debug("Diesel3: name: " + this.getName() + " soundName " + _soundName);
 	notch_sounds = new HashMap<Integer, D3Notch>();
+	String in = e.getChildText("idle-notch");
+	Integer idle_notch = null;
+	if (in != null) {
+	    idle_notch = Integer.parseInt(in);
+	} else { 
+	    // leave idle_notch null for now. We'll use it at the end to trigger a "grandfathering" action
+	    log.warn("No Idle Notch Specified!");
+	}
 
 	// Get the notch sounds
 	Iterator<Element> itr =  (e.getChildren("notch-sound")).iterator();
@@ -199,13 +211,19 @@ class Diesel3Sound extends EngineSound {
 	    sb = new D3Notch();
 	    int nn = Integer.parseInt(el.getChildText("notch"));
 	    sb.setNotch(nn);
-	    List<Element> elist = (List<Element>)el.getChildren("file");
+	    if ((idle_notch != null) && (nn == idle_notch)) { sb.setIdleNotch(true); log.debug("This Notch (" + nn + ") is Idle."); }
+	    List<Element> elist = el.getChildren("file");
 	    int j = 0;
 	    for (Element fe : elist) {
 		fn = fe.getText();
-		AudioBuffer b = D3Notch.getBuffer(vf, fn, "Engine_n" + i + "_" + j, "Engine_" + i + "_" + j);
-		log.debug("Buffer created: " + b + " name: " + b.getSystemName());
-		sb.addLoopBuffer(b);
+		//AudioBuffer b = D3Notch.getBuffer(vf, fn, "Engine_n" + i + "_" + j, "Engine_" + i + "_" + j);
+		//log.debug("Buffer created: " + b + " name: " + b.getSystemName());
+		//sb.addLoopBuffer(b);
+		List<AudioBuffer> l = D3Notch.getBufferList(vf, fn,  "Engine_n" + i + "_" + j, "Engine_" + i + "_" + j);
+		log.debug("Buffers Created: ");
+		for (AudioBuffer b : l)
+		    log.debug("\tSubBuffer: " + b.getSystemName());
+		sb.addLoopBuffers(l);
 		j++;
 	    }
 	    //log.debug("Notch: " + nn + " File: " + fn);
@@ -245,9 +263,32 @@ class Diesel3Sound extends EngineSound {
 	    stop_buffer = D3Notch.getBuffer(vf, fn, "Engine_shutdown", "Engine_Shutdown");
 	}
 
+	// Handle "grandfathering the idle notch indication
+	// If the VSD designer did not explicitly designate an idle notch...
+	// Find the Notch with the lowest notch number, and make it the idle notch.
+	// If there's a tie, this will take the first value, but the notches /should/
+	// all have unique notch numbers.
+	if (idle_notch == null) {
+	    D3Notch min_notch = null;
+	    // No, this is not a terribly efficient "min" operation.  But that's OK.
+	    for (D3Notch n : notch_sounds.values()) {
+		    if ((min_notch == null) || (n.getNotch() < min_notch.getNotch())) {
+		        min_notch = n;
+		    }
+	    }
+	    log.debug("No Idle Notch Specified.  Choosing Notch (" + (min_notch != null ? min_notch.getNotch() : "min_notch not set") + ") to be the Idle Notch.");
+	    if (min_notch != null) {
+	        min_notch.setIdleNotch(true);
+	    } else {
+	        log.warn("Could not set idle notch because min_notch was still null");
+	    }
+	}
+
+	// Kick-start the loop thread.
+	this.startThread();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Diesel3Sound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Diesel3Sound.class.getName());
 
 }
 
@@ -259,6 +300,7 @@ class D3Notch {
     private float accel_limit, decel_limit;
     private int loop_index;
     private List<AudioBuffer> loop_bufs = new ArrayList<AudioBuffer>();
+    private Boolean is_idle;
 
     public D3Notch() {
 	this(1, 1, 1, null, null, null);
@@ -290,6 +332,7 @@ class D3Notch {
     public List<AudioBuffer> getLoopBuffers() { return(loop_bufs); }
     public AudioBuffer getLoopBuffer(int idx) { return(loop_bufs.get(idx)); }
     public long getLoopBufferLength(int idx) { return(SoundBite.calcLength(loop_bufs.get(idx))); }
+    public Boolean isIdleNotch() { return(is_idle); }
 
     public void setNextNotch(int n) { next_notch = n; }
     public void setNextNotch(String s) { next_notch = setIntegerFromString(s); }
@@ -303,9 +346,11 @@ class D3Notch {
     public void setAccelBuffer(AudioBuffer b) { accel_buf = b; }
     public void setDecelBuffer(AudioBuffer b) { decel_buf = b; }
     public void addLoopBuffer(AudioBuffer b) { loop_bufs.add(b); }
+    public void addLoopBuffers(List<AudioBuffer> l) { loop_bufs.addAll(l); }
     public void setLoopBuffers(List<AudioBuffer> l) { loop_bufs = l; }
     public void clearLoopBuffers() { loop_bufs.clear(); }
     public AudioBuffer nextLoopBuffer() { return(loop_bufs.get(incLoopIndex())); }
+    public void setIdleNotch(Boolean i) { is_idle = i; }
 
     public int loopIndex() { return(loop_index); }
     public int incLoopIndex() {
@@ -344,6 +389,26 @@ class D3Notch {
 	}
     }
 
+    static public List<AudioBuffer> getBufferList(VSDFile vf, String filename, String sname, String uname) {
+	List<AudioBuffer> buflist = null;
+	if (vf == null) {
+	    // Need to fix this.
+	    //buf.setURL(vsd_file_base + filename);
+	    log.debug("No VSD File");
+	    return(null);
+	} else {
+	    java.io.InputStream ins = vf.getInputStream(filename);
+	    if (ins != null) {
+		//buflist = AudioUtil.getSplitInputStream(VSDSound.BufSysNamePrefix+filename, ins, 250, 100);
+		buflist = AudioUtil.getAudioBufferList(VSDSound.BufSysNamePrefix+filename, ins, 250, 100);
+	    }
+	    else {
+		log.debug("Input Stream failed");
+		return(null);
+	    }
+	    return(buflist);
+	}
+    }
     static public AudioBuffer getBuffer(VSDFile vf, String filename, String sname, String uname) {
 	AudioBuffer buf = null;
 	AudioManager am = jmri.InstanceManager.audioManagerInstance();
@@ -374,7 +439,7 @@ class D3Notch {
 	return(buf);
     }
  
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(D3Notch.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(D3Notch.class.getName());
    
 }
 
@@ -386,6 +451,8 @@ class D3LoopThread extends Thread {
     D3Notch _notch;
     SoundBite _sound;
     float _throttle;
+
+    public static final int SLEEP_INTERVAL = 50;
 
     public D3LoopThread(Diesel3Sound p) {
 	super();
@@ -428,11 +495,29 @@ class D3LoopThread extends Thread {
 
     public boolean isRunning() { return(is_running); }
 
-    public void setThrottle(float t) { _throttle = t; }
+    public void setThrottle(float t) { _throttle = t; log.debug("Throttle set: " + _throttle); }
 
     public void startEngine(AudioBuffer start_buf) {
 	_sound.unqueueBuffers();
-	_sound.queueBuffer(start_buf);
+	// Adjust the current notch to match the throttle setting
+	log.debug("Notch = " + _notch.getNotch() + " prev = " + _notch.getPrevNotch() + " next = " + _notch.getNextNotch());
+	if (!_notch.isInLimits(_throttle)) {
+	    // We're out of whack. Find the right notch for the current throttle setting.
+	    while (!_notch.isInLimits(_throttle)) {
+		if (_throttle > _notch.getAccelLimit())
+		    _notch = _parent.getNotch(_notch.getNextNotch());
+		else if (_throttle < _notch.getDecelLimit())
+		    _notch = _parent.getNotch(_notch.getPrevNotch());
+	    }
+	}
+	// Only queue the start buffer if we know we're in the idle notch.
+	// This is indicated by prevNotch == self.
+	if (_notch.isIdleNotch()) {
+	    _sound.queueBuffer(start_buf);
+	} else {
+	    _sound.queueBuffer(_notch.nextLoopBuffer());
+	}
+	// Follow up with another loop buffer.
 	_sound.queueBuffer(_notch.nextLoopBuffer());
 	is_looping = true;
 	if (!_sound.isPlaying())
@@ -455,12 +540,13 @@ class D3LoopThread extends Thread {
 			_sound.unqueueBuffers();
 		    //log.debug("D3Loop"+ _sound.getName() + "Run loop. Buffers: " + _sound.getSource().numQueuedBuffers());
 		    if (!_notch.isInLimits(_throttle)) {
+			//log.debug("Notch Change! throttle = " + _throttle);
 			changeNotch();
 		    }
 		    if (_sound.getSource().numQueuedBuffers() < 2) {
-			log.debug("D3Loop"+ _sound.getName() + "Buffer count low (" + _sound.getSource().numQueuedBuffers() + ").  Adding buffer.");
+			//log.debug("D3Loop"+ _sound.getName() + "Buffer count low (" + _sound.getSource().numQueuedBuffers() + ").  Adding buffer. Throttle = " + _throttle);
 			AudioBuffer b = _notch.nextLoopBuffer();
-			log.debug("D3Loop"+ _sound.getName() + "Loop: Adding buffer " + b.getSystemName());
+			//log.debug("D3Loop"+ _sound.getName() + "Loop: Adding buffer " + b.getSystemName());
 			_sound.queueBuffer(b);
 		    }
 		    if (!_sound.isPlaying()) {
@@ -473,10 +559,10 @@ class D3LoopThread extends Thread {
 			_sound.unqueueBuffers();
 		    if (is_dying && (_sound.getSource().getState() != Audio.STATE_PLAYING)) {
 			_sound.stop(); // good reason to get rid of SoundBite.is_playing variable!
-			return;
+			//return;
 		    }
 		}
-		sleep(100);
+		sleep(SLEEP_INTERVAL);
 	    }
 	    // Note: if (is_running == false) we'll exit the endless while and the Thread will die.
 	    return;
@@ -549,6 +635,6 @@ class D3LoopThread extends Thread {
 	_notch = null;
 	_sound = null;
     }
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(D3LoopThread.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(D3LoopThread.class.getName());
 
 }

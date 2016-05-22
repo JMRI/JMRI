@@ -1,12 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
+import java.awt.Shape;
 
 import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.Shape;
 import javax.swing.JPopupMenu;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PositionableRoundRect adds corner radii to PositionableShapes.
@@ -38,7 +40,7 @@ public class PositionableRoundRect extends PositionableRectangle {
      *  only after its parameters have been set
      */
     public void makeShape() {  	
- 	   _shape = new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius);
+    	setShape(new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius));
     }
 
     public Positionable deepClone() {
@@ -53,7 +55,7 @@ public class PositionableRoundRect extends PositionableRectangle {
     }
     
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rbcp.getString("editShape"), rbcp.getString("roundRect"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("roundRect"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                 	_editFrame = new DrawRoundRect("editShape", "rectangle", null);
@@ -63,5 +65,5 @@ public class PositionableRoundRect extends PositionableRectangle {
         return true;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableRoundRect.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableRoundRect.class.getName());
 }

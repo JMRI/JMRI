@@ -2,6 +2,8 @@
 
 package jmri.jmrix.cmri.serial.diagnostic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -31,7 +33,7 @@ public class DiagnosticAction 	extends AbstractAction {
         f.setVisible(true);
     }
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DiagnosticAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(DiagnosticAction.class.getName());
 }
 
 /* @(#)DiagnosticAction.java */

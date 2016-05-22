@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Script to start a JMRI application from inside a MacOS X app bundle
+# Script to start a JMRI application from inside a Mac OS X app bundle
 #
 # If you want to be able to move this bundle anywhere and run it,
 # set your JMRI_HOME environment variable to the absolute pathname
@@ -36,7 +36,7 @@
 CLASSNAME=apps.PanelPro.PanelPro
 
 # set DEBUG to anything to see debugging output
-# we leave this set on MacOS X, as the Console app makes it less visible
+# we leave this set on Mac OS X, as the Console app makes it less visible
 DEBUG=yes
 
 # label what is to follow
@@ -125,7 +125,7 @@ fi
 CP="${CP}:jmri.jar"
 # and contents of lib
 CP="${CP}:`ls -m lib/*.jar | tr -d ' \n' | tr ',' ':'`"
-# and MacOS X system library
+# and Mac OS X system library
 CP=${CP}:/System/Library/Java
 [ "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
@@ -154,7 +154,7 @@ OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
 # memory start and max limits
 OPTIONS="${OPTIONS} -Xms96m"
 OPTIONS="${OPTIONS} -Xmx640m"
-# MacOS X specific options
+# Mac OS X specific options
 OPTIONS="${OPTIONS} -Dapple.laf.useScreenMenuBar=true"
 OPTIONS="${OPTIONS} -Dfile.encoding=UTF-8"
 OPTIONS="${OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"

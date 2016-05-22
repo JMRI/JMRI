@@ -2,8 +2,9 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
 import java.util.List;
 import java.io.File;
 
@@ -35,8 +36,6 @@ import jmri.util.FileUtil;
  */
 
 public class TrainScriptFrame extends OperationsFrame {
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	TrainManager manager;
 	TrainManagerXml managerXml;
@@ -58,17 +57,17 @@ public class TrainScriptFrame extends OperationsFrame {
 	JLabel trainDescription = new JLabel();
 
 	// major buttons
-	JButton addBuildScriptButton = new JButton(rb.getString("AddScript"));
-	JButton addAfterBuildScriptButton = new JButton(rb.getString("AddScript"));
-	JButton addMoveScriptButton = new JButton(rb.getString("AddScript"));
-	JButton addTerminationScriptButton = new JButton(rb.getString("AddScript"));
+	JButton addBuildScriptButton = new JButton(Bundle.getMessage("AddScript"));
+	JButton addAfterBuildScriptButton = new JButton(Bundle.getMessage("AddScript"));
+	JButton addMoveScriptButton = new JButton(Bundle.getMessage("AddScript"));
+	JButton addTerminationScriptButton = new JButton(Bundle.getMessage("AddScript"));
 	
-	JButton runBuildScriptButton = new JButton(rb.getString("RunScripts"));
-	JButton runAfterBuildScriptButton = new JButton(rb.getString("RunScripts"));
-	JButton runMoveScriptButton = new JButton(rb.getString("RunScripts"));
-	JButton runTerminationScriptButton = new JButton(rb.getString("RunScripts"));
+	JButton runBuildScriptButton = new JButton(Bundle.getMessage("RunScripts"));
+	JButton runAfterBuildScriptButton = new JButton(Bundle.getMessage("RunScripts"));
+	JButton runMoveScriptButton = new JButton(Bundle.getMessage("RunScripts"));
+	JButton runTerminationScriptButton = new JButton(Bundle.getMessage("RunScripts"));
 	
-	JButton saveTrainButton = new JButton(rb.getString("SaveTrain"));
+	JButton saveTrainButton = new JButton(Bundle.getMessage("SaveTrain"));
 
 	public TrainScriptFrame() {
 		super();
@@ -78,19 +77,19 @@ public class TrainScriptFrame extends OperationsFrame {
     	// Set up script options in a Scroll Pane..
      	buildScriptPane = new JScrollPane(pBuildScript);
       	buildScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	buildScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsBeforeBuild")));
+      	buildScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsBeforeBuild")));
       	
      	afterBuildScriptPane = new JScrollPane(pAfterBuildScript);
       	afterBuildScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	afterBuildScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsAfterBuild")));
+      	afterBuildScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsAfterBuild")));
 
      	moveScriptPane = new JScrollPane(pMoveScript);
       	moveScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	moveScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsWhenMoved")));
+      	moveScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsWhenMoved")));
  
       	terminationScriptPane = new JScrollPane(pTerminationScript);
       	terminationScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	terminationScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsWhenTerminated")));  	
+      	terminationScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsWhenTerminated")));  	
 
 		// remember who called us
 		parent.setChildFrame(this);
@@ -109,13 +108,13 @@ public class TrainScriptFrame extends OperationsFrame {
 		// row 1a
        	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
-    	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
+    	pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Name")));
     	addItem(pName, trainName, 0, 0);
 
 		// row 1b
        	JPanel pDesc = new JPanel();
     	pDesc.setLayout(new GridBagLayout());
-    	pDesc.setBorder(BorderFactory.createTitledBorder(rb.getString("Description")));
+    	pDesc.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
     	addItem(pDesc, trainDescription, 0, 0);
 		
     	p1.add(pName);
@@ -163,7 +162,7 @@ public class TrainScriptFrame extends OperationsFrame {
 		} else {
 			enableButtons(false);
 		}
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true); // NOI18N
 		packFrame();
 	}
 	
@@ -178,7 +177,7 @@ public class TrainScriptFrame extends OperationsFrame {
     		if (scripts.size()>0)
     			addItem(pBuildScript, runBuildScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeBuildScripts = new JButton(rb.getString("RemoveScript"));
+    			JButton removeBuildScripts = new JButton(Bundle.getMessage("RemoveScript"));
     			removeBuildScripts.setName(scripts.get(i));
     			removeBuildScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -204,7 +203,7 @@ public class TrainScriptFrame extends OperationsFrame {
     		if (scripts.size()>0)
     			addItem(pAfterBuildScript, runAfterBuildScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeAfterBuildScripts = new JButton(rb.getString("RemoveScript"));
+    			JButton removeAfterBuildScripts = new JButton(Bundle.getMessage("RemoveScript"));
     			removeAfterBuildScripts.setName(scripts.get(i));
     			removeAfterBuildScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -230,7 +229,7 @@ public class TrainScriptFrame extends OperationsFrame {
       		if (scripts.size()>0)
     			addItem(pMoveScript, runMoveScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeMoveScripts = new JButton(rb.getString("RemoveScript"));
+    			JButton removeMoveScripts = new JButton(Bundle.getMessage("RemoveScript"));
     			removeMoveScripts.setName(scripts.get(i));
     			removeMoveScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -256,7 +255,7 @@ public class TrainScriptFrame extends OperationsFrame {
       		if (scripts.size()>0)
     			addItem(pTerminationScript, runTerminationScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeTerminationScripts = new JButton(rb.getString("RemoveScript"));
+				JButton removeTerminationScripts = new JButton(Bundle.getMessage("RemoveScript"));
     			removeTerminationScripts.setName(scripts.get(i));
        			removeTerminationScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -332,9 +331,9 @@ public class TrainScriptFrame extends OperationsFrame {
 	
 	public void buttonActionRemoveBuildScript(java.awt.event.ActionEvent ae){
 		if (_train != null){
-			JButton rb = (JButton)ae.getSource();
-			log.debug("remove build script button activated "+rb.getName());
-			_train.deleteBuildScript(rb.getName());
+			JButton rbutton = (JButton)ae.getSource();
+			log.debug("remove build script button activated "+rbutton.getName());
+			_train.deleteBuildScript(rbutton.getName());
 			updateBuildScriptPanel();
 			packFrame();
 		}
@@ -342,9 +341,9 @@ public class TrainScriptFrame extends OperationsFrame {
 	
 	public void buttonActionRemoveAfterBuildScript(java.awt.event.ActionEvent ae){
 		if (_train != null){
-			JButton rb = (JButton)ae.getSource();
-			log.debug("remove after build script button activated "+rb.getName());
-			_train.deleteAfterBuildScript(rb.getName());
+			JButton rbutton = (JButton)ae.getSource();
+			log.debug("remove after build script button activated "+rbutton.getName());
+			_train.deleteAfterBuildScript(rbutton.getName());
 			updateAfterBuildScriptPanel();
 			packFrame();
 		}
@@ -352,9 +351,9 @@ public class TrainScriptFrame extends OperationsFrame {
 	
 	public void buttonActionRemoveMoveScript(java.awt.event.ActionEvent ae){
 		if (_train != null){
-			JButton rb = (JButton)ae.getSource();
-			log.debug("remove move script button activated "+rb.getName());
-			_train.deleteMoveScript(rb.getName());
+			JButton rbutton = (JButton)ae.getSource();
+			log.debug("remove move script button activated "+rbutton.getName());
+			_train.deleteMoveScript(rbutton.getName());
 			updateMoveScriptPanel();
 			packFrame();
 		}
@@ -362,9 +361,9 @@ public class TrainScriptFrame extends OperationsFrame {
 	
 	public void buttonActionRemoveTerminationScript(java.awt.event.ActionEvent ae){
 		if (_train != null){
-			JButton rb = (JButton)ae.getSource();
-			log.debug("remove termination script button activated "+rb.getName());
-			_train.deleteTerminationScript(rb.getName());
+			JButton rbutton = (JButton)ae.getSource();
+			log.debug("remove termination script button activated "+rbutton.getName());
+			_train.deleteTerminationScript(rbutton.getName());
 			updateTerminationScriptPanel();
 			packFrame();
 		}
@@ -381,23 +380,22 @@ public class TrainScriptFrame extends OperationsFrame {
 	 * We always use the same file chooser in this class, so that
 	 * the user's last-accessed directory remains available.
 	 */
-	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
+	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PythonScriptFiles"), "py"); // NOI18N
 
 	private File selectFile() {
 		if (fc==null) {
         	log.error("Could not find user directory");
         } else {
-            fc.setDialogTitle("Find desired script file");
+            fc.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
             // when reusing the chooser, make sure new files are included
             fc.rescanCurrentDirectory();
-        }
-
-        int retVal = fc.showOpenDialog(null);
-        // handle selection or cancel
-        if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            // Run the script from it's filename
-            return file;
+            int retVal = fc.showOpenDialog(null);
+            // handle selection or cancel
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                // Run the script from it's filename
+                return file;
+            }
         }
         return null;
     }
@@ -420,6 +418,6 @@ public class TrainScriptFrame extends OperationsFrame {
 		setVisible(true);
     }
  	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(TrainScriptFrame.class.getName());
 }

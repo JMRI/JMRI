@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import javax.swing.JFrame;
 
 import junit.framework.*;
@@ -54,5 +55,5 @@ public class RouteTableActionTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteTableActionTest.class.getName());
+    static Logger log = Logger.getLogger(RouteTableActionTest.class.getName());
 }

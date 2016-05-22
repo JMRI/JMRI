@@ -2,6 +2,8 @@
 
 package jmri.progdebugger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Hashtable;
@@ -221,7 +223,7 @@ public class ProgDebugger implements Programmer  {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgDebugger.class.getName());
+    static Logger log = LoggerFactory.getLogger(ProgDebugger.class.getName());
 }
 
 /* @(#)ProgDebugger.java */

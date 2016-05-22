@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.swing.lzv100;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -48,6 +49,6 @@ public class LZV100FrameTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LZV100FrameTest.class.getName());
+    static Logger log = Logger.getLogger(LZV100FrameTest.class.getName());
 
 }

@@ -11,6 +11,8 @@ package jmri.jmrix.loconet.locormi;
 
  // -Djava.security.policy=lib/security.policy
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -24,7 +26,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
   private static LnMessageServer self = null ;
   static final String serviceName = "LocoNetServer" ;
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnMessageServer.class.getName());
+  static Logger log = LoggerFactory.getLogger(LnMessageServer.class.getName());
 
   private LnMessageServer() throws RemoteException
   {
@@ -86,7 +88,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
     }
     catch( Exception ex )
     {
-      log.fatal( "Exception during disable: " + ex );
+      log.error( "Exception during disable: " + ex );
     }
   }
 }

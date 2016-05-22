@@ -2,6 +2,8 @@
 
 package jmri.jmrit.roster;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -157,6 +159,6 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
     abstract protected void message(String m);
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IdentifyLoco.class.getName());
+    static Logger log = LoggerFactory.getLogger(IdentifyLoco.class.getName());
 
 }

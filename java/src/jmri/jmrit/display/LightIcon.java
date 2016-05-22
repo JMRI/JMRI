@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.jmrit.catalog.NamedIcon;
@@ -154,7 +156,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
 
     public String getNameString() {
         String name;
-        if (light == null) name = rb.getString("NotConnected");
+        if (light == null) name = Bundle.getMessage("NotConnected");
         else if (light.getUserName()!=null)
             name = light.getUserName()+" ("+light.getSystemName()+")";
         else
@@ -238,7 +240,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
             if (isIcon()) super.setIcon(on);
             break;
         default:
-            if (isText()) super.setText(rb.getString("Inconsistent"));
+            if (isText()) super.setText(Bundle.getMessage("Inconsistent"));
             if (isIcon()) super.setIcon(inconsistent);
             break;
         }
@@ -280,5 +282,5 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LightIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(LightIcon.class.getName());
 }

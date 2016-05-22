@@ -2,6 +2,9 @@
 
 package jmri.jmrix.rps;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Encodes a single set of input values (a "reading") for RPS.
  * <P>
@@ -109,7 +112,7 @@ public class Reading {
      */
     public Object getRawData() {return rawData;}
     
-    final static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Reading.class.getName());
+    final static Logger log = LoggerFactory.getLogger(Reading.class.getName());
 
     final Object rawData;
 }

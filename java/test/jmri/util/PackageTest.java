@@ -27,11 +27,13 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.UtilTest");   // no tests in this class itself
 
+        suite.addTest(BundleTest.suite());
         suite.addTest(FileUtilTest.suite());
         suite.addTest(JUnitAppenderTest.suite());
         suite.addTest(NamedBeanHandleTest.suite());
         suite.addTest(OrderedHashtableTest.suite());
         suite.addTest(StringUtilTest.suite());
+        suite.addTest(I18NTest.suite());
         
         if (!System.getProperty("jmri.headlesstest","false").equals("true"))
             suite.addTest(SwingTestCaseTest.suite());

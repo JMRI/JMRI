@@ -2,6 +2,8 @@
 
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractManager;
 
 import java.util.ArrayList;
@@ -156,6 +158,43 @@ public class TransitManager extends AbstractManager
 		}
 		return list;
 	}
+    
+    public ArrayList<Transit> getListUsingBlock(Block b){
+		ArrayList<Transit> list = new ArrayList<Transit>();
+		List<String> tList = getSystemNameList();
+		for (int i = 0; i < tList.size(); i++) {
+			String tName = tList.get(i);
+			if ( (tName!=null) && (tName.length()>0) ) {
+				Transit tTransit = getTransit(tName);
+				if (tTransit!=null) {
+					if (tTransit.containsBlock(b)) {
+						// this Transit uses the specified Section
+						list.add(tTransit);
+					}
+				}
+			}
+		}
+		return list;
+    }
+    
+    public ArrayList<Transit> getListEntryBlock(Block b){
+    	ArrayList<Transit> list = new ArrayList<Transit>();
+		List<String> tList = getSystemNameList();
+		for (int i = 0; i < tList.size(); i++) {
+			String tName = tList.get(i);
+			if ( (tName!=null) && (tName.length()>0) ) {
+				Transit tTransit = getTransit(tName);
+				if (tTransit!=null) {
+                    ArrayList<Block> entryBlock = tTransit.getEntryBlocksList();
+					if (entryBlock.contains(b)) {
+						// this Transit uses the specified Section
+						list.add(tTransit);
+					}
+				}
+			}
+		}
+		return list;
+    }
 	
     static TransitManager _instance = null;
     static public TransitManager instance() {
@@ -165,7 +204,7 @@ public class TransitManager extends AbstractManager
         return (_instance);
     }
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(TransitManager.class.getName());
 }
 
 

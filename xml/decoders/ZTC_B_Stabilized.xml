@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: ZTC_B_Stabilized.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,7 +17,7 @@
   <version author="Ian Birchenough(ian@birchenough.demon.co.uk)" version="2" lastUpdated="20060521"/>
   <version author="Phil Grainger (phil.grainger@ca.com)" version="1" lastUpdated="20030805"/>
   <!--   version 3 Added factory reset.-->
-<!-- ZTC Speed Stabilized decoders -->
+  <!-- ZTC Speed Stabilized decoders -->
   <decoder>
     <family name="ZTC Speed Stabilised (B)" mfg="ZTC" lowVersionID="0" highVersionID="255">
       <model model="ZTC216B" numOuts="2">
@@ -170,14 +170,14 @@
         <label> Kick Start </label>
         <comment>Range 0-63</comment>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
-      <constant label="F1 controls output 3" minOut="3" default="1"/>
-      <constant label="F2 controls output 4" minOut="4" default="1"/>
-      <constant label="F3 controls output 5" minOut="5" default="1"/>
-      <constant label="F4 controls output 6" minOut="6" default="1"/>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="F1 controls output 3" minOut="3" default="1"/>
+      <constant item="F2 controls output 4" minOut="4" default="1"/>
+      <constant item="F3 controls output 5" minOut="5" default="1"/>
+      <constant item="F4 controls output 6" minOut="6" default="1"/>
     </variables>
     <resets>
-       <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
   <pane name="ZTC">

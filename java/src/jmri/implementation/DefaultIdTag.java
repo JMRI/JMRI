@@ -2,6 +2,8 @@
 
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -47,6 +49,7 @@ public class DefaultIdTag extends AbstractIdTag {
         setWhereLastSeen(null);
     }
 
+    @Override
     public final void setWhereLastSeen(Reporter r) {
         Reporter oldWhere = this._whereLastSeen;
         Date oldWhen = this._whenLastSeen;
@@ -59,8 +62,8 @@ public class DefaultIdTag extends AbstractIdTag {
             this._whenLastSeen = null;
         }
         setCurrentState(r!=null?SEEN:UNSEEN);
-        firePropertyChange("whereLastSeen", oldWhere, this._whereLastSeen);
-        firePropertyChange("whenLastSeen", oldWhen, this._whenLastSeen);
+        firePropertyChange("whereLastSeen", oldWhere, this._whereLastSeen); //NOI18N
+        firePropertyChange("whenLastSeen", oldWhen, this._whenLastSeen);    //NOI18N
     }
 
     private void setCurrentState(int state) {
@@ -71,52 +74,56 @@ public class DefaultIdTag extends AbstractIdTag {
         }
     }
 
+    @Override
     public void setState(int s) throws JmriException {
         this._currentState = s;
     }
 
+    @Override
     public int getState() {
         return this._currentState;
     }
 
+    @Override
     public Element store(boolean storeState) {
-        Element e = new Element("idtag");
+        Element e = new Element("idtag"); //NOI18N
         // e.setAttribute("systemName", this.mSystemName); // not needed from 2.11.1
-        e.addContent(new Element("systemName").addContent(this.mSystemName));
+        e.addContent(new Element("systemName").addContent(this.mSystemName)); //NOI18N
         if (this.mUserName!=null && this.mUserName.length()>0) {
             // e.setAttribute("userName", this.mUserName); // not needed from 2.11.1
-            e.addContent(new Element("userName").addContent(this.mUserName));
+            e.addContent(new Element("userName").addContent(this.mUserName)); //NOI18N
         }
         if (this.getComment()!=null && this.getComment().length()>0) {
-            e.addContent(new Element("comment").addContent(this.getComment()));
+            e.addContent(new Element("comment").addContent(this.getComment())); //NOI18N
         }
         if (this.getWhereLastSeen()!=null && storeState) {
-            e.addContent(new Element("whereLastSeen").addContent(this.getWhereLastSeen().getSystemName()));
+            e.addContent(new Element("whereLastSeen").addContent(this.getWhereLastSeen().getSystemName())); //NOI18N
         }
         if (this.getWhenLastSeen()!=null && storeState) {
-            e.addContent(new Element("whenLastSeen").addContent(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(this.getWhenLastSeen())));
+            e.addContent(new Element("whenLastSeen").addContent(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(this.getWhenLastSeen()))); //NOI18N
         }
         return e;
     }
 
+    @Override
     public void load(Element e) {
-        if (e.getName().equals("idtag")) {
+        if (e.getName().equals("idtag")) { //NOI18N
             if (log.isDebugEnabled())
                 log.debug("Load IdTag element for " + this.getSystemName());
-            if (e.getChild("userName")!=null)
-                this.setUserName(e.getChild("userName").getText());
-            if (e.getChild("comment")!=null)
-                this.setComment(e.getChild("comment").getText());
-            if (e.getChild("whereLastSeen")!=null) {
+            if (e.getChild("userName")!=null) //NOI18N
+                this.setUserName(e.getChild("userName").getText()); //NOI18N
+            if (e.getChild("comment")!=null) //NOI18N
+                this.setComment(e.getChild("comment").getText()); //NOI18N
+            if (e.getChild("whereLastSeen")!=null) { //NOI18N
                 this.setWhereLastSeen(
                         InstanceManager.reporterManagerInstance().provideReporter(
-                            e.getChild("whereLastSeen").getText()));
+                            e.getChild("whereLastSeen").getText())); //NOI18N
                 this._whenLastSeen = null;
             }
-            if (e.getChild("whenLastSeen")!=null) {
+            if (e.getChild("whenLastSeen")!=null) { //NOI18N
                 log.debug("When Last Seen: " + e.getChild("whenLastSeen").getText());
                 try {
-                    this._whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText());
+                    this._whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText()); //NOI18N
                 } catch (ParseException ex) {
                     log.warn("Error parsing when last seen: " + ex);
                 }
@@ -126,7 +133,7 @@ public class DefaultIdTag extends AbstractIdTag {
         }
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultIdTag.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultIdTag.class.getName());
 
 }
 

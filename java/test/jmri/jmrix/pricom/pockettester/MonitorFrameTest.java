@@ -26,6 +26,8 @@ public class MonitorFrameTest extends TestCase {
         f.asciiFormattedMessage(PocketTesterTest.version);
         f.asciiFormattedMessage(PocketTesterTest.speed0003A);
         f.asciiFormattedMessage(PocketTesterTest.idlePacket);
+        
+        f.dispose();
     }
 
     // from here down is testing infrastructure

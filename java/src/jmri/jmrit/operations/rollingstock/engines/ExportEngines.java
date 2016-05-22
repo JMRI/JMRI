@@ -2,11 +2,15 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -22,6 +26,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  */
 public class ExportEngines extends XmlFile {
 	
+	static final String ESC = "\""; // escape character NOI18N
 	private String del = ","; 	// delimiter
 	
 	public ExportEngines(){
@@ -67,8 +72,8 @@ public class ExportEngines extends XmlFile {
         PrintWriter fileOut;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file)),
-					true);
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
+					"UTF-8")), true); // NOI18N
 		} catch (IOException e) {
 			log.error("can not open Engine roster CSV file");
 			return;
@@ -89,38 +94,39 @@ public class ExportEngines extends XmlFile {
         	Engine engine = manager.getById(engineList.get(i));
         	engineModel = engine.getModel();
         	if (engineModel.contains(del)){
-        		log.debug("Engine ("+engine.getRoad()+" "+engine.getNumber()+") has delimiter in model field: "+engineModel);
-        		engineModel = "\""+engine.getModel()+"\"";
+        		log.debug("Engine ("+engine.getRoadName()+" "+engine.getNumber()+") has delimiter in model field: "+engineModel);
+        		engineModel = ESC+engine.getModel()+ESC;
         	}
         	engineLocationName = engine.getLocationName();
         	if (engineLocationName.contains(del)){
-        		log.debug("Engine ("+engine.getRoad()+" "+engine.getNumber()+") has delimiter in location field: "+engineLocationName);
-        		engineLocationName = "\""+engine.getLocationName()+"\"";
+        		log.debug("Engine ("+engine.getRoadName()+" "+engine.getNumber()+") has delimiter in location field: "+engineLocationName);
+        		engineLocationName = ESC+engine.getLocationName()+ESC;
         	}
         	engineTrackName = engine.getTrackName();
         	if (engineTrackName.contains(del)){
-        		log.debug("Engine ("+engine.getRoad()+" "+engine.getNumber()+") has delimiter in track field: "+engineTrackName);
-        		engineTrackName = "\""+engine.getTrackName()+"\"";
+        		log.debug("Engine ("+engine.getRoadName()+" "+engine.getNumber()+") has delimiter in track field: "+engineTrackName);
+        		engineTrackName = ESC+engine.getTrackName()+ESC;
         	}
            	// only export value field if value has been set.
         	value = "";
         	if (!engine.getValue().equals("")){
-        		value = del + "\""+engine.getValue()+"\"";
+        		value = del + ESC+engine.getValue()+ESC;
         	}
-			line = engine.getNumber() + del + engine.getRoad() + del
+			line = engine.getNumber() + del + engine.getRoadName() + del
 					+ engineModel + del + engine.getLength() + del
 					+ engine.getOwner() + del + engine.getBuilt() + del
-					+ engineLocationName + ",-," + engineTrackName
+					+ engineLocationName + ",-," + engineTrackName // NOI18N
 					+ value;
 			fileOut.println(line);
         }
 		fileOut.flush();
 		fileOut.close();
 		log.info("Exported "+engineList.size()+" engines to file "+defaultOperationsFilename());
-		JOptionPane.showMessageDialog(null,"Exported "+engineList.size()+" engines to file "+defaultOperationsFilename(),
-				"Export complete",
-				JOptionPane.INFORMATION_MESSAGE);
-
+		JOptionPane.showMessageDialog(
+				null,
+				MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"), new Object[] {
+						engineList.size(), defaultOperationsFilename() }),
+				Bundle.getMessage("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
     }
     
     // Operation files always use the same directory
@@ -132,9 +138,9 @@ public class ExportEngines extends XmlFile {
     public static String getOperationsFileName(){
     	return OperationsFileName;
     }
-    private static String OperationsFileName = "ExportOperationsEngineRoster.csv";
+    private static String OperationsFileName = "ExportOperationsEngineRoster.csv"; // NOI18N
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ExportEngines.class.getName());
+    static Logger log = LoggerFactory.getLogger(ExportEngines.class.getName());
 
 
 }

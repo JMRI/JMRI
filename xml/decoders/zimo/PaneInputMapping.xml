@@ -1,145 +1,142 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
 <pane name="ZIMO Input Mapping">
-	<column>
-          <row>
-            <column>       
-            <label label="Preliminary ZIMO Input Mapping Interface "/>
-            <label label="See manual for further details"/>
-            </column>
-          </row>
-          <row>
-            <column>
-              <display item="Input mapping for internal F0">
-              <label>Input mapping for internal F0</label>
-              </display>
-              <display item="Input mapping for internal F1">
-              <label>Input mapping for internal F1</label>
-              </display>
-              <display item="Input mapping for internal F2">
-              <label>Input mapping for internal F2</label>
-              </display>
-              <display item="Input mapping for internal F3">
-              <label>Input mapping for internal F3</label>
-              </display>
-              <display item="Input mapping for internal F4">
-              <label>Input mapping for internal F4</label>
-              </display>
-              <display item="Input mapping for internal F5">
-              <label>Input mapping for internal F5</label>
-              </display>
-              <display item="Input mapping for internal F6">
-              <label>Input mapping for internal F6</label>
-              </display>
-              <display item="Input mapping for internal F7">
-              <label>Input mapping for internal F7</label>
-              </display>
-              <display item="Input mapping for internal F8">
-              <label>Input mapping for internal F8</label>
-              </display>
-              <display item="Input mapping for internal F9">
-              <label>Input mapping for internal F9</label>
-              </display>
-              <display item="Input mapping for internal F10">
-              <label>Input mapping for internal F10</label>
-              </display>
-              <display item="Input mapping for internal F11">
-              <label>Input mapping for internal F11</label>
-              </display>
-              <display item="Input mapping for internal F12">
-              <label>Input mapping for internal F12</label>
-              </display>
-              <display item="Input mapping for internal F13">
-              <label>Input mapping for internal F13</label>
-              </display>
-              <display item="Input mapping for internal F14">
-              <label>Input mapping for internal F14</label>
-              </display>
-            </column>
-            <column>
-               <label label="   "/>
-            </column>
-            <column>
-              <display item="Input mapping for internal F15">
-              <label>Input mapping for internal F15</label>
-              </display>
-              <display item="Input mapping for internal F16">
-              <label>Input mapping for internal F16</label>
-              </display>
-              <display item="Input mapping for internal F17">
-              <label>Input mapping for internal F17</label>
-              </display>
-              <display item="Input mapping for internal F18">
-              <label>Input mapping for internal F18</label>
-              </display>
-              <display item="Input mapping for internal F19">
-              <label>Input mapping for internal F19</label>
-              </display>
-              <display item="Input mapping for internal F20">
-              <label>Input mapping for internal F20</label>
-              </display>
-              <display item="Input mapping for internal F21">
-              <label>Input mapping for internal F21</label>
-              </display>
-              <display item="Input mapping for internal F22">
-              <label>Input mapping for internal F22</label>
-              </display>
-              <display item="Input mapping for internal F23">
-              <label>Input mapping for internal F23</label>
-              </display>
-              <display item="Input mapping for internal F24">
-              <label>Input mapping for internal F24</label>
-              </display>
-              <display item="Input mapping for internal F25">
-              <label>Input mapping for internal F25</label>
-              </display>
-              <display item="Input mapping for internal F26">
-              <label>Input mapping for internal F26</label>
-              </display>
-              <display item="Input mapping for internal F27">
-              <label>Input mapping for internal F27</label>
-              </display>
-              <display item="Input mapping for internal F28">
-              <label>Input mapping for internal F28</label>
-              </display>
-            </column>
-            <column>
-		   <label label="          "/>
-            </column>
-      		<separator/>
-            <column>
-		   <label label="     "/>
-            </column>
-		<column>
-		<label label="                  SETTINGS"/>
-		<label label=" "/>
-		<label label="       0   = Default 1:1 mapping"/>
-		<label label=" "/>
-		<label label=" 1 - 28 = F1 - F28 Both Directions"/>
-		<label label="       29 =      F0      Both Directions"/>
-		<label label=" "/>
-		<label label="30 - 57 = F1 - F28 Forward Only"/>
-		<label label="        58 =      F0      Forward Only"/>
-		<label label=" "/>
-		<label label="59 - 86 = F1 - F28 Reverse Only"/>
-		<label label="        87 =      F0      Forward Only"/>
-		<label label=" "/>
-		<label label="101 - 128 = F1 - F28 Both Directions, Inverse"/>
-		<label label="           129 =      F0      Both Directions, Inverse"/>
-		<label label=" "/>
-		<label label="130 - 157 = F1 - F28 Forward Only, Inverse"/>
-		<label label="           158 =      F0      Forward Only, Inverse"/>
-		<label label=" "/>
-		<label label="159 - 186 = F1 - F28 Reverse Only, Inverse"/>
-		<label label="           187 =      F0      Forward Only, Inverse"/>
-		<label label=" "/>
-		<label label="      254 = Forward"/>
-		<label label="      255 = Reverse"/>    
-		</column>
-          </row>
-        </column>
+  <column>
+    <row>
+      <column>
+        <label label="Preliminary ZIMO Input Mapping Interface "/>
+        <label label="See manual for further details"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Input mapping for internal F0">
+          <label>Input mapping for internal F0</label>
+        </display>
+        <display item="Input mapping for internal F1">
+          <label>Input mapping for internal F1</label>
+        </display>
+        <display item="Input mapping for internal F2">
+          <label>Input mapping for internal F2</label>
+        </display>
+        <display item="Input mapping for internal F3">
+          <label>Input mapping for internal F3</label>
+        </display>
+        <display item="Input mapping for internal F4">
+          <label>Input mapping for internal F4</label>
+        </display>
+        <display item="Input mapping for internal F5">
+          <label>Input mapping for internal F5</label>
+        </display>
+        <display item="Input mapping for internal F6">
+          <label>Input mapping for internal F6</label>
+        </display>
+        <display item="Input mapping for internal F7">
+          <label>Input mapping for internal F7</label>
+        </display>
+        <display item="Input mapping for internal F8">
+          <label>Input mapping for internal F8</label>
+        </display>
+        <display item="Input mapping for internal F9">
+          <label>Input mapping for internal F9</label>
+        </display>
+        <display item="Input mapping for internal F10">
+          <label>Input mapping for internal F10</label>
+        </display>
+        <display item="Input mapping for internal F11">
+          <label>Input mapping for internal F11</label>
+        </display>
+        <display item="Input mapping for internal F12">
+          <label>Input mapping for internal F12</label>
+        </display>
+        <display item="Input mapping for internal F13">
+          <label>Input mapping for internal F13</label>
+        </display>
+        <display item="Input mapping for internal F14">
+          <label>Input mapping for internal F14</label>
+        </display>
+      </column>
+      <column>
+        <label label="   "/>
+      </column>
+      <column>
+        <display item="Input mapping for internal F15">
+          <label>Input mapping for internal F15</label>
+        </display>
+        <display item="Input mapping for internal F16">
+          <label>Input mapping for internal F16</label>
+        </display>
+        <display item="Input mapping for internal F17">
+          <label>Input mapping for internal F17</label>
+        </display>
+        <display item="Input mapping for internal F18">
+          <label>Input mapping for internal F18</label>
+        </display>
+        <display item="Input mapping for internal F19">
+          <label>Input mapping for internal F19</label>
+        </display>
+        <display item="Input mapping for internal F20">
+          <label>Input mapping for internal F20</label>
+        </display>
+        <display item="Input mapping for internal F21">
+          <label>Input mapping for internal F21</label>
+        </display>
+        <display item="Input mapping for internal F22">
+          <label>Input mapping for internal F22</label>
+        </display>
+        <display item="Input mapping for internal F23">
+          <label>Input mapping for internal F23</label>
+        </display>
+        <display item="Input mapping for internal F24">
+          <label>Input mapping for internal F24</label>
+        </display>
+        <display item="Input mapping for internal F25">
+          <label>Input mapping for internal F25</label>
+        </display>
+        <display item="Input mapping for internal F26">
+          <label>Input mapping for internal F26</label>
+        </display>
+        <display item="Input mapping for internal F27">
+          <label>Input mapping for internal F27</label>
+        </display>
+        <display item="Input mapping for internal F28">
+          <label>Input mapping for internal F28</label>
+        </display>
+      </column>
+      <column>
+        <label label="          "/>
+      </column>
+      <separator/>
+      <column>
+        <label label="     "/>
+      </column>
+      <column>
+        <label label="                  SETTINGS"/>
+        <label label=" "/>
+        <label label="       0   = Default 1:1 mapping"/>
+        <label label=" "/>
+        <label label=" 1 - 28 = F1 - F28 Both Directions"/>
+        <label label="       29 =      F0      Both Directions"/>
+        <label label=" "/>
+        <label label="30 - 57 = F1 - F28 Forward Only"/>
+        <label label="        58 =      F0      Forward Only"/>
+        <label label=" "/>
+        <label label="59 - 86 = F1 - F28 Reverse Only"/>
+        <label label="        87 =      F0      Forward Only"/>
+        <label label=" "/>
+        <label label="101 - 128 = F1 - F28 Both Directions, Inverse"/>
+        <label label="           129 =      F0      Both Directions, Inverse"/>
+        <label label=" "/>
+        <label label="130 - 157 = F1 - F28 Forward Only, Inverse"/>
+        <label label="           158 =      F0      Forward Only, Inverse"/>
+        <label label=" "/>
+        <label label="159 - 186 = F1 - F28 Reverse Only, Inverse"/>
+        <label label="           187 =      F0      Forward Only, Inverse"/>
+        <label label=" "/>
+        <label label="      254 = Forward"/>
+        <label label="      255 = Reverse"/>
+      </column>
+    </row>
+  </column>
 </pane>

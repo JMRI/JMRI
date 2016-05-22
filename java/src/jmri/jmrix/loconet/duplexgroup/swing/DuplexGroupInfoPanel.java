@@ -653,5 +653,5 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
     }
 
-    //    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DuplexGroupInfoPanel.class.getName());
+    //    static Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class.getName());
 }

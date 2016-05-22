@@ -2,6 +2,8 @@
 
 package jmri.jmrix.marklin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Hashtable;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -113,7 +115,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-            showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+            showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         
@@ -243,7 +245,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(MarklinSensorManager.class.getName());
 }
 
 /* @(#)MarklinSensorManager.java */

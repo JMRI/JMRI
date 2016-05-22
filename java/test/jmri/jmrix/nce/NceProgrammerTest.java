@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 import java.io.DataInputStream;
@@ -369,6 +370,6 @@ public class NceProgrammerTest extends TestCase {
     // protected void setUp() { log4jfixtureInst.setUp(); }
     // protected void tearDown() { log4jfixtureInst.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceProgrammerTest.class.getName());
+    static Logger log = Logger.getLogger(NceProgrammerTest.class.getName());
 
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog.serialdriver;
 
+import jmri.util.SystemType;
+
 /**
  * Definition of objects to handle configuring a layout connection
  * via an SPROG SerialDriverAdapter object.
@@ -29,7 +31,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     
     @Override
     protected String[] getPortFriendlyNames() {
-        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+        if(SystemType.isWindows()){
             return new String[]{"SPROG"};
         }
         return new String[]{};

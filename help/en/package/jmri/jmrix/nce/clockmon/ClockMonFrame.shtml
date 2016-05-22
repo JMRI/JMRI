@@ -92,10 +92,10 @@ in the clock adjustments.
 <p>
 This adjusts how much the rate of change between the current error and the prior error
 is used in adjusting the clock.
-
-
-
+</p>
 <!--#include virtual="/Footer" -->
+	</div>
+  </div>
 </body>
 </html>
 

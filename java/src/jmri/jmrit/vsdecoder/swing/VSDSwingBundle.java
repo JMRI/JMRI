@@ -38,9 +38,15 @@ import java.util.ResourceBundle;
 
 public class VSDSwingBundle {
 
+    static private final String bundleFile = "jmri.jmrit.vsdecoder.swing.VSDSwingBundle"; // NOI18N
+
     static public final ResourceBundle b
-            = java.util.ResourceBundle.getBundle("jmri.jmrit.vsdecoder.swing.VSDSwingBundle");
+            = java.util.ResourceBundle.getBundle(bundleFile);
 
     static public ResourceBundle bundle() { return b; }
+
+    static public String getString(String key) {
+	return(ResourceBundle.getBundle(bundleFile).getString(key));
+    }
     
 }

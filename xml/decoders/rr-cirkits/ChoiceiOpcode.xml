@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,20 +11,15 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file includes for LNCP files -->
-
 <!-- Indexed mode choices for evaluate Variable -->
-
 <ienumVal>
-  <ienumChoice choice="V1 AND V2 => true"/>
-  <ienumChoice choice="V1 OR V2 => true"/>
-  <ienumChoice choice="V1 AND V2 => false"/>
-  <ienumChoice choice="V1 OR V2 => false"/>
-  <ienumChoice choice="V1 AND V2 => change"/>
-  <ienumChoice choice="V1 OR V2 => change"/>
-  <ienumChoice choice="V1 THEN V2 => true"/>
+  <ienumChoice choice="V1 AND V2 =&gt; true"/>
+  <ienumChoice choice="V1 OR V2 =&gt; true"/>
+  <ienumChoice choice="V1 AND V2 =&gt; false"/>
+  <ienumChoice choice="V1 OR V2 =&gt; false"/>
+  <ienumChoice choice="V1 AND V2 =&gt; change"/>
+  <ienumChoice choice="V1 OR V2 =&gt; change"/>
+  <ienumChoice choice="V1 THEN V2 =&gt; true"/>
   <ienumChoice choice="Reserved"/>
 </ienumVal>
- 	  	 

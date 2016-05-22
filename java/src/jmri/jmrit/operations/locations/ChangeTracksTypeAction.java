@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
 import java.awt.event.*;
 
@@ -9,8 +11,6 @@ import javax.swing.*;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 
@@ -23,13 +23,11 @@ import jmri.jmrit.operations.OperationsXml;
  * @version $Revision: 18559 $
  */
 public class ChangeTracksTypeAction extends AbstractAction {
-		
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+			
 	private LocationEditFrame _lef;
 	
 	public ChangeTracksTypeAction(LocationEditFrame lef){
-		super(rb.getString("MenuItemChangeTrackType"));
+		super(Bundle.getMessage("MenuItemChangeTrackType"));
 		_lef = lef;
 	}
 	
@@ -40,17 +38,15 @@ public class ChangeTracksTypeAction extends AbstractAction {
 }
 
 class ChangeTracksFrame extends OperationsFrame{
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+		
 	// radio buttons
-    JRadioButton sidingRadioButton = new JRadioButton(rb.getString("Siding"));
-    JRadioButton yardRadioButton = new JRadioButton(rb.getString("Yard"));
-    JRadioButton interchangeRadioButton = new JRadioButton(rb.getString("Interchange"));
-    JRadioButton stagingRadioButton = new JRadioButton(rb.getString("Staging")); 
+    JRadioButton spurRadioButton = new JRadioButton(Bundle.getMessage("Spur"));
+    JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yard"));
+    JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getMessage("Interchange"));
+    JRadioButton stagingRadioButton = new JRadioButton(Bundle.getMessage("Staging")); 
     
     // major buttons
-    JButton saveButton = new JButton(rb.getString("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("Save"));
     
     private LocationEditFrame _lef;
     private Location _location;
@@ -72,8 +68,8 @@ class ChangeTracksFrame extends OperationsFrame{
 	   	// row 1a
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
-    	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(rb.getString("TrackType"),new Object[]{_location.getName()})));
-    	addItem(p1, sidingRadioButton, 0, 0);
+    	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("TrackType"),new Object[]{_location.getName()})));
+    	addItem(p1, spurRadioButton, 0, 0);
     	addItem(p1, yardRadioButton, 1, 0);
     	addItem(p1, interchangeRadioButton, 2, 0);
     	addItem(p1, stagingRadioButton, 3, 0);
@@ -81,7 +77,7 @@ class ChangeTracksFrame extends OperationsFrame{
     	
     	// group and set current track type
     	ButtonGroup group = new ButtonGroup();
-    	group.add(sidingRadioButton);
+    	group.add(spurRadioButton);
     	group.add(yardRadioButton);
     	group.add(interchangeRadioButton);
     	group.add(stagingRadioButton);
@@ -90,7 +86,7 @@ class ChangeTracksFrame extends OperationsFrame{
     	addButtonAction(saveButton);
     	
     	getContentPane().add(p1);
-    	setTitle(rb.getString("MenuItemChangeTrackType"));
+    	setTitle(Bundle.getMessage("MenuItemChangeTrackType"));
     	pack();
     	if (getWidth() < 250)
     		setSize(getWidth()+100, getHeight());
@@ -100,8 +96,8 @@ class ChangeTracksFrame extends OperationsFrame{
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){	
 			// check to see if button has changed
-			if (sidingRadioButton.isSelected()){
-				changeTracks(Track.SIDING);
+			if (spurRadioButton.isSelected()){
+				changeTracks(Track.SPUR);
 			} else if (yardRadioButton.isSelected()){
 				changeTracks(Track.YARD);
 			} else if (interchangeRadioButton.isSelected()){
@@ -128,5 +124,5 @@ class ChangeTracksFrame extends OperationsFrame{
 		dispose();
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ChangeTracksFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(ChangeTracksFrame.class.getName());
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: JMRI $) 2013 -->
+<!-- $Id: index.shtml 18924 2013-01-29 11:10:30Z ejb $ -->
+<title>JMRI: Rio Grande 1965 Rule Book Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: RG-1965 Signaling Definition
+</h1>
+<p>
+This directory contains signaling definitions corresponding to the 1965 Rio Grande rules as published in the 1965 version of the "Rio Grande Rules of the Operating Department", cited by Frank Keller in his article Rio Grande Signals - Prototype &amp; Model, published in The Prospector volume 2, number 1 2005 by the <a href="http://rgmhs.drgw.org">Rio Grande Modeling and Historical Society</a>.
+</p>
+<p>
+Remarks: 
+<ul>
+<li>Interlocking signals have been named -abs in this definition (no markers on mast).</li>
+<li>The Rio Grande used the term &quot;Positive&quot; for an Absolute signal, marked with a round badge carrying the letter P.</li>
+<li>CTC &amp; ABS signals are grouped as -pbs with Stop &amp; Proceed as the most restricting aspect.</li>
+<li>Although there is no official Stop aspect for a Double head Interlocking dwarf signal in the 1965 Rule Book, an unofficial red-red indication has been added.</li>
+</ul>
+</p>
+
+<p>
+Compatibility:
+<ul>
+<li>Some special .GIF icon files are included to help the user address known issues: rule-282.gif is the default animated icon that works fine in JMRI 3.2 but doesn't show as an aspect on a panel with JMRI 2.14.1 on Mac OSX 10.5.8 (Java 1.5). rule-282-1.gif and rule-282-2.gif are the 2 files used to create the animated gif rule-282.gif</li>
+<li>The Digitrax SE8c signal decoder does not support the Lunar aspect used in the Restricting  appearance (rule 290). Replacing the word &quot;lunar&quot; by &quot;dark&quot; in your copies of the appearance xml files is a fix.</li>
+<li>For older systems limited to Java 1.5 and JMRI 2.14.1 a static icon rule-282-b.gif is included in each aspect icon folder under JMRI/resources/icons/smallschematics/aspects/RG-1965/SL-x-etc/ which can be renamed to rule-282.gif</li>
+<li>If preferred, one could overrule the icons in the application's resource folder as described in the <a href="http://jmri.sourceforge.net/help/en/html/tools/signaling/DefineNewAspects.shtml">Signal documentation</a>.</li>
+</ul>
+</p>
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+</p>
+<p>
+Signal Mast definitions:
+
+<ul>
+<li><a href="appearance-SL-1-high-abs.xml">Single head colorlight high interlocking signal</a></li>
+<li><a href="appearance-SL-1-high-pbs.xml">Single head colorlight high signal</a></li>
+<li><a href="appearance-SL-2-high-abs.xml">Double head colorlight high interlocking signal</a></li>
+<li><a href="appearance-SL-2-high-pbs.xml">Double head colorlight high signal</a></li>
+<li><a href="appearance-SL-3-high-abs.xml">Triple head colorlight high interlocking signal</a></li>
+<li><a href="appearance-SL-3-high-pbs.xml">Triple head colorlight high signal</a></li>
+<li><a href="appearance-SL-1-low-abs.xml">Single head colorlight dwarf interlocking signal</a></li>
+<li><a href="appearance-SL-1-low-pbs.xml">Single head colorlight dwarf signal</a></li>
+<li><a href="appearance-SL-2-low-abs.xml">Double head colorlight dwarf interlocking signal</a></li>
+<li><a href="appearance-SL-2-low-pbs.xml">Double head colorlight dwarf signal</a></li>
+</ul>
+</p>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

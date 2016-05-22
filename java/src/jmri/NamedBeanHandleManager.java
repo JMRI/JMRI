@@ -1,5 +1,7 @@
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +47,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         super();
     }
     //Checks are performed to make sure that the beans are the same type before being returned
+    @SuppressWarnings("unchecked") 
     public <T> NamedBeanHandle<T> getNamedBeanHandle(String name, T bean){
         if (bean==null || name==null || name.equals(""))
             return null;
@@ -65,6 +68,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     * Note this does not change the name on the bean, it only changes the references
     * 
     */
+    @SuppressWarnings("unchecked") 
     public <T> void renameBean(String oldName, String newName, T bean){
         
         /*Gather a list of the beans in the system with the oldName ref.
@@ -89,6 +93,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     *  It does not move the name provided from one bean to another.
     */
     //Checks are performed to make sure that the beans are the same type before being moved
+    @SuppressWarnings("unchecked") 
     public <T> void moveBean(T oldBean, T newBean, String name){
         /*Gather a list of the beans in the system with the oldBean ref.
         Although when a new bean is requested, we always return the first one that exists
@@ -123,6 +128,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         renameBean(systemName, userName, bean);
     }
     
+    @SuppressWarnings("unchecked") 
     public <T> boolean inUse(String name, T bean){
         NamedBeanHandle<T> temp = new NamedBeanHandle<T>(name, bean);
         for (NamedBeanHandle<T> h : namedBeanHandles ) {
@@ -234,5 +240,5 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NamedBeanHandleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class.getName());
 }

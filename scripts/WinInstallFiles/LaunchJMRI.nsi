@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.17.0
+; - Modification to pass JMRI process return code back to caller
+; -------------------------------------------------------------------------
 ; - Version 0.1.16.0
 ; - Modification to pass flag for correct usage with UTF-8 encoded files
 ; -------------------------------------------------------------------------
@@ -115,8 +118,8 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "© 1997-2012 JMRI Community"   ; Copyright string
-!define VER        "0.1.16.0"                     ; Launcher version
+!define COPYRIGHT  "© 1997-2013 JMRI Community"   ; Copyright string
+!define VER        "0.1.17.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -442,6 +445,9 @@ Section "Main"
   
   ; -- Check the return code is 100 - if so, re-launch
   StrCmp $7 100 LaunchJMRI
+  
+  ; -- Set ErrorLevel to return code
+  SetErrorLevel $7
   
   Exit:
   DetailPrint "To copy this text to the clipboard, right click then choose"

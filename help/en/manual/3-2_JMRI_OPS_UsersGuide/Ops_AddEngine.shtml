@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Ops_AddEngine.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
+<title>Operations-Add Engine</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Add Locomotive</h1>
+
+<div align=right>
+<p><a href="Ops_Engines.shtml">Back</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<p>The Add Engine window is displayed.</p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_AddEngineMenu.png" width="471" height="88" alt="Add Engine Menu"></td>
+    <td align="left" valign="top"><p>The Add Locomotive's Window and Help menus are the standard JMRI&reg; menus used on most windows.</p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_AddEngineRoad.png" width="457" height="113" alt="road"></td>
+    <td align="left" valign="top"><p>Select the Road 
+      <select name="select" id="select">
+        <option>AA</option>
+      </select>
+      for the  engine. If the desired road doesn't exist, press
+      <input type="submit" name="button" id="button" value="Edit">
+Opens the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Road. </p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_CarNumber.png" width="474" height="81" alt="Engine number"></td>
+    <td align="left" valign="top"><p>Type the Locomotive's Road Number 
+        <input name="textfield" type="text" id="textfield" size="12">
+    use 
+    <input type="submit" name="button2" id="button2" value="Clear">
+    to remove your entry if you make a typing error.</p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_EngineModel.png" width="475" height="101" alt="Engine Model"></td>
+    <td align="left" valign="top"><p>Select the Model 
+      <select name="select2" id="select2">
+        <option>P42</option>
+      </select>
+    if the model you need is not in the list then press 
+    <input type="submit" name="button3" id="button3" value="Edit">
+    and the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Model will open. </p>
+    <p>The program allows you organize your engines by model. Each model can  only have one engine type, length, weight and horsepower rating associated with  it. For example, if you assign the model name "RS11" to a set of  locomotives, when you change the length of one of the "RS11"s, the length  will also change for the others</p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_EngineType.png" width="471" height="93" alt="Engine Type"></td>
+    <td align="left" valign="top"><p>Now select the locomotive's <strong>Type</strong>
+        <select name="select3" id="select3">
+  <option>Diesel</option>
+</select>
+    if the type you need is not in the list then press 
+    <input type="submit" name="button4" id="button4" value="Edit">
+and the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for type will open. </p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_CarLength.png" width="470" height="104" alt="Engine Length"></td>
+    <td align="left" valign="top"><p>Now select the locomotive's <strong>Length</strong>
+        <select name="select4" id="select4">
+          <option>60</option>
+        </select>
+if the length you need is not in the list then press
+<input type="submit" name="button5" id="button5" value="Edit">
+and the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Length will open. </p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_Engine_LocationTrack.png" width="459" height="128" alt="location and track"></td>
+    <td align="left" valign="top">Select the locomotive's location 
+      <select name="select21" id="select21">
+    </select> 
+      and the locomotive's track 
+      <select name="select22" id="select22">
+      </select></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_Engine_weight.png" width="461" height="134" alt="weight"></td>
+    <td align="left" valign="top">Optional: Enter the weight of the locomotive in tons</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_EngineHP.png" width="474" height="83" alt="Engine Horsepower"></td>
+    <td align="left" valign="top"><p>Now enter the engine's <strong>Horsepower</strong>
+      <input name="textfield2" type="text" id="textfield2" size="15">
+    . The locomotive's horsepower, the train's  weight, and track grade is used by the program to calculate how many  engines are required when using the "Auto" feature when building trains. </p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_EngineConsist.png" width="460" height="124" alt="consist"></td>
+    <td align="left" valign="top"> <p>If wish this locomotive  to be part of an <strong>Optional Consist
+          <select name="select7" id="select7">
+          </select>
+    </strong>, press 
+      <input type="submit" name="button6" id="button6" value="Edit">
+which opens the<br>
+<br>
+<img src="images/Ops_AddEngine_consist.png" width="275" height="151" alt="consist">     where you may enter a  consist name. Then select the consist name from the drop-down List.</p>
+<h4>Synchronize with NCE Consists</h4>
+If you are using NCE as your DCC command station, you can have the  program synchronize your consist numbers with your locomotives. The program  will read all of the consists out of the NCE system and then will search  for matching locomotives in your operations roster. The program will assign  the consist name nce_xxx where xxx is the consist number. To synchronize  your consists, select "Synchronize with NCE Consists" under the "Tools"  menu.
+<p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_CarBuilt.png" width="474" height="91" alt="Built"></td>
+    <td align="left" valign="top"> You may enter the optional <strong>Built</strong>
+      <input type="text" name="textfield3" id="textfield3"> 
+    date</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_CarOwner.png" width="475" height="92" alt="owner"></td>
+    <td align="left" valign="top"><strong>Owner
+        <select name="select8" id="select8">
+          <option>SF</option>
+      </select>
+    </strong>, if the owner's name is not in the list press
+    <input type="submit" name="button7" id="button7" value="Edit">
+which opens<img src="images/Ops_AddEngine_owner.png" width="275" height="151" alt="owner"> <br>
+where you may enter the owner's name. Then select the Owner name from the drop-down list.</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_CarComment.png" width="475" height="97" alt="comments"></td>
+    <td align="left" valign="top">Type your <strong>Comment
+      <input name="textfield4" type="text" id="textfield4" size="50">
+    </strong></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_CarButtons.png" width="475" height="75" alt="Buttons"></td>
+    <td align="left" valign="top"><p>
+      <input type="submit" name="button9" id="button9" value="Add">
+      add another engine.</p>
+      <p>
+        <input type="submit" name="button10" id="button10" value="Delete">
+        delete an engine.</p>
+      <p>
+        <input type="submit" name="button11" id="button11" value="Save">
+        to store the engine's settings. The program will create a file  (OperationsEngineRoster.xml) in your JMRI directory in a folder called  "operations". A backup file with the last settings for all of your engines  is also created each time the
+        <input type="submit" name="button12" id="button12" value="Save">
+        button is pressed. </p>
+    <p></p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>Now that you have your engines stored in the roster, you will need to add  <a href="Ops_Routes.shtml">Routes  </a> that your trains will use to  operate on your layout.</p>
+<hr>
+
+<div align=right>
+<p><a href="Ops_Engines.shtml">Back</a><a href="Ops_Routes.shtml"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,125 +1,122 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
 <pane name="ABC">
-    <column>
-      <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable ABC Signal Control"/>
-      <display item="Direction Dependent stops with asymmetrical DCC" tooltip="CV27"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Distance controlled stopping" tooltip="CV 140"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <column>
-          <display item="Distance controlled stopping Distance" tooltip="CV 141"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Distance controlled stopping speed correction (ABC)" tooltip="CV142"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <display item="Distance controlled stopping Distance" format="hslider" label="" tooltip="CV141">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="" tooltip="CV 142">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Signal Dependent Acceleration" tooltip="CV 49"/>
-          <display item="Signal Dependent Deceleration" tooltip="CV 50"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Signal Dependent Reaction Time" tooltip="CV 59"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="   ">
-            <label>   </label>
-          </label>
-        </column>
-        <column>
-          <label label="Entered value multiplied by 0.4 seconds is the additional accel/decel">
-            <label>Entered value multiplied by 0.4 seconds is the additional accel/decel</label>
-          </label>
-          <label label="added to the normal CV3 and CV4 setting, for speed changes due to ABC">
-            <label>added to the normal CV3 and CV4 setting, for speed changes due to ABC</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="Asymmetrical DCC Threshold" tooltip="CV 134"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="    ">
-            <label>    </label>
-          </label>
-        </column>
-        <column>
-          <row>
-            <column>
-              <label label="Hundreds digit = sensitivity">
-                <label>Hundreds digit = sensitivity</label>
-              </label>
-            </column>
-            <column>
-              <label label="    ">
-                <label>    </label>
-              </label>
-            </column>
-            <column>
-              <label label="0 = Fast recognition">
-                <label>0 = Fast recognition</label>
-              </label>
-              <label label="1 = Normal recognition (0.5s)">
-                <label>1 = Normal recognition (0.5s)</label>
-              </label>
-              <label label="2 = Slow recognition (1s)">
-                <label>2 = Slow recognition (1s)</label>
-              </label>
-            </column>
-          </row>
-          <label label="Tens and Ones digits = Assymmetrical threshold in tenths of a volt">
-            <label>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>ABC</name>
-  </pane>
+  <column>
+    <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable ABC Signal Control"/>
+    <display item="Direction Dependent stops with asymmetrical DCC" tooltip="CV27"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Distance controlled stopping" tooltip="CV 140"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <column>
+        <display item="Distance controlled stopping Distance" tooltip="CV 141"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Distance controlled stopping speed correction (ABC)" tooltip="CV142"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <display item="Distance controlled stopping Distance" format="hslider" label="" tooltip="CV141">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="" tooltip="CV 142">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Signal Dependent Acceleration" tooltip="CV 49"/>
+        <display item="Signal Dependent Deceleration" tooltip="CV 50"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Signal Dependent Reaction Time" tooltip="CV 59"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label="   ">
+          <label>   </label>
+        </label>
+      </column>
+      <column>
+        <label label="Entered value multiplied by 0.4 seconds is the additional accel/decel">
+          <label>Entered value multiplied by 0.4 seconds is the additional accel/decel</label>
+        </label>
+        <label label="added to the normal CV3 and CV4 setting, for speed changes due to ABC">
+          <label>added to the normal CV3 and CV4 setting, for speed changes due to ABC</label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Asymmetrical DCC Threshold" tooltip="CV 134"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label="    ">
+          <label>    </label>
+        </label>
+      </column>
+      <column>
+        <row>
+          <column>
+            <label label="Hundreds digit = sensitivity">
+              <label>Hundreds digit = sensitivity</label>
+            </label>
+          </column>
+          <column>
+            <label label="    ">
+              <label>    </label>
+            </label>
+          </column>
+          <column>
+            <label label="0 = Fast recognition">
+              <label>0 = Fast recognition</label>
+            </label>
+            <label label="1 = Normal recognition (0.5s)">
+              <label>1 = Normal recognition (0.5s)</label>
+            </label>
+            <label label="2 = Slow recognition (1s)">
+              <label>2 = Slow recognition (1s)</label>
+            </label>
+          </column>
+        </row>
+        <label label="Tens and Ones digits = Assymmetrical threshold in tenths of a volt">
+          <label>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</label>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>ABC</name>
+</pane>

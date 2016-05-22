@@ -2,6 +2,8 @@
 
 package jmri.jmrit.display.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.*;
 import jmri.configurexml.*;
 import jmri.jmrit.display.AnalogClock2Display;
@@ -37,6 +39,10 @@ public class AnalogClock2DisplayXml
         element.setAttribute("x", "" + p.getX());
         element.setAttribute("y", "" + p.getY());
         element.setAttribute("scale", "" + p.getScale());
+        String link = p.getUrl();
+        if (link!=null && link.trim().length()>0) {
+            element.setAttribute("link", link);        	
+        }
 
         element.setAttribute("class",
             "jmri.jmrit.display.configurexml.AnalogClock2DisplayXml");
@@ -73,6 +79,9 @@ public class AnalogClock2DisplayXml
         catch (org.jdom.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
+        if (element.getAttribute("link")!=null) {
+            l.setUrl(element.getAttribute("link").getValue());
+        }
         l.setOpaque(false);
         l.update();
         l.setLocation(x, y);
@@ -83,6 +92,6 @@ public class AnalogClock2DisplayXml
         ed.putItem(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger
+    static Logger log = LoggerFactory
     .getLogger(AnalogClock2DisplayXml.class.getName());
 }

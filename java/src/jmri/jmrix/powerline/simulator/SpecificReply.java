@@ -2,6 +2,8 @@
 
 package jmri.jmrix.powerline.simulator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.util.StringUtil;
@@ -121,7 +123,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         return text+"\n";
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpecificReply.class.getName());
 
 }
 

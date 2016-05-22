@@ -2,7 +2,10 @@
 
 package jmri.jmrit.catalog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
@@ -50,7 +53,7 @@ import java.util.ArrayList;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 /**
  * Create a JPanel containing trees of resources to replace default icons.
@@ -87,7 +90,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     static Color    _grayColor = new Color(235,235,235);
     protected Color _currentBackground = _grayColor;
 
-    JLabel          _previewLabel = new JLabel();
+    JLabel          _previewLabel = new JLabel(" ");
     protected JPanel  _preview;
     boolean         _noDrag;
 
@@ -96,8 +99,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
     DefaultTreeModel        _model;
     ArrayList <CatalogTree> _branchModel = new ArrayList <CatalogTree>();
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.catalog.CatalogBundle");
-
     public CatalogPanel() {
         _model =new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
     }
@@ -105,18 +106,17 @@ public class CatalogPanel extends JPanel implements MouseListener {
     public CatalogPanel(String label1, String label2) {
         super(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        add(new JLabel(Bundle.getMessage(label1)));
         JPanel p1 = new JPanel();
-        p1.setLayout(new BorderLayout());
-        p1.add(new JLabel(rb.getString(label1)), BorderLayout.WEST);
-        p.add(p1);
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BorderLayout());
-        p2.add(new JLabel(rb.getString(label2)), BorderLayout.WEST);
-        p.add(p2);
-        p.setMaximumSize(p.getPreferredSize());
-        this.add(p);
+        p1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
+        		Bundle.getMessage(label2)));
+        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+        _treePane = new JScrollPane(_dTree);
+        _treePane.getViewport().setPreferredSize(new Dimension(250, 100));
+        p1.add(_treePane);
+        add(p1);
+        add(makePreviewPanel());
+        add(makeButtonPanel());
     }
 
     public void setToolTipText(String tip) {
@@ -129,7 +129,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         super.setToolTipText(tip);
     }
 
-    public void init(boolean treeDnD) {
+    protected void init(boolean treeDnD) {
         _model =new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
         if (treeDnD){   // index editor (right pane)
             _dTree = new DropJTree(_model);
@@ -153,10 +153,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }
         });
         _dTree.setExpandsSelectedPaths(true);
-        _treePane = new JScrollPane(_dTree);
-        _treePane.getViewport().setPreferredSize(new Dimension(250, 200));
-        add(_treePane);
-        setupPanel();
+        _treePane.setViewportView(_dTree);
+//        setupPanel();
     }
 
     public void updatePanel() {
@@ -379,20 +377,24 @@ public class CatalogPanel extends JPanel implements MouseListener {
     * Setup a display pane for a tree that shows only directory nodes (no file leaves)
     * The leaves (icon images) will be displayed in this panel.
     */
-    private void setupPanel() {
-        JPanel previewPanel = new JPanel();
+    private JPanel makePreviewPanel() {
+    	JPanel previewPanel = new JPanel();
         previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        p.add(_previewLabel);
-        previewPanel.add(p);
+//        JPanel p = new JPanel();
+//        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+//        p.add(_previewLabel);
+        previewPanel.add(_previewLabel);
         _preview = new JPanel();
+//        _preview.setPreferredSize(new Dimension(250, 200));
         JScrollPane js = new JScrollPane(_preview);                       
+        js.getViewport().setPreferredSize(new Dimension(250, 200));
         previewPanel.add(js);
-        //_preview.setMinimumSize(new Dimension(250, 200));
-        JRadioButton whiteButton = new JRadioButton(rb.getString("white"),false);
-        JRadioButton grayButton = new JRadioButton(rb.getString("lightGray"),true);
-        JRadioButton darkButton = new JRadioButton(rb.getString("darkGray"),false);
+        return previewPanel;
+    }
+    private JPanel makeButtonPanel() {
+        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("white"),false);
+        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"),true);
+        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"),false);
         whiteButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     _currentBackground = Color.white;
@@ -414,7 +416,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         JPanel backgroundPanel = new JPanel(); 
         backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
         JPanel pp = new JPanel();
-        pp.add(new JLabel(rb.getString("setBackground")));
+        pp.add(new JLabel(Bundle.getMessage("setBackground")));
         backgroundPanel.add(pp);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
@@ -427,8 +429,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         buttonPanel.add(darkButton);
         backgroundPanel.add(buttonPanel);
         backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
-        previewPanel.add(backgroundPanel);
-        add(previewPanel);
+        return backgroundPanel;
     }
 
     public void setBackground(Container container) {
@@ -560,7 +561,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
 //            iPanel.add(image);
 //            p.add(iPanel);
             p.add(nameLabel);
-            JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
+            JLabel label = new JLabel(java.text.MessageFormat.format(Bundle.getMessage("scale"),
                                 new Object[] {printDbl(scale,2)}));
             p.add(label);
             if (_noDrag) {
@@ -583,8 +584,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _preview.add(bottom);
 
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
-        packParentFrame(this);
-        return java.text.MessageFormat.format(rb.getString("numImagesInNode"),
+        return java.text.MessageFormat.format(Bundle.getMessage("numImagesInNode"),
                               new Object[] {node.getUserObject(),Integer.valueOf(leaves.size())});
     }
 
@@ -602,8 +602,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-        XmlFile.ensurePrefsPresent("resources");
-        catalog.createNewBranch("IFPREF", "Preferences Directory", XmlFile.prefsDir()+"resources");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
+        catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
         return catalog;
     }
 
@@ -627,7 +627,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         if (frame!=null) {
             frame.pack();
         }
-
     }
 
     /**
@@ -719,7 +718,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     void rename(NamedIcon icon) {
         String name = JOptionPane.showInputDialog(getParentFrame(this), 
-                                              rb.getString("newIconName"), icon.getName(),
+                                              Bundle.getMessage("newIconName"), icon.getName(),
                                               JOptionPane.QUESTION_MESSAGE);
         if (name != null && name.length() > 0) {
             CatalogTreeNode node = getSelectedNode();
@@ -755,7 +754,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.add(new JMenuItem(icon.getURL()));
         popup.add(new javax.swing.JPopupMenu.Separator());
 
-        popup.add(new AbstractAction(rb.getString("RenameIcon")) {
+        popup.add(new AbstractAction(Bundle.getMessage("RenameIcon")) {
                 NamedIcon icon;    
                 public void actionPerformed(ActionEvent e) {
                     rename(icon);
@@ -767,7 +766,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }.init(icon));
         popup.add(new javax.swing.JPopupMenu.Separator());
 
-        popup.add(new AbstractAction(rb.getString("DeleteIcon")) {
+        popup.add(new AbstractAction(Bundle.getMessage("DeleteIcon")) {
                 NamedIcon icon;    
                 public void actionPerformed(ActionEvent e) {
                     delete(icon);
@@ -852,6 +851,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(CatalogPanel.class.getName());
 }
 

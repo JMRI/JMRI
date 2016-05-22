@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -191,6 +192,6 @@ public class LocoNetMessageTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetMessageTest.class.getName());
+	 static Logger log = Logger.getLogger(LocoNetMessageTest.class.getName());
 
 }

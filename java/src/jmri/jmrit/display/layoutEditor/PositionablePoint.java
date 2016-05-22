@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.geom.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -12,6 +14,7 @@ import javax.swing.JSeparator;
 import jmri.NamedBeanHandle;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SignalMast;
 import jmri.jmrit.signalling.SignallingGuiTools;
 
 /**
@@ -57,12 +60,14 @@ public class PositionablePoint
 	private Point2D coords = new Point2D.Double(10.0,10.0);
 	private String eastBoundSignalName = ""; // signal head for east (south) bound trains
 	private String westBoundSignalName = ""; // signal head for west (north) bound trains
+    
+    private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
+    private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
     /* We use a namedbeanhandle for the the sensors, even though we only store the name here, 
     this is so that we can keep up with moves and changes of userNames */
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
-    private String eastBoundSignalMastName = "";
-    private String westBoundSignalMastName = "";
+
 	
     public PositionablePoint(String id, int t, Point2D p, LayoutEditor myPanel) {
 		instance = this;
@@ -92,11 +97,18 @@ public class PositionablePoint
 	public String getWestBoundSignal() {return westBoundSignalName;}
 	public void setWestBoundSignal(String signalName) {westBoundSignalName = signalName;}
     
-    public String getEastBoundSensor() {
+    public String getEastBoundSensorName() {
         if(eastBoundSensorNamed!=null)
             return eastBoundSensorNamed.getName();
         return "";
     }
+    
+    public Sensor getEastBoundSensor(){
+        if(eastBoundSensorNamed!=null)
+            return eastBoundSensorNamed.getBean();
+        return null;
+    }
+    
 	public void setEastBoundSensor(String sensorName) {
         if(sensorName==null || sensorName.equals("")){
             eastBoundSensorNamed=null;
@@ -111,11 +123,18 @@ public class PositionablePoint
         }
     }
     
-	public String getWestBoundSensor() {
+	public String getWestBoundSensorName() {
         if(westBoundSensorNamed!=null)
             return westBoundSensorNamed.getName();
         return "";
     }
+    
+    public Sensor getWestBoundSensor(){
+        if(westBoundSensorNamed!=null)
+            return westBoundSensorNamed.getBean();
+        return null;
+    }
+    
 	public void setWestBoundSensor(String sensorName) {
         if(sensorName==null || sensorName.equals("")){
             westBoundSensorNamed=null;
@@ -129,10 +148,57 @@ public class PositionablePoint
         }
     }
     
-	public String getEastBoundSignalMast() {return eastBoundSignalMastName;}
-	public void setEastBoundSignalMast(String signalMastName) {eastBoundSignalMastName = signalMastName;}
-	public String getWestBoundSignalMast() {return westBoundSignalMastName;}
-	public void setWestBoundSignalMast(String signalMastName) {westBoundSignalMastName = signalMastName;}
+    public String getEastBoundSignalMastName(){
+        if(eastBoundSignalMastNamed!=null)
+            return eastBoundSignalMastNamed.getName();
+        return "";
+    }
+    
+    public SignalMast getEastBoundSignalMast(){
+        if(eastBoundSignalMastNamed!=null)
+            return eastBoundSignalMastNamed.getBean();
+        return null;
+    }
+    
+	public void setEastBoundSignalMast(String signalMast){
+        if(signalMast==null || signalMast.equals("")){
+            eastBoundSignalMastNamed=null;
+            return;
+        }
+        
+        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        if (mast != null) {
+            eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+        } else {
+            eastBoundSignalMastNamed=null;
+        }
+    }
+    
+	public String getWestBoundSignalMastName() {
+        if(westBoundSignalMastNamed!=null)
+            return westBoundSignalMastNamed.getName();
+        return "";
+    }
+    
+    public SignalMast getWestBoundSignalMast(){
+        if(westBoundSignalMastNamed!=null)
+            return westBoundSignalMastNamed.getBean();
+        return null;
+    }
+    
+	public void setWestBoundSignalMast(String signalMast){
+        if(signalMast==null || signalMast.equals("")){
+            westBoundSignalMastNamed=null;
+            return;
+        }
+        
+        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        if (mast != null) {
+            westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+        } else {
+            westBoundSignalMastNamed=null;
+        }
+    }
     
 	// initialization instance variables (used when loading a LayoutEditor)
 	public String trackSegment1Name = "";
@@ -163,8 +229,8 @@ public class PositionablePoint
 			else if ( (type!=END_BUMPER) && (connect2==null) ) {
 				connect2 = track;
                 if(connect1.getLayoutBlock()==connect2.getLayoutBlock()){
-                    setWestBoundSignalMast("");
-                    setEastBoundSignalMast("");
+                    westBoundSignalMastNamed=null;
+                    eastBoundSignalMastNamed=null;
                     setWestBoundSensor("");
                     setEastBoundSensor("");
                 }
@@ -194,12 +260,12 @@ public class PositionablePoint
             return;
         if(connect1==null && connect2==null){
             //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if(!getWestBoundSignalMast().equals(""))
+            if(westBoundSignalMastNamed!=null)
                 removeSML(getWestBoundSignalMast());
-            if(!getEastBoundSignalMast().equals(""))
+            if(eastBoundSignalMastNamed!=null)
                 removeSML(getEastBoundSignalMast());
-            setWestBoundSignalMast("");
-            setEastBoundSignalMast("");
+            westBoundSignalMastNamed=null;
+            eastBoundSignalMastNamed=null;
             setWestBoundSensor("");
             setEastBoundSensor("");
             //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
@@ -208,29 +274,23 @@ public class PositionablePoint
             return;
         } else if (connect1.getLayoutBlock()==connect2.getLayoutBlock()){
             //We are no longer a block bounardy
-            if(!getWestBoundSignalMast().equals(""))
+            if(westBoundSignalMastNamed!=null)
                 removeSML(getWestBoundSignalMast());
-            if(!getEastBoundSignalMast().equals(""))
+            if(eastBoundSignalMastNamed!=null)
                 removeSML(getEastBoundSignalMast());
-            setWestBoundSignalMast("");
-            setEastBoundSignalMast("");
+            westBoundSignalMastNamed=null;
+            eastBoundSignalMastNamed=null;
             setWestBoundSensor("");
             setEastBoundSensor("");
             //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
         }
     }
     
-    void removeSML(String signalMast){
-        if(signalMast==null || signalMast.equals(""))
+    void removeSML(SignalMast signalMast){
+        if(signalMast==null)
             return;
-        jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
-        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(mast)){
-            if(SignallingGuiTools.removeSignalMastLogic(null, mast)){
-                if (tools == null) {
-                    tools = new LayoutEditorTools(layoutEditor);
-                }
-                tools.removeSignalMastFromPanel(signalMast);
-            }
+        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)){
+            SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
 
@@ -404,6 +464,6 @@ public class PositionablePoint
         return active;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePoint.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionablePoint.class.getName());
 
 }

@@ -13,6 +13,11 @@ import java.beans.PropertyChangeListener;
  */
 public interface RosterGroupSelector {
     
+    /**
+     * Key for the property "selectedRosterGroup"
+     */
+    public final static String selectedRosterGroupProperty = "selectedRosterGroup";
+            
     public String getSelectedRosterGroup();
     
     public void	addPropertyChangeListener(PropertyChangeListener listener);

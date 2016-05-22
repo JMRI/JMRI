@@ -1,6 +1,8 @@
 // RollingStockGroup.java
 
 package jmri.jmrit.operations.rollingstock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
@@ -38,7 +40,7 @@ public class RollingStockGroup {
 		}
 		int oldSize = _group.size();
 		_group.add(rs);
-		firePropertyChange("listLength", Integer.toString(oldSize), Integer.valueOf(_group.size()));
+		firePropertyChange("grouplistLength", Integer.toString(oldSize), Integer.valueOf(_group.size())); // NOI18N
 	}
 	
 	public void delete(RollingStock rs){
@@ -52,18 +54,18 @@ public class RollingStockGroup {
 			// need a new lead rs
 			setLead(_group.get(0));
 		}
-		firePropertyChange("listLength", Integer.toString(oldSize), Integer.valueOf(_group.size()));
+		firePropertyChange("grouplistLength", Integer.toString(oldSize), Integer.valueOf(_group.size())); // NOI18N
 	}
 	
 	public List<RollingStock> getGroup(){
 		return _group;
 	}
 
-	public int getLength() {
+	public int getTotalLength() {
 		int length = 0;
 		for (int i=0; i<_group.size(); i++){
 			RollingStock rs = _group.get(i);
-			length = length + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER;
+			length = length + rs.getTotalLength();
 		}
 		return length;
 	}
@@ -132,6 +134,6 @@ public class RollingStockGroup {
 	}
 
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(RollingStockGroup.class.getName());
 }

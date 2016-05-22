@@ -15,24 +15,22 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20110530"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.1" lastUpdated="20121202"/>
-
-<!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
-<!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
-<!--                                                                                       -->
-<!-- Based on the "2010 03 01" English version of the ZIMO MX640						   -->
-<!-- decoder manual (with thanks to Art Luescher of ZIMO Agency of North America           -->
-<!-- for the translations!)with updates from "2010 10 15" German version				   --> 
-<!-- and the decoder software update page of the Zimo website.							   -->
-<!--                                                                                       -->
-<!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
-<!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
-<!-- variables on the proper pane of the Comprehensive programmer.                         -->
-<!-- V 1 new file -->
-<!-- V 1.1 updated file  highVersionID increased to 30 -->
+  <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
+  <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
+  <!--                                                                                       -->
+  <!-- Based on the "2010 03 01" English version of the ZIMO MX640						   -->
+  <!-- decoder manual (with thanks to Art Luescher of ZIMO Agency of North America           -->
+  <!-- for the translations!)with updates from "2010 10 15" German version				   -->
+  <!-- and the decoder software update page of the Zimo website.							   -->
+  <!--                                                                                       -->
+  <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
+  <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
+  <!-- variables on the proper pane of the Comprehensive programmer.                         -->
+  <!-- V 1 new file -->
+  <!-- V 1.1 updated file  highVersionID increased to 30 -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX69V version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)"
- numOuts="14" numFns="14" formFactor="G" connector="other" productID="209">
+      <model model="MX69V version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="209">
         <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug"/>
         <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug"/>
         <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug"/>
@@ -52,36 +50,28 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV152bit7version27.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
-
-		<variable label="Decoder ID 1" CV="250" default="209" readOnly="yes">
-			<decVal/>
-			<label>Decoder ID 1</label>
-			</variable>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV152bit7version27.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+      <variable label="Decoder ID 1" CV="250" default="209" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 1</label>
+      </variable>
     </variables>
-    <resets>
-      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
-      <factReset label="HARD RESET all CVs reset to default for the current Sound Project or CVset" CV="8" default="0"/>
-      <factReset label="HARD RESET for LGB operation (14 speed steps,pulse chain)" CV="8" default="9"/>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
   </decoder>
-
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap8+.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>  
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneServos4.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/> 
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
-  
 </decoder-config>

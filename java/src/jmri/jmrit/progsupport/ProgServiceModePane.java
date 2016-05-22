@@ -2,6 +2,8 @@
 
 package jmri.jmrit.progsupport;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.BoxLayout;
 import jmri.*;
 
@@ -82,11 +84,11 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
         modeGroup = group;
 
         // configure items for GUI
-        pagedButton.setText("Paged Mode");
-        directBitButton.setText("Direct Bit");
-        directByteButton.setText("Direct Byte");
-        registerButton.setText("Register Mode");
-        addressButton.setText("Address Mode");
+        pagedButton.setText(Bundle.getMessage("PagedMode"));
+        directBitButton.setText(Bundle.getMessage("DirectBit"));
+        directByteButton.setText(Bundle.getMessage("DirectByte"));
+        registerButton.setText(Bundle.getMessage("RegisterMode"));
+        addressButton.setText(Bundle.getMessage("AddressMode"));
         modeGroup.add(pagedButton);
         modeGroup.add(registerButton);
         modeGroup.add(directByteButton);
@@ -271,5 +273,5 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgServiceModePane.class.getName());
+    static Logger log = LoggerFactory.getLogger(ProgServiceModePane.class.getName());
 }

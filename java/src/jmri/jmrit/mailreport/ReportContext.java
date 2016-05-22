@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import jmri.util.FileUtil;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
@@ -62,7 +63,7 @@ public class ReportContext {
         addString("Available Communication Ports:");
         addCommunicationPortInfo();
 
-        String prefs = jmri.jmrit.XmlFile.prefsDir();
+        String prefs = FileUtil.getUserFilesPath();
         addString("Preferences directory: "+prefs+"  ");
         
         String prog = System.getProperty("user.dir");

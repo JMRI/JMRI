@@ -2,6 +2,8 @@
 
 package jmri.jmrix.openlcb.swing.tie;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 import java.awt.*;
@@ -197,7 +199,7 @@ public class ProducerTableModel extends AbstractTableModel {
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(ProducerTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(ProducerTableModel.class.getName());
 	
 }
 

@@ -273,8 +273,8 @@ tell the program about those turnouts also.  (SE8c users skip this step)
 	<P>
 	If you'd like to give additional warning, click the "with flashing
 	yellow" checkbox.  In that case, the signal before a red will show
-	flashing yellow, and the signal before that flashing yellow will
-	show a steady yellow.
+	 yellow, and the signal before that yellow will
+	show a flashing yellow.
     <li>Once you've set the options, click "OK".  You can 
       use this form repeatedly to enter as many as you'd like.
 	</UL>

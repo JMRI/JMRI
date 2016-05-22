@@ -1,222 +1,219 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 15 Aug 11 JES
                  - added Dim function output 10-12
 -->
-
-  <pane name="Function Output">
-    <column>
-      <row>
-        <column>
-          <row>
-            <column>
-              <display item="Pulse Chain Generation"/>
-            </column>
-            <column>
-              <label label="    ">
-                <label>    </label>
-              </label>
-            </column>
-            <column>
-              <label label="Generates Pulse chain commands   ">
-                <label>Generates Pulse chain commands   </label>
-              </label>
-              <label label="for LGB sound modules on FO 1">
-                <label>for LGB sound modules on FO 1</label>
-              </label>
-            </column>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
+<pane name="Function Output">
+  <column>
+    <row>
+      <column>
+        <row>
           <column>
-		  <display item="SUSI" tooltip="CV 124 bit 7"/>
-		  </column>
-		  <column>
-          <label label="   ">
-            <label> </label>
-          </label>
-          </column>		  
-            <column>
-              <display item="Special Output Configuration"/>
-            </column>
-            </row>
-			  <label label=" ">
-           		<label> </label>
-			  </label>
-          <display item="Function Output 4 as virtual Cam or Smoke Fan" tooltip="CV 133"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
+            <display item="Pulse Chain Generation"/>
+          </column>
+          <column>
+            <label label="    ">
+              <label>    </label>
+            </label>
+          </column>
+          <column>
+            <label label="Generates Pulse chain commands   ">
+              <label>Generates Pulse chain commands   </label>
+            </label>
+            <label label="for LGB sound modules on FO 1">
+              <label>for LGB sound modules on FO 1</label>
+            </label>
+          </column>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <column>
+            <display item="SUSI" tooltip="CV 124 bit 7"/>
+          </column>
+          <column>
+            <label label="   ">
+              <label> </label>
+            </label>
+          </column>
+          <column>
+            <display item="Special Output Configuration"/>
+          </column>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Function Output 4 as virtual Cam or Smoke Fan" tooltip="CV 133"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="Dim Front Light" format="checkbox" tooltip="CV 114 bit 0"/>
+        <display item="Dim Rear Light" format="checkbox" tooltip="CV 114 bit 1"/>
+        <display item="Dim function output 1" format="checkbox" tooltip="CV 114 bit 2"/>
+        <display item="Dim function output 2" format="checkbox" tooltip="CV 114 bit 3"/>
+        <display item="Dim function output 3" format="checkbox" tooltip="CV 114 bit 4"/>
+        <display item="Dim function output 4" format="checkbox" tooltip="CV 114 bit 5"/>
+        <display item="Dim function output 5" format="checkbox" tooltip="CV 114 bit 6"/>
+        <display item="Dim function output 6" format="checkbox" tooltip="CV 114 bit 7"/>
+        <display item="Dim function output 7" format="checkbox" tooltip="CV 152 bit 0"/>
+        <display item="Dim function output 8" format="checkbox" tooltip="CV 152 bit 1"/>
+        <display item="Dim function output 9" format="checkbox" tooltip="CV 152 bit 2"/>
+        <display item="Dim function output 10" format="checkbox" tooltip="CV 152 bit 3"/>
+        <display item="Dim function output 11" format="checkbox" tooltip="CV 152 bit 4"/>
+        <display item="Dim function output 12" format="checkbox" tooltip="CV 152 bit 5"/>
+      </column>
+      <column>
+        <row>
+          <column>
+            <display item="Output Level" tooltip="CV 60"/>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <label label=" ">
+              <label> </label>
+            </label>
+          </column>
+          <column>
+            <display item="Output Level" format="hslider" tooltip="CV 60" label="">
+              <label/>
+            </display>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <label label=" ">
+              <label> </label>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <display item="F6 dims front light" format="checkbox" tooltip="CV 119 bit 0"/>
+            <display item="F6 dims rear light" format="checkbox" tooltip="CV 119 bit 1"/>
+            <display item="F6 dims function output 1" format="checkbox" tooltip="CV 119 bit 2"/>
+            <display item="F6 dims function output 2" format="checkbox" tooltip="CV 119 bit 3"/>
+            <display item="F6 dims function output 3" format="checkbox" tooltip="CV 119 bit 4"/>
+            <display item="F6 dims function output 4" format="checkbox" tooltip="CV 119 bit 5"/>
+            <display item="F6 inverted" format="checkbox" tooltip="CV 119 bit 7"/>
+          </column>
+          <column>
+            <display item="F7 dims front light" format="checkbox" tooltip="CV 120 bit 0"/>
+            <display item="F7 dims rear light" format="checkbox" tooltip="CV 120 bit 1"/>
+            <display item="F7 dims function output 1" format="checkbox" tooltip="CV 120 bit 2"/>
+            <display item="F7 dims function output 2" format="checkbox" tooltip="CV 120 bit 3"/>
+            <display item="F7 dims function output 3" format="checkbox" tooltip="CV 120 bit 4"/>
+            <display item="F7 dims function output 4" format="checkbox" tooltip="CV 120 bit 5"/>
+            <display item="F7 inverted" format="checkbox" tooltip="CV 120 bit 7"/>
+          </column>
+          <column>
+            <label label="          ">
+              <label>          </label>
+            </label>
+          </column>
+        </row>
+      </column>
       <separator/>
-      <row>
-            <column>
-              <display item="Dim Front Light" format="checkbox" tooltip="CV 114 bit 0"/>
-              <display item="Dim Rear Light" format="checkbox" tooltip="CV 114 bit 1"/>
-              <display item="Dim function output 1" format="checkbox" tooltip="CV 114 bit 2"/>
-              <display item="Dim function output 2" format="checkbox" tooltip="CV 114 bit 3"/>
-              <display item="Dim function output 3" format="checkbox" tooltip="CV 114 bit 4"/>
-              <display item="Dim function output 4" format="checkbox" tooltip="CV 114 bit 5"/>
-              <display item="Dim function output 5" format="checkbox" tooltip="CV 114 bit 6"/>
-              <display item="Dim function output 6" format="checkbox" tooltip="CV 114 bit 7"/>
-              <display item="Dim function output 7" format="checkbox" tooltip="CV 152 bit 0"/>
-              <display item="Dim function output 8" format="checkbox" tooltip="CV 152 bit 1"/>
-              <display item="Dim function output 9" format="checkbox" tooltip="CV 152 bit 2"/>
-              <display item="Dim function output 10" format="checkbox" tooltip="CV 152 bit 3"/>
-              <display item="Dim function output 11" format="checkbox" tooltip="CV 152 bit 4"/>
-              <display item="Dim function output 12" format="checkbox" tooltip="CV 152 bit 5"/>
-            </column>
-        <column>
-          <row>
-            <column>
-              <display item="Output Level" tooltip="CV 60"/>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-            <column>
-              <display item="Output Level" format="hslider" tooltip="CV 60" label="">
-                <label/>
-              </display>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-          </row>
-          <row>
-            <column>
-              <display item="F6 dims front light" format="checkbox" tooltip="CV 119 bit 0"/>
-              <display item="F6 dims rear light" format="checkbox" tooltip="CV 119 bit 1"/>
-              <display item="F6 dims function output 1" format="checkbox" tooltip="CV 119 bit 2"/>
-              <display item="F6 dims function output 2" format="checkbox" tooltip="CV 119 bit 3"/>
-              <display item="F6 dims function output 3" format="checkbox" tooltip="CV 119 bit 4"/>
-              <display item="F6 dims function output 4" format="checkbox" tooltip="CV 119 bit 5"/>
-              <display item="F6 inverted" format="checkbox" tooltip="CV 119 bit 7"/>
-            </column>
-            <column>
-              <display item="F7 dims front light" format="checkbox" tooltip="CV 120 bit 0"/>
-              <display item="F7 dims rear light" format="checkbox" tooltip="CV 120 bit 1"/>
-              <display item="F7 dims function output 1" format="checkbox" tooltip="CV 120 bit 2"/>
-              <display item="F7 dims function output 2" format="checkbox" tooltip="CV 120 bit 3"/>
-              <display item="F7 dims function output 3" format="checkbox" tooltip="CV 120 bit 4"/>
-              <display item="F7 dims function output 4" format="checkbox" tooltip="CV 120 bit 5"/>
-              <display item="F7 inverted" format="checkbox" tooltip="CV 120 bit 7"/>
-            </column>
-            <column>
-              <label label="          ">
-                <label>          </label>
-              </label>
-            </column>
-          </row>
-        </column>
-        <separator/>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <row>
-            <column>
-              <label label="     ">
-                <label>     </label>
-              </label>
-            </column>
-            <column>
-              <display item="Flash Rate" tooltip="CV 117"/>
-            </column>
-            <column>
-              <label label="    ">
-                <label>    </label>
-              </label>
-            </column>
-            <column>
-              <label label="Tens digit = on time">
-                <label>Tens digit = on time</label>
-              </label>
-              <label label="Ones digit = Off time">
-                <label>Ones digit = Off time</label>
-              </label>
-              <label label="(0 = 100ms, 9 = 1s)">
-                <label>(0 = 100ms, 9 = 1s)</label>
-              </label>
-            </column>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Flash front light" format="checkbox" tooltip="CV 118 bit 0"/>
-          <display item="Flash rear light" format="checkbox" tooltip="CV 118 bit 1"/>
-          <display item="Flash function output 1" format="checkbox" tooltip="CV 118 bit 2"/>
-          <display item="Flash function output 2" format="checkbox" tooltip="CV 118 bit 3"/>
-          <display item="Flash function output 3" format="checkbox" tooltip="CV 118 bit 4"/>
-          <display item="Flash function output 4" format="checkbox" tooltip="CV 118 bit 5"/>
-          <display item="Inverse Flash Output 2" format="checkbox" tooltip="CV 118 bit 6"/>
-          <display item="Inverse Flash Output 4" format="checkbox" tooltip="CV 118 bit 7"/>
-          <display item="Flash Rate Off Time"/>
-          <display item="Flash Rate On Time"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <separator/>
-      <label label="                                         Lighting Effects Adjustments (Mars, Gyralight etc)">
-        <label>                                         Lighting Effects Adjustments (Mars, Gyralight etc)</label>
-      </label>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Minimum Dimming Value" tooltip="CV 62"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Light Effects Modifications" tooltip="CV 63"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Ditch Light Off Time" tooltip="CV 64"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="   ">
-            <label>   </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)">
-            <label>Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)</label>
-          </label>
-          <label label="Ones digit extends Off time(0-9)">
-            <label>Ones digit extends Off time(0-9)</label>
-          </label>
-          <label label="Auto Turn Off delay time (0-255 = 0 - 25.5 sec)">
-            <label>Auto Turn Off delay time (0-255 = 0 - 25.5 sec)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>Function Output</name>
-  </pane>
+      <column>
+        <label label="        ">
+          <label>        </label>
+        </label>
+      </column>
+      <column>
+        <row>
+          <column>
+            <label label="     ">
+              <label>     </label>
+            </label>
+          </column>
+          <column>
+            <display item="Flash Rate" tooltip="CV 117"/>
+          </column>
+          <column>
+            <label label="    ">
+              <label>    </label>
+            </label>
+          </column>
+          <column>
+            <label label="Tens digit = on time">
+              <label>Tens digit = on time</label>
+            </label>
+            <label label="Ones digit = Off time">
+              <label>Ones digit = Off time</label>
+            </label>
+            <label label="(0 = 100ms, 9 = 1s)">
+              <label>(0 = 100ms, 9 = 1s)</label>
+            </label>
+          </column>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Flash front light" format="checkbox" tooltip="CV 118 bit 0"/>
+        <display item="Flash rear light" format="checkbox" tooltip="CV 118 bit 1"/>
+        <display item="Flash function output 1" format="checkbox" tooltip="CV 118 bit 2"/>
+        <display item="Flash function output 2" format="checkbox" tooltip="CV 118 bit 3"/>
+        <display item="Flash function output 3" format="checkbox" tooltip="CV 118 bit 4"/>
+        <display item="Flash function output 4" format="checkbox" tooltip="CV 118 bit 5"/>
+        <display item="Inverse Flash Output 2" format="checkbox" tooltip="CV 118 bit 6"/>
+        <display item="Inverse Flash Output 4" format="checkbox" tooltip="CV 118 bit 7"/>
+        <display item="Flash Rate Off Time"/>
+        <display item="Flash Rate On Time"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <label label="                                         Lighting Effects Adjustments (Mars, Gyralight etc)">
+      <label>                                         Lighting Effects Adjustments (Mars, Gyralight etc)</label>
+    </label>
+    <row>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Minimum Dimming Value" tooltip="CV 62"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Light Effects Modifications" tooltip="CV 63"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Ditch Light Off Time" tooltip="CV 64"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label="   ">
+          <label>   </label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <label label="Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)">
+          <label>Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)</label>
+        </label>
+        <label label="Ones digit extends Off time(0-9)">
+          <label>Ones digit extends Off time(0-9)</label>
+        </label>
+        <label label="Auto Turn Off delay time (0-255 = 0 - 25.5 sec)">
+          <label>Auto Turn Off delay time (0-255 = 0 - 25.5 sec)</label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>Function Output</name>
+</pane>

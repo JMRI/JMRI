@@ -2,6 +2,8 @@
 
 package jmri.jmrix.powerline;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.Turnout;
 
@@ -46,7 +48,7 @@ public String getNextValidAddress(String curAddress, String prefix){
     } catch (NumberFormatException ex) {
         log.error("Unable to convert " + curAddress + " Hardware Address to a number");
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                            showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
         return null;
     }
     
@@ -90,7 +92,7 @@ public String getNextValidAddress(String curAddress, String prefix){
         return t;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
 

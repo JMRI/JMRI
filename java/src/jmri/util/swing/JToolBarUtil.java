@@ -2,8 +2,9 @@
 
 package jmri.util.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.io.File;
 import org.jdom.*;
 
 /**
@@ -21,12 +22,12 @@ import org.jdom.*;
 
 public class JToolBarUtil extends GuiUtilBase {
 
-    static public JToolBar loadToolBar(File file) {
-        return loadToolBar(file, null, null);  // tool bar without window or context
+    static public JToolBar loadToolBar(String name) {
+        return loadToolBar(name, null, null);  // tool bar without window or context
     }
 
-    static public JToolBar loadToolBar(File file, WindowInterface wi, Object context) {
-        Element root = rootFromFile(file);
+    static public JToolBar loadToolBar(String name, WindowInterface wi, Object context) {
+        Element root = rootFromName(name);
                 
         JToolBar retval = new JToolBar(root.getChild("name").getText());
         
@@ -46,5 +47,5 @@ public class JToolBarUtil extends GuiUtilBase {
         
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JToolBarUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(JToolBarUtil.class.getName());
 }

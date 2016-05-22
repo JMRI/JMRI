@@ -2,10 +2,11 @@
 
 package jmri.jmrit.display.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.SignalMast;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
-import jmri.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -32,8 +33,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("signalmasticon");
-        
-        element.setAttribute("signalmast", ""+p.getPName());
+        element.setAttribute("signalmast", ""+p.getNamedSignalMast().getName());
         storeCommonAttributes(p, element);
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
@@ -105,7 +105,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         SignalMast sh = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
 
         if (sh != null) {
-            l.setSignalMast(new NamedBeanHandle<SignalMast>(name, sh));
+            l.setSignalMast(name);
         } else {
             log.error("SignalMast named '"+attr.getValue()+"' not found.");
             ed.loadFailed();
@@ -144,6 +144,6 @@ public class SignalMastIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SIGNALS, element);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalMastIconXml.class.getName());
 
 }

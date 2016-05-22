@@ -1,6 +1,8 @@
 // DefaultClockControl.java
 
 package jmri.implementation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import java.util.Date;
 
@@ -103,7 +105,7 @@ public class DefaultClockControl implements ClockControl {
 	public void initializeHardwareClock(double rate, Date now, boolean getTime) {return;}
 
 	
-static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultClockControl.class.getName());
+static final Logger log = LoggerFactory.getLogger(DefaultClockControl.class.getName());
 }
 
 /* @(#)DefaultClockControl.java */

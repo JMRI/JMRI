@@ -3,12 +3,14 @@
 package jmri.configurexml;
 
 /*
+import org.apache.log4j.Logger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jmri.JmriException;
 */
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -20,7 +22,7 @@ import jmri.Memory;
 import jmri.Path;
 import jmri.Sensor;
 
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -338,8 +340,8 @@ public class BlockManagerXmlTest extends LoadFileTestBase {
             .load(inFile);
     
         // store file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        java.io.File outFile = new java.io.File(XmlFile.prefsDir()+"temp/LoadBlockManagerFileTest.xml");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
+        File outFile = new File(FileUtil.getUserFilesPath()+"temp/LoadBlockManagerFileTest.xml");
         InstanceManager.configureManagerInstance()
             .storeConfig(outFile);
         
@@ -430,7 +432,7 @@ public class BlockManagerXmlTest extends LoadFileTestBase {
     }
 
 /*    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManagerXmlTest.class.getName());
+    static Logger log = Logger.getLogger(BlockManagerXmlTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

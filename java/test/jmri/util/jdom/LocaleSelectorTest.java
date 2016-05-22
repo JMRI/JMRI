@@ -2,6 +2,7 @@
 
 package jmri.util.jdom;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 import org.jdom.*;
 
@@ -113,5 +114,5 @@ public class LocaleSelectorTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocaleSelectorTest.class.getName());
+	static Logger log = Logger.getLogger(LocaleSelectorTest.class.getName());
 }

@@ -8,6 +8,7 @@
     <modifier>.3</modifier>
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
     <sensor systemName="ISBO1" inverted="false" userName="blocknorthwestoccupied">
       <systemName>ISBO1</systemName>
       <userName>blocknorthwestoccupied</userName>

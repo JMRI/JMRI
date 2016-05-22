@@ -2,6 +2,8 @@
 
 package jmri.jmrix.dcc4pc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
 import java.util.Calendar;
 
@@ -294,7 +296,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     try {
                         Thread.sleep(10);
                     } catch (Exception ex){
-                        log.debug(ex);
+                        log.debug(ex.getLocalizedMessage(), ex);
                     }
                     //log.debug("We do not forward the response to the listener as it has not been formed");
                     lastIncomplete = null;
@@ -583,6 +585,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return adaptermemo.getSystemPrefix();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class.getName());
 }
 /* @(#)Dcc4PcTrafficController.java */

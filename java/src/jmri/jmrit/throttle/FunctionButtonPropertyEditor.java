@@ -4,9 +4,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ResourceBundle;
 
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
 
 /**
@@ -15,7 +14,6 @@ import jmri.util.swing.EditableResizableImagePanel;
  */
 public class FunctionButtonPropertyEditor extends JDialog
 {
-    static final ResourceBundle rb = ThrottleBundle.bundle();
     private FunctionButton button;
 
     private JTextField textField;
@@ -42,7 +40,7 @@ public class FunctionButtonPropertyEditor extends JDialog
     private void initGUI()
     {
         this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        this.setTitle(rb.getString("ButtonEditFunction"));
+        this.setTitle(Bundle.getMessage("ButtonEditFunction"));
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new BorderLayout());
@@ -65,7 +63,7 @@ public class FunctionButtonPropertyEditor extends JDialog
 
         idField = new JTextField();
         idField.setColumns(1);
-        propertyPanel.add(new JLabel(rb.getString("LabelFunctionNumber")), constraints);
+        propertyPanel.add(new JLabel(Bundle.getMessage("LabelFunctionNumber")), constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 1;
@@ -76,7 +74,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         constraints.gridy = 1;
         textField = new JTextField();
         textField.setColumns(10);
-        propertyPanel.add(new JLabel(rb.getString("LabelText")), constraints);
+        propertyPanel.add(new JLabel(Bundle.getMessage("LabelText")), constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 1;
@@ -87,19 +85,19 @@ public class FunctionButtonPropertyEditor extends JDialog
         constraints.gridy = 2;
         fontField = new JTextField();
         fontField.setColumns(10);
-        propertyPanel.add(new JLabel(rb.getString("LabelFontSize")), constraints);
+        propertyPanel.add(new JLabel(Bundle.getMessage("LabelFontSize")), constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 1;
         propertyPanel.add(fontField, constraints);
 
-        lockableCheckBox = new JCheckBox(rb.getString("CheckBoxLockable"));
+        lockableCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxLockable"));
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 0;
         constraints.gridy = 3;
         propertyPanel.add(lockableCheckBox, constraints);
 
-        visibleCheckBox = new JCheckBox(rb.getString("CheckBoxVisible"));
+        visibleCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxVisible"));
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 0;
         constraints.gridy = 4;
@@ -107,22 +105,22 @@ public class FunctionButtonPropertyEditor extends JDialog
 
         constraints.gridy = 5;
         constraints.gridx = 0;
-        propertyPanel.add(new JLabel(rb.getString("OffIcon")), constraints);
+        propertyPanel.add(new JLabel(Bundle.getMessage("OffIcon")), constraints);
         
         constraints.gridx = 1;
-        propertyPanel.add(new JLabel(rb.getString("OnIcon")), constraints);
+        propertyPanel.add(new JLabel(Bundle.getMessage("OnIcon")), constraints);
         
         constraints.gridy = 6;
         constraints.gridx = 0;
         _imageFilePath = new EditableResizableImagePanel("",BUT_IMG_SIZE,BUT_IMG_SIZE);
-		_imageFilePath.setDropFolder(XmlFile.resourcesDir());
+		_imageFilePath.setDropFolder(FileUtil.getUserResourcePath());
 		_imageFilePath.setBackground(new Color(0,0,0,0));
 		_imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
         propertyPanel.add(_imageFilePath, constraints);
         
         constraints.gridx = 1;
         _imagePressedFilePath = new EditableResizableImagePanel("",BUT_IMG_SIZE,BUT_IMG_SIZE);
-        _imagePressedFilePath.setDropFolder(XmlFile.resourcesDir());
+        _imagePressedFilePath.setDropFolder(FileUtil.getUserResourcePath());
         _imagePressedFilePath.setBackground(new Color(0,0,0,0));
         _imagePressedFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
         propertyPanel.add(_imagePressedFilePath, constraints);
@@ -130,7 +128,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
-        JButton saveButton = new JButton(rb.getString("ButtonOk"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonOk"));
         saveButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -140,7 +138,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         });
 
 
-        JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -226,7 +224,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         catch (NumberFormatException ex)
         {
             errors.append(String.valueOf(++errorNumber));
-            errors.append(". " + rb.getString("ErrorFunctionKeyRange") + "\n");
+            errors.append(". " + Bundle.getMessage("ErrorFunctionKeyRange") + "\n");
         }
 
         /* font > 0 */
@@ -241,7 +239,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         catch (NumberFormatException ex)
         {
             errors.append(String.valueOf(++errorNumber));
-            errors.append(". " + rb.getString("ErrorFontSize"));
+            errors.append(". " + Bundle.getMessage("ErrorFontSize"));
         }
 
 

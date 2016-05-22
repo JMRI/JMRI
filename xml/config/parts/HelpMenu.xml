@@ -1,32 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
 
-<node
+<nodes
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
-><name>Help</name>
-<mnemonic>h</mnemonic>
-    <node><name>General</name>
+>
+<node>
+    <name>Help</name>
+    <name xml:lang="it">Aiuto</name>
+    <mnemonic>h</mnemonic>
+    <node>
+        <name>General</name>
+        <name xml:lang="it">Generale</name>
         <help>index</help>
     </node>
-    <node><name>Window-Specific</name>
+    <node>
+        <name>Window-Specific</name>
+        <name xml:lang="it">Specifico</name>
     </node>
-    <node><name>License</name>
+    <node>
+        <name>License</name>
+        <name xml:lang="it">Licenza</name>
         <adapter>apps.LicenseAction</adapter>
     </node>
-    <node><name>Locations</name>
+    <node>
+        <name>Locations</name>
+        <name xml:lang="it">Località</name>
     </node>
-    <node><name>Context</name>
+    <node>
+        <name>Context</name>
+        <name xml:lang="it">Contesto</name>
         <adapter>apps.ReportContextAction</adapter>
     </node>
-    <node><name>Upload Debugging Info</name>
+    <node>
+        <name>Upload Debugging Info</name>
+        <name xml:lang="it">Carica Info Debug</name>
     </node>
-    <node><name>System Console</name>
+    <node>
+        <name>System Console</name>
+        <name xml:lang="it">Consolle di Sistema</name>
         <adapter>apps.SystemConsoleAction</adapter>
     </node>
     
-    
+</node>    
 
-</node>
+</nodes>
   

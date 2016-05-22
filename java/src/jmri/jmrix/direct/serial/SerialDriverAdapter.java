@@ -2,8 +2,11 @@
 
 package jmri.jmrix.direct.serial;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.direct.PortController;
 import jmri.jmrix.direct.TrafficController;
+import jmri.util.SystemType;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -45,7 +48,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
             // Serialio.SerialConfig exists on this machine, we use that
             // else we revert to gnu.io
             try {
-                if (System.getProperty("os.name","<unknown>").toLowerCase().contains("windows") && Double.valueOf(System.getProperty("os.version")) >= 6 )
+                if (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6 )
                     throw new Exception("Direct interface not compatible.");
                 Class.forName("Serialio.SerialConfig");
                 log.debug("openPort using SerialIO");
@@ -288,6 +291,6 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

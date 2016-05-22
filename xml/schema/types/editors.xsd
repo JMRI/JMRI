@@ -219,6 +219,7 @@
         <xs:element name="inactive" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="error" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="iconmaps" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="activeText" type="EditorTextInfoType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="inactiveText" type="EditorTextInfoType" minOccurs="0" maxOccurs="unbounded" />
@@ -295,6 +296,9 @@
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
       </xs:attribute>
       <xs:attribute name="unknown" type="xs:string" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="error" type="xs:string" >
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
       </xs:attribute>
       <xs:attribute name="inconsistent" type="xs:string" >
@@ -434,16 +438,25 @@
       <xs:attribute name="width" type="xs:integer" >
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
       </xs:attribute>
+      <xs:attribute name="justification" default="left" >
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="centre"/>
+            <xs:enumeration value="right"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
 
     </xs:complexType>
 
     <xs:complexType name="EditorMemoryIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a ReporterIcon
+          Define the XML stucture for storing a MemoryIcon
         </xs:documentation>
         <xs:appinfo>
-          jmri.jmrit.display.configurexml.ReporterIconXml
+          jmri.jmrit.display.configurexml.MemoryIconXml
         </xs:appinfo>
       </xs:annotation>
 
@@ -480,6 +493,7 @@
       <xs:attribute name="redBorder" type="xs:int" />
       <xs:attribute name="greenBorder" type="xs:int" />
       <xs:attribute name="blueBorder" type="xs:int" />
+      <xs:attribute name="colWidth" type="xs:int" />
       <xs:attribute name="justification" default="left" >
         <xs:simpleType>
           <xs:restriction base="xs:token">
@@ -505,6 +519,46 @@
       <xs:attribute name="width" type="xs:integer" >
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
       </xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorMemoryInputIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a MemoryInputIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.MemoryInputIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup" />
+
+      <xs:attribute name="class" type="classType" use="required" />
+      <xs:attribute name="memory" type="beanNameType" />
+      <xs:attribute name="justification" default="left" >
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="centre"/>
+            <xs:enumeration value="right"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="colWidth" type="xs:string" />
+      <xs:attribute name="size" type="xs:int" />
+      <xs:attribute name="style" type="xs:int" />
+      <xs:attribute name="red" type="xs:int" />
+      <xs:attribute name="green" type="xs:int" />
+      <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="redBorder" type="xs:int" />
+      <xs:attribute name="greenBorder" type="xs:int" />
+      <xs:attribute name="blueBorder" type="xs:int" />
+      <xs:attribute name="redBack" type="xs:int" />
+      <xs:attribute name="greenBack" type="xs:int" />
+      <xs:attribute name="blueBack" type="xs:int" />
+      <xs:attribute name="margin" type="xs:int" />
+      <xs:attribute name="borderSize" type="xs:int" />
 
     </xs:complexType>
 
@@ -643,6 +697,7 @@
 
       <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="rotate" type="xs:string" />
+      <xs:attribute name="degrees" type="xs:string" />
       <xs:attribute name="signalhead" type="beanNameType" />
       <xs:attribute name="clickmode" type="xs:string" />
       <xs:attribute name="litmode" type="xs:string" />
@@ -708,6 +763,7 @@
       <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="signalmast" type="xs:string" />
       <xs:attribute name="rotate" type="xs:string" />
+      <xs:attribute name="rotation" type="xs:string" />
       <xs:attribute name="degrees" type="xs:string" />
       <xs:attribute name="scale" type="xs:string" />
       <xs:attribute name="clickmode" type="xs:string" />
@@ -969,17 +1025,31 @@
           jmri.jmrit.display.configurexml.LocoIconXML??
         </xs:appinfo>
       </xs:annotation>
+      <xs:sequence>
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
       <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="icon" type="xs:string" />
+      <xs:attribute name="dockX" type="xs:string" />
+      <xs:attribute name="dockY" type="xs:string" />
       <xs:attribute name="text" type="xs:string" />
       <xs:attribute name="size" type="xs:string" />
       <xs:attribute name="style" type="xs:string" />
       <xs:attribute name="red" type="xs:int" />
       <xs:attribute name="green" type="xs:int" />
       <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="justification" default="left" >
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="centre"/>
+            <xs:enumeration value="right"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
 
     </xs:complexType>
 

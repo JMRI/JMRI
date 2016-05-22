@@ -2,6 +2,8 @@
 
 package jmri.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.beans.*;
 import java.lang.reflect.*;
@@ -153,5 +155,5 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
             }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultJavaBeanConfigXML.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultJavaBeanConfigXML.class.getName());
 }

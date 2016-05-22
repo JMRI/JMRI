@@ -2,6 +2,8 @@
 
 package jmri.jmrit.simpleclock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Date;
 import jmri.Memory;
 import jmri.Timebase;
@@ -459,9 +461,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 	private int startClockOption = NONE;	// request start of a clock at start up
 	private boolean notInitialized = true;  // true before initialization received from start up
 
-    java.text.SimpleDateFormat timeStorageFormat = 
-            new java.text.SimpleDateFormat(java.util.ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle")
-                                .getString("TimeStorageFormat"));
+    java.text.SimpleDateFormat timeStorageFormat = null;
                                 
 	javax.swing.Timer timer = null;
     java.beans.PropertyChangeSupport pcMinutes = new java.beans.PropertyChangeSupport(this);
@@ -512,6 +512,15 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     void updateMemory(Date date) {
+        if (timeStorageFormat == null) {
+            try {
+                timeStorageFormat = new java.text.SimpleDateFormat(java.util.ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle")
+                                .getString("TimeStorageFormat"));
+            } catch (java.lang.IllegalArgumentException e) {
+                log.info("Dropping back to default time format due to exception "+e);
+                timeStorageFormat = new java.text.SimpleDateFormat("h:mm a");
+            }
+        }
         clockMemory.setValue(timeStorageFormat.format(date));
     }
     
@@ -537,7 +546,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     public void setState(int s) throws jmri.JmriException{}
     public int getState(){ return 0; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTimebase.class.getName());
+    static Logger log = LoggerFactory.getLogger(SimpleTimebase.class.getName());
 
 }
 

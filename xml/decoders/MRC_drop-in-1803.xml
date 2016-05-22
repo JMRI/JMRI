@@ -1,4 +1,5 @@
-<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
 <!-- $Id: MRC_soundbrilliance1803.xml,v 12011/08/14 03:38:52 van nort Exp $ -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->
@@ -10,11 +11,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.                                       -->
 <!-- See the GNU General Public License for more details.                    -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-   <version author="Darryl Van Nort" version="1" lastUpdated="20110815"/>
-        <!--   version 1 created from MRC 1800 v2 definition  -->
-        <!--   MRC 1800 version  author="Peter Ulvestad" version="1" lastUpdated="20091228" -->
-        <!--   MRC 1800 version  author="John Crellin" version="2" lastUpdated="20091229"  -->
- <decoder>
+  <version author="Darryl Van Nort" version="1" lastUpdated="20110815"/>
+  <!--   version 1 created from MRC 1800 v2 definition  -->
+  <!--   MRC 1800 version  author="Peter Ulvestad" version="1" lastUpdated="20091228" -->
+  <!--   MRC 1800 version  author="John Crellin" version="2" lastUpdated="20091229"  -->
+  <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Diesel Sound 1803 - HO  Proto 2000 PA/PB Locomotives" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="" width="" height="" units="mm"/>
@@ -130,7 +131,7 @@
       <variable label="Use Speed Table" CV="29" item="Speed Table Definition" tooltip="CV29 ['8' bit] determines if loco will use Speed Table or not" default="1" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Don't use Speed Table">
-            <choice>Don&apos;t use Speed Table</choice>
+            <choice>Don't use Speed Table</choice>
           </enumChoice>
           <enumChoice choice="Use Speed Table">
             <choice>Use Speed Table</choice>
@@ -212,8 +213,8 @@
         <decVal max="15"/>
         <label>Coupling Volume</label>
       </variable>
-            <variable label="Auto Ditch Lights Flash with Horn" CV="63" item="Global lighting option 5" tooltip="CV 118/119 sets ACC1 lighting options [range  0-1]" default="1">
-         <enumVal>
+      <variable label="Auto Ditch Lights Flash with Horn" CV="63" item="Global lighting option 5" tooltip="CV 118/119 sets ACC1 lighting options [range  0-1]" default="1">
+        <enumVal>
           <enumChoice choice="Disable" value="0">
             <choice>Disable</choice>
           </enumChoice>
@@ -223,7 +224,7 @@
         </enumVal>
         <label>Ditch Lights Auto With Horn</label>
       </variable>
-            <variable label="Rail clack volume" CV="64" item="Sound Setting 15" tooltip="CV64 sets the Rail Clack Volume [range 0-15]" default="12">
+      <variable label="Rail clack volume" CV="64" item="Sound Setting 15" tooltip="CV64 sets the Rail Clack Volume [range 0-15]" default="12">
         <decVal max="15"/>
         <label>Rail clack volume</label>
       </variable>
@@ -369,7 +370,7 @@
           <enumChoice choice="EMD 567" value="1">
             <choice>Type 2</choice>
           </enumChoice>
-          </enumVal>
+        </enumVal>
         <label>Prime Mover</label>
       </variable>
     </variables>
@@ -379,7 +380,7 @@
   </decoder>
   <pane name="MRC">
     <column>
-            <label label="MRC NOTE: Some DCC systems do not have enough power on the program track for programming">
+      <label label="MRC NOTE: Some DCC systems do not have enough power on the program track for programming">
         <label>MRC NOTE: Some DCC systems do not have enough power on the program track for programming</label>
       </label>
       <label label="sound decoders. If your system is one of these, There are Program Track Boosters available">

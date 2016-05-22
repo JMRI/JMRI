@@ -2,10 +2,10 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -19,13 +19,11 @@ import jmri.jmrit.roster.RosterEntry;
  *
  */
 public class ImportRosterEngines extends Thread {
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
-	
+		
 	EngineManager manager = EngineManager.instance();
-	private static String defaultEngineLength = rb.getString("engineDefaultLength");
-	private static String defaultEngineType = rb.getString("engineDefaultType");
-	private static String defaultEngineHp = rb.getString("engineDefaultHp");
+	private static String defaultEngineLength = Bundle.getMessage("engineDefaultLength");
+	private static String defaultEngineType = Bundle.getMessage("engineDefaultType");
+	private static String defaultEngineHp = Bundle.getMessage("engineDefaultHp");
 	
 	javax.swing.JLabel textEngine = new javax.swing.JLabel();
 	javax.swing.JLabel textId = new javax.swing.JLabel();
@@ -35,14 +33,14 @@ public class ImportRosterEngines extends Thread {
 		
 		// create a status frame
 	   	JPanel ps = new JPanel();
-	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(rb.getString("TitleImportEngines"));
+	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getMessage("TitleImportEngines"));
 	   	fstatus.setLocationRelativeTo(null);
 	   	fstatus.setSize (200,100);
 
 	   	ps.add (textEngine);
 	   	ps.add(textId);
 	   	fstatus.getContentPane().add (ps);
-		textEngine.setText("Add engine: ");
+		textEngine.setText(Bundle.getMessage("AddEngine"));
         textEngine.setVisible(true);
         textId.setVisible(true);
 		fstatus.setVisible (true);
@@ -71,8 +69,8 @@ public class ImportRosterEngines extends Thread {
 					if (engine.getLength().equals(""))
 						engine.setLength(defaultEngineLength);
 					// does this model already have a type?
-					if (engine.getType().equals(""))
-						engine.setType(defaultEngineType);
+					if (engine.getTypeName().equals(""))
+						engine.setTypeName(defaultEngineType);
 					// does this model already have a hp?
 					if (engine.getHp().equals(""))
 						engine.setHp(defaultEngineHp);
@@ -92,16 +90,16 @@ public class ImportRosterEngines extends Thread {
 
 		if (enginesAdded>0) {
 			JOptionPane.showMessageDialog(null, 
-					MessageFormat.format(rb.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
-					rb.getString("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
+					MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"),new Object[]{enginesAdded}),
+					Bundle.getMessage("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null,
-					MessageFormat.format(rb.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
-					rb.getString("ImportFailed"), JOptionPane.ERROR_MESSAGE);
+					MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"),new Object[]{enginesAdded}),
+					Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(ImportRosterEngines.class.getName());
 }
 

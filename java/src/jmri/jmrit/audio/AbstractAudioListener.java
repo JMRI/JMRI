@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.InstanceManager;
@@ -43,7 +45,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     private float _metersPerUnit    = 1.0f;
     private long _timeOfLastPositionCheck = 0;
 
-    private static AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
+    private static final AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
 
     /**
      * Abstract constructor for new AudioListener with system name
@@ -66,10 +68,12 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
         this.setState(STATE_POSITIONED);
     }
 
+    @Override
     public char getSubType() {
         return LISTENER;
     }
 
+    @Override
     public void setPosition(Vector3f pos) {
         this._position = pos;
         changePosition(pos);
@@ -77,22 +81,27 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
             log.debug("Set position of Listener " + this.getSystemName() + " to " + pos);
     }
 
+    @Override
     public void setPosition(float x, float y, float z) {
         this.setPosition(new Vector3f(x, y, z));
     }
 
+    @Override
     public void setPosition(float x, float y) {
         this.setPosition(new Vector3f(x, y, 0.0f));
     }
 
+    @Override
     public Vector3f getPosition() {
         return this._position;
     }
 
+    @Override
     public Vector3f getCurrentPosition() {
         return this._currentPosition;
     }
 
+    @Override
     public void setVelocity(Vector3f vel) {
         this._velocity = vel;
         this.setState(vel.length()!=0?STATE_MOVING:STATE_POSITIONED);
@@ -100,6 +109,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
             log.debug("Set velocity of Listener " + this.getSystemName() + " to " + vel);
     }
 
+    @Override
     public Vector3f getVelocity() {
         return this._velocity;
     }
@@ -130,6 +140,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
         }
     }
 
+    @Override
     public void resetCurrentPosition() {
         activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
         activeAudioFactory.getCommandThread().interrupt();
@@ -148,6 +159,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
      */
     abstract protected void changePosition(Vector3f pos);
 
+    @Override
     public void setOrientation(Vector3f at, Vector3f up) {
         this._orientationAt = at;
         this._orientationUp = up;
@@ -155,6 +167,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
             log.debug("Set orientation of Listener " + this.getSystemName() + " to (at) " + at + " (up) " + up);
     }
 
+    @Override
     public Vector3f getOrientation(int which) {
         Vector3f _orientation = null;
         switch (which) {
@@ -166,10 +179,13 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
                 _orientation = this._orientationUp;
                 break;
             }
+            default:
+                throw new IllegalArgumentException();
         }
         return _orientation;
     }
 
+    @Override
     public Vector3f getCurrentOrientation(int which) {
         Vector3f _orientation = null;
         switch (which) {
@@ -181,30 +197,37 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
                 _orientation = this._currentOriUp;
                 break;
             }
+            default:
+                throw new IllegalArgumentException();
         }
         return _orientation;
     }
 
+    @Override
     public void setGain(float gain) {
         this._gain = gain;
         if (log.isDebugEnabled())
             log.debug("Set gain of Listener " + this.getSystemName() + " to " + gain);
     }
 
+    @Override
     public float getGain() {
         return this._gain;
     }
 
+    @Override
     public void setMetersPerUnit(float metersPerUnit) {
         this._metersPerUnit = metersPerUnit;
         if (log.isDebugEnabled())
             log.debug("Set Meters per unit of Listener " + this.getSystemName() + " to " + metersPerUnit);
     }
 
+    @Override
     public float getMetersPerUnit() {
         return this._metersPerUnit;
     }
 
+    @Override
     public void stateChanged(int oldState) {
         // Move along... nothing to see here...
     }
@@ -216,7 +239,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
                 + ", meters/unit=" + this.getMetersPerUnit();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioListener.class.getName());
 
     /**
      * An internal class used to create a new thread to monitor and maintain

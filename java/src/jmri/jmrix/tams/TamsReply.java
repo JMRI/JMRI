@@ -2,6 +2,9 @@
 
 package jmri.jmrix.tams;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Carries the reply to an TamsMessage.
  * <P>
@@ -51,11 +54,11 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
             log.error("Unable to get number from reply: \""+s+"\" index: "+index
                       +" message: \""+toString()+"\"");
         }
-        log.info(val);
+        log.info(Integer.toString(val));
         return val;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsReply.class.getName());
 
 }
 

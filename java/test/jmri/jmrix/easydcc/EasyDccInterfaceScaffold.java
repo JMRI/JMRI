@@ -8,6 +8,8 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
+
 class EasyDccInterfaceScaffold implements EasyDccListener {
 	public EasyDccInterfaceScaffold() {
 		rcvdReply = null;
@@ -19,6 +21,6 @@ class EasyDccInterfaceScaffold implements EasyDccListener {
 	EasyDccReply rcvdReply;
 	EasyDccMessage rcvdMsg;
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccInterfaceScaffold.class.getName());
+	static Logger log = Logger.getLogger(EasyDccInterfaceScaffold.class.getName());
 
 }

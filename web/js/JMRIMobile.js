@@ -195,9 +195,6 @@ var $getNextValue = function($type, $value){
 	if ($type == 'memory') {
 		return $value + '.';  //default to appending a dot for testing, will add prompt/edit later
 	}
-	if ($type == 'signalmast') {
-		return "Stop";  //TODO: add proper handling of Unknown, Held and Dark to xmlioserver
-	}
 	var $nextValue = ($value=='4' ? '2' : '4');
 	return $nextValue;
 };
@@ -230,7 +227,7 @@ var $getValueText = function($type, $value){
 		} else {
 			return '<img src="/web/images/PowerGrey.png">';
 		}
-	} else if ($type == 'memory' || $type == 'metadata' || $type == 'signalhead' || $type == 'signalmast' ) {
+	} else if ($type == 'memory' || $type == 'metadata' || $type == 'signalHead' || $type == 'signalMast' ) {
 		return $value;
 	}
 	return '???';

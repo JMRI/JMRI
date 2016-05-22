@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
@@ -197,10 +199,8 @@ public class IndexedVariableValue extends VariableValue
     }
 
     public void setAvailable(boolean a) {
-        for (int i = 0; i<sliders.size(); i++) 
-            sliders.get(i).setVisible(a);
-        for (int i = 0; i<valuereps.size(); i++) 
-            valuereps.get(i).setVisible(a);
+        for (Component c : sliders) c.setVisible(a);
+        for (Component c : valuereps) c.setVisible(a);
         super.setAvailable(a);
     }
     
@@ -546,5 +546,5 @@ public class IndexedVariableValue extends VariableValue
    }
 
    // initialize logging
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndexedVariableValue.class.getName());
+   static Logger log = LoggerFactory.getLogger(IndexedVariableValue.class.getName());
 }

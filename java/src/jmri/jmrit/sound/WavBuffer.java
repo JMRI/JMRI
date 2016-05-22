@@ -1,5 +1,8 @@
 package jmri.jmrit.sound;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Wrap a byte array to provide WAV file functionality
@@ -148,5 +151,5 @@ public class WavBuffer {
         return buffer;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WavBuffer.class.getName());
+    static Logger log = LoggerFactory.getLogger(WavBuffer.class.getName());
 }

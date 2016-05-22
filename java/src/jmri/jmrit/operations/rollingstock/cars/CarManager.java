@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 
@@ -33,7 +36,7 @@ public class CarManager extends RollingStockManager{
 	
 	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>(); // stores Kernels by number
 
-	public static final String KERNELLISTLENGTH_CHANGED_PROPERTY = "KernelListLength";
+	public static final String KERNELLISTLENGTH_CHANGED_PROPERTY = "KernelListLength"; // NOI18N
 
     public CarManager() {
     }
@@ -238,10 +241,10 @@ public class CarManager extends RollingStockManager{
     protected Object getRsAttribute(RollingStock rs, int attribute){
     	Car car = (Car)rs;
     	switch (attribute){
-    	case BY_LOAD: return car.getLoad();
+    	case BY_LOAD: return car.getLoadName();
     	case BY_KERNEL: return car.getKernelName();
     	case BY_RWE: return car.getReturnWhenEmptyDestName();
-    	case BY_FINAL_DEST: return car.getNextDestinationName() + car.getNextDestTrackName();
+    	case BY_FINAL_DEST: return car.getFinalDestinationName() + car.getFinalDestinationTrackName();
     	case BY_WAIT: return car.getWait();	// returns an integer
     	default: return super.getRsAttribute(car, attribute);
     	}
@@ -257,15 +260,13 @@ public class CarManager extends RollingStockManager{
 	 */
     public List<String> getByTrainDestinationList(Train train) {
      	List<String> inTrain = getByTrainList(train);
-    	Car car;
-
      	// now sort by track destination
     	List<String> out = new ArrayList<String>();
     	boolean carAdded;
     	int lastCarsIndex = 0;	// incremented each time a car is added to the end of the train 
     	for (int i = 0; i < inTrain.size(); i++) {
     		carAdded = false;
-    		car = getById(inTrain.get(i));
+    	   	Car car = getById(inTrain.get(i));
     		String carDestination = car.getDestinationTrackName();
     		for (int j = 0; j < out.size(); j++) {
     			Car carOut = getById (out.get(j));
@@ -300,8 +301,8 @@ public class CarManager extends RollingStockManager{
        	Enumeration<String> en = _hashTable.keys();
     	while (en.hasMoreElements()) { 
     		Car car = getById(en.nextElement());
-    		if (car.isCaboose() && !names.contains(car.getRoad())){
-    			names.add(car.getRoad());
+    		if (car.isCaboose() && !names.contains(car.getRoadName())){
+    			names.add(car.getRoadName());
     		}
     	}
     	return sortList(names);
@@ -316,8 +317,8 @@ public class CarManager extends RollingStockManager{
        	Enumeration<String> en = _hashTable.keys();
     	while (en.hasMoreElements()) { 
     		Car car = getById(en.nextElement());
-    		if (car.hasFred() && !names.contains(car.getRoad())){
-    			names.add(car.getRoad());
+    		if (car.hasFred() && !names.contains(car.getRoadName())){
+    			names.add(car.getRoadName());
     		}
     	}
     	return sortList(names);
@@ -329,14 +330,17 @@ public class CarManager extends RollingStockManager{
      * @param oldLoadName old load name
      * @param newLoadName new load name
      */
-	public void replaceLoad(String type, String oldLoadName, String newLoadName){
-		List<String> cars = getList();
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = getById(cars.get(i));
-			if (car.getType().equals(type) && car.getLoad().equals(oldLoadName))
-				car.setLoad(newLoadName);
-		}
-	}
+    public void replaceLoad(String type, String oldLoadName, String newLoadName){
+    	List<String> cars = getList();
+    	for (int i = 0; i < cars.size(); i++) {
+    		Car car = getById(cars.get(i));
+    		if (car.getTypeName().equals(type) && car.getLoadName().equals(oldLoadName))
+    			if (newLoadName != null)
+    				car.setLoadName(newLoadName);
+    			else
+    				car.setLoadName(CarLoads.instance().getDefaultEmptyName());
+    	}
+    }
 	
 	public List<String> getCarsLocationUnknown(){
 		List<String> mias = new ArrayList<String>();
@@ -361,36 +365,97 @@ public class CarManager extends RollingStockManager{
    public void setCarsFrameTableColumnWidths(int[] tableColumnWidths){
    	_carsTableColumnWidths = tableColumnWidths;
    }
-   	
-	public void options (Element values) {
-		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-		// get Cars Table Frame attributes
-		Element e = values.getChild("carsOptions");
-		if (e != null){
-			org.jdom.Attribute a;
-			// backwards compatible TODO remove in 2013 after production release
-	  		if ((a = e.getAttribute("columnWidths")) != null){
-             	String[] widths = a.getValue().split(" ");
-             	for (int i=0; i<widths.length; i++){
-             		try{
-             			_carsTableColumnWidths[i] = Integer.parseInt(widths[i]);
-             		} catch (NumberFormatException ee){
-             			log.error("Number format exception when reading trains column widths");
-             		}
-             	}
-    		}
+   
+	public void load(Element root) {
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.NEW_KERNELS)!= null) {
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.NEW_KERNELS).getChildren(Xml.KERNEL);
+			if (log.isDebugEnabled()) log.debug("Car manager sees "+l.size()+" kernels");
+			Attribute a;
+			for (int i=0; i<l.size(); i++) {
+				Element kernel = l.get(i);
+				if ((a = kernel.getAttribute(Xml.NAME)) != null) {
+					newKernel(a.getValue());
+				}
+			}
 		}
+		// old format
+		else if (root.getChild(Xml.KERNELS) != null) {
+			String names = root.getChildText(Xml.KERNELS);
+			if (!names.equals("")) {
+				String[] kernelNames = names.split("%%"); // NOI18N
+				if (log.isDebugEnabled())
+					log.debug("kernels: " + names);
+				for (int i = 0; i < kernelNames.length; i++) {
+					newKernel(kernelNames[i]);
+				}
+			}
+		}
+
+		if (root.getChild(Xml.OPTIONS) != null) {
+			Element options = root.getChild(Xml.OPTIONS);
+			if (log.isDebugEnabled())
+				log.debug("ctor from element " + options);
+			// get Cars Table Frame attributes
+			Element e = options.getChild(Xml.CARS_OPTIONS);
+			if (e != null) {
+				org.jdom.Attribute a;
+				// backwards compatible TODO remove in 2013 after production release
+				if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
+					String[] widths = a.getValue().split(" ");
+					for (int i = 0; i < widths.length; i++) {
+						try {
+							_carsTableColumnWidths[i] = Integer.parseInt(widths[i]);
+						} catch (NumberFormatException ee) {
+							log.error("Number format exception when reading trains column widths");
+						}
+					}
+				}
+			}
+		}
+		
+        if (root.getChild(Xml.CARS) != null) {
+        	@SuppressWarnings("unchecked")
+            List<Element> l = root.getChild(Xml.CARS).getChildren(Xml.CAR);
+            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" cars");
+            for (int i=0; i<l.size(); i++) {
+                register(new Car(l.get(i)));
+            }
+        }
 	}
 
 	   /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
      * detailed DTD in operations-cars.dtd.
-     * @return Contents in a JDOM Element
      */
-    public Element store() {
-    	Element values = new Element("options");
-    	// nothing to save!
-        return values;
+    public void store(Element root) {
+    	root.addContent(new Element(Xml.OPTIONS));     	// nothing to save under options
+
+    	Element values;  
+    	List<String> names = getKernelNameList();
+    	if (Control.backwardCompatible) {
+    		root.addContent(values = new Element(Xml.KERNELS));
+    		for (int i=0; i<names.size(); i++){
+    			String kernelNames = names.get(i)+"%%"; // NOI18N
+    			values.addContent(kernelNames);
+    		}
+    	}
+        // new format using elements
+        Element kernels = new Element(Xml.NEW_KERNELS);
+        for (int i=0; i<names.size(); i++){
+        	Element kernel = new Element(Xml.KERNEL);
+        	kernel.setAttribute(new Attribute(Xml.NAME, names.get(i)));
+        	kernels.addContent(kernel);
+        }
+        root.addContent(kernels);
+        root.addContent(values = new Element(Xml.CARS));
+        // add entries
+        List<String> carList = getList();
+        for (int i=0; i<carList.size(); i++) {
+        	Car car = getById(carList.get(i));
+            values.addContent(car.store());
+        }
     }
     
     protected void firePropertyChange(String p, Object old, Object n){
@@ -399,7 +464,7 @@ public class CarManager extends RollingStockManager{
     	super.firePropertyChange(p, old, n);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(CarManager.class.getName());
 
 }
 

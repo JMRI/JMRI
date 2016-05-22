@@ -14,9 +14,9 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="peter.brandenburg@t-online.de" version="3" lastUpdated="20042912"/>
-<!-- Based on the contribution of "sip@euronet.nl",Zimo_MX61_2000_11.xml-->
-<!-- version 2 - add consist direction - jake -->
-<!-- version 3 - added CT-programmer panes and tooltips- Peter -->
+  <!-- Based on the contribution of "sip@euronet.nl",Zimo_MX61_2000_11.xml-->
+  <!-- version 2 - add consist direction - jake -->
+  <!-- version 3 - added CT-programmer panes and tooltips- Peter -->
   <decoder>
     <family name="DCX Series (old)" mfg="CT Elektronik">
       <model model="DCX50" numOuts="7" numFns="5" maxMotorCurrent="1.2 Amp" maxTotalCurrent="1.2 Amp">
@@ -85,7 +85,7 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-<!--	<variable label="Manufacturer ID - Reset" CV="8">
+      <!--	<variable label="Manufacturer ID - Reset" CV="8">
 			<decVal/>
 			</variable>	-->
       <variable label="Total PWM Period" CV="9" default="150" tooltip="13-63=30-150Hz, 141-191=16kHz" comment="Range 13-63/141-191">
@@ -952,37 +952,6 @@
       </variable>
     </variables>
   </decoder>
-<!--		
-<pane name="Motor">
-		<column>
-			<display item="Acceleration" tooltip="CV 3"/>
-			<display item="Deceleration" tooltip="CV 4"/>
-			<label label=" "/>
-			<display item="Forward Trim" tooltip="CV 66"/>
-			<display item="Reverse Trim" tooltip="CV 95"/>
-			<label label=" "/>
-			<display item="Total PWM Period" tooltip="CV 9, read manual"/>
-			<separator/>
-			<display item="PWM period low/high" tooltip="CV 29, bit 7, read manual"/>
-		</column>
-		
-		<column>
-			<display item="Exponential Acceleration" tooltip="CV 121"/>
-			<display item="Exponential Deceleration" tooltip="CV 122"/>
-			<display item="Adapts Acceleration and Deceleration" tooltip="CV 123"/>
-		</column>
-
-		<column>
-			<display item="EMF Feedback Cutoff" tooltip="CV 10"/>
-			<display item="Volume EMF Feedback Cutoff" tooltip="CV 113"/>
-			<display item="BEMF Pull" tooltip="CV 50"/>
-			<label label=" "/>
-			<display item="P adjustment" tooltip="CV 51"/>
-			<display item="I adjustment" tooltip="CV 52"/>
-			<display item="Adjust EMK Voltage" tooltip="CV 49"/>
-		</column>
-	</pane>
--->
   <pane name="Output Handling">
     <column>
       <display item="Output Reduction" layout="below" format="vslider" label="" tooltip="CV 54">

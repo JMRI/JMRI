@@ -2,38 +2,37 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
-import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.DccAddressPanel;
-import jmri.jmrit.symbolicprog.FnMapPanel;
-import jmri.jmrit.symbolicprog.ValueEditor;
-import jmri.jmrit.symbolicprog.ValueRenderer;
-import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.symbolicprog.VariableValue;
-import jmri.util.jdom.LocaleSelector;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
-
-import javax.swing.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.awt.Color;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-
-
+import javax.swing.*;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.DccAddressPanel;
+import jmri.jmrit.symbolicprog.FnMapPanel;
+import jmri.jmrit.symbolicprog.IndexedCvTableModel;
+import jmri.jmrit.symbolicprog.SymbolicProgBundle;
+import jmri.jmrit.symbolicprog.ValueEditor;
+import jmri.jmrit.symbolicprog.ValueRenderer;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.jmrit.symbolicprog.VariableValue;
+import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.jdom.LocaleSelector;
 import org.jdom.Attribute;
 import org.jdom.Element;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Provides the individual panes for the TabbedPaneProgrammer.
@@ -71,19 +70,19 @@ import java.util.List;
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
 
-    CvTableModel _cvModel;
+    protected CvTableModel _cvModel;
     IndexedCvTableModel _indexedCvModel;
-    VariableTableModel _varModel;
-    PaneContainer container;
+    protected VariableTableModel _varModel;
+    protected PaneContainer container;
         
-    boolean _cvTable; 
-
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
+    boolean _cvTable;
+    
+    protected JPanel bottom;
 
     transient ItemListener l1;
-    transient ItemListener l2;
+    protected transient ItemListener l2;
     transient ItemListener l3;
-    transient ItemListener l4;
+    protected transient ItemListener l4;
     transient ItemListener l5;
     transient ItemListener l6;
 
@@ -153,7 +152,7 @@ public class PaneProgPane extends javax.swing.JPanel
         add(new JScrollPane(p));
 
         // add buttons in a new panel
-        JPanel bottom = new JPanel();
+        bottom = new JPanel();
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
 
@@ -165,7 +164,7 @@ public class PaneProgPane extends javax.swing.JPanel
         readChangesButton.addItemListener(l1 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    readChangesButton.setText(rbt.getString("ButtonStopReadChangesSheet"));
+                    readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadChangesSheet"));
                     if (container.isBusy() == false) {
                         prepReadPane(true);
                         prepGlassPane(readChangesButton);
@@ -174,7 +173,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    readChangesButton.setText(rbt.getString("ButtonReadChangesSheet"));
+                    readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
                     if (container.isBusy()) {
                         readChangesButton.setEnabled(false);
                     }
@@ -184,7 +183,7 @@ public class PaneProgPane extends javax.swing.JPanel
         readAllButton.addItemListener(l2 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    readAllButton.setText(rbt.getString("ButtonStopReadSheet"));
+                    readAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadSheet"));
                     if (container.isBusy() == false) {
                         prepReadPane(false);
                         prepGlassPane(readAllButton);
@@ -193,7 +192,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    readAllButton.setText(rbt.getString("ButtonReadFullSheet"));
+                    readAllButton.setText(SymbolicProgBundle.getMessage("ButtonReadFullSheet"));
                     if (container.isBusy()) {
                         readAllButton.setEnabled(false);
                     }
@@ -201,11 +200,11 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         });
 
-        writeChangesButton.setToolTipText(rbt.getString("TipWriteHighlightedSheet"));
+        writeChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipWriteHighlightedSheet"));
         writeChangesButton.addItemListener(l3 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    writeChangesButton.setText(rbt.getString("ButtonStopWriteChangesSheet"));
+                    writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteChangesSheet"));
                     if (container.isBusy() == false) {
                         prepWritePane(true);
                         prepGlassPane(writeChangesButton);
@@ -214,7 +213,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    writeChangesButton.setText(rbt.getString("ButtonWriteChangesSheet"));
+                    writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonWriteChangesSheet"));
                     if (container.isBusy()) {
                         writeChangesButton.setEnabled(false);
                     }
@@ -222,11 +221,11 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         });
 
-        writeAllButton.setToolTipText(rbt.getString("TipWriteAllSheet"));
+        writeAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipWriteAllSheet"));
         writeAllButton.addItemListener(l4 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    writeAllButton.setText(rbt.getString("ButtonStopWriteSheet"));
+                    writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteSheet"));
                     if (container.isBusy() == false) {
                         prepWritePane(false);
                         prepGlassPane(writeAllButton);
@@ -235,7 +234,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    writeAllButton.setText(rbt.getString("ButtonWriteFullSheet"));
+                    writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWriteFullSheet"));
                     if (container.isBusy()) {
                         writeAllButton.setEnabled(false);
                     }
@@ -251,7 +250,7 @@ public class PaneProgPane extends javax.swing.JPanel
         confirmChangesButton.addItemListener(l5 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    confirmChangesButton.setText(rbt.getString("ButtonStopConfirmChangesSheet"));
+                    confirmChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopConfirmChangesSheet"));
                     if (container.isBusy() == false) {
                         prepConfirmPane(true);
                         prepGlassPane(confirmChangesButton);
@@ -260,7 +259,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    confirmChangesButton.setText(rbt.getString("ButtonConfirmChangesSheet"));
+                    confirmChangesButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmChangesSheet"));
                     if (container.isBusy()) {
                         confirmChangesButton.setEnabled(false);
                     }
@@ -270,7 +269,7 @@ public class PaneProgPane extends javax.swing.JPanel
         confirmAllButton.addItemListener(l6 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    confirmAllButton.setText(rbt.getString("ButtonStopConfirmSheet"));
+                    confirmAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopConfirmSheet"));
                     if (container.isBusy() == false) {
                         prepConfirmPane(false);
                         prepGlassPane(confirmAllButton);
@@ -279,7 +278,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    confirmAllButton.setText(rbt.getString("ButtonConfirmFullSheet"));
+                    confirmAllButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmFullSheet"));
                     if (container.isBusy()) {
                         confirmAllButton.setEnabled(false);
                     }
@@ -310,16 +309,16 @@ public class PaneProgPane extends javax.swing.JPanel
      * the attached programmer's capability.
      */
     void enableReadButtons() {
-        readChangesButton.setToolTipText(rbt.getString("TipReadChangesSheet"));
-        readAllButton.setToolTipText(rbt.getString("TipReadAllSheet"));
+        readChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipReadChangesSheet"));
+        readAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipReadAllSheet"));
         if (_cvModel.getProgrammer()!= null
             && !_cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the buttons
             readChangesButton.setEnabled(false);
             readAllButton.setEnabled(false);
             // set tooltip to explain why
-            readChangesButton.setToolTipText(rbt.getString("TipNoRead"));
-            readAllButton.setToolTipText(rbt.getString("TipNoRead"));
+            readChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
+            readAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
         } else {
             readChangesButton.setEnabled(true);
             readAllButton.setEnabled(true);
@@ -332,16 +331,16 @@ public class PaneProgPane extends javax.swing.JPanel
      * the attached programmer's capability.
      */
     void enableConfirmButtons() {
-        confirmChangesButton.setToolTipText(rbt.getString("TipConfirmChangesSheet"));
-        confirmAllButton.setToolTipText(rbt.getString("TipConfirmAllSheet"));
+        confirmChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipConfirmChangesSheet"));
+        confirmAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipConfirmAllSheet"));
         if (_cvModel.getProgrammer()!= null
             && !_cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the buttons
             confirmChangesButton.setEnabled(false);
             confirmAllButton.setEnabled(false);
             // set tooltip to explain why
-            confirmChangesButton.setToolTipText(rbt.getString("TipNoRead"));
-            confirmAllButton.setToolTipText(rbt.getString("TipNoRead"));
+            confirmChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
+            confirmAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
         } else {
             confirmChangesButton.setEnabled(true);
             confirmAllButton.setEnabled(true);
@@ -362,8 +361,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * separately, and the CVs that are represented by variables are not
      * entered here.  So far (sic), the only use of this is for the cvtable rep.
      */
-    List<Integer> cvList = new ArrayList<Integer>();
-    int cvListIndex;
+    protected List<Integer> cvList = new ArrayList<Integer>();
+    protected int cvListIndex;
     /**
      * This remembers the indexed CVs on this pane for the Read/Write sheet
      * operation.  They are stored as a list of Integer objects, each of which
@@ -374,12 +373,12 @@ public class PaneProgPane extends javax.swing.JPanel
     List<Integer> indexedCvList = new ArrayList<Integer>();
     int indexedCvListIndex;
 
-    JToggleButton readChangesButton  = new JToggleButton(rbt.getString("ButtonReadChangesSheet"));
-    JToggleButton readAllButton      = new JToggleButton(rbt.getString("ButtonReadFullSheet"));
-    JToggleButton writeChangesButton = new JToggleButton(rbt.getString("ButtonWriteChangesSheet"));
-    JToggleButton writeAllButton     = new JToggleButton(rbt.getString("ButtonWriteFullSheet"));
-    JToggleButton confirmChangesButton = new JToggleButton(rbt.getString("ButtonConfirmChangesSheet"));
-    JToggleButton confirmAllButton     = new JToggleButton(rbt.getString("ButtonConfirmFullSheet"));
+    protected JToggleButton readChangesButton  = new JToggleButton(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
+    protected JToggleButton readAllButton      = new JToggleButton(SymbolicProgBundle.getMessage("ButtonReadFullSheet"));
+    protected JToggleButton writeChangesButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonWriteChangesSheet"));
+    protected JToggleButton writeAllButton     = new JToggleButton(SymbolicProgBundle.getMessage("ButtonWriteFullSheet"));
+    JToggleButton confirmChangesButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonConfirmChangesSheet"));
+    JToggleButton confirmAllButton     = new JToggleButton(SymbolicProgBundle.getMessage("ButtonConfirmFullSheet"));
 
     /**
      * Estimate the number of CVs that will be accessed when
@@ -1142,7 +1141,7 @@ public class PaneProgPane extends javax.swing.JPanel
         log.debug("end restartProgramming");
     }
 
-    void stopProgramming() {
+    protected void stopProgramming() {
         log.debug("start stopProgramming");
         setToRead(false, false);
         setToWrite(false, false);
@@ -1642,8 +1641,8 @@ public class PaneProgPane extends javax.swing.JPanel
               spaces = spaces + " ";
             }
             // start with pane name in bold
-            String heading1 = rbt.getString("PrintHeadingField");
-            String heading2 = rbt.getString("PrintHeadingSetting");
+            String heading1 = SymbolicProgBundle.getMessage("PrintHeadingField");
+            String heading2 = SymbolicProgBundle.getMessage("PrintHeadingSetting");
             String s;
             int interval = spaces.length()- heading1.length();
             w.setFontStyle(Font.BOLD);
@@ -1961,6 +1960,6 @@ public class PaneProgPane extends javax.swing.JPanel
         return l;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(PaneProgPane.class.getName());
 
 }

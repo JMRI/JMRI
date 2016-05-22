@@ -143,6 +143,6 @@ public class ComboRadioButtonsTest extends TestCase {
         return suite;
     }
 
-    // static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ComboRadioButtonsTest.class.getName());
+    // static Logger log = Logger.getLogger(ComboRadioButtonsTest.class.getName());
 
 }

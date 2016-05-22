@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
-
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
 <!-- $Id: Massoth_eMOTION_S_SUSI.xml,v 1.6 2008/02/03 18:51:01 jacobsen Exp $ -->
 <!--                                                                        -->
@@ -14,12 +12,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
-<decoder-config>
-		<version author="Jeff Schmaltz escopetas@comcast.net"
-			version="1.0" lastUpdated="20110820" />
-<!-- 
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110820"/>
+  <!-- 
       This decoder XML is meant to be used with the "Custom" programmer format.
       The pane definitions are included below the decoder definition.  The Massoth
       decoders seem to fit the description of "weird" as mentioned in that
@@ -55,662 +50,569 @@
         1.0 - Initial release 20 Aug 2011
 
 -->
-
-
-<decoder>
-	<family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" lowVersionID="1" highVersionID="30">
-		<model model="eMOTION S SUSI" lowVersionID="10"
-			maxInputVolts="24 V" maxTotalCurrent="370 mA"
-			numOuts="3" numFns="18"
-			formFactor="G" connector="other" >
-			<size length="35" width="20" height="12" units="mm" />
-			<output name="1" label="A3" maxcurrent="70 mA" connection="solder" />
-	   	 	<output name="2" label="A7" maxcurrent="10 mA" connection="solder" />
-	   	 	<output name="3" label="A8" maxcurrent="10 mA" connection="solder" />
-		</model>
-	</family>
-
-	<programming direct="yes" paged="no"
-	                     register="yes" ops="yes"></programming>
-
-	<variables>
-
-                <variable label="SUSI-range" CV="897" default="2" tooltip="Will not read/write properly if multiple SUSI modules attached. CV897">
-			<enumVal>
-				<enumChoice choice="Not used"/>
-				<enumChoice choice="Range I (CVs 900-939)"/>
-				<enumChoice choice="Range II (CVs 940-979)"/>
-				<enumChoice choice="Range III (CVs 980-1019)"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Manufacturer ID" CV="940" readOnly="yes" default="123"
-			item="Manufacturer"
-			tooltip="The manufacturer's ID number (read only) CV940/CV8">
-			<decVal/>
-		</variable>
-
-		<variable label="Software Version Number" CV="941"
-			item="Decoder Version"
-			tooltip="The decoder version number (read only) CV941/CV7" >
-			<decVal/>
-		</variable>
-
-		<variable label="Total Volume Level" CV="942"
-			tooltip="1=Low, 63=Loud, 255=external Potentiometer. CV942/CV200">
-			<decVal min="1" max="255"/>
-		</variable>
-
-		<variable label="Sound_01 : Individual Volume Level" CV="943"
-			tooltip="Controls volume of Sound_01 CV943/CV201">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_02 : Individual Volume Level" CV="944"
-			tooltip="Controls volume of Sound_02 CV944/CV202">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_03 : Individual Volume Level" CV="945"
-			tooltip="Controls volume of Sound_03 CV945/CV203">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_04 : Individual Volume Level" CV="946"
-			tooltip="Controls volume of Sound_04 CV946/CV204">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_05 : Individual Volume Level" CV="947"
-			tooltip="Controls volume of Sound_05 CV947/CV205">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_06 : Individual Volume Level" CV="948"
-			tooltip="Controls volume of Sound_06 CV948/CV206">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_07 : Individual Volume Level" CV="949"
-			tooltip="Controls volume of Sound_07 CV949/CV207">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_08 : Individual Volume Level" CV="950"
-			tooltip="Controls volume of Sound_08 CV950/CV208">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_09 : Individual Volume Level" CV="951"
-			tooltip="Controls volume of Sound_09 CV951/CV209">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_10 : Individual Volume Level" CV="952"
-			tooltip="Controls volume of Sound_10 CV952/CV210">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_11 : Individual Volume Level" CV="953"
-			tooltip="Controls volume of Sound_11 CV953/CV211">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_12 : Individual Volume Level" CV="954"
-			tooltip="Controls volume of Sound_12 CV954/CV212">
-			<enumVal>
-				<enumChoice choice="25%" value="0"/>
-				<enumChoice choice="50%" value="1"/>
-				<enumChoice choice="75%" value="2"/>
-				<enumChoice choice="100%" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_01: Command Allocation - Function Keys" CV="961"
-			tooltip="Function key which switches Sound_01 CV961/CV131">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_02: Command Allocation - Function Keys" CV="962"
-			tooltip="Function key which switches Sound_02 CV962/CV132">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_03: Command Allocation - Function Keys" CV="963"
-			tooltip="Function key which switches Sound_03 CV963/CV133">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_04: Command Allocation - Function Keys" CV="964"
-			tooltip="Function key which switches Sound_04 CV964/CV134">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_05: Command Allocation - Function Keys" CV="965"
-			tooltip="Function key which switches Sound_05 CV965/CV135">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_06: Command Allocation - Function Keys" CV="966"
-			tooltip="Function key which switches Sound_06 CV966/CV136">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_07: Command Allocation - Function Keys" CV="967"
-			tooltip="Function key which switches Sound_07 CV967/CV137">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_08: Command Allocation - Function Keys" CV="968"
-			tooltip="Function key which switches Sound_08 CV968/CV138">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_09: Command Allocation - Function Keys" CV="969"
-			tooltip="Function key which switches Sound_09 CV969/CV139">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_10: Command Allocation - Function Keys" CV="970"
-			tooltip="Function key which switches Sound_10 CV970/CV140">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_11: Command Allocation - Function Keys" CV="971"
-			tooltip="Function key which switches Sound_11 CV971/CV141">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound_12: Command Allocation - Function Keys" CV="972"
-			tooltip="Function key which switches Sound_12 CV972/CV142">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound On/Off: Command Allocation - Function Keys" CV="977" default="6"
-			tooltip="Function key which switches sound (amplifier) on/off CV977/CV147">
-			<enumVal>
-				<enumChoice choice="Sound steady (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Loco Start Up/Shut Down: Command Allocation - Function Keys" CV="978" default="5"
-			tooltip="Function key which switches Loco Start Up/Shut Down CV978/CV148">
-			<enumVal>
-				<enumChoice choice="Loco always on (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-				<enumChoice choice="F13" value="13"/>
-				<enumChoice choice="F14" value="14"/>
-				<enumChoice choice="F15" value="15"/>
-				<enumChoice choice="F16" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random Sounds Generator" CV="979" mask="XXXXXXXV" default="0"
-			tooltip="Random generator active or not CV979/CV149" >
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Standing Phase Noise" CV="979" mask="XXXXXXVX" default="1"
-			tooltip="Standing Phase Noise active or not CV979/CV149" >
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Load dependent sound" CV="979" mask="XXXXXVXX"
-			tooltip="Rolling noise during coasting active or not CV979/CV149" >
-			<enumVal>
-				<enumChoice choice="Off (Standard Driving Sound)"/>
-				<enumChoice choice="On (Load-Dependent Sound)"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Cylinder Valves Open/Closed (Steam only)" CV="979" mask="XXXXVXXX"
-			tooltip="Only steam locos during start of movement CV979/CV149" >
-			<enumVal>
-				<enumChoice choice="Cylinder valves closed during start"/>
-				<enumChoice choice="Cylinder valves open during start"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Directional triggering of reed contacts" CV="979" mask="XXXVXXXX"
-			tooltip="Sound triggered by reed contacts direction-dependent or not CV979/CV149" >
-			<enumVal>
-				<enumChoice choice="Reed contact sounds both directions"/>
-				<enumChoice choice="Reed contact sounds forward only"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Automatic Background Noises" CV="979" mask="XXVXXXXX"
-			tooltip="Automatic background noises active or not CV979/CV149" >
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Start Signal Delay" CV="979" mask="XVXXXXXX"
-			tooltip="Starting sound reduced during frequent direction changes CV979/CV149" >
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-	</variables>
-
-</decoder>
-
-<pane name="Basic">
-		<column>
-			<label label=" "/>
-                        <display item="SUSI-range" />
-		</column>
-		<column>
-			<label label=" "/>
-			<label label=" "/>
-			<label label=" "/>
-			<label label=" "/>
-			<label label=" "/>
-			<separator/>
-			<label label=" "/>
-			<display item="Manufacturer" />
-			<display item="Decoder Version" />
-		</column>
-	</pane>
-
-	<pane name="Sound - Main">
-		<column>
-			<display item="Sound On/Off: Command Allocation - Function Keys"/>
-			<display item="Loco Start Up/Shut Down: Command Allocation - Function Keys"/>
-			<label label=" "/>
-			<label label="Massoth sound configuration"/>
-			<display item="Random Sounds Generator"/>
-			<display item="Standing Phase Noise"/>
-			<display item="Load dependent sound"/>
-			<display item="Cylinder Valves Open/Closed (Steam only)"/>
-			<display item="Directional triggering of reed contacts"/>
-			<display item="Automatic Background Noises"/>
-			<display item="Start Signal Delay"/>
-
-			<label label=" "/>
-		</column>
-	</pane>
-
-	<pane name="Sound - F-Keys">
-		<column>
-			<display item="Sound_01: Command Allocation - Function Keys"/>
-			<display item="Sound_01: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_02: Command Allocation - Function Keys"/>
-			<display item="Sound_02: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_03: Command Allocation - Function Keys"/>
-			<display item="Sound_03: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_04: Command Allocation - Function Keys"/>
-			<display item="Sound_04: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_05: Command Allocation - Function Keys"/>
-			<display item="Sound_05: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_06: Command Allocation - Function Keys"/>
-			<display item="Sound_06: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_07: Command Allocation - Function Keys"/>
-			<display item="Sound_07: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_08: Command Allocation - Function Keys"/>
-			<display item="Sound_08: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_09: Command Allocation - Function Keys"/>
-			<display item="Sound_09: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_10: Command Allocation - Function Keys"/>
-			<display item="Sound_10: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_11: Command Allocation - Function Keys"/>
-			<display item="Sound_11: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Sound_12: Command Allocation - Function Keys"/>
-			<display item="Sound_12: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Function key for steam rack rail loco and dual power locos"/>
-		</column>
-	</pane>
-
-	<pane name="Sound - Volume">
-		<column>
-			<display item="Total Volume Level"/>
-			<label label=" "/>
-			<label label=" "/>
-			<display item="Sound_01 : Individual Volume Level"/>
-			<display item="Sound_02 : Individual Volume Level"/>
-			<display item="Sound_03 : Individual Volume Level"/>
-			<display item="Sound_04 : Individual Volume Level"/>
-			<display item="Sound_05 : Individual Volume Level"/>
-			<display item="Sound_06 : Individual Volume Level"/>
-			<display item="Sound_07 : Individual Volume Level"/>
-			<display item="Sound_08 : Individual Volume Level"/>
-			<display item="Sound_09 : Individual Volume Level"/>
-			<display item="Sound_10 : Individual Volume Level"/>
-			<display item="Sound_11 : Individual Volume Level"/>
-			<display item="Sound_12 : Individual Volume Level"/>
-			<label label=" "/>
-			<display item="Volume Turn-on Phase"/>
-			<display item="Volume Standing Phase"/>
-			<display item="Volume Turn-off Phase"/>
-			<display item="Volume Driving Phase"/>
-		</column>
-	</pane>
-
-	<pane name="CVs">
-		<column>
-			<cvtable/>
-		</column>
-	</pane>
-
+  <decoder>
+    <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" lowVersionID="1" highVersionID="30">
+      <model model="eMOTION S SUSI" lowVersionID="10" maxInputVolts="24 V" maxTotalCurrent="370 mA" numOuts="3" numFns="18" formFactor="G" connector="other">
+        <output name="1" label="A3" maxcurrent="70 mA" connection="solder"/>
+        <output name="2" label="A7" maxcurrent="10 mA" connection="solder"/>
+        <output name="3" label="A8" maxcurrent="10 mA" connection="solder"/>
+        <size length="35" width="20" height="12" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
+      <variable label="SUSI-range" CV="897" default="2" tooltip="Will not read/write properly if multiple SUSI modules attached. CV897">
+        <enumVal>
+          <enumChoice choice="Not used"/>
+          <enumChoice choice="Range I (CVs 900-939)"/>
+          <enumChoice choice="Range II (CVs 940-979)"/>
+          <enumChoice choice="Range III (CVs 980-1019)"/>
+        </enumVal>
+      </variable>
+      <variable label="Manufacturer ID" CV="940" readOnly="yes" default="123" item="Manufacturer" tooltip="The manufacturer's ID number (read only) CV940/CV8">
+        <decVal/>
+      </variable>
+      <variable label="Software Version Number" CV="941" item="Decoder Version" tooltip="The decoder version number (read only) CV941/CV7">
+        <decVal/>
+      </variable>
+      <variable label="Total Volume Level" CV="942" tooltip="1=Low, 63=Loud, 255=external Potentiometer. CV942/CV200">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Sound_01 : Individual Volume Level" CV="943" tooltip="Controls volume of Sound_01 CV943/CV201">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_02 : Individual Volume Level" CV="944" tooltip="Controls volume of Sound_02 CV944/CV202">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_03 : Individual Volume Level" CV="945" tooltip="Controls volume of Sound_03 CV945/CV203">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_04 : Individual Volume Level" CV="946" tooltip="Controls volume of Sound_04 CV946/CV204">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_05 : Individual Volume Level" CV="947" tooltip="Controls volume of Sound_05 CV947/CV205">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_06 : Individual Volume Level" CV="948" tooltip="Controls volume of Sound_06 CV948/CV206">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_07 : Individual Volume Level" CV="949" tooltip="Controls volume of Sound_07 CV949/CV207">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_08 : Individual Volume Level" CV="950" tooltip="Controls volume of Sound_08 CV950/CV208">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_09 : Individual Volume Level" CV="951" tooltip="Controls volume of Sound_09 CV951/CV209">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_10 : Individual Volume Level" CV="952" tooltip="Controls volume of Sound_10 CV952/CV210">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_11 : Individual Volume Level" CV="953" tooltip="Controls volume of Sound_11 CV953/CV211">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_12 : Individual Volume Level" CV="954" tooltip="Controls volume of Sound_12 CV954/CV212">
+        <enumVal>
+          <enumChoice choice="25%" value="0"/>
+          <enumChoice choice="50%" value="1"/>
+          <enumChoice choice="75%" value="2"/>
+          <enumChoice choice="100%" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_01: Command Allocation - Function Keys" CV="961" tooltip="Function key which switches Sound_01 CV961/CV131">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_02: Command Allocation - Function Keys" CV="962" tooltip="Function key which switches Sound_02 CV962/CV132">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_03: Command Allocation - Function Keys" CV="963" tooltip="Function key which switches Sound_03 CV963/CV133">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_04: Command Allocation - Function Keys" CV="964" tooltip="Function key which switches Sound_04 CV964/CV134">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_05: Command Allocation - Function Keys" CV="965" tooltip="Function key which switches Sound_05 CV965/CV135">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_06: Command Allocation - Function Keys" CV="966" tooltip="Function key which switches Sound_06 CV966/CV136">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_07: Command Allocation - Function Keys" CV="967" tooltip="Function key which switches Sound_07 CV967/CV137">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_08: Command Allocation - Function Keys" CV="968" tooltip="Function key which switches Sound_08 CV968/CV138">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_09: Command Allocation - Function Keys" CV="969" tooltip="Function key which switches Sound_09 CV969/CV139">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_10: Command Allocation - Function Keys" CV="970" tooltip="Function key which switches Sound_10 CV970/CV140">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_11: Command Allocation - Function Keys" CV="971" tooltip="Function key which switches Sound_11 CV971/CV141">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound_12: Command Allocation - Function Keys" CV="972" tooltip="Function key which switches Sound_12 CV972/CV142">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound On/Off: Command Allocation - Function Keys" CV="977" default="6" tooltip="Function key which switches sound (amplifier) on/off CV977/CV147">
+        <enumVal>
+          <enumChoice choice="Sound steady (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Loco Start Up/Shut Down: Command Allocation - Function Keys" CV="978" default="5" tooltip="Function key which switches Loco Start Up/Shut Down CV978/CV148">
+        <enumVal>
+          <enumChoice choice="Loco always on (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Random Sounds Generator" CV="979" mask="XXXXXXXV" default="0" tooltip="Random generator active or not CV979/CV149">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing Phase Noise" CV="979" mask="XXXXXXVX" default="1" tooltip="Standing Phase Noise active or not CV979/CV149">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Load dependent sound" CV="979" mask="XXXXXVXX" tooltip="Rolling noise during coasting active or not CV979/CV149">
+        <enumVal>
+          <enumChoice choice="Off (Standard Driving Sound)"/>
+          <enumChoice choice="On (Load-Dependent Sound)"/>
+        </enumVal>
+      </variable>
+      <variable label="Cylinder Valves Open/Closed (Steam only)" CV="979" mask="XXXXVXXX" tooltip="Only steam locos during start of movement CV979/CV149">
+        <enumVal>
+          <enumChoice choice="Cylinder valves closed during start"/>
+          <enumChoice choice="Cylinder valves open during start"/>
+        </enumVal>
+      </variable>
+      <variable label="Directional triggering of reed contacts" CV="979" mask="XXXVXXXX" tooltip="Sound triggered by reed contacts direction-dependent or not CV979/CV149">
+        <enumVal>
+          <enumChoice choice="Reed contact sounds both directions"/>
+          <enumChoice choice="Reed contact sounds forward only"/>
+        </enumVal>
+      </variable>
+      <variable label="Automatic Background Noises" CV="979" mask="XXVXXXXX" tooltip="Automatic background noises active or not CV979/CV149">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Start Signal Delay" CV="979" mask="XVXXXXXX" tooltip="Starting sound reduced during frequent direction changes CV979/CV149">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+    </variables>
+  </decoder>
+  <pane name="Basic">
+    <column>
+      <label label=" "/>
+      <display item="SUSI-range"/>
+    </column>
+    <column>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
+      <separator/>
+      <label label=" "/>
+      <display item="Manufacturer"/>
+      <display item="Decoder Version"/>
+    </column>
+  </pane>
+  <pane name="Sound - Main">
+    <column>
+      <display item="Sound On/Off: Command Allocation - Function Keys"/>
+      <display item="Loco Start Up/Shut Down: Command Allocation - Function Keys"/>
+      <label label=" "/>
+      <label label="Massoth sound configuration"/>
+      <display item="Random Sounds Generator"/>
+      <display item="Standing Phase Noise"/>
+      <display item="Load dependent sound"/>
+      <display item="Cylinder Valves Open/Closed (Steam only)"/>
+      <display item="Directional triggering of reed contacts"/>
+      <display item="Automatic Background Noises"/>
+      <display item="Start Signal Delay"/>
+      <label label=" "/>
+    </column>
+  </pane>
+  <pane name="Sound - F-Keys">
+    <column>
+      <display item="Sound_01: Command Allocation - Function Keys"/>
+      <display item="Sound_01: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_02: Command Allocation - Function Keys"/>
+      <display item="Sound_02: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_03: Command Allocation - Function Keys"/>
+      <display item="Sound_03: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_04: Command Allocation - Function Keys"/>
+      <display item="Sound_04: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_05: Command Allocation - Function Keys"/>
+      <display item="Sound_05: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_06: Command Allocation - Function Keys"/>
+      <display item="Sound_06: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_07: Command Allocation - Function Keys"/>
+      <display item="Sound_07: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_08: Command Allocation - Function Keys"/>
+      <display item="Sound_08: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_09: Command Allocation - Function Keys"/>
+      <display item="Sound_09: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_10: Command Allocation - Function Keys"/>
+      <display item="Sound_10: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_11: Command Allocation - Function Keys"/>
+      <display item="Sound_11: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Sound_12: Command Allocation - Function Keys"/>
+      <display item="Sound_12: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Function key for steam rack rail loco and dual power locos"/>
+    </column>
+  </pane>
+  <pane name="Sound - Volume">
+    <column>
+      <display item="Total Volume Level"/>
+      <label label=" "/>
+      <label label=" "/>
+      <display item="Sound_01 : Individual Volume Level"/>
+      <display item="Sound_02 : Individual Volume Level"/>
+      <display item="Sound_03 : Individual Volume Level"/>
+      <display item="Sound_04 : Individual Volume Level"/>
+      <display item="Sound_05 : Individual Volume Level"/>
+      <display item="Sound_06 : Individual Volume Level"/>
+      <display item="Sound_07 : Individual Volume Level"/>
+      <display item="Sound_08 : Individual Volume Level"/>
+      <display item="Sound_09 : Individual Volume Level"/>
+      <display item="Sound_10 : Individual Volume Level"/>
+      <display item="Sound_11 : Individual Volume Level"/>
+      <display item="Sound_12 : Individual Volume Level"/>
+      <label label=" "/>
+      <display item="Volume Turn-on Phase"/>
+      <display item="Volume Standing Phase"/>
+      <display item="Volume Turn-off Phase"/>
+      <display item="Volume Driving Phase"/>
+    </column>
+  </pane>
+  <pane name="CVs">
+    <column>
+      <cvtable/>
+    </column>
+  </pane>
 </decoder-config>
-

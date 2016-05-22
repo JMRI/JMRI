@@ -22,6 +22,8 @@ public class EchoServlet extends HttpServlet {
     static ResourceBundle htmlStrings = ResourceBundle.getBundle("jmri.web.server.Html");
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="XSS_REQUEST_PARAMETER_TO_SERVLET_WRITER",
+                                    justification="header being returned in formatted part of page")
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);

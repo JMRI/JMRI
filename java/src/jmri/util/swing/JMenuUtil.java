@@ -2,8 +2,9 @@
 
 package jmri.util.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-import java.io.File;
 import javax.swing.*;
 import org.jdom.*;
 import java.beans.PropertyChangeListener;
@@ -23,8 +24,8 @@ import jmri.util.jdom.LocaleSelector;
 
 public class JMenuUtil extends GuiUtilBase {
 
-    static public JMenu[] loadMenu(File file, WindowInterface wi, Object context) {
-        Element root = rootFromFile(file);
+    static public JMenu[] loadMenu(String path, WindowInterface wi, Object context) {
+        Element root = rootFromName(path);
 
         int n = root.getChildren("node").size();
         JMenu[] retval = new JMenu[n];
@@ -189,5 +190,5 @@ public class JMenuUtil extends GuiUtilBase {
         return kcode;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMenuUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(JMenuUtil.class.getName());
 }

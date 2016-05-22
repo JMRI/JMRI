@@ -2,6 +2,8 @@
 
 package jmri.jmrit.log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -25,5 +27,5 @@ public class LogOutputWindowAction extends AbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LogOutputWindowAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(LogOutputWindowAction.class.getName());
 }

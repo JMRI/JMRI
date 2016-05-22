@@ -34,9 +34,9 @@ import java.beans.PropertyChangeListener;
  */
 public interface PowerManager {
 
-	static final int UNKNOWN = 0;
-	static final int ON      = 2;
-	static final int OFF     = 4;
+	static final int UNKNOWN = NamedBean.UNKNOWN;
+	static final int ON      = 0x02;
+	static final int OFF     = 0x04;
 
 	public void 	setPower(int v) 	throws JmriException;
 	public int	 	getPower()  	throws JmriException;

@@ -2,8 +2,9 @@ package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.*;
-
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.PositionableShape objects
@@ -28,9 +29,6 @@ public class PositionableRoundRectXml extends PositionableShapeXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("positionableRoundRect");
-        element.setAttribute("width", ""+p.getWidth());
-        element.setAttribute("height", ""+p.getHeight());
-        element.setAttribute("cornerRadius", ""+p.getCornerRadius());
         storeCommonAttributes(p, element);
 
         Element elem = new Element("size");
@@ -71,5 +69,5 @@ public class PositionableRoundRectXml extends PositionableShapeXml {
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableRoundRectXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableRoundRectXml.class.getName());
 }

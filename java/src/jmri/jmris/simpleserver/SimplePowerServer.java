@@ -4,7 +4,8 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jetty.websocket.WebSocket.Connection;
 
 import jmri.PowerManager;
@@ -21,7 +22,7 @@ public class SimplePowerServer extends AbstractPowerServer {
 
     private DataOutputStream output;
     private Connection connection;
-    static Logger log = Logger.getLogger(SimplePowerServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(SimplePowerServer.class.getName());
 
     public SimplePowerServer(DataInputStream inStream, DataOutputStream outStream) {
         output = outStream;

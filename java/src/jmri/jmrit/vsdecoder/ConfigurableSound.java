@@ -20,6 +20,8 @@ package jmri.jmrit.vsdecoder;
  */
 
 // JMRI and Java stuff
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jmri.util.PhysicalLocation;
@@ -274,7 +276,7 @@ class ConfigurableSound extends VSDSound {
     }
 
     public void setXml(Element e, VSDFile vf) {
-	this.setName(e.getAttributeValue("name"));
+	this.setName(this.getName() + e.getAttributeValue("name"));
 	log.debug("ConfigurableSound: " + e.getAttributeValue("name"));
 	//log.debug("  start file: " + e.getChildText("start-file"));
 	if (((start_file = e.getChildText("start-file")) != null) && !(start_file.equals("")))
@@ -323,6 +325,6 @@ class ConfigurableSound extends VSDSound {
 	
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigurableSound.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConfigurableSound.class.getName());
 
 }

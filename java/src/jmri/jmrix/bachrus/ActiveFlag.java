@@ -2,6 +2,9 @@
 
 package jmri.jmrix.bachrus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Provide a flag to indicate that the system provided by
  * this package is active.
@@ -22,7 +25,7 @@ abstract public class ActiveFlag {
         return flag;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ActiveFlag.class.getName());
+    static Logger log = LoggerFactory.getLogger(ActiveFlag.class.getName());
 
 }
 

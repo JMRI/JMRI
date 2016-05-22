@@ -25,10 +25,13 @@
 
 <H1>Send Powerline Device Message
 </H1>
-    
-This is the help/jmri/jmrix/powerline/packetgen/SerialPacketGenFrame help page
+  <p>  
+	This is the help/jmri/jmrix/powerline/packetgen/SerialPacketGenFrame help page
+  </p>
 
 <!--#include virtual="/Footer" -->
+	</div>
+  </div>
 </body>
 </html>
 

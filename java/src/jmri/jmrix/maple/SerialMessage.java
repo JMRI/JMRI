@@ -2,6 +2,9 @@
 
 package jmri.jmrix.maple;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Contains the data payload of a serial
@@ -137,7 +140,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         setElement(index+1, secondChar);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialMessage.class.getName());
 }
 
 /* @(#)SerialMessage.java */

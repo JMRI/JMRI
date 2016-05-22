@@ -2,6 +2,8 @@
 
 package jmri.jmrix.mrc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -101,7 +103,7 @@ public class MrcTrafficController extends AbstractMRTrafficController
         return true;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MrcTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(MrcTrafficController.class.getName());
 }
 
 

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 
@@ -67,7 +68,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
 		return listeners.size();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetInterfaceScaffold.class.getName());
+	static Logger log = Logger.getLogger(LocoNetInterfaceScaffold.class.getName());
 
 }
 

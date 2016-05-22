@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeListener;
 import jmri.*;
 
@@ -154,6 +155,6 @@ public class ProxyReporterManagerTest extends TestCase {
     @Override
 	protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyReporterManagerTest.class.getName());
+    static Logger log = Logger.getLogger(ProxyReporterManagerTest.class.getName());
     
 }

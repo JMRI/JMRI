@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.apache.log4j.Logger;
 import jmri.Turnout;
 import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
@@ -127,6 +128,6 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetTurnoutManagerTest.class.getName());
+    static Logger log = Logger.getLogger(EliteXNetTurnoutManagerTest.class.getName());
 
 }

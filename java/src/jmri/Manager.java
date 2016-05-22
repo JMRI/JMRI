@@ -78,6 +78,7 @@ public interface Manager {
 
     public String[] getSystemNameArray();
     public List<String> getSystemNameList();
+    public List<NamedBean> getNamedBeanList();
     
     /**
      * Locate an instance based on a system name.  Returns null if no

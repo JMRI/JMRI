@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet.locormi;
 
-import jmri.jmrix.loconet.*;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.loconet.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Client for the RMI LocoNet server.
@@ -42,6 +44,7 @@ public class LnMessageClient extends LnTrafficRouter {
     /**
      * Forward messages to the server.
      */
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
         // update statistics
         transmittedMsgCount++;
@@ -118,36 +121,5 @@ public class LnMessageClient extends LnTrafficRouter {
     
     public SystemConnectionMemo getAdapterMemo(){ return clientMemo; }
 
-    public static void main( String[] args ){
-    	String logFile = "default.lcf";
-    	try {
-            if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-            } else {
-                org.apache.log4j.BasicConfigurator.configure();
-            }
-        }
-        catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-
-        String serverName;
-        try {
-            serverName = java.net.InetAddress.getLocalHost().getHostName();
-        } catch (java.net.UnknownHostException e) {
-            log.fatal("Unknown local host name", e);
-            return;
-        }
-        try {
-            LnMessageClient lnClient = new LnMessageClient() ;
-            lnClient.configureRemoteConnection( serverName, 60 );
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            log.fatal("Loconet error", e);
-            return;
-        }
-
-        // just run forever in this simple test app
-        while (true) 
-            new jmri.util.WaitHandler("");  // handle synchronization, spurious wake, interruption
-    }
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnMessageClient.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnMessageClient.class.getName());
 }

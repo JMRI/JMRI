@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ResourceBundle;
 import javax.swing.JInternalFrame;
 
 /**
@@ -16,7 +15,6 @@ import javax.swing.JInternalFrame;
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
-    static final ResourceBundle rb = ThrottleBundle.bundle();
     
     private ThrottleWindow frame;
 	
@@ -28,11 +26,11 @@ public class ThrottleFramePropertyEditor extends JDialog
 
     private String [] titleTextTypes = {"address", "text", "textAddress", "addressText", "rosterID"};
     private String [] titleTextTypeNames = {
-    		rb.getString("SelectTitleTypeADDRESS"),
-    		rb.getString("SelectTitleTypeTEXT"),
-    		rb.getString("SelectTitleTypeTEXTADDRESS"),
-    		rb.getString("SelectTitleTypeADDRESSTEXT"),
-    		rb.getString("SelectTitleTypeROSTERID")
+    		Bundle.getMessage("SelectTitleTypeADDRESS"),
+    		Bundle.getMessage("SelectTitleTypeTEXT"),
+    		Bundle.getMessage("SelectTitleTypeTEXTADDRESS"),
+    		Bundle.getMessage("SelectTitleTypeADDRESSTEXT"),
+    		Bundle.getMessage("SelectTitleTypeROSTERID")
     };
 
     /**
@@ -41,7 +39,7 @@ public class ThrottleFramePropertyEditor extends JDialog
     private void initGUI()
     {
         this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        this.setTitle(rb.getString("EditThrottleFrameTitle"));
+        this.setTitle(Bundle.getMessage("EditThrottleFrameTitle"));
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new BorderLayout());
@@ -70,7 +68,7 @@ public class ThrottleFramePropertyEditor extends JDialog
             }
         });
         
-        propertyPanel.add(new JLabel(rb.getString("FrameTitlePrompt")), constraints);
+        propertyPanel.add(new JLabel(Bundle.getMessage("FrameTitlePrompt")), constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx++;
@@ -87,17 +85,17 @@ public class ThrottleFramePropertyEditor extends JDialog
         }
         constraints.gridy++;
         constraints.gridx = 0;
-        propertyPanel.add(new JLabel(rb.getString("SelectTitleTypePrompt")), constraints);
+        propertyPanel.add(new JLabel(Bundle.getMessage("SelectTitleTypePrompt")), constraints);
         constraints.gridx++;
         propertyPanel.add(titleType, constraints);
 
         // add a checkbox for borders off, but only if that's actually possible.
         // this code uses details of internal UI code
         if (((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getCurrentThrottleFrame().getControlPanel().getUI()).getNorthPane()!=null) {
-            borderOff = new JCheckBox(rb.getString("FrameBorderOffTitle"), false);
+            borderOff = new JCheckBox(Bundle.getMessage("FrameBorderOffTitle"), false);
             constraints.gridy++;
             constraints.gridx = 0;
-            propertyPanel.add(new JLabel(rb.getString("FrameDecorationsTitle")), constraints);
+            propertyPanel.add(new JLabel(Bundle.getMessage("FrameDecorationsTitle")), constraints);
             constraints.gridx++;
             propertyPanel.add(borderOff, constraints);
         }
@@ -105,7 +103,7 @@ public class ThrottleFramePropertyEditor extends JDialog
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
-        JButton saveButton = new JButton(rb.getString("ButtonOk"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonOk"));
         saveButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -115,7 +113,7 @@ public class ThrottleFramePropertyEditor extends JDialog
         });
 
 
-        JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -156,8 +154,8 @@ public class ThrottleFramePropertyEditor extends JDialog
      */
     protected void titleFieldChanged() {
         if (titleField.getText().equals("")) return;
-        if (titleType.getSelectedValue().equals(rb.getString("SelectTitleTypeADDRESS")))
-            titleType.setSelectedValue(rb.getString("SelectTitleTypeTEXT"), true);
+        if (titleType.getSelectedValue().equals(Bundle.getMessage("SelectTitleTypeADDRESS")))
+            titleType.setSelectedValue(Bundle.getMessage("SelectTitleTypeTEXT"), true);
     }
 
     /**
@@ -167,7 +165,7 @@ public class ThrottleFramePropertyEditor extends JDialog
     {
         if (isDataValid())
         {
-        	int bSize = Integer.parseInt(rb.getString("FrameSize"));
+        	int bSize = Integer.parseInt(Bundle.getMessage("FrameSize"));
         	JInternalFrame myFrame;
         	frame.setTitleText( titleField.getText() );
             frame.setTitleTextType( titleTextTypes[titleType.getSelectedIndex()] );
@@ -218,7 +216,7 @@ public class ThrottleFramePropertyEditor extends JDialog
         if (errorNumber > 0)
         {
             JOptionPane.showMessageDialog(this, errors,
-                    rb.getString("ErrorOnPage"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorOnPage"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

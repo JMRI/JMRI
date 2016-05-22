@@ -29,7 +29,7 @@
 debugging information is printed to "standard output", which is in different
 places depending on what operating system you're using and how you started the
 program.  On a Macintosh classic, it appears in a window that's created with the
-first error message.  With MacOS X, it may appear in a new window, or you may
+first error message.  With Mac OS X, it may appear in a new window, or you may
 have to launch the "Console" application to see it.  On Windows, you may have
 to run one the "Debug" batch files to see the error messages; look for them in the
 application's directory.</p>

@@ -47,7 +47,7 @@ particular computer and operating system version. The important issue
 here is the "drivers" the computer needs to talk to the hardware
 adapter; some adapter manufacturers only provide Windows drivers, which
 makes their products useless to a Macintosh or Linux user. Also note
-that MacOS 8/9 and MacOS X drivers are different, and can't be
+that MacOS 8/9 and Mac OS X drivers are different, and can't be
 interchanged.</P>
 <P>Many DCC systems don't require very much of their serial ports,
 and in that case any adapter will probably work. But some DCC systems
@@ -64,7 +64,7 @@ control leads.
 <P>The Keyspan 19HS adapters are known to work with the MS100. We've
 gotten reports of success from Windows 98, Windows XP, and MacOS 9
 users. 
-(Note that the MS100 doesn't work with MacOS X or many Windows Vista machines; 
+(Note that the MS100 doesn't work with Mac OS X or many Windows Vista machines; 
 this is not a USB adapter issue) You'll have to get a special cable to connect the 9-pin
 connector on the Keyspan adapter to the 25-pin connector on the MS100.</P>
 <P>Note that using a LocoBuffer is highly recommended instead of
@@ -91,7 +91,7 @@ the RS232 control leads provide flow control.
 
 <P>The Keyspan adapters are also known to work with the LocoBuffer.
 We've gotten reports of success from Windows 98, Windows ME, Windows XP
-and MacOS X users. You'll have to get a special cable to connect
+and Mac OS X users. You'll have to get a special cable to connect
 the 9-pin connector on the Keyspan adapter to the 25-pin connector on
 the original LocoBuffer; later models have a 9-pin serial connector.</P>
 <P>We have also had a report that the "IConcepts" adapter, purchased

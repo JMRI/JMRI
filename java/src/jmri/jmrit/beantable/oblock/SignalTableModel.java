@@ -21,6 +21,8 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -201,7 +203,7 @@ public class SignalTableModel extends AbstractTableModel {
     		} else {
             	msg = java.text.MessageFormat.format(
                         rbo.getString("PortalBlockConflict"), portal.getName(),
-                        toBlock.getDisplayName());    			
+                        (toBlock != null ? toBlock.getDisplayName() : "(null to-block reference)"));    			
     		}
         } else if (fromBlock!=null && toBlock!=null) {
         	Portal p = _parent.getPortalModel().getPortal(fromBlock, toBlock);
@@ -446,7 +448,7 @@ public class SignalTableModel extends AbstractTableModel {
                         break;      // no change
                     }
                     deleteSignal(signalRow);    // delete old
-                    OBlock oldBlock = signalRow.getFromBlock();
+//                    OBlock oldBlock = signalRow.getFromBlock();
                     signalRow.setFromBlock(block);                    	
                     portal = signalRow.getPortal();
                     if (checkPortalBlock(portal, block)) {
@@ -571,14 +573,14 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private int getSignalIndex(String name) {
-        for (int i=0; i<_signalList.size(); i++)  {
-            if (_signalList.get(i).getSignal().getDisplayName().equals(name)) { 
-                return i;
-            }
-        }
-        return -1;
-    }
+//    private int getSignalIndex(String name) {
+//        for (int i=0; i<_signalList.size(); i++)  {
+//            if (_signalList.get(i).getSignal().getDisplayName().equals(name)) { 
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
 
     private void deleteSignal(SignalRow signalRow) {
         Portal portal = signalRow.getPortal();
@@ -663,5 +665,5 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalTableModel.class.getName());
 }

@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110820"/>
-<!--
+  <!--
   This version was based on the English versions of the Uhlenbrock manuals - IntelliSoundModule 32 100
   and IntelliSoundModule 32 400 (web links dated 23.06.2006) - and the PIKO German manual -
   36193 PIKO Soundmodul with 36193-90-7000 in the lower left of the last page (courtesy of
@@ -38,9 +38,7 @@
         <size length="25" width="15" height="5" units="mm"/>
       </model>
     </family>
-
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-
     <variables>
       <variable label="SUSI-range" CV="897" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached. CV897">
         <enumVal>
@@ -59,9 +57,7 @@
         </enumVal>
         <label>SUSI-range</label>
       </variable>
-
-   <!-- Range I variables -->
-
+      <!-- Range I variables -->
       <variable label="Range I Manufacturer ID" CV="900" readOnly="yes" item="Manufacturer" default="85" tooltip="CV900">
         <decVal/>
         <label>Range I Manufacturer ID</label>
@@ -74,7 +70,7 @@
         <decVal/>
         <label>Range I Software version</label>
       </variable>
-                      <!-- Speculating that CV 903 is F0, not really clear from manuals -->
+      <!-- Speculating that CV 903 is F0, not really clear from manuals -->
       <variable label="Range I F0 activated sound" CV="903" default="0" tooltip="CV903">
         <enumVal>
           <enumChoice choice="None">
@@ -533,10 +529,9 @@
       </variable>
     </variables>
   </decoder>
-
   <pane name="SUSI Address Range I">
     <column>
-      <display item="SUSI-range" />
+      <display item="SUSI-range"/>
       <label label=""/>
       <display item="Range I Manufacturer ID" label="Manufacturer ID"/>
       <display item="Range I " label=""/>

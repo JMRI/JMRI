@@ -12,6 +12,8 @@ package jmri.implementation;
  *
  * @version     $Revision$
  */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -768,8 +770,8 @@ public class DefaultRoute extends AbstractNamedBean
     }
     
     /**
-     * Turnout has changed, check to see if this fires
-     * @return will fire route if appropriate
+     * Turnout has changed, check to see if this fires.
+     * Will fire route if appropriate
      */
      void checkTurnout(int newState, int oldState, Turnout t) {
         if (isVetoed()) return; // skip setting route
@@ -909,7 +911,7 @@ public class DefaultRoute extends AbstractNamedBean
      * Internal method to check whether
      * operation of the route has been vetoed by a sensor
      * or turnout setting.
-     * @returns true if veto, i.e. don't fire route; false if no veto, OK to fire
+     * @return true if veto, i.e. don't fire route; false if no veto, OK to fire
      */
     boolean isVetoed() {
         log.debug("check for veto");
@@ -1002,7 +1004,7 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRoute.class.getName());
+    static final Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
     
     
 }
@@ -1092,7 +1094,7 @@ class SetRouteThread extends Thread {
 	}
 	
 	private DefaultRoute r;
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SetRouteThread.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SetRouteThread.class.getName());
 }
 
 /* @(#)DefaultRoute.java */

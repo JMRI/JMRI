@@ -29,6 +29,7 @@ public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
         return new String[] {
             "jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver.ConnectionConfig",
+            "jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.net.ConnectionConfig",
             "jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig",

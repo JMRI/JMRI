@@ -19,6 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 import java.awt.BorderLayout;
 import java.util.List;
@@ -27,6 +29,7 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import java.awt.Dimension;
+import jmri.jmrit.vsdecoder.swing.VSDPreferencesAction;
 
 @SuppressWarnings("serial")
 class VSDecoderFrame extends JmriJFrame {
@@ -64,7 +67,7 @@ class VSDecoderFrame extends JmriJFrame {
         fileMenu.add(new LoadVSDFileAction(vsdBundle.getString("VSDecoderFileMenuLoadVSDFile" )));
         fileMenu.add(new StoreXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuSaveProfile" )));
         fileMenu.add(new LoadXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuLoadProfile")));
-	fileMenu.add(new VSDecoderPreferencesAction(vsdBundle.getString("VSDecoderFileMenuPreferences")));
+	fileMenu.add(new VSDPreferencesAction(vsdBundle.getString("VSDecoderFileMenuPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load
@@ -92,5 +95,5 @@ class VSDecoderFrame extends JmriJFrame {
 
     public List<JMenu> getMenus() { return menuList; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(VSDecoderFrame.class.getName());
 }

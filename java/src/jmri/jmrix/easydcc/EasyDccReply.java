@@ -2,6 +2,9 @@
 
 package jmri.jmrix.easydcc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Carries the reply to an EasyDccMessage.
  *
@@ -60,7 +63,7 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 		return val;
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccReply.class.getName());
 
 }
 

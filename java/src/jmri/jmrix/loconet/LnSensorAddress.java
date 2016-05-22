@@ -2,6 +2,9 @@
 
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Utilities for handling LocoNet sensor addresses.
  * <P>
@@ -209,7 +212,7 @@ public class LnSensorAddress {
         return prefix+"S"+(asInt()/16)+letter+digit;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorAddress.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnSensorAddress.class.getName());
 
 }
 

@@ -2,6 +2,8 @@
  
 package jmri.jmrix.rps.swing.soundset;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.*;
 
 import java.beans.PropertyChangeListener;
@@ -173,5 +175,5 @@ public class SoundSetPane extends JPanel
         // don't have to do anything
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundSetPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(SoundSetPane.class.getName());
 }

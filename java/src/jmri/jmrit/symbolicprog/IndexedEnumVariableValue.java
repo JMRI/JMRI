@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
@@ -563,5 +565,5 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndexedEnumVariableValue.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndexedEnumVariableValue.class.getName());
 }

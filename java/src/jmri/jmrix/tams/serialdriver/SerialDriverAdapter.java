@@ -2,6 +2,8 @@
 
 package jmri.jmrix.tams.serialdriver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.tams.TamsPortController;
 import jmri.jmrix.tams.TamsTrafficController;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
@@ -179,6 +181,6 @@ public class SerialDriverAdapter extends TamsPortController  implements jmri.jmr
         adaptermemo = null;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

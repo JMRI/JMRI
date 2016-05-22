@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.ProgListener;
 
@@ -26,8 +28,6 @@ import javax.swing.JTextField;
  * @version   $Revision$
  */
 public class CvValue extends AbstractValue implements ProgListener {
-
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
     public CvValue(int num, Programmer pProgrammer) {
         _num = num;
@@ -256,7 +256,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateReadingCV"),
+                                    Bundle.getMessage("StateReadingCV"),
                                     new Object[]{""+_num}));
 
         if (mProgrammer != null) {
@@ -268,14 +268,14 @@ public class CvValue extends AbstractValue implements ProgListener {
             } catch (Exception e) {
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateExceptionDuringRead"),
+                                    Bundle.getMessage("StateExceptionDuringRead"),
                                     new Object[]{e.toString()}));
 
                 log.warn("Exception during CV read: "+e);
                 setBusy(false);
             }
         } else {
-            if (status != null) status.setText(rbt.getString("StateNoProgrammer"));
+            if (status != null) status.setText(Bundle.getMessage("StateNoProgrammer"));
             log.error("No programmer available!");
         }
     }
@@ -287,7 +287,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateReadingIndexedCV"),
+                                    Bundle.getMessage("StateReadingIndexedCV"),
                                     new Object[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
 
         if (mProgrammer != null) {
@@ -302,13 +302,13 @@ public class CvValue extends AbstractValue implements ProgListener {
                 setState(UNKNOWN);
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateExceptionDuringIndexedRead"),
+                                    Bundle.getMessage("StateExceptionDuringIndexedRead"),
                                     new Object[]{e.toString()}));
                 log.warn("Exception during IndexedCV read: " + e);
                 setBusy(false);
             }
         } else {
-            if (status != null) status.setText(rbt.getString("StateNoProgrammer"));
+            if (status != null) status.setText(Bundle.getMessage("StateNoProgrammer"));
             log.error("No programmer available!");
         }
     }
@@ -320,7 +320,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateConfirmIndexedCV"),
+                                    Bundle.getMessage("StateConfirmIndexedCV"),
                                     new Object[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
 
         if (mProgrammer != null) {
@@ -335,13 +335,13 @@ public class CvValue extends AbstractValue implements ProgListener {
                 setState(UNKNOWN);
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateExceptionDuringIndexedRead"),
+                                    Bundle.getMessage("StateExceptionDuringIndexedRead"),
                                     new Object[]{e.toString()}));
                 log.warn("Exception during IndexedCV read: " + e);
                 setBusy(false);
             }
         } else {
-            if (status != null) status.setText(rbt.getString("StateNoProgrammer"));
+            if (status != null) status.setText(Bundle.getMessage("StateNoProgrammer"));
             log.error("No programmer available!");
         }
     }
@@ -354,7 +354,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateConfirmingCV"),
+                                    Bundle.getMessage("StateConfirmingCV"),
                                     new Object[]{""+_num}));
 
         if (mProgrammer != null) {
@@ -366,13 +366,13 @@ public class CvValue extends AbstractValue implements ProgListener {
             } catch (Exception e) {
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateExceptionDuringConfirm"),
+                                    Bundle.getMessage("StateExceptionDuringConfirm"),
                                     new Object[]{e.toString()}));
                 log.warn("Exception during CV read: "+e);
                 setBusy(false);
             }
         } else {
-            if (status != null) status.setText(rbt.getString("StateNoProgrammer"));
+            if (status != null) status.setText(Bundle.getMessage("StateNoProgrammer"));
             log.error("No programmer available!");
         }
     }
@@ -385,7 +385,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateWritingCV"),
+                                    Bundle.getMessage("StateWritingCV"),
                                     new Object[]{""+_num}));
         if (mProgrammer != null) {
             setBusy(true);
@@ -398,13 +398,13 @@ public class CvValue extends AbstractValue implements ProgListener {
                 setState(UNKNOWN);
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateExceptionDuringWrite"),
+                                    Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
                 log.warn("Exception during CV write: "+e);
                 setBusy(false);
             }
         } else {
-            if (status != null) status.setText(rbt.getString("StateNoProgrammer"));
+            if (status != null) status.setText(Bundle.getMessage("StateNoProgrammer"));
             log.error("No programmer available!");
         }
     }
@@ -415,7 +415,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _status = status;
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateWritingPICV"),
+                                    Bundle.getMessage("StateWritingPICV"),
                                     new Object[]{""+_num}));
         if (mProgrammer != null) {
             setBusy(true);
@@ -428,13 +428,13 @@ public class CvValue extends AbstractValue implements ProgListener {
                 setState(UNKNOWN);
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateExceptionDuringWrite"),
+                                    Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
                 log.warn("Exception during CV write: "+e);
                 setBusy(false);
             }
         } else {
-            if (status != null) status.setText(rbt.getString("StateNoProgrammer"));
+            if (status != null) status.setText(Bundle.getMessage("StateNoProgrammer"));
             log.error("No programmer available!");
         }
     }
@@ -445,7 +445,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _status = status;
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateWritingSICV"),
+                                    Bundle.getMessage("StateWritingSICV"),
                                     new Object[]{""+_num}));
         if (mProgrammer != null) {
             setBusy(true);
@@ -463,14 +463,14 @@ public class CvValue extends AbstractValue implements ProgListener {
                     setState(UNKNOWN);
                     if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateExceptionDuringWrite"),
+                                    Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
                     log.warn("Exception during CV write: " + e);
                     setBusy(false);
                 }
         }
         else {
-            if (status != null) status.setText(rbt.getString("StateNoProgrammer"));
+            if (status != null) status.setText(Bundle.getMessage("StateNoProgrammer"));
             log.error("No programmer available!");
         }
     }
@@ -483,7 +483,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
         if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateWritingIndexedCV"),
+                                    Bundle.getMessage("StateWritingIndexedCV"),
                                     new Object[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
 
         if (mProgrammer != null) {
@@ -497,13 +497,13 @@ public class CvValue extends AbstractValue implements ProgListener {
                 setState(UNKNOWN);
                 if (status != null) status.setText(
                                 java.text.MessageFormat.format(
-                                    rbt.getString("StateExceptionDuringIndexedWrite"),
+                                    Bundle.getMessage("StateExceptionDuringIndexedWrite"),
                                     new Object[]{e.toString()}));
                 log.warn("Exception during CV write: "+e);
                 setBusy(false);
             }
         } else {
-            if (status != null) status.setText(rbt.getString("StateNoProgrammer"));
+            if (status != null) status.setText(Bundle.getMessage("StateNoProgrammer"));
             log.error("No programmer available!");
         }
     }
@@ -516,7 +516,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (!_busy) log.error("opReply when not busy!");
         boolean oldBusy = _busy;
         if (retval == OK) {
-            if (_status != null) _status.setText(rbt.getString("StateOK"));
+            if (_status != null) _status.setText(Bundle.getMessage("StateOK"));
             if (_reading) {
                 // set & notify value directly to avoid state going to EDITED
                 _value = value;
@@ -545,7 +545,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         } else {
             if (_status != null) _status.setText(
                         java.text.MessageFormat.format(
-                            rbt.getString("StateProgrammerError"),
+                            Bundle.getMessage("StateProgrammerError"),
                             new Object[]{mProgrammer.decodeErrorCode(retval)}));
 
             // delay to ensure that the message appears!
@@ -574,6 +574,6 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CvValue.class.getName());
+    static Logger log = LoggerFactory.getLogger(CvValue.class.getName());
 
 }

@@ -2,12 +2,11 @@
 
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import java.io.File;
-
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
@@ -28,8 +27,6 @@ public class SignalSpeedMap {
     static private int _sStepDelay;
     static private int _numSteps;
 
-    final static private ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
     static public SignalSpeedMap getMap() {
         if (_map == null) {
             loadMap();
@@ -40,17 +37,13 @@ public class SignalSpeedMap {
     static void loadMap() {
         _map = new SignalSpeedMap();
 
-        File file = new File("xml"+File.separator
-                                +"signals"+File.separator
-                                +"signalSpeeds.xml");
-        if (!file.exists()) {
-            log.error("signalSpeeds file doesn't exist: "+file.getPath());
-            throw new IllegalArgumentException("signalSpeeds file doesn't exist: "+file.getPath());
-        }
+        String path = "xml" + File.separator
+                + "signals" + File.separator
+                + "signalSpeeds.xml";
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
         Element root;
         try {
-            root = xf.rootFromFile(file);
+            root = xf.rootFromName(path);
             Element e = root.getChild("interpretation");
             String sval = e.getText().toUpperCase();
             if (sval.equals("PERCENTNORMAL")) {
@@ -109,17 +102,21 @@ public class SignalSpeedMap {
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getName();
                 String speed = l.get(i).getText();
-                _headTable.put(rb.getString(name), speed);
-                if (log.isDebugEnabled()) log.debug("Add "+name+"="+rb.getString(name)+", "+speed+" to AppearanceSpeed Table");
+                _headTable.put(Bundle.getMessage(name), speed);
+                if (log.isDebugEnabled()) log.debug("Add "+name+"="+Bundle.getMessage(name)+", "+speed+" to AppearanceSpeed Table");
             }
         } catch (org.jdom.JDOMException e) {
-            log.error("error reading file \""+file.getName()+"\" due to: "+e);
+            log.error("error reading file \"" + path + "\" due to: " + e);
+        } catch (java.io.FileNotFoundException e) {
+                log.error("signalSpeeds file (" + path + ") doesn't exist in XmlFile search path.");
+                throw new IllegalArgumentException("signalSpeeds file (" + path + ") doesn't exist in XmlFile search path.");
         } catch (java.io.IOException ioe) {
-            log.error("error reading file \""+file.getName()+"\" due to: "+ioe);
+            log.error("error reading file \"" + path + "\" due to: " + ioe);
         }
     }
 
     public boolean checkSpeed(String name) {
+    	if (name==null) {return false; }
         return _table.get(name) != null;
     }
 
@@ -162,7 +159,7 @@ public class SignalSpeedMap {
             // not a valid aspect
             log.warn("attempting to set invalid speed: "+name);
             //java.util.Enumeration<String> e = _table.keys();
-            throw new IllegalArgumentException("attempting to get speed from invalid name: "+name);
+            throw new IllegalArgumentException("attempting to get speed from invalid name: \""+name+"\"");
         }
         Float speed = _table.get(name);
         if (speed==null) {
@@ -194,7 +191,7 @@ public class SignalSpeedMap {
         return _numSteps;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalSpeedMap.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalSpeedMap.class.getName());
 }
 
 /* @(#)SignalSpeedMap.java */

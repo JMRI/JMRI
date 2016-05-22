@@ -129,7 +129,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		// confirm defaults
 		Assert.assertTrue("build normal", f.buildNormal.isSelected());
 		Assert.assertFalse("build aggressive", f.buildAggressive.isSelected());
-		Assert.assertFalse("local", f.localSidingCheckBox.isSelected());
+		Assert.assertFalse("local", f.localSpurCheckBox.isSelected());
 		Assert.assertFalse("interchange", f.localInterchangeCheckBox.isSelected());
 		Assert.assertFalse("yard", f.localYardCheckBox.isSelected());
 		Assert.assertFalse("rfid", f.rfidCheckBox.isSelected());
@@ -141,8 +141,8 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertFalse("build normal", f.buildNormal.isSelected());
 		Assert.assertTrue("build aggressive", f.buildAggressive.isSelected());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.localSidingCheckBox ) );
-		Assert.assertTrue("local", f.localSidingCheckBox.isSelected());
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.localSpurCheckBox ) );
+		Assert.assertTrue("local", f.localSpurCheckBox.isSelected());
 		
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.localInterchangeCheckBox ) );
 		Assert.assertTrue("interchange", f.localInterchangeCheckBox.isSelected());
@@ -174,7 +174,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		
 		Assert.assertFalse("build normal",f.buildNormal.isSelected());
 		Assert.assertTrue("build aggressive",f.buildAggressive.isSelected());
-		Assert.assertTrue("local", f.localSidingCheckBox.isSelected());
+		Assert.assertTrue("local", f.localSpurCheckBox.isSelected());
 		Assert.assertTrue("interchange", f.localInterchangeCheckBox.isSelected());
 		Assert.assertTrue("yard", f.localYardCheckBox.isSelected());
 		Assert.assertTrue("rfid", f.rfidCheckBox.isSelected());

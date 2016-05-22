@@ -7,7 +7,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -39,14 +38,13 @@ public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
     	super(s, i, wi);
     }
 
-    public ReportContextAction() { super(rb.getString("TitleContext"));}
+    public ReportContextAction() { super(Bundle.getMessage("TitleContext"));}
 
     JTextArea pane;
-    static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
 
     public void actionPerformed(ActionEvent ev) {
 
-        final JFrame frame = new JmriJFrame(rb.getString("TitleContext"));  // JmriJFrame to ensure fits on screen
+        final JFrame frame = new JmriJFrame(Bundle.getMessage("TitleContext"));  // JmriJFrame to ensure fits on screen
 
         final Clipboard clipboard = frame.getToolkit().getSystemClipboard();
 
@@ -67,7 +65,7 @@ public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
 
         // Add button to allow copy to clipboard
         JPanel p = new JPanel();
-        JButton copy = new JButton(rb.getString("ButtonCopyClip"));
+        JButton copy = new JButton(Bundle.getMessage("ButtonCopyClip"));
         copy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 StringSelection text = new StringSelection(pane.getText());
@@ -75,7 +73,7 @@ public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
             }
         });
         p.add(copy);
-        JButton close = new JButton(rb.getString("ButtonClose"));
+        JButton close = new JButton(Bundle.getMessage("ButtonClose"));
         close.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 frame.setVisible(false);

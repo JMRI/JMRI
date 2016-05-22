@@ -43,7 +43,7 @@ public class ThrottleCreationAction extends JmriAbstractAction {
     }
 
     public ThrottleCreationAction() {
-        this(ThrottleBundle.bundle().getString("MenuItemNewThrottle"));
+        this(Bundle.getMessage("MenuItemNewThrottle"));
     }
 
     /**

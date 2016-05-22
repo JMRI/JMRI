@@ -4,8 +4,6 @@ package jmri.swing;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
-import java.util.ResourceBundle;
 import javax.swing.JLabel;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionStatus;
@@ -19,7 +17,6 @@ import jmri.jmrix.JmrixConfigPane;
 public final class ConnectionLabel extends JLabel implements PropertyChangeListener {
 
     ConnectionConfig connection;
-    final protected static ResourceBundle appsBundle = ResourceBundle.getBundle("apps.AppsBundle");
 
     public ConnectionLabel(ConnectionConfig connection) {
         super();
@@ -43,12 +40,12 @@ public final class ConnectionLabel extends JLabel implements PropertyChangeListe
         }
         if (ConnectionStatus.instance().isConnectionOk(this.connection.getInfo())) {
             this.setForeground(Color.BLACK);
-            this.setText(MessageFormat.format(appsBundle.getString("ConnectionSucceeded"),
-                    new Object[]{name, this.connection.name(), this.connection.getInfo()}));
+            this.setText(Bundle.getMessage("ConnectionSucceeded",
+                            name, this.connection.name(), this.connection.getInfo()));
         } else {
             this.setForeground(Color.RED);
-            this.setText(MessageFormat.format(appsBundle.getString("ConnectionFailed"),
-                    new Object[]{name, this.connection.name(), this.connection.getInfo()}));
+            this.setText(Bundle.getMessage("ConnectionFailed",
+                            name, this.connection.name(), this.connection.getInfo()));
         }
         this.revalidate();
     }

@@ -1,6 +1,8 @@
 package jmri.jmrit.display.palette;
 
-import java.util.Hashtable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -48,23 +50,23 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         _scrollPane = new JScrollPane(_table);
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         _table.getSelectionModel().addListSelectionListener(this);
-        _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        _table.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        _scrollPane.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         JPanel panel = new JPanel();
-        JButton clearSelectionButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
+        JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     _table.clearSelection();
                 }
         });
-        clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
+        clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
         return topPanel;
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "SignalHeadStateRed");
     }
     
@@ -78,16 +80,16 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         if (!_update) {
             _dragIconPanel.setVisible(false);
         }
-        _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
+        _showIconsButton.setText(Bundle.getMessage("HideIcons"));
     }
    
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> allIconsMap) {
-        Hashtable<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
+    protected void addIconsToPanel(HashMap<String, NamedIcon> allIconsMap) {
+        HashMap<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
         if (iconMap==null) {
             iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
                 _updateButton.setEnabled(false);
-                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+                _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
         } else {
             super.addIconsToPanel(iconMap);
@@ -110,7 +112,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             }
         } else {
             _updateButton.setEnabled(false);
-            _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+            _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         }
         if (_iconPanel.isVisible()) {
         	showIcons();
@@ -118,12 +120,11 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
  //       hideIcons();
     }
 
-    protected Hashtable<String, NamedIcon> getFilteredIconMap(Hashtable<String, NamedIcon> allIconsMap) {
+    protected HashMap<String, NamedIcon> getFilteredIconMap(HashMap<String, NamedIcon> allIconsMap) {
         if (allIconsMap==null) {
             JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                   ItemPalette.rbp.getString(_itemType), _family), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("FamilyNotFound", _itemType, _family), 
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
         if (_table==null || _table.getSelectedRow()<0) {
@@ -136,7 +137,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             if (states.length == 0) {
                 return allIconsMap;
             }
-            Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>(); 
+            HashMap<String, NamedIcon> iconMap = new HashMap<String, NamedIcon>(); 
             Iterator<Entry<String, NamedIcon>> it = allIconsMap.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
@@ -158,15 +159,15 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         return allIconsMap;
     }
 
-    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        Hashtable <String, NamedIcon> iconMap;
+        HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
+        public IconDragJLabel(DataFlavor flavor, HashMap <String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
         }
@@ -186,11 +187,11 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
 
             SignalHeadIcon sh = new SignalHeadIcon(_editor);
             sh.setSignalHead(bean.getDisplayName());
-            Hashtable <String, NamedIcon> map = getFilteredIconMap(iconMap);
+            HashMap <String, NamedIcon> map = getFilteredIconMap(iconMap);
             Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
-                sh.setIcon(ItemPalette.rbean.getString(ent.getKey()), new NamedIcon(ent.getValue()));
+                sh.setIcon(Bundle.getMessage(ent.getKey()), new NamedIcon(ent.getValue()));
             }
             sh.setFamily(_family);
             sh.setLevel(Editor.SIGNALS);
@@ -198,5 +199,5 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class.getName());
 }

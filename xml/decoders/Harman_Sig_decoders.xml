@@ -1,0 +1,1896 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Nigel Cliffe" version="0.1" lastUpdated="20130308"/>
+  <decoder>
+    <family name="Harman Signalist Accessory Decoders" mfg="Harman DCC">
+      <!--  <model model="SC1 version 0.18" numOuts="8" numFns="16" formFactor="HO" productID="V018">
+        <versionCV lowVersionID="224" highVersionID="255"/>
+        <output name="1" label="Output A"/>
+        <output name="2" label="Output B"/>
+        <output name="3" label="Output C"/>
+        <output name="4" label="Output D"/>
+        <output name="5" label="Output E"/>
+        <output name="6" label="Output F"/>
+        <output name="7" label="Output G"/>
+        <output name="8" label="Output H"/>
+      </model>
+	  --> 
+      <model model="SC1 version 0.21" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57377">
+	    <!-- possibly product ID will need to be both Hex numbers, ie. E021, which is decimal 57377  -->
+        <!-- productID=33 should match Version=021Hex  <versionCV lowVersionID="21" highVersionID="22"/> -->
+        <output name="1" label="Output A"/>
+        <output name="2" label="Output B"/>
+        <output name="3" label="Output C"/>
+        <output name="4" label="Output D"/>
+        <output name="5" label="Output E"/>
+        <output name="6" label="Output F"/>
+        <output name="7" label="Output G"/>
+        <output name="8" label="Output H"/>
+      </model>
+      <model model="SC1 version 0.23" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57379">
+        <!--productID=57379 should match Version=E023Hex    
+			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35) 
+			-->
+        <output name="1" label="Output A"/>
+        <output name="2" label="Output B"/>
+        <output name="3" label="Output C"/>
+        <output name="4" label="Output D"/>
+        <output name="5" label="Output E"/>
+        <output name="6" label="Output F"/>
+        <output name="7" label="Output G"/>
+        <output name="8" label="Output H"/>
+      </model>
+      
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="no"/>
+    <!-- not sure if it can do ops-mode, but few command stations can do accessory ops-mode -->
+    <variables>
+      <variable label="Low 7 bytes of Address CV1" CV="1" default="01" tooltip="CV1">
+        <!--  in decoder address mode, takes values 0-63, ie, bits 0 to 5 
+			        in output address mode, takes values 0-255, ie. all bits -->
+        <decVal/>
+      </variable>
+	  
+      <variable label="A Output (x10) Millisecs" CV="3" mask="VVVVVVVV" default="0">
+        <decVal min="0" max="144"/>
+      </variable>
+      <variable label="B Output (x10) Millisecs" CV="4" mask="VVVVVVVV" default="0" minOut="8">
+        <decVal min="0" max="144"/>
+      </variable>
+      <variable label="C Output (x10) Millisecs" CV="5" mask="VVVVVVVV" default="0" minOut="8">
+        <decVal min="0" max="144"/>
+      </variable>
+      <variable label="D Output (x10) Millisecs" CV="6" mask="VVVVVVVV" default="0" minOut="8">
+        <decVal min="0" max="144"/>
+      </variable>
+       
+	<variable label="Hardware Type" CV="7" readOnly="yes" item="Decoder Version"  default="9" >
+				<decVal/>
+			</variable>
+		
+		<variable label="Manufacturer ID" CV="8" readOnly="yes"	item="Manufacturer" default="98" >
+			<decVal/>
+		</variable>
+		
+      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV" tooltip="CV9">
+        <!-- uses same bits in both addressing modes -->
+        <decVal min="0" max="7"/>
+      </variable>
+
+	  <variable label="Decoder Address (1-511)" item="Short Address" CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-511">
+        <splitVal highCV="9" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Output Mode Address (1-2047)" item="Long Address" CV="1" mask="VVVVVVVV" default="1" tooltip="Range 1-2047">
+        <splitVal highCV="9" upperMask="XXXXXVVV"/>
+      </variable>
+
+      <!-- these calculate turnout (decoder) addresses for Lenz/Digitrax systems.  Roco and MERG use offsets of -3 to 0 -->
+      <variable label="                    output A" CV="1" mask="XXVVVVVV" default="1" item="Decoder Lenz Base Address" tooltip="Range 1-2041">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-7"/>
+      </variable>
+      
+	  <!--
+	  <variable label="                    output G" CV="1" mask="XXVVVVVV" default="2" item="Decoder Lenz 2nd Address" tooltip="Range 8-2049" minOut="8">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="0"/>
+      </variable>
+	  -->
+ 
+      <variable label="                    output A" CV="1" mask="XXVVVVVV" default="1" item="Decoder Roco Base Address" tooltip="Range 1-2037">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3"/>
+      </variable>
+	  
+	  <!--
+      <variable label="                    output G" CV="1" mask="XXVVVVVV" default="2" item="Decoder Roco 2nd Address" tooltip="Range 8-2045" minOut="8">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="4"/>
+      </variable>
+	  -->
+ 
+      <!-- these calculate turnout (output mode) addresses for Lenz/Digitrax systems.  Roco and MERG use offsets of -3 to 0 -->
+      <variable label="                    output A" CV="1" mask="VVVVVVVV" default="1" item="Output Lenz Base Address" tooltip="Range 1-2043">
+        <splitVal highCV="9" upperMask="XXXXXVVV" offset="-4"/>
+      </variable>
+	<!-- comment these out as unnecessary 
+      <variable label="                    outputs 3+4" CV="1" mask="VVVVVVVV" default="2" item="Output Lenz 2nd Address" tooltip="Range 2-2044" minOut="8">
+        <splitVal highCV="9" upperMask="XXXXXVVV" offset="-3"/>
+      </variable>
+      <variable label="                    outputs 5+6" CV="1" mask="VVVVVVVV" default="3" item="Output Lenz 3rd Address" tooltip="Range 3-2045" minOut="8">
+        <splitVal highCV="9" upperMask="XXXXXVVV" offset="-2"/>
+      </variable>
+      <variable label="                    outputs 7+8" CV="1" mask="VVVVVVVV" default="4" item="Output Lenz 4th Address" tooltip="Range 4-2046" minOut="8">
+        <splitVal highCV="9" upperMask="XXXXXVVV" offset="-1"/>
+      </variable>
+	  -->
+      <variable label="                    output A" CV="1" mask="VVVVVVVV" default="1" item="Output Roco Base Address" tooltip="Range 1-2047">
+        <splitVal highCV="9" upperMask="XXXXXVVV" offset="0"/>
+      </variable>
+	  <!-- comment out as unnecessary 
+      <variable label="                    outputs 3+4" CV="1" mask="VVVVVVVV" default="2" item="Output Roco 2nd Address" tooltip="Range 2-2048" minOut="8">
+        <splitVal highCV="9" upperMask="XXXXXVVV" offset="1"/>
+      </variable>
+      <variable label="                    outputs 5+6" CV="1" mask="VVVVVVVV" default="3" item="Output Roco 3rd Address" tooltip="Range 3-2049" minOut="8">
+        <splitVal highCV="9" upperMask="XXXXXVVV" offset="2"/>
+      </variable>
+      <variable label="                    outputs 7+8" CV="1" mask="VVVVVVVV" default="4" item="Output Roco 4th Address" tooltip="Range 4-2050" minOut="8">
+        <splitVal highCV="9" upperMask="XXXXXVVV" offset="3"/>
+      </variable>
+	  -->
+      <variable label="Address Mode" CV="29" mask="XVXXXXXX"  item="Address Format" default="0" tooltip="Output mode recommended as device address equals accessory address">
+	  <!--  ie. sequential sets value of either 128 (off) or 192 (on) -->
+        <enumVal>
+          <enumChoice choice="Decoder Address Mode"/>
+          <enumChoice choice="Output Address Mode"/>
+        </enumVal>
+      </variable> 
+	  <variable label="Accessory Mode Setting" CV="29" mask="VXXXXXXX" item="Accessory Mode" default="1">
+	  <!--  effectively always on for this decoder, value = 128 -->
+        <enumVal>
+          <enumChoice choice="off"/>
+          <enumChoice choice="on"/>
+        </enumVal>
+      </variable>
+
+      <variable label="Lenz Toggle Mode" CV="33" mask="VVVVVVVV" default="15">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Toggle Mode output 1" CV="33" mask="XXXXXXXV" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Toggle Mode output 2" CV="33" mask="XXXXXXVX" default="1" minOut="8">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Toggle Mode output 3" CV="33" mask="XXXXXVXX" default="1" minOut="8">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Toggle Mode output 4" CV="33" mask="XXXXVXXX" default="1" minOut="8">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Roco Momentary Mode" CV="33" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Ack Pin" CV="34" mask="XXXXVXXX" default="8">
+        <enumVal>
+          <enumChoice choice="Pin 6" value="0"/>
+          <enumChoice choice="Pin 5 or 11" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="invert outputs" CV="35" default="255">
+        <decVal/>
+      </variable>
+      <variable label="Common anode output 1" CV="35" mask="VXXXXXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Common anode output 2" CV="35" mask="XVXXXXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Common anode output 3" CV="35" mask="XXVXXXXX" minOut="8" default="0">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Common anode output 4" CV="35" mask="XXXVXXXX" minOut="8" default="0">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Common anode output 5" CV="35" mask="XXXXVXXX" minOut="8" default="0">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Common anode output 6" CV="35" mask="XXXXXVXX" minOut="8" default="0">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Common anode output 7" CV="35" mask="XXXXXXVX" minOut="8" default="0">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Common anode output 8" CV="35" mask="XXXXXXXV" minOut="8" default="0">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="default outputs" CV="37" default="0">
+        <decVal/>
+      </variable>
+      <variable label="default output 1" CV="37" mask="VXXXXXXX" minOut="8">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="default output 2" CV="37" mask="XVXXXXXX" minOut="8">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="default output 3" CV="37" mask="XXVXXXXX" minOut="8">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="default output 4" CV="37" mask="XXXVXXXX" minOut="8">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="default output 5" CV="37" mask="XXXXVXXX" minOut="8">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="default output 6" CV="37" mask="XXXXXVXX" minOut="8">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="default output 7" CV="37" mask="XXXXXXVX" minOut="8">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="default output 8" CV="37" mask="XXXXXXXV" minOut="8">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+	  <!-- use of item="Locomotive Direction" forces this onto the "basic" pane of the decoder -->
+	  <variable label="Signal Type" CV="38" item="Locomotive Direction" tooltip="Select Signal Type" include="V018" >
+		<enumVal>
+			<enumChoice choice="UK:  Four 2-aspect" value="0" />
+			<enumChoice choice="UK:  Two 3 or 4 aspect" value="1" />
+			<enumChoice choice="UK:  Two 2 aspect with feather" value="2" />
+			<enumChoice choice="UK:  3 or 4 aspect with 3 feathers" value="3" />
+			<enumChoice choice="UK:  Searchlight, Two 3 or 4 aspect" value="4" />
+			<enumChoice choice="UK:  Searchlight, 3 or 4 aspect with 3 feathers" value="5" />
+			<enumChoice choice="UK:  3 or 4 aspect (A-D) with feather (E,F) and 2 aspect (G,H)" value="6" />
+			<enumChoice choice="UK:  Two 4 aspect allowing dark and flashing" value="7" />
+			<enumChoice choice="UK:  Eight individual aspects" value="8" />
+			<enumChoice choice="UK:  Searchlight, Two 3 aspect with feather" value="9" />
+			<enumChoice choice="UK:  Searchlight, Two 4 aspect with feather" value="10" />
+			<enumChoice choice="UK:  Two 4 aspect with easy manual control" value="11" />
+			<enumChoice choice="UK:  Four pairs on together (level crossing)" value="12" />
+			<enumChoice choice="UK:  Two triplets on together (eg. SPAD) plus pair" value="13" />
+			<enumChoice choice="UK:  4 aspect (A-D) and two 2 aspect" value="14" />
+			<enumChoice choice="UK:  Eight Dapol semaphore signals" value="15" />
+			
+			</enumVal>
+	  </variable>
+	  <variable label="Signal Type" CV="38" item="Locomotive Direction" tooltip="Select Signal Type" include="57377" >
+		<enumVal>
+			<enumChoice choice="UK:  Four 2-aspect" value="0" />
+			<enumChoice choice="UK:  Two 3 or 4 aspect" value="1" />
+			<enumChoice choice="UK:  Two 2 aspect with feather" value="2" />
+			<enumChoice choice="UK:  3 or 4 aspect with 3 feathers" value="3" />
+			<enumChoice choice="UK:  Searchlight, Two 3 or 4 aspect" value="4" />
+			<enumChoice choice="UK:  Searchlight, 3 or 4 aspect with 3 feathers" value="5" />
+			<enumChoice choice="UK:  3 or 4 aspect (A-D) with feather (E,F) and 2 aspect (G,H)" value="6" />
+			<enumChoice choice="UK:  Two 4 aspect allowing dark and flashing" value="7" />
+			<enumChoice choice="UK:  Eight individual aspects" value="8" />
+			<enumChoice choice="UK:  Searchlight, Two 3 aspect with feather" value="9" />
+			<enumChoice choice="UK:  Searchlight, Two 4 aspect with feather" value="10" />
+			<enumChoice choice="UK:  Two 4 aspect with easy manual control" value="11" />
+			<enumChoice choice="UK:  Four pairs on together (level crossing)" value="12" />
+			<enumChoice choice="UK:  Two triplets on together (eg. SPAD) plus pair" value="13" />
+			<enumChoice choice="UK:  4 aspect (A-D) and two 2 aspect" value="14" />
+			<enumChoice choice="UK:  Eight Dapol semaphore signals" value="15" />
+			
+			<!-- North American Signal Types, v22 firmware -->
+			
+			<!-- Advanced Signal Protocol types, v21 firmware -->
+			<enumChoice choice="Advanced Signal Protocol:  Two 4 aspect" value="128" />
+			<enumChoice choice="Advanced Signal Protocol:  Four 3 aspect searchlight" value="129" />
+			<enumChoice choice="Advanced Signal Protocol:  Two 3 aspect with feather" value="130" />
+			<enumChoice choice="Advanced Signal Protocol:  Two 4-aspect searchlight with a feather" value="131" />
+			<enumChoice choice="Advanced Signal Protocol:  Two 4-aspect searchlight" value="132" />
+			<enumChoice choice="Advanced Signal Protocol:  One 3-aspect or 4-aspect with 3x feathers" value = "133" />
+			<enumChoice choice="Advanced Signal Protocol:  One 4-aspect searchlight with 3x feathers" value = "134" />
+			<!-- 35 only <enumChoice choice="Advanced Signal Protocol:  Single signal with user defined aspects" value = "135" /> -->
+						
+			</enumVal>
+	  </variable>
+
+	  <variable label="Signal Type" CV="38" item="Locomotive Direction" tooltip="Select Signal Type" include="57379" >
+		<enumVal>
+			<enumChoice choice="UK:  Four 2-aspect" value="0" />
+			<enumChoice choice="UK:  Two 3 or 4 aspect" value="1" />
+			<enumChoice choice="UK:  Two 2 aspect with feather" value="2" />
+			<enumChoice choice="UK:  3 or 4 aspect with 3 feathers" value="3" />
+			<enumChoice choice="UK:  Searchlight, Two 3 or 4 aspect" value="4" />
+			<enumChoice choice="UK:  Searchlight, 3 or 4 aspect with 3 feathers" value="5" />
+			<enumChoice choice="UK:  3 or 4 aspect (A-D) with feather (E,F) and 2 aspect (G,H)" value="6" />
+			<enumChoice choice="UK:  Two 4 aspect allowing dark and flashing" value="7" />
+			<enumChoice choice="UK:  Eight individual aspects" value="8" />
+			<enumChoice choice="UK:  Searchlight, Two 3 aspect with feather" value="9" />
+			<enumChoice choice="UK:  Searchlight, Two 4 aspect with feather" value="10" />
+			<enumChoice choice="UK:  Two 4 aspect with easy manual control" value="11" />
+			<enumChoice choice="UK:  Four pairs on together (level crossing)" value="12" />
+			<enumChoice choice="UK:  Two triplets on together (eg. SPAD) plus pair" value="13" />
+			<enumChoice choice="UK:  4 aspect (A-D) and two 2 aspect" value="14" />
+			<enumChoice choice="UK:  Eight Dapol semaphore signals" value="15" />
+			
+			<!-- North American Signal Types, v22 firmware -->
+			<enumChoice choice="USA/Canada:  Generic Two 4-aspect with discrete R/G/Y/L drive" value="64" />
+			<enumChoice choice="USA/Canada:  Canada triple head searchlight + single head searchlight" value = "65" />
+			<enumChoice choice="USA/Canada:  Canada 2x double head searchlight"  value = "66" />
+			<enumChoice choice="USA/Canada:  Norfolk and Western 2-disc position light" value="68" />
+			<enumChoice choice="USA/Canada:  Norfolk and Western 3-head searchlight + single head" value="69" />
+			<enumChoice choice="USA/Canada:  Norfolk and Western 2-head searchlight + single head" value="70" />
+			<enumChoice choice="USA/Canada:  Norfolk and Western 2x 2-head searchlight (no Lunar)" value="71" />
+			<enumChoice choice="USA/Canada:  B+O Disc and markers position light" value="72" />
+			<enumChoice choice="USA/Canada:  B+O 2x extra markers"  value="73"  />
+			<enumChoice choice="USA/Canada:  PRR Disc and star position light"  value="74"   />
+			<enumChoice choice="USA/Canada:  Amtrak Double disc position light" value="75"   />
+			
+			<!-- Advanced Signal Protocol types, v21 firmware -->
+			<enumChoice choice="Advanced Signal Protocol:  Two 4 aspect" value="128" />
+			<enumChoice choice="Advanced Signal Protocol:  Four 3 aspect searchlight" value="129" />
+			<enumChoice choice="Advanced Signal Protocol:  Two 3 aspect with feather" value="130" />
+			<enumChoice choice="Advanced Signal Protocol:  Two 4-aspect searchlight with a feather" value="131" />
+			<enumChoice choice="Advanced Signal Protocol:  Two 4-aspect searchlight" value="132" />
+			<enumChoice choice="Advanced Signal Protocol:  One 3-aspect or 4-aspect with 3x feathers" value = "133" />
+			<enumChoice choice="Advanced Signal Protocol:  One 4-aspect searchlight with 3x feathers" value = "134" />
+			<!-- Custom Advanced Signal Protocol option, v23 firmware -->
+			<enumChoice choice="Advanced Signal Protocol:  Single signal with user defined aspects" value = "135" />
+			
+			
+			</enumVal>
+	  </variable>
+	  <variable item="userAspects" label="Advanced Signal Protocol: Single signal with user defined aspects" CV="38" include="57379" >
+		<!-- Custom Advanced Signal Protocol option, v23 firmware -->
+		<enumVal>
+			<enumChoice choice="no" value="0" />
+			<enumChoice choice="Advanced Signal Protocol: Single signal with user defined aspects"  value="135" />
+		</enumVal>
+		</variable>
+	  
+	  <variable label="Brightness of Output A" CV="48" default="255"> <decVal />  </variable>
+	  <variable label="Brightness of Output B" CV="49" default="255"> <decVal />  </variable>
+	  <variable label="Brightness of Output C" CV="50" default="255"> <decVal />  </variable>
+	  <variable label="Brightness of Output D" CV="51" default="255"> <decVal />  </variable>
+	  <variable label="Brightness of Output E" CV="52" default="255"> <decVal />  </variable>
+	  <variable label="Brightness of Output F" CV="53" default="255"> <decVal />  </variable>
+	  <variable label="Brightness of Output G" CV="54" default="255"> <decVal />  </variable>
+	  <variable label="Brightness of Output H" CV="55" default="255"> <decVal />  </variable>
+	  
+	  <variable label="Effects Output A" CV="56" >
+		<enumVal>
+			<enumChoice choice="Constant Signal" value="0" />
+			<enumChoice choice="MARS lamp" value="1" />
+			<enumChoice choice="Oil lamp" value="2" />
+			<enumChoice choice="Flashing" value="3" />
+			<enumChoice choice="Single Strobe" value="4" />
+			<enumChoice choice="Double Strobe" value="5" />
+			<enumChoice choice="Rotating beacon" value="6" />
+			<enumChoice choice="Gyralight" value="7" />
+			<enumChoice choice="Fade phase 1" value="8" />
+			<enumChoice choice="Fade phase 2" value="9" />
+			<enumChoice choice="Flashing (inverse)" value="12" />
+			<enumChoice choice="Flashing portable battery" value="14" />
+		</enumVal>
+	  </variable>
+	  <variable label="Effects Output B" CV="57" >
+		<enumVal>
+			<enumChoice choice="Constant Signal" value="0" />
+			<enumChoice choice="MARS lamp" value="1" />
+			<enumChoice choice="Oil lamp" value="2" />
+			<enumChoice choice="Flashing" value="3" />
+			<enumChoice choice="Single Strobe" value="4" />
+			<enumChoice choice="Double Strobe" value="5" />
+			<enumChoice choice="Rotating beacon" value="6" />
+			<enumChoice choice="Gyralight" value="7" />
+			<enumChoice choice="Fade phase 1" value="8" />
+			<enumChoice choice="Fade phase 2" value="9" />
+			<enumChoice choice="Flashing (inverse)" value="12" />
+			<enumChoice choice="Flashing portable battery" value="14" />
+		</enumVal>
+	  </variable>
+	  <variable label="Effects Output C" CV="58" >
+		<enumVal>
+			<enumChoice choice="Constant Signal" value="0" />
+			<enumChoice choice="MARS lamp" value="1" />
+			<enumChoice choice="Oil lamp" value="2" />
+			<enumChoice choice="Flashing" value="3" />
+			<enumChoice choice="Single Strobe" value="4" />
+			<enumChoice choice="Double Strobe" value="5" />
+			<enumChoice choice="Rotating beacon" value="6" />
+			<enumChoice choice="Gyralight" value="7" />
+			<enumChoice choice="Fade phase 1" value="8" />
+			<enumChoice choice="Fade phase 2" value="9" />
+			<enumChoice choice="Flashing (inverse)" value="12" />
+			<enumChoice choice="Flashing portable battery" value="14" />
+		</enumVal>
+	  </variable>
+	  <variable label="Effects Output D" CV="59" >
+		<enumVal>
+			<enumChoice choice="Constant Signal" value="0" />
+			<enumChoice choice="MARS lamp" value="1" />
+			<enumChoice choice="Oil lamp" value="2" />
+			<enumChoice choice="Flashing" value="3" />
+			<enumChoice choice="Single Strobe" value="4" />
+			<enumChoice choice="Double Strobe" value="5" />
+			<enumChoice choice="Rotating beacon" value="6" />
+			<enumChoice choice="Gyralight" value="7" />
+			<enumChoice choice="Fade phase 1" value="8" />
+			<enumChoice choice="Fade phase 2" value="9" />
+			<enumChoice choice="Flashing (inverse)" value="12" />
+			<enumChoice choice="Flashing portable battery" value="14" />
+		</enumVal>
+	  </variable>
+	  <variable label="Effects Output E" CV="60" >
+		<enumVal>
+			<enumChoice choice="Constant Signal" value="0" />
+			<enumChoice choice="MARS lamp" value="1" />
+			<enumChoice choice="Oil lamp" value="2" />
+			<enumChoice choice="Flashing" value="3" />
+			<enumChoice choice="Single Strobe" value="4" />
+			<enumChoice choice="Double Strobe" value="5" />
+			<enumChoice choice="Rotating beacon" value="6" />
+			<enumChoice choice="Gyralight" value="7" />
+			<enumChoice choice="Fade phase 1" value="8" />
+			<enumChoice choice="Fade phase 2" value="9" />
+			<enumChoice choice="Flashing (inverse)" value="12" />
+			<enumChoice choice="Flashing portable battery" value="14" />
+		</enumVal>
+	  </variable>
+	  <variable label="Effects Output F" CV="61" >
+		<enumVal>
+			<enumChoice choice="Constant Signal" value="0" />
+			<enumChoice choice="MARS lamp" value="1" />
+			<enumChoice choice="Oil lamp" value="2" />
+			<enumChoice choice="Flashing" value="3" />
+			<enumChoice choice="Single Strobe" value="4" />
+			<enumChoice choice="Double Strobe" value="5" />
+			<enumChoice choice="Rotating beacon" value="6" />
+			<enumChoice choice="Gyralight" value="7" />
+			<enumChoice choice="Fade phase 1" value="8" />
+			<enumChoice choice="Fade phase 2" value="9" />
+			<enumChoice choice="Flashing (inverse)" value="12" />
+			<enumChoice choice="Flashing portable battery" value="14" />
+		</enumVal>
+	  </variable>
+	  <variable label="Effects Output G" CV="62" >
+		<enumVal>
+			<enumChoice choice="Constant Signal" value="0" />
+			<enumChoice choice="MARS lamp" value="1" />
+			<enumChoice choice="Oil lamp" value="2" />
+			<enumChoice choice="Flashing" value="3" />
+			<enumChoice choice="Single Strobe" value="4" />
+			<enumChoice choice="Double Strobe" value="5" />
+			<enumChoice choice="Rotating beacon" value="6" />
+			<enumChoice choice="Gyralight" value="7" />
+			<enumChoice choice="Fade phase 1" value="8" />
+			<enumChoice choice="Fade phase 2" value="9" />
+			<enumChoice choice="Flashing (inverse)" value="12" />
+			<enumChoice choice="Flashing portable battery" value="14" />
+		</enumVal>
+	  </variable>
+	  <variable label="Effects Output H" CV="63" >
+		<enumVal>
+			<enumChoice choice="Constant Signal" value="0" />
+			<enumChoice choice="MARS lamp" value="1" />
+			<enumChoice choice="Oil lamp" value="2" />
+			<enumChoice choice="Flashing" value="3" />
+			<enumChoice choice="Single Strobe" value="4" />
+			<enumChoice choice="Double Strobe" value="5" />
+			<enumChoice choice="Rotating beacon" value="6" />
+			<enumChoice choice="Gyralight" value="7" />
+			<enumChoice choice="Fade phase 1" value="8" />
+			<enumChoice choice="Fade phase 2" value="9" />
+			<enumChoice choice="Flashing (inverse)" value="12" />
+			<enumChoice choice="Flashing portable battery" value="14" />
+		</enumVal>
+	  </variable>
+
+	  
+	  <variable label="Firmware version" CV="113" readOnly="yes" default="0" item="Product Number" tooltip="Firmware version (read only)CV112">
+	   <hexVal/>
+      </variable>	  
+	  <!--  firmware version is actually CV112 and CV113, CV112 being usually value E0.  But a SplitVal with HEX formatting doesn't work.
+	  <variable label="Firmware sub-version" CV="113" readOnly="yes" default="0" item="User Id #1" tooltip="Firmware sub-version (read only)CV113">
+        <splitVal highCV="112" upperMask="VVVVVVVV" /> 
+      </variable>
+	  -->
+	  
+	  
+	  <!--  Variables 192 to 223 for 32 custom aspects, V023 (productID=57379) and later -->
+	  <variable label="CustAspect0.A" CV="192" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect0.B" CV="192" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect0.C" CV="192" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect0.D" CV="192" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect0.E" CV="192" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect0.F" CV="192" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect0.G" CV="192" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect0.H" CV="192" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+
+	  <variable label="CustAspect1.A" CV="193" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect1.B" CV="193" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect1.C" CV="193" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect1.D" CV="193" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect1.E" CV="193" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect1.F" CV="193" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect1.G" CV="193" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect1.H" CV="193" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect2.A" CV="194" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect2.B" CV="194" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect2.C" CV="194" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect2.D" CV="194" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect2.E" CV="194" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect2.F" CV="194" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect2.G" CV="194" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect2.H" CV="194" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect3.A" CV="195" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect3.B" CV="195" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect3.C" CV="195" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect3.D" CV="195" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect3.E" CV="195" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect3.F" CV="195" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect3.G" CV="195" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect3.H" CV="195" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect4.A" CV="196" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect4.B" CV="196" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect4.C" CV="196" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect4.D" CV="196" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect4.E" CV="196" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect4.F" CV="196" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect4.G" CV="196" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect4.H" CV="196" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect5.A" CV="197" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect5.B" CV="197" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect5.C" CV="197" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect5.D" CV="197" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect5.E" CV="197" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect5.F" CV="197" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect5.G" CV="197" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect5.H" CV="197" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect6.A" CV="198" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect6.B" CV="198" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect6.C" CV="198" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect6.D" CV="198" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect6.E" CV="198" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect6.F" CV="198" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect6.G" CV="198" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect6.H" CV="198" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect7.A" CV="199" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect7.B" CV="199" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect7.C" CV="199" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect7.D" CV="199" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect7.E" CV="199" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect7.F" CV="199" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect7.G" CV="199" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect7.H" CV="199" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  
+	  <variable label="CustAspect8.A" CV="200" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect8.B" CV="200" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect8.C" CV="200" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect8.D" CV="200" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect8.E" CV="200" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect8.F" CV="200" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect8.G" CV="200" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect8.H" CV="200" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect9.A" CV="201" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect9.B" CV="201" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect9.C" CV="201" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect9.D" CV="201" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect9.E" CV="201" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect9.F" CV="201" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect9.G" CV="201" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect9.H" CV="201" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect10.A" CV="202" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect10.B" CV="202" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect10.C" CV="202" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect10.D" CV="202" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect10.E" CV="202" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect10.F" CV="202" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect10.G" CV="202" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect10.H" CV="202" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect11.A" CV="203" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect11.B" CV="203" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect11.C" CV="203" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect11.D" CV="203" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect11.E" CV="203" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect11.F" CV="203" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect11.G" CV="203" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect11.H" CV="203" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect12.A" CV="204" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect12.B" CV="204" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect12.C" CV="204" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect12.D" CV="204" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect12.E" CV="204" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect12.F" CV="204" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect12.G" CV="204" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect12.H" CV="204" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect13.A" CV="205" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect13.B" CV="205" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect13.C" CV="205" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect13.D" CV="205" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect13.E" CV="205" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect13.F" CV="205" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect13.G" CV="205" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect13.H" CV="205" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect14.A" CV="206" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect14.B" CV="206" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect14.C" CV="206" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect14.D" CV="206" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect14.E" CV="206" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect14.F" CV="206" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect14.G" CV="206" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect14.H" CV="206" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect15.A" CV="207" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect15.B" CV="207" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect15.C" CV="207" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect15.D" CV="207" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect15.E" CV="207" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect15.F" CV="207" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect15.G" CV="207" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect15.H" CV="207" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  
+	  <variable label="CustAspect16.A" CV="208" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect16.B" CV="208" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect16.C" CV="208" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect16.D" CV="208" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect16.E" CV="208" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect16.F" CV="208" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect16.G" CV="208" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect16.H" CV="208" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect17.A" CV="209" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect17.B" CV="209" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect17.C" CV="209" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect17.D" CV="209" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect17.E" CV="209" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect17.F" CV="209" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect17.G" CV="209" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect17.H" CV="209" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect18.A" CV="210" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect18.B" CV="210" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect18.C" CV="210" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect18.D" CV="210" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect18.E" CV="210" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect18.F" CV="210" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect18.G" CV="210" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect18.H" CV="210" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect19.A" CV="211" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect19.B" CV="211" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect19.C" CV="211" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect19.D" CV="211" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect19.E" CV="211" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect19.F" CV="211" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect19.G" CV="211" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect19.H" CV="211" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect20.A" CV="212" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect20.B" CV="212" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect20.C" CV="212" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect20.D" CV="212" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect20.E" CV="212" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect20.F" CV="212" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect20.G" CV="212" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect20.H" CV="212" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect21.A" CV="213" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect21.B" CV="213" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect21.C" CV="213" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect21.D" CV="213" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect21.E" CV="213" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect21.F" CV="213" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect21.G" CV="213" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect21.H" CV="213" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect22.A" CV="214" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect22.B" CV="214" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect22.C" CV="214" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect22.D" CV="214" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect22.E" CV="214" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect22.F" CV="214" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect22.G" CV="214" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect22.H" CV="214" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect23.A" CV="215" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect23.B" CV="215" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect23.C" CV="215" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect23.D" CV="215" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect23.E" CV="215" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect23.F" CV="215" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect23.G" CV="215" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect23.H" CV="215" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  
+	  <variable label="CustAspect24.A" CV="216" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect24.B" CV="216" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect24.C" CV="216" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect24.D" CV="216" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect24.E" CV="216" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect24.F" CV="216" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect24.G" CV="216" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect24.H" CV="216" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect25.A" CV="217" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect25.B" CV="217" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect25.C" CV="217" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect25.D" CV="217" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect25.E" CV="217" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect25.F" CV="217" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect25.G" CV="217" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect25.H" CV="217" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect26.A" CV="218" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect26.B" CV="218" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect26.C" CV="218" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect26.D" CV="218" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect26.E" CV="218" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect26.F" CV="218" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect26.G" CV="218" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect26.H" CV="218" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect27.A" CV="219" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect27.B" CV="219" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect27.C" CV="219" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect27.D" CV="219" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect27.E" CV="219" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect27.F" CV="219" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect27.G" CV="219" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect27.H" CV="219" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect28.A" CV="220" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect28.B" CV="220" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect28.C" CV="220" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect28.D" CV="220" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect28.E" CV="220" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect28.F" CV="220" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect28.G" CV="220" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect28.H" CV="220" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect29.A" CV="221" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect29.B" CV="221" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect29.C" CV="221" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect29.D" CV="221" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect29.E" CV="221" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect29.F" CV="221" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect29.G" CV="221" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect29.H" CV="221" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect30.A" CV="222" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect30.B" CV="222" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect30.C" CV="222" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect30.D" CV="222" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect30.E" CV="222" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect30.F" CV="222" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect30.G" CV="222" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect30.H" CV="222" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  <variable label="CustAspect31.A" CV="223" mask="VXXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect31.B" CV="223" mask="XVXXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect31.C" CV="223" mask="XXVXXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect31.D" CV="223" mask="XXXVXXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect31.E" CV="223" mask="XXXXVXXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect31.F" CV="223" mask="XXXXXVXX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect31.G" CV="223" mask="XXXXXXVX" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>
+	  <variable label="CustAspect31.H" CV="223" mask="XXXXXXXV" minOut="8" include="57379">
+        <enumVal><enumChoice choice="No" value="0"/><enumChoice choice="Yes" value="1"/></enumVal>
+      </variable>	  
+	  
+	  </variables>
+    <resets>
+      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
+    </resets>
+  </decoder>
+  <pane name="Decoder Address Mode">
+    <column>
+      <row>
+        <column>
+          <label label="  "/>
+          <display item="Address Mode" format="offradiobutton" label="Select to use settings shown below"/>
+          <label label="           To turn off, use Output Address Mode pane"/>
+          <label label="  "/>
+        </column>
+      </row>
+      <separator/>
+      <label label="  "/>
+      <display item="Decoder Address (1-511)"/>
+      <label label="In Decoder Address Mode, the decoder address is multiplied by four to get the accessory address."/>
+      <label label="An offset of 1 is required to work with Lenz/Digitrax* systems when compared to Roco/MERG command stations"/>
+      <label label="(*) NB. If using advanced signalling options, then Digitrax does not offset address and follows Roco numbers"/>
+
+      <label label="    "/>
+      <row>
+        <column>
+          <label label=" Lenz (etc) Command Stations "/>
+          <label label=" Accessory Address to operate "/>
+          <display item="Decoder Lenz Base Address"/>
+        </column>
+        <column>
+          <label label="                  "/>
+        </column>
+        <column>
+          <label label=" Roco (etc) Command Stations "/>
+          <label label=" Accessory Address to operate "/>
+          <display item="Decoder Roco Base Address"/>
+        </column>
+      </row>
+      
+    </column>
+  </pane>
+  <pane name="Output Address Mode">
+    <column>
+      <row>
+        <column>
+          <label label="  "/>
+          <display item="Address Mode" format="onradiobutton" label="Select to use settings shown below"/>
+          <label label="           To turn off, use Decoder Address Mode pane"/>
+          <label label="  "/>
+        </column>
+      </row>
+      <separator/>
+      <label label="  "/>
+      <display item="Output Mode Address (1-2047)"/>
+      <label label="In Output Address Mode, the decoder address is the accessory address, there is no multiplication. "/>
+      <label label="An offset of 4 is required to work with Lenz/Digitrax* systems when compared to Roco/MERG command stations"/>
+      <label label="(*) NB. If using advanced signalling options, then Digitrax does not offset address and follows Roco numbers"/>
+
+      <label label="    "/>
+      <row>
+        <column>
+          <label label=" Lenz (etc) Command Stations "/>
+          <label label=" Accessory Address to operate "/>
+          <display item="Output Lenz Base Address"/>
+       </column>
+        <column>
+          <label label="                  "/>
+        </column>
+        <column>
+          <label label=" Roco (etc) Command Stations "/>
+          <label label=" Accessory Address to operate "/>
+          <display item="Output Roco Base Address"/>
+        </column>
+      </row>
+    </column>
+  </pane>
+  <pane name="Signal Settings">
+      <column>
+      <label label="  "/>
+	  <display item="Signal Type" />
+      <label label="  "/>
+      <label label="  "/>
+	  
+      <label label="Toggle Mode is required for some systems, if in doubt, turn on. Duration is (x10 MilliSecs), with 0 = continuous"/>
+      <label label="  "/>
+	
+	  <row>
+		<column>
+			<display item="Effects Output A"  label="Output A" />
+		</column>
+		<column>
+			<display item="Brightness of Output A" label="    Brightness" />
+		</column>
+		<column>
+          <display item="Common anode output 1" label="    Common anode" format="checkbox"/>
+		</column>
+        <column>
+          <display item="default output 1" label="    Default on" format="checkbox"/>
+		</column>
+		<column>
+			<display item="A Output (x10) Millisecs" label="   Duration A+B"/>
+		</column>
+		<column>
+          <display item="Toggle Mode output 1" format="checkbox" label="   Toggle A+B"/>
+		</column>
+	  </row>
+	   <label label="  "/>
+	  <row>
+		<column>
+			<display item="Effects Output B"  label="Output B" />
+		</column>
+		<column>
+			<display item="Brightness of Output B" label="    Brightness" />
+		</column>
+		<column>
+          <display item="Common anode output 2" label="    Common anode" format="checkbox"/>
+		</column>
+        <column>
+          <display item="default output 2" label="    Default on" format="checkbox"/>
+		</column>
+	  </row>
+	   <label label="  "/>
+	  <row>
+		<column>
+			<display item="Effects Output C"  label="Output C" />
+		</column>
+		<column>
+			<display item="Brightness of Output C" label="    Brightness" />
+		</column>
+		<column>
+          <display item="Common anode output 3" label="    Common anode" format="checkbox"/>
+		</column>
+        <column>
+          <display item="default output 3" label="    Default on" format="checkbox"/>
+		</column>
+		<column>
+			<display item="B Output (x10) Millisecs" label="   Duration C+D"/>
+		</column>
+		<column>
+          <display item="Toggle Mode output 2" format="checkbox" label="   Toggle C+D"/>
+		</column>
+
+	  </row>
+	   <label label="  "/>
+	  <row>
+		<column>
+			<display item="Effects Output D"  label="Output D" />
+		</column>
+		<column>
+			<display item="Brightness of Output D" label="    Brightness" />
+		</column>
+		<column>
+          <display item="Common anode output 4" label="    Common anode" format="checkbox"/>
+		</column>
+        <column>
+          <display item="default output 4" label="    Default on" format="checkbox"/>
+		</column>
+	  </row>
+	   <label label="  "/>
+	  <row>
+		<column>
+			<display item="Effects Output E"  label="Output E" />
+		</column>
+		<column>
+			<display item="Brightness of Output E" label="    Brightness" />
+		</column>
+		<column>
+          <display item="Common anode output 5" label="    Common anode" format="checkbox"/>
+		</column>
+        <column>
+          <display item="default output 5" label="    Default on" format="checkbox"/>
+		</column>
+		<column>
+			<display item="C Output (x10) Millisecs" label="   Duration E+F"/>
+		</column>
+		<column>
+          <display item="Toggle Mode output 3" format="checkbox" label="   Toggle E+F"/>
+		</column>
+
+	  </row>
+	   <label label="  "/>
+	  <row>
+		<column>
+			<display item="Effects Output F"  label="Output F" />
+		</column>
+		<column>
+			<display item="Brightness of Output F" label="    Brightness" />
+		</column>
+		<column>
+          <display item="Common anode output 6" label="    Common anode" format="checkbox"/>
+		</column>
+        <column>
+          <display item="default output 6" label="    Default on" format="checkbox"/>
+		</column>
+	  </row>
+	   <label label="  "/>
+	  <row>
+		<column>
+			<display item="Effects Output G"  label="Output G" />
+		</column>
+		<column>
+			<display item="Brightness of Output G" label="    Brightness" />
+		</column>
+		<column>
+          <display item="Common anode output 7" label="    Common anode" format="checkbox"/>
+		</column>
+        <column>
+          <display item="default output 7" label="    Default on" format="checkbox"/>
+		</column>
+		<column>
+			<display item="D Output (x10) Millisecs" label="   Duration G+H"/>
+		</column>
+		<column>
+          <display item="Toggle Mode output 4" format="checkbox" label="   Toggle G+H"/>
+		</column>
+
+	  </row>
+	   <label label="  "/>
+	  <row>
+		<column>
+			<display item="Effects Output H"  label="Output H" />
+		</column>
+		<column>
+			<display item="Brightness of Output H" label="    Brightness" />
+		</column>
+		<column>
+          <display item="Common anode output 8" label="    Common anode" format="checkbox"/>
+		</column>
+        <column>
+          <display item="default output 8" label="    Default on" format="checkbox"/>
+		</column>
+	  </row>
+	   <label label="  "/>
+	
+	  <display item="Roco Momentary Mode" format="checkbox"/>
+ 
+    </column>
+  
+  </pane>
+  <pane name="Custom Output Map">
+	<column>
+		<row>
+		<column>
+			<label label="Use this with Map for Custom Signal Arrangements when using the DCC Advanced Signalling Protocol " />
+			<label label="Requires V023 or later firmware" />
+			<display item="userAspects" label=" " format="onradiobutton" />
+			<label label="Typical uses would be unusual signalling systems, numeric (theatre) displays, etc.  " />
+			<label label=" " />
+		</column>
+		</row>
+		<row>
+			<column>
+				<label label="                    A " />
+				<display item="CustAspect0.A" label="Aspect 0  " format="checkbox" />
+				<display item="CustAspect1.A" label="Aspect 1  " format="checkbox" />
+				<display item="CustAspect2.A" label="Aspect 2  " format="checkbox" />
+				<display item="CustAspect3.A" label="Aspect 3  " format="checkbox" />
+				<display item="CustAspect4.A" label="Aspect 4  " format="checkbox" />
+				<display item="CustAspect5.A" label="Aspect 5  " format="checkbox" />
+				<display item="CustAspect6.A" label="Aspect 6  " format="checkbox" />
+				<display item="CustAspect7.A" label="Aspect 7  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect8.A" label="Aspect 8  " format="checkbox" />
+				<display item="CustAspect9.A" label="Aspect 9  " format="checkbox" />
+				<display item="CustAspect10.A" label="Aspect 10 " format="checkbox" />
+				<display item="CustAspect11.A" label="Aspect 11 " format="checkbox" />
+				<display item="CustAspect12.A" label="Aspect 12 " format="checkbox" />
+				<display item="CustAspect13.A" label="Aspect 13 " format="checkbox" />
+				<display item="CustAspect14.A" label="Aspect 14 " format="checkbox" />
+				<display item="CustAspect15.A" label="Aspect 15 " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect16.A" label="Aspect 16 " format="checkbox" />
+				<display item="CustAspect17.A" label="Aspect 17 " format="checkbox" />
+				<display item="CustAspect18.A" label="Aspect 18 " format="checkbox" />
+				<display item="CustAspect19.A" label="Aspect 19 " format="checkbox" />
+				<display item="CustAspect20.A" label="Aspect 20 " format="checkbox" />
+				<display item="CustAspect21.A" label="Aspect 21 " format="checkbox" />
+				<display item="CustAspect22.A" label="Aspect 22 " format="checkbox" />
+				<display item="CustAspect23.A" label="Aspect 23 " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect24.A" label="Aspect 24 " format="checkbox" />
+				<display item="CustAspect25.A" label="Aspect 25 " format="checkbox" />
+				<display item="CustAspect26.A" label="Aspect 26 " format="checkbox" />
+				<display item="CustAspect27.A" label="Aspect 27 " format="checkbox" />
+				<display item="CustAspect28.A" label="Aspect 28 " format="checkbox" />
+				<display item="CustAspect29.A" label="Aspect 29 " format="checkbox" />
+				<display item="CustAspect30.A" label="Aspect 30 " format="checkbox" />
+				<display item="CustAspect31.A" label="Aspect 31 " format="checkbox" />
+
+			</column>
+			<column>
+				<label label="    B " />
+				<display item="CustAspect0.B" label="  " format="checkbox" />
+				<display item="CustAspect1.B" label="  " format="checkbox" />
+				<display item="CustAspect2.B" label="  " format="checkbox" />
+				<display item="CustAspect3.B" label="  " format="checkbox" />
+				<display item="CustAspect4.B" label="  " format="checkbox" />
+				<display item="CustAspect5.B" label="  " format="checkbox" />
+				<display item="CustAspect6.B" label="  " format="checkbox" />
+				<display item="CustAspect7.B" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect8.B" label="  " format="checkbox" />
+				<display item="CustAspect9.B" label="  " format="checkbox" />
+				<display item="CustAspect10.B" label="  " format="checkbox" />
+				<display item="CustAspect11.B" label="  " format="checkbox" />
+				<display item="CustAspect12.B" label="  " format="checkbox" />
+				<display item="CustAspect13.B" label="  " format="checkbox" />
+				<display item="CustAspect14.B" label="  " format="checkbox" />
+				<display item="CustAspect15.B" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect16.B" label="  " format="checkbox" />
+				<display item="CustAspect17.B" label="  " format="checkbox" />
+				<display item="CustAspect18.B" label="  " format="checkbox" />
+				<display item="CustAspect19.B" label="  " format="checkbox" />
+				<display item="CustAspect20.B" label="  " format="checkbox" />
+				<display item="CustAspect21.B" label="  " format="checkbox" />
+				<display item="CustAspect22.B" label="  " format="checkbox" />
+				<display item="CustAspect23.B" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect24.B" label="  " format="checkbox" />
+				<display item="CustAspect25.B" label="  " format="checkbox" />
+				<display item="CustAspect26.B" label="  " format="checkbox" />
+				<display item="CustAspect27.B" label="  " format="checkbox" />
+				<display item="CustAspect28.B" label="  " format="checkbox" />
+				<display item="CustAspect29.B" label="  " format="checkbox" />
+				<display item="CustAspect30.B" label="  " format="checkbox" />
+				<display item="CustAspect31.B" label="  " format="checkbox" />
+
+			</column>
+			<column>
+				<label label="    C " />
+				<display item="CustAspect0.C" label="  " format="checkbox" />
+				<display item="CustAspect1.C" label="  " format="checkbox" />
+				<display item="CustAspect2.C" label="  " format="checkbox" />
+				<display item="CustAspect3.C" label="  " format="checkbox" />
+				<display item="CustAspect4.C" label="  " format="checkbox" />
+				<display item="CustAspect5.C" label="  " format="checkbox" />
+				<display item="CustAspect6.C" label="  " format="checkbox" />
+				<display item="CustAspect7.C" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect8.C" label="  " format="checkbox" />
+				<display item="CustAspect9.C" label="  " format="checkbox" />
+				<display item="CustAspect10.C" label="  " format="checkbox" />
+				<display item="CustAspect11.C" label="  " format="checkbox" />
+				<display item="CustAspect12.C" label="  " format="checkbox" />
+				<display item="CustAspect13.C" label="  " format="checkbox" />
+				<display item="CustAspect14.C" label="  " format="checkbox" />
+				<display item="CustAspect15.C" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect16.C" label="  " format="checkbox" />
+				<display item="CustAspect17.C" label="  " format="checkbox" />
+				<display item="CustAspect18.C" label="  " format="checkbox" />
+				<display item="CustAspect19.C" label="  " format="checkbox" />
+				<display item="CustAspect20.C" label="  " format="checkbox" />
+				<display item="CustAspect21.C" label="  " format="checkbox" />
+				<display item="CustAspect22.C" label="  " format="checkbox" />
+				<display item="CustAspect23.C" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect24.C" label="  " format="checkbox" />
+				<display item="CustAspect25.C" label="  " format="checkbox" />
+				<display item="CustAspect26.C" label="  " format="checkbox" />
+				<display item="CustAspect27.C" label="  " format="checkbox" />
+				<display item="CustAspect28.C" label="  " format="checkbox" />
+				<display item="CustAspect29.C" label="  " format="checkbox" />
+				<display item="CustAspect30.C" label="  " format="checkbox" />
+				<display item="CustAspect31.C" label="  " format="checkbox" />
+
+			</column>
+			<column>
+				<label label="    D " />
+				<display item="CustAspect0.D" label="  " format="checkbox" />
+				<display item="CustAspect1.D" label="  " format="checkbox" />
+				<display item="CustAspect2.D" label="  " format="checkbox" />
+				<display item="CustAspect3.D" label="  " format="checkbox" />
+				<display item="CustAspect4.D" label="  " format="checkbox" />
+				<display item="CustAspect5.D" label="  " format="checkbox" />
+				<display item="CustAspect6.D" label="  " format="checkbox" />
+				<display item="CustAspect7.D" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect8.D" label="  " format="checkbox" />
+				<display item="CustAspect9.D" label="  " format="checkbox" />
+				<display item="CustAspect10.D" label="  " format="checkbox" />
+				<display item="CustAspect11.D" label="  " format="checkbox" />
+				<display item="CustAspect12.D" label="  " format="checkbox" />
+				<display item="CustAspect13.D" label="  " format="checkbox" />
+				<display item="CustAspect14.D" label="  " format="checkbox" />
+				<display item="CustAspect15.D" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect16.D" label="  " format="checkbox" />
+				<display item="CustAspect17.D" label="  " format="checkbox" />
+				<display item="CustAspect18.D" label="  " format="checkbox" />
+				<display item="CustAspect19.D" label="  " format="checkbox" />
+				<display item="CustAspect20.D" label="  " format="checkbox" />
+				<display item="CustAspect21.D" label="  " format="checkbox" />
+				<display item="CustAspect22.D" label="  " format="checkbox" />
+				<display item="CustAspect23.D" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect24.D" label="  " format="checkbox" />
+				<display item="CustAspect25.D" label="  " format="checkbox" />
+				<display item="CustAspect26.D" label="  " format="checkbox" />
+				<display item="CustAspect27.D" label="  " format="checkbox" />
+				<display item="CustAspect28.D" label="  " format="checkbox" />
+				<display item="CustAspect29.D" label="  " format="checkbox" />
+				<display item="CustAspect30.D" label="  " format="checkbox" />
+				<display item="CustAspect31.D" label="  " format="checkbox" />
+
+			</column>
+			<column>
+				<label label="    E " />
+				<display item="CustAspect0.E" label="  " format="checkbox" />
+				<display item="CustAspect1.E" label="  " format="checkbox" />
+				<display item="CustAspect2.E" label="  " format="checkbox" />
+				<display item="CustAspect3.E" label="  " format="checkbox" />
+				<display item="CustAspect4.E" label="  " format="checkbox" />
+				<display item="CustAspect5.E" label="  " format="checkbox" />
+				<display item="CustAspect6.E" label="  " format="checkbox" />
+				<display item="CustAspect7.E" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect8.E" label="  " format="checkbox" />
+				<display item="CustAspect9.E" label="  " format="checkbox" />
+				<display item="CustAspect10.E" label="  " format="checkbox" />
+				<display item="CustAspect11.E" label="  " format="checkbox" />
+				<display item="CustAspect12.E" label="  " format="checkbox" />
+				<display item="CustAspect13.E" label="  " format="checkbox" />
+				<display item="CustAspect14.E" label="  " format="checkbox" />
+				<display item="CustAspect15.E" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect16.E" label="  " format="checkbox" />
+				<display item="CustAspect17.E" label="  " format="checkbox" />
+				<display item="CustAspect18.E" label="  " format="checkbox" />
+				<display item="CustAspect19.E" label="  " format="checkbox" />
+				<display item="CustAspect20.E" label="  " format="checkbox" />
+				<display item="CustAspect21.E" label="  " format="checkbox" />
+				<display item="CustAspect22.E" label="  " format="checkbox" />
+				<display item="CustAspect23.E" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect24.E" label="  " format="checkbox" />
+				<display item="CustAspect25.E" label="  " format="checkbox" />
+				<display item="CustAspect26.E" label="  " format="checkbox" />
+				<display item="CustAspect27.E" label="  " format="checkbox" />
+				<display item="CustAspect28.E" label="  " format="checkbox" />
+				<display item="CustAspect29.E" label="  " format="checkbox" />
+				<display item="CustAspect30.E" label="  " format="checkbox" />
+				<display item="CustAspect31.E" label="  " format="checkbox" />
+
+			</column>
+			<column>
+				<label label="    F " />
+				<display item="CustAspect0.F" label="  " format="checkbox" />
+				<display item="CustAspect1.F" label="  " format="checkbox" />
+				<display item="CustAspect2.F" label="  " format="checkbox" />
+				<display item="CustAspect3.F" label="  " format="checkbox" />
+				<display item="CustAspect4.F" label="  " format="checkbox" />
+				<display item="CustAspect5.F" label="  " format="checkbox" />
+				<display item="CustAspect6.F" label="  " format="checkbox" />
+				<display item="CustAspect7.F" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect8.F" label="  " format="checkbox" />
+				<display item="CustAspect9.F" label="  " format="checkbox" />
+				<display item="CustAspect10.F" label="  " format="checkbox" />
+				<display item="CustAspect11.F" label="  " format="checkbox" />
+				<display item="CustAspect12.F" label="  " format="checkbox" />
+				<display item="CustAspect13.F" label="  " format="checkbox" />
+				<display item="CustAspect14.F" label="  " format="checkbox" />
+				<display item="CustAspect15.F" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect16.F" label="  " format="checkbox" />
+				<display item="CustAspect17.F" label="  " format="checkbox" />
+				<display item="CustAspect18.F" label="  " format="checkbox" />
+				<display item="CustAspect19.F" label="  " format="checkbox" />
+				<display item="CustAspect20.F" label="  " format="checkbox" />
+				<display item="CustAspect21.F" label="  " format="checkbox" />
+				<display item="CustAspect22.F" label="  " format="checkbox" />
+				<display item="CustAspect23.F" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect24.F" label="  " format="checkbox" />
+				<display item="CustAspect25.F" label="  " format="checkbox" />
+				<display item="CustAspect26.F" label="  " format="checkbox" />
+				<display item="CustAspect27.F" label="  " format="checkbox" />
+				<display item="CustAspect28.F" label="  " format="checkbox" />
+				<display item="CustAspect29.F" label="  " format="checkbox" />
+				<display item="CustAspect30.F" label="  " format="checkbox" />
+				<display item="CustAspect31.F" label="  " format="checkbox" />
+
+			</column>
+			<column>
+				<label label="    G " />
+				<display item="CustAspect0.G" label="  " format="checkbox" />
+				<display item="CustAspect1.G" label="  " format="checkbox" />
+				<display item="CustAspect2.G" label="  " format="checkbox" />
+				<display item="CustAspect3.G" label="  " format="checkbox" />
+				<display item="CustAspect4.G" label="  " format="checkbox" />
+				<display item="CustAspect5.G" label="  " format="checkbox" />
+				<display item="CustAspect6.G" label="  " format="checkbox" />
+				<display item="CustAspect7.G" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect8.G" label="  " format="checkbox" />
+				<display item="CustAspect9.G" label="  " format="checkbox" />
+				<display item="CustAspect10.G" label="  " format="checkbox" />
+				<display item="CustAspect11.G" label="  " format="checkbox" />
+				<display item="CustAspect12.G" label="  " format="checkbox" />
+				<display item="CustAspect13.G" label="  " format="checkbox" />
+				<display item="CustAspect14.G" label="  " format="checkbox" />
+				<display item="CustAspect15.G" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect16.G" label="  " format="checkbox" />
+				<display item="CustAspect17.G" label="  " format="checkbox" />
+				<display item="CustAspect18.G" label="  " format="checkbox" />
+				<display item="CustAspect19.G" label="  " format="checkbox" />
+				<display item="CustAspect20.G" label="  " format="checkbox" />
+				<display item="CustAspect21.G" label="  " format="checkbox" />
+				<display item="CustAspect22.G" label="  " format="checkbox" />
+				<display item="CustAspect23.G" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect24.G" label="  " format="checkbox" />
+				<display item="CustAspect25.G" label="  " format="checkbox" />
+				<display item="CustAspect26.G" label="  " format="checkbox" />
+				<display item="CustAspect27.G" label="  " format="checkbox" />
+				<display item="CustAspect28.G" label="  " format="checkbox" />
+				<display item="CustAspect29.G" label="  " format="checkbox" />
+				<display item="CustAspect30.G" label="  " format="checkbox" />
+				<display item="CustAspect31.G" label="  " format="checkbox" />
+
+			</column>
+			<column>
+				<label label="    H " />
+				<display item="CustAspect0.H" label="  " format="checkbox" />
+				<display item="CustAspect1.H" label="  " format="checkbox" />
+				<display item="CustAspect2.H" label="  " format="checkbox" />
+				<display item="CustAspect3.H" label="  " format="checkbox" />
+				<display item="CustAspect4.H" label="  " format="checkbox" />
+				<display item="CustAspect5.H" label="  " format="checkbox" />
+				<display item="CustAspect6.H" label="  " format="checkbox" />
+				<display item="CustAspect7.H" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect8.H" label="  " format="checkbox" />
+				<display item="CustAspect9.H" label="  " format="checkbox" />
+				<display item="CustAspect10.H" label="  " format="checkbox" />
+				<display item="CustAspect11.H" label="  " format="checkbox" />
+				<display item="CustAspect12.H" label="  " format="checkbox" />
+				<display item="CustAspect13.H" label="  " format="checkbox" />
+				<display item="CustAspect14.H" label="  " format="checkbox" />
+				<display item="CustAspect15.H" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect16.H" label="  " format="checkbox" />
+				<display item="CustAspect17.H" label="  " format="checkbox" />
+				<display item="CustAspect18.H" label="  " format="checkbox" />
+				<display item="CustAspect19.H" label="  " format="checkbox" />
+				<display item="CustAspect20.H" label="  " format="checkbox" />
+				<display item="CustAspect21.H" label="  " format="checkbox" />
+				<display item="CustAspect22.H" label="  " format="checkbox" />
+				<display item="CustAspect23.H" label="  " format="checkbox" />
+				<label label=" " />
+				<display item="CustAspect24.H" label="  " format="checkbox" />
+				<display item="CustAspect25.H" label="  " format="checkbox" />
+				<display item="CustAspect26.H" label="  " format="checkbox" />
+				<display item="CustAspect27.H" label="  " format="checkbox" />
+				<display item="CustAspect28.H" label="  " format="checkbox" />
+				<display item="CustAspect29.H" label="  " format="checkbox" />
+				<display item="CustAspect30.H" label="  " format="checkbox" />
+				<display item="CustAspect31.H" label="  " format="checkbox" />
+
+			</column>
+
+		</row>
+	</column>
+  </pane>
+</decoder-config>

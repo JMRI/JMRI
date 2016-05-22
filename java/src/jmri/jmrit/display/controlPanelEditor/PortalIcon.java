@@ -3,6 +3,8 @@
 
 package jmri.jmrit.display.controlPanelEditor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.catalog.NamedIcon;
@@ -33,14 +35,14 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
     public PortalIcon(String blockName, String portalName, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(editor);
-        OBlock block = jmri.InstanceManager.oBlockManagerInstance().getOBlock(blockName);
+        OBlock block = jmri.InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(blockName);
         _portal = block.getPortalByName(portalName);
         initMap();
     }
 
 
     private void initMap() {
-        _iconMap = new java.util.Hashtable<String, NamedIcon>();
+        _iconMap = new java.util.HashMap<String, NamedIcon>();
 
         String fileName = "resources/icons/throttles/RoundRedCircle20.png";
         NamedIcon icon = new NamedIcon(fileName, fileName);
@@ -82,5 +84,5 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
         return _portal.getDescription();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PortalIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(PortalIcon.class.getName());
 }

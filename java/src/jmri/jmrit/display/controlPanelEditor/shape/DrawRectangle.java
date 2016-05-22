@@ -3,15 +3,16 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <P>
@@ -52,7 +53,7 @@ public class DrawRectangle extends DrawFrame{
     	_widthText.setText(Integer.toString(_width));
         _widthText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_widthText);
-        pp.add(new JLabel(rbcp.getString("width")));
+        pp.add(new JLabel(Bundle.getMessage("width")));
         p.add(pp);
         p.add(Box.createHorizontalStrut(STRUT_SIZE));
 
@@ -72,7 +73,7 @@ public class DrawRectangle extends DrawFrame{
     	_heightText.setText(Integer.toString(_height));
         _heightText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_heightText);
-        pp.add(new JLabel(rbcp.getString("height")));
+        pp.add(new JLabel(Bundle.getMessage("height")));
         p.add(pp);
         
         panel.add(p);
@@ -83,21 +84,21 @@ public class DrawRectangle extends DrawFrame{
     /**
      * Create a new PositionableShape 
      */
-    protected void makeFigure() {
+    protected boolean makeFigure(MouseEvent event) {
     	ControlPanelEditor ed = _parent.getEditor();
     	Rectangle r = ed.getSelectRect();
-    	if (r==null) {
-    		return;
+    	if (r!=null) {
+        	_width = r.width;
+        	_height = r.height;
+        	Rectangle2D.Double rr = new Rectangle2D.Double(0, 0, _width, _height);
+        	PositionableRectangle ps = new PositionableRectangle(ed, rr);
+        	ps.setLocation(r.x, r.y);
+        	ps.setDisplayLevel(ControlPanelEditor.MARKERS);
+    		setPositionableParams(ps);
+            ps.updateSize();
+        	ed.putItem(ps);
     	}
-    	_width = r.width;
-    	_height = r.height;
-    	Rectangle2D.Double rr = new Rectangle2D.Double(0, 0, _width, _height);
-    	PositionableRectangle ps = new PositionableRectangle(ed, rr);
-    	ps.setLocation(r.x, r.y);
-    	ps.setDisplayLevel(ControlPanelEditor.MARKERS);
-		setPositionableParams(ps);
-        ps.updateSize();
-    	ed.putItem(ps);
+		return true;
 	}
 
     /**
@@ -129,5 +130,5 @@ public class DrawRectangle extends DrawFrame{
 //		pos.makeShape();
     }
    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DrawRectangle.class.getName());
+    static Logger log = LoggerFactory.getLogger(DrawRectangle.class.getName());
 }

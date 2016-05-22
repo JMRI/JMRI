@@ -2,6 +2,9 @@
 
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Abstract Traffic Controller base class for those implementations that
  * track a set of nodes.
@@ -137,5 +140,5 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
         nodeArray[numNodes] = null;
     }
 
-    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMRNodeTrafficController.class.getName());
+    private static Logger log = LoggerFactory.getLogger(AbstractMRNodeTrafficController.class.getName());
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable.sensor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 import jmri.jmrit.beantable.BeanTableDataModel;
@@ -22,7 +24,8 @@ import jmri.InstanceManager;
 public class SensorTableDataModel extends BeanTableDataModel {
 
     static public final int INVERTCOL = NUMCOLUMN;
-    static public final int USEGLOBALDELAY = INVERTCOL+1;
+    static public final int EDITCOL = INVERTCOL+1;
+    static public final int USEGLOBALDELAY = EDITCOL+1;
     static public final int ACTIVEDELAY = USEGLOBALDELAY+1;
     static public final int INACTIVEDELAY = ACTIVEDELAY+1;
     
@@ -96,6 +99,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     public String getColumnName(int col) {
         if(col==INVERTCOL) return rb.getString("Inverted");
+        if(col==EDITCOL) return "";
         if(col==USEGLOBALDELAY) return rb.getString("SensorUseGlobalDebounce");
         if(col==ACTIVEDELAY) return rb.getString("SensorActiveDebounce");
         if(col==INACTIVEDELAY) return rb.getString("SensorInActiveDebounce");
@@ -103,6 +107,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
     public Class<?> getColumnClass(int col) {
         if (col==INVERTCOL) return Boolean.class;
+        if (col==EDITCOL) return JButton.class;
         if(col==USEGLOBALDELAY) return Boolean.class;
         if(col==ACTIVEDELAY) return String.class;
         if(col==INACTIVEDELAY) return String.class;
@@ -113,10 +118,11 @@ public class SensorTableDataModel extends BeanTableDataModel {
         if(col==USEGLOBALDELAY || col==ACTIVEDELAY || col==INACTIVEDELAY){
             return new JTextField(8).getPreferredSize().width;
         }
+        if(col == EDITCOL) return new JTextField(7).getPreferredSize().width;
         else return super.getPreferredWidth(col);
     }
     public boolean isCellEditable(int row, int col) {
-        if (col==INVERTCOL) return true;
+        if (col==INVERTCOL || col==EDITCOL) return true;
         if(col==USEGLOBALDELAY) return true;
         //Need to do something here to make it disable 
         if(col==ACTIVEDELAY||col==INACTIVEDELAY){
@@ -153,6 +159,8 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
         else if(col==INACTIVEDELAY){
             return s.getSensorDebounceGoingInActiveTimer();
+        } else if (col==EDITCOL ) {
+            return rb.getString("ButtonEdit");
         }
         else return super.getValueAt(row, col);
     }    		
@@ -184,6 +192,18 @@ public class SensorTableDataModel extends BeanTableDataModel {
             String val = (String)value;
             long goingInActive = Long.valueOf(val);
             s.setSensorDebounceGoingInActiveTimer(goingInActive);
+        } else if (col==EDITCOL ) {
+            class WindowMaker implements Runnable {
+                Sensor s;
+                WindowMaker(Sensor s){
+                    this.s = s;
+                }
+                public void run() {
+                        editButton(s);
+                    }
+                }
+            WindowMaker w = new WindowMaker(s);
+            javax.swing.SwingUtilities.invokeLater(w);
         }
         else super.setValueAt(value, row, col);
     }
@@ -209,6 +229,12 @@ public class SensorTableDataModel extends BeanTableDataModel {
     
     protected JTable table;
     
+    void editButton(Sensor s){
+        jmri.jmrit.beantable.beanedit.SensorEditAction beanEdit = new jmri.jmrit.beantable.beanedit.SensorEditAction();
+        beanEdit.setBean(s);
+        beanEdit.actionPerformed(null);
+    }
+    
     public void showDebounce(boolean show){
         XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
         TableColumn column  = columnModel.getColumnByModelIndex(USEGLOBALDELAY);
@@ -225,7 +251,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     public String getClassDescription() { return rb.getString("TitleSensorTable"); }
 
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableDataModel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SensorTableDataModel.class.getName());
 }
 
 /* @(#)SensorTableDataModel.java */

@@ -2,6 +2,7 @@
 
 package jmri.util.exceptionhandler;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 import jmri.util.*;
@@ -52,6 +53,6 @@ public class AwtHandlerTest extends SwingTestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AwtHandlerTest.class.getName());
+	static Logger log = Logger.getLogger(AwtHandlerTest.class.getName());
 
 }

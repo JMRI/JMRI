@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: MRC_soundbrilliance1819.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,15 +16,15 @@
   <version author="Peter Osborne" version="1" lastUpdated="20090101"/>
   <version author="Bill Chown" version="2" lastUpdated="20090111"/>
   <version author="Peter Ulvestad" version="3" lastUpdated="20091011"/>
-<!-- Ver. 1 - made from the MRC_Athearn Big Boy or Challenger file (Peter Osborne) prosborne@sbcglobal.net-->
-<!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
-<!-- works for both loco types, despite apparent differences in the documentation -->
-<!-- Ver. 2 - reset default values, small errors corrected -->
-<!-- Ver. 3 - Moved Consist functions to Consist pane, Cleaned up sound level pane -->
+  <!-- Ver. 1 - made from the MRC_Athearn Big Boy or Challenger file (Peter Osborne) prosborne@sbcglobal.net-->
+  <!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
+  <!-- works for both loco types, despite apparent differences in the documentation -->
+  <!-- Ver. 2 - reset default values, small errors corrected -->
+  <!-- Ver. 3 - Moved Consist functions to Consist pane, Cleaned up sound level pane -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="G Gauge Steam Decoder 1819" maxTotalCurrent="5A" extFnsMRC="yes">
-<!-- note All 28 functions are NMRA compatible -->
+        <!-- note All 28 functions are NMRA compatible -->
         <size length="70.5" width="34" height="11.4" units="mm"/>
       </model>
     </family>

@@ -50,18 +50,18 @@ public class BackupSet {
 			if (f.isFile()) {
 				ok = f.delete();
 				if (!ok)
-					throw new RuntimeException("Failed to delete file: " + f.getAbsolutePath());
+					throw new RuntimeException("Failed to delete file: " + f.getAbsolutePath()); // NOI18N
 			}
 		}
 
 		ok = dir.delete();
 		if (!ok)
-			throw new RuntimeException("Failed to delete directory: " + dir.getAbsolutePath());
+			throw new RuntimeException("Failed to delete directory: " + dir.getAbsolutePath()); // NOI18N
 	}
 
 
 	@Override
 	public String toString() {
-		return String.format("%s (%s)", _setName, _lastModifiedDate);
+		return String.format("%s (%s)", _setName, _lastModifiedDate); // NOI18N
 	}
 }

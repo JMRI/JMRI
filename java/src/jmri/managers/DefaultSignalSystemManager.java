@@ -2,14 +2,18 @@
 
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.implementation.DefaultSignalSystem;
 
 import java.io.*;
+import java.lang.reflect.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import jmri.util.FileUtil;
 
 import org.jdom.Element;
 
@@ -89,8 +93,8 @@ public class DefaultSignalSystemManager extends AbstractManager
             }
         }
         //Now get the user defined systems.
-        signalDir = new File(XmlFile.prefsDir()+
-            java.io.File.separator+"resources"+File.separator+"signals");
+        signalDir = new File(FileUtil.getUserFilesPath()
+            +"resources"+File.separator+"signals");
         if(!signalDir.exists()){
             log.info("User signal resource directory has not been created");
             try {
@@ -136,7 +140,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         }
 
         //if the file doesn't exist or fails the load from the default location then try the user directory
-        filename = XmlFile.prefsDir()+"resources"
+        filename = FileUtil.getUserFilesPath()+"resources"
                             +File.separator+"signals"
                             +File.separator+name
                             +File.separator+"aspects.xml";
@@ -187,6 +191,40 @@ public class DefaultSignalSystemManager extends AbstractManager
                 s.setImageType(type);
             }
         }
+        //loadProperties(s, root);
+        if(root.getChild("properties")!=null){
+            for (Object next : root.getChild("properties").getChildren("property")) {
+                Element e = (Element) next;
+                
+                try {
+                    Class<?> cl;
+                    Constructor<?> ctor;
+                    // create key object
+                    cl = Class.forName(e.getChild("key").getAttributeValue("class"));
+                    ctor = cl.getConstructor(new Class<?>[] {String.class});
+                    Object key = ctor.newInstance(new Object[] {e.getChild("key").getText()});
+
+                    // create value object
+                    Object value = null;
+                    if (e.getChild("value") != null) {
+                        cl = Class.forName(e.getChild("value").getAttributeValue("class"));
+                        ctor = cl.getConstructor(new Class<?>[] {String.class});
+                        value = ctor.newInstance(new Object[] {e.getChild("value").getText()});
+                    }
+                    
+                    // store
+                    s.setProperty(key, value);
+                } catch (Exception ex) {
+                    log.error("Error loading properties", ex);
+                }
+            }
+        }
+    }
+    
+    void loadProperties(NamedBean t, Element elem) {
+        Element p = elem.getChild("properties");
+        if (p == null) return;
+        
     }
 
     /** 
@@ -195,7 +233,7 @@ public class DefaultSignalSystemManager extends AbstractManager
     static class AspectFile extends XmlFile {
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalSystemManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class.getName());
 }
 
 /* @(#)DefaultSignalSystemManager.java */

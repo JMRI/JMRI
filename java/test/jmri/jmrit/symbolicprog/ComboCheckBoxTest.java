@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 
 import javax.swing.*;
@@ -121,6 +122,6 @@ public class ComboCheckBoxTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ComboCheckBoxTest.class.getName());
+    static Logger log = Logger.getLogger(ComboCheckBoxTest.class.getName());
 
 }

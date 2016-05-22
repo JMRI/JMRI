@@ -1,5 +1,7 @@
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import jmri.BasicRosterEntry;
 import jmri.LocoAddress;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import jmri.Throttle;
 
 /**
  * Abstract implementation of a ThrottleManager.
@@ -495,67 +498,67 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             else if (item.equals("SpeedStepMode"))
                 return t.getSpeedStepMode();
         }
-        else if (item.equals("F0"))
+        else if (item.equals(Throttle.F0))
             return t.getF0();
-        else if(item.startsWith("F1")){
-            if (item.equals("F1"))
+        else if(item.startsWith(Throttle.F1)){
+            if (item.equals(Throttle.F1))
                 return t.getF1();
-            else if (item.equals("F10"))
+            else if (item.equals(Throttle.F10))
                 return t.getF10();
-            else if (item.equals("F11"))
+            else if (item.equals(Throttle.F11))
                 return t.getF11();
-            else if (item.equals("F12"))
+            else if (item.equals(Throttle.F12))
                 return t.getF12();
-            else if (item.equals("F13"))
+            else if (item.equals(Throttle.F13))
                 return t.getF13();
-            else if (item.equals("F14"))
+            else if (item.equals(Throttle.F14))
                 return t.getF14();
-            else if (item.equals("F15"))
+            else if (item.equals(Throttle.F15))
                 return t.getF15();
-            else if (item.equals("F16"))
+            else if (item.equals(Throttle.F16))
                 return t.getF16();
-            else if (item.equals("F17"))
+            else if (item.equals(Throttle.F17))
                 return t.getF17();
-            else if (item.equals("F18"))
+            else if (item.equals(Throttle.F18))
                 return t.getF18();
-            else if (item.equals("F19"))
+            else if (item.equals(Throttle.F19))
                 return t.getF19();
         }
-        else if(item.startsWith("F2")){
-            if (item.equals("F2"))
+        else if(item.startsWith(Throttle.F2)){
+            if (item.equals(Throttle.F2))
                 return t.getF2();
-            else if (item.equals("F20"))
+            else if (item.equals(Throttle.F20))
                 return t.getF20();
-            else if (item.equals("F21"))
+            else if (item.equals(Throttle.F21))
                 return t.getF21();
-            else if (item.equals("F22"))
+            else if (item.equals(Throttle.F22))
                 return t.getF22();
-            else if (item.equals("F23"))
+            else if (item.equals(Throttle.F23))
                 return t.getF23();
-            else if (item.equals("F24"))
+            else if (item.equals(Throttle.F24))
                 return t.getF24();
-            else if (item.equals("F25"))
+            else if (item.equals(Throttle.F25))
                 return t.getF25();
-            else if (item.equals("F26"))
+            else if (item.equals(Throttle.F26))
                 return t.getF26();
-            else if (item.equals("F27"))
+            else if (item.equals(Throttle.F27))
                 return t.getF27();
-            else if (item.equals("F28"))
+            else if (item.equals(Throttle.F28))
                 return t.getF28();
         }
-        else if (item.equals("F3"))
+        else if (item.equals(Throttle.F3))
             return t.getF3();
-        else if (item.equals("F4"))
+        else if (item.equals(Throttle.F4))
             return t.getF4();
-        else if (item.equals("F5"))
+        else if (item.equals(Throttle.F5))
             return t.getF5();
-        else if (item.equals("F6"))
+        else if (item.equals(Throttle.F6))
             return t.getF6();
-        else if (item.equals("F7"))
+        else if (item.equals(Throttle.F7))
             return t.getF7();
-        else if (item.equals("F8"))
+        else if (item.equals(Throttle.F8))
             return t.getF8();
-        else if (item.equals("F9"))
+        else if (item.equals(Throttle.F9))
             return t.getF9();
         return null;
     }
@@ -644,5 +647,5 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractThrottleManager.class.getName());
 }

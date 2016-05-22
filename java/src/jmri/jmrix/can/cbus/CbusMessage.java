@@ -5,6 +5,8 @@
 
 package jmri.jmrix.can.cbus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.Programmer;
@@ -462,5 +464,5 @@ public class CbusMessage {
         return (false);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(CbusMessage.class.getName());
 }

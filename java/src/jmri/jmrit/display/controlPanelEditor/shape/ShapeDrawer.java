@@ -1,16 +1,15 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <P>
@@ -22,41 +21,40 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 public class ShapeDrawer  {
 	
 	protected ControlPanelEditor _editor;
-	private boolean 	_creatingNewShape = false;
 	private DrawFrame 	_drawFrame;
+	private PositionableShape _currentSelection;
 
-    public final static ResourceBundle rbcp = ControlPanelEditor.rbcp;
-	
 	public ShapeDrawer(ControlPanelEditor ed) {
         _editor = ed;
    }
 	
 	public JMenu makeMenu() {
-    	JMenu drawMenu = new JMenu(rbcp.getString("drawShapes"));
+    	JMenu drawMenu = new JMenu(Bundle.getMessage("drawShapes"));
     	
-        JMenuItem shapeItem = new JMenuItem(rbcp.getString("drawRectangle"));
+        JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawRectangle"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     newRectangle();
                 }
             });
-        shapeItem = new JMenuItem(rbcp.getString("drawRoundRectangle"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawRoundRectangle"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     newRoundRectangle();
                 }
             });
-        /*
-        shapeItem = new JMenuItem(rbcp.getString("drawPolygon"));
+
+        shapeItem = new JMenuItem(Bundle.getMessage("drawPolygon"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     newPolygon();
                 }
             });
-        shapeItem = new JMenuItem(rbcp.getString("drawLine"));
+        /*
+        shapeItem = new JMenuItem(Bundle.getMessage("drawLine"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -64,14 +62,14 @@ public class ShapeDrawer  {
                 }
             });
             */
-        shapeItem = new JMenuItem(rbcp.getString("drawCircle"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawCircle"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     newCircle();
                 }
             });
-        shapeItem = new JMenuItem(rbcp.getString("drawEllipse"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawEllipse"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -81,6 +79,13 @@ public class ShapeDrawer  {
 
     	return drawMenu;
     }
+	
+	public void setDrawFrame(DrawFrame f) {
+    	if (_drawFrame==null) {
+        	_drawFrame = f;
+        	_drawFrame.setParent(this);
+    	}
+	}
     
     private void newRectangle() {
     	if (_drawFrame==null) {
@@ -98,9 +103,14 @@ public class ShapeDrawer  {
     	}
     }
     private void newPolygon() {   	
+    	if (_drawFrame==null) {
+        	_drawFrame = new DrawPolygon("newShape", "polygon", this);    		
+    	} else {
+    		_drawFrame.toFront();
+    	}
     }
-    private void newLine() {   	
-    }
+//    private void newLine() {   	
+//    }
     private void newCircle() {   	
     	if (_drawFrame==null) {
         	_drawFrame = new DrawCircle("newShape", "circle", this);    		
@@ -123,53 +133,74 @@ public class ShapeDrawer  {
     protected ControlPanelEditor getEditor() {
     	return _editor;
     }
+
+    public void paint(Graphics g) {
+    	if (_drawFrame!=null) {
+    		_drawFrame.drawShape(g);
+    	}
+    }
     
     /**************************** Mouse *************************/
 
-    ArrayList<Positionable> _saveSelectionGroup;
-    /**
-    * Keep selections when editing.  Restore what super nulls
-    */
-    public void saveSelectionGroup(ArrayList<Positionable> selectionGroup) {
-    	_saveSelectionGroup = selectionGroup;
-    }
-    
     public boolean doMousePressed(MouseEvent event) {
     	if (_drawFrame!=null) {
-            _editor.setSelectionGroup(null);
-            _drawFrame.setDrawParams();
+    		_drawFrame.anchorPoint(event.getX(), event.getY());
             return true;
+    	} else {
+    		Positionable p = _editor.getCurrentSelection();
+    		if (p instanceof PositionableShape) {
+    			if (!p.equals(_currentSelection)) {
+    				if (_currentSelection!= null) {
+    					_currentSelection.removeHandles();
+    				}
+	    			_currentSelection = (PositionableShape)p;
+	    			_currentSelection.drawHandles();
+    			}    			
+    		} else {
+				if (_currentSelection!= null) {
+					_currentSelection.removeHandles();
+				}
+				_currentSelection = null;    			
+    		}
     	}
     	return false;
     }
    
     public boolean doMouseReleased(Positionable selection, MouseEvent event) {
         if (_drawFrame!=null) {
-        	_drawFrame.makeFigure();
-        	_drawFrame.closingEvent();
-            _editor.resetEditor();
+        	if (_drawFrame.makeFigure(event)) {
+            	_drawFrame.closingEvent();
+                _editor.resetEditor();        		
+        	}
             return true;
         }
         return false;
     }
 
-    public boolean doMouseClicked(Positionable selection, MouseEvent event) {
+    public boolean doMouseClicked(MouseEvent event) {
         if (_drawFrame!=null) {
             return true;
         }
         return false;
     }
 
-    /**
-    * No dragging when editing
-    */
-    public boolean doMouseDragged(Positionable selection, MouseEvent event) {
+    public boolean doMouseDragged(MouseEvent event) {
+        if (_currentSelection!=null) {
+        	return _currentSelection.doHandleMove(event);
+        }
+        return false;
+    }
+
+    /*
+     * Make rubber band line
+     */
+    public boolean doMouseMoved(MouseEvent event) {
         if (_drawFrame!=null) {
-            _editor.drawSelectRect(event.getX(), event.getY());
+        	_drawFrame.moveTo(event.getX(), event.getY());
             return true;     // no dragging when editing
         }
         return false;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ShapeDrawer.class.getName());
+    static Logger log = LoggerFactory.getLogger(ShapeDrawer.class.getName());
 }

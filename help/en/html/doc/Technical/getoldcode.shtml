@@ -66,7 +66,7 @@ we just can't support other methods (sending .zip files, etc), as they're
 just too error prone.
 
 <P>
-Many computers come with CVS installed, including Linux and MacOS X.
+Many computers come with CVS installed, including Linux and Mac OS X.
 If you're using Windows, you will need to install a CVS "client" program like
 <A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467">WinCVS</a>.
 A recent version can be downloaded from: 

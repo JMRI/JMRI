@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce.macro;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import java.io.*;
@@ -11,6 +13,7 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
+import jmri.util.FileUtil;
 
 
 /**
@@ -83,7 +86,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 	public void run() {
 
 		// Get file to read from
-		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+		JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
 		fc.addChoosableFileFilter(new textFilter());
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
@@ -294,6 +297,6 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(NceMacroRestore.class.getName());
 }

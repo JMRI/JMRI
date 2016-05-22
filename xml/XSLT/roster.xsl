@@ -23,6 +23,7 @@
      See http://www.w3.org/TR/xslt#output for more details
 -->
 <xsl:output method="html" encoding="ISO-8859-1"/>
+      <xsl:param name="JmriCopyrightYear"/>
 
 
 <!-- This first template matches our root element in the input file.
@@ -46,7 +47,7 @@
 
 <HR/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; 1997 - 2012 JMRI Community. 
+<P/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community. 
 <P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
 <P/>Site hosted by: <BR/>

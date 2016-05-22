@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz.swing.stackmon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.*;
 
 import java.awt.Dimension;
@@ -328,7 +330,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     // Register for logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StackMonFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(StackMonFrame.class.getName());
 
 }
 

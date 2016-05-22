@@ -2,6 +2,7 @@
 
 package jmri.jmrit.ussctc;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 /**
@@ -50,6 +51,6 @@ public class OsIndicatorActionTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OsIndicatorActionTest.class.getName());
+    static Logger log = Logger.getLogger(OsIndicatorActionTest.class.getName());
 
 }

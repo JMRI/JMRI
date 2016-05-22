@@ -2,6 +2,8 @@
 
 package jmri.jmrix.pricom.pockettester;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.util.Hashtable;
 
@@ -152,6 +154,6 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StatusFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(StatusFrame.class.getName());
 
 }

@@ -25,7 +25,8 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.web.WebTest");   // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.web.PackageTest");   // no tests in this class itself
+        suite.addTest(jmri.web.servlet.PackageTest.suite());
         suite.addTest(jmri.web.xmlio.PackageTest.suite());
         return suite;
     }

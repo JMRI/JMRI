@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import jmri.util.FileUtil;
 
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
@@ -389,8 +392,9 @@ public class RouteTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame("Add/Edit Route", false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.RouteAddEdit", true);
             addFrame.setLocation(100,30);
-            addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            Container contentPane = addFrame.getContentPane();        
+            
+            JPanel contentPanel = new JPanel();
+            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
             // add system name
             JPanel ps = new JPanel(); 
             ps.setLayout(new FlowLayout());
@@ -407,14 +411,14 @@ public class RouteTableAction extends AbstractTableAction {
             _systemName.setToolTipText("Enter system name for new Route, e.g. R12.");
             ps.add(fixedSystemName);
             fixedSystemName.setVisible(false);
-            contentPane.add(ps);
+            contentPanel.add(ps);
             // add user name
             JPanel p = new JPanel(); 
             p.setLayout(new FlowLayout());
             p.add(userLabel);
             p.add(_userName);
             _userName.setToolTipText("Enter user name for new Route, e.g. Clear Mainline.");
-            contentPane.add(p);
+            contentPanel.add(p);
             // add Turnout Display Choice
             JPanel py = new JPanel();
             py.add(new JLabel("Show "));
@@ -447,7 +451,7 @@ public class RouteTableAction extends AbstractTableAction {
                     }
                 });
             py.add(new JLabel("  Turnouts and Sensors"));
-            contentPane.add(py);
+            contentPanel.add(py);
 
             // add turnout table
             p2xt = new JPanel();
@@ -503,7 +507,7 @@ public class RouteTableAction extends AbstractTableAction {
             stateColumnT.setMaxWidth(100);
             _routeTurnoutScrollPane = new JScrollPane(routeTurnoutTable);
             p2xt.add(_routeTurnoutScrollPane,BorderLayout.CENTER);
-            contentPane.add(p2xt);
+            contentPanel.add(p2xt);
             p2xt.setVisible(true);
  
              // add sensor table
@@ -557,7 +561,7 @@ public class RouteTableAction extends AbstractTableAction {
             stateColumnS.setMaxWidth(100);
             _routeSensorScrollPane = new JScrollPane(routeSensorTable);
             p2xs.add(_routeSensorScrollPane,BorderLayout.CENTER);
-            contentPane.add(p2xs);
+            contentPanel.add(p2xs);
             p2xs.setVisible(true);
 
             // Enter filenames for sound, script
@@ -573,7 +577,7 @@ public class RouteTableAction extends AbstractTableAction {
             });
             p25.add(ss);
             p25.add(soundFile);
-//            contentPane.add(p25);
+//            contentPanel.add(p25);
             
 //            JPanel p26 = new JPanel();
 //            p26.setLayout(new FlowLayout());
@@ -586,7 +590,7 @@ public class RouteTableAction extends AbstractTableAction {
             });
             p25.add(ss);
             p25.add(scriptFile);
-            contentPane.add(p25);
+            contentPanel.add(p25);
             
             //add turnouts aligned sensor
             JPanel p27 = new JPanel();
@@ -596,7 +600,7 @@ public class RouteTableAction extends AbstractTableAction {
             turnoutsAlignedSensor.setFirstItemBlank(true);
             turnoutsAlignedSensor.setSelectedBean(null);
             turnoutsAlignedSensor.setToolTipText("Enter a Sensor system name or nothing");
-            contentPane.add(p27);
+            contentPanel.add(p27);
            
             // add control sensor table
             JPanel p3 = new JPanel();
@@ -664,7 +668,7 @@ public class RouteTableAction extends AbstractTableAction {
 			// complete this panel
             Border p3Border = BorderFactory.createEtchedBorder();
             p3.setBorder(p3Border);
-            contentPane.add(p3);
+            contentPanel.add(p3);
              
             // add lock control table
             JPanel p4 = new JPanel();
@@ -686,7 +690,7 @@ public class RouteTableAction extends AbstractTableAction {
 			// complete this panel
             Border p4Border = BorderFactory.createEtchedBorder();
             p4.setBorder(p4Border);
-            contentPane.add(p4);
+            contentPanel.add(p4);
             
             // add notes panel
             JPanel pa = new JPanel();
@@ -701,7 +705,7 @@ public class RouteTableAction extends AbstractTableAction {
             pa.add(p2);
             Border pBorder = BorderFactory.createEtchedBorder();
             pa.setBorder(pBorder);
-            contentPane.add(pa);
+            contentPanel.add(pa);
             // add buttons - Add Route button
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout());
@@ -752,7 +756,7 @@ public class RouteTableAction extends AbstractTableAction {
                 }
             });
             exportButton.setToolTipText("Export Route to Logix Conditionals for further enhancement");
-            
+
             // Show the initial buttons, and hide the others
             exportButton.setVisible(false);
             cancelButton.setVisible(false);
@@ -760,7 +764,10 @@ public class RouteTableAction extends AbstractTableAction {
             editButton.setVisible(true);
             createButton.setVisible(true);
             deleteButton.setVisible(false);
-            contentPane.add(pb);
+            contentPanel.add(pb);
+            
+            addFrame.getContentPane().add(new JScrollPane(contentPanel), BorderLayout.CENTER);
+            
             // pack and release space
             addFrame.pack();
             p2xsSpace.setVisible(false);
@@ -891,8 +898,9 @@ public class RouteTableAction extends AbstractTableAction {
         if (g==null) {
             // should never get here
             log.error("Unknown failure to create Route with System Name: "+sName);
+        } else {
+            g.deActivateRoute();
         }
-        g.deActivateRoute();
         return g;
     }
 
@@ -996,7 +1004,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void setSoundPressed() {
         if (soundChooser == null) {
-            soundChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+            soundChooser = new JFileChooser(FileUtil.getUserFilesPath());
             soundChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
         }
         soundChooser.rescanCurrentDirectory();
@@ -2006,6 +2014,6 @@ public class RouteTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleRouteTable"); }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(RouteTableAction.class.getName());
 }
 /* @(#)RouteTableAction.java */

@@ -2,6 +2,8 @@
 
 package jmri.jmrit.roster;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.davidflanagan.*;
 import java.io.IOException;
 import java.awt.Font;
@@ -268,5 +270,5 @@ public class PrintRosterEntry implements PaneContainer {
         w.setFontStyle(Font.PLAIN);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintRosterEntry.class.getName());
+    static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class.getName());
 }

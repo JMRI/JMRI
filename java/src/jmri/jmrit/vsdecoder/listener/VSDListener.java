@@ -1,5 +1,7 @@
 package jmri.jmrit.vsdecoder.listener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import java.util.List;
 import jmri.AudioManager;
@@ -70,13 +72,13 @@ public class VSDListener {
 	// Set position here
     }
 
-    public void SetPosition(PhysicalLocation p) {
+    public void setPosition(PhysicalLocation p) {
 	if (_location == null)
 	    _location = new ListeningSpot();
 	_location.setLocation(p);
 	_listener.setPosition(p);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDListener.class.getName());
+    static Logger log = LoggerFactory.getLogger(VSDListener.class.getName());
 
 }

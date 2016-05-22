@@ -1,5 +1,7 @@
 package jmri.jmrix.acela.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 import jmri.jmrix.acela.*;
@@ -35,5 +37,5 @@ public class AcelaTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
         return loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTurnoutManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerXml.class.getName());
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.dcc4pc.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
@@ -48,7 +50,7 @@ public class Dcc4PcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcNamedPaneAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(Dcc4PcNamedPaneAction.class.getName());
 }
 
 /* @(#)Dcc4PcNamedPaneAction.java */

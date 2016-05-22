@@ -118,18 +118,18 @@ dans le processus d'être déplacé dans les pages JavaHelp pour une utilisation
 <LI> outils -
 </ul>
 
-<H2> Site Web Local: MacOS X</H2>
+<H2> Site Web Local: Mac OS X</H2>
 
 Si vous voulez héberger une copie du site web JMRI sur votre ordinateur local
-MacOS X , suivez ces instructions d'abord configurer
+Mac OS X , suivez ces instructions d'abord configurer
 le serveur Apache pour faire à côté un serveur inclut, puis faire
 une copie fichiers disponible du site web sur le serveur.
 
 <OL>
 <LI> Vous devez modifier le fichier de configuration du serveur web Apache.
 <ul>
-<li> Sur MacOS X 10.4 (Tiger), c'est le fichier/etc/httpd/httpd.conf
-<li> Sur MacOS X 10.5 (Leopard), c'est le fichier etc/apache2/httpd.con /
+<li> Sur Mac OS X 10.4 (Tiger), c'est le fichier/etc/httpd/httpd.conf
+<li> Sur Mac OS X 10.5 (Leopard), c'est le fichier etc/apache2/httpd.con /
 </UL>
 Une fois que vous avez localisé le fichier, ouvrez le avec votre éditeur favori
 (Vous devez vous authentifier avec le mot de passe administrateur pour

@@ -2,6 +2,9 @@
 
 package jmri.jmrix.xpa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Encodes a message to an XPressNet command station via an XPA and a modem.
  *
@@ -39,8 +42,10 @@ public class XpaMessage {
     // copy one
     @SuppressWarnings("null")
 	public  XpaMessage(XpaMessage m) {
-        if (m == null)
+        if (m == null){
             log.error("copy ctor of null message");
+            return;
+        }
         _nDataChars = m._nDataChars;
         _dataChars = new byte[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
@@ -181,7 +186,7 @@ public class XpaMessage {
 
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(XpaMessage.class.getName());
 
 }
 

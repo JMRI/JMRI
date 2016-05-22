@@ -14,23 +14,21 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20110530"/>
-
-<!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
-<!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
-<!--                                                                                       -->
-<!-- Based on the "2010 03 01" English version of the ZIMO MX640            			 -->
-<!-- decoder manual (with thanks to Art Luescher of ZIMO Agency of North America           -->
-<!-- for the translations!)with updates from "2010 10 15" German version			 --> 
-<!-- and the decoder software update page of the Zimo website.					 -->
-<!--                                                                                       -->
-<!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
-<!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
-<!-- variables on the proper pane of the Comprehensive programmer.                         -->
-<!-- V 1 new file -->
+  <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
+  <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
+  <!--                                                                                       -->
+  <!-- Based on the "2010 03 01" English version of the ZIMO MX640            			 -->
+  <!-- decoder manual (with thanks to Art Luescher of ZIMO Agency of North America           -->
+  <!-- for the translations!)with updates from "2010 10 15" German version			 -->
+  <!-- and the decoder software update page of the Zimo website.					 -->
+  <!--                                                                                       -->
+  <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
+  <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
+  <!-- variables on the proper pane of the Comprehensive programmer.                         -->
+  <!-- V 1 new file -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX642 version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A"
- maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="214">
+      <model model="MX642 version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="214">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -43,8 +41,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4.5" units="mm"/>
       </model>
-      <model model="MX642R version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A"
- maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="214">
+      <model model="MX642R version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="214">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -57,8 +54,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4.5" units="mm"/>
       </model>
-      <model model="MX642F version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A"
- maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="214">
+      <model model="MX642F version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="214">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -71,8 +67,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4.5" units="mm"/>
       </model>
-      <model model="MX642D version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A"
- maxTotalCurrent="1.2A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="214">
+      <model model="MX642D version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="214">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -85,8 +80,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4.5" units="mm"/>
       </model>
-      <model model="MX642C version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A"
- maxTotalCurrent="1.2A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="214">
+      <model model="MX642C version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="214">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -102,59 +96,46 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
-
-		<variable label="Decoder ID 1" CV="250" default="214" readOnly="yes">
-			<decVal/>
-			<label>Decoder ID 1</label>
-			</variable>		
-		<variable label="Decoder ID 2" CV="251" readOnly="yes">
-			<decVal/>
-			<label>Decoder ID 2</label>
-			</variable>		
-		<variable label="Decoder ID 3" CV="252" readOnly="yes">
-			<decVal/>
-			<label>Decoder ID 3</label>
-			</variable>		
-		<variable label="Decoder ID 4" CV="253" readOnly="yes">
-			<decVal/>
-			<label>Decoder ID 4</label>
-			</variable>
-			
-<!-- Begin sound-only variables -->
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound.xml"/>
-<!-- End sound-only variables -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+      <variable label="Decoder ID 1" CV="250" default="214" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 1</label>
+      </variable>
+      <variable label="Decoder ID 2" CV="251" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 2</label>
+      </variable>
+      <variable label="Decoder ID 3" CV="252" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 3</label>
+      </variable>
+      <variable label="Decoder ID 4" CV="253" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 4</label>
+      </variable>
+      <!-- Begin sound-only variables -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound.xml"/>
+      <!-- End sound-only variables -->
     </variables>
-    <resets>
-      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
-      <factReset label="HARD RESET all CVs reset to default for the current Sound Project or CVset" CV="8" default="0"/>
-      <factReset label="HARD RESET for LGB operation (14 speed steps,pulse chain)" CV="8" default="9"/>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
   </decoder>
-
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap8+.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>  
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneServos2.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>  
-  
-<!-- Begin sound-only panes -->
-
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
+  <!-- Begin sound-only panes -->
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-ElectricLoco.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRandomSounds.xml"/>
-  
-<!-- End sound-only panes -->
-
+  <!-- End sound-only panes -->
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
-  
 </decoder-config>

@@ -1,5 +1,7 @@
 package jmri.jmrix.ecos.utilities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -341,8 +343,6 @@ public class EcosLocoToRoster implements EcosListener {
 
         re.writeFile(null, null, null);
         
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        
         Roster.writeRosterFile();
         ecosManager.clearLocoToRoster();
     }
@@ -498,7 +498,7 @@ public class EcosLocoToRoster implements EcosListener {
     DefaultTreeModel dModel;
     DefaultMutableTreeNode dRoot;
     TreeSelectionListener dListener;
-    
+    //@TODO this could do with being re-written so that it reuses the combined loco select tree code
     protected JPanel layoutDecoderSelection() {
         
         JPanel pane1a = new JPanel();
@@ -851,7 +851,7 @@ public class EcosLocoToRoster implements EcosListener {
         adaptermemo.getTrafficController().sendEcosMessage(m, this);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoToRoster.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class.getName());
 }
 /*
 cv8 - mfgIdFromName

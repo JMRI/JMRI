@@ -3,6 +3,7 @@
 
 package jmri.jmrix.lenz.ztc640;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -34,7 +35,7 @@ public class ZTC640Test extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZTC640Test.class.getName());
+    static Logger log = Logger.getLogger(ZTC640Test.class.getName());
 
 }
 

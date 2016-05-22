@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import java.util.ResourceBundle;
 
@@ -228,7 +230,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSystemConnectionMemo.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetSystemConnectionMemo.class.getName());
 
 
 }

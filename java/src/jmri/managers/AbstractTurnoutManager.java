@@ -2,6 +2,8 @@
 
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.managers.AbstractManager;
 
@@ -24,8 +26,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return Manager.TURNOUTS;
     }
     //protected int xmlorder = 20;
-
-    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     public char typeLetter() { return 'T'; }
 
@@ -113,14 +113,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 	 * Allows text other than "CLOSED" to be use with certain hardware system 
 	 * to represent the Turnout.CLOSED state.
 	 */
-	public String getClosedText() { return rbt.getString("TurnoutStateClosed"); }
+	public String getClosedText() { return Bundle.getMessage("TurnoutStateClosed"); }
 	
 	/**
 	 * Get text to be used for the Turnout.THROWN state in user communication.
 	 * Allows text other than "THROWN" to be use with certain hardware system 
 	 * to represent the Turnout.THROWN state.
 	 */
-	public String getThrownText() { return rbt.getString("TurnoutStateThrown"); }
+	public String getThrownText() { return Bundle.getMessage("TurnoutStateThrown"); }
 	
 	/**
 	 * Get from the user, the number of addressed bits used to control a turnout. 
@@ -197,7 +197,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                    showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         
@@ -213,7 +213,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         //The Number of Output Bits of the previous turnout will help determine the next
@@ -300,7 +300,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return defaultClosedSpeed;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
 }
 
 /* @(#)AbstractTurnoutManager.java */

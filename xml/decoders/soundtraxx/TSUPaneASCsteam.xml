@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,15 +11,13 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new pane file for SoundTraxx Tsunami -->
-
 <pane name="ASC">
   <column>
     <row>
       <label label="AUTOMATIC SOUND CONTROL">
         <label>AUTOMATIC SOUND CONTROL</label>
+	<label xml:lang="it">CONTROLLO AUTOMATICO SUONO</label>
       </label>
     </row>
     <label label=" ">
@@ -63,9 +60,11 @@
             </label>
             <label label="These CVs allow the user to set the parameters">
               <label>These CVs allow the user to set the parameters</label>
+		<label xml:lang="it">Queste CV permettono di impostare i parametri</label>
             </label>
             <label label="for the Automatic Sound Control features.">
               <label>for the Automatic Sound Control features.</label>
+		<label xml:lang="it">per il controllo automatico dei suoni</label>
             </label>
             <label label=" ">
               <label> </label>
@@ -140,9 +139,11 @@
             </label>
             <label label="Set the probability that the various sound effects will occur the next time the locomotive is stopped.">
               <label>Set the probability that the various sound effects will occur the next time the locomotive is stopped.</label>
+		<label xml:lang="it">Imposta la probabilità che i vari effetti vengano eseguiti la prossima volta che la loco si ferma</label>
             </label>
             <label label="A setting of zero effectively turns off an effect.   A setting of 255 enables the effect at every stop.">
               <label>A setting of zero effectively turns off an effect.   A setting of 255 enables the effect at every stop.</label>
+		<label xml:lang="it">Impostare valore=0 per non generare mai l'effetto. Valore=255 per generarlo ad ogni fermata</label>
             </label>
             <label label=" ">
               <label> </label>

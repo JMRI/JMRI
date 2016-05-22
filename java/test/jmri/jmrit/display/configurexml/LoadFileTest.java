@@ -2,7 +2,7 @@
 
 package jmri.jmrit.display.configurexml;
 
-import jmri.jmrit.XmlFile;
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import junit.framework.Assert;
@@ -10,6 +10,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import jmri.InstanceManager;
+import jmri.util.FileUtil;
 
 /**
  * Test upper level loading of a file
@@ -21,8 +22,8 @@ import jmri.InstanceManager;
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
     public void testLoadStoreCurrent() throws Exception {
-        // skip if headless, as requires display to show
-        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+        // this runs during the "headless" tests, so files
+        // used can't pop windows
     
         // load manager
         java.io.File inFile = new java.io.File("java/test/jmri/jmrit/display/configurexml/ScaledIconTest.xml");
@@ -32,8 +33,8 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
             .load(inFile);
     
         // store file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        java.io.File outFile = new java.io.File(XmlFile.prefsDir()+"temp/ScaledIconTest.xml");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
+        File outFile = new File(FileUtil.getUserFilesPath()+"temp/ScaledIconTest.xml");
         InstanceManager.configureManagerInstance()
             .storeUser(outFile);
         
@@ -65,6 +66,7 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
                 && !inLine.startsWith("    <memory")   // time changes
                 && !inLine.startsWith("    <test>")  // version changes
                 && !inLine.startsWith("    <modifier")  // version changes
+                && !inLine.startsWith("    <minor")  // version changes
                 && !inLine.startsWith("  <paneleditor class="))   // outfile writes class for backward compatibility
                     Assert.assertEquals(inLine, outLine);
         }
@@ -106,6 +108,6 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadFileTest.class.getName());
+    static Logger log = Logger.getLogger(LoadFileTest.class.getName());
 
 }

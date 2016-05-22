@@ -2,6 +2,8 @@
 
 package jmri.jmrix.oaktree;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
@@ -318,7 +320,7 @@ public class SerialNode extends AbstractNode {
         timeout = 0;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialNode.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
 }
 
 /* @(#)SerialNode.java */

@@ -2,13 +2,13 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
 import javax.swing.*;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
@@ -37,13 +37,10 @@ import jmri.jmrit.operations.setup.Setup;
 class PoolTrackFrame extends OperationsFrame implements
 		java.beans.PropertyChangeListener {
 
-	static final ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-
 	// labels
-	JLabel name = new JLabel(rb.getString("Name"));
-	JLabel minimum = new JLabel(rb.getString("Minimum"));
-	JLabel length = new JLabel(rb.getString("Length"));
+	JLabel name = new JLabel(Bundle.getMessage("Name"));
+	JLabel minimum = new JLabel(Bundle.getMessage("Minimum"));
+	JLabel length = new JLabel(Bundle.getMessage("Length"));
 
 	// text field
 	JTextField trackPoolNameTextField = new JTextField(20);
@@ -53,8 +50,8 @@ class PoolTrackFrame extends OperationsFrame implements
 	JComboBox comboBoxPools = new JComboBox();
 
 	// major buttons
-	JButton addButton = new JButton(rb.getString("Add"));
-	JButton saveButton = new JButton(rb.getString("Save"));
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// pool status
 	JPanel poolStatus = new JPanel();
@@ -95,21 +92,21 @@ class PoolTrackFrame extends OperationsFrame implements
 
 		JPanel poolName = new JPanel();
 		poolName.setLayout(new GridBagLayout());
-		poolName.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("PoolName")));
+		poolName.setBorder(BorderFactory.createTitledBorder(Bundle
+				.getMessage("PoolName")));
 		addItem(poolName, trackPoolNameTextField, 0, 0);
 		addItem(poolName, addButton, 1, 0);
 
 		JPanel selectPool = new JPanel();
 		selectPool.setLayout(new GridBagLayout());
-		selectPool.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("PoolSelect")));
+		selectPool.setBorder(BorderFactory.createTitledBorder(Bundle
+				.getMessage("PoolSelect")));
 		addItem(selectPool, comboBoxPools, 0, 0);
 
 		JPanel minLengthTrack = new JPanel();
 		minLengthTrack.setLayout(new GridBagLayout());
 		minLengthTrack.setBorder(BorderFactory.createTitledBorder(MessageFormat
-				.format(rb.getString("PoolTrackMinimum"),
+				.format(Bundle.getMessage("PoolTrackMinimum"),
 						new Object[] { _track.getName() })));
 		addItem(minLengthTrack, trackMinLengthTextField, 0, 0);
 
@@ -139,7 +136,7 @@ class PoolTrackFrame extends OperationsFrame implements
 
 		getContentPane().add(p1Pane);
 		getContentPane().add(p2Pane);
-		setTitle(rb.getString("MenuItemPoolTrack"));
+		setTitle(Bundle.getMessage("MenuItemPoolTrack"));
 
 		// load comboBox
 		updatePoolsComboBox();
@@ -157,7 +154,7 @@ class PoolTrackFrame extends OperationsFrame implements
 
 		// Check for null first,
 		if (t == null)
-			throw new NullPointerException("Track instance can't be null");
+			throw new NullPointerException("Track instance can't be null");	// NOI18N
 		
 		// then save the Track we will work with
 		_track = t;
@@ -194,21 +191,21 @@ class PoolTrackFrame extends OperationsFrame implements
 
 		JPanel poolName = new JPanel();
 		poolName.setLayout(new GridBagLayout());
-		poolName.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("PoolName")));
+		poolName.setBorder(BorderFactory.createTitledBorder(Bundle
+				.getMessage("PoolName")));
 		addItem(poolName, trackPoolNameTextField, 0, 0);
 		addItem(poolName, addButton, 1, 0);
 
 		JPanel selectPool = new JPanel();
 		selectPool.setLayout(new GridBagLayout());
-		selectPool.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("PoolSelect")));
+		selectPool.setBorder(BorderFactory.createTitledBorder(Bundle
+				.getMessage("PoolSelect")));
 		addItem(selectPool, comboBoxPools, 0, 0);
 
 		JPanel minLengthTrack = new JPanel();
 		minLengthTrack.setLayout(new GridBagLayout());
 		minLengthTrack.setBorder(BorderFactory.createTitledBorder(MessageFormat
-				.format(rb.getString("PoolTrackMinimum"),
+				.format(Bundle.getMessage("PoolTrackMinimum"),
 						new Object[] { _track.getName() })));
 		addItem(minLengthTrack, trackMinLengthTextField, 0, 0);
 
@@ -238,7 +235,7 @@ class PoolTrackFrame extends OperationsFrame implements
 
 		getContentPane().add(p1Pane);
 		getContentPane().add(p2Pane);
-		setTitle(rb.getString("MenuItemPoolTrack"));
+		setTitle(Bundle.getMessage("MenuItemPoolTrack"));
 
 		// load comboBox
 		updatePoolsComboBox();
@@ -292,7 +289,7 @@ class PoolTrackFrame extends OperationsFrame implements
 				addItem(poolStatus, length, 2, i + 1);
 			}
 			// Summary
-			JLabel total = new JLabel(rb.getString("Totals"));
+			JLabel total = new JLabel(Bundle.getMessage("Totals"));
 			addItem(poolStatus, total, 0, tracks.size() + 1);
 			JLabel totalMin = new JLabel();
 			totalMin.setText(Integer.toString(totalMinLength));
@@ -303,7 +300,7 @@ class PoolTrackFrame extends OperationsFrame implements
 		}
 		poolStatus
 				.setBorder(BorderFactory.createTitledBorder(MessageFormat
-						.format(rb.getString("PoolTracks"),
+						.format(Bundle.getMessage("PoolTracks"),
 								new Object[] { poolName })));
 		poolStatus.repaint();
 		poolStatus.validate();
@@ -323,8 +320,8 @@ class PoolTrackFrame extends OperationsFrame implements
 						.parseInt(trackMinLengthTextField.getText()));
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this,
-						rb.getString("TrackMustBeNumber"),
-						rb.getString("ErrorTrackLength"),
+						Bundle.getMessage("TrackMustBeNumber"),
+						Bundle.getMessage("ErrorTrackLength"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -364,7 +361,7 @@ class PoolTrackFrame extends OperationsFrame implements
 		// enabled, etc.
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: "
-					+ e.getOldValue() + " new: " + e.getNewValue());
+					+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
 
 		if (e.getPropertyName().equals(Location.POOL_LENGTH_CHANGED_PROPERTY))
 			updatePoolsComboBox();
@@ -376,6 +373,6 @@ class PoolTrackFrame extends OperationsFrame implements
 			updatePoolStatus();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(PoolTrackFrame.class.getName());
 }

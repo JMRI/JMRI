@@ -2,6 +2,9 @@
 
 package jmri.jmrix.dcc4pc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Encodes a message to the DCC4PC Interface.
  * <P>
@@ -58,8 +61,10 @@ public class Dcc4PcMessage  extends jmri.jmrix.AbstractMRMessage {
     // copy one
     @SuppressWarnings("null")
 	public  Dcc4PcMessage(Dcc4PcMessage m) {
-        if (m == null)
+        if (m == null){
             log.error("copy ctor of null message");
+            return;
+        }
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
@@ -96,8 +101,6 @@ public class Dcc4PcMessage  extends jmri.jmrix.AbstractMRMessage {
     /**
      * Get formatted message for direct output to stream - this is the final 
      * format of the message as a byte array
-     * @param dcc4pcState a Dcc4PcState variable representing the current state
-     * of the Dcc4Pc
      * @return the formatted message as a byte array
      */
     public byte[] getFormattedMessage() {
@@ -181,7 +184,7 @@ public class Dcc4PcMessage  extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(Dcc4PcMessage.class.getName());
 
 }
 

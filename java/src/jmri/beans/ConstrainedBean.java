@@ -3,8 +3,7 @@ package jmri.beans;
 
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeSupport;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A Bean with support for vetoable property change listeners
@@ -21,7 +20,7 @@ public class ConstrainedBean extends Bean {
             getVetoableChangeSupport().fireVetoableChange(key, getProperty(key), value);
             super.setProperty(key, value);
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Property " + key + " change vetoed.", ex);
+            LoggerFactory.getLogger(this.getClass().getName()).warn("Property " + key + " change vetoed.", ex);
             super.firePropertyChange(key, getProperty(key), getProperty(key));
         }
     }

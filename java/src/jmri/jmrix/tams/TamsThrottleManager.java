@@ -1,5 +1,7 @@
 package jmri.jmrix.tams;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
@@ -91,6 +93,6 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         return false;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsThrottleManager.class.getName());
 
 }

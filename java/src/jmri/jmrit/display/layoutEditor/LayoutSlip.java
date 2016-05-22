@@ -1,7 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 import jmri.Turnout;
+import jmri.SignalMast;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -11,7 +14,6 @@ import java.awt.event.MouseEvent;
 
 import jmri.NamedBeanHandle;
 import jmri.InstanceManager;
-import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.swing.JmriBeanComboBox;
 
 import java.util.ResourceBundle;
@@ -58,26 +60,23 @@ public class LayoutSlip extends LayoutTurnout
     final public static int STATE_AD = 0x06;
     final public static int STATE_BC = 0x08;
     
-    private Point2D center = new Point2D.Double(50.0,50.0);
-	private Point2D dispA = new Point2D.Double(-20.0,0.0);
-	private Point2D dispB = new Point2D.Double(-14.0,14.0);
-    
     public int currentState = UNKNOWN;
     
     private String turnoutBName="";
     private NamedBeanHandle<Turnout> namedTurnoutB = null;
     private java.beans.PropertyChangeListener mTurnoutListener = null;
-	
-    
 	/** 
 	 * constructor method
 	 */  
-	public LayoutSlip(String id, Point2D c, LayoutEditor myPanel, int type) {
+	public LayoutSlip(String id, Point2D c, double rot, LayoutEditor myPanel, int type) {
 		instance = this;
 		layoutEditor = myPanel;
 		ident = id;
 		center = c;
+        dispC = new Point2D.Double(-20.0,0.0);
+        dispB = new Point2D.Double(-14.0,14.0);
         setTurnoutType(type);
+        rotateCoords(rot);
     }
     
     public void setTurnoutType(int slipType){
@@ -231,8 +230,8 @@ public class LayoutSlip extends LayoutTurnout
 
 	public Point2D getCoordsCenter() {return center;}
 	public Point2D getCoordsA() {
-		double x = center.getX() + dispA.getX();
-		double y = center.getY() + dispA.getY();
+		double x = center.getX() + dispC.getX();
+		double y = center.getY() + dispC.getY();
 		return new Point2D.Double(x,y);
 	}
 	public Point2D getCoordsB() {
@@ -241,8 +240,8 @@ public class LayoutSlip extends LayoutTurnout
 		return new Point2D.Double(x,y);
 	}
 	public Point2D getCoordsC() {
-		double x = center.getX() - dispA.getX();
-		double y = center.getY() - dispA.getY();
+		double x = center.getX() - dispC.getX();
+		double y = center.getY() - dispC.getY();
 		return new Point2D.Double(x,y);
 	}
 	public Point2D getCoordsD() {
@@ -278,22 +277,23 @@ public class LayoutSlip extends LayoutTurnout
     public void reCheckBlockBoundary(){
         if(connectA==null && connectB==null && connectC==null && connectD==null){
             //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if(!getSignalAMast().equals(""))
+            if(signalAMastNamed!=null)
                 removeSML(getSignalAMast());
-            if(!getSignalBMast().equals(""))
+            if(signalBMastNamed!=null)
                 removeSML(getSignalBMast());
-            if(!getSignalCMast().equals(""))
+            if(signalCMastNamed!=null)
                 removeSML(getSignalCMast());
-            if(!getSignalDMast().equals(""))
+            if(signalDMastNamed!=null)
                 removeSML(getSignalDMast());
-            setSignalAMast("");
-            setSignalBMast("");
-            setSignalCMast("");
-            setSignalDMast("");
-            setSensorA("");
-            setSensorB("");
-            setSensorC("");
-            setSensorD("");
+            signalAMastNamed = null;
+            signalBMastNamed = null;
+            signalCMastNamed = null;
+            signalDMastNamed = null;
+            sensorANamed=null;
+            sensorBNamed=null;
+            sensorCNamed=null;
+            sensorDNamed=null;
+            return;
             //May want to look at a method to remove the assigned mast from the panel and potentially any logics generated
         }  else if(connectA==null || connectB==null || connectC==null || connectD==null){
             //could still be in the process of rebuilding the point details
@@ -308,52 +308,42 @@ public class LayoutSlip extends LayoutTurnout
         if(connectA instanceof TrackSegment){
             trkA = (TrackSegment)connectA;
             if(trkA.getLayoutBlock()==block){
-                if(!getSignalAMast().equals(""))
+               if(signalAMastNamed!=null)
                     removeSML(getSignalAMast());
-                setSignalAMast("");
-                setSensorA("");
+                signalAMastNamed = null;
+                sensorANamed=null;
             }
         }
         if(connectC instanceof TrackSegment) {
             trkC = (TrackSegment)connectC;
             if(trkC.getLayoutBlock()==block){
-                if(!getSignalCMast().equals(""))
+               if(signalCMastNamed!=null)
                     removeSML(getSignalCMast());
-                setSignalCMast("");
-                setSensorC("");
+                signalCMastNamed = null;
+                sensorCNamed=null;
             }
         }
         if(connectB instanceof TrackSegment){
             trkB = (TrackSegment)connectB;
             if(trkB.getLayoutBlock()==block){
-                if(!getSignalBMast().equals(""))
+               if(signalBMastNamed!=null)
                     removeSML(getSignalBMast());
-                setSignalBMast("");
-                setSensorB("");
+                signalBMastNamed = null;
+                sensorBNamed=null;
             }
         }
 
         if(connectD instanceof TrackSegment) {
             trkD = (TrackSegment)connectC;
             if(trkD.getLayoutBlock()==block){
-                if(!getSignalDMast().equals(""))
+               if(signalDMastNamed!=null)
                     removeSML(getSignalDMast());
-                setSignalDMast("");
-                setSensorD("");
+                signalDMastNamed = null;
+                sensorDNamed=null;
             }
         }
     }
     
-    void removeSML(String signalMast){
-        if(signalMast==null || signalMast.equals(""))
-            return;
-        jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
-        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(mast)){
-            InstanceManager.signalMastLogicManagerInstance().disableLayoutEditorUse(mast);
-            SignallingGuiTools.removeSignalMastLogic(null, mast);
-        }
-    }
-
 	/** 
 	 * Methods to test if mainline track or not
 	 *  Returns true if either connecting track segment is mainline
@@ -378,7 +368,7 @@ public class LayoutSlip extends LayoutTurnout
 	public void setCoordsA(Point2D p) {
 		double x = center.getX() - p.getX();
 		double y = center.getY() - p.getY();
-		dispA = new Point2D.Double(-x,-y);
+		dispC = new Point2D.Double(-x,-y);
 	}
 	public void setCoordsB(Point2D p) {
 		double x = center.getX() - p.getX();
@@ -388,7 +378,7 @@ public class LayoutSlip extends LayoutTurnout
 	public void setCoordsC(Point2D p) {
 		double x = center.getX() - p.getX();
 		double y = center.getY() - p.getY();
-		dispA = new Point2D.Double(x,y);
+		dispC = new Point2D.Double(x,y);
 	}
 	public void setCoordsD(Point2D p) {
 		double x = center.getX() - p.getX();
@@ -399,9 +389,9 @@ public class LayoutSlip extends LayoutTurnout
 		Point2D pt = new Point2D.Double(round(center.getX()*xFactor),
 										round(center.getY()*yFactor));
 		center = pt;
-		pt = new Point2D.Double(round(dispA.getX()*xFactor),
-										round(dispA.getY()*yFactor));
-		dispA = pt;
+		pt = new Point2D.Double(round(dispC.getX()*xFactor),
+										round(dispC.getY()*yFactor));
+		dispC = pt;
 		pt = new Point2D.Double(round(dispB.getX()*xFactor),
 										round(dispB.getY()*yFactor));
 		dispB = pt;
@@ -470,6 +460,42 @@ public class LayoutSlip extends LayoutTurnout
                         }
                     }
                 });
+            if ( (connectA==null) && (connectB==null) &&
+                        (connectC==null) && (connectD==null) ) {
+                JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate")+"...");
+                popup.add(rotateItem);
+                rotateItem.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        boolean entering = true;
+                        boolean error = false;
+                        String newAngle = "";
+                        while (entering) {
+                            // prompt for rotation angle
+                            error = false;
+                            newAngle = JOptionPane.showInputDialog(layoutEditor, 
+                                                rb.getString("EnterRotation")+" :");
+                            if (newAngle.length()<1) return;  // cancelled
+                            double rot = 0.0;
+                            try {
+                                rot = Double.parseDouble(newAngle);
+                            }
+                            catch (Exception e) {
+                                JOptionPane.showMessageDialog(layoutEditor,rb.getString("Error3")+
+                                    " "+e,rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                                error = true;
+                                newAngle = "";
+                            }
+                            if (!error) {
+                                entering = false;
+                                if (rot!=0.0) {
+                                   rotateCoords(rot);
+                                   layoutEditor.redrawPanel();
+                                }
+                            }
+                        }
+                    }
+                });
+            }
             if (blockAssigned) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
                     public void actionPerformed(ActionEvent e) {
@@ -976,11 +1002,10 @@ public class LayoutSlip extends LayoutTurnout
         active = false;
     }
     
-    void disableSML(String signalMast){
-         if(signalMast==null || signalMast.equals(""))
+    void disableSML(SignalMast signalMast){
+        if(signalMast==null)
             return;
-        jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
-        InstanceManager.signalMastLogicManagerInstance().disableLayoutEditorUse(mast);
+        InstanceManager.signalMastLogicManagerInstance().disableLayoutEditorUse(signalMast);
     }
 
     boolean active = true;
@@ -1125,6 +1150,6 @@ public class LayoutSlip extends LayoutTurnout
     
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutSlip.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
 
 }

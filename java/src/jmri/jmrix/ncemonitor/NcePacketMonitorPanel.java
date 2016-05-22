@@ -2,6 +2,8 @@
 
 package jmri.jmrix.ncemonitor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -31,7 +33,12 @@ import jmri.jmrix.nce.swing.NcePanelInterface;
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC", justification="serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
 	
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8995209813681779828L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
@@ -500,7 +507,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketMonitorPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class.getName());
 
     /**
      * Internal class to handle the separate character-receive thread

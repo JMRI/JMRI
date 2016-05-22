@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.implementation.AbstractTurnout;
 import junit.framework.*;
@@ -151,6 +152,6 @@ public class OrderedHashtableTest extends TestCase {
 	    protected void turnoutPushbuttonLockout(boolean locked) {}
     }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OrderedHashtableTest.class.getName());
+	static Logger log = Logger.getLogger(OrderedHashtableTest.class.getName());
 
 }

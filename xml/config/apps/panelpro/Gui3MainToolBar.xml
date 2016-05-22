@@ -7,17 +7,24 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
 >
   <name>PanelPro</name>
-
-  <node><name>New PP Window</name>
+  
+  <node>
+    <name>New PP Window</name>
+    <name xml:lang="it">Nuova Finestra PanelPro</name>
     <adapter>apps.gui3.paned.PanelProAction</adapter>
   </node>
-  <node><icon>resources/icons/throttles/PowerRed24.png</icon>
+  <node>
+    <icon>resources/icons/throttles/power_red.png</icon>
     <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
   </node>
-  <node><name>Preferences</name>
+  <node>
+    <name>Preferences</name>
+    <name xml:lang="it">Preferenze</name>
     <panel>apps.gui3.TabbedPreferences</panel>
   </node>
-  <node><name>Help</name>
+  <node>
+    <name>Help</name>
+    <name xml:lang="it">Aiuto</name>
     <help>index</help>
   </node>
 

@@ -55,7 +55,7 @@ suivant leurs désirs tandis que nous trions ce qui est généralement nécessai
 <h2> Structure </h2>
 
 Parce jinput et le RailDriver fournissent des noms pour les  différents composants
-sur Windows, MacOS X et Linux, le script est organisé autour du
+sur Windows, Mac OS X et Linux, le script est organisé autour du
 nombre (index) de la composante, et non pas de son nom. Les trois plates-formes
 fournissent les composants dans le même ordre.
 

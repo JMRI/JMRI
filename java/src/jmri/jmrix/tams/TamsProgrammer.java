@@ -2,6 +2,8 @@
 
 package jmri.jmrix.tams;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 
@@ -278,7 +280,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         temp.programmingOpReply(value, status);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsProgrammer.class.getName());
 
 }
 

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.pricom.pockettester;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -377,7 +379,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         justification="Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DataSource.class.getName());
+    static Logger log = LoggerFactory.getLogger(DataSource.class.getName());
 
     /**
      * Internal class to handle the separate character-receive thread

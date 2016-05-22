@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 
 /**
@@ -50,16 +52,18 @@ public class NullAudioListener extends AbstractAudioListener {
         if (log.isDebugEnabled()) log.debug("New NullAudioListener: "+userName+" ("+systemName+")");
     }
 
+    @Override
     protected void changePosition(Vector3f pos) {
         // Do nothing
     }
 
+    @Override
     protected void cleanUp() {
         if (log.isDebugEnabled()) log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
         this.dispose();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NullAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NullAudioListener.class.getName());
 
 }
 

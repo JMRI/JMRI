@@ -12,6 +12,7 @@
 
 package jmri.implementation;
 
+import java.util.HashMap;
 import jmri.*;
 
 /**
@@ -21,13 +22,15 @@ import jmri.*;
  * <P>
  * The mapping is as follows:
  * <P>
- *    0 = DARK        <BR>
- *    1 = RED         <BR>
- *    2 = YELLOW      <BR>
- *    3 = GREEN       <BR>
+ *    0 = RED         <BR>
+ *    1 = YELLOW      <BR>
+ *    2 = GREEN       <BR>
+ *    3 = LUNAR       <BR>
  *    4 = FLASHRED    <BR>
  *    5 = FLASHYELLOW <BR>
  *    6 = FLASHGREEN  <BR>
+ *    7 = FLASHLUNAR  <BR>
+ *    8 = DARK        <BR>
  * <P>
  * The FLASH appearances are expected to be implemented in the decoder.
  *
@@ -39,6 +42,7 @@ public class DccSignalHead extends AbstractSignalHead {
   public DccSignalHead( String sys, String user ) {
     super(sys, user);
     configureHead(sys);
+    
   }
 
   public DccSignalHead( String sys ) {
@@ -47,9 +51,19 @@ public class DccSignalHead extends AbstractSignalHead {
   }
 
   void configureHead(String sys){
+    //Set the default appearances
+    appearanceToOutput.put(Integer.valueOf(SignalHead.RED),getDefaultNumberForApperance(SignalHead.RED));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.YELLOW),getDefaultNumberForApperance(SignalHead.YELLOW));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.GREEN),getDefaultNumberForApperance(SignalHead.GREEN));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.LUNAR),getDefaultNumberForApperance(SignalHead.LUNAR));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHRED),getDefaultNumberForApperance(SignalHead.FLASHRED));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHYELLOW),getDefaultNumberForApperance(SignalHead.FLASHYELLOW));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHGREEN),getDefaultNumberForApperance(SignalHead.FLASHGREEN));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHLUNAR),getDefaultNumberForApperance(SignalHead.FLASHLUNAR));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.DARK),getDefaultNumberForApperance(SignalHead.DARK));
     //New method seperates the system name and address using $
     if(sys.contains("$")){
-        DccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$")+1, sys.length()));
+        dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$")+1, sys.length()));
         String commandStationPrefix = sys.substring(0, sys.indexOf("$")-1);
         java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         if(connList!=null){
@@ -68,9 +82,9 @@ public class DccSignalHead extends AbstractSignalHead {
     } else {
         c = InstanceManager.commandStationInstance();
         if (( sys.length() > 2 ) && (( sys.charAt(1) == 'H' ) || ( sys.charAt(1) == 'h' )))
-          DccSignalDecoderAddress = Integer.parseInt(sys.substring(2,sys.length()));
+          dccSignalDecoderAddress = Integer.parseInt(sys.substring(2,sys.length()));
         else
-          DccSignalDecoderAddress = Integer.parseInt(sys);
+          dccSignalDecoderAddress = Integer.parseInt(sys);
     }
   }
 
@@ -115,25 +129,84 @@ public class DccSignalHead extends AbstractSignalHead {
 
   protected void updateOutput() {
     if (c != null) {
-      int aspect = 0 ;  // SignalHead.DARK
+      int aspect = 8 ;  // SignalHead.DARK, but default set below
 
       if( getLit() ) {
-        switch( mAppearance ){
-          case SignalHead.DARK:        aspect = 0 ; break;
-          case SignalHead.RED:         aspect = 1 ; break;
-          case SignalHead.YELLOW:      aspect = 2 ; break;
-          case SignalHead.GREEN:       aspect = 3 ; break;
+        Integer app = Integer.valueOf(mAppearance);
+        if(appearanceToOutput.containsKey(app))
+            aspect = appearanceToOutput.get(app);
+        else
+            log.error("Unknown appearance " + mAppearance+" displays DARK");
+/*        switch( mAppearance ){
+          case SignalHead.DARK:        aspect = 8 ; break;
+          case SignalHead.RED:         aspect = 0 ; break;
+          case SignalHead.YELLOW:      aspect = 1 ; break;
+          case SignalHead.GREEN:       aspect = 2 ; break;
+          case SignalHead.LUNAR:       aspect = 3 ; break;
           case SignalHead.FLASHRED:    aspect = 4 ; break;
           case SignalHead.FLASHYELLOW: aspect = 5 ; break;
           case SignalHead.FLASHGREEN:  aspect = 6 ; break;
-        }
+          case SignalHead.FLASHLUNAR:  aspect = 7 ; break;
+          default :                    aspect = 8;
+                                       log.error("Unknown appearance " + mAppearance+" displays DARK");
+                                       break;
+        }*/
       }
-
-      c.sendPacket( NmraPacket.accSignalDecoderPkt( DccSignalDecoderAddress, aspect ), 3);
+        
+        if(useAddressOffSet)
+            c.sendPacket( NmraPacket.accSignalDecoderPkt( dccSignalDecoderAddress, aspect ), 3);
+        else
+            c.sendPacket( NmraPacket.altAccSignalDecoderPkt( dccSignalDecoderAddress, aspect ), 3);
     }
   }
   
-  CommandStation c;
+    CommandStation c;
+  
+    boolean useAddressOffSet = false;
+    
+    public void useAddressOffSet(boolean boo){
+        useAddressOffSet = boo;
+    }
+    
+    public boolean useAddressOffSet() {
+        return useAddressOffSet;
+    }
+  
+    protected HashMap<Integer, Integer> appearanceToOutput = new HashMap<Integer, Integer>();
 
-  int DccSignalDecoderAddress ;
+    public int getOutputForAppearance(int appearance){
+        Integer app = Integer.valueOf(appearance);
+        if(!appearanceToOutput.containsKey(app)){
+            log.error("Trying to get appearance " + appearance + " but it has not been configured");
+            return -1;
+        }
+        return appearanceToOutput.get(app);
+    }
+    
+    public void setOutputForAppearance(int appearance, int number){
+        Integer app = Integer.valueOf(appearance);
+        if(appearanceToOutput.containsKey(app)){
+            log.debug("Appearance " + appearance + " is already defined as " + appearanceToOutput.get(app));
+            appearanceToOutput.remove(app);
+        }
+        appearanceToOutput.put(app, number);
+    }
+    
+    public static int getDefaultNumberForApperance(int i){
+        switch( i ){
+          case SignalHead.DARK:        return 8 ;
+          case SignalHead.RED:         return 0 ;
+          case SignalHead.YELLOW:      return 1 ;
+          case SignalHead.GREEN:       return 2 ;
+          case SignalHead.LUNAR:       return 3 ;
+          case SignalHead.FLASHRED:    return 4 ;
+          case SignalHead.FLASHYELLOW: return 5 ;
+          case SignalHead.FLASHGREEN:  return 6 ;
+          case SignalHead.FLASHLUNAR:  return 7 ;
+          default :                    return 8;
+        }
+    
+    }
+    
+    int dccSignalDecoderAddress ;
 }

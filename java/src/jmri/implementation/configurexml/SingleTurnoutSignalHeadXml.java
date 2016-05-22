@@ -1,5 +1,7 @@
 package jmri.implementation.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.SingleTurnoutSignalHead;
@@ -155,5 +157,5 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
     
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SingleTurnoutSignalHeadXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHeadXml.class.getName());
 }

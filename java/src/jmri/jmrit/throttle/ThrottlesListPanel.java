@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -20,7 +19,6 @@ import jmri.jmrit.catalog.NamedIcon;
 
 
 public class ThrottlesListPanel extends JPanel {
-	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
 
 	private ThrottlesTableModel throttleFramesLM;
 	private JTable throttleFrames;
@@ -60,7 +58,7 @@ public class ThrottlesListPanel extends JPanel {
 	    JToolBar throttleToolBar = new JToolBar("Throttles list toolbar");
 	    JButton jbNew = new JButton();
 	    jbNew.setIcon(new NamedIcon("resources/icons/throttles/new.png","resources/icons/throttles/new.png"));
-	    jbNew.setToolTipText(throttleBundle.getString("ThrottleToolBarNewWindowToolTip"));
+	    jbNew.setToolTipText(Bundle.getMessage("ThrottleToolBarNewWindowToolTip"));
 	    jbNew.setVerticalTextPosition(JButton.BOTTOM);
 	    jbNew.setHorizontalTextPosition(JButton.CENTER);
 	    jbNew.addActionListener(new ActionListener() {
@@ -81,7 +79,7 @@ public class ThrottlesListPanel extends JPanel {
 	    throttleToolBar.addSeparator();
 	    JButton jbPreferences = new JButton();
 	    jbPreferences.setIcon(new NamedIcon("resources/icons/throttles/preferences.png","resources/icons/throttles/Preferences24.png"));
-	    jbPreferences.setToolTipText(throttleBundle.getString("ThrottleToolBarPreferencesToolTip"));
+	    jbPreferences.setToolTipText(Bundle.getMessage("ThrottleToolBarPreferencesToolTip"));
 	    jbPreferences.setVerticalTextPosition(JButton.BOTTOM);
 	    jbPreferences.setHorizontalTextPosition(JButton.CENTER);
 	    jbPreferences.addActionListener( new ThrottlesPreferencesAction() );

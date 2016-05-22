@@ -27,7 +27,7 @@ JMRI: AppleScript
 
 Sur Mac OS X, vous pouvez utiliser AppleScript avec JMRI. Il y a deux façons de faire cela:
 <ul>
-<li> Un script JMRI peut utiliser AppleScript pour demander MacOS X de faire des choses.
+<li> Un script JMRI peut utiliser AppleScript pour demander Mac OS X de faire des choses.
 <li> Un AppleScripts s'exécutant en dehors de JMRI peut demander à une application JMRI de faire des choses.
 </Ul>
 

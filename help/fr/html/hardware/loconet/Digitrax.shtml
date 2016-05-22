@@ -133,7 +133,7 @@ ou d'une centrale de commande Zephyr. </p>
      programme. "Metal" est l'apparence Java native disponible sur tous les
      types. D'autres choix varie en fonction de votre type d'ordinateur. "Motif", "Windows",
      "MacOS"et "MacOS Adaptive" apparence native sur Linux, Windows, MacOS "Classic"
-     et MacOS X, respectivement. </li>
+     et Mac OS X, respectivement. </li>
    <li> Dans la boîte de sélection en bas, vous pouvez choisir le format de programmation par défaut.
 Vous pouvez le remplacer chaque fois que vous ouvrez le programmateur, ce n'est donc ici
 seulement pour la commodité. Si vous êtes le principal utilisateur de ce système nous vous suggérons
@@ -179,8 +179,8 @@ LocoNet. Ceux-ci communiquent via le protocole standard TCP/IP, et peuvent même 
 programmer les décodeurs par un programmateur PR1. Vous devez utiliser l'une des centrales de commandes
 ci-dessus. </p>
 
-<p><b> MacOS X et le MS100 </b> - Parce que MacOS X ne peut pas communiquer à la
-vitesse de transmission utilisée par le MS100, le MS100 ne fonctionne pas avec MacOS X. Vous
+<p><b> Mac OS X et le MS100 </b> - Parce que Mac OS X ne peut pas communiquer à la
+vitesse de transmission utilisée par le MS100, le MS100 ne fonctionne pas avec Mac OS X. Vous
 devrez à la place prendre un LocoBuffer-USB à la place. </p>
 
 <p><b> Microsoft Vista et le MS100 </b> - Il a été rapporté que Vista ne

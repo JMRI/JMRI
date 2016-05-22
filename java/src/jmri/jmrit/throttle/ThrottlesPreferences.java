@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,6 +12,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 public class ThrottlesPreferences {
     private boolean _useExThrottle = true;	
@@ -28,8 +31,8 @@ public class ThrottlesPreferences {
 	private ArrayList<PropertyChangeListener> listeners;
     
     public ThrottlesPreferences(){
-		String dirname = XmlFile.prefsDir()+ "throttle" +File.separator;
-		XmlFile.ensurePrefsPresent(dirname);
+		String dirname = FileUtil.getUserFilesPath()+ "throttle" +File.separator;
+		FileUtil.createDirectory(dirname);
         prefFile = dirname+ "ThrottlesPreferences.xml";
 		ThrottlesPrefsXml prefs = new ThrottlesPrefsXml();
 		File file = new File(prefFile );
@@ -253,5 +256,5 @@ public class ThrottlesPreferences {
 			listeners.remove(l);		
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesPreferences.class.getName());
+	static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class.getName());
 }

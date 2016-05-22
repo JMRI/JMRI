@@ -2,6 +2,8 @@
 
 package jmri.jmrix.tams.swing.locodatabase;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 
@@ -134,6 +136,6 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoDataPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoDataPane.class.getName());
     
 }

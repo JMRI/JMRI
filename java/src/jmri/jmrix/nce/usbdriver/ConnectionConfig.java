@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce.usbdriver;
 
+import jmri.util.SystemType;
+
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
  * via an NCE SerialDriverAdapter object.
@@ -40,7 +42,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         
     @Override
     protected String[] getPortFriendlyNames() {
-        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+        if(SystemType.isWindows()){
             return new String[]{"Silicon Labs CP210x USB to UART Bridge", "Silicon Labs CP210x"};
         }
         return new String[]{};

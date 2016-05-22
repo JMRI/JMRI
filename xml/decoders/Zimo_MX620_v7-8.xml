@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Zimo_MX620_v7-8.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.02" lastUpdated="20090626"/>
   <version author="Nigel Cliffe ncliffe@btinternet.com and Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20090222"/>
-<!-- 
+  <!-- 
      This decoder configuration file is based the Zimo_MX620_v6.xml V 1.01 file, dated 20080328.
      Re-instating CV 116 (bug fixed by Zimo in v7), Modified CV124, Extended CV 161,
      Extended CVs 125-132 and CVs 181-2.  
@@ -28,9 +28,9 @@
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.
  -->
-<!-- V 1 new file -->
-<!-- V 1.01 Fixed error in CV161 mask -->
-<!-- V 1.02 added CV's 129 & 130, corrected CV161 masks -->
+  <!-- V 1 new file -->
+  <!-- V 1.01 Fixed error in CV161 mask -->
+  <!-- V 1.02 added CV's 129 & 130, corrected CV161 masks -->
   <decoder>
     <family name="Zimo MX620" mfg="Zimo">
       <model model="MX620 version 7-8" lowVersionID="7" highVersionID="8" maxInputVolts="12-22V" maxMotorCurrent="0.8A, peak=2A for 5 sec." maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14">
@@ -2172,18 +2172,12 @@
         <decVal/>
         <label>Sub-version</label>
       </variable>
-      <variable label="Forward Trim" CV="66" default="0">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="0">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <variable label="User Data #1" CV="105" item="User Id #1">
         <decVal/>
         <label>User Data #1</label>

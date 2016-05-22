@@ -5,9 +5,7 @@
 package jmri.web.servlet.panel;
 
 import java.util.List;
-
 import javax.swing.JFrame;
-
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -22,9 +20,9 @@ import org.jdom.output.XMLOutputter;
  */
 public class ControlPanelServlet extends AbstractPanelServlet {
 
-   	private static final long serialVersionUID = -8086671279145186127L;
+    private static final long serialVersionUID = -8086671279145186127L;
 
-	@Override
+    @Override
     protected String getPanelType() {
         return "ControlPanel";
     }
@@ -43,18 +41,18 @@ public class ControlPanelServlet extends AbstractPanelServlet {
             log.info("Target Frame [" + frame.getTitle() + "]");
 
             panel.setAttribute("name", name);
-            panel.setAttribute("height", "" + frame.getContentPane().getHeight());
-            panel.setAttribute("width", "" +  frame.getContentPane().getWidth());
-            panel.setAttribute("panelheight", "" + frame.getContentPane().getHeight());
-            panel.setAttribute("panelwidth", "" +  frame.getContentPane().getWidth());
+            panel.setAttribute("height", Integer.toString(frame.getContentPane().getHeight()));
+            panel.setAttribute("width", Integer.toString(frame.getContentPane().getWidth()));
+            panel.setAttribute("panelheight", Integer.toString(frame.getContentPane().getHeight()));
+            panel.setAttribute("panelwidth", Integer.toString(frame.getContentPane().getWidth()));
 
-            panel.setAttribute("showtooltips", "" + (editor.showTooltip() ? "yes" : "no"));
-            panel.setAttribute("controlling", "" + (editor.allControlling() ? "yes" : "no"));
+            panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
+            panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
             if (editor.getBackgroundColor() != null) {
                 Element color = new Element("backgroundColor");
-                color.setAttribute("red", "" + editor.getBackgroundColor().getRed());
-                color.setAttribute("green", "" + editor.getBackgroundColor().getGreen());
-                color.setAttribute("blue", "" + editor.getBackgroundColor().getBlue());
+                color.setAttribute("red", Integer.toString(editor.getBackgroundColor().getRed()));
+                color.setAttribute("green", Integer.toString(editor.getBackgroundColor().getGreen()));
+                color.setAttribute("blue", Integer.toString(editor.getBackgroundColor().getBlue()));
                 panel.addContent(color);
             }
 
@@ -68,7 +66,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                     try {
                         Element e = ConfigXmlManager.elementFromObject(sub);
                         if (e != null) {
-                            if (e.getName() == "signalmasticon") {  //insert icon details into signalmast
+                            if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
                                 e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
                             }
                             parsePortableURIs(e);
@@ -90,10 +88,9 @@ public class ControlPanelServlet extends AbstractPanelServlet {
         }
     }
 
-	@Override
-	protected String getJsonPanel(String name) {
-		// TODO Auto-generated method stub
-		return "ERROR JSON support not implemented";
-	}
-
+    @Override
+    protected String getJsonPanel(String name) {
+        // TODO Auto-generated method stub
+        return "ERROR JSON support not implemented";
+    }
 }

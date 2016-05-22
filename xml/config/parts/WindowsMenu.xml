@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
 
-<node
+<nodes
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
-><name>Windows</name>
+>
+<node>
+    <name>Windows</name>
+    <name xml:lang="it">Finestre</name>
     <mnemonic>w</mnemonic>
-    <node><name>Active</name>
-        <node><name>Sample Window 1</name>
+    <node>
+        <name>Active</name>
+        <name xml:lang="it">Attive</name>
+        <node>
+            <name>Sample Window 1</name>
+            <name xml:lang="it">Finestra Esempio 2</name>
         </node>
-        <node><name>Sample Window 2</name>
+        <node>
+            <name>Sample Window 2</name>
+            <name xml:lang="it">Finestra Esempio 2</name>
         </node>
     </node>
-    <node><name>New PanelPro Window</name>
+    <node
+        ><name>New PanelPro Window</name>
+        <name xml:lang="it">Nuova Finestra PanelPro</name>
         <adapter>apps.gui3.paned.PanelProAction</adapter>
     </node>
-
 </node>
+</nodes>
   

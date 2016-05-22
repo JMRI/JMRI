@@ -2,6 +2,9 @@
 
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Basic implementation of a node for JMRI protocol support.
@@ -98,5 +101,5 @@ public abstract class AbstractNode {
 
     boolean needSend = true;          // 'true' if something has changed that requires data to be sent
     
-    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNode.class.getName());
+    private static Logger log = LoggerFactory.getLogger(AbstractNode.class.getName());
 }

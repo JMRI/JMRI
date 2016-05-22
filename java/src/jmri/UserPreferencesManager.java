@@ -150,27 +150,62 @@ public interface UserPreferencesManager {
      * @param classString String value of the calling class
      * @param item String value of the specific item this is used for
      */
-    public void showInfoMessage(String title, String message, String classString, java.lang.String item);
+    public void showInfoMessage(String title, String message, String classString, String item);
 
     
     /**
-     * Show an info message ("don't forget ...")
-     * with a given dialog title and
-     * user message.
-     * Use a given preference name to determine whether
-     * to show it in the future.
-     * added flag to indicate that the message should be suppressed
-     * JMRI session only.
-     * The classString & item parameters should form a unique value
+     * Show an error message ("don't forget ...") with a given dialog title and
+     * user message. Use a given preference name to determine whether to show it
+     * in the future. added flag to indicate that the message should be
+     * suppressed JMRI session only. The classString & item parameters should
+     * form a unique value
+     *
      * @param title Message Box title
      * @param message Message to be displayed
      * @param classString String value of the calling class
      * @param item String value of the specific item this is used for
-     * @param sessionOnly Means this message will be suppressed in this JMRI session and not be remembered
-     * @param alwaysRemember Means that the suppression of the message will be saved
-     * @param level Used to determine the type of messagebox that will be used.
+     * @param sessionOnly Means this message will be suppressed in this JMRI
+     * session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be
+     * saved
      */
-    public void showInfoMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember, org.apache.log4j.Level level);
+    public void showErrorMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
+    
+    /**
+     * Show an info message ("don't forget ...") with a given dialog title and
+     * user message. Use a given preference name to determine whether to show it
+     * in the future. added flag to indicate that the message should be
+     * suppressed JMRI session only. The classString & item parameters should
+     * form a unique value
+     *
+     * @param title Message Box title
+     * @param message Message to be displayed
+     * @param classString String value of the calling class
+     * @param item String value of the specific item this is used for
+     * @param sessionOnly Means this message will be suppressed in this JMRI
+     * session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be
+     * saved
+     */
+    public void showInfoMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
+    
+    /**
+     * Show a warning message ("don't forget ...") with a given dialog title and
+     * user message. Use a given preference name to determine whether to show it
+     * in the future. added flag to indicate that the message should be
+     * suppressed JMRI session only. The classString & item parameters should
+     * form a unique value
+     *
+     * @param title Message Box title
+     * @param message Message to be displayed
+     * @param classString String value of the calling class
+     * @param item String value of the specific item this is used for
+     * @param sessionOnly Means this message will be suppressed in this JMRI
+     * session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be
+     * saved
+     */
+    public void showWarningMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
     
     /**
      * Adds the last selection of a combo box.

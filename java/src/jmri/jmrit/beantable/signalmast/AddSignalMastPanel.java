@@ -2,6 +2,9 @@
 
 package jmri.jmrit.beantable.signalmast;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.*;
 import jmri.util.StringUtil;
 
@@ -20,9 +23,9 @@ import jmri.util.ConnectionNameFromSystemName;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
-import jmri.jmrit.XmlFile;
 
 import javax.swing.*;
+import jmri.util.FileUtil;
 
 import org.jdom.*;
 
@@ -261,8 +264,10 @@ public class AddSignalMastPanel extends JPanel {
                 while(aspects.hasMoreElements()){
                     String key = aspects.nextElement();
                     DCCAspectPanel dccPanel = dccAspect.get(key);
-                    dccPanel.setAspectId(dmast.getOutputForAppearance(key));
                     dccPanel.setAspectDisabled(dmast.isAspectDisabled(key));
+                    if(!dmast.isAspectDisabled(key))
+                        dccPanel.setAspectId(dmast.getOutputForAppearance(key));
+                    
                 }
             }
             java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
@@ -404,7 +409,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         try {
-            File[] apps = new File(XmlFile.prefsDir()+"resources"+File.separator
+            File[] apps = new File(FileUtil.getUserFilesPath()+"resources"+File.separator
                     +"signals"+File.separator+sigsysname).listFiles();
             if(apps!=null){
                 for (int j=0; j<apps.length; j++) {
@@ -730,7 +735,7 @@ public class AddSignalMastPanel extends JPanel {
         return false;
     }
     
-    void refreshHeadComboBox(){
+    protected void refreshHeadComboBox(){
         if(!rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem()))
             return;
         if(includeUsed.isSelected()){
@@ -1032,7 +1037,11 @@ public class AddSignalMastPanel extends JPanel {
     void copyFromAnotherDCCMastAspect(String strMast){
         DccSignalMast mast = (DccSignalMast)InstanceManager.signalMastManagerInstance().getNamedBean(strMast);
         for(String aspect: dccAspect.keySet()){
-            dccAspect.get(aspect).setAspectId(mast.getOutputForAppearance(aspect));
+            if(mast.isAspectDisabled(aspect)){
+                dccAspect.get(aspect).setAspectDisabled(true);
+            } else {
+                dccAspect.get(aspect).setAspectId(mast.getOutputForAppearance(aspect));
+            }
         }
     }
     
@@ -1116,7 +1125,7 @@ public class AddSignalMastPanel extends JPanel {
     }
     
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddSignalMastPanel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class.getName());
 }
 
 

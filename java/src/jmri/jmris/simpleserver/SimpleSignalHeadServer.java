@@ -8,7 +8,8 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHead;
 import jmri.jmris.AbstractSignalHeadServer;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jetty.websocket.WebSocket.Connection;
 
 /**
@@ -22,7 +23,7 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
 
     private DataOutputStream output;
     private Connection connection;
-    static Logger log = Logger.getLogger(SimpleSignalHeadServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(SimpleSignalHeadServer.class.getName());
 
     public SimpleSignalHeadServer(Connection connection) {
     	super();

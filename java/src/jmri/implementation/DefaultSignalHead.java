@@ -2,8 +2,6 @@
 
 package jmri.implementation;
 
-import java.util.ResourceBundle;
-
  /**
  * Default implementation of the basic logic of the SignalHead interface.
  *
@@ -142,7 +140,6 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         mFlashOn = true;
     }
 
-    final static private ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
     final static private int[] validStates = new int[]{
         DARK, 
         RED, 
@@ -153,13 +150,13 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         FLASHGREEN,
     };
     final static private String[] validStateNames = new String[]{
-        rb.getString("SignalHeadStateDark"),
-        rb.getString("SignalHeadStateRed"),
-        rb.getString("SignalHeadStateYellow"),
-        rb.getString("SignalHeadStateGreen"),
-        rb.getString("SignalHeadStateFlashingRed"),
-        rb.getString("SignalHeadStateFlashingYellow"),
-        rb.getString("SignalHeadStateFlashingGreen"),
+        Bundle.getMessage("SignalHeadStateDark"),
+        Bundle.getMessage("SignalHeadStateRed"),
+        Bundle.getMessage("SignalHeadStateYellow"),
+        Bundle.getMessage("SignalHeadStateGreen"),
+        Bundle.getMessage("SignalHeadStateFlashingRed"),
+        Bundle.getMessage("SignalHeadStateFlashingYellow"),
+        Bundle.getMessage("SignalHeadStateFlashingGreen"),
     };
     
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy

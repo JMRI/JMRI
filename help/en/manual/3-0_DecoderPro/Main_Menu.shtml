@@ -114,16 +114,8 @@
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>
 </blockquote>
 <ul>
-  <li><strong><a href="Ops_Start.shtml">Operations</a> <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings)
-    <ul>
-      <li><a href="Ops_Settings.shtml">Settings</a></li>
-      <li><a href="Ops_Locations.shtml">Locations</a></li>
-      <li><a href="Ops_Cars.shtml">Cars</a></li>
-      <li><a href="Ops_Engines.shtml">Locomotives</a></li>
-      <li><a href="Ops_Routes.shtml">Routes</a></li>
-      <li><a href="Ops_Trains.shtml">Trains</a></li>
-    </ul>
-    <p><img src="images/separator.png" alt="" width="340" height="4"></p>
+  <li><strong>Operations <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings)(Covered in Operations Program User's Guide)
+<p><img src="images/separator.png" alt="" width="340" height="4"></p>
     <ul>
       <li><strong>Start JMRI Web Server </strong></li>
     </ul>
@@ -160,15 +152,7 @@
 </ul>
 <h4><a href="Main_Panels.shtml">Panels</a></h4>
 <p>Beyond the scope of this manual, primarily for use in connection with PanelPro</p>
-<p><strong><a href="Ops_Start.shtml">Operations</a> <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings) </p>
-<ul>
-  <li><a href="Ops_Settings.shtml">Settings</a></li>
-  <li><a href="Ops_Locations.shtml">Locations</a></li>
-  <li><a href="Ops_Cars.shtml">Cars</a></li>
-  <li><a href="Ops_Engines.shtml">Locomotives</a></li>
-  <li><a href="Ops_Routes.shtml">Routes</a></li>
-  <li><a href="Ops_Trains.shtml">Trains</a></li>
-</ul>
+<p><strong>Operations <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings) (Covered in Operations Program User's Guide)</p>
 <h4><span class="style1"><a name="System"></a>System</span><br>
   <span class="ACCENT">(This menu name will depend upon the system that you selected in Preferences. The options are listed. If (none) is selected in Preferences this menu will not be displayed.)</span></h4>
 <ul>
@@ -251,7 +235,7 @@
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>
 </blockquote>
 <ul>
-  <li><a href="http://jmri.org/help/en/html/web/MiniServer.shtml">Start JMRI Web Server</a></li>
+  <li><a href="file:///G|/JMRI_SVN/html/web/index.shtml">Start JMRI Web Server</a></li>
 </ul>
 <blockquote>
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>

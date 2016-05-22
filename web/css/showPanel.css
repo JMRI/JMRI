@@ -15,6 +15,17 @@ body {
   border: solid 1px lightGray;
   cursor: pointer;
 }
+.clickable a {
+  text-decoration: none;
+}
+.clickable :link{
+	color: inherit;
+	font-weight: normal;
+}
+.clickable :link:hover, .clickable :visited:hover {
+	color: inherit;
+}
+
 .positionablelabel.text.hidden,
 .sensoricon.hidden,
 .signalheadicon.hidden {

@@ -22,6 +22,10 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -75,8 +79,24 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         List <NamedBean> list = _oBlockModel.getBeanList();
         if (list.size() > 0) {
             int count = 0;
-            int idx = 0;
+            int idx = 0;		//accumulated row count
             OBlock block = null;
+            NamedBean[] array = new NamedBean[list.size()];
+        	array = list.toArray(array);
+            Arrays.sort(array, new jmri.util.NamedBeanComparator());
+            while (count <= row)  {
+                count += ((OBlock)array[idx++]).getPortals().size();
+            }
+            block = (OBlock)array[--idx];
+            idx = row - (count - block.getPortals().size());
+            if (col==BLOCK_NAME_COLUMN) {
+                if (idx==0) {
+                    return block.getDisplayName();
+                }
+                return "";
+            }
+            return block.getPortals().get(idx).getName();
+            /*           
             while (count <= row)  {
                 count += ((OBlock)list.get(idx++)).getPortals().size();
             }
@@ -89,6 +109,7 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
                 return "";
             }
             return block.getPortals().get(idx).getName();
+            */
         }
         return null;
     }
@@ -116,5 +137,5 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockPortalTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class.getName());
 }

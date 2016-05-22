@@ -1,5 +1,7 @@
 package jmri.jmrit.logix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +51,8 @@ public class Portal  {
             log.error("Path \""+path.getName()+"\" has no block.");
             return false;
         }
-        //if (log.isDebugEnabled()) log.debug("addPath: "+toString());
         if (!this.equals(path.getFromPortal()) &&
                 !this.equals(path.getToPortal()) ){
-        //    log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
-        //        "\" does not pass through Portal \""+_portalName+"\".");
             return false;
         }
         if (_fromBlock != null && _fromBlock.equals(block)) {
@@ -64,9 +63,6 @@ public class Portal  {
             if (!_toPaths.contains(path))  {
                 return addPath(_toPaths, path);
             }
-        } else {
-        //    log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
-        //        "\" is not in either of the blocks of Portal \""+_portalName+"\".");
         }
         // path already in one of the path lists
         return true;
@@ -120,8 +116,7 @@ public class Portal  {
         if (msg==null) {
             _portalName = name;
         } else {
-            msg = java.text.MessageFormat.format(
-                  WarrantTableAction.rb.getString("DuplicatePortalName"), msg, name); 
+            msg = Bundle.getMessage("DuplicatePortalName", msg, name); 
         }
         return msg;
     }
@@ -447,6 +442,27 @@ public class Portal  {
         return true;
     }
 
+    /**
+     * Check if path connects to Portal
+     * @param path
+     */
+    public boolean isValidPath(OPath path) {
+    	String name = path.getName();
+    	for (int i=0; i<_toPaths.size(); i++) {
+    		if (_toPaths.get(i).getName().equals(name)) {
+    			return true;
+    		}
+    	}
+    	for (int i=0; i<_fromPaths.size(); i++) {
+    		if (_fromPaths.get(i).getName().equals(name)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    /**
+     * Check portal has both blocks
+     */
     public boolean isValid() {
         return (_fromBlock!=null && _toBlock!=null);
     }
@@ -457,7 +473,7 @@ public class Portal  {
     }
 
     public String getDescription() {
-        return java.text.MessageFormat.format(WarrantTableAction.rb.getString("PortalDescription"),
+        return Bundle.getMessage("PortalDescription",
                         _portalName, getFromBlockName(), getToBlockName());
     }
     
@@ -465,5 +481,5 @@ public class Portal  {
         return ("Portal \""+_portalName+"\" from block \""+getFromBlockName()+"\" to block \""+getToBlockName()+"\""); 
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Portal.class.getName());
+    static Logger log = LoggerFactory.getLogger(Portal.class.getName());
 }

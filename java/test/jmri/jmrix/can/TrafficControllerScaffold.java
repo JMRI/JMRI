@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -87,6 +88,6 @@ public class TrafficControllerScaffold extends TrafficController {
         return cmdListeners.size();
     }
     
-static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrafficControllerScaffold.class.getName());
+static Logger log = Logger.getLogger(TrafficControllerScaffold.class.getName());
 
 }

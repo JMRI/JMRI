@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Kato_em13.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,8 +15,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Dale A Tripp" version="1" lastUpdated="20090625"/>
   <version author="Marc Fournier" version="1.1" lastUpdated="20091018"/>
-<!-- Created from Digitrax_01x3 file -->
-<!-- Correct variables statement error, file name corrected put K in caps, sort issue -->
+  <!-- Created from Digitrax_01x3 file -->
+  <!-- Correct variables statement error, file name corrected put K in caps, sort issue -->
   <decoder>
     <family name="EM13, silent, readback" mfg="Kato" lowVersionID="49" highVersionID="51">
       <model model="EM13" numOuts="1" numFns="0" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="unspecified">
@@ -216,14 +216,8 @@
         <label>Ditch light hold-over time</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
       </variable>
-      <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
-        <decVal/>
-        <label>Decoder Lock ID number</label>
-      </variable>
-      <variable label="Kick Start" CV="65">
-        <decVal/>
-        <label>Kick Start</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <variable label="User Private ID #1" CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
@@ -244,7 +238,7 @@
   </decoder>
   <pane name="Digitrax">
     <column>
-<!--<display item="Advanced consist droop compensation for speed stabilization"/>-->
+      <!--<display item="Advanced consist droop compensation for speed stabilization"/>-->
       <display item="Speed Compensation Control"/>
       <display item="Split field motor"/>
       <display item="Vstart/Vmid/Vfull in 128 step mode"/>

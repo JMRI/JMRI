@@ -19,16 +19,28 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import java.util.zip.*;
-import java.io.*;
-import org.jdom.Element;
-import java.util.ResourceBundle;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 import jmri.jmrit.XmlFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.jdom.Element;
 
 public class VSDFile extends ZipFile {
+    
+    private static final String VSDXmlFileName = "config.xml"; // NOI18N
     
     // Dummy class just used to instantiate
     private static class VSDXmlFile extends XmlFile { }
@@ -62,45 +74,43 @@ public class VSDFile extends ZipFile {
 
     protected boolean init() {
 	VSDXmlFile xmlfile = new VSDXmlFile();
-	String path = rb.getString("VSD_XMLFileName");
 	initialized = false;
 
 	try {
 	    // Debug: List all the top-level contents in the file.
-	    @SuppressWarnings("rawtypes")
-	    Enumeration entries = this.entries();
+	    Enumeration<?> entries = this.entries();
 	    while(entries.hasMoreElements()) {
 		ZipEntry z = (ZipEntry)entries.nextElement();
 		log.debug("Entry: " + z.getName());
 	    }
 
-	    ZipEntry config = this.getEntry(path);
+	    ZipEntry config = this.getEntry(VSDXmlFileName);
 	    if (config == null) {
-		_statusMsg = "File does not contain " + path;
+		_statusMsg = "File does not contain " + VSDXmlFileName;
 		log.error(_statusMsg);
 		return(false);
 	    }
-	    File f2 = new File(this.getURL(path));
+	    File f2 = new File(this.getURL(VSDXmlFileName));
 	    root = xmlfile.rootFromFile(f2);
 	    ValidateStatus rv = this.validate(root);
 	    if (!rv.getValid()) {
 		// Need to make this one fancier right here.
 		_statusMsg = rv.getMessage();
-		log.error("VALIDATE FAILED: File " + path);
+		log.error("VALIDATE FAILED: File " + VSDXmlFileName);
 	    }
 	    initialized = rv.getValid();
 	    return(initialized);
 
 	} catch (java.io.IOException ioe) {
-	    _statusMsg = "IO Error auto-loading VSD File: " + path + " " + ioe.toString();
+	    _statusMsg = "IO Error auto-loading VSD File: " + VSDXmlFileName + " " + ioe.toString();
 	    log.warn(_statusMsg);
 	    return(false);
 	} catch (NullPointerException npe) {
-	    _statusMsg = "NP Error auto-loading VSD File: path = " + path + " " + npe.toString();
+	    _statusMsg = "NP Error auto-loading VSD File: path = " + VSDXmlFileName + " " + npe.toString();
 	    log.warn(_statusMsg);
 	    return(false);
 	} catch (org.jdom.JDOMException ex) {
-	    _statusMsg = "JDOM Exception loading VSDecoder from path " + path + " " + ex.toString();
+	    _statusMsg = "JDOM Exception loading VSDecoder from path " + VSDXmlFileName + " " + ex.toString();
 	    log.error(_statusMsg);
 	    return(false);
 	}
@@ -341,7 +351,8 @@ public class VSDFile extends ZipFile {
     }
 
     protected boolean validateFiles(Element el, String name, String[] fnames, Boolean required) {
-	List elist = el.getChildren(name);
+	@SuppressWarnings("unchecked")
+	List<Element> elist = el.getChildren(name);
 	String s;
 
 	// First, check to see if any elements of this <name> exist.
@@ -371,6 +382,6 @@ public class VSDFile extends ZipFile {
 	return(true);
     }
 	// initialize logging
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDFile.class.getName());
+	static Logger log = LoggerFactory.getLogger(VSDFile.class.getName());
 
 }

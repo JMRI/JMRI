@@ -197,6 +197,9 @@ bytes</P>
 <P>0xAC Perform hard reset of command station. Reset to factory
 defaults (Note: will change baud rate to 9600) (0) Returns nothing</P>
 <P>0xAD (4 data bytes) Accy/signal and macro commands (1) !,1</P>
+<!--#include virtual="/Footer" -->
+	</div>
+  </div>
 </BODY>
 </HTML>
 

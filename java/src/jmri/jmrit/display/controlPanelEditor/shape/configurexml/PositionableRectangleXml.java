@@ -1,5 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.*;
 import org.jdom.Element;
@@ -65,5 +67,5 @@ public class PositionableRectangleXml extends PositionableShapeXml {
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableRectangleXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableRectangleXml.class.getName());
 }

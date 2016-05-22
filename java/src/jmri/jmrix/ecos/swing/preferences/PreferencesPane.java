@@ -67,7 +67,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         JTabbedPane tab = new JTabbedPane();
         tab.add(rosterTab(), "Roster");
         tab.add(throttleTab(), "Throttle");
-        tab.add(turnoutTab(), "Turnouts");
+        tab.add(turnoutTab(), java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Turnouts"));
         
         add(tab);
         add(buttonPanel);

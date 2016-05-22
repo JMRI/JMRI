@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is the main JMRI Server implementation.
@@ -26,7 +28,7 @@ public class JmriServer {
     protected ZeroConfService service = null;
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
-    protected ArrayList<clientListener> connectedClientThreads = new ArrayList<clientListener>();
+    protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<ClientListener>();
     private static JmriServer _instance = null;
 
     public synchronized static JmriServer instance() {
@@ -43,26 +45,26 @@ public class JmriServer {
 
     // Create a new server using a given port and no timeout
     public JmriServer(int port) {
-    	this(port, 0);
+        this(port, 0);
     }
 
     // Create a new server using a given port with a timeout
     // A timeout of 0 is infinite
     public JmriServer(int port, int timeout) {
-    	super();
+        super();
         // Try registering the server on the given port
-    	try {
-    		this.connectSocket = new ServerSocket(port);
-    	} catch (IOException e) {
-    		log.error("Failed to connect to port " + port);
-    	}
-    	this.portNo = port;
-    	this.timeout = timeout;
+        try {
+            this.connectSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            log.error("Failed to connect to port " + port);
+        }
+        this.portNo = port;
+        this.timeout = timeout;
     }
 
     // Maintain a vector of connected clients
     // Add a new client
-    private synchronized void addClient(clientListener client) {
+    private synchronized void addClient(ClientListener client) {
         if (!connectedClientThreads.contains(client)) {
             connectedClientThreads.add(client);
             client.start();
@@ -70,7 +72,7 @@ public class JmriServer {
     }
 
     //Remove a client
-    private synchronized void removeClient(clientListener client) {
+    private synchronized void removeClient(ClientListener client) {
         if (connectedClientThreads.contains(client)) {
             client.stop(this);
             connectedClientThreads.remove(client);
@@ -95,16 +97,20 @@ public class JmriServer {
     }
 
     protected void advertise(String type) {
+        this.advertise(type, new HashMap<String, String>());
+    }
+
+    protected void advertise(String type, HashMap<String, String> properties) {
         if (this.service == null) {
-            this.service = ZeroConfService.create(type, this.portNo);
+            this.service = ZeroConfService.create(type, this.portNo, properties);
         }
         this.service.publish();
     }
-    
+
     public void stop() {
-    	for (clientListener client : this.connectedClientThreads) {
-    		client.stop(this);
-    	}
+        for (ClientListener client : this.connectedClientThreads) {
+            client.stop(this);
+        }
         this.listenThread = null;
         this.service.stop();
         if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
@@ -123,16 +129,15 @@ public class JmriServer {
             listenSocket = socket;
         }
 
+        @Override
         public void run() {
             // Listen for connection requests
             try {
                 while (running) {
                     Socket clientSocket = listenSocket.accept();
                     clientSocket.setSoTimeout(timeout);
-                    if (log.isDebugEnabled()) {
-                        log.debug(" Client Connected from IP " + clientSocket.getInetAddress() + " port " + clientSocket.getPort());
-                    }
-                    addClient(new clientListener(clientSocket));
+                    log.debug(" Client Connected from IP {} port {}", clientSocket.getInetAddress(), clientSocket.getPort());
+                    addClient(new ClientListener(clientSocket));
                 }
             } catch (IOException e) {
                 log.error("IOException while Listening for clients");
@@ -144,28 +149,23 @@ public class JmriServer {
             running = false;
             try {
                 listenSocket.close();
-                if (log.isDebugEnabled()) {
-                    log.debug("Listen Socket closed");
-                }
+                log.debug("Listen Socket closed");
             } catch (IOException e) {
                 log.error("socket in ThreadedServer won't close");
-                return;
             }
         }
     } // end of newClientListener class
 
     // Internal class to handle a client
-    protected class clientListener implements Runnable {
+    protected class ClientListener implements Runnable {
 
         Socket clientSocket = null;
         DataInputStream inStream = null;
         DataOutputStream outStream = null;
         Thread clientThread = null;
 
-        public clientListener(Socket socket) {
-            if (log.isDebugEnabled()) {
-                log.debug("Starting new Client");
-            }
+        public ClientListener(Socket socket) {
+            log.debug("Starting new Client");
             clientSocket = socket;
             try {
                 inStream = new DataInputStream(clientSocket.getInputStream());
@@ -181,38 +181,33 @@ public class JmriServer {
         }
 
         public void stop(JmriServer server) {
-        	try {
-            	server.stopClient(inStream, outStream);
-				clientSocket.close();
-			} catch (IOException e) {
-				// silently ignore, since we may be reacting to a closed socket
-			}
+            try {
+                server.stopClient(inStream, outStream);
+                clientSocket.close();
+            } catch (IOException e) {
+                // silently ignore, since we may be reacting to a closed socket
+            }
             clientThread = null;
         }
 
+        @Override
         public void run() {
             // handle a client.
             try {
                 handleClient(inStream, outStream);
             } catch (IOException ex) {
                 // When we get an IO exception here, we're done
-                if (log.isDebugEnabled()) {
-                    log.debug("Server Exiting");
-                }
+                log.debug("Server Exiting");
                 // Unregister with the server
                 removeClient(this);
-                return;
             } catch (java.lang.NullPointerException ex) {
                 // When we get an IO exception here, we're done with this client
-                if (log.isDebugEnabled()) {
-                    log.debug("Client Disconnect", ex);
-                }
+                log.debug("Client Disconnect", ex);
                 // Unregister with the server
                 removeClient(this);
-                return;
             }
         }
-    } // end of clientListener class.
+    } // end of ClientListener class.
 
     // Handle communication to a client through inStream and outStream
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
@@ -228,10 +223,10 @@ public class JmriServer {
             }
         }
     }
-    
+
     // Send a stop message to the client if applicable
     public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
-    	outStream.writeBytes("");
+        outStream.writeBytes("");
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriServer.class.getName());
 }

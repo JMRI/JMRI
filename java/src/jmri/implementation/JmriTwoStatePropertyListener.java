@@ -2,6 +2,8 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
 import jmri.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A service class for monitoring a bound property in one of the JMRI Named beans
@@ -54,8 +56,7 @@ public class JmriTwoStatePropertyListener extends JmriSimplePropertyListener
         */
     }
 
-static final org.apache.log4j.Logger 
-log = org.apache.log4j.Logger.getLogger(JmriTwoStatePropertyListener.class.getName());
+    static final Logger log = LoggerFactory.getLogger(JmriTwoStatePropertyListener.class.getName());
 }
 
 

@@ -11,7 +11,8 @@
 
 package jmri.jmrit.throttle;
 
-import java.util.ResourceBundle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JFrame;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
@@ -26,7 +27,6 @@ import java.beans.PropertyChangeListener;
 public class ThrottlesPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -5473594799045080011L;
 	
-	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
     private javax.swing.JCheckBox cbUseToolBar;
     private javax.swing.JCheckBox cbUseFunctionIcon;
     private javax.swing.JCheckBox cbResizeWinImg;
@@ -158,17 +158,17 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
 
         labelApplyWarning = new javax.swing.JLabel();
         
-        cbUseExThrottle.setText(throttleBundle.getString("UseExThrottle"));
-        cbResizeWinImg.setText(throttleBundle.getString("ExThrottleForceResize"));
-        cbUseToolBar.setText(throttleBundle.getString("ExThrottleUseToolBar"));
-        cbUseFunctionIcon.setText(throttleBundle.getString("ExThrottleUseFunctionIcons"));
-        cbUseRosterImage.setText(throttleBundle.getString("ExThrottleUseRosterImageBkg"));
-        cbEnableRosterSearch.setText(throttleBundle.getString("ExThrottleEnableRosterSearch"));
-        cbEnableAutoLoad.setText(throttleBundle.getString("ExThrottleEnableAutoSave"));
-        cbHideUndefinedButtons.setText(throttleBundle.getString("ExThrottleHideUndefinedFunctionButtons")); 
-        cbIgnoreThrottlePosition.setText(throttleBundle.getString("ExThrottleIgnoreThrottlePosition"));         
-        labelApplyWarning.setText(throttleBundle.getString("ExThrottleLabelApplyWarning"));
-        cbSaveThrottleOnLayoutSave.setText(throttleBundle.getString("ExThrottleSaveThrottleOnLayoutSave"));
+        cbUseExThrottle.setText(Bundle.getMessage("UseExThrottle"));
+        cbResizeWinImg.setText(Bundle.getMessage("ExThrottleForceResize"));
+        cbUseToolBar.setText(Bundle.getMessage("ExThrottleUseToolBar"));
+        cbUseFunctionIcon.setText(Bundle.getMessage("ExThrottleUseFunctionIcons"));
+        cbUseRosterImage.setText(Bundle.getMessage("ExThrottleUseRosterImageBkg"));
+        cbEnableRosterSearch.setText(Bundle.getMessage("ExThrottleEnableRosterSearch"));
+        cbEnableAutoLoad.setText(Bundle.getMessage("ExThrottleEnableAutoSave"));
+        cbHideUndefinedButtons.setText(Bundle.getMessage("ExThrottleHideUndefinedFunctionButtons")); 
+        cbIgnoreThrottlePosition.setText(Bundle.getMessage("ExThrottleIgnoreThrottlePosition"));         
+        labelApplyWarning.setText(Bundle.getMessage("ExThrottleLabelApplyWarning"));
+        cbSaveThrottleOnLayoutSave.setText(Bundle.getMessage("ExThrottleSaveThrottleOnLayoutSave"));
 
         java.awt.event.ActionListener al = new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,7 +180,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         cbUseRosterImage.addActionListener(al);
         cbEnableAutoLoad.addActionListener(al);
 
-        jbSave.setText(throttleBundle.getString("ThrottlesPrefsSave"));
+        jbSave.setText(Bundle.getMessage("ThrottlesPrefsSave"));
         jbSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSaveActionPerformed(evt);
@@ -188,14 +188,14 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         });
         jbSave.setVisible(false);
         
-        jbCancel.setText(throttleBundle.getString("ThrottlesPrefsReset"));
+        jbCancel.setText(Bundle.getMessage("ThrottlesPrefsReset"));
         jbCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCancelActionPerformed(evt);
             }
         });
        
-        jbApply.setText(throttleBundle.getString("ThrottlesPrefsApply"));
+        jbApply.setText(Bundle.getMessage("ThrottlesPrefsApply"));
         jbApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbApplyActionPerformed(evt);
@@ -296,10 +296,10 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
 	public void setContainer(JFrame f) {
 		m_container = f;
         jbSave.setVisible(true);
-        jbCancel.setText(throttleBundle.getString("ThrottlesPrefsCancel"));
+        jbCancel.setText(Bundle.getMessage("ThrottlesPrefsCancel"));
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesPreferencesPane.class.getName());
+	static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesPane.class.getName());
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		if ((evt == null) || (evt.getPropertyName() == null)) return;

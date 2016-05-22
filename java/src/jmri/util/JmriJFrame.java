@@ -2,6 +2,8 @@
 
 package jmri.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -69,13 +71,13 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     protected boolean allowInFrameServlet = true;
     
     /**
-     * Creates a JFrame
+     * Creates a JFrame with standard settings, optional
+     * save/restore of size and position.
      * @param saveSize - Set true to save the last known size
      * @param savePosition - Set true to save the last known location
      */
     public JmriJFrame(boolean saveSize, boolean savePosition) {
-	    super();
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+	super();
         reuseFrameSavedPosition=savePosition;
         reuseFrameSavedSized=saveSize;
         addWindowListener(this);
@@ -110,16 +112,26 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
     }
     
+    /**
+     * Creates a JFrame with standard settings, including
+     * saving/restoring of size and position.
+     */
     public JmriJFrame() {
         this(true, true);
     }
     
+    /**
+     * Creates a JFrame with with given name plus standard settings, including
+     * saving/restoring of size and position.
+     * @param name - Title of the JFrame
+     */
     public JmriJFrame(String name) {
         this(name, true, true);
     }
     
     /**
-     * Creates a JMRI JFrame
+     * Creates a JFrame with with given name plus standard settings, including
+     * optional save/restore of size and position.
      * @param name - Title of the JFrame
      * @param saveSize - Set true to save the last knowm size
      * @param savePosition - Set true to save the last known location
@@ -135,22 +147,33 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         setFrameLocation();
     }
     
+    /**
+     * Remove this window from e.g. the Windows Menu
+     * by removing it from the list of active JmriJFrames
+     */ 
+    public void makePrivateWindow() {   
+        synchronized (list) {
+            list.remove(this);
+        }
+    }
+    
     void setFrameLocation(){
-        if ((p != null) && (p.isWindowPositionSaved(windowFrameRef))) {
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if ((prefsMgr != null) && (prefsMgr.isWindowPositionSaved(windowFrameRef))) {
             Dimension screen = getToolkit().getScreenSize();
-            if ((reuseFrameSavedPosition) && (!((p.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
-                (p.getWindowLocation(windowFrameRef).getY()>=screen.getHeight())))){
-                if (log.isDebugEnabled()) log.debug("setFrameLocation 1st clause sets location to "+p.getWindowLocation(windowFrameRef));
-                this.setLocation(p.getWindowLocation(windowFrameRef));
+            if ((reuseFrameSavedPosition) && (!((prefsMgr.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
+                (prefsMgr.getWindowLocation(windowFrameRef).getY()>=screen.getHeight())))){
+                if (log.isDebugEnabled()) log.debug("setFrameLocation 1st clause sets location to "+prefsMgr.getWindowLocation(windowFrameRef));
+                this.setLocation(prefsMgr.getWindowLocation(windowFrameRef));
             }
             /* Simple case that if either height or width are zero, then we should
             not set them */
-            if ((reuseFrameSavedSized) &&(!((p.getWindowSize(windowFrameRef).getWidth()==0.0) ||
-                (p.getWindowSize(windowFrameRef).getHeight()==0.0)))){
-                if (log.isDebugEnabled()) log.debug("setFrameLocation 2nd clause sets preferredSize to "+p.getWindowSize(windowFrameRef));
-                this.setPreferredSize(p.getWindowSize(windowFrameRef));
-                if (log.isDebugEnabled()) log.debug("setFrameLocation 2nd clause sets size to "+p.getWindowSize(windowFrameRef));
-                this.setSize(p.getWindowSize(windowFrameRef));
+            if ((reuseFrameSavedSized) &&(!((prefsMgr.getWindowSize(windowFrameRef).getWidth()==0.0) ||
+                (prefsMgr.getWindowSize(windowFrameRef).getHeight()==0.0)))){
+                if (log.isDebugEnabled()) log.debug("setFrameLocation 2nd clause sets preferredSize to "+prefsMgr.getWindowSize(windowFrameRef));
+                this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
+                if (log.isDebugEnabled()) log.debug("setFrameLocation 2nd clause sets size to "+prefsMgr.getWindowSize(windowFrameRef));
+                this.setSize(prefsMgr.getWindowSize(windowFrameRef));
             }
             
             /* We just check to make sure that having set the location
@@ -185,9 +208,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
         int refNo = 1;
         String ref = initref;
-        for(int i = 0; i<list.size();i++){
-            JmriJFrame j = list.get(i);
-            if(j!=this && j.getWindowFrameRef().equals(ref)){
+        for(JmriJFrame j:list){
+            if(j!=this && j.getWindowFrameRef()!=null && j.getWindowFrameRef().equals(ref)){
                 ref = initref+":"+refNo;
                 refNo++;
             }
@@ -197,7 +219,11 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     @Override
-    public void pack(){
+    public void pack() {
+        // work around for Linux, sometimes the stored window size is too small
+        if (this.getPreferredSize().width < 100 || this.getPreferredSize().height < 100) {
+        	this.setPreferredSize(null); // try without the preferred size
+        }
 	    super.pack();
         reSizeToFitOnScreen();
     }
@@ -211,37 +237,40 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         Dimension dim = getMaximumSize();
         int width = this.getPreferredSize().width;
         int height = this.getPreferredSize().height;
-        if (log.isDebugEnabled()) log.debug("reSizeToFitOnScreen starts with maximum size "+dim);
+        if (log.isDebugEnabled()) log.debug("reSizeToFitOnScreen of \""+getTitle()+"\" starts with maximum size "+dim);
         if (log.isDebugEnabled()) log.debug("reSizeToFitOnScreen starts with preferred height "+height+" width "+width);
+        if (log.isDebugEnabled()) log.debug("reSizeToFitOnScreen starts with location "+getX()+","+getY());
         
         if ((width+this.getX())>=dim.getWidth()){
             // not fit in width, try to move position left
             int offsetX = (width+this.getX()) - (int)dim.getWidth(); // pixels too large
-            if (log.isDebugEnabled()) log.debug("reSizeToFitScreen moves left "+offsetX+" pixels");
+            if (log.isDebugEnabled()) log.debug("reSizeToFitScreen moves \""+getTitle()+"\" left "+offsetX+" pixels");
             int positionX = this.getX()-offsetX;
             if (positionX < 0) {
-                log.debug("reSizeToFitScreen sets X to zero");
+                if (log.isDebugEnabled()) log.debug("reSizeToFitScreen sets \""+getTitle()+"\" X to zero");
                 positionX = 0;
             }
             this.setLocation(positionX, this.getY());
             // try again to see if it doesn't fit
             if ((width+this.getX())>=dim.getWidth()){
                 width = width - (int)((width + this.getX())-dim.getWidth());
+                if (log.isDebugEnabled()) log.debug("reSizeToFitScreen sets \""+getTitle()+"\" width to "+width);
             }
         }
         if ((height+this.getY())>=dim.getHeight()){
             // not fit in height, try to move position up
             int offsetY = (height+this.getY()) - (int)dim.getHeight(); // pixels too large
-            if (log.isDebugEnabled()) log.debug("reSizeToFitScreen moves up "+offsetY+" pixels");
+            if (log.isDebugEnabled()) log.debug("reSizeToFitScreen moves \""+getTitle()+"\" up "+offsetY+" pixels");
             int positionY = this.getY()-offsetY;
             if (positionY < 0) {
-                log.debug("reSizeToFitScreen sets Y to zero");
+                if (log.isDebugEnabled()) log.debug("reSizeToFitScreen sets \""+getTitle()+"\" Y to zero");
                 positionY = 0;
             }
             this.setLocation(this.getX(), positionY);
             // try again to see if it doesn't fit
             if ((height+this.getY())>=dim.getHeight()){
                 height = height - (int)((height + this.getY())-dim.getHeight());
+                if (log.isDebugEnabled()) log.debug("reSizeToFitScreen sets \""+getTitle()+"\" height to "+height);
             }
         }
         this.setSize(width, height);
@@ -271,8 +300,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             frameOffSetx=f.getInsets().top/2;
         this.setLocation(frameOffSetx, frameOffSety);
     }
-    
-    jmri.UserPreferencesManager p;
     
     String windowFrameRef;
     
@@ -319,7 +346,13 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 
         int stdMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         InputMap im = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, stdMask), "close");
+        
+        // We extract the modifiers as a string, then add the I18N string, and
+        // build a key code
+        String modifier = KeyStroke.getKeyStroke(KeyEvent.VK_W, stdMask).toString();
+        String keyCode = modifier.substring(0, modifier.length()-1)+Bundle.getMessage("VkKeyWindowClose").substring(0,1);
+
+        im.put(KeyStroke.getKeyStroke(keyCode), "close"); // NOI18N
         //im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close");
     }
 
@@ -431,19 +464,15 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 
                 // If insets are zero, guess based on system type
                 if (widthInset == 0 && heightInset == 0) {
-                    String type = System.getProperty("os.name","");
-                    if (type.equals("Linux")) {
+                    String osName = SystemType.getOSName();
+                    if (SystemType.isLinux()) {
                         // Linux generally has a bar across the top and/or bottom
                         // of the screen, but lets you have the full width.
                         heightInset = 70;
                     }
                     // Windows generally has values, but not always,
                     // so we provide observed values just in case
-                    else if (type.equals("Windows XP")) {
-                        heightInset = 28;  // bottom 28
-                    } else if (type.equals("Windows 98")) {
-                        heightInset = 28;  // bottom 28
-                    } else if (type.equals("Windows 2000")) {
+                    else if (osName.equals("Windows XP") || osName.equals("Windows 98") || osName.equals("Windows 2000")) {
                         heightInset = 28;  // bottom 28
                     }
                 }
@@ -569,11 +598,12 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSavePosition(boolean save){
         reuseFrameSavedPosition=save;
-        if (p == null) {
-            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr == null) {
+            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         }
-        if (p != null) {
-            p.setSaveWindowLocation(windowFrameRef, save);
+        if (prefsMgr != null) {
+            prefsMgr.setSaveWindowLocation(windowFrameRef, save);
         } else {
             log.warn("setSavePosition() UserPreferencesManager() not initialised" );
         }
@@ -584,11 +614,12 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSaveSize(boolean save){
         reuseFrameSavedSized=save;
-        if (p == null) {
-            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr == null) {
+            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         }
-        if (p != null) {
-            p.setSaveWindowSize(windowFrameRef, save);
+        if (prefsMgr != null) {
+            prefsMgr.setSaveWindowSize(windowFrameRef, save);
         } else {
             log.warn("setSaveSize() UserPreferencesManager() not initialised" );
         }
@@ -598,9 +629,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * Returns if the frame Position is saved or not
      */
     public boolean getSavePosition(){
-        if (p == null) {
-            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        }
         return reuseFrameSavedPosition;
     }
 
@@ -635,16 +663,15 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="LI_LAZY_INIT_STATIC", justification="modified is only on Swing thread")
     protected void handleModified() {
         if (getModifiedFlag()) {
-            if (rb == null) rb = java.util.ResourceBundle.getBundle("jmri.util.UtilBundle");
             this.setVisible(true);
             int result = javax.swing.JOptionPane.showOptionDialog(this,
-                rb.getString("WarnChangedMsg"),
-                rb.getString("WarnChangedTitle"),
+                Bundle.getMessage("WarnChangedMsg"),
+                Bundle.getMessage("WarnChangedTitle"),
                 javax.swing.JOptionPane.YES_NO_OPTION,
                 javax.swing.JOptionPane.WARNING_MESSAGE,
                 null, // icon
-                new String[]{rb.getString("WarnYesSave"),rb.getString("WarnNoClose")},
-                rb.getString("WarnYesSave")
+                new String[]{Bundle.getMessage("WarnYesSave"),Bundle.getMessage("WarnNoClose")},
+                Bundle.getMessage("WarnYesSave")
             );
             if (result == javax.swing.JOptionPane.YES_OPTION) {
                 // user wants to save
@@ -652,13 +679,12 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             }
         }
     }
-    static java.util.ResourceBundle rb = null; 
     protected void storeValues() {
         log.error("default storeValues does nothing for "+getTitle());
     }
         
     
-    // For marking the window as modified on MacOS X
+    // For marking the window as modified on Mac OS X
     // See: http://developer.apple.com/qa/qa2001/qa1146.html
     final static String WINDOW_MODIFIED = "windowModified";
     public void markWindowModified(boolean yes){
@@ -691,8 +717,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if ((p != null) && (reuseFrameSavedSized) && isVisible()) {
             //Windows sets the size parameter when resizing a frame, while Unix uses the preferredsize
-            if(System.getProperty("os.name").toLowerCase().contains("windows")
-            		|| System.getProperty("os.name").toLowerCase().equals("mac os x"))
+        	if (!SystemType.isLinux())
                 p.setWindowSize(windowFrameRef, super.getSize());
             else 
                 p.setWindowSize(windowFrameRef, super.getPreferredSize());
@@ -701,7 +726,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     
     public void componentShown(java.awt.event.ComponentEvent e) { }
     
-    private jmri.implementation.AbstractShutDownTask task = null;
+    private transient jmri.implementation.AbstractShutDownTask task = null;
     protected void setShutDownTask() {
         if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
             task = 
@@ -732,8 +757,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 p.setWindowLocation(windowFrameRef, this.getLocation());
             if (reuseFrameSavedSized){
             	//Windows sets the size parameter when resizing a frame, while Unix uses the preferredsize
-                if(System.getProperty("os.name").toLowerCase().contains("windows")
-                		|| System.getProperty("os.name").toLowerCase().equals("mac os x"))
+            	if (!SystemType.isLinux())
                     p.setWindowSize(windowFrameRef, super.getSize());
                 else 
                     p.setWindowSize(windowFrameRef, super.getPreferredSize());
@@ -855,5 +879,5 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return this;
     }
 
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriJFrame.class.getName());
+    static private Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
 }

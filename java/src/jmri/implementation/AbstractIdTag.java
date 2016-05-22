@@ -41,16 +41,19 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
         super(systemName.toUpperCase(), userName);
     }
 
+    @Override
     public String getTagID() {
         // TODO: Convert this to allow for >1 char system name length
         // Or, is this really necessary as it will always be 'I'nternal???
         return this.mSystemName.substring(2);
     }
 
+    @Override
     public Reporter getWhereLastSeen() {
         return this._whereLastSeen;
     }
 
+    @Override
     public Date getWhenLastSeen() {
         if (this._whenLastSeen == null) return null;
         else return (Date)this._whenLastSeen.clone();  // Date is mutable, so return copy
@@ -61,7 +64,7 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
         return (mUserName==null || mUserName.length()==0)?getTagID():mUserName;
     }
 
-//    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractIdTag.class.getName());
+//    private static final Logger log = LoggerFactory.getLogger(AbstractIdTag.class.getName());
 
 }
 

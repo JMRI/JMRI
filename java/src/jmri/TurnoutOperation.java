@@ -3,6 +3,8 @@
  */
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Iterator;
 import jmri.implementation.AbstractTurnout;
@@ -253,5 +255,5 @@ public abstract class TurnoutOperation implements Comparable<Object> {
 		return (mode & feedbackModes) != 0;
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperation.class.getName());
+    static Logger log = LoggerFactory.getLogger(TurnoutOperation.class.getName());
 }

@@ -31,7 +31,7 @@ public class FontUtil {
     static void init() {
         doInit = false;
         // see if on a Mac Classic system where shouldnt even try
-        if (System.getProperty("os.name").equals("Mac OS")) {
+        if (SystemType.getOSName().equals("Mac OS")) {
             skip = true;
         }
     }

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.powerline.insteon2412s;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.powerline.*;
 
 /**
@@ -101,7 +103,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
     }
     
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificX10Light.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpecificX10Light.class.getName());
 }
 
 /* @(#)SpecificX10Light.java */

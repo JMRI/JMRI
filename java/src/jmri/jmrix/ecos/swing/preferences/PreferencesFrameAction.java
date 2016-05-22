@@ -2,6 +2,8 @@
 
 package jmri.jmrix.ecos.swing.preferences;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
@@ -34,7 +36,7 @@ public class PreferencesFrameAction extends AbstractAction {
 			}
 		f.setVisible(true);	
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PreferencesFrameAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(PreferencesFrameAction.class.getName());
 }
 
 

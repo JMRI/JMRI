@@ -2,6 +2,8 @@
 
 package jmri.jmrix.cmri.serial.assignment;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
@@ -32,7 +34,7 @@ public class ListAction extends AbstractAction {
         f.setVisible(true);
     }
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ListAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(ListAction.class.getName());
 }
 
 /* @(#)ListAction.java */

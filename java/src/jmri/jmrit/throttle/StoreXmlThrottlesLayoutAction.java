@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.*;
 import java.awt.event.*;
@@ -20,8 +22,6 @@ import org.jdom.output.*;
  * @version     $Revision$
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
-
-	static final ResourceBundle rb = ThrottleBundle.bundle();
 
 	/**
 	 * Constructor
@@ -45,7 +45,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 	 * @param e The event causing the action.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
 		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 		fileChooser.setCurrentDirectory(new File( ThrottleFrame.getDefaultThrottleFolder()));
 		java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
@@ -99,6 +99,6 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 	}
 
 	// initialize logging
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
 
 }

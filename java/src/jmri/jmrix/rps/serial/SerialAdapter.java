@@ -2,6 +2,8 @@
 
 package jmri.jmrix.rps.serial;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Reading;
@@ -453,6 +455,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialAdapter.class.getName());
 
 }

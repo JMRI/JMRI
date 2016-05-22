@@ -2,6 +2,8 @@
 
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /**
@@ -77,7 +79,10 @@ public class TransitSection {
         }
 		needsInitialization = false;
 	}
-	
+    
+    boolean temporary = false;
+    public void setTemporary(boolean boo){ temporary = boo; }
+    public boolean isTemporary() { return temporary; }
 	/**
      * Access methods
      */
@@ -111,7 +116,7 @@ public class TransitSection {
 	}
 
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitSection.class.getName());
+    static Logger log = LoggerFactory.getLogger(TransitSection.class.getName());
 }
 
 /* @(#)TransitSection.java */

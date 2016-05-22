@@ -2,6 +2,8 @@
 
 package jmri.jmrix.easydcc.networkdriver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.easydcc.EasyDccNetworkPortController;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 
@@ -74,6 +76,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         return null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

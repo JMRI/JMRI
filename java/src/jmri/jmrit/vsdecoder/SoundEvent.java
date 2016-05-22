@@ -19,6 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -343,6 +345,6 @@ public class SoundEvent implements PropertyChangeListener {
 
     }  // end setXml()
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundEvent.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SoundEvent.class.getName());
     
 }

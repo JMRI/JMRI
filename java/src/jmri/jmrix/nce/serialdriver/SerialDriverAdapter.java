@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce.serialdriver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -24,6 +26,7 @@ import gnu.io.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @author ken ccameron Copyright (C) 2013
  * @version			$Revision$
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
@@ -122,8 +125,10 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
             // setting binary mode
             adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
+            adaptermemo.setNceCmdGroups(~NceTrafficController.CMDS_USB);
         } else {
             adaptermemo.configureCommandStation(NceTrafficController.OPTION_2004);
+            adaptermemo.setNceCmdGroups(~NceTrafficController.CMDS_USB);
         }
         
         tc.connectPort(this); 
@@ -164,8 +169,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 		return validSpeeds;
 	}
 
-	private String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
-	private int [] validSpeedValues = new int[]{9600, 19200};
+	private String [] validSpeeds = new String[]{"9,600 baud"};
+	private int [] validSpeedValues = new int[]{9600};
 
     // private control members
     private boolean opened = false;
@@ -177,6 +182,6 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         adaptermemo = null;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

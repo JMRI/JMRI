@@ -2,9 +2,11 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import net.java.games.joal.AL;
-import java.util.List;
+import java.util.Queue;
 
 /**
  * JOAL implementation of the Audio Source sub-class.
@@ -156,31 +158,32 @@ public class JoalAudioSource extends AbstractAudioSource {
      * @return True if successfully queued.
      */
     @Override
-    public boolean queueAudioBuffers(List<AudioBuffer> audioBuffers) {
+    public boolean queueAudioBuffers(Queue<AudioBuffer> audioBuffers) {
         // First check we've been initialised
         if (!_initialised) {
             return false;
         }
         
 	// Make an int[] of the buffer ids
-	int[] bids = new int[audioBuffers.size()];
+	int[] bids = new int[1];
 	int i = 0;
-	for (AudioBuffer b : audioBuffers) {
-	    bids[i] = ((JoalAudioBuffer)b).getDataStorageBuffer()[0];
+	// While the list isn't empty, pop elements and process.
+	AudioBuffer b;
+	while ((b = audioBuffers.poll()) != null) {
+	    bids[0] = ((JoalAudioBuffer)b).getDataStorageBuffer()[0];
+	    al.alSourceQueueBuffers(_source[0], 1, bids, 0);
 	    if (log.isDebugEnabled()) log.debug("Queueing Buffer [" + i + "] " + b.getSystemName());
 	    i++;
+	    if (JoalAudioFactory.checkALError()) {
+		log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + b.getDisplayName() +") etc.");
+		return false;
+	    }
 	}
 
         // Bind this AudioSource to the specified AudioBuffer
-	al.alSourceQueueBuffers(_source[0], bids.length, bids, 0);
+	//al.alSourceQueueBuffers(_source[0], bids.length, bids, 0);
         //al.alSourcei(_source[0], AL.AL_BUFFER, ((JoalAudioBuffer)audioBuffer).getDataStorageBuffer()[0]);
-        if (JoalAudioFactory.checkALError()) {
-            log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + audioBuffers.get(0).getDisplayName() +") etc.");
-            return false;
-        }
         
-        if (log.isDebugEnabled()) log.debug("Queue JoalAudioBuffer (" + audioBuffers.get(0).getSystemName() +
-                                            ") (etc) to JoalAudioSource (" + this.getSystemName() + ")");
         return true;
     }
 
@@ -259,6 +262,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return(num_processed[0]);
     }
 
+    @Override
     boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // First check we've been initialised
         if (!_initialised) {
@@ -277,6 +281,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return true;
     }
 
+    @Override
     protected void changePosition(Vector3f pos) {
         if (_initialised) {
             al.alSource3f(_source[0], AL.AL_POSITION, pos.x, pos.y, pos.z);
@@ -391,6 +396,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doPlay() {
         if (log.isDebugEnabled()) log.debug("Play JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -400,6 +406,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @SuppressWarnings("SleepWhileInLoop")
+    @Override
     protected void doStop() {
         if (log.isDebugEnabled()) log.debug("Stop JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -419,6 +426,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         this.setState(STATE_STOPPED);
     }
 
+    @Override
     protected void doPause() {
         if (log.isDebugEnabled()) log.debug("Pause JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -427,6 +435,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         this.setState(STATE_STOPPED);
     }
 
+    @Override
     protected void doResume() {
         if (log.isDebugEnabled()) log.debug("Resume JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -444,6 +453,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         this.setState(STATE_PLAYING);
     }
 
+    @Override
     protected void doRewind() {
         if (log.isDebugEnabled()) log.debug("Rewind JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -451,6 +461,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doFadeIn() {
         if (log.isDebugEnabled()) log.debug("Fade-in JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -460,6 +471,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doFadeOut() {
         if (log.isDebugEnabled()) log.debug("Fade-out JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -468,6 +480,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void cleanUp() {
         if (log.isDebugEnabled()) log.debug("Cleanup JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -479,6 +492,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         this.dispose();
     }
 
+    @Override
     protected void calculateGain() {
 
         // Adjust gain based on master gain for this source and any
@@ -504,7 +518,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return this._source;
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JoalAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioSource.class.getName());
 
     /**
      * An internal class used to create a new thread to monitor looping as,

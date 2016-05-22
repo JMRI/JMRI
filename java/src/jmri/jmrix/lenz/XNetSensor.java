@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
@@ -171,7 +173,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     // package protected routine to get the Sensor Nibble
     int getNibble() { return nibble; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSensor.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetSensor.class.getName());
 
 }
 

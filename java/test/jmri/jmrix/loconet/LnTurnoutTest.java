@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 /**
@@ -140,6 +141,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnoutTest.class.getName());
+	 static Logger log = Logger.getLogger(LnTurnoutTest.class.getName());
 
 }

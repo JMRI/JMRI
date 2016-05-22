@@ -2,16 +2,18 @@
 
 package jmri.jmrix.openlcb.swing.hub;
 
+import java.net.*;
 import javax.swing.*;
 import jmri.jmrix.can.CanListener;
-import jmri.jmrix.can.swing.CanPanelInterface;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
-
+import jmri.jmrix.can.swing.CanPanelInterface;
 import org.openlcb.hub.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying,and more importantly starting, an OpenLCB TCP/IP hub
@@ -63,8 +65,10 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         
         // add GUI components
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
-
-        add(new JLabel("Port: "+hub.getPort()));
+        
+        try {
+            add(new JLabel("Hub IP address "+InetAddress.getLocalHost().getHostAddress()+":"+hub.getPort()));
+        } catch (UnknownHostException e) { log.error(e.getLocalizedMessage(), e); }
         add(label);
         
         startHubThread(hub.getPort());
@@ -84,7 +88,13 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
                 if (m.source == null) return;  // was from this
                 // process and forward m.line;
                 GridConnectReply msg = new GridConnectReply();
-                byte[] bytes = m.line.getBytes();
+                byte[] bytes;
+                try {
+                    bytes = m.line.getBytes("US-ASCII");  // GC adapters use ASCII // NOI18N
+                } catch (java.io.UnsupportedEncodingException e) {
+                    log.error("Cannot proceed with GC input message since US-ASCII not supported");
+                    return;
+                }
                 for (int i = 0; i<m.line.length(); i++) {
                     msg.setElement(i, bytes[i]);
                 }
@@ -145,6 +155,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HubPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(HubPane.class.getName());
 
 }

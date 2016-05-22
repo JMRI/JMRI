@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import org.apache.log4j.Logger;
 import java.util.Vector;
 
 /**
@@ -60,6 +61,6 @@ public class AcelaTrafficControlScaffold extends AcelaTrafficController {
 		return cmdListeners.size();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTrafficControlScaffold.class.getName());
+	static Logger log = Logger.getLogger(AcelaTrafficControlScaffold.class.getName());
 
 }

@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -115,7 +117,7 @@ public class LocoIcon extends PositionableLabel {
     ButtonGroup locoButtonGroup = null;
     
     protected JMenu makeLocoIconMenu(){
-    	JMenu iconMenu = new JMenu(rb.getString("LocoColor"));
+    	JMenu iconMenu = new JMenu(Bundle.getMessage("LocoColor"));
     	locoButtonGroup = new ButtonGroup();
     	String[] colors = getLocoColors();
     	for (int i=0; i<colors.length; i++){
@@ -193,7 +195,7 @@ public class LocoIcon extends PositionableLabel {
     }
     
     protected JMenuItem makeDockingMenu() {
-    	JMenuItem dockingMenu = new JMenuItem(rb.getString("setDockingLocation"));
+    	JMenuItem dockingMenu = new JMenuItem(Bundle.getMessage("setDockingLocation"));
     	dockingMenu.addActionListener(new ActionListener() {
     		Editor ed;
     		LocoIcon loco;
@@ -225,7 +227,7 @@ public class LocoIcon extends PositionableLabel {
     }
 
     protected JMenuItem makeDockMenu() {
-    	JMenuItem dockMenu = new JMenuItem(rb.getString("dockIcon"));
+    	JMenuItem dockMenu = new JMenuItem(Bundle.getMessage("dockIcon"));
     	dockMenu.addActionListener(new ActionListener() {
     		Editor ed;
     		LocoIcon loco;
@@ -240,5 +242,5 @@ public class LocoIcon extends PositionableLabel {
     	return dockMenu;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoIcon.class.getName());
 }

@@ -177,7 +177,7 @@ this page
         the LIUSB through the Lenz LIUSBServer.
 
         <li>The Lenz LI-USB-Ethernet (Lenz part number 23151) is a revised version of the LIUSB which includes 
-        built in Ethernet adapter.  The USB connection on the device is provided by a Microchip chipset and registers itself as a USB CDC-ACM (Abstract Control Model) device.  For Windows users, Connection via the USB port will be identical to the previous version of the LIUSB.  For Linux users, the device will appear as a /dev/ttyACMx device (where x is replaced with a number.)  For MacOS X users, the device name will be /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit number)</p>
+        built in Ethernet adapter.  The USB connection on the device is provided by a Microchip chipset and registers itself as a USB CDC-ACM (Abstract Control Model) device.  For Windows users, Connection via the USB port will be identical to the previous version of the LIUSB.  For Linux users, the device will appear as a /dev/ttyACMx device (where x is replaced with a number.)  For Mac OS X users, the device name will be /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit number)</p>
 
 <p>The protocol used to connect to the device via USB is identical to the prior LIUSB device, so the USB connection is supported by any JMRI version with support for the LIUSB.  When configuring to communicate with the device via USB, be sure that Flow Control is turned off.</p>  
 <p>Connection via the Ethernet connection is available through the LIUSB Ethernet connection type, which was first made available in version 2.13.7.</p>
@@ -464,14 +464,14 @@ this page
 
     <li><b>This option has been removed starting in version 2.9.5</b>
     Check Buffer Status When Sending?  Defaults to "yes" on 
-    Windows and Linux, and "no" on MacOS 8/9 and MacOS X.   
+    Windows and Linux, and "no" on MacOS 8/9 and Mac OS X.   
     Except when debugging problems, you should leave this at the default.
 
     <li>The series of radio buttons labeled "GUI style" allows you to
     select how the program will look.  "Metal" is the native Java look
     available on all types.  Other choices will vary with your computer
     type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and MacOS X respectively.
+    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
 
     <li>In the bottom selection box, you can pick the default
     programmer format. You can override this each time you open the
@@ -536,14 +536,14 @@ this page
 
     <li><b>This option has been removed starting in version 2.9.5</b>
     Check Buffer Status When Sending?  Defaults to "yes" on 
-    Windows and Linux, and "no" on MacOS 8/9 and MacOS X.   
+    Windows and Linux, and "no" on MacOS 8/9 and Mac OS X.   
     Except when debugging problems, you should leave this at the default.
 
     <li>The series of radio buttons labeled "GUI style" allows you to
     select how the program will look.  "Metal" is the native Java look
     available on all types.  Other choices will vary with your computer
     type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and MacOS X respectively.
+    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
 
     <li>In the bottom selection box, you can pick the default
     programmer format. You can override this each time you open the
@@ -589,7 +589,7 @@ this page
     select how the program will look.  "Metal" is the native Java look
     available on all types.  Other choices will vary with your computer
     type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and MacOS X respectively.
+    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
 
     <li>In the bottom selection box, you can pick the default
     programmer format. You can override this each time you open the
@@ -632,7 +632,7 @@ this page
     select how the program will look.  "Metal" is the native Java look
     available on all types.  Other choices will vary with your computer
     type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and MacOS X respectively.
+    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
 
     <li>In the bottom selection box, you can pick the default
     programmer format. You can override this each time you open the
@@ -658,7 +658,7 @@ this page
     select how the program will look.  "Metal" is the native Java look
     available on all types.  Other choices will vary with your computer
     type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and MacOS X respectively.
+    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
 
     <li>In the bottom selection box, you can pick the default
     programmer format. You can override this each time you open the
@@ -715,14 +715,14 @@ this page
 
     <li><b>This option has been removed starting in version 2.9.5</b>
     Check Buffer Status When Sending?  Defaults to "yes" on 
-    Windows and Linux, and "no" on MacOS 8/9 and MacOS X. 
+    Windows and Linux, and "no" on MacOS 8/9 and Mac OS X. 
     Except when debugging problems, you should leave this at the default.
 
     <li>The series of radio buttons labeled "GUI style" allows you to
     select how the program will look.  "Metal" is the native Java look
     available on all types.  Other choices will vary with your computer
     type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and MacOS X respectively.
+    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
 
     <li>In the bottom selection box, you can pick the default
     programmer format. You can override this each time you open the
@@ -770,14 +770,14 @@ USB connection is 2.1.2</b>
 
     <li><b>This option has been removed starting in version 2.9.5</b>
     Check Buffer Status When Sending?  Defaults to "yes" on 
-    Windows and Linux, and "no" on MacOS 8/9 and MacOS X.   
+    Windows and Linux, and "no" on MacOS 8/9 and Mac OS X.   
     Except when debugging problems, you should leave this at the default.
 
     <li>The series of radio buttons labeled "GUI style" allows you to
     select how the program will look.  "Metal" is the native Java look
     available on all types.  Other choices will vary with your computer
     type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and MacOS X respectively.
+    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
 
     <li>In the bottom selection box, you can pick the default
     programmer format. You can override this each time you open the
@@ -846,7 +846,7 @@ since the IP address can change due to DHCP addressing.
     how the program will look. "Metal" is the native Java look available on all
     types. Other choices will vary with your computer type. "Motif", "Windows",
     "MacOS" and "MacOS Adaptive" look native on Linux, Windows, MacOS "Classic"
-    and MacOS X respectively.
+    and Mac OS X respectively.
 
     <li>In the bottom selection box, you can pick the default programmer
     format. You can override this each time you open the programmer, so this is

@@ -34,6 +34,7 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
+        <xs:element name="cleardown" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="logicDelay" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="layoutPanel" type="EntryExitPanelType" minOccurs="0" maxOccurs="unbounded" />      
       </xs:sequence>
@@ -106,7 +107,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-
+      <xs:attribute name="uniqueid" type="xs:string" use="required" />
     </xs:complexType>
 
 </xs:schema>

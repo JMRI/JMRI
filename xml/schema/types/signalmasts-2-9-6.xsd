@@ -37,7 +37,8 @@
         <xs:element name="turnoutsignalmast" type="TurnoutSignalMastType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="dccsignalmast" type="DccSignalMastType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="virtualsignalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />    
+        <xs:element name="virtualsignalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalmastrepeater" type="SignalMastRepeater" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
     </xs:complexType>
@@ -148,6 +149,28 @@
         <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
       </xs:attribute>
       <xs:attribute name="class" type="classType" use="required" />
+    </xs:complexType>
+    
+    <xs:complexType name="SignalMastRepeater">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of one Signal Mast Repeater implementation.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element name="masterMast" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="slaveMast" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="enabled" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="update" minOccurs="0" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="BothWay"/>
+              <xs:enumeration value="MasterToSlave"/>
+              <xs:enumeration value="SlaveToMaster"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
     </xs:complexType>
 
 </xs:schema>

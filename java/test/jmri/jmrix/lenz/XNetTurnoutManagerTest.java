@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.Turnout;
 import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
@@ -124,6 +125,6 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTurnoutManagerTest.class.getName());
+    static Logger log = Logger.getLogger(XNetTurnoutManagerTest.class.getName());
 
 }

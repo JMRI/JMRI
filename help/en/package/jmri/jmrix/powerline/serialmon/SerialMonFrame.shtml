@@ -32,8 +32,10 @@ This is the help/jmri/jmrix/powerline/serialmon/SerialMonFrame help page
 For more information on the 
 various controls and options, please see the
 <a href="../../AbstractMonFrame.shtml">Communications Monitor Window page</a>.
-
+</p>
 <!--#include virtual="/Footer" -->
+	</div>
+  </div>
 </body>
 </html>
 

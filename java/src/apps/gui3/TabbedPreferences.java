@@ -55,7 +55,8 @@ import jmri.jmrix.JmrixConfigPane;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 import apps.AppConfigBase;
@@ -113,7 +114,7 @@ public class TabbedPreferences extends AppConfigBase {
 	WiThrottlePrefsPanel withrottlePrefsPanel;
 
 	ArrayList<JmrixConfigPane> connectionTabInstance = new ArrayList<JmrixConfigPane>();
-	ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
+	ArrayList<PreferencesCatItems> preferencesArray = new ArrayList<PreferencesCatItems>();
 	JPanel buttonpanel;
 	@SuppressWarnings("rawtypes")
 	// IDEs in Java 1.7 warn about this, IDEs in Java 1.6 don't.
@@ -136,31 +137,31 @@ public class TabbedPreferences extends AppConfigBase {
 		 * Adds the place holders for the menu items so that any items add by
 		 * third party code is added to the end
 		 */
-		preferencesArray.add(new preferencesCatItems("CONNECTIONS", rb
+		preferencesArray.add(new PreferencesCatItems("CONNECTIONS", rb
 				.getString("MenuConnections")));
 
-		preferencesArray.add(new preferencesCatItems("DEFAULTS", rb
+		preferencesArray.add(new PreferencesCatItems("DEFAULTS", rb
 				.getString("MenuDefaults")));
 
-		preferencesArray.add(new preferencesCatItems("FILELOCATIONS", rb
+		preferencesArray.add(new PreferencesCatItems("FILELOCATIONS", rb
 				.getString("MenuFileLocation")));
 
-		preferencesArray.add(new preferencesCatItems("STARTUP", rb
+		preferencesArray.add(new PreferencesCatItems("STARTUP", rb
 				.getString("MenuStartUp")));
 
-		preferencesArray.add(new preferencesCatItems("DISPLAY", rb
+		preferencesArray.add(new PreferencesCatItems("DISPLAY", rb
 				.getString("MenuDisplay")));
 
-		preferencesArray.add(new preferencesCatItems("MESSAGES", rb
+		preferencesArray.add(new PreferencesCatItems("MESSAGES", rb
 				.getString("MenuMessages")));
 
-		preferencesArray.add(new preferencesCatItems("ROSTER", rb
+		preferencesArray.add(new PreferencesCatItems("ROSTER", rb
 				.getString("MenuRoster")));
 
-		preferencesArray.add(new preferencesCatItems("THROTTLE", rb
+		preferencesArray.add(new PreferencesCatItems("THROTTLE", rb
 				.getString("MenuThrottle")));
 
-		preferencesArray.add(new preferencesCatItems("WITHROTTLE", rb
+		preferencesArray.add(new PreferencesCatItems("WITHROTTLE", rb
 				.getString("MenuWiThrottle")));
 	}
 
@@ -173,14 +174,14 @@ public class TabbedPreferences extends AppConfigBase {
 		initalisationState = INITIALISING;
 
 		deleteConnectionIconRollOver = new ImageIcon(
-				FileUtil.getExternalFilename("program:resources/icons/misc/gui3/Delete16x16.png"));
+				FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Delete16x16.png"));
 		deleteConnectionIcon = new ImageIcon(
-				FileUtil.getExternalFilename("program:resources/icons/misc/gui3/Delete-bw16x16.png"));
+				FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Delete-bw16x16.png"));
 		deleteConnectionButtonSize = new Dimension(
 				deleteConnectionIcon.getIconWidth() + 2,
 				deleteConnectionIcon.getIconHeight() + 2);
 		addConnectionIcon = new ImageIcon(
-				FileUtil.getExternalFilename("program:resources/icons/misc/gui3/Add16x16.png"));
+				FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Add16x16.png"));
 
 		throttlePreferences = new ThrottlesPreferencesPane();
 		withrottlePrefsPanel = new WiThrottlePrefsPanel();
@@ -202,7 +203,7 @@ public class TabbedPreferences extends AppConfigBase {
 		save = new JButton(
 				rb.getString("ButtonSave"),
 				new ImageIcon(
-						FileUtil.getExternalFilename("program:resources/icons/misc/gui3/SaveIcon.png")));
+						FileUtil.findExternalFilename("program:resources/icons/misc/gui3/SaveIcon.png")));
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				invokeSaveOptions();
@@ -314,7 +315,7 @@ public class TabbedPreferences extends AppConfigBase {
 			// need to replace this mechanism with some mechanism that relies on a
 			// cached discovery mechanism for plugins like @ http://code.google.com/p/jspf/
 			List<String> classNames = (new ObjectMapper()).readValue(
-					rb.getString("PreferencesPanels"),
+					java.util.ResourceBundle.getBundle("apps.AppsStructureBundle").getString("PreferencesPanels"),
 					new TypeReference<List<String>>() {
 					});
 			for (String className : classNames) {
@@ -476,7 +477,7 @@ public class TabbedPreferences extends AppConfigBase {
 
 	public void addItem(String prefItem, String itemText, String tabtitle,
 			String labelKey, JComponent item, boolean store, String tooltip) {
-		preferencesCatItems itemBeingAdded = null;
+		PreferencesCatItems itemBeingAdded = null;
 		for (int x = 0; x < preferencesArray.size(); x++) {
 			if (preferencesArray.get(x).getPrefItem().equals(prefItem)) {
 				itemBeingAdded = preferencesArray.get(x);
@@ -484,7 +485,7 @@ public class TabbedPreferences extends AppConfigBase {
 			}
 		}
 		if (itemBeingAdded == null) {
-			itemBeingAdded = new preferencesCatItems(prefItem, itemText);
+			itemBeingAdded = new PreferencesCatItems(prefItem, itemText);
 			preferencesArray.add(itemBeingAdded);
 			// As this is a new item in the selection list, we need to update
 			// the JList.
@@ -493,11 +494,9 @@ public class TabbedPreferences extends AppConfigBase {
 		}
 		if (tabtitle == null)
 			tabtitle = itemText;
-		itemBeingAdded.addPreferenceItem(tabtitle, labelKey, item, tooltip,
-				store);
+		itemBeingAdded.addPreferenceItem(tabtitle, labelKey, item, tooltip);
 		if (store) {
 			items.add(item);
-			// InstanceManager.configureManagerInstance().registerPref(item);
 		}
 	}
 
@@ -572,7 +571,7 @@ public class TabbedPreferences extends AppConfigBase {
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				preferencesCatItems item = preferencesArray.get(list
+				PreferencesCatItems item = preferencesArray.get(list
 						.getSelectedIndex());
 				selection(item.getPrefItem());
 			}
@@ -756,7 +755,7 @@ public class TabbedPreferences extends AppConfigBase {
 	private Dimension deleteConnectionButtonSize;
 	private ImageIcon addConnectionIcon;
 
-	class preferencesCatItems {
+	static class PreferencesCatItems implements java.io.Serializable {
 
 		/*
 		 * This contains details of all list items to be displayed in the
@@ -768,24 +767,23 @@ public class TabbedPreferences extends AppConfigBase {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		ArrayList<String> disableItemsList = new ArrayList<String>();
 
-		ArrayList<tabDetails> tabDetailsArray = new ArrayList<tabDetails>();
+		ArrayList<TabDetails> TabDetailsArray = new ArrayList<TabDetails>();
 
-		preferencesCatItems(String pref, String title) {
+		PreferencesCatItems(String pref, String title) {
 			prefItem = pref;
 			itemText = title;
 		}
 
 		void addPreferenceItem(String title, String labelkey, JComponent item,
-				String tooltip, boolean store) {
-			for (int x = 0; x < tabDetailsArray.size(); x++) {
-				if (tabDetailsArray.get(x).getTitle().equals(title)) {
+				String tooltip) {
+			for (int x = 0; x < TabDetailsArray.size(); x++) {
+				if (TabDetailsArray.get(x).getTitle().equals(title)) {
 					// If we have a match then we do not need to add it back in.
 					return;
 				}
 			}
-			tabDetails tab = new tabDetails(labelkey, title, item, tooltip,
-					store);
-			tabDetailsArray.add(tab);
+			TabDetails tab = new TabDetails(labelkey, title, item, tooltip);
+			TabDetailsArray.add(tab);
 			tabbedPane.addTab(tab.getTitle(), null, tab.getPanel(),
 					tab.getToolTip());
 
@@ -808,8 +806,8 @@ public class TabbedPreferences extends AppConfigBase {
 
 		ArrayList<String> getSubCategoriesList() {
 			ArrayList<String> choices = new ArrayList<String>();
-			for (int x = 0; x < tabDetailsArray.size(); x++) {
-				choices.add(tabDetailsArray.get(x).getTitle());
+			for (int x = 0; x < TabDetailsArray.size(); x++) {
+				choices.add(TabDetailsArray.get(x).getTitle());
 			}
 			return choices;
 		}
@@ -820,18 +818,18 @@ public class TabbedPreferences extends AppConfigBase {
 		 */
 
 		JComponent getPanel() {
-			if (tabDetailsArray.size() == 1) {
-				return tabDetailsArray.get(0).getPanel();
+			if (TabDetailsArray.size() == 1) {
+				return TabDetailsArray.get(0).getPanel();
 			} else {
 				return tabbedPane;
 			}
 		}
 
 		void gotoSubCategory(String sub) {
-			if (tabDetailsArray.size() == 1)
+			if (TabDetailsArray.size() == 1)
 				return;
-			for (int i = 0; i < tabDetailsArray.size(); i++) {
-				if (tabDetailsArray.get(i).getTitle().equals(sub)) {
+			for (int i = 0; i < TabDetailsArray.size(); i++) {
+				if (TabDetailsArray.get(i).getTitle().equals(sub)) {
 					tabbedPane.setSelectedIndex(i);
 					return;
 				}
@@ -839,15 +837,15 @@ public class TabbedPreferences extends AppConfigBase {
 		}
 
 		void disableSubCategory(String sub) {
-			if (tabDetailsArray.size() == 0) {
+			if (TabDetailsArray.size() == 0) {
 				// So the tab preferences might not have been initialised when
 				// the call to disable an item is called therefore store it for
 				// later on
 				disableItemsList.add(sub);
 				return;
 			}
-			for (int i = 0; i < tabDetailsArray.size(); i++) {
-				if ((tabDetailsArray.get(i).getItem()).getClass().getName()
+			for (int i = 0; i < TabDetailsArray.size(); i++) {
+				if ((TabDetailsArray.get(i).getItem()).getClass().getName()
 						.equals(sub)) {
 					tabbedPane.setEnabledAt(i, false);
 					return;
@@ -855,7 +853,7 @@ public class TabbedPreferences extends AppConfigBase {
 			}
 		}
 
-		class tabDetails {
+		static class TabDetails implements java.io.Serializable{
 
 			/* This contains all the JPanels that make up a preferences menus */
 
@@ -863,14 +861,13 @@ public class TabbedPreferences extends AppConfigBase {
 			String tabTooltip;
 			String tabTitle;
 			JPanel tabPanel = new JPanel();
-			boolean store;
+			//boolean store;
 
-			tabDetails(String labelkey, String tabTit, JComponent item,
-					String tooltip, boolean save) {
+			TabDetails(String labelkey, String tabTit, JComponent item,
+					String tooltip) {
 				tabItem = item;
 				tabTitle = tabTit;
 				tabTooltip = tooltip;
-				store = save;
 
 				JComponent p = new JPanel();
 				p.setLayout(new BorderLayout());
@@ -905,11 +902,6 @@ public class TabbedPreferences extends AppConfigBase {
 				return tabPanel;
 			}
 
-			void addToStore() {
-				if (store)
-					items.add(tabItem);
-			}
-
 			JComponent getItem() {
 				return tabItem;
 			}
@@ -917,6 +909,6 @@ public class TabbedPreferences extends AppConfigBase {
 		}
 	}
 
-	static Logger log = Logger.getLogger(TabbedPreferences.class.getName());
+	static Logger log = LoggerFactory.getLogger(TabbedPreferences.class.getName());
 
 }

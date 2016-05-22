@@ -2,6 +2,8 @@
 
 package jmri.jmrix.cmri.serial.assignment;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialNode;
@@ -603,7 +605,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 						   rb.getString("HeadingSystemName"),
 						   rb.getString("HeadingUserName")};
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ListFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(ListFrame.class.getName());
 	
 }
 

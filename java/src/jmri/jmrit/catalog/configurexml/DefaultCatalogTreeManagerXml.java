@@ -1,5 +1,7 @@
 package jmri.jmrit.catalog.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
@@ -14,6 +16,7 @@ import java.util.Iterator;
 import java.io.File;
 
 import javax.swing.tree.DefaultTreeModel;
+import jmri.util.FileUtil;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -32,7 +35,7 @@ import org.jdom.Attribute;
 public class DefaultCatalogTreeManagerXml extends XmlFile
                     /* extends jmri.configurexml.AbstractXmlAdapter */ {
 
-	private static String defaultFileName = XmlFile.prefsDir()+"catalogTrees.xml";
+    private static String defaultFileName = FileUtil.getUserFilesPath() + "catalogTrees.xml";
 
     public DefaultCatalogTreeManagerXml() {
     }
@@ -283,5 +286,5 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultCatalogTreeManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManagerXml.class.getName());
 }

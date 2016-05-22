@@ -3,7 +3,6 @@
 package jmri.util.swing.mdi;
 
 import junit.framework.*;
-import java.io.File;
 
 /**
  *
@@ -14,9 +13,9 @@ public class PackageTest extends TestCase {
 
     public void testShow() {
         MdiMainFrame f = new MdiMainFrame("Test of MDI Frame", 
-                new File("java/test/jmri/util/swing/xml/Gui3LeftTree.xml"), 
-    	        new File("java/test/jmri/util/swing/xml/Gui3Menus.xml"), 
-    	        new File("java/test/jmri/util/swing/xml/Gui3MainToolBar.xml")
+                "java/test/jmri/util/swing/xml/Gui3LeftTree.xml", 
+    	        "java/test/jmri/util/swing/xml/Gui3Menus.xml", 
+    	        "java/test/jmri/util/swing/xml/Gui3MainToolBar.xml"
         );
         f.setSize(new java.awt.Dimension(400,400));
         f.setVisible(true);

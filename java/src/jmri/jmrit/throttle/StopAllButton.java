@@ -3,7 +3,6 @@ package jmri.jmrit.throttle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import jmri.DccThrottle;
@@ -11,12 +10,11 @@ import jmri.DccThrottle;
 import jmri.jmrit.catalog.NamedIcon;
 
 public class StopAllButton extends JButton {
-	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
 
 	public StopAllButton() {
-		//   	stop.setText(throttleBundle.getString("ThrottleToolBarStopAll"));
+		//   	stop.setText(Bundle.getMessage("ThrottleToolBarStopAll"));
 		setIcon(new NamedIcon("resources/icons/throttles/estop.png","resources/icons/throttles/estop.png"));
-		setToolTipText(throttleBundle.getString("ThrottleToolBarStopAllToolTip"));
+		setToolTipText(Bundle.getMessage("ThrottleToolBarStopAllToolTip"));
 		setVerticalTextPosition(JButton.BOTTOM);
 		setHorizontalTextPosition(JButton.CENTER);
 		addActionListener(new ActionListener() {

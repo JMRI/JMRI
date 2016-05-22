@@ -2,6 +2,8 @@
 
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractManager;
 import java.text.DecimalFormat;
 
@@ -129,6 +131,19 @@ public class BlockManager extends AbstractManager
     public Block getByUserName(String key) {
         return (Block)_tuser.get(key);
     }
+
+    public Block getByDisplayName(String key) {
+	// First try to find it in the user list.
+	// If that fails, look it up in the system list
+	Block retv = this.getByUserName(key);
+	if (retv == null) {
+	    retv = this.getBySystemName(key);
+	}
+	// If it's not in the system list, go ahead and return null
+	return(retv);
+    }
+
+
     
     static BlockManager _instance = null;
     static public BlockManager instance() {
@@ -165,7 +180,7 @@ public class BlockManager extends AbstractManager
         return defaultSpeed;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());
 }
 
 /* @(#)BlockManager.java */

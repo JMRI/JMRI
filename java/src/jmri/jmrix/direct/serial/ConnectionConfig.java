@@ -2,6 +2,8 @@
 
 package jmri.jmrix.direct.serial;
 
+import jmri.util.SystemType;
+
 
 /**
  * Definition of objects to handle configuring a layout connection
@@ -26,10 +28,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { 
-        String osName;
-    	if ((osName = System.getProperty("os.name","<unknown>").toLowerCase()).equals("mac os x")
-            || (osName.contains("windows") && Double.valueOf(System.getProperty("os.version")) >= 6 ) )
+    public String name() {
+    	if (SystemType.isMacOSX()
+            || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6 ))
 
             return "(Direct Drive (Serial) not available)";
         

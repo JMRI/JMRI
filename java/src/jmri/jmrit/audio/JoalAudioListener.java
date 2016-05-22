@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import net.java.games.joal.AL;
 
@@ -98,6 +100,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         return true;
     }
 
+    @Override
     protected void changePosition(Vector3f pos) {
         if (_initialised) {
             al.alListener3f(AL.AL_POSITION, pos.x, pos.y, pos.z);
@@ -174,13 +177,14 @@ public class JoalAudioListener extends AbstractAudioListener {
         }
     }
 
+    @Override
     protected void cleanUp() {
         // no clean-up needed for Listener
         if (log.isDebugEnabled()) log.debug("Cleanup JoalAudioListener (" + this.getSystemName() + ")");
         this.dispose();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JoalAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioListener.class.getName());
 
 }
 

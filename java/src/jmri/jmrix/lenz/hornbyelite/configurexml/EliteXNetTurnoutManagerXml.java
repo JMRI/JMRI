@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz.hornbyelite.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -31,6 +33,6 @@ public class EliteXNetTurnoutManagerXml extends jmri.managers.configurexml.Abstr
         return loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetTurnoutManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerXml.class.getName());
 
 }

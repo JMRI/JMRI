@@ -2,6 +2,8 @@
 
 package jmri.jmrix.tams;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -247,7 +249,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         if(adaptermemo==null) return "TM";
         return adaptermemo.getSystemPrefix();
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsTrafficController.class.getName());
 }
 
 

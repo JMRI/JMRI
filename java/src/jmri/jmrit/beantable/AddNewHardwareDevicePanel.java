@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
@@ -108,7 +110,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     JLabel finishLabel = new JLabel("Number to Add");
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddNewHardwareDevicePanel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanel.class.getName());
 }
 
 

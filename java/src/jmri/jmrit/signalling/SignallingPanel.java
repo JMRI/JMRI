@@ -2,6 +2,8 @@
 
 package jmri.jmrit.signalling;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Block;
@@ -10,6 +12,7 @@ import jmri.SignalMastManager;
 import jmri.SignalMastLogic;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
+import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 
@@ -79,13 +82,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             this.sourceMast = source;
             this.sml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(source);
             fixedSourceMastLabel = new JLabel(sourceMast.getDisplayName());
+            if(dest!=null)
+                frame.setTitle(source.getDisplayName() + " to " + dest.getDisplayName());
         }
         if ((dest!=null) && (sml!=null)){
             this.destMast=dest;
             if (!sml.isDestinationValid(dest)){
                 sml.setDestinationMast(dest);
             }
-
             fixedDestMastLabel = new JLabel(destMast.getDisplayName());
             useLayoutEditor.setSelected(sml.useLayoutEditor(destMast));
             useLayoutEditorTurnout.setSelected(sml.useLayoutEditorTurnouts(destMast));
@@ -135,7 +139,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 if (useLayoutEditor.isSelected()){
                     try {
                         boolean valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
-                            destMastBox.getSelectedBean());
+                            destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
                         if(!valid)
                             JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
                     }
@@ -187,7 +191,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                         }
                         try {
                             valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
-                                destMastBox.getSelectedBean());
+                                destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
                             if(!valid){
                                 JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
                             }
@@ -246,10 +250,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 //        JPanel signalMastPanel = new JPanel();
         
         JTabbedPane detailsTab = new JTabbedPane();
-        detailsTab.add(rb.getString("Blocks"), buildBlocksPanel());
-        detailsTab.add(rb.getString("Turnouts"), buildTurnoutPanel());
-        detailsTab.add(rb.getString("Sensors"), buildSensorPanel());
-        detailsTab.add(rb.getString("SignalMasts"), buildSignalMastPanel());
+        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Blocks")), buildBlocksPanel());
+        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Turnouts")), buildTurnoutPanel());
+        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Sensors")), buildSensorPanel());
+        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("SignalMasts")), buildSignalMastPanel());
         
         containerPanel.add(detailsTab, BorderLayout.CENTER);
         
@@ -768,7 +772,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             boolean valid = false;
             try {
                 valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMast, 
-                    destMast);
+                    destMast, LayoutBlockConnectivityTools.MASTTOMAST);
                 if(!valid){
                     JOptionPane.showMessageDialog(null,  rb.getString("ErrorUnReachableDestination"));
                     return;
@@ -1848,7 +1852,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignallingPanel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SignallingPanel.class.getName());
 }
 
 /* @(#)StatusPane.java */

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.jinput;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -99,6 +101,6 @@ public class UsbNode extends DefaultMutableTreeNode {
 
     static private java.util.HashMap<Object,UsbNode> map = new java.util.HashMap<Object,UsbNode>();
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UsbNode.class.getName());
+    static Logger log = LoggerFactory.getLogger(UsbNode.class.getName());
 }
 

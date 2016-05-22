@@ -2,6 +2,8 @@
 
 package jmri.jmrix.bachrus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -26,7 +28,7 @@ public class SpeedoConsoleAction extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoConsoleAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(SpeedoConsoleAction.class.getName());
 }
 
 

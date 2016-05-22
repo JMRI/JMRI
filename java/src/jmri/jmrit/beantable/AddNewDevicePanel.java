@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -84,7 +86,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddNewDevicePanel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(AddNewDevicePanel.class.getName());
 }
 
 

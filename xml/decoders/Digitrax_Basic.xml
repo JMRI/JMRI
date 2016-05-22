@@ -11,20 +11,20 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- $Id$ -->
+<!-- $Id: Digitrax_Basic.xml 22115 2012-12-30 02:15:20Z jacobsen $ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="phil.grainger@ca.com" version="9" lastUpdated="20050112"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="11" lastUpdated="20080412"/>
-<!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
-<!-- version 4 - add DH140, DN140, update DN146 ID -->
-<!-- version 5 - update versionID range -->
-<!-- version 6 - add consist direction - jake -->
-<!-- Version 7 - fix "rule 17" typos -->
-<!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
-<!-- Version 9 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
-<!-- Version 10 - fixed labels for Enable/Disable "Vstart/Vmid/Vfull in 128 step mode" - Paul Bender -->
-<!-- Version 11 - added factory reset -->
+  <!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
+  <!-- version 4 - add DH140, DN140, update DN146 ID -->
+  <!-- version 5 - update versionID range -->
+  <!-- version 6 - add consist direction - jake -->
+  <!-- Version 7 - fix "rule 17" typos -->
+  <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
+  <!-- Version 9 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+  <!-- Version 10 - fixed labels for Enable/Disable "Vstart/Vmid/Vfull in 128 step mode" - Paul Bender -->
+  <!-- Version 11 - added factory reset -->
   <decoder>
     <family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111">
       <model model="DH083" numOuts="5" numFns="3"/>
@@ -46,157 +46,91 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Start Volts" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
-        <decVal/>
-        <label>Start Volts</label>
-        <comment>A value of 255 corresponds to 100%</comment>
-      </variable>
-      <variable label="Acceleration Rate" CV="3" item="Accel">
-        <decVal max="31"/>
-        <label>Acceleration Rate</label>
-      </variable>
-      <variable label="Deceleration Rate" CV="4" item="Decel">
-        <decVal max="31"/>
-        <label>Deceleration Rate</label>
-      </variable>
-      <variable label="Max Volts" CV="5" item="Vhigh">
-        <decVal/>
-        <label>Max Volts</label>
-      </variable>
-      <variable label="Mid Volts" CV="6" item="Vmid">
-        <decVal/>
-        <label>Mid Volts</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
+        <label xml:lang="it">ID Versione</label>
       </variable>
       <variable label="Manufacturer" CV="8" readOnly="yes">
         <decVal/>
         <label>Manufacturer</label>
+        <label xml:lang="it">Costruttore</label>
       </variable>
       <variable label="F1 during DC operation" CV="13" mask="XXXXXXXV" minFn="1" item="Analog Mode Function Status - F1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 during DC operation</label>
+        <label xml:lang="it">F1 durante funzionamento Analogico</label>
       </variable>
       <variable label="F2 during DC operation" CV="13" mask="XXXXXXVX" minFn="2" item="Analog Mode Function Status - F2">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 during DC operation</label>
+        <label xml:lang="it">F2 durante funzionamento Analogico</label>
       </variable>
       <variable label="F3 during DC operation" CV="13" mask="XXXXXVXX" minFn="3" item="Analog Mode Function Status - F3">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 during DC operation</label>
+        <label xml:lang="it">F3 durante funzionamento Analogico</label>
       </variable>
       <variable label="F4 during DC operation" CV="13" mask="XXXXVXXX" minFn="4" item="Analog Mode Function Status - F4">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 during DC operation</label>
+        <label xml:lang="it">F4 durante funzionamento Analogico</label>
       </variable>
       <variable label="F5 during DC operation" CV="13" mask="XXXVXXXX" minFn="5" item="Analog Mode Function Status - F5">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 during DC operation</label>
+        <label xml:lang="it">F5 durante funzionamento Analogico</label>
       </variable>
       <variable label="F6 during DC operation" CV="13" mask="XXVXXXXX" minFn="6" item="Analog Mode Function Status - F6">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 during DC operation</label>
+        <label xml:lang="it">F6 durante funzionamento Analogico</label>
       </variable>
       <variable label="F0 Forward during DC operation" CV="13" mask="XVXXXXXX" item="Analog Mode Function Status - FL(f)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F0 Forward during DC operation</label>
+        <label xml:lang="it">F0 Avanti durante funzionamento Analogico</label>
       </variable>
       <variable label="F0 Reverse during DC operation" CV="13" mask="VXXXXXXX" item="Analog Mode Function Status - FL(r)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F0 Reverse during DC operation</label>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address">
-        <longAddressVal/>
-        <label>Long Address</label>
+        <label xml:lang="it">F0 Indietro durante funzionamento Analogico</label>
       </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
+        <label xml:lang="it">Indirizzo Consist</label>
       </variable>
       <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
+            <choice xml:lang="it">Normale</choice>
           </enumChoice>
           <enumChoice choice="Reversed">
             <choice>Reversed</choice>
+            <choice xml:lang="it">Indietro</choice>
           </enumChoice>
         </enumVal>
         <label>Consist Direction</label>
+        <label xml:lang="it">Direzione Consist</label>
       </variable>
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
             <choice>forward</choice>
+            <choice xml:lang="it">avanti</choice>
           </enumChoice>
           <enumChoice choice="reverse">
             <choice>reverse</choice>
+            <choice xml:lang="it">indietro</choice>
           </enumChoice>
         </enumVal>
         <label>Normal direction of motion</label>
+        <label xml:lang="it">Direzione di Marcia Normale</label>
       </variable>
       <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode">
         <enumVal>
@@ -208,17 +142,12 @@
           </enumChoice>
         </enumVal>
         <label>Speed steps</label>
+        <label xml:lang="it">Step velocità</label>
       </variable>
       <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
+        <label xml:lang="it">Modo Conversione Analogica</label>
       </variable>
       <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
@@ -227,394 +156,463 @@
           </enumChoice>
           <enumChoice choice="Use Table">
             <choice>Use Table</choice>
+            <choice xml:lang="it">Usa Tabella velocità</choice>
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
+        <label xml:lang="it">Tabella velocità</label>
       </variable>
       <variable label="Function F0F effect generated" CV="49" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function F0F effect generated</label>
+        <label xml:lang="it">Funzione F0F effetti generati</label>
       </variable>
       <variable label="Function F0F behavior" CV="49" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="Forward direction, ON with function ON, phase A">
             <choice>Forward direction, ON with function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with function ON, phase B">
             <choice>Reverse direction, ON with function ON, phase B</choice>
+            <choice xml:lang="it">Direzione indietro, ON con Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase A">
             <choice>Non directional, ON with function ON, effect phase A</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase A</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase B">
             <choice>Non directional, ON with function ON, effect phase B</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase B</choice>
           </enumChoice>
           <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
             <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con F0 e Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
             <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+            <choice xml:lang="it">Direzione Indietro, ON con F0 e Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
             <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Luci Ditch o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
             <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Logica Speciale per Luci Ditch Indietro o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x8)">
             <choice>Reserved (0x8)</choice>
+            <choice xml:lang="it">Riservata (0x8)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x9)">
             <choice>Reserved (0x9)</choice>
+            <choice xml:lang="it">Riservata (0x9)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xA)">
             <choice>Reserved (0xA)</choice>
+            <choice xml:lang="it">Riservata (0xA)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xB)">
             <choice>Reserved (0xB)</choice>
+            <choice xml:lang="it">Riservata (0xB)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xC)">
             <choice>Reserved (0xC)</choice>
+            <choice xml:lang="it">Riservata (0xC)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xD)">
             <choice>Reserved (0xD)</choice>
+            <choice xml:lang="it">Riservata (0xD)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xE)">
             <choice>Reserved (0xE)</choice>
+            <choice xml:lang="it">Riservata (0xE)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xF)">
             <choice>Reserved (0xF)</choice>
+            <choice xml:lang="it">Riservata (0xF)</choice>
           </enumChoice>
         </enumVal>
         <label>Function F0F behavior</label>
+        <label xml:lang="it">Comportamento Funzione F0F</label>
       </variable>
       <variable label="Function F0R effect generated" CV="50" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function F0R effect generated</label>
+        <label xml:lang="it">Funzione F0R effetti generati</label>
       </variable>
       <variable label="Function F0R behavior" CV="50" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="Forward direction, ON with function ON, phase A">
             <choice>Forward direction, ON with function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with function ON, phase B">
             <choice>Reverse direction, ON with function ON, phase B</choice>
+            <choice xml:lang="it">Direzione Indietro, ON con Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase A">
             <choice>Non directional, ON with function ON, effect phase A</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase A</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase B">
             <choice>Non directional, ON with function ON, effect phase B</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase B</choice>
           </enumChoice>
           <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
             <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con F0 e Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
             <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+            <choice xml:lang="it">Direzione Indietro, ON con F0 e Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
             <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Logica Speciale per Luci Ditch Avanti o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
             <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Logica Speciale per Luci Ditch Indietro o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x8)">
             <choice>Reserved (0x8)</choice>
+            <choice xml:lang="it">Riservata (0x8)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x9)">
             <choice>Reserved (0x9)</choice>
+            <choice xml:lang="it">Riservata (0x9)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xA)">
             <choice>Reserved (0xA)</choice>
+            <choice xml:lang="it">Riservata (0xA)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xB)">
             <choice>Reserved (0xB)</choice>
+            <choice xml:lang="it">Riservata (0x8B</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xC)">
             <choice>Reserved (0xC)</choice>
+            <choice xml:lang="it">Riservata (0xC)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xD)">
             <choice>Reserved (0xD)</choice>
+            <choice xml:lang="it">Riservata (0xD)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xE)">
             <choice>Reserved (0xE)</choice>
+            <choice xml:lang="it">Riservata (0xE)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xF)">
             <choice>Reserved (0xF)</choice>
+            <choice xml:lang="it">Riservata (0xF)</choice>
           </enumChoice>
         </enumVal>
         <label>Function F0R behavior</label>
+        <label xml:lang="it">Comportamento Funzione F0F</label>
       </variable>
       <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 1 effect generated</label>
+        <label xml:lang="it">Funzione 1 effetti generati</label>
       </variable>
       <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="Forward direction, ON with function ON, phase A">
             <choice>Forward direction, ON with function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with function ON, phase B">
             <choice>Reverse direction, ON with function ON, phase B</choice>
+            <choice xml:lang="it">Direzione Indietro, ON con Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase A">
             <choice>Non directional, ON with function ON, effect phase A</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase A</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase B">
             <choice>Non directional, ON with function ON, effect phase B</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase B</choice>
           </enumChoice>
           <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
             <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con F0 e Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
             <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+            <choice xml:lang="it">Direzione Indietro, ON con F0 e Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
             <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Logica Speciale per Luci Ditch Avanti o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
             <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Logica Speciale per Luci Ditch indietro o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x8)">
             <choice>Reserved (0x8)</choice>
+            <choice xml:lang="it">Riservata (0x8)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x9)">
             <choice>Reserved (0x9)</choice>
+            <choice xml:lang="it">Riservata (0x9)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xA)">
             <choice>Reserved (0xA)</choice>
+            <choice xml:lang="it">Riservata (0xA)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xB)">
             <choice>Reserved (0xB)</choice>
+            <choice xml:lang="it">Riservata (0xB)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xC)">
             <choice>Reserved (0xC)</choice>
+            <choice xml:lang="it">Riservata (0xC)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xD)">
             <choice>Reserved (0xD)</choice>
+            <choice xml:lang="it">Riservata (0xD)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xE)">
             <choice>Reserved (0xE)</choice>
+            <choice xml:lang="it">Riservata (0xE)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xF)">
             <choice>Reserved (0xF)</choice>
+            <choice xml:lang="it">Riservata (0xF)</choice>
           </enumChoice>
         </enumVal>
         <label>Function 1 behavior</label>
+        <label xml:lang="it">Comportamento Funzione 1</label>
       </variable>
       <variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 2 effect generated</label>
+        <label xml:lang="it">Funzione 2 effetti generati</label>
       </variable>
       <variable label="Function 2 behavior" CV="52" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="Forward direction, ON with function ON, phase A">
             <choice>Forward direction, ON with function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with function ON, phase B">
             <choice>Reverse direction, ON with function ON, phase B</choice>
+            <choice xml:lang="it">Direzione Indietro, ON con Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase A">
             <choice>Non directional, ON with function ON, effect phase A</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase A</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase B">
             <choice>Non directional, ON with function ON, effect phase B</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase B</choice>
           </enumChoice>
           <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
             <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con F0 e Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
             <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+            <choice xml:lang="it">Direzione Indietro, ON con F0 e Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
             <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Logica Speciale per Luci Ditch Avanti o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
             <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Logica Speciale per Luci Ditch indietro o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x8)">
             <choice>Reserved (0x8)</choice>
+            <choice xml:lang="it">Riservata (0x8)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x9)">
             <choice>Reserved (0x9)</choice>
+            <choice xml:lang="it">Riservata (0x9)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xA)">
             <choice>Reserved (0xA)</choice>
+            <choice xml:lang="it">Riservata (0xA)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xB)">
             <choice>Reserved (0xB)</choice>
+            <choice xml:lang="it">Riservata (0xB)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xC)">
             <choice>Reserved (0xC)</choice>
+            <choice xml:lang="it">Riservata (0xC)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xD)">
             <choice>Reserved (0xD)</choice>
+            <choice xml:lang="it">Riservata (0xD)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xE)">
             <choice>Reserved (0xE)</choice>
+            <choice xml:lang="it">Riservata (0xE)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xF)">
             <choice>Reserved (0xF)</choice>
+            <choice xml:lang="it">Riservata (0xF)</choice>
           </enumChoice>
         </enumVal>
         <label>Function 2 behavior</label>
+        <label xml:lang="it">Comportamento Funzione 2</label>
       </variable>
       <variable label="Function 3 effect generated" CV="53" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 3 effect generated</label>
+        <label xml:lang="it">Funzione 3 effetti generati</label>
       </variable>
       <variable label="Function 3 behavior" CV="53" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="Forward direction, ON with function ON, phase A">
             <choice>Forward direction, ON with function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with function ON, phase B">
             <choice>Reverse direction, ON with function ON, phase B</choice>
+            <choice xml:lang="it">Direzione Indietro, ON con Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase A">
             <choice>Non directional, ON with function ON, effect phase A</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase A</choice>
           </enumChoice>
           <enumChoice choice="Non directional, ON with function ON, effect phase B">
             <choice>Non directional, ON with function ON, effect phase B</choice>
+            <choice xml:lang="it">Non Direzionale, ON con Funzione ON, effetto fase B</choice>
           </enumChoice>
           <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
             <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+            <choice xml:lang="it">Direzione Avanti, ON con F0 e Funzione ON, fase A</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
             <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+            <choice xml:lang="it">Direzione Indietro, ON con F0 e Funzione ON, fase B</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
             <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Logica Speciale per Luci Ditch Avanti o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
             <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+            <choice xml:lang="it">Logica Speciale per Luci Ditch indietro o attenuazione a Norma 17</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x8)">
             <choice>Reserved (0x8)</choice>
+            <choice xml:lang="it">Riservata (0x8)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x9)">
             <choice>Reserved (0x9)</choice>
+            <choice xml:lang="it">Riservata (0x9)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xA)">
             <choice>Reserved (0xA)</choice>
+            <choice xml:lang="it">Riservata (0xA)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xB)">
             <choice>Reserved (0xB)</choice>
+            <choice xml:lang="it">Riservata (0xB)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xC)">
             <choice>Reserved (0xC)</choice>
+            <choice xml:lang="it">Riservata (0xC)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xD)">
             <choice>Reserved (0xD)</choice>
+            <choice xml:lang="it">Riservata (0xD)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xE)">
             <choice>Reserved (0xE)</choice>
+            <choice xml:lang="it">Riservata (0xE)</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0xF)">
             <choice>Reserved (0xF)</choice>
+            <choice xml:lang="it">Riservata (0xF)</choice>
           </enumChoice>
         </enumVal>
         <label>Function 3 behavior</label>
+        <label xml:lang="it">Comportamento Funzione 3)</label>
       </variable>
       <variable label="Directional Headlights" CV="61" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Normal headlight operation">
             <choice>Normal headlight operation</choice>
+            <choice xml:lang="it">Funzionamento Luci di testa Normale</choice>
           </enumChoice>
           <enumChoice choice="Reverse light lead controlled by F4">
             <choice>Reverse light lead controlled by F4</choice>
+            <choice xml:lang="it">Funzionamento Luci di testa controllate da F4</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa</label>
       </variable>
       <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Vstart/Vmid/Vfull in 128 step mode</label>
       </variable>
       <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Short-circuit protection</label>
+        <label xml:lang="it">Protezione Corto-Circuito</label>
         <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
+        <comment xml:lang="it">Funzione non documentata, occasionalmente richiesta dal servizio assistenza Digitrax</comment>
       </variable>
       <variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
         <decVal max="15"/>
         <label>Lamp keep-alive voltage</label>
+        <label xml:lang="it">Tensione mantenimento Lampade</label>
         <comment>0 is no keep-alive, use with LEDs</comment>
+        <comment xml:lang="it">0=nessuna, usare con LED</comment>
       </variable>
       <variable label="FX rate adjust" CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
         <decVal max="15"/>
         <label>FX rate adjust</label>
+        <label xml:lang="it">Tasso aggiustamento FX</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+        <comment xml:lang="it">0= veloce, 4 raccomandato all'inizio</comment>
       </variable>
       <variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
         <decVal/>
         <label>Ditch light hold-over time</label>
+        <label xml:lang="it">tempo smorzamento luci Ditch</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
+        <comment xml:lang="it">0= nessuno, 40 realistico (5 sec), 255= circa 20 sec.</comment>
       </variable>
-      <variable label="Kick Start" CV="65">
-        <decVal/>
-        <label>Kick Start</label>
-      </variable>
-      <variable label="Forward Trim" CV="66">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
-      <variable label="Reverse Trim" CV="95">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
-        <decVal/>
-        <label>User Private ID #1</label>
-      </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
-        <decVal/>
-        <label>User Private ID #2</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
+        <label xml:lang="it">Tabella Velocità</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
-      <constant label="FL(f) controls output 1" minOut="1" default="1"/>
-      <constant label="FL(r) controls output 2" minOut="2" default="1"/>
-      <constant label="F1 controls output 3" minOut="3" minFn="1" default="1"/>
-      <constant label="F2 controls output 4" minOut="4" minFn="2" default="1"/>
-      <constant label="F3 controls output 5" minOut="5" minFn="3" default="1"/>
-      <constant label="F4 controls output 6" minOut="6" minFn="4" default="1"/>
-      <constant label="F5 controls output 7" minOut="7" minFn="5" default="1"/>
-      <constant label="F6 controls output 8" minOut="8" minFn="6" default="1"/>
-      <constant label="F7 controls output 9" minOut="9" minFn="7" default="1"/>
-      <constant label="F8 controls output 10" minOut="10" minFn="8" default="1"/>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
+      <constant item="F1 controls output 3" minOut="3" minFn="1" default="1"/>
+      <constant item="F2 controls output 4" minOut="4" minFn="2" default="1"/>
+      <constant item="F3 controls output 5" minOut="5" minFn="3" default="1"/>
+      <constant item="F4 controls output 6" minOut="6" minFn="4" default="1"/>
+      <constant item="F5 controls output 7" minOut="7" minFn="5" default="1"/>
+      <constant item="F6 controls output 8" minOut="8" minFn="6" default="1"/>
+      <constant item="F7 controls output 9" minOut="9" minFn="7" default="1"/>
+      <constant item="F8 controls output 10" minOut="10" minFn="8" default="1"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
-      <factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+                 <label>Reset All CVs</label>
+                 <label xml:lang="it">Ripristino di tutte le CV</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+                 <label>Reset All CVs except speed table</label>
+                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+      </factReset>
     </resets>
   </decoder>
   <pane name="Digitrax">

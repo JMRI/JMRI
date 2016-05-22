@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.setup;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -33,15 +35,11 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 public class RestoreDialog extends JDialog {
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-			.getLogger(RestoreDialog.class.getName());
-	
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
+	static Logger log = LoggerFactory.getLogger(RestoreDialog.class
+			.getName());
 
 	private JPanel mainPanel;
 	private JPanel contentPanel;
@@ -49,7 +47,7 @@ public class RestoreDialog extends JDialog {
 	private JRadioButton defaultBackupsRadioButton;
 	private JComboBox comboBox;
 	private JButton restoreButton;
-	private JButton helpButton;
+	//private JButton helpButton;
 
 	private BackupBase backup;
 	private String setName;
@@ -65,7 +63,7 @@ public class RestoreDialog extends JDialog {
 	private void initComponents() {
 		setModalityType(ModalityType.DOCUMENT_MODAL);
 		setModal(true);
-		setTitle("Restore Operations files");
+		setTitle(Bundle.getMessage("RestoreDialog.this.title"));
 		setBounds(100, 100, 378, 251);
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -75,12 +73,11 @@ public class RestoreDialog extends JDialog {
 
 			contentPanel = new JPanel();
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-			contentPanel
-					.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+			contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 			mainPanel.add(contentPanel, BorderLayout.NORTH);
 
 			{
-				JLabel captionLabel = new JLabel("Select backup store to use:");
+				JLabel captionLabel = new JLabel(Bundle.getMessage("RestoreDialog.label.text"));
 				captionLabel.setBorder(new EmptyBorder(5, 0, 5, 0));
 				contentPanel.add(captionLabel);
 			}
@@ -88,43 +85,36 @@ public class RestoreDialog extends JDialog {
 				JPanel panel = new JPanel();
 				panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 				panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-				panel.setBorder(new TitledBorder(UIManager
-						.getBorder("TitledBorder.border"), "From:",
-						TitledBorder.LEADING, TitledBorder.TOP, null,
-						new Color(0, 0, 0)));
+				panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), // NOI18N
+						"From:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0))); // NOI18N
 
 				contentPanel.add(panel);
 				ButtonGroup fromGroup = new ButtonGroup();
 
 				{
-					automaticBackupsRadioButton = new JRadioButton(
-							"Automatic backups");
-					automaticBackupsRadioButton
-							.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent e) {
-									do_automaticBackupsRadioButton_actionPerformed(e);
-								}
-							});
+					automaticBackupsRadioButton = new JRadioButton(Bundle.getMessage("RestoreDialog.radioButton.autoBackup"));
+					automaticBackupsRadioButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							do_automaticBackupsRadioButton_actionPerformed(e);
+						}
+					});
 					panel.add(automaticBackupsRadioButton);
 					fromGroup.add(automaticBackupsRadioButton);
 				}
 				{
-					defaultBackupsRadioButton = new JRadioButton(
-							"Default backups");
-					defaultBackupsRadioButton
-							.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent e) {
-									do_defaultBackupsRadioButton_actionPerformed(e);
-								}
-							});
+					defaultBackupsRadioButton = new JRadioButton(Bundle.getMessage("RestoreDialog.radioButton.defaultBackup"));
+					defaultBackupsRadioButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							do_defaultBackupsRadioButton_actionPerformed(e);
+						}
+					});
 					panel.add(defaultBackupsRadioButton);
 					fromGroup.add(defaultBackupsRadioButton);
 				}
 			}
 
 			{
-				newLabelLabel = new JLabel(
-						"and the specifc backup set directory:");
+				newLabelLabel = new JLabel(Bundle.getMessage("RestoreDialog.label2.text"));
 				newLabelLabel.setBorder(new EmptyBorder(10, 0, 5, 0));
 				contentPanel.add(newLabelLabel);
 			}
@@ -142,11 +132,11 @@ public class RestoreDialog extends JDialog {
 
 		{
 			JPanel buttonPane = new JPanel();
-			FlowLayout fl_buttonPane = new FlowLayout(FlowLayout.RIGHT);
+			FlowLayout fl_buttonPane = new FlowLayout(FlowLayout.CENTER);
 			buttonPane.setLayout(fl_buttonPane);
 			mainPanel.add(buttonPane, BorderLayout.SOUTH);
 			{
-				restoreButton = new JButton("Restore");
+				restoreButton = new JButton(Bundle.getMessage("RestoreDialog.retoreButton.text"));
 				restoreButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						do_restoreButton_actionPerformed(e);
@@ -155,7 +145,7 @@ public class RestoreDialog extends JDialog {
 				buttonPane.add(restoreButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton(Bundle.getMessage("BackupDialog.cancelButton.text"));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						do_cancelButton_actionPerformed(arg0);
@@ -163,16 +153,16 @@ public class RestoreDialog extends JDialog {
 				});
 				buttonPane.add(cancelButton);
 			}
-			{
-				helpButton = new JButton("Help");
-				helpButton.setEnabled(false);
-				helpButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						do_helpButton_actionPerformed(arg0);
-					}
-				});
-				buttonPane.add(helpButton);
-			}
+//			{
+//				helpButton = new JButton(Bundle.getString"BackupDialog.helpButton.text"));
+//				helpButton.setEnabled(false);
+//				helpButton.addActionListener(new ActionListener() {
+//					public void actionPerformed(ActionEvent arg0) {
+//						do_helpButton_actionPerformed(arg0);
+//					}
+//				});
+//				buttonPane.add(helpButton);
+//			}
 		}
 
 		// Start out with Default backups
@@ -222,12 +212,8 @@ public class RestoreDialog extends JDialog {
 
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
-			if (JOptionPane
-					.showConfirmDialog(
-							this,
-							rb.getString("OperationsFilesModified"),
-							rb.getString("SaveOperationFiles"),
-							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("OperationsFilesModified"),
+					Bundle.getMessage("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
 		}
@@ -258,10 +244,8 @@ public class RestoreDialog extends JDialog {
 				log.debug("Unable to deregister Train Dirty Task");
 			}
 
-			JOptionPane.showMessageDialog(this,
-					rb.getString("YouMustRestartAfterRestore"),
-					rb.getString("RestoreSuccessful"),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("YouMustRestartAfterRestore"),
+					Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 			dispose();
 
 			Apps.handleRestart();
@@ -270,29 +254,27 @@ public class RestoreDialog extends JDialog {
 		// These may need to be enhanced to show the backup store being used,
 		// auto or default.
 		catch (IOException ex) {
-			ExceptionContext context = new ExceptionContext(ex,
-					"Restoring Operation files from: " + setName,
-					"Hint about checking valid names, etc.");
+			ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("RestoreDialog.restoring")
+					+ " " + setName, "Hint about checking valid names, etc.");	// NOI18N
 			new ExceptionDisplayFrame(context);
 
 		} catch (Exception ex) {
 			log.error("Doing restore from " + setName, ex);
 
-			UnexpectedExceptionContext context = new UnexpectedExceptionContext(
-					ex, "Restoring Operation files from: " + setName);
+			UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
+					Bundle.getMessage("RestoreDialog.restoring") + " " + setName);
 
 			new ExceptionDisplayFrame(context);
 		}
 	}
 
 	/**
-	 * Adds the names of the backup sets that are available in either the
-	 * Automatic or the Default backup store.
+	 * Adds the names of the backup sets that are available in either the Automatic or the Default backup store.
 	 */
 	private void loadComboBox() {
 		// Get the Backup Sets from the currently selected backup store.
 		// Called after the radio button selection has changed
-		
+
 		// Disable the Restore button in case there is nothing loaded into the ComboBox
 		restoreButton.setEnabled(false);
 

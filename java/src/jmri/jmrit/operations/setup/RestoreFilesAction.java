@@ -2,10 +2,10 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -25,11 +25,8 @@ import apps.Apps;
  */
 public class RestoreFilesAction extends AbstractAction {
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(RestoreFilesAction.class.getName());
-	
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
 	public RestoreFilesAction(String s) {
 		super(s);
@@ -48,8 +45,8 @@ public class RestoreFilesAction extends AbstractAction {
 			if (JOptionPane
 					.showConfirmDialog(
 							null,
-							rb.getString("OperationsFilesModified"),
-							rb.getString("SaveOperationFiles"),
+							Bundle.getMessage("OperationsFilesModified"),
+							Bundle.getMessage("SaveOperationFiles"),
 							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
@@ -83,8 +80,8 @@ public class RestoreFilesAction extends AbstractAction {
 			backup.restoreFilesFromDirectory(directory);
 
 			JOptionPane.showMessageDialog(null,
-					rb.getString("YouMustRestartAfterRestore"),
-					rb.getString("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
+					Bundle.getMessage("YouMustRestartAfterRestore"),
+					Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
 			// now deregister shut down task
 			// If Trains window was opened, then task is active
@@ -102,8 +99,8 @@ public class RestoreFilesAction extends AbstractAction {
 
 		} catch (Exception ex) {
 			ExceptionContext context = new ExceptionContext(ex,
-					"Restore files",
-					"Make sure that the backup set files exists and can be read.");
+					Bundle.getMessage("RestoreDialog.restore.files"),
+					Bundle.getMessage("RestoreDialog.makeSure"));
 			new ExceptionDisplayFrame(context);
 		}
 	}
@@ -114,14 +111,14 @@ public class RestoreFilesAction extends AbstractAction {
 			if (f.isDirectory())
 				return true;
 			String name = f.getName();
-			if (name.matches(".*\\.xml"))
+			if (name.matches(".*\\.xml")) // NOI18N
 				return true;
 			else
 				return false;
 		}
 
 		public String getDescription() {
-			return rb.getString("BackupFolders");
+			return Bundle.getMessage("BackupFolders");
 		}
 	}
 

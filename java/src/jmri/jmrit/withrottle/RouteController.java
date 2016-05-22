@@ -1,10 +1,11 @@
 package jmri.jmrit.withrottle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.ResourceBundle;
 import java.util.Enumeration;
 import jmri.InstanceManager;
 import jmri.Route;
@@ -80,7 +81,7 @@ public class RouteController extends AbstractController implements PropertyChang
 
         StringBuilder labels = new StringBuilder("PRT");    //  Panel Turnout Titles
 
-        labels.append("]\\[" + ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle").getString("MenuItemRouteTable") + "}|{Route");
+        labels.append("]\\[" + Bundle.getMessage("MenuItemRouteTable") + "}|{Route");
         labels.append("]\\[" + "Active" + "}|{2");
         labels.append("]\\[" + "Inactive" + "}|{4");
 
@@ -191,5 +192,5 @@ public class RouteController extends AbstractController implements PropertyChang
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteController.class.getName());
+    static Logger log = LoggerFactory.getLogger(RouteController.class.getName());
 }

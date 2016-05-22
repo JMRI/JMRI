@@ -2,6 +2,8 @@
 
 package jmri.jmrix.powerline;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractVariableLight;
 
 /**
@@ -129,7 +131,7 @@ abstract public class SerialLight extends AbstractVariableLight {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLight.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
 
 /* @(#)SerialLight.java */

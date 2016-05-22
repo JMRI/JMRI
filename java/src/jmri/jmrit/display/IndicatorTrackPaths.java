@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import java.awt.BasicStroke;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -8,12 +9,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Dimension;
-import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import jmri.Sensor;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableRoundRect;
 import jmri.jmrit.logix.OBlock;
 /**
@@ -49,14 +47,7 @@ import jmri.jmrit.logix.OBlock;
         return _paths;
     }
 	protected void setPaths(ArrayList<String>paths) {
-		if (paths == null) {
-	        _paths = paths;			
-		} else {
-			_paths = new ArrayList<String>();			
-            for (int i=0; i<paths.size(); i++) {
-            	_paths.add(paths.get(i).trim());
-            }
-		}
+        _paths = paths;			
     }
 
 	protected void addPath(String path) {
@@ -187,9 +178,6 @@ import jmri.jmrit.logix.OBlock;
         public void paint(Graphics g) {
         	super.paint(g);
             Graphics2D g2d = (Graphics2D)g;
-            if (_transform!=null ) {
-            	g2d.transform(_transform);
-            }        
             g2d.setFont(getFont().deriveFont(Font.BOLD));
         	int textWidth = getFontMetrics(getFont()).stringWidth(_text);
         	int textHeight = getFontMetrics(getFont()).getHeight();
@@ -200,5 +188,5 @@ import jmri.jmrit.logix.OBlock;
         }
     }
       
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTrackPaths.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndicatorTrackPaths.class.getName());
  }

@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
+import jmri.util.FileUtil;
 
 /**
  * Provide GUI to configure the Default File Locations
@@ -41,15 +42,15 @@ public class FileLocationPane extends JPanel {
     }
     
     public static void save(){
-        jmri.jmrit.XmlFile.setScriptsFileLocationDefault(scriptLocation.getText());
-        jmri.jmrit.XmlFile.setUserFileLocationDefault(userLocation.getText());
+        FileUtil.setScriptsPath(scriptLocation.getText());
+        FileUtil.setUserFilesPath(userLocation.getText());
         //jmri.jmrit.throttle.ThrottleFrame.setDefaultThrottleLocation(throttleLocation.getText());
     }
     
     private JPanel ScriptsLocation(){
         JButton bScript = new JButton(rb.getString("ButtonSetDots"));
         final JFileChooser fcScript;
-        fcScript = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
+        fcScript = new JFileChooser(FileUtil.getScriptsPath());
 
         fcScript.setDialogTitle(rb.getString("MessageSelectDirectory"));
         fcScript.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -71,7 +72,7 @@ public class FileLocationPane extends JPanel {
         p.add(scriptLocation);
         p.add(bScript);
         scriptLocation.setColumns(30);
-        scriptLocation.setText(jmri.jmrit.XmlFile.scriptsDir());
+        scriptLocation.setText(FileUtil.getScriptsPath());
         return p;
     }
     
@@ -81,11 +82,11 @@ public class FileLocationPane extends JPanel {
         p.add(users);
         p.add(userLocation);
         userLocation.setColumns(30);
-        userLocation.setText(jmri.jmrit.XmlFile.userFileLocationDefault());
+        userLocation.setText(FileUtil.getUserFilesPath());
         
         JButton bUser = new JButton(rb.getString("ButtonSetDots"));
         final JFileChooser fcUser;
-        fcUser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+        fcUser = new JFileChooser(FileUtil.getUserFilesPath());
 
         fcUser.setDialogTitle(rb.getString("MessageSelectDirectory"));
         fcUser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

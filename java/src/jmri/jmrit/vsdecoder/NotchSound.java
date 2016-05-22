@@ -1,5 +1,8 @@
 package jmri.jmrit.vsdecoder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * <hr>
  * This file is part of JMRI.
@@ -19,11 +22,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18481 $
  */
 
-import jmri.AudioException;
-import jmri.AudioManager;
-import jmri.jmrit.audio.AudioBuffer;
-import jmri.jmrit.audio.AudioSource;
-import jmri.util.PhysicalLocation;
+
 
 class NotchSound extends SoundBite {
     // Engine-notch specific values
@@ -118,7 +117,7 @@ class NotchSound extends SoundBite {
     public SoundBite getAccelSound() { return(accel_sound); }
     public SoundBite getDecelSound() { return(decel_sound); }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NotchSound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NotchSound.class.getName());
 
 }
 

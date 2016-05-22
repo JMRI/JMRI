@@ -2,6 +2,8 @@
 
 package jmri.jmrix.marklin.swing.packetgen;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.marklin.*;
 import java.awt.*;
 import javax.swing.*;
@@ -95,7 +97,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
     public void  reply(MarklinReply r) {
         packetReplyField.setText(r.toHexString());
     } // ignore replies
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketGenPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(PacketGenPanel.class.getName());
 }
 
 

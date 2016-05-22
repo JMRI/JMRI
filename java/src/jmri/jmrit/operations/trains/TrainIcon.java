@@ -1,9 +1,10 @@
 package jmri.jmrit.operations.trains;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
+import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
@@ -27,8 +28,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 
 public class TrainIcon extends LocoIcon {
 
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
- 
 	public TrainIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
     	super(editor); 
@@ -43,26 +42,26 @@ public class TrainIcon extends LocoIcon {
      */
 	public boolean showPopUp(JPopupMenu popup) {
 		if (train != null){
-			popup.add(new AbstractAction(rb.getString("Move")) {
+			popup.add(new AbstractAction(Bundle.getMessage("Move")) {
 				public void actionPerformed(ActionEvent e) {
 					train.move();
 				}
 			});
 			popup.add(makeTrainRouteMenu()); 
-			popup.add(new TrainConductorAction(rb.getString("TitleTrainConductor"), train));
-			popup.add(new ShowCarsInTrainAction(rb.getString("MenuItemShowCarsInTrain"), train));
+			popup.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), train));
+			popup.add(new ShowCarsInTrainAction(Bundle.getMessage("MenuItemShowCarsInTrain"), train));
             if (!isEditable()) {
-                popup.add(new AbstractAction("Set X&Y") {
+                popup.add(new AbstractAction(Bundle.getMessage("SetX&Y")) {
                     public void actionPerformed(ActionEvent e) {
                         if(!train.setTrainIconCoordinates())
-                            JOptionPane.showMessageDialog(null, "See Operations -> Settings to enable Set X&Y",
-                                    "Set X&Y is disabled",
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("SeeOperationsSettings"),
+                            		Bundle.getMessage("SetX&YisDisabled"),
                                     JOptionPane.ERROR_MESSAGE);
                     }
                 });
             }
 		}
-		popup.add(new ThrottleAction("Throttle")); 
+		popup.add(new ThrottleAction(Bundle.getMessage("Throttle"))); 
 		popup.add(makeLocoIconMenu());
         if (!isEditable()) {
             getEditor().setRemoveMenu(this, popup);
@@ -97,7 +96,7 @@ public class TrainIcon extends LocoIcon {
 		if (getConsistNumber() > 0){
 			tf.getAddressPanel().setAddress(getConsistNumber(), false);	// use consist address
 			if (JOptionPane.showConfirmDialog(null,
-					"Send function commands to lead loco?", "Consist Throttle",
+					Bundle.getMessage("SendFunctionCommands"), Bundle.getMessage("ConsistThrottle"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				tf.getAddressPanel().setRosterEntry(entry);			 	// use lead loco address
 			}			
@@ -108,7 +107,7 @@ public class TrainIcon extends LocoIcon {
 	}
 
 	private JMenu makeTrainRouteMenu(){
-		JMenu routeMenu = new JMenu(rb.getString("Route"));
+		JMenu routeMenu = new JMenu(Bundle.getMessage("Route"));
 		Route route = train.getRoute();
 		if (route == null)
 			return routeMenu;
@@ -121,7 +120,7 @@ public class TrainIcon extends LocoIcon {
 			String current = "     ";
 			RouteLocation rl = route.getLocationById(routeList.get(r));
 			if (train.getCurrentLocation() == rl)
-				current = "-> ";
+				current = "-> "; // NOI18N
 			for (int j=0; j<carList.size(); j++){
 				Car car = carManager.getById(carList.get(j));
 				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
@@ -135,12 +134,12 @@ public class TrainIcon extends LocoIcon {
 			String pickups = "";
 			String drops = "";
 			if (pickupCars > 0){
-				pickups = " "+rb.getString("Pickup")+" " + pickupCars;
+				pickups = " "+Bundle.getMessage("Pickup")+" " + pickupCars;
 				if (dropCars > 0)
-					drops = ", "+rb.getString("SetOut")+" " + dropCars;
+					drops = ", "+Bundle.getMessage("SetOut")+" " + dropCars;
 			}
 			else if (dropCars > 0)
-				drops = " "+rb.getString("SetOut")+" " + dropCars;
+				drops = " "+Bundle.getMessage("SetOut")+" " + dropCars;
 			if (pickupCars > 0 || dropCars > 0)
 				rText = current + rl.getName() +"  (" + pickups + drops +" )";
 			else
@@ -190,7 +189,8 @@ public class TrainIcon extends LocoIcon {
 							train.move();
 						}else if (nextRl == _rl){
 							if (JOptionPane.showConfirmDialog(null,
-									"Move train to "+_rl.getName()+"?", "Move Train "+train.getIconName()+"?",
+									MessageFormat.format(Bundle.getMessage("MoveTrainTo"), new Object [] { _rl.getName() }),
+									MessageFormat.format(Bundle.getMessage("MoveTrain"), new Object [] { train.getIconName() }),
 									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 								while (train.getCurrentLocation() != _rl){
 									train.move();
@@ -202,5 +202,5 @@ public class TrainIcon extends LocoIcon {
 			}
 		}
 	}
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
+	static Logger log = LoggerFactory.getLogger(LocoIcon.class.getName());
 }

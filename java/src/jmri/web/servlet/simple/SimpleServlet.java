@@ -21,7 +21,8 @@ import jmri.jmris.simpleserver.SimpleSensorServer;
 import jmri.jmris.simpleserver.SimpleSignalHeadServer;
 import jmri.jmris.simpleserver.SimpleTurnoutServer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 
@@ -34,7 +35,7 @@ public class SimpleServlet extends WebSocketServlet {
 	private final Set<SimpleWebSocket> sockets = new CopyOnWriteArraySet<SimpleWebSocket>();
     private static ResourceBundle html = ResourceBundle.getBundle("jmri.web.server.Html");
     private static ResourceBundle wsHtml = ResourceBundle.getBundle("jmri.web.servlet.simple.Simple");
-	private static Logger log = Logger.getLogger(SimpleServlet.class);
+	private static Logger log = LoggerFactory.getLogger(SimpleServlet.class);
 
 	public SimpleServlet() {
 		super();

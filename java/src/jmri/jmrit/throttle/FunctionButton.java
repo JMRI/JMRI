@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,7 +12,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.ResourceBundle;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -19,7 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 
 import org.jdom.Element;
@@ -41,7 +42,6 @@ import org.jdom.Element;
  */
 public class FunctionButton extends JToggleButton implements ActionListener
 {
-    static final ResourceBundle rb = ThrottleBundle.bundle();
     private ArrayList<FunctionListener> listeners = new ArrayList<FunctionListener>();
     private int identity; // F0, F1, etc?
     private boolean isOn;
@@ -75,7 +75,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     {
         popup = new JPopupMenu();
 
-        JMenuItem propertiesItem = new JMenuItem(rb.getString("MenuItemProperties"));
+        JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
         propertiesItem.addActionListener(this);
         popup.add(propertiesItem);
 
@@ -414,12 +414,12 @@ public class FunctionButton extends JToggleButton implements ActionListener
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
         me.setAttribute("isVisible", String.valueOf(this.getDisplay()));
         me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
-        if ( this.getIconPath().startsWith(XmlFile.resourcesDir()))
-        	me.setAttribute("iconPath", this.getIconPath().substring( XmlFile.resourcesDir().length() ));
+        if ( this.getIconPath().startsWith(FileUtil.getUserResourcePath()))
+        	me.setAttribute("iconPath", this.getIconPath().substring( FileUtil.getUserResourcePath().length() ));
         else
         	me.setAttribute("iconPath", this.getIconPath());
-        if (this.getSelectedIconPath().startsWith(XmlFile.resourcesDir()))
-        	me.setAttribute("selectedIconPath", this.getSelectedIconPath().substring( XmlFile.resourcesDir().length() ));
+        if (this.getSelectedIconPath().startsWith(FileUtil.getUserResourcePath()))
+        	me.setAttribute("selectedIconPath", this.getSelectedIconPath().substring( FileUtil.getUserResourcePath().length() ));
         else
         	me.setAttribute("selectedIconPath", this.getSelectedIconPath());
         return me;
@@ -456,13 +456,13 @@ public class FunctionButton extends JToggleButton implements ActionListener
             	this.setVisible(false);
             this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
             if ((e.getAttribute("iconPath")!=null) && (e.getAttribute("iconPath").getValue().length()>0))
-            	if (checkFile(XmlFile.resourcesDir()+e.getAttribute("iconPath").getValue()) )
-            		this.setIconPath(XmlFile.resourcesDir()+e.getAttribute("iconPath").getValue());
+            	if (checkFile(FileUtil.getUserResourcePath()+e.getAttribute("iconPath").getValue()) )
+            		this.setIconPath(FileUtil.getUserResourcePath()+e.getAttribute("iconPath").getValue());
             	else
             		this.setIconPath(e.getAttribute("iconPath").getValue());
             if ((e.getAttribute("selectedIconPath")!=null) && (e.getAttribute("selectedIconPath").getValue().length()>0))
-            	if (checkFile(XmlFile.resourcesDir()+e.getAttribute("selectedIconPath").getValue()))
-            		this.setSelectedIconPath(XmlFile.resourcesDir()+e.getAttribute("selectedIconPath").getValue());
+            	if (checkFile(FileUtil.getUserResourcePath()+e.getAttribute("selectedIconPath").getValue()))
+            		this.setSelectedIconPath(FileUtil.getUserResourcePath()+e.getAttribute("selectedIconPath").getValue());
             	else
             		this.setSelectedIconPath(e.getAttribute("selectedIconPath").getValue());
             updateLnF();
@@ -533,6 +533,6 @@ public class FunctionButton extends JToggleButton implements ActionListener
 		return isSelectedImageOK;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionButton.class.getName());
+	static Logger log = LoggerFactory.getLogger(FunctionButton.class.getName());
 
 }

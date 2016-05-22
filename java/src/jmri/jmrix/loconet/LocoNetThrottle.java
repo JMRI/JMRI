@@ -1,8 +1,11 @@
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -122,6 +125,15 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) return 0.f;
         else if (lSpeed == 1) return -1.f;   // estop
+        if(getSpeedStepMode()==DccThrottle.SpeedStepMode28){
+            if(lSpeed<=15) //Value less than 15 is in the stop/estop range bracket
+                return 0.f;
+            return (((lSpeed-12)/4f)/28.f);
+        }  else if (getSpeedStepMode()==DccThrottle.SpeedStepMode14){
+            if(lSpeed<=15) //Value less than 15 is in the stop/estop range bracket
+                return 0.f;
+            return ((lSpeed-8)/8f)/14.f;
+        }
         else return ( (lSpeed-1)/126.f);
     }
 
@@ -133,6 +145,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         return 0;
       else if (fSpeed < 0.f)
         return 1;   // estop
+      if(getSpeedStepMode()==DccThrottle.SpeedStepMode28){
+        return (int)((fSpeed*28)*4)+12;
+      } else if (getSpeedStepMode()==DccThrottle.SpeedStepMode14){
+          return (int)((fSpeed*14)*8)+8;
+      }
         // add the 0.5 to handle float to int round for positive numbers
       return (int)(fSpeed * 126.f + 0.5) + 1 ;
     }
@@ -335,149 +352,149 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (this.f0 != slot.isF0()) {
             temp = this.f0;
             this.f0 = slot.isF0();
-            notifyPropertyChangeListener("F0", Boolean.valueOf(temp), Boolean.valueOf(slot.isF0()));
+            notifyPropertyChangeListener(Throttle.F0, Boolean.valueOf(temp), Boolean.valueOf(slot.isF0()));
         }
         if (this.f1 != slot.isF1()) {
             temp = this.f1;
             this.f1 = slot.isF1();
-            notifyPropertyChangeListener("F1", Boolean.valueOf(temp), Boolean.valueOf(slot.isF1()));
+            notifyPropertyChangeListener(Throttle.F1, Boolean.valueOf(temp), Boolean.valueOf(slot.isF1()));
         }
         if (this.f2 != slot.isF2()) {
             temp = this.f2;
             this.f2 = slot.isF2();
-            notifyPropertyChangeListener("F2", Boolean.valueOf(temp), Boolean.valueOf(slot.isF2()));
+            notifyPropertyChangeListener(Throttle.F2, Boolean.valueOf(temp), Boolean.valueOf(slot.isF2()));
         }
         if (this.f3 != slot.isF3()) {
             temp = this.f3;
             this.f3 = slot.isF3();
-            notifyPropertyChangeListener("F3", Boolean.valueOf(temp), Boolean.valueOf(slot.isF3()));
+            notifyPropertyChangeListener(Throttle.F3, Boolean.valueOf(temp), Boolean.valueOf(slot.isF3()));
         }
         if (this.f4 != slot.isF4()) {
             temp = this.f4;
             this.f4 = slot.isF4();
-            notifyPropertyChangeListener("F4", Boolean.valueOf(temp), Boolean.valueOf(slot.isF4()));
+            notifyPropertyChangeListener(Throttle.F4, Boolean.valueOf(temp), Boolean.valueOf(slot.isF4()));
         }
         if (this.f5 != slot.isF5()) {
             temp = this.f5;
             this.f5 = slot.isF5();
-            notifyPropertyChangeListener("F5", Boolean.valueOf(temp), Boolean.valueOf(slot.isF5()));
+            notifyPropertyChangeListener(Throttle.F5, Boolean.valueOf(temp), Boolean.valueOf(slot.isF5()));
         }
         if (this.f6 != slot.isF6()) {
             temp = this.f6;
             this.f6 = slot.isF6();
-            notifyPropertyChangeListener("F6", Boolean.valueOf(temp), Boolean.valueOf(slot.isF6()));
+            notifyPropertyChangeListener(Throttle.F6, Boolean.valueOf(temp), Boolean.valueOf(slot.isF6()));
         }
         if (this.f7 != slot.isF7()) {
             temp = this.f7;
             this.f7 = slot.isF7();
-            notifyPropertyChangeListener("F7", Boolean.valueOf(temp), Boolean.valueOf(slot.isF7()));
+            notifyPropertyChangeListener(Throttle.F7, Boolean.valueOf(temp), Boolean.valueOf(slot.isF7()));
         }
         if (this.f8 != slot.isF8()) {
             temp = this.f8;
             this.f8 = slot.isF8();
-            notifyPropertyChangeListener("F8", Boolean.valueOf(temp), Boolean.valueOf(slot.isF8()));
+            notifyPropertyChangeListener(Throttle.F8, Boolean.valueOf(temp), Boolean.valueOf(slot.isF8()));
         }
 
         // extended slot
         if (this.f9 != slot.isF9()) {
             temp = this.f9;
             this.f9 = slot.isF9();
-            notifyPropertyChangeListener("F9", Boolean.valueOf(temp), Boolean.valueOf(slot.isF9()));
+            notifyPropertyChangeListener(Throttle.F9, Boolean.valueOf(temp), Boolean.valueOf(slot.isF9()));
         }
         if (this.f10 != slot.isF10()) {
             temp = this.f10;
             this.f10 = slot.isF10();
-            notifyPropertyChangeListener("F10", Boolean.valueOf(temp), Boolean.valueOf(slot.isF10()));
+            notifyPropertyChangeListener(Throttle.F10, Boolean.valueOf(temp), Boolean.valueOf(slot.isF10()));
         }
         if (this.f11 != slot.isF11()) {
             temp = this.f11;
             this.f11 = slot.isF11();
-            notifyPropertyChangeListener("F11", Boolean.valueOf(temp), Boolean.valueOf(slot.isF11()));
+            notifyPropertyChangeListener(Throttle.F11, Boolean.valueOf(temp), Boolean.valueOf(slot.isF11()));
         }
         if (this.f12 != slot.isF12()) {
             temp = this.f12;
             this.f12 = slot.isF12();
-            notifyPropertyChangeListener("F12", Boolean.valueOf(temp), Boolean.valueOf(slot.isF12()));
+            notifyPropertyChangeListener(Throttle.F12, Boolean.valueOf(temp), Boolean.valueOf(slot.isF12()));
         }
         if (this.f13 != slot.isF13()) {
             temp = this.f13;
             this.f13 = slot.isF13();
-            notifyPropertyChangeListener("F13", Boolean.valueOf(temp), Boolean.valueOf(slot.isF13()));
+            notifyPropertyChangeListener(Throttle.F13, Boolean.valueOf(temp), Boolean.valueOf(slot.isF13()));
         }
         if (this.f14 != slot.isF14()) {
             temp = this.f14;
             this.f14 = slot.isF14();
-            notifyPropertyChangeListener("F14", Boolean.valueOf(temp), Boolean.valueOf(slot.isF14()));
+            notifyPropertyChangeListener(Throttle.F14, Boolean.valueOf(temp), Boolean.valueOf(slot.isF14()));
         }
         if (this.f15 != slot.isF15()) {
             temp = this.f15;
             this.f15 = slot.isF15();
-            notifyPropertyChangeListener("F15", Boolean.valueOf(temp), Boolean.valueOf(slot.isF15()));
+            notifyPropertyChangeListener(Throttle.F15, Boolean.valueOf(temp), Boolean.valueOf(slot.isF15()));
         }
         if (this.f16 != slot.isF16()) {
             temp = this.f16;
             this.f16 = slot.isF16();
-            notifyPropertyChangeListener("F16", Boolean.valueOf(temp), Boolean.valueOf(slot.isF16()));
+            notifyPropertyChangeListener(Throttle.F16, Boolean.valueOf(temp), Boolean.valueOf(slot.isF16()));
         }
         if (this.f17 != slot.isF17()) {
             temp = this.f17;
             this.f17 = slot.isF17();
-            notifyPropertyChangeListener("F17", Boolean.valueOf(temp), Boolean.valueOf(slot.isF17()));
+            notifyPropertyChangeListener(Throttle.F17, Boolean.valueOf(temp), Boolean.valueOf(slot.isF17()));
         }
         if (this.f18 != slot.isF18()) {
             temp = this.f18;
             this.f18 = slot.isF18();
-            notifyPropertyChangeListener("F18", Boolean.valueOf(temp), Boolean.valueOf(slot.isF18()));
+            notifyPropertyChangeListener(Throttle.F18, Boolean.valueOf(temp), Boolean.valueOf(slot.isF18()));
         }
         if (this.f19 != slot.isF19()) {
             temp = this.f19;
             this.f19 = slot.isF19();
-            notifyPropertyChangeListener("F19", Boolean.valueOf(temp), Boolean.valueOf(slot.isF19()));
+            notifyPropertyChangeListener(Throttle.F19, Boolean.valueOf(temp), Boolean.valueOf(slot.isF19()));
         }
         if (this.f20 != slot.isF20()) {
             temp = this.f20;
             this.f20 = slot.isF20();
-            notifyPropertyChangeListener("F20", Boolean.valueOf(temp), Boolean.valueOf(slot.isF20()));
+            notifyPropertyChangeListener(Throttle.F20, Boolean.valueOf(temp), Boolean.valueOf(slot.isF20()));
         }
         if (this.f21 != slot.isF21()) {
             temp = this.f21;
             this.f21 = slot.isF21();
-            notifyPropertyChangeListener("F21", Boolean.valueOf(temp), Boolean.valueOf(slot.isF21()));
+            notifyPropertyChangeListener(Throttle.F21, Boolean.valueOf(temp), Boolean.valueOf(slot.isF21()));
         }
         if (this.f22 != slot.isF22()) {
             temp = this.f22;
             this.f22 = slot.isF22();
-            notifyPropertyChangeListener("F22", Boolean.valueOf(temp), Boolean.valueOf(slot.isF22()));
+            notifyPropertyChangeListener(Throttle.F22, Boolean.valueOf(temp), Boolean.valueOf(slot.isF22()));
         }
         if (this.f23 != slot.isF23()) {
             temp = this.f23;
             this.f23 = slot.isF23();
-            notifyPropertyChangeListener("F23", Boolean.valueOf(temp), Boolean.valueOf(slot.isF23()));
+            notifyPropertyChangeListener(Throttle.F23, Boolean.valueOf(temp), Boolean.valueOf(slot.isF23()));
         }
         if (this.f24 != slot.isF24()) {
             temp = this.f24;
             this.f24 = slot.isF24();
-            notifyPropertyChangeListener("F24", Boolean.valueOf(temp), Boolean.valueOf(slot.isF24()));
+            notifyPropertyChangeListener(Throttle.F24, Boolean.valueOf(temp), Boolean.valueOf(slot.isF24()));
         }
         if (this.f25 != slot.isF25()) {
             temp = this.f25;
             this.f25 = slot.isF25();
-            notifyPropertyChangeListener("F25", Boolean.valueOf(temp), Boolean.valueOf(slot.isF25()));
+            notifyPropertyChangeListener(Throttle.F25, Boolean.valueOf(temp), Boolean.valueOf(slot.isF25()));
         }
         if (this.f26 != slot.isF26()) {
             temp = this.f26;
             this.f26 = slot.isF26();
-            notifyPropertyChangeListener("F26", Boolean.valueOf(temp), Boolean.valueOf(slot.isF26()));
+            notifyPropertyChangeListener(Throttle.F26, Boolean.valueOf(temp), Boolean.valueOf(slot.isF26()));
         }
         if (this.f27 != slot.isF27()) {
             temp = this.f27;
             this.f27 = slot.isF27();
-            notifyPropertyChangeListener("F27", Boolean.valueOf(temp), Boolean.valueOf(slot.isF27()));
+            notifyPropertyChangeListener(Throttle.F27, Boolean.valueOf(temp), Boolean.valueOf(slot.isF27()));
         }
         if (this.f28 != slot.isF28()) {
             temp = this.f28;
             this.f28 = slot.isF28();
-            notifyPropertyChangeListener("F28", Boolean.valueOf(temp), Boolean.valueOf(slot.isF28()));
+            notifyPropertyChangeListener(Throttle.F28, Boolean.valueOf(temp), Boolean.valueOf(slot.isF28()));
         }
         
     }
@@ -520,10 +537,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 speedIncrement=SPEED_STEP_28_INCREMENT;
                 log.debug("28 speed step change");
                 status=status&((~LnConstants.DEC_MODE_MASK)|
-                                LnConstants.STAT1_SL_SPDEX)
-                             | LnConstants.DEC_MODE_28;         // DEC_MODE_28 has a zero value, here for documentation
-                                                                // but it unfortunately shows a INT_VACUOUS_BIT_OPERATION
-                                                                // in Findbugs
+                                LnConstants.STAT1_SL_SPDEX);
+                             // | LnConstants.DEC_MODE_28;      // DEC_MODE_28 has a zero value, here for documentation
+                                                                // it unfortunately shows a INT_VACUOUS_BIT_OPERATION in Findbugs
+                                                                // and I don't want to annote that around this entire long method
              }
         else { // default to 128 speed step mode
                 speedIncrement=SPEED_STEP_128_INCREMENT;
@@ -548,6 +565,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class.getName());
 
 }

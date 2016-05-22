@@ -60,7 +60,7 @@ public class Control {
 	public static int max_len_string_weight_name = 4;
 	
 	// Car and Engine built date maximum string length
-	public static int max_len_string_built_name = 4;
+	public static int max_len_string_built_name = 5;
 	
 	// Train name maximum string length
 	public static int max_len_string_train_name = 25;
@@ -69,95 +69,98 @@ public class Control {
 	public static int max_len_string_route_name = 25;
 	
 	// Backward compatibility for xml saves (pre 2013 releases)
-	// TODO turn backward compatibility to false in 2013
+	// TODO turn backward compatibility to false in 2014
 	public static boolean backwardCompatible = true;
 	
     // must synchronize changes with operation-config.dtd
     public static Element store(){
     	Element values;
     	Element length;
-    	Element e = new Element("control");
+    	Element e = new Element(Xml.CONTROL);
     	// backward compatibility
-    	e.addContent(values = new Element("backwardCompatibility"));
-    	// TODO Enable saving the compatibility attribute in 2013
-    	//values.setAttribute("saveUsingPre_2013_Format", backwardCompatible?"true":"false");
+    	e.addContent(values = new Element(Xml.BACKWARD_COMPATIBILITY));
+    	// TODO Enable saving the compatibility attribute in 2014
+    	//values.setAttribute(Xml.SAVE_USING_PRE_2013_FORMAT, backwardCompatible?Xml.TRUE:Xml.FALSE);
+    	// for now we'll only store false if user overrode
+    	if (!backwardCompatible)
+    		values.setAttribute(Xml.SAVE_USING_PRE_2013_FORMAT, Xml.FALSE);
     	// maximum string lengths
-    	e.addContent(values = new Element("maximumStringLengths"));
-    	values.addContent(length = new Element("max_len_string_attibute"));
-    	length.setAttribute("length", Integer.toString(max_len_string_attibute));  	
-    	values.addContent(length = new Element("max_len_string_road_number"));
-    	length.setAttribute("length", Integer.toString(max_len_string_road_number));    	
-    	values.addContent(length = new Element("max_len_string_location_name"));
-    	length.setAttribute("length", Integer.toString(max_len_string_location_name));    	
-    	values.addContent(length = new Element("max_len_string_track_name"));
-    	length.setAttribute("length", Integer.toString(max_len_string_track_name));    	
-    	values.addContent(length = new Element("max_len_string_track_length_name"));
-    	length.setAttribute("length", Integer.toString(max_len_string_track_length_name));
-    	values.addContent(length = new Element("max_len_string_length_name"));
-    	length.setAttribute("length", Integer.toString(max_len_string_length_name));
-    	values.addContent(length = new Element("max_len_string_weight_name"));
-    	length.setAttribute("length", Integer.toString(max_len_string_weight_name));
-    	values.addContent(length = new Element("max_len_string_built_name"));
-    	length.setAttribute("length", Integer.toString(max_len_string_built_name));
-    	values.addContent(length = new Element("max_len_string_train_name"));
-    	length.setAttribute("length", Integer.toString(max_len_string_train_name));
-    	values.addContent(length = new Element("max_len_string_route_name"));
-    	length.setAttribute("length", Integer.toString(max_len_string_route_name));
+    	e.addContent(values = new Element(Xml.MAXIMUM_STRING_LENGTHS));
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_ATTRIBUTE));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_attibute));  	
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_ROAD_NUMBER));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_road_number));    	
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_LOCATION_NAME));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_location_name));    	
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_TRACK_NAME));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_track_name));    	
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_TRACK_LENGTH_NAME));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_track_length_name));
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_LENGTH_NAME));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_length_name));
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_WEIGHT_NAME));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_weight_name));
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_BUILT_NAME));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_built_name));
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_TRAIN_NAME));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_train_name));
+    	values.addContent(length = new Element(Xml.MAX_LEN_STRING_ROUTE_NAME));
+    	length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_route_name));
     	return e;
     }
     
     public static void load(Element e) {
-    	Element control = e.getChild("control");
+    	Element control = e.getChild(Xml.CONTROL);
         if (control == null)
         	return;
-        Element backwardCompatibility = control.getChild("backwardCompatibility");
+        Element backwardCompatibility = control.getChild(Xml.BACKWARD_COMPATIBILITY);
         if (backwardCompatibility != null){
         	Attribute format;
-            if ((format = backwardCompatibility.getAttribute("saveUsingPre_2013_Format")) != null){
-            	backwardCompatible = format.getValue().equals("true");
+            if ((format = backwardCompatibility.getAttribute(Xml.SAVE_USING_PRE_2013_FORMAT)) != null){
+            	backwardCompatible = format.getValue().equals(Xml.TRUE);
             }
         }
-        Element maximumStringLengths = control.getChild("maximumStringLengths");
+        Element maximumStringLengths = control.getChild(Xml.MAXIMUM_STRING_LENGTHS);
         if (maximumStringLengths != null){
             Attribute length;
-            if ((maximumStringLengths.getChild("max_len_string_attibute") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_attibute").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ATTRIBUTE) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ATTRIBUTE).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_attibute = Integer.parseInt(length.getValue());
             }
-            if ((maximumStringLengths.getChild("max_len_string_road_number") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_road_number").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ROAD_NUMBER) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ROAD_NUMBER).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_road_number = Integer.parseInt(length.getValue());
             }
-            if ((maximumStringLengths.getChild("max_len_string_location_name") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_location_name").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_LOCATION_NAME) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_LOCATION_NAME).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_location_name = Integer.parseInt(length.getValue());
             }
-            if ((maximumStringLengths.getChild("max_len_string_track_name") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_track_name").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_TRACK_NAME) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_TRACK_NAME).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_track_name = Integer.parseInt(length.getValue());
             }
-            if ((maximumStringLengths.getChild("max_len_string_track_length_name") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_track_length_name").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_TRACK_LENGTH_NAME) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_TRACK_LENGTH_NAME).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_track_length_name = Integer.parseInt(length.getValue());
             }
-            if ((maximumStringLengths.getChild("max_len_string_length_name") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_length_name").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_LENGTH_NAME) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_LENGTH_NAME).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_length_name = Integer.parseInt(length.getValue());
             }
-            if ((maximumStringLengths.getChild("max_len_string_weight_name") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_weight_name").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_WEIGHT_NAME) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_WEIGHT_NAME).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_weight_name = Integer.parseInt(length.getValue());
             }
-            if ((maximumStringLengths.getChild("max_len_string_built_name") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_built_name").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_BUILT_NAME) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_BUILT_NAME).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_built_name = Integer.parseInt(length.getValue());
             }
-            if ((maximumStringLengths.getChild("max_len_string_train_name") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_train_name").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_TRAIN_NAME) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_TRAIN_NAME).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_train_name = Integer.parseInt(length.getValue());
             }
-            if ((maximumStringLengths.getChild("max_len_string_route_name") != null) && 
-            		(length = maximumStringLengths.getChild("max_len_string_route_name").getAttribute("length"))!= null){
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ROUTE_NAME) != null) && 
+            		(length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ROUTE_NAME).getAttribute(Xml.LENGTH))!= null){
             	max_len_string_route_name = Integer.parseInt(length.getValue());
             }
         }

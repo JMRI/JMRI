@@ -2,6 +2,8 @@
 
 package jmri.jmrix.dcc4pc.serialdriver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.dcc4pc.Dcc4PcPortController;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
@@ -210,6 +212,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

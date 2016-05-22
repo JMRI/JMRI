@@ -2,8 +2,9 @@
 
 package apps.gui3.demo3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
-import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
 
 import apps.GuiLafConfigPane;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import javax.swing.*;
+import jmri.util.FileUtil;
 
 /**
  * Base class for GUI3 JMRI applications.
@@ -215,13 +217,13 @@ public class Apps3 {
             configFilename = "jmriprefs3.xml";
             log.debug("configure from default file "+configFilename);
         }
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         File file = new File(configFilename);
         // decide whether name is absolute or relative
         if (!file.isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
+            file = new File(FileUtil.getUserFilesPath()+configFilename);
         }
         try {
             configOK = InstanceManager.configureManagerInstance().load(file);
@@ -354,13 +356,13 @@ public class Apps3 {
         InstanceManager.configureManagerInstance().registerPref(guiPrefs);
 
         // write file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         // decide whether name is absolute or relative
         File file = new File(configFilename);
         if (!file.isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
+            file = new File(FileUtil.getUserFilesPath()+configFilename);
         }
 
         InstanceManager.configureManagerInstance().storePrefs(file);
@@ -403,7 +405,7 @@ public class Apps3 {
         // TODO: splash(false);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Apps3.class.getName());
+    static Logger log = LoggerFactory.getLogger(Apps3.class.getName());
     
 }
 

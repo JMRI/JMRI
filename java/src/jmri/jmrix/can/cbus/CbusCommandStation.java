@@ -1,6 +1,8 @@
 // CbusCommandStation.java
 package jmri.jmrix.can.cbus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
 import jmri.jmrix.DccCommandStation;
 
@@ -175,7 +177,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
     @Override
     public String getSystemPrefix() { return adapterMemo.getSystemPrefix(); }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusCommandStation.class.getName());
+    static Logger log = LoggerFactory.getLogger(CbusCommandStation.class.getName());
 }
 
 /* @(#)CbusCommandStation.java */

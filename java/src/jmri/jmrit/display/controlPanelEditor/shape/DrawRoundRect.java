@@ -3,11 +3,12 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
-
 import javax.swing.*;
-
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -47,7 +48,7 @@ public class DrawRoundRect extends DrawRectangle {
 	   _radiusText.setText(Integer.toString(_radius));
        _radiusText.setHorizontalAlignment(JTextField.RIGHT);
        pp.add(_radiusText);
-       pp.add(new JLabel(rbcp.getString("cornerRadius")));
+       pp.add(new JLabel(Bundle.getMessage("cornerRadius")));
        p.add(pp);
        panel.add(p);
        panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -57,19 +58,21 @@ public class DrawRoundRect extends DrawRectangle {
 	/**
     * Create a new PositionableShape 
     */
-	protected void makeFigure() {
+	protected boolean makeFigure(MouseEvent event) {
 		ControlPanelEditor ed = _parent.getEditor();
 		Rectangle r = ed.getSelectRect();
-		if (r==null) {
-		   return;
+		if (r!=null) {
+        	_width = r.width;
+        	_height = r.height;
+			RoundRectangle2D.Double rr = new RoundRectangle2D.Double(0, 0, r.width, r.height, _radius, _radius);
+			PositionableRoundRect ps = new PositionableRoundRect(ed, rr);
+			ps.setLocation(r.x, r.y);
+	    	ps.setDisplayLevel(ControlPanelEditor.MARKERS);
+		   	setPositionableParams(ps);
+		   	ps.updateSize();
+		   	ed.putItem(ps);
 		}
-		RoundRectangle2D.Double rr = new RoundRectangle2D.Double(0, 0, r.width, r.height, _radius, _radius);
-		PositionableRoundRect ps = new PositionableRoundRect(ed, rr);
-		ps.setLocation(r.x, r.y);
-    	ps.setDisplayLevel(ControlPanelEditor.MARKERS);
-	   	setPositionableParams(ps);
-	   	ps.updateSize();
-	   	ed.putItem(ps);
+		return true;
 	}
    
    
@@ -96,5 +99,5 @@ public class DrawRoundRect extends DrawRectangle {
 //	   pos.makeShape();
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DrawRoundRect.class.getName());
+    static Logger log = LoggerFactory.getLogger(DrawRoundRect.class.getName());
 }

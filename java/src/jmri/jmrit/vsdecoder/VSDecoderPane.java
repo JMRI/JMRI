@@ -25,6 +25,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -34,7 +36,6 @@ import jmri.DccLocoAddress;
 import jmri.util.swing.*;
 
 import java.io.File;
-import jmri.jmrit.XmlFile;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -47,6 +48,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.TitledBorder;
+import jmri.util.FileUtil;
 
 /**
  * Virtual Sound Decoder for playing sounds off of LocoNet messages.
@@ -123,7 +125,7 @@ public class VSDecoderPane extends JmriPanel {
      */
     public static String getDefaultVSDecoderFolder() {
         if (VSDecoderFileLocation == null)
-            return XmlFile.prefsDir()+"vsdecoder"+File.separator ;
+            return FileUtil.getUserFilesPath()+"vsdecoder"+File.separator ;
         return VSDecoderFileLocation;
     }
 
@@ -408,5 +410,5 @@ public class VSDecoderPane extends JmriPanel {
 	log.debug("VSDecoderPane windowClosing() called...");
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPane.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class.getName());
 }

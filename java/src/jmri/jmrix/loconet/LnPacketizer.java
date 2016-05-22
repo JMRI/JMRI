@@ -2,8 +2,11 @@
 
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
@@ -42,7 +45,7 @@ public class LnPacketizer extends LnTrafficController {
   	 * true if the external hardware is not echoing messages,
   	 * so we must
   	 */
-  	protected boolean echo = false;  // echo messages here, instead of in hardware
+  	protected boolean echo = true;  // echo messages here, instead of in hardware
   	
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification="Only used during system initialization")
@@ -174,123 +177,126 @@ public class LnPacketizer extends LnTrafficController {
     }
     // Defined this way to reduce new object creation
     private byte[] rcvBuffer = new byte[1];
-        
-    /**
-     * Handle incoming characters.  This is a permanent loop,
-     * looking for input messages in character form on the
-     * stream connected to the LnPortController via <code>connectPort</code>.
-     * Terminates with the input stream breaking out of the try block.
-     */
-    @SuppressWarnings("null")
-	public void run() {
-        int opCode;
-        while (true) {   // loop permanently, program close will exit
-            try {
-                // start by looking for command -  skip if bit not set
-                while ( ((opCode = (readByteProtected(istream)&0xFF)) & 0x80) == 0 )  {
-                    if (fulldebug && debug) log.debug("Skipping: "+Integer.toHexString(opCode));
-                }
-                // here opCode is OK. Create output message
-                if (fulldebug)
-                    log.debug("(run) Start message with opcode: "+Integer.toHexString(opCode));
-                LocoNetMessage msg = null;
-                while (msg == null) {
-                    try {
-                        // Capture 2nd byte, always present
-                        int byte2 = readByteProtected(istream)&0xFF;
-                        if (fulldebug)
-                            log.debug("Byte2: "+Integer.toHexString(byte2));
-                        // Decide length
-                        switch((opCode & 0x60) >> 5)
-                            {
-                            case 0:     /* 2 byte message */
-                                msg = new LocoNetMessage(2);
-                                break;
 
-                            case 1:     /* 4 byte message */
-                                msg = new LocoNetMessage(4);
-                                break;
-
-                            case 2:     /* 6 byte message */
-                                msg = new LocoNetMessage(6);
-                                break;
-
-                            case 3:     /* N byte message */
-                                if (byte2<2) log.error("LocoNet message length invalid: "+byte2
-                                                       +" opcode: "+Integer.toHexString(opCode));
-                                msg = new LocoNetMessage(byte2);
-                                break;
-                            }
-                        // message exists, now fill it
-                        msg.setOpCode(opCode);
-                        msg.setElement(1, byte2);
-                        int len = msg.getNumDataElements();
-                        if (fulldebug) log.debug("len: "+len);
-                        for (int i = 2; i < len; i++)  {
-                            // check for message-blocking error
-                            int b = readByteProtected(istream)&0xFF;
-                            if (fulldebug) log.debug("char "+i+" is: "+Integer.toHexString(b));
-                            if ( (b&0x80) != 0) {
-                                log.warn("LocoNet message with opCode: "
-                                         +Integer.toHexString(opCode)
-                                         +" ended early. Expected length: "+len
-                                         +" seen length: "+i
-                                         +" unexpected byte: "
-                                         +Integer.toHexString(b));
-                                opCode = b;
-                                throw new LocoNetMessageException();
-                            }
-                            msg.setElement(i, b);
-                        }
-                    }
-                    catch (LocoNetMessageException e) {
-                        // retry by destroying the existing message
-                        // opCode is set for the newly-started packet
-                        msg = null;
-                    }
-                }
-                // check parity
-                if (!msg.checkParity()) {
-                    log.warn("Ignore Loconet packet with bad checksum: "+msg.toString());
-                    throw new LocoNetMessageException();
-                }
-             	// message is complete, dispatch it !!
-             	{
-                    final LocoNetMessage thisMsg = msg;
-                    final LnPacketizer thisTC = this;
-                    // return a notification via the queue to ensure end
-                    Runnable r = new Runnable() {
-                            LocoNetMessage msgForLater = thisMsg;
-                            LnPacketizer myTC = thisTC;
-                            public void run() {
-                                myTC.notify(msgForLater);
-                            }
-                        };
-                    javax.swing.SwingUtilities.invokeLater(r);
-                }
-
-             	// done with this one
-            }
-            catch (LocoNetMessageException e) {
-                // just let it ride for now
-            }
-            catch (java.io.EOFException e) {
-                // posted from idle port when enableReceiveTimeout used
-                log.debug("EOFException, is LocoNet serial I/O using timeouts?");
-                e.printStackTrace();
-            }
-            catch (java.io.IOException e) {
-                // fired when write-end of HexFile reaches end
-                log.debug("IOException, should only happen with HexFIle: "+e);
-                log.info("End of file");
-                disconnectPort(controller);
-                return;
-            }
-            catch (Exception e) {
-                log.warn("run: unexpected exception: "+e);
-            }
-        } // end of permanent loop
-    }
+// The following appears to be a duplication of the code from the RcvHandler below?
+// Can this be removed? 
+//    
+//    /**
+//     * Handle incoming characters.  This is a permanent loop,
+//     * looking for input messages in character form on the
+//     * stream connected to the LnPortController via <code>connectPort</code>.
+//     * Terminates with the input stream breaking out of the try block.
+//     */
+//    @SuppressWarnings("null")
+//	public void run() {
+//        int opCode;
+//        while (true) {   // loop permanently, program close will exit
+//            try {
+//                // start by looking for command -  skip if bit not set
+//                while ( ((opCode = (readByteProtected(istream)&0xFF)) & 0x80) == 0 )  {
+//                    if (fulldebug && debug) log.debug("Skipping: "+Integer.toHexString(opCode));
+//                }
+//                // here opCode is OK. Create output message
+//                if (fulldebug)
+//                    log.debug("(run) Start message with opcode: "+Integer.toHexString(opCode));
+//                LocoNetMessage msg = null;
+//                while (msg == null) {
+//                    try {
+//                        // Capture 2nd byte, always present
+//                        int byte2 = readByteProtected(istream)&0xFF;
+//                        if (fulldebug)
+//                            log.debug("Byte2: "+Integer.toHexString(byte2));
+//                        // Decide length
+//                        switch((opCode & 0x60) >> 5)
+//                            {
+//                            case 0:     /* 2 byte message */
+//                                msg = new LocoNetMessage(2);
+//                                break;
+//
+//                            case 1:     /* 4 byte message */
+//                                msg = new LocoNetMessage(4);
+//                                break;
+//
+//                            case 2:     /* 6 byte message */
+//                                msg = new LocoNetMessage(6);
+//                                break;
+//
+//                            case 3:     /* N byte message */
+//                                if (byte2<2) log.error("LocoNet message length invalid: "+byte2
+//                                                       +" opcode: "+Integer.toHexString(opCode));
+//                                msg = new LocoNetMessage(byte2);
+//                                break;
+//                            }
+//                        // message exists, now fill it
+//                        msg.setOpCode(opCode);
+//                        msg.setElement(1, byte2);
+//                        int len = msg.getNumDataElements();
+//                        if (fulldebug) log.debug("len: "+len);
+//                        for (int i = 2; i < len; i++)  {
+//                            // check for message-blocking error
+//                            int b = readByteProtected(istream)&0xFF;
+//                            if (fulldebug) log.debug("char "+i+" is: "+Integer.toHexString(b));
+//                            if ( (b&0x80) != 0) {
+//                                log.warn("LocoNet message with opCode: "
+//                                         +Integer.toHexString(opCode)
+//                                         +" ended early. Expected length: "+len
+//                                         +" seen length: "+i
+//                                         +" unexpected byte: "
+//                                         +Integer.toHexString(b));
+//                                opCode = b;
+//                                throw new LocoNetMessageException();
+//                            }
+//                            msg.setElement(i, b);
+//                        }
+//                    }
+//                    catch (LocoNetMessageException e) {
+//                        // retry by destroying the existing message
+//                        // opCode is set for the newly-started packet
+//                        msg = null;
+//                    }
+//                }
+//                // check parity
+//                if (!msg.checkParity()) {
+//                    log.warn("Ignore Loconet packet with bad checksum: "+msg.toString());
+//                    throw new LocoNetMessageException();
+//                }
+//             	// message is complete, dispatch it !!
+//             	{
+//                    final LocoNetMessage thisMsg = msg;
+//                    final LnPacketizer thisTC = this;
+//                    // return a notification via the queue to ensure end
+//                    Runnable r = new Runnable() {
+//                            LocoNetMessage msgForLater = thisMsg;
+//                            LnPacketizer myTC = thisTC;
+//                            public void run() {
+//                                myTC.notify(msgForLater);
+//                            }
+//                        };
+//                    javax.swing.SwingUtilities.invokeLater(r);
+//                }
+//
+//             	// done with this one
+//            }
+//            catch (LocoNetMessageException e) {
+//                // just let it ride for now
+//            }
+//            catch (java.io.EOFException e) {
+//                // posted from idle port when enableReceiveTimeout used
+//                log.debug("EOFException, is LocoNet serial I/O using timeouts?");
+//                e.printStackTrace();
+//            }
+//            catch (java.io.IOException e) {
+//                // fired when write-end of HexFile reaches end
+//                log.debug("IOException, should only happen with HexFIle: "+e);
+//                log.info("End of file");
+//                disconnectPort(controller);
+//                return;
+//            }
+//            catch (Exception e) {
+//                log.warn("run: unexpected exception: "+e);
+//            }
+//        } // end of permanent loop
+//    }
 
     /**
      * Captive class to handle incoming characters.  This is a permanent loop,
@@ -387,7 +393,7 @@ public class LnPacketizer extends LnTrafficController {
                                 LocoNetMessage msgForLater = thisMsg;
                                 LnPacketizer myTC = thisTC;
                                 public void run() {
-                                    myTC.notify(msgForLater);
+                                    myTC.notifyRcv(new Date(), msgForLater);
                                 }
                             };
                         javax.swing.SwingUtilities.invokeLater(r);
@@ -476,19 +482,21 @@ public class LnPacketizer extends LnTrafficController {
         if (!echo) return;
         // message is queued for transmit, echo it when needed
         // return a notification via the queue to ensure end
-        javax.swing.SwingUtilities.invokeLater(new Echo(this, new LocoNetMessage(msg)));
+        javax.swing.SwingUtilities.invokeLater(new Echo(this, new Date(), new LocoNetMessage(msg)));
     }
     
     static class Echo implements Runnable {
-        Echo(LnPacketizer t, LocoNetMessage m) {
+        Echo(LnPacketizer t, Date _timestamp, LocoNetMessage m) {
             myTc = t;
             msgForLater = m;
+            timestamp = _timestamp;
         }
         LocoNetMessage msgForLater;
         LnPacketizer myTc;
+        Date timestamp;
        
         public void run() {
-            myTc.notify(msgForLater);
+            myTc.notifyXmit(timestamp, msgForLater);
         }
     }
     
@@ -523,7 +531,7 @@ public class LnPacketizer extends LnTrafficController {
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPacketizer.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnPacketizer.class.getName());
 }
 
 /* @(#)LnPacketizer.java */

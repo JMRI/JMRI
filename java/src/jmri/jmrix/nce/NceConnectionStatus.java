@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JOptionPane;
 
 import jmri.jmrix.ConnectionStatus;
@@ -69,7 +71,8 @@ public class NceConnectionStatus implements NceListener {
 	private static final int mm_2007a = 1; // Revision of May 2007 EPROM VV.MM.mm = 6.2.1
 	private static final int mm_2008 = 2;  // Revision of 2008 EPROM VV.MM.mm = 6.2.2
 	
-	private static final int VV_2012 = 7;	// Revision 2012
+	private static final int VV_2012 = 7;	// Revision 2012 EPROM VV.MM.mm = 7.2.0
+	private static final int MM_2012 = 2;
 
 	// USB -> Cab bus adapter:
 	// When used with PowerCab V1.28 - 6.3.0
@@ -80,8 +83,10 @@ public class NceConnectionStatus implements NceListener {
 	// Future version of PowerCab V1.61 - 6.3.4
 	// Future version of SB3 V1.61 - 6.3.5
 	//
-	// NOTE: The USB port can not read CS memory 	
+	// NOTE: The USB port can not read CS memory, unless greater than 7.* version
+	
 	private static final int VV_USB = 6; 		// Revision of USB EPROM VV.MM.mm = 6.3.x
+	private static final int VV_USB_V7 = 7;		// 2012 revision of USB EPROM VV.MM.mm = 7.3.x
 	private static final int MM_USB = 3;
 	private static final int mm_USB_PwrCab = 0; // PowerCab
 	private static final int mm_USB_SB3 = 1; 	// SB3
@@ -298,17 +303,19 @@ public class NceConnectionStatus implements NceListener {
 			}
 
 			// Check that layout connection is correct
-			// PowerHouse? 3 cases for PH, 1999, 2004, & 2007
-			if (VV == VV_1999 || (VV == VV_2004 && MM == MM_2004) || (VV == VV_2007 && MM == MM_2007))
+			// PowerHouse? 4 cases for PH, 1999, 2004, 2007, & 2012
+			if (VV == VV_1999 
+					|| (VV == VV_2004 && MM == MM_2004) 
+					|| (VV == VV_2007 && MM == MM_2007)
+					|| (VV == VV_2012 && MM == MM_2012))
 				// make sure system connection is not NCE USB
 				if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
 					log.error("System Connection is incorrect, detected Power Pro");
 					epromState = ERROR4_STATE;
 				}
 
-			// Check for USB
-			// TODO the following code doesn't check for 2012 USB version 7
-			if (VV == VV_USB && MM == MM_USB) {
+			// Check for USB 6.3.x or 7.3.x
+			if ((VV == VV_USB || VV == VV_USB_V7) && MM == MM_USB) {
 				// USB detected, check to see if user preferences are correct
 				if (mm == mm_USB_PwrCab	&& tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB) {
 					log.error("System Connection is incorrect, detected USB connected to a PowerCab");
@@ -336,7 +343,7 @@ public class NceConnectionStatus implements NceListener {
 		nceEpromMarch2007 = b;
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(NceConnectionStatus.class.getName());
 
 }

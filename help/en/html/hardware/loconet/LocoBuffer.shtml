@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Connecting a LocoBuffer to LocoNet
+      JMRI Hardware Guide: Connecting a LocoBuffer to LocoNet&reg;
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -26,13 +26,13 @@
     <div id="mainContent">
 
       <h1> 
-      JMRI Hardware Guide: Connecting a LocoBuffer to LocoNet
+      JMRI Hardware Guide: Connecting a LocoBuffer to LocoNet&reg;
       </h1>
 
 
 <p>
 John Jabour designed the LocoBuffer as a reliable way of connecting
-a computer to a LocoNet.  He's no longer making them, but 
+a computer to a LocoNet&reg;.  He's no longer making them, but 
 <A HREF="http://users.pandora.be/deloof/page5.html">Hans deLoof</a>
 has taken over for people who want to build their own.
 </p>
@@ -112,6 +112,7 @@ Start DecoderPro or other program and configure it for:
 	  and 8 (without traces).  Be careful not to short to pin 7, which
 	  is already connected.  </p>
 	  
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
   </div>
 <!--#include virtual="/Footer" -->

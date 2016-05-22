@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioManager;
@@ -56,6 +58,7 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
         if (log.isDebugEnabled()) log.debug("New JavaSoundAudioListener: "+userName+" ("+systemName+")");
     }
 
+    @Override
     protected void changePosition(Vector3f pos) {
         recalculateSources();
     }
@@ -84,13 +87,14 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
         }
     }
 
+    @Override
     protected void cleanUp() {
         // no clean-up needed for Listener
         if (log.isDebugEnabled()) log.debug("Cleanup JavaSoundAudioListener (" + this.getSystemName() + ")");
         this.dispose();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JavaSoundAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioListener.class.getName());
 
 }
 

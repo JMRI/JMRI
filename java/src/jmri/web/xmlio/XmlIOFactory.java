@@ -2,6 +2,9 @@
 
 package jmri.web.xmlio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Provide server objects for doing XML I/O
@@ -30,7 +33,7 @@ public class XmlIOFactory {
         return new DefaultXmlIOServer();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlIOFactory.class.getName());
+    static Logger log = LoggerFactory.getLogger(XmlIOFactory.class.getName());
 }
 
 /* @(#)AbstractManager.java */

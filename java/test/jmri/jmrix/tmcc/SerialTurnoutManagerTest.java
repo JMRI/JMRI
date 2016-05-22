@@ -2,6 +2,7 @@
 
 package jmri.jmrix.tmcc;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -63,6 +64,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManagerTest.class.getName());
+	 static Logger log = Logger.getLogger(SerialTurnoutManagerTest.class.getName());
 
 }

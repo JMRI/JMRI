@@ -34,11 +34,7 @@ DecoderPro 3
 <p>Note: All screen shots in this manual are from a Windows machine using the   "Metal" User Interface option   . While your screens will probably differ  in some layout details, they will be essentially the same. All   programming examples shown are with Digitrax PR3(MS100 mode) connected   to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive   samples will be Digitrax, except for sound examples.
 <p>Note: This entire manual has been updated to   correspond to JMRI&reg; 2.14 DecoderPro3&reg; only, and the HTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
 <p>
-  <a name="index"></a>
-<div align="right">
-<h2><a href="http://jmri.org/help/en/manual/pdf/DP3_Man_2_14.pdf" target="_blank">Download Print version of Manual (pdf format) </a></h2>
-<p><strong>Decoder 3&reg; User's Guide version 2.14 (163 pages,6.798MB)</strong></div>
-
+<a name="index"></a>
 <h1>Table of Contents</h1>
 <h4><a name="Installing"></a>Installing JMRI</h4>
 <ul>

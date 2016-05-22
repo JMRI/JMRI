@@ -2,6 +2,8 @@
 
 package jmri.jmrit.mailreport;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.javamail.MailMessage;
 
 import jmri.util.javaworld.GridLayout2;
@@ -150,5 +152,5 @@ public class ReportPanel extends JPanel {
         }        
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReportPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(ReportPanel.class.getName());
 }

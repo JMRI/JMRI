@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami -->
+<enumVal>
+  <enumChoice choice="Manual notching, engine RPM controlled by F10/F9">
+    <choice>Manual notching, engine RPM controlled by F10/F9</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases at each speed step">
+    <choice>Engine RPM increases at each speed step</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 2 speed steps">
+    <choice>Engine RPM increases every 2 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 3 speed steps">
+    <choice>Engine RPM increases every 3 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 4 speed steps">
+    <choice>Engine RPM increases every 4 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 5 speed steps">
+    <choice>Engine RPM increases every 5 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 6 speed steps">
+    <choice>Engine RPM increases every 6 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 7 speed steps">
+    <choice>Engine RPM increases every 7 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 8 speed steps">
+    <choice>Engine RPM increases every 8 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 9 speed steps">
+    <choice>Engine RPM increases every 9 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 10 speed steps">
+    <choice>Engine RPM increases every 10 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 11 speed steps">
+    <choice>Engine RPM increases every 11 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 12 speed steps">
+    <choice>Engine RPM increases every 12 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 13 speed steps">
+    <choice>Engine RPM increases every 13 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 14 speed steps">
+    <choice>Engine RPM increases every 14 speed steps</choice>
+  </enumChoice>
+  <enumChoice choice="Engine RPM increases every 15 speed steps">
+    <choice>Engine RPM increases every 15 speed steps</choice>
+  </enumChoice>
+</enumVal>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: TCS_X.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,27 +13,27 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="John Crellin" version="9.2" lastUpdated="20130211"/>
   <version author="Michael Mosher" version="9" lastUpdated="20070730"/>
   <version author="Michael Mosher" version="8" lastUpdated="20061204"/>
   <version author="Michael Mosher" version="7" lastUpdated="20060921"/>
   <version author="Michael Mosher" version="6" lastUpdated="20060728"/>
   <version author="Michael Mosher" version="5" lastUpdated="20060206"/>
-<!-- Version 1 - made from TSC Tx -->
-<!-- Version 2 - correction to CV61 -->
-<!-- Version 3 - version range 30 to 35 -->
-<!-- Version 4 - added AMD1 & MP-15N & ver to 37 -->
-<!-- Version 5 - fix bug in MP-15N -->
-<!-- Version 6 - added VO-1000N -->
-<!-- Version 7 - added T1, M1, M1P-15, M1P-UK as they are full X series now -->
-<!-- also added factory reset feature  -->
-<!-- Version 8 - High ver to 40 -->
-<!-- Version 9 - Added CV 23&24, & auto mars to light fx & re-itemize for better layout -->
-<!-- Version 9.1 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
-
-
+  <!-- Version 1 - made from TSC Tx -->
+  <!-- Version 2 - correction to CV61 -->
+  <!-- Version 3 - version range 30 to 35 -->
+  <!-- Version 4 - added AMD1 & MP-15N & ver to 37 -->
+  <!-- Version 5 - fix bug in MP-15N -->
+  <!-- Version 6 - added VO-1000N -->
+  <!-- Version 7 - added T1, M1, M1P-15, M1P-UK as they are full X series now -->
+  <!-- also added factory reset feature  -->
+  <!-- Version 8 - High ver to 40 -->
+  <!-- Version 9 - Added CV 23&24, & auto mars to light fx & re-itemize for better layout -->
+  <!-- Version 9.1 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 9.2 20130211 Added Forward and Reverse trim to a new pane called TCS Other(jcrellin0661@gmail.com) -->
   <decoder>
     <family name="TCS X Series Decoders" mfg="Train Control Systems">
-      <model model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+      <model show="no" model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A4X" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -43,7 +43,7 @@
         <output name="Motor"/>
         <size length="2.860" width="0.680" height="0.145" units="inches"/>
       </model>
-      <model model="A6X" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+      <model show="no" model="A6X" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A6X" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="solder" maxcurrent="200 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="200 mA"/>
@@ -55,14 +55,14 @@
         <output name="Motor"/>
         <size length="2.860" width="0.680" height="0.145" units="inches"/>
       </model>
-      <model model="AMD1" numOuts="2" numFns="8" lowVersionID="37" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B">
+      <model show="no" model="AMD1" numOuts="2" numFns="8" lowVersionID="37" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" replacementModel="AMD1" replacementFamily="Jan 2000">
         <output name="1" label="Front LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA"/>
         <output name="2" label="Rear LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA"/>
         <output name="Dim"/>
         <output name="Motor"/>
         <size length="3.03" width="0.355" height="0.135" units="inches"/>
       </model>
-      <model model="DP5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+      <model show="no" model="DP5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="DP5X" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -73,7 +73,7 @@
         <output name="Motor"/>
         <size length="0845" width="0.680" height="0.165" units="inches"/>
       </model>
-      <model model="M1" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="M1" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M1" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -81,7 +81,7 @@
         <output name="Motor"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M1P-15" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="HO">
+      <model show="no" model="M1P-15" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="HO" replacementModel="M1P-15" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -89,7 +89,7 @@
         <output name="Motor"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M1P-UK" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="HO">
+      <model show="no" model="M1P-UK" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="HO" replacementModel="M1P-15" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -97,7 +97,7 @@
         <output name="Motor"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M3" numOuts="3" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="M3" numOuts="3" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M3" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -106,7 +106,7 @@
         <output name="Motor"/>
         <size length="0.570" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="M4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M4" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -116,7 +116,7 @@
         <output name="Motor"/>
         <size length="0.570" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="MC2" numOuts="2" numFns="8" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="MC2" numOuts="2" numFns="8" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC2" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -124,7 +124,7 @@
         <output name="Motor"/>
         <size length="0.71" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model model="MC4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="MC4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC4" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -134,7 +134,7 @@
         <output name="Motor"/>
         <size length="0.71" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC4" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -146,7 +146,8 @@
         <output name="Motor"/>
         <size length="0.71" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model model="MP-15N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15">
+      <model show="no" model="MP-15N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15"
+           replacementModel="MP-15N" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -155,7 +156,7 @@
         <output name="Ditch"/>
         <output name="Motor"/>
       </model>
-      <model model="T1" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+      <model show="no" model="T1" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T1" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -163,7 +164,7 @@
         <output name="Motor"/>
         <size length="1.010" width="0.665" height="0.250" units="inches"/>
       </model>
-      <model model="T4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+      <model show="no" model="T4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T4X" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -173,7 +174,7 @@
         <output name="Motor"/>
         <size length="1.010" width="0.665" height="0.250" units="inches"/>
       </model>
-      <model model="T5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+      <model show="no" model="T5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T4X" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -184,7 +185,7 @@
         <output name="Motor"/>
         <size length="1.000" width="0.680" height="0.250" units="inches"/>
       </model>
-      <model model="T6X" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+      <model show="no" model="T6X" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T6X" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -196,7 +197,8 @@
         <output name="Motor"/>
         <size length="1.00" width="0.680" height="0.250" units="inches"/>
       </model>
-      <model model="VO-1000N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000">
+      <model show="no" model="VO-1000N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000"
+           replacementModel="VO-1000N" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -205,7 +207,7 @@
         <output name="Ditch"/>
         <output name="Motor"/>
       </model>
-      <model model="W5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+      <model show="no" model="W5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T6X" replacementFamily="Jan 2000">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -308,10 +310,7 @@
         </enumVal>
         <label>Analog Mode Pink</label>
       </variable>
-      <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="1" tooltip="Set this decoder's unique locking ID number">
-        <decVal/>
-        <label>Decoder Lock ID number</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <variable label="Long Address" CV="17" item="Extended Address">
         <longAddressVal/>
         <label>Long Address</label>
@@ -2141,12 +2140,21 @@
         </enumVal>
         <label>F6 controls output Motor</label>
       </variable>
+      <variable label="Forward Trim" CV="66" item="Forward Motor Trim" default="128" comment="Range 0-256">
+        <decVal max="256"/>
+        <label>Forward Motor Trim</label>
+        <comment>Range 0-256</comment>
+      </variable>
+      <variable label="Reverse Trim" CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
+        <decVal max="256"/>
+        <label>Reverse Motor Trim</label>
+        <comment>Range 0-256</comment>
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-
   <pane name="Momentum">
     <column>
       <label label="Accel Base Starting Point is 1">
@@ -2253,6 +2261,7 @@
       </label>
     </column>
     <name>Momentum</name>
+    
   </pane>
   <pane name="Misc">
     <column>
@@ -2262,5 +2271,15 @@
       </label>
     </column>
     <name>Misc</name>
+  </pane>
+  <pane name="TCS Other">
+    <column>
+      <display item="Forward Motor Trim"/>
+      <display item="Reverse Motor Trim"/>
+      <label label="Values above 128 increase speed.  Values below 128 decrease speed">
+        <label>Values above 128 increase speed.  Values below 128 decrease speed</label>
+      </label>
+    </column>
+    <name>TCS Other</name>
   </pane>
 </decoder-config>

@@ -15,7 +15,7 @@
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
-# Author:  Giorgio Terdina copyright (c) 2009
+# Author:  Giorgio Terdina copyright (c) 2009, 2010, 2011
 #
 # 2.01 beta - Fixed problem wih signalheads without UserName
 # 2.02 beta - Added test for empty sections
@@ -56,6 +56,13 @@
 # 2.35 - Added $ST (Start at fast clock time) command in schedule.
 # 2.35 - Released throttle when train is in manual section.
 # 2.35 - Added custom section RGB colors.
+# 2.36 - Avoided duplicate operation of turnouts due to changes in Layout Editor.
+# 2.37 - Added section tracking using JMRI memory variables.
+# 2.38 - Modified to ignored Power OFF when using XpressNet Simulator (since it's unreliable).
+# 2.39 - Removed Operations interface (nobody ever used it!)
+# 2.40 - Fixed thread race condition when stopping trains
+# 2.41 - Set default minimum interval between speed commands (maxIdle) to 60 seconds
+# 2.42 - Adapted to refactoring occurred in JMRI 3.32 (different access to default directory)
 
 # JAVA imports
 
@@ -129,9 +136,9 @@ from jmri.jmrit.consisttool import ConsistToolFrame
 
 from jmri.implementation import AbstractShutDownTask
 
-from jmri.jmrit.operations.locations import LocationManager
-from jmri.jmrit.operations.rollingstock.cars import CarManager
-from jmri.jmrit.operations.trains import TrainManager
+# from jmri.jmrit.operations.locations import LocationManager
+#from jmri.jmrit.operations.rollingstock.cars import CarManager
+#from jmri.jmrit.operations.trains import TrainManager
 
 from jmri.jmrit.roster import Roster
 
@@ -159,7 +166,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
 
 # CONSTANTS ==========================
 
-    version = "2.35"
+    version = "2.42"
     
     
     # Retrieve DOUBLE_XOVER constant, depending on JMRI Version
@@ -211,6 +218,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     paused = False
     repaint = False
     simulation = False
+    lenzSimulation = False
     trainsDirty = False
     preferencesDirty = False
     debug = False
@@ -434,6 +442,13 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                     AutoDispatcher.simulation = False
                 else :
                     AutoDispatcher.simulation = True
+                    if (Apps.getConnection1().upper() != "XPRESSNETSIMULATOR" < 0 and
+                     Apps.getConnection2().upper() != "XPRESSNETSIMULATOR" and
+                     Apps.getConnection3().upper() != "XPRESSNETSIMULATOR" < 0 and
+                     Apps.getConnection4().upper() != "XPRESSNETSIMULATOR" < 0) :
+                        AutoDispatcher.lenzSimulation = False
+                    else :
+                        AutoDispatcher.lenzSimulation = True
                 retrieveError = False
                 break
             except :
@@ -523,7 +538,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         self.userSettings() 
         
         # Get data from Operations module
-        ADlocation.getOpLocations()
+#        ADlocation.getOpLocations()
 
         # Setup completed
         # Enable buttons, unless some error occurred
@@ -1132,6 +1147,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
             # (on some command stations)
             currentTime = System.currentTimeMillis()
             # Check all trains
+#            if not AutoDispatcher.paused :
             for train in ADtrain.getList() :
                 # Check for train stalled
                 if (train.running and ADsettings.stalledDetection !=
@@ -1155,8 +1171,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                     # Compare speeds rounding them, to cope with different 
                     # precisions in Jython (double) and Java (float)
                     targetSpeed = round(locomotive.targetSpeed, 4)
-                    presentSpeed = round(
-                      locomotive.throttle.getSpeedSetting(), 4)
+                    presentSpeed = round(locomotive.currentSpeed, 4)
                     if presentSpeed < 0 :
                         presentSpeed = 0
                     if presentSpeed != targetSpeed :
@@ -1166,7 +1181,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                             # Yes - Stop it immediately!
                             if presentSpeed > 0 :
                                 locomotive.throttle.setSpeedSetting(targetSpeed)
-                                locomotive.rampingSpeed = 0
+                                locomotive.rampingSpeed = locomotive.currentSpeed = 0
                                 locomotive.currentSpeedSwing.setText("0")
                                 locomotive.updateMeter()
                         else :
@@ -1182,6 +1197,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                             if delta == 0 :
                                 # No - Apply target speed
                                 locomotive.throttle.setSpeedSetting(targetSpeed)
+                                locomotive.currentSpeed = targetSpeed
                                 locomotive.lastSent = currentTime
                                 locomotive.rampingSpeed = targetSpeed
                                 if targetSpeed <= 0 :
@@ -1216,6 +1232,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                                       # Meaningful change - apply new speed
                                     locomotive.throttle.setSpeedSetting(
                                       locomotive.rampingSpeed)
+                                    locomotive.currentSpeed = locomotive.rampingSpeed
                                     locomotive.lastSent = currentTime
                                        # Update locomotives window (if open)
                                     locomotive.currentSpeedSwing.setText(
@@ -1233,6 +1250,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                        ADsettings.maxIdle) :
                         locomotive.throttle.setSpeedSetting(
                           locomotive.rampingSpeed)
+                        locomotive.currentSpeed = locomotive.rampingSpeed
                         locomotive.lastSent = currentTime
             # Wait n/10 of second before repeating
             # This thread is no time critical, since it only varies speeds 
@@ -2000,6 +2018,7 @@ class ADsection (PropertyChangeListener) :
         self.allocationPoint = [None, None]
         self.safePoint = [None, None]
         self.manualSensor = None
+        self.memoryVariable = jmri.InstanceManager.memoryManagerInstance().getMemory(self.name)
         self.stopAtBeginning = [-1.0, -1.0]
         # Assume that order of blocks and entries is not reversed
         self.reversed = False
@@ -2383,8 +2402,13 @@ class ADsection (PropertyChangeListener) :
         self.setColor()
                             
     def changeTrainName(self) :
-        # Place/remove train name in jmri Blocks
-        # (only if user enabled this option)
+        # Place/remove train name in jmri Memory Variable (if defined)
+        # and in jmri Blocks (only if user enabled this option)
+        if self.memoryVariable != None :
+            if self.allocated == None :
+                self.memoryVariable.setValue("")
+            else :
+                self.memoryVariable.setValue(self.allocated.getName())
         if not ADsettings.blockTracking :
             return
         if self.allocated == None :
@@ -2759,7 +2783,7 @@ class ADblock (PropertyChangeListener) :
             foundSpeed = len(ADsettings.speedsList)
         return foundSpeed
         
-    def setTurnouts(self, connectingBlock) :
+    def setTurnouts(self, connectingBlock, turnoutList) :
         # Set turnouts between present block and connecting block
         # Return:
         #  True if any turnout is "Thrown"
@@ -2773,23 +2797,27 @@ class ADblock (PropertyChangeListener) :
             for i in range(beanSettings.size()) :
                 beanSetting = beanSettings.get(i)
                 turnout = beanSetting.getBean()
-                position = beanSetting.getSetting()
-                # Take note if turnout must be throw
-                if position == Turnout.THROWN :
-                    thrown = True
-                # Operate turnout only if not yet set in the proper position
-                # or if user disabled "Trust turnouts KnownState" indicator
-                if (not ADsettings.trustTurnouts or 
-                   turnout.getState() != position) :
-                    AutoDispatcher.turnoutCommands[turnout] = [
-                      position, System.currentTimeMillis()]
-                    turnout.setState(position)
-                    # No need of repainting, since LayoutEditor will do it
-                    AutoDispatcher.repaint = False
-                    # Wait if user specified a delay between turnouts operation
-                    if ADsettings.turnoutDelay > 0 :
-                        AutoDispatcher.instance.waitMsec(
-                          ADsettings.turnoutDelay)
+                # Make sure turnout is not included twice in paths
+                # Seems to happen starting with JMRI 2.11.4
+                if not turnout in turnoutList :
+                    turnoutList.append(turnout)
+                    position = beanSetting.getSetting()
+                    # Take note if turnout must be throw
+                    if position == Turnout.THROWN :
+                        thrown = True
+                    # Operate turnout only if not yet set in the proper position
+                    # or if user disabled "Trust turnouts KnownState" indicator
+                    if (not ADsettings.trustTurnouts or 
+                        turnout.getState() != position) :
+                        AutoDispatcher.turnoutCommands[turnout] = [
+                          position, System.currentTimeMillis()]
+                        turnout.setState(position)
+                        # No need of repainting, since LayoutEditor will do it
+                        AutoDispatcher.repaint = False
+                        # Wait if user specified a delay between turnouts operation
+                        if ADsettings.turnoutDelay > 0 :
+                            AutoDispatcher.instance.waitMsec(
+                              ADsettings.turnoutDelay)
         return thrown
                     
     def setColor(self, color):
@@ -2885,7 +2913,7 @@ class ADlocation :
     
     # STATIC VARIABLES
     
-    locationManager = LocationManager.instance()
+#    locationManager = LocationManager.instance()
     locations ={}   # dictionary of location instances
 
     # STATIC METHODS
@@ -2902,21 +2930,21 @@ class ADlocation :
         return ADlocation.locations.get(name, None)
     getByName = ADstaticMethod(getByName)
     
-    def getOpLocations() :
+#    def getOpLocations() :
         # Get location IDs from Operations
-        opIds = ADlocation.locationManager.getLocationsByNameList()
-        for opId in opIds :
-            # get Operation's location instance
-            opLocation = ADlocation.locationManager.getLocationById(opId)
-            name = opLocation.getName()
-            # get our corresponding location or create it
-            if ADlocation.locations.has_key(name) :
-                location = ADlocation.locations[name]
-            else :
-                location = ADlocation(name)
-            # Link our location with Operation's instance
-            location.opLocation = opLocation
-    getOpLocations = ADstaticMethod(getOpLocations)
+#        opIds = ADlocation.locationManager.getLocationsByNameList()
+#        for opId in opIds :
+#            # get Operation's location instance
+#            opLocation = ADlocation.locationManager.getLocationById(opId)
+#            name = opLocation.getName()
+#            # get our corresponding location or create it
+#            if ADlocation.locations.has_key(name) :
+#                location = ADlocation.locations[name]
+#           else :
+#                location = ADlocation(name)
+#            # Link our location with Operation's instance
+#            location.opLocation = opLocation
+#    getOpLocations = ADstaticMethod(getOpLocations)
 
     # INSTANCE METHODS
 
@@ -4797,6 +4825,7 @@ class ADlocomotive :
         # Default 128 speed steps
         self.stepsNumber = 126.
         self.locoPaused = False
+        self.currentSpeed = 0
         self.targetSpeed = 0
         self.rampingSpeed = 0
         self.savedSpeed = 0
@@ -4961,6 +4990,8 @@ class ADlocomotive :
                 self.stepsNumber = 27.
             else :
                 self.stepsNumber = 14.
+            self.currentSpeed = self.throttle.getSpeedSetting()
+
             
     def releaseThrottle(self) :
         if self.throttle != None :
@@ -5051,9 +5082,10 @@ class ADlocomotive :
                 speed = -1
                 if self.throttle != None :
                     self.throttle.setSpeedSetting(speed)
-                self.targetSpeed = self.rampingSpeed = 0
-                self.currentSpeedSwing.setText("0")
-                self.updateMeter()
+#                self.targetSpeed = self.rampingSpeed = self.currentSpeed = 0
+#                self.targetSpeed = 0
+#                self.currentSpeedSwing.setText("0")
+#                self.updateMeter()
         elif self.runningStart == -1L :
                 self.runningStart = System.currentTimeMillis()
         if not AutoDispatcher.paused and not AutoDispatcher.stopped :
@@ -5503,6 +5535,7 @@ class ADautoRoute :
         # Set all turnouts contained in the (reduced) route
         # Record also blocks of the route in blocksList
         self.blocksList = []
+        self.turnoutList = []
         # Before starting, make sure we have a valid route :-)
         if len(self.step) == 0 :
             return
@@ -5515,10 +5548,10 @@ class ADautoRoute :
             thrown = self.__setTurnouts__(startBlock, endBlock, direction)
             # Set turnouts from present section to next section
             startBlock = entry.getExternalBlock()
-            if startBlock.setTurnouts(endBlock) :
+            if startBlock.setTurnouts(endBlock, self.turnoutList) :
                 thrown = True
             # and vice-versa
-            if endBlock.setTurnouts(startBlock) :
+            if endBlock.setTurnouts(startBlock, self.turnoutList) :
                 thrown = True
             # Keep note if some turnouts were thrown
             # (info will be used when clearing signals)
@@ -5553,9 +5586,9 @@ class ADautoRoute :
                 # Note that we need to set turnouts included in both paths:
                 # From previousBlock to block; and 
                 # from block to previousBlock.
-                if block.setTurnouts(previousBlock) :
+                if block.setTurnouts(previousBlock, self.turnoutList) :
                     thrown = True
-                if previousBlock.setTurnouts(block) :
+                if previousBlock.setTurnouts(block, self.turnoutList) :
                     thrown = True
                 self.blocksList.append(block)
                 # Look for ending block
@@ -5969,7 +6002,7 @@ class ADsettings :
     derailDetection = DETECTION_PAUSE
     wrongRouteDetection = DETECTION_PAUSE
     # Maximum idle time between speed commands
-    maxIdle = 60
+    maxIdle = 60000
     useCustomColors = True
     # Default section colors (as strings)
     colorTable = ["BLACK", "BLUE", "RED", "YELLOW", "ORANGE",
@@ -6017,7 +6050,14 @@ class ADsettings :
     sectionTracking = False
     soundList = []
     defaultSounds = [1] * len(soundLabel)
-    soundRoot = XmlFile.userFileLocationDefault()
+    try :
+        soundRoot = jmri.util.FileUtil.getUserFilesPath()
+    except :
+        try:
+            soundRoot = XmlFile.userFileLocationDefault()
+        except :
+            AutoDispatcher.log("Unable to find user sound's directory")
+        soundRoot = ""
     soundDic = {}
     maintenanceTime = 0.
     maintenanceMiles = 0.
@@ -6955,7 +6995,7 @@ class ADpowerMonitor (PropertyChangeListener) :
     
     def __init__(self):
         self.powerManager = InstanceManager.powerManagerInstance()
-        if self.powerManager != None :
+        if self.powerManager != None and not AutoDispatcher.lenzSimulation :
             ADpowerMonitor.powerOn = (self.powerManager.getPower()
               == PowerManager.ON)
             self.powerManager.addPropertyChangeListener(self)
@@ -6986,7 +7026,7 @@ class ADpowerMonitor (PropertyChangeListener) :
         self.dispose()
 
     def dispose(self) :
-        if self.powerManager != None :
+        if self.powerManager != None and not AutoDispatcher.lenzSimulation :
             self.powerManager.removePropertyChangeListener(self)
             
     def setPower(self, power) :
@@ -7261,6 +7301,7 @@ class ADmainMenu (JmriJFrame) :
         self.contentPane.add(temppane)
         
         # Display frame
+        self.setLocation(0, 0)
         self.pack()
         self.show()
         
@@ -9465,7 +9506,7 @@ class ADsoundListFrame (AdScrollFrame) :
             if upperName.endswith(".WAV") :
                 fileName = fileName[0:len(fileName)-4]
             if upperName.endswith(".AU") :
-                fileName = fileName[0:len(fileName)-4]
+                fileName = fileName[0:len(fileName)-3]
             ADsettings.soundList[ind].name = fileName
         self.soundListChanged()
 
@@ -10084,25 +10125,26 @@ class ADImportTrainFrame (AdScrollFrame) :
         self.header.add(JLabel(""))
 
     def createDetail(self):
+        trainIds = []
         # Fill contents of scroll area
-        trainManager = TrainManager.instance()
-        trainIds = trainManager.getTrainsByNameList()
-        nTrains = len(trainIds)
-        self.detail.setLayout(GridLayout(nTrains, 3))
-        self.opTrains = []
-        for i in range(nTrains) :
-            opTrain = trainManager.getTrainById(trainIds[i])
-            self.opTrains.append(opTrain)
-            self.detail.add(JLabel(opTrain.getName()))
-            if opTrain.getBuilt() :
-                self.detail.add(AutoDispatcher.centerLabel("Built"))
-                importButton = JButton("Import")
-                importButton.setActionCommand(str(i))
-                importButton.actionPerformed = self.whenImportClicked
-                self.detail.add(importButton)
-            else :
-                self.detail.add(JLabel(""))
-                self.detail.add(JLabel(""))
+#        trainManager = TrainManager.instance()
+#        trainIds = trainManager.getTrainsByNameList()
+#        nTrains = len(trainIds)
+#        self.detail.setLayout(GridLayout(nTrains, 3))
+#        self.opTrains = []
+#        for i in range(nTrains) :
+#            opTrain = trainManager.getTrainById(trainIds[i])
+#            self.opTrains.append(opTrain)
+#            self.detail.add(JLabel(opTrain.getName()))
+#            if opTrain.getBuilt() :
+#                self.detail.add(AutoDispatcher.centerLabel("Built"))
+#                importButton = JButton("Import")
+#                importButton.setActionCommand(str(i))
+#                importButton.actionPerformed = self.whenImportClicked
+#                self.detail.add(importButton)
+#            else :
+#                self.detail.add(JLabel(""))
+#                self.detail.add(JLabel(""))
 
     def createButtons(self) : 
         # Cancel button
@@ -10118,109 +10160,110 @@ class ADImportTrainFrame (AdScrollFrame) :
             
     # define what Import button in Import Trains Window does when clicked
     def whenImportClicked(self,event) :
-        ind = int(event.getActionCommand())
-        # Get Operations train
-        opTrain = self.opTrains[ind]
-        name = opTrain.getIconName()
-        engine = opTrain.getLeadEngine()
-        if engine == None :
-            engine = ""
-        else :
-            engine = engine.getNumber()
-        # Get the list of cars to be hauled by the train
-        carManager = CarManager.instance()
-        carIds = carManager.getCarsByTrainList(opTrain)
-        cars = []
-        for carId in carIds :
-            cars.append(carManager.getCarById(carId))
-        # Get train route
-        route = opTrain.getRoute()
-        routeIds = route.getLocationsBySequenceList()
-        routeLocations = []
-        for id in routeIds :
-            routeLocations.append(route.getLocationById(id))
-        # Now build our schedule
-        departStation = True
-        schedule = ""
-        previousDirection = startDirection = ""
-        startLocation = None
-        hauled = []
-        while len(routeLocations) > 0 :
-            routeLocation = routeLocations.pop(0)
-            direction = routeLocation.getTrainDirectionString().upper()
-            location = ADlocation.getByName(routeLocation.getName())
-            manualSwitching = ""
-            # Check if any car must be picked up or dropped here
-            for car in cars :
-                source = car.getRouteLocation()
-                destination = car.getRouteDestination()
-                if source == destination :
-                    continue
-                if source == routeLocation and not car in hauled :
-                    pickUp = True
-                    # does train pass twice in this location ?
-                    if routeLocation in routeLocations :
-                        # Yes. See if car must be picked up now or next time
-                        for nextLocation in routeLocations :
-                            if nextLocation == routeLocation :
-                                pickUp = False
-                                break
-                            if nextLocation == destination :
-                                break
-                    if pickUp :
-                        hauled.append(car)
-                        manualSwitching = " $M"
-                elif destination == routeLocation and car in hauled :
-                    manualSwitching = " $M"
-                    hauled.remove(car)
-            if departStation :
-                startDirection = direction
-                manualSwitching = ""
-                startLocation = location
-                routeStart = routeLocation
-                departStation = False
-            if location != None :
-                if len(schedule) > 0 :
-                    schedule += " "
-                if previousDirection != direction :
-                    schedule += "$" + direction + " "
-                    previousDirection = direction
-                schedule += "[" + location.text + "]" + manualSwitching
-        train = ADtrain(name)
-        train.opTrain = opTrain
-        if startDirection.strip() != "" :
-            train.setDirection(startDirection)
-        if engine != None and ADlocomotive.getByName(engine) != None :
-            train.changeLocomotive(engine)
-        else :
-            AutoDispatcher.chimeLog(ADsettings.ATTENTION_SOUND,
-              "Locomotive \"" + engine +
-              "\" not found. Manual running assumed!")
-            train.setEngineer("Manual")
-        # Find start section
-        if startLocation != None :
-            for section in startLocation.getSections() :
-                section.setManual(True)
-                if section.getAllocated() == None :
-                    train.setSection(section, True)
-                    if section.getAllocated() == train :
-                        break
-                section.setManual(False)
-            if section.getAllocated() != train :
-                AutoDispatcher.chimeLog(ADsettings.ATTENTION_SOUND,
-                "Canot place train \"" + name +
-                "\" in location " + startLocation.name
-                + " (all sections occupied)")
-            train.trainLength = round(float(routeStart.getTrainLength())
-              * 304.8 / ADsettings.scale)
-        if schedule.strip() != "" :
-            train.setSchedule(schedule)
-        train.updateSwing()
-        
-        AutoDispatcher.setTrainsDirty()
-        if AutoDispatcher.trainsFrame != None :
-            AutoDispatcher.trainsFrame.reDisplay()
-        self.whenCancelClicked(None)
+        ind = 0
+#        ind = int(event.getActionCommand())
+#        # Get Operations train
+#        opTrain = self.opTrains[ind]
+#        name = opTrain.getIconName()
+#        engine = opTrain.getLeadEngine()
+#        if engine == None :
+#            engine = ""
+#        else :
+#            engine = engine.getNumber()
+#        # Get the list of cars to be hauled by the train
+#        carManager = CarManager.instance()
+#        carIds = carManager.getCarsByTrainList(opTrain)
+#        cars = []
+#        for carId in carIds :
+#            cars.append(carManager.getCarById(carId))
+#        # Get train route
+#        route = opTrain.getRoute()
+#        routeIds = route.getLocationsBySequenceList()
+#        routeLocations = []
+#        for id in routeIds :
+#            routeLocations.append(route.getLocationById(id))
+#        # Now build our schedule
+#        departStation = True
+#        schedule = ""
+#        previousDirection = startDirection = ""
+#        startLocation = None
+#        hauled = []
+#        while len(routeLocations) > 0 :
+#            routeLocation = routeLocations.pop(0)
+#            direction = routeLocation.getTrainDirectionString().upper()
+#            location = ADlocation.getByName(routeLocation.getName())
+#            manualSwitching = ""
+#            # Check if any car must be picked up or dropped here
+#            for car in cars :
+#                source = car.getRouteLocation()
+#                destination = car.getRouteDestination()
+#                if source == destination :
+#                    continue
+#                if source == routeLocation and not car in hauled :
+#                    pickUp = True
+#                    # does train pass twice in this location ?
+#                    if routeLocation in routeLocations :
+#                        # Yes. See if car must be picked up now or next time
+#                        for nextLocation in routeLocations :
+#                            if nextLocation == routeLocation :
+#                                pickUp = False
+#                                break
+#                            if nextLocation == destination :
+#                                break
+#                    if pickUp :
+#                        hauled.append(car)
+#                        manualSwitching = " $M"
+#                elif destination == routeLocation and car in hauled :
+#                    manualSwitching = " $M"
+#                    hauled.remove(car)
+#            if departStation :
+#                startDirection = direction
+#                manualSwitching = ""
+#                startLocation = location
+#                routeStart = routeLocation
+#                departStation = False
+#            if location != None :
+#                if len(schedule) > 0 :
+#                    schedule += " "
+#                if previousDirection != direction :
+#                    schedule += "$" + direction + " "
+#                    previousDirection = direction
+#                schedule += "[" + location.text + "]" + manualSwitching
+#        train = ADtrain(name)
+#        train.opTrain = opTrain
+#        if startDirection.strip() != "" :
+#            train.setDirection(startDirection)
+#        if engine != None and ADlocomotive.getByName(engine) != None :
+#            train.changeLocomotive(engine)
+#        else :
+#            AutoDispatcher.chimeLog(ADsettings.ATTENTION_SOUND,
+#              "Locomotive \"" + engine +
+#              "\" not found. Manual running assumed!")
+#            train.setEngineer("Manual")
+#        # Find start section
+#        if startLocation != None :
+#            for section in startLocation.getSections() :
+#                section.setManual(True)
+#                if section.getAllocated() == None :
+#                    train.setSection(section, True)
+#                    if section.getAllocated() == train :
+#                        break
+#                section.setManual(False)
+#            if section.getAllocated() != train :
+#                AutoDispatcher.chimeLog(ADsettings.ATTENTION_SOUND,
+#                "Canot place train \"" + name +
+#                "\" in location " + startLocation.name
+#                + " (all sections occupied)")
+#            train.trainLength = round(float(routeStart.getTrainLength())
+#              * 304.8 / ADsettings.scale)
+#        if schedule.strip() != "" :
+#            train.setSchedule(schedule)
+#        train.updateSwing()
+#        
+#        AutoDispatcher.setTrainsDirty()
+#        if AutoDispatcher.trainsFrame != None :
+#            AutoDispatcher.trainsFrame.reDisplay()
+#        self.whenCancelClicked(None)
             
 class ADexamples1 :
 

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+<title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H2>DecoderPro User Guide - Advanced Decoder Definitions</h2>
+
+<p>This page provides information on advanced features in
+the decoder definiton
+files for the DecoderPro Symbolic Programmer.</p>
+
+
+<h3>Identification</h3>
+Three pieces:
+<ul>
+<li>Manufacturer - from CV8
+<li>Version code - from CV7
+<li>Product code - read from a manufacturer specific CV or CVs, 
+this only works for specific manufacturers.  The read process
+is handled in the code (the jmri.jmrit.decoderdefn.IdentifyDecoder class)
+and has to be updated each time a manufacturer starts providing this number
+in a CV.
+</ul>
+
+<h3>Visibility</h3>
+ 
+The model element has a "show" attribute. It's possible values are:
+
+<ul>
+<li>"yes" (default) - the traditional behavior, always show this model and the family it contains
+<li>"no" - never show this model, even if it matches a possible selection.
+            Used for legacy (old) definitions that have been replaced with newer ones.
+<li>"maybe" - only show if it matches a (possible) automatic identification.
+</ul>
+
+
+<h3>Updates and Migration</h3>
+
+Sometimes, we replace a decoder definition with a better one.  The old one is in use,
+but we'd like to move those users to the new one eventually.  There are model-level
+attributes that can be added to the old (not the new) definition to facilitate that:
+
+<code><pre>
+&lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
+</pre></code>
+
+The user selects "Update decoder definitions" from the Debug Menu, and 
+all existing roster entries what point a decoder definitions with replacementModel and/or
+replacementFamily defined will be updated to those replacements.
+
+<!--#include virtual="/Footer" -->
+</div>
+</body>
+</html>

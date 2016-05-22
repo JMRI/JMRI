@@ -1,5 +1,7 @@
 package jmri.jmrit.simpleclock.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Timebase;
 import jmri.InstanceManager;
 
@@ -178,6 +180,6 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         return jmri.Manager.TIMEBASE;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTimebaseXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(SimpleTimebaseXml.class.getName());
 
 }

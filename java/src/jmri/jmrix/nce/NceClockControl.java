@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.DefaultClockControl;
 import jmri.InstanceManager;
 import jmri.Timebase;
@@ -56,6 +58,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         internalClock = InstanceManager.timebaseInstance();
         if (internalClock == null){
             log.error("No Timebase Instance");
+            return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -64,6 +67,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
             } ;
         if (minuteChangeListener == null){
             log.error("No minuteChangeListener");
+            return;
         }
         internalClock.addMinuteChangeListener(minuteChangeListener);
     }
@@ -527,7 +531,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         return((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceClockControl.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceClockControl.class.getName());
 }
 
 /* @(#)NceClockControl.java */

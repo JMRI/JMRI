@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -93,7 +95,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 try{
                     fireTableRowsUpdated(row, row);
                 } catch (Exception ex){
-                    log.error(ex.toString());
+                    log.error("Property Change " + ex.toString());
                 }
             }
         }
@@ -948,6 +950,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
         }
     }
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanTableDataModel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
 
 }

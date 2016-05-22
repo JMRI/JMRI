@@ -2,6 +2,8 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
+
 /** 
  * Stands in for the EasyDccTrafficController class
  * @author			Bob Jacobsen
@@ -18,6 +20,6 @@ class EasyDccListenerScaffold implements EasyDccListener {
 	EasyDccReply rcvdReply;
 	EasyDccMessage rcvdMsg;
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccListenerScaffold.class.getName());
+	static Logger log = Logger.getLogger(EasyDccListenerScaffold.class.getName());
 
 }

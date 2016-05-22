@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Zimo_MX62_64_1.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,8 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="sip@euronet.nl" version="1.1" lastUpdated="20031008"/>
-<!-- Based on the contribution of many others -->
-<!-- V 1.1 changed spelling of "behavior" (Jack Shall) -->
+  <!-- Based on the contribution of many others -->
+  <!-- V 1.1 changed spelling of "behavior" (Jack Shall) -->
   <decoder>
     <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo">
       <model model="MX62 version 8" lowVersionID="8" highVersionID="8" maxInputVolts="12-24V" maxMotorCurrent="0.7A (peak=1.5A, 5 sec.)" maxTotalCurrent="0.8A" formFactor="N, HOe, HOm" numOuts="4" numFns="6">
@@ -99,7 +99,7 @@
         <label>EMF Feedback Cutoff</label>
         <comment>Range 0-252</comment>
       </variable>
-<!-- Deleted all CV 11 to 13 references-->
+      <!-- Deleted all CV 11 to 13 references-->
       <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
@@ -1019,18 +1019,12 @@
         <decVal min="0" max="9"/>
         <label>Ditch Light Off Time</label>
       </variable>
-      <variable label="Forward Trim" CV="66" default="0">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="0">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <variable label="User Private ID #1" CV="105" default="0" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>

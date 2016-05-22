@@ -2,6 +2,8 @@
 
 package jmri.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 
 import java.awt.Frame;
@@ -25,10 +27,8 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 	private Frame parentFrame;	// Keep note of the window containing the menu
 	private List<JmriJFrame> framesList;	// Keep the list of windows, in order to find out which window was selected
 
-    java.util.ResourceBundle rb;
-    
     public WindowMenu(WindowInterface wi) {
-        super(java.util.ResourceBundle.getBundle("apps.AppsBundle").getString("MenuWindow"));
+        super(Bundle.getMessage("MenuWindow"));
 		parentFrame = wi.getFrame();
 		addMenuListener(this);
     }
@@ -38,9 +38,8 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 		String windowName;
 		framesList = JmriJFrame.getFrameList();
 		removeAll();
-		if (rb == null) rb=java.util.ResourceBundle.getBundle("apps.AppsBundle");
 		
-        add(new AbstractAction(rb.getString("MenuItemMinimize")){
+        add(new AbstractAction(Bundle.getMessage("MenuItemMinimize")){
             public void actionPerformed(ActionEvent e) {
                 // the next line works on Java 2, but not 1.1.8
                 if (parentFrame != null) {
@@ -83,6 +82,6 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 	public void menuDeselected(MenuEvent e) {}
 	public void menuCanceled(MenuEvent e) {}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WindowMenu.class.getName());
+    static Logger log = LoggerFactory.getLogger(WindowMenu.class.getName());
 
 }

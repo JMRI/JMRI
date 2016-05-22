@@ -24,6 +24,8 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -49,8 +51,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.XmlFile;
-
 
 public class VSDConfigDialog extends JDialog {
 
@@ -93,9 +93,9 @@ public class VSDConfigDialog extends JDialog {
 
     /** Constructor
      *
-     * @param JPanel parent : parent panel
-     * @param String title  : title for the dialog
-     * @param VSDConfig c   : Config object to be set by the dialog
+     * @param parent Ancestor panel
+     * @param title title for the dialog
+     * @param c Config object to be set by the dialog
      */
     public VSDConfigDialog(JPanel parent, String title, VSDConfig c) {
 	super(SwingUtilities.getWindowAncestor(parent), title);
@@ -484,12 +484,11 @@ public class VSDConfigDialog extends JDialog {
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         Roster.writeRosterFile();
 
         return true;
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDConfigDialog.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDConfigDialog.class.getName());
     
 }

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.openlcb.swing.tie;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -50,7 +52,7 @@ public class TieTablePane extends JPanel {
 
     // for Print button support, see jmri.jmrix.cmri.serial.assignment.ListFrame
 
-    static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(ProducerTablePane.class.getName());
+    static Logger log = LoggerFactory.getLogger(ProducerTablePane.class.getName());
 	
 }
 

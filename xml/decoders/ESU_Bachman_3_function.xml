@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!--$Id$ -->
+<!--$Id: ESU_Bachman_3_function.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,7 +16,7 @@
   <version author="Peter Ulvestad" version="3" lastUpdated="20100401"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20090726"/>
   <version author="Ian Birchenough@talktalk.netJeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080131"/>
-<!--
+  <!--
      This decoder configuration file is based on ESU_LokPilotBasic 1.0.xml
      V 1.0, dated 20080131, by Jeff Schmaltz. Which also acknowledged
      "the contribution of many others" including Walter Thompson.
@@ -32,8 +32,8 @@
      Version History:
 
         1.0 - Initial release 28 Mar 2009-->
-<!-- Version 2 - Added CV17 - Extended address, corrected CV4 max value and CV5 default value (Peter Ulvestad) -->
-<!-- Version 3 - Fixed Extended address buttons not showing (Peter Ulvestad) -->
+  <!-- Version 2 - Added CV17 - Extended address, corrected CV4 max value and CV5 default value (Peter Ulvestad) -->
+  <!-- Version 3 - Fixed Extended address buttons not showing (Peter Ulvestad) -->
   <decoder>
     <family name="Bachmann" mfg="Electronic Solutions Ulm GmbH">
       <model model="EZ Command 3 function decoder (336-553)" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="4" formFactor="HO" connector="NMRAmedium">

@@ -2,9 +2,9 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -30,8 +30,6 @@ import java.io.File;
  */
 
 public class TrainManifestOptionFrame extends OperationsFrame{
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	Train _train = null;
 	
@@ -40,14 +38,14 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 	JLabel logoURL = new JLabel("");
 
 	// major buttons	
-	JButton saveButton = new JButton(rb.getString("Save"));
-	JButton addLogoButton = new JButton(rb.getString("AddLogo"));
-	JButton removeLogoButton = new JButton(rb.getString("RemoveLogo"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
+	JButton addLogoButton = new JButton(Bundle.getMessage("AddLogo"));
+	JButton removeLogoButton = new JButton(Bundle.getMessage("RemoveLogo"));
 
 	// radio buttons		
     
     // check boxes
-	JCheckBox ShowTimesCheckBox = new JCheckBox(rb.getString("ShowTimes"));
+	JCheckBox ShowTimesCheckBox = new JCheckBox(Bundle.getMessage("ShowTimes"));
 	
 	// text fields
 	JTextField railroadNameTextField = new JTextField(35);
@@ -56,7 +54,7 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 	// combo boxes
 
 	public TrainManifestOptionFrame() {
-		super(rb.getString("TitleOptions"));
+		super(Bundle.getMessage("TitleOptions"));
 	}
 
 	public void initComponents(TrainEditFrame parent) {
@@ -66,8 +64,8 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		_train = parent._train;
 		
 		// add tool tips
-		addLogoButton.setToolTipText(rb.getString("AddLogoToolTip"));
-		removeLogoButton.setToolTipText(rb.getString("RemoveLogoToolTip"));
+		addLogoButton.setToolTipText(Bundle.getMessage("AddLogoToolTip"));
+		removeLogoButton.setToolTipText(Bundle.getMessage("RemoveLogoToolTip"));
 			
 		// Option panel
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));		
@@ -75,14 +73,14 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		JPanel pOptionName = new JPanel();
 		pOptionName.setLayout(new GridBagLayout());
 		JScrollPane pOptionNamePane = new JScrollPane(pOptionName);
-		pOptionNamePane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutRailRoadName")));
+		pOptionNamePane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutRailRoadName")));
 		addItem (pOptionName, railroadNameTextField, 0, 0);
 		
 		// manifest logo
 		JPanel pOptionLogo = new JPanel();
 		pOptionLogo.setLayout(new GridBagLayout());
 		JScrollPane pOptionLogoPane = new JScrollPane(pOptionLogo);
-		pOptionLogoPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLogo")));
+		pOptionLogoPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutLogo")));
 		addItem (pOptionLogo, textPad, 2, 18);
 		addItem (pOptionLogo, addLogoButton, 2, 20);
 		addItemLeft (pOptionLogo, removeLogoButton, 0, 21);
@@ -93,7 +91,8 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		JPanel pCheckboxes = new JPanel();
 		pCheckboxes.setLayout(new GridBagLayout());
 		JScrollPane pCheckboxesPane = new JScrollPane(pCheckboxes);
-		pCheckboxesPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifest")));
+		pCheckboxesPane.setBorder(BorderFactory
+				.createTitledBorder(Bundle.getMessage("BorderLayoutManifest")));
 		addItem (pCheckboxes, ShowTimesCheckBox, 0, 0);
 		
 		// row 11
@@ -118,7 +117,7 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		}
 
 		//	build menu		
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainManifestOptions", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainManifestOptions", true);// NOI18N
 
 		pack();
 		if (getWidth()<400 )
@@ -142,22 +141,21 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 	 * We always use the same file chooser in this class, so that the user's
 	 * last-accessed directory remains available.
 	 */
-	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Images");
+	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("Images"));
 
 	private File selectFile() {
 		if (fc==null) {
 			log.error("Could not find user directory");
 		} else {
-			fc.setDialogTitle("Find desired image");
+			fc.setDialogTitle(Bundle.getMessage("FindDesiredImage"));
 			// when reusing the chooser, make sure new files are included
 			fc.rescanCurrentDirectory();
-		}
-
-		int retVal = fc.showOpenDialog(null);
-		// handle selection or cancel
-		if (retVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			return file;
+			int retVal = fc.showOpenDialog(null);
+			// handle selection or cancel
+			if (retVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				return file;
+			}
 		}
 		return null;
 	}
@@ -187,6 +185,6 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(TrainManifestOptionFrame.class.getName());
 }

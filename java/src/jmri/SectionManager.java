@@ -2,6 +2,8 @@
 
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 import java.util.List;
@@ -243,7 +245,7 @@ public class SectionManager extends AbstractManager
     }
 	
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SectionManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SectionManager.class.getName());
 }
 
 /* @(#)SectionManager.java */

@@ -2,6 +2,9 @@
 
 package jmri.jmrix.bachrus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * SpeedoReply.java
  *
@@ -22,8 +25,10 @@ public class SpeedoReply {
 	@SuppressWarnings("null")
 	public  SpeedoReply(SpeedoReply m) {
           this();
-		if (m == null)
+		if (m == null) {
 			log.error("copy ctor of null message");
+		    return;
+		}
 		_nDataChars = m._nDataChars;
         unsolicited = m.unsolicited;
 		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
@@ -113,7 +118,7 @@ public class SpeedoReply {
     private int _nDataChars;
     private char _dataChars[] = new char[maxSize];
     private boolean unsolicited;
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpeedoReply.class.getName());
 }
 
 /* @(#)SpeedoReply.java */

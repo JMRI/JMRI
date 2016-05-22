@@ -3,12 +3,9 @@
  package apps.gui3.paned;
 
 import javax.swing.tree.*;
-import java.io.File;
-
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.swing.*;
 import jmri.util.swing.multipane.*;
-
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Standalone, but paned, PanelPro window.
@@ -26,8 +23,9 @@ public class PanelProFrame extends MultiPaneWindow {
      * GUIs
      */
  	public PanelProFrame(String title) {
-    	super(title, new File("xml/config/apps/panelpro/Gui3LeftTree.xml"), 
-    	        new File("xml/config/apps/panelpro/Gui3Menus.xml"), new File("xml/config/apps/panelpro/Gui3MainToolBar.xml"));
+    	super(title, "xml/config/apps/panelpro/Gui3LeftTree.xml", 
+    	        "xml/config/apps/panelpro/Gui3Menus.xml",
+                "xml/config/apps/panelpro/Gui3MainToolBar.xml");
     }
      
        
@@ -35,7 +33,7 @@ public class PanelProFrame extends MultiPaneWindow {
      * Make a PanelPro tree, and add the LocoNet stuff, because we assume those systems active here
      */
     @Override
-    protected TreeNode makeNavTreeTopNode(File treeFile, PanedInterface rightTopWI) {
+    protected TreeNode makeNavTreeTopNode(String treeFile, PanedInterface rightTopWI) {
         DefaultMutableTreeNode top = JTreeUtil.loadTree(treeFile, rightTopWI, null);  // no context
         
         // as a test, we manually create a loconet tree
@@ -43,13 +41,13 @@ public class PanelProFrame extends MultiPaneWindow {
         if (jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class) != null) {
             LocoNetSystemConnectionMemo lm1 = (LocoNetSystemConnectionMemo)jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class).get(0);
             if (lm1 !=null) {
-                DefaultMutableTreeNode l1 = JTreeUtil.loadTree(new File("xml/config/parts/jmri/jmrix/loconet/ToolsTree.xml"), rightTopWI, lm1);
+                DefaultMutableTreeNode l1 = JTreeUtil.loadTree("xml/config/parts/jmri/jmrix/loconet/ToolsTree.xml", rightTopWI, lm1);
                 l1.setUserObject("LocoNet");
                 top.add(l1);
             }
             LocoNetSystemConnectionMemo lm2 = (LocoNetSystemConnectionMemo)jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class).get(1);
             if (lm2 !=null) {            
-                DefaultMutableTreeNode l2 = JTreeUtil.loadTree(new File("xml/config/parts/jmri/jmrix/loconet/ToolsTree.xml"), rightTopWI, lm2);
+                DefaultMutableTreeNode l2 = JTreeUtil.loadTree("xml/config/parts/jmri/jmrix/loconet/ToolsTree.xml", rightTopWI, lm2);
                 l2.setUserObject("LocoNet2");
                 top.add(l2);
             }

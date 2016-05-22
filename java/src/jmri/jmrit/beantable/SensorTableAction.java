@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 import jmri.util.ConnectionNameFromSystemName;
 
@@ -151,7 +153,7 @@ public class SensorTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to Sensors to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Number to Sensors to Add must be a number!",""+ex, "",true, false);
                 return;
             }
         } 
@@ -171,7 +173,7 @@ public class SensorTableAction extends AbstractTableAction {
                 curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
             }  catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false);
                 return;
             }
             if (curAddress==null){
@@ -196,7 +198,7 @@ public class SensorTableAction extends AbstractTableAction {
                     s.setUserName(user);
                 } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
                     jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true, org.apache.log4j.Level.ERROR);
+                        showErrorMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
                 }
             }
         }
@@ -269,19 +271,56 @@ public class SensorTableAction extends AbstractTableAction {
         m.fireTableDataChanged();
     }
     
+    protected void setDefaultState(JFrame _who){
+        String[] sensorStates = new String[]{ Bundle.getMessage("BeanStateUnknown"),  Bundle.getMessage("SensorStateInactive"), Bundle.getMessage("SensorStateActive"), Bundle.getMessage("BeanStateInconsistent")};
+        JComboBox stateCombo = new JComboBox(sensorStates);
+        switch(jmri.managers.InternalSensorManager.getDefaultStateForNewSensors()){
+            case jmri.Sensor.ACTIVE : stateCombo.setSelectedItem(Bundle.getMessage("SensorStateActive")); break;
+            case jmri.Sensor.INACTIVE : stateCombo.setSelectedItem(Bundle.getMessage("SensorStateInactive")); break;
+            case jmri.Sensor.INCONSISTENT : stateCombo.setSelectedItem(Bundle.getMessage("BeanStateInconsistent")); break;
+            default : stateCombo.setSelectedItem(Bundle.getMessage("BeanStateUnknown"));
+        }
+        int retval = JOptionPane.showOptionDialog(_who,
+                              Bundle.getMessage("SensorInitialStateMessageBox"), Bundle.getMessage("InitialSensorState"),
+                              0, JOptionPane.INFORMATION_MESSAGE, null,
+                              new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), stateCombo}, null );
+        if (retval != 1) {
+            return;
+        }
+        int defaultState = jmri.Sensor.UNKNOWN;
+        String selectedState = (String)stateCombo.getSelectedItem();
+        if(selectedState.equals(Bundle.getMessage("SensorStateActive"))){
+            defaultState = jmri.Sensor.ACTIVE;
+        } else if (selectedState.equals(Bundle.getMessage("SensorStateInactive"))){
+            defaultState = jmri.Sensor.INACTIVE;
+        } else if (selectedState.equals(Bundle.getMessage("BeanStateInconsistent"))){
+            defaultState  = jmri.Sensor.INCONSISTENT;
+        }
+        
+        jmri.managers.InternalSensorManager.setDefaultStateForNewSensors(defaultState);
+        
+    }
+    
     public void setMenuBar(BeanTableFrame f){
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
 
-        JMenu debounceMenu = new JMenu(rb.getString("Debounce"));
-        JMenuItem item = new JMenuItem("Defaults...");
-        debounceMenu.add(item);
+        JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
+        JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
+        optionsMenu.add(item);
         item.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     setDefaultDebounce(finalF);
         	}
-            });
-        menuBar.add(debounceMenu);
+        });
+        item = new JMenuItem(Bundle.getMessage("InitialSensorState"));
+        optionsMenu.add(item);
+        item.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                    setDefaultState(finalF);
+        	}
+        });
+        menuBar.add(optionsMenu);
     }
 
     void showDebounceChanged() {
@@ -324,7 +363,7 @@ public class SensorTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleSensorTable"); }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SensorTableAction.class.getName());
 }
 
 

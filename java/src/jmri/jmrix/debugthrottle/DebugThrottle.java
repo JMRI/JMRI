@@ -1,5 +1,7 @@
 package jmri.jmrix.debugthrottle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
@@ -39,6 +41,7 @@ public class DebugThrottle extends AbstractThrottle
         this.isForward    = true;
 
         this.address      = address;
+        setSpeedStepMode( jmri.DccThrottle.SpeedStepMode128 ); 
     }
 
     DccLocoAddress address;
@@ -102,6 +105,6 @@ public class DebugThrottle extends AbstractThrottle
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(DebugThrottle.class.getName());
 
 }

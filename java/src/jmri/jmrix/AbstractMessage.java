@@ -2,6 +2,9 @@
 
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Add description of class here.
@@ -29,6 +32,8 @@ public abstract class AbstractMessage implements Message {
     }
 
     @SuppressWarnings("null")
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_ON_SOME_PATH",
+                                    justification="we want to force an exception")
 	public AbstractMessage(AbstractMessage m) {
     	if (m == null)
     		log.error("copy ctor of null message throws exception");
@@ -56,6 +61,6 @@ public abstract class AbstractMessage implements Message {
     // contents (private)
     protected int _nDataChars = 0;
 
-    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMessage.class.getName());
+    private static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
 
 }

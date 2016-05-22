@@ -115,7 +115,7 @@ Le support Jython nest pas (encore) standard dans JMRI. Pour utiliser ceci:
 connexion fonctionne pour les menus des outils de base avant d'essayer d'utiliser Jython. 
 <LI>Télécharger et installer Jython depuis
 <A HREF="http://www.jython.org">http://www.jython.org</a>.  
-Le développement utilise la version 2.1, donc vous pouvez commencer avec ceci. Sur MacOS X, l'installateur ne s'exécute pas, vous devez donc appeler manuellement le fichier jython_21.class; voir la note MacOS X sur le site web de Jython. Assurez-vous que l'installation est terminée en appelant Jython depuis la ligne de commande:
+Le développement utilise la version 2.1, donc vous pouvez commencer avec ceci. Sur Mac OS X, l'installateur ne s'exécute pas, vous devez donc appeler manuellement le fichier jython_21.class; voir la note Mac OS X sur le site web de Jython. Assurez-vous que l'installation est terminée en appelant Jython depuis la ligne de commande:
 <PRE>
    % jython
    Jython 2.1 on java1.4.1_01 (JIT: null)
@@ -147,7 +147,7 @@ Maintenant vous avez juste à avoir les classes nécessaires dans le CLASSPATH u
   setenv CLASSPATH .:jmri.jar:lib/log4j.jar:lib/collections.jar:lib/crimson.jar:lib/jdom-jdk11.jar
 </PRE>
 <BR/>
-Pour enregistrer la frappe, le script "jmrithon"  est disponible pour une utilisation sur les systèmes Linux et MacOS X:
+Pour enregistrer la frappe, le script "jmrithon"  est disponible pour une utilisation sur les systèmes Linux et Mac OS X:
 <PRE>
   % ./jmrithon
   Jython 2.1 on java1.4.1_01 (JIT: null)
@@ -183,7 +183,7 @@ Pour rendre les classes JMRI disponible, vous avez à faire:
 Tel qu'il est actuellement mis en place, ceci n'exécute pas n'importe quel code d'initialisation pour commencer les connexions matérielles, etc. Une façon de faire est de charger un fichier de configuration, peut-être celui que vous avez créé précédemment via le panneau de préférences JmriDemo:
 <PRE>
   import java.io
-  configfile = java.io.File(jmri.jmrit.XmlFile.prefsDir()+"JmriDemoConfig2.xml")
+  configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"JmriDemoConfig2.xml")
   jmri.InstanceManager.setConfigureManager(jmri.configurexml.ConfigXmlManager())
   jmri.InstanceManager.configureManagerInstance().load(configfile)
 </PRE>

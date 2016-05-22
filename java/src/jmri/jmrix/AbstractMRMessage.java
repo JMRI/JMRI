@@ -2,6 +2,8 @@
 
 package jmri.jmrix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.StringUtil;
 
 /**
@@ -18,7 +20,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setBinary(false);
         setNeededMode(AbstractMRTrafficController.NORMALMODE);
         setTimeout(SHORT_TIMEOUT);  // default value is the short timeout
-	setRetries(0);  // Default to no retries
+        setRetries(0);  // Default to no retries
     }
 
     // create a new one
@@ -32,6 +34,8 @@ abstract public class AbstractMRMessage extends AbstractMessage {
 
     // copy one
     @SuppressWarnings("null")
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_ON_SOME_PATH",
+                                    justification="we want to force an exception")
 	public  AbstractMRMessage(AbstractMRMessage m) {
     	this();
     	if (m == null)
@@ -146,7 +150,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setElement(offset+3,s.charAt(3));
         return;
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMRMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class.getName());
 
     public String toString() {
         String s = "";

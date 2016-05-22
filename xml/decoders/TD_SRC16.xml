@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: TD_SRC16.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,14 +17,14 @@
   <version author="td@teamdigital1.com" version="1.6" lastUpdated="20100305"/>
   <version author="td@teamdigital1.com" version="1.4" lastUpdated="20080906"/>
   <version author="td@teamdigital1.com" version="1.3" lastUpdated="20080808"/>
-<!-- Version 1 inital release -->
-<!-- Version 1.1 added default values for inputs 9-16 and outputs 9-16-->
-<!-- Version 1.2 corrected output 16 effect-->
-<!-- Version 1.3 removed dynamic flash selection-->
-<!-- Version 1.4 reversed "t" and "c" in routes-->
-<!-- Version 1.5 corrected output 8 reciprocal-->
-<!-- Version 1.6 added input lockout and CV10 option 5-->
-<!-- Version 1.7 corrected "Rte Num S8" CV (was 64 should be 63) -->
+  <!-- Version 1 inital release -->
+  <!-- Version 1.1 added default values for inputs 9-16 and outputs 9-16-->
+  <!-- Version 1.2 corrected output 16 effect-->
+  <!-- Version 1.3 removed dynamic flash selection-->
+  <!-- Version 1.4 reversed "t" and "c" in routes-->
+  <!-- Version 1.5 corrected output 8 reciprocal-->
+  <!-- Version 1.6 added input lockout and CV10 option 5-->
+  <!-- Version 1.7 corrected "Rte Num S8" CV (was 64 should be 63) -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SRC16" lowVersionID="1" comment="SRC16 is a stationary decoder with serial bus"/>
@@ -33,7 +33,7 @@
     <variables>
       <variable label="Ops Mode Address" CV="1" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
         <shortAddressVal/>
-<!-- <splitVal highCV="2" upperMask="XXXXXXXX"/> -->
+        <!-- <splitVal highCV="2" upperMask="XXXXXXXX"/> -->
         <label>Ops Mode Address</label>
       </variable>
       <variable label="Switch Address" CV="5" mask="VVVVVVVV" default="1" tooltip="Range 1-2040">
@@ -187,7 +187,7 @@
         <decVal min="0" max="127"/>
         <label>Route send delay</label>
       </variable>
-<!-- Begin Power on Output State Table definition -->
+      <!-- Begin Power on Output State Table definition -->
       <variable label="" item="OS1" CV="12" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="n" value="0">
@@ -300,12 +300,12 @@
         </enumVal>
         <label/>
       </variable>
-<!-- Input Lockout variable definition -->
+      <!-- Input Lockout variable definition -->
       <variable label="Address" CV="14" mask="VVVVVVVV" item="Lockout">
         <splitVal highCV="15" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
-<!-- Begin inputs 1-8 variable definition -->
+      <!-- Begin inputs 1-8 variable definition -->
       <variable label="Address" CV="16" mask="VVVVVVVV" item="PA1" default="1">
         <splitVal highCV="17" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
@@ -794,7 +794,7 @@
         <decVal min="0" max="8"/>
         <label>Route Number</label>
       </variable>
-<!-- Begin inputs 9-16 variable definition -->
+      <!-- Begin inputs 9-16 variable definition -->
       <variable label="Address" CV="40" mask="VVVVVVVV" item="SA1" default="5">
         <splitVal highCV="41" max="7" upperMask="XXXXVVVV"/>
         <label>Address</label>
@@ -1283,7 +1283,7 @@
         <decVal min="0" max="8"/>
         <label>Route Number</label>
       </variable>
-<!-- Begin Output variable definition -->
+      <!-- Begin Output variable definition -->
       <variable label="Output Address" CV="64" mask="VVVVVVVV" item="Address 1A" default="1">
         <splitVal highCV="65" upperMask="XXXXVVVV"/>
         <label>Output Address</label>
@@ -2820,7 +2820,7 @@
         </enumVal>
         <label>Effect Duration</label>
       </variable>
-<!-- Begin route variable definition -->
+      <!-- Begin route variable definition -->
       <variable label="Top Address" CV="112" mask="VVVVVVVV" item="Rt Top1">
         <splitVal highCV="113" upperMask="XXXXVVVV"/>
         <label>Top Address</label>
@@ -3029,7 +3029,7 @@
         </enumVal>
         <label>Sensor Route Execution</label>
       </variable>
-<!-- Route 1 variable definition -->
+      <!-- Route 1 variable definition -->
       <variable label="Cell 1 Address" CV="128" mask="VVVVVVVV" item="Rt Cell 11">
         <splitVal highCV="129" upperMask="XXXXVVVV"/>
         <label>Cell 1 Address</label>

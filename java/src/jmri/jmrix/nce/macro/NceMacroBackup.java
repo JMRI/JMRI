@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce.macro;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import java.io.*;
@@ -12,6 +14,7 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
+import jmri.util.FileUtil;
 
 
 /**
@@ -88,7 +91,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 	public void run() {
 
 		// get file to write to
-		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+		JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
 		fc.addChoosableFileFilter(new textFilter());
 		
 		File fs = new File ("NCE macro backup.txt");
@@ -301,6 +304,6 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(NceMacroBackup.class.getName());
 }

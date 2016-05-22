@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 
 /**
@@ -57,6 +59,7 @@ public class NullAudioSource extends AbstractAudioSource {
         _initialised = init();
     }
 
+    @Override
     boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // Don't actually need to do anything specific here
         if (log.isDebugEnabled()) log.debug("Bind NullAudioSource (" + this.getSystemName() +
@@ -73,10 +76,12 @@ public class NullAudioSource extends AbstractAudioSource {
         return true;
     }
 
+    @Override
     protected void changePosition(Vector3f pos) {
         // Do nothing
     }
 
+    @Override
     protected void doPlay() {
         if (log.isDebugEnabled()) log.debug("Play NullAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -85,6 +90,7 @@ public class NullAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doStop() {
         if (log.isDebugEnabled()) log.debug("Stop NullAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -93,6 +99,7 @@ public class NullAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doPause() {
         if (log.isDebugEnabled()) log.debug("Pause NullAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -101,6 +108,7 @@ public class NullAudioSource extends AbstractAudioSource {
         this.setState(STATE_STOPPED);
     }
 
+    @Override
     protected void doResume() {
         if (log.isDebugEnabled()) log.debug("Resume NullAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -109,6 +117,7 @@ public class NullAudioSource extends AbstractAudioSource {
         this.setState(STATE_PLAYING);
     }
 
+    @Override
     protected void doRewind() {
         if (log.isDebugEnabled()) log.debug("Rewind NullAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -117,6 +126,7 @@ public class NullAudioSource extends AbstractAudioSource {
         this.setState(STATE_STOPPED);
     }
 
+    @Override
     protected void doFadeIn() {
         if (log.isDebugEnabled()) log.debug("Fade-in JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -124,6 +134,7 @@ public class NullAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doFadeOut() {
         if (log.isDebugEnabled()) log.debug("Fade-out JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -131,16 +142,18 @@ public class NullAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void cleanUp() {
         if (log.isDebugEnabled()) log.debug("Cleanup NullAudioSource (" + this.getSystemName() + ")");
         this.dispose();
     }
 
+    @Override
     protected void calculateGain() {
         // do nothing
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NullAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NullAudioSource.class.getName());
 
 }
 

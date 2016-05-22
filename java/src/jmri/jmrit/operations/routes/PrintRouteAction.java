@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.routes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,9 +13,9 @@ import java.text.MessageFormat;
 import javax.swing.*;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 
 
 /**
@@ -29,9 +31,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
  */
 public class PrintRouteAction  extends AbstractAction {
 	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
-	String newLine = "\n";
-	private static final int MAX_NAME_LENGTH = 20;
+	static final String NEW_LINE = "\n"; // NOI18N
+	static final String TAB = "\t"; // NOI18N
+	private static final int MAX_NAME_LENGTH = Control.max_len_string_location_name - 5;
 
     public PrintRouteAction(String actionName, boolean preview, Route route) {
         super(actionName);
@@ -57,7 +59,7 @@ public class PrintRouteAction  extends AbstractAction {
     	// obtain a HardcopyWriter to do this
     	HardcopyWriter writer = null;
     	try {
-    		writer = new HardcopyWriter(mFrame, MessageFormat.format(rb.getString("TitleRoute"), new Object[] {route.getName()}), 10, .5, .5, .5, .5, isPreview);
+    		writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getMessage("TitleRoute"), new Object[] {route.getName()}), 10, .5, .5, .5, .5, isPreview);
     	} catch (HardcopyWriter.PrintCanceledException ex) {
     		log.debug("Print cancelled");
     		return;
@@ -69,18 +71,18 @@ public class PrintRouteAction  extends AbstractAction {
     	
     protected void printRoute(HardcopyWriter writer, Route route) {
     	try {
-    		writer.write(route.getComment()+newLine);
-        	String s = rb.getString("Location") 
-        	+ "\t    " + rb.getString("Direction") 
-        	+ " " + rb.getString("MaxMoves") 
-        	+ " " + rb.getString("Pickups")
-        	+ " " + rb.getString("Drops")
-        	+ " " + rb.getString("Wait")
-        	+ "\t" + rb.getString("Length")     	
-        	+ "\t" + rb.getString("Grade")
-        	+ "\t" + rb.getString("X")
-        	+ "    " + rb.getString("Y")
-        	+ newLine;
+    		writer.write(route.getComment()+NEW_LINE);
+        	String s = Bundle.getMessage("Location") 
+        	+ TAB +"    " + Bundle.getMessage("Direction") 
+        	+ " " + Bundle.getMessage("MaxMoves") 
+        	+ " " + Bundle.getMessage("Pickups")
+        	+ " " + Bundle.getMessage("Drops")
+        	+ " " + Bundle.getMessage("Wait")
+        	+ TAB + Bundle.getMessage("Length")     	
+        	+ TAB + Bundle.getMessage("Grade")
+        	+ TAB + Bundle.getMessage("X")
+        	+ "    " + Bundle.getMessage("Y")
+        	+ NEW_LINE;
         	writer.write(s);
     		List<String> locations = route.getLocationsBySequenceList();
     		for (int i=0; i<locations.size(); i++){
@@ -95,31 +97,31 @@ public class PrintRouteAction  extends AbstractAction {
     			else if (rl.getTrainIconX() < 1000)
     				pad = "  ";
     			s = name 
-    			+ "\t" + rl.getTrainDirectionString() 
-    			+ "\t" + rl.getMaxCarMoves()
-    			+ "\t" + (rl.canPickup()?rb.getString("yes"):rb.getString("no"))
-    			+ "\t" + (rl.canDrop()?rb.getString("yes"):rb.getString("no"))
-    			+ "\t" + rl.getWait()
-    			+ "\t" + rl.getMaxTrainLength()
-    			+ "\t" + rl.getGrade()
-    			+ "\t" + rl.getTrainIconX()
+    			+ TAB + rl.getTrainDirectionString() 
+    			+ TAB + rl.getMaxCarMoves()
+    			+ TAB + (rl.canPickup()?Bundle.getMessage("yes"):Bundle.getMessage("no"))
+    			+ TAB + (rl.canDrop()?Bundle.getMessage("yes"):Bundle.getMessage("no"))
+    			+ TAB + rl.getWait()
+    			+ TAB + rl.getMaxTrainLength()
+    			+ TAB + rl.getGrade()
+    			+ TAB + rl.getTrainIconX()
     			+ pad + rl.getTrainIconY()
-    			+ newLine;
+    			+ NEW_LINE;
     			writer.write(s);		
     		}
-    		s = newLine + rb.getString("Location") 
-        	+ "\t" + rb.getString("DepartTime") 
-        	+ "\t" + rb.getString("Comment")
-        	+ newLine;
+    		s = NEW_LINE + Bundle.getMessage("Location") 
+        	+ TAB + Bundle.getMessage("DepartTime") 
+        	+ TAB + Bundle.getMessage("Comment")
+        	+ NEW_LINE;
     		writer.write(s);
     		for (int i=0; i<locations.size(); i++){
     			RouteLocation rl = route.getLocationById(locations.get(i)); 
     			String name = rl.getName();
     			name = truncate(name);
     			s = name 
-    			+ "\t" + rl.getDepartureTime()
-    			+ "\t" + rl.getComment()
-    			+ newLine;
+    			+ TAB + rl.getDepartureTime()
+    			+ TAB + rl.getComment()
+    			+ NEW_LINE;
     			writer.write(s);
     		}
     	} catch (IOException we) {
@@ -139,5 +141,5 @@ public class PrintRouteAction  extends AbstractAction {
 		return buf.toString();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintRouteAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(PrintRouteAction.class.getName());
 }

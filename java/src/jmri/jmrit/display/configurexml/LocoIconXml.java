@@ -1,5 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
@@ -113,5 +115,5 @@ public class LocoIconXml extends PositionableLabelXml {
         loadTextInfo(l, element);
      }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoIconXml.class.getName());
 }

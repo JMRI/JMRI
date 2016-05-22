@@ -42,6 +42,9 @@ CLASSNAME="@CLASS@"
 # set DEBUG to anything to see debugging output
 # DEBUG=yes
 
+# command execute Java, but default assume command line set up 
+JAVACMD="java"
+
 if [ -z "$OS" ]
 then
     # start finding the architecture specific library directories
@@ -62,6 +65,10 @@ fi
 if [ "$OS" = "macosx" ]; then
     # on Mac OS X, we default to logging, since the Console app make it less visible unless you look for it
     DEBUG=yes
+    # check for Oracle method of directly locating java binaries
+    if [ -x /usr/libexec/java_home ]; then
+        JAVACMD="/usr/libexec/java_home -exec java"
+    fi
 fi
 
 
@@ -164,6 +171,8 @@ fi
 
 [ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
+[ -n "${DEBUG}" ] && echo "Java CMD: '${JAVACMD}'"
+
 # configuration file name is 1st argument.
 # If not provided, build config file name dynamically
 if [ "$OS" = "macosx" ]; then
@@ -248,7 +257,7 @@ EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ]
 do
 
-  java "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+  $JAVACMD "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
   EXIT_STATUS=$?
   [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"

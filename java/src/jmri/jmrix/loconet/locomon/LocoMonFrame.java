@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.locomon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.*;
 
 /**
@@ -52,5 +54,5 @@ public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNet
 
     jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoMonFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoMonFrame.class.getName());
 }

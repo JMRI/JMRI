@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRReply;
 import jmri.JmriException;
@@ -74,8 +76,9 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     NceAIU[] aiuArray = new NceAIU[MAXAIU+1];  // element 0 isn't used
     int [] activeAIUs = new int[MAXAIU];		// keep track of those worth polling
     int activeAIUMax = 0;							// last+1 element used of activeAIUs
-    private static int MINAIU =  1;
-    private static int MAXAIU = 63;
+    private static final int MINAIU =  1;
+    private static final int MAXAIU = 63;
+    private static final int MAXPIN = 14;				// only pins 1 - 14 used on NCE AIU
 
     Thread pollThread;
     boolean stopPolling = false;
@@ -149,17 +152,40 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     		}
     	}
     }
+    
+    public NceMessage makeAIUPoll(int aiuNo) {
+    	// use old 4 byte read command if not USB
+    	if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE)
+    		return makeAIUPoll4ByteReply(aiuNo);
+    	else
+    		return makeAIUPoll2ByteReply(aiuNo);
+    }
 
     /**
      * construct a binary-formatted AIU poll message
      * @param aiuNo	number of AIU to poll
      * @return	message to be queued
      */
-    public NceMessage makeAIUPoll(int aiuNo) {
+    private NceMessage makeAIUPoll4ByteReply(int aiuNo) {
         NceMessage m = new NceMessage(2);
         m.setBinary(true);
         m.setReplyLen(4);
         m.setElement(0, NceBinaryCommand.READ_AUI4_CMD);
+        m.setElement(1, aiuNo);
+        m.setTimeout(pollTimeout);
+        return m;
+    }
+    
+    /**
+     * construct a binary-formatted AIU poll message
+     * @param aiuNo	number of AIU to poll
+     * @return	message to be queued
+     */
+    private NceMessage makeAIUPoll2ByteReply(int aiuNo) {
+        NceMessage m = new NceMessage(2);
+        m.setBinary(true);
+        m.setReplyLen(2);
+        m.setElement(0, NceBinaryCommand.READ_AUI2_CMD);
         m.setElement(1, aiuNo);
         m.setTimeout(pollTimeout);
         return m;
@@ -298,6 +324,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         if(curAddress.contains(":")){
             //Sensor address is presented in the format AIU Cab Address:Pin Number On AIU
             //Should we be validating the values of aiucab address and pin number?
+        	// Yes we should, added check for valid AIU and pin ranges DBoudreau 2/13/2013
             int seperator = curAddress.indexOf(":");
             try {
                 aiucab = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
@@ -316,6 +343,18 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 throw new JmriException("Hardware Address passed should be a number");
             }
+            pin = iName%16 + 1;
+            aiucab = iName/16 + 1;
+        }
+        // only pins 1 through 14 are valid
+        if (pin == 0 || pin > MAXPIN) {
+            log.error("NCE sensor "+ curAddress +" pin number " + pin + " is out of range only pin numbers 1 - 14 are valid");
+            throw new JmriException("Sensor pin number is out of range");
+        }
+        if (aiucab == 0 || aiucab > MAXAIU) {
+            log.error("NCE sensor "+ curAddress +" AIU number " + aiucab + " is out of range only AIU 1 - 63 are valid");
+            throw new JmriException("AIU number is out of range");
+
         }
         return prefix+typeLetter()+iName;
     
@@ -333,28 +372,31 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                    showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if(s!=null){
-            for(int x = 1; x<10; x++){
-                iName=iName+1;
-                s = getBySystemName(prefix+typeLetter()+iName);
-                if(s==null){
-                    return Integer.toString(iName);
-                }
-            }
-            return null;
-        } else {
-            return Integer.toString(iName);
-        }
+		Sensor s = getBySystemName(tmpSName);
+		if (s != null) {
+			for (int x = 1; x < 10; x++) {
+				iName = iName + 1;
+				pin = pin + 1;
+				if (pin > MAXPIN)
+					return null;
+				s = getBySystemName(prefix + typeLetter() + iName);
+				if (s == null) {
+					return Integer.toString(iName);
+				}
+			}
+			return null;
+		} else {
+			return Integer.toString(iName);
+		}
         
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceSensorManager.class.getName());
 }
 
 /* @(#)NceSensorManager.java */

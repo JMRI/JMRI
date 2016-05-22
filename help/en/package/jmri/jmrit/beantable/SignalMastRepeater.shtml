@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SignalMastRepeater.shtml 19331 2011-12-09 11:32:11Z kevin-dickerson $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Signal Masts Repeater
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Kevin Dickerson" name=Author>
+    <META name="keywords" content="JMRI help Signal Mast Repeater">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Signal Mast Repeater</H1>
+<p>
+The Signal Mast repeater tool allows you to configure one signal mast to follow the state of another, or for both SignalMasts to update each others state.
+<br>
+For this to work each SignalMast must be of the same Signal System and Mast Type.<br>
+When a Master mast is selected from the list at the bottom of the screen the Slave list will be populated with the corresponding SignalMasts of the same type. 
+If there are no valid Masts then the option to select the slave will remain disabled.
+<p>
+In the main table it is possible to select which direction the updates will take place, either Master to Slave, Slave To Master or Bothway.  You can also disable/enable the repeater along with deleting it from this screen.
+<p>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

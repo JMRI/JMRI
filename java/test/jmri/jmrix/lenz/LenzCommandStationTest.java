@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -92,6 +93,6 @@ public class LenzCommandStationTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LenzCommandStationTest.class.getName());
+    static Logger log = Logger.getLogger(LenzCommandStationTest.class.getName());
 
 }

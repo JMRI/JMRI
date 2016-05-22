@@ -52,7 +52,11 @@ public class CombinedLocoSelListPaneTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() throws Exception { 
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

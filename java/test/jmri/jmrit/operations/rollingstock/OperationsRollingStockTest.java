@@ -36,11 +36,11 @@ public class OperationsRollingStockTest extends TestCase {
 	public void testCreate() {
 		RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
                 
-                Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoad());
+                Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
 		Assert.assertEquals("Car Number", "TESTNUMBER1", rs1.getNumber());
 		Assert.assertEquals("Car ID", "TESTROAD"+"TESTNUMBER1", rs1.getId());
                 
-		rs1.setType("TESTTYPE");
+		rs1.setTypeName("TESTTYPE");
 		rs1.setLength("TESTLENGTH");
 		rs1.setColor("TESTCOLOR");
 		rs1.setWeight("TESTWEIGHT");
@@ -51,7 +51,7 @@ public class OperationsRollingStockTest extends TestCase {
 		rs1.setRfid("TESTRFID");
 		rs1.setMoves(5);
 
-		Assert.assertEquals("RollingStock Type", "TESTTYPE", rs1.getType());
+		Assert.assertEquals("RollingStock Type", "TESTTYPE", rs1.getTypeName());
                 
                 /* Also need to test location length */
 		Assert.assertEquals("RollingStock Length", "TESTLENGTH", rs1.getLength());
@@ -71,7 +71,7 @@ public class OperationsRollingStockTest extends TestCase {
 	// test RollingStock weight and weighttons
 	public void testRollingStockWeight() {
 		RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
-		Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoad());
+		Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
 		Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
 
                 Setup.setScale(Setup.N_SCALE);
@@ -83,7 +83,7 @@ public class OperationsRollingStockTest extends TestCase {
 	// test RollingStock public constants
 	public void testRollingStockConstants() {
 		RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
-		Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoad());
+		Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
 		Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
                 
 		Assert.assertEquals("RollingStock Constant LOCATION_CHANGED_PROPERTY", "rolling stock location", RollingStock.LOCATION_CHANGED_PROPERTY);
@@ -98,13 +98,13 @@ public class OperationsRollingStockTest extends TestCase {
 	public void testRollingStockLocation() {
 		RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
 		/* Rolling Stock needs a valid type */
-		rs1.setType("TESTTYPE");
+		rs1.setTypeName("TESTTYPE");
 		/* Type needs to be in CarTypes or EngineTypes */
 		CarTypes.instance().addName("TESTTYPE");
 
-		Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoad());
+		Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
 		Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
-		Assert.assertEquals("RollingStock Type", "TESTTYPE", rs1.getType());
+		Assert.assertEquals("RollingStock Type", "TESTTYPE", rs1.getTypeName());
 
 		/* Rolling Stock not placed on layout yet */
 		Assert.assertEquals("RollingStock null Location Name", "", rs1.getLocationName());
@@ -117,7 +117,7 @@ public class OperationsRollingStockTest extends TestCase {
 
 		/* Place Rolling Stock on layout */
 		Location testlocation1 = new Location("Loc1", "Test Town");
-		Track testtrack1 = testlocation1.addTrack("Testees Office", Track.SIDING);
+		Track testtrack1 = testlocation1.addTrack("Testees Office", Track.SPUR);
 
 		testtrack1.deleteTypeName("TESTTYPE");
 		testresult = rs1.setLocation(testlocation1, testtrack1);

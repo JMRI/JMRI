@@ -1,5 +1,7 @@
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import javax.swing.*;
 import java.awt.*;
@@ -235,7 +237,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
                 bottomBox.add(comp, bottomBoxIndex);
                 ++bottomBoxIndex;
             } catch (java.lang.IllegalArgumentException ex){
-                log.error (ex);
+                log.error (ex.getLocalizedMessage(), ex);
             }
         }
         
@@ -250,6 +252,6 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTableTabAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractTableTabAction.class.getName());
 
 }

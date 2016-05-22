@@ -28,7 +28,7 @@
 <p><a href="Main_Tool.shtml"> Previous | </a><a href="Main_Panels.shtml">Next </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
-<p><strong><a name="roster"></a><a href="DP3Roster">Roster</a></strong></p>
+<p><strong><a name="roster"></a><a href="Main_Roster_DP3.shtml">Roster</a></strong></p>
 <blockquote>
   <p>Opens <strong>DecoderPro3</strong> Roster Window. </p>
 </blockquote>
@@ -87,16 +87,7 @@ will only contain locomotives that are in that specific list.</p>
 </ul>
 <p><strong>Export Complete Roster...</strong></p>
 <p>Opens the Save dialog box to allow you to select directory and name the file.</p>
-<p><a name="OpenDP3Roster"></a><strong>DecoderPro3&reg; Roster Window</strong></p>
-<p>Opens in DecoderPro3&reg; Window. (See DecoderPro3&reg; Manual.)</p>
-<p><img src="images/Main_DP3Roster.png" width="899" height="527" alt="DP3 Roster"></p>
-<blockquote>
-  <div>
-    <div align="right"><a href="#Top">Top</a></div>
-  </div>
-  <p>&nbsp;</p>
-</blockquote>
-<h4><a name="CreateRoster"></a>New Roster Setup Pane</h4>
+<p><a name="CreateRoster"></a>New Roster Setup Pane</p>
 <p align="center"><img src="images/Main_RosterMenu01.png" alt="Create Roster" width="391" height="483" border="4"></p>
 <p>Select a decoder that matches the one installed in your locomotive. The Open Programmer button will now become activated and you&rsquo;ll be  able to move on with the Programmer selected from the drop-down list, then &nbsp;click on the <strong>Open Programmer</strong> button, the selected Programmer window will open. All programmers,  Basic and Comprehensive, open to the <a href="Comp_Setup_Roster.shtml">Roster Entry pane</a>.</p>
 <div>

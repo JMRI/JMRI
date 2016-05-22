@@ -1,12 +1,13 @@
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.jmrit.Sound;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.BitSet;
 import java.util.Date;
-import java.util.ResourceBundle;
 import java.beans.PropertyChangeEvent;
 
 import java.awt.event.ActionListener;
@@ -50,8 +51,7 @@ public class DefaultConditional extends AbstractNamedBean
 
     public static final boolean PARKS_DEBUG = false;
 
-	static final ResourceBundle rbx = ResourceBundle
-			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+	static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     public DefaultConditional(String systemName, String userName) {
         super(systemName, userName);
@@ -1170,34 +1170,37 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
 						}
 						break;
-                    case ACTION_ALLOCATE_BLOCK_PATH:
+					case Conditional.ACTION_SET_BLOCK_VALUE:
                         OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
 						else {
-                            String err = b.allocate(getActionString(action));
-							if (err!=null) {
-                                errorList.add("allocate error - "+err);
-                            }
+                            b.setValue(getActionString(action));
                             actionCount++;
 						}
 						break;
-                    case ACTION_SET_BLOCK_PATH_TURNOUTS:
+					case Conditional.ACTION_SET_BLOCK_ERROR:
+                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+						if (b == null) {
+							errorList.add("invalid block name in action - "+action.getDeviceName());
+						}
+						else {
+                            b.setError(true);
+                            actionCount++;
+						}
+						break;
+                    case Conditional.ACTION_CLEAR_BLOCK_ERROR:
                     	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
 						else {
-                            String err = b.setPath(getActionString(action), null);
-                            if (err!=null) {
-                                log.info("setPath error - "+err);
-                            }
-                            actionCount++;
+                            b.setError(false);
 						}
 						break;
                     case ACTION_DEALLOCATE_BLOCK:
-                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                    	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1207,7 +1210,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case ACTION_SET_BLOCK_OUT_OF_SERVICE:
-                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                    	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1519,7 +1522,7 @@ public class DefaultConditional extends AbstractNamedBean
 		}
 	}
 	
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultConditional.class.getName());
+    static final Logger log = LoggerFactory.getLogger(DefaultConditional.class.getName());
 }
 
 /* @(#)DefaultConditional.java */

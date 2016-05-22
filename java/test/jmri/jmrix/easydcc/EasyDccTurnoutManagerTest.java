@@ -8,6 +8,7 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -62,6 +63,6 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccTurnoutManagerTest.class.getName());
+	 static Logger log = Logger.getLogger(EasyDccTurnoutManagerTest.class.getName());
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2007 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: MRC_soundbrilliance1630.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,15 +18,15 @@
   <version author="Bob Jacobsen" version="3" lastUpdated="20071028"/>
   <version author="Walter Thompson" version="2" lastUpdated="20060916"/>
   <version author="Bob Jacobsen" version="1" lastUpdated="20060326"/>
-<!-- made from the MRC_1627 file by Rick Beaber -->
-<!--Updated by Walter Thompson 20060916, Many changes lables and CV  to match Geneis BigBoy -->
-<!-- version 3 has updated connector, new 1656 model -->
-<!-- version 4 1656 now in separate file -->
-<!-- version 5 Moved consist functions to Consist Pane, added some tooltips -->
+  <!-- made from the MRC_1627 file by Rick Beaber -->
+  <!--Updated by Walter Thompson 20060916, Many changes lables and CV  to match Geneis BigBoy -->
+  <!-- version 3 has updated connector, new 1656 model -->
+  <!-- version 4 1656 now in separate file -->
+  <!-- version 5 Moved consist functions to Consist Pane, added some tooltips -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Steam Sound 1630" numOuts="2" numFns="12" connector="9pin" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note only F0 to F12 are NMRA compatible -->
+        <!-- note only F0 to F12 are NMRA compatible -->
         <size length="48" width="17" height="7.5" units="mm"/>
       </model>
     </family>

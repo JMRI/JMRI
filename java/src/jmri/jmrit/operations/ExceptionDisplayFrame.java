@@ -75,7 +75,7 @@ public class ExceptionDisplayFrame extends JDialog {
 	public ExceptionDisplayFrame(ExceptionContext context) {
 		if (context == null)
 			throw new IllegalArgumentException(
-					"ExceptionContext argument passed to ErrorDisplayFrame constructor cannot be null.");
+					"ExceptionContext argument passed to ErrorDisplayFrame constructor cannot be null.");	// NOI18N
 
 		this.context = context;
 
@@ -88,8 +88,8 @@ public class ExceptionDisplayFrame extends JDialog {
 	 * @param ex
 	 */
 	public ExceptionDisplayFrame(Exception ex) {
-		this.context = new ExceptionContext(ex, "Operation unavailable",
-				"Hint unavailable");
+		this.context = new ExceptionContext(ex, "Operation unavailable",	// NOI18N
+				"Hint unavailable");	// NOI18N
 
 		InitComponents();
 	}
@@ -104,7 +104,7 @@ public class ExceptionDisplayFrame extends JDialog {
 		setContentPane(contentPane);
 
 		lblNewLabel_1 = new JLabel(
-				"This is a prototype dialog for displaying details about exceptions that are thrown during program execution. It still needs a lot of work!");
+				"This is a prototype dialog for displaying details about exceptions that are thrown during program execution. It still needs a lot of work!");	// NOI18N
 		lblNewLabel_1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		contentPane.add(lblNewLabel_1);
@@ -112,13 +112,13 @@ public class ExceptionDisplayFrame extends JDialog {
 		summaryPanel = new JPanel();
 		contentPane.add(summaryPanel);
 
-		lblNewLabel_3 = new JLabel("Summary:");
+		lblNewLabel_3 = new JLabel("Summary:");	// NOI18N
 		summaryPanel.add(lblNewLabel_3);
 
 		summaryTextArea2 = new JTextArea();
 		summaryPanel.add(summaryTextArea2);
 
-		showDetailsButton = new JButton("Show details");
+		showDetailsButton = new JButton("Show details");	// NOI18N
 		showDetailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		showDetailsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -135,9 +135,9 @@ public class ExceptionDisplayFrame extends JDialog {
 
 		stackTraceTextArea = new JTextArea();
 		stackTraceTextArea
-				.setToolTipText("This is the trace of all of the methods that were active when the exception occurred.");
+				.setToolTipText("This is the trace of all of the methods that were active when the exception occurred.");	// NOI18N
 
-		stackTraceLabel = new JLabel("Stack trace:");
+		stackTraceLabel = new JLabel("Stack trace:");	// NOI18N
 		stackTraceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		stackTraceLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		detailsPanel.add(stackTraceLabel);
@@ -146,7 +146,7 @@ public class ExceptionDisplayFrame extends JDialog {
 		panel = new JPanel();
 		detailsPanel.add(panel);
 
-		lblNewLabel = new JLabel("Operation:");
+		lblNewLabel = new JLabel("Operation:");	// NOI18N
 		panel.add(lblNewLabel);
 
 		operationTextArea = new JTextArea();
@@ -155,7 +155,7 @@ public class ExceptionDisplayFrame extends JDialog {
 		panel_4 = new JPanel();
 		detailsPanel.add(panel_4);
 
-		lblNewLabel_4 = new JLabel("Messsage:");
+		lblNewLabel_4 = new JLabel("Messsage:");	// NOI18N
 		panel_4.add(lblNewLabel_4);
 
 		messageTextArea = new JTextArea();
@@ -164,7 +164,7 @@ public class ExceptionDisplayFrame extends JDialog {
 		panel_2 = new JPanel();
 		detailsPanel.add(panel_2);
 
-		lblNewLabel_2 = new JLabel("Hint:");
+		lblNewLabel_2 = new JLabel("Hint:");	// NOI18N
 		panel_2.add(lblNewLabel_2);
 
 		hintTextArea = new JTextArea();
@@ -173,7 +173,7 @@ public class ExceptionDisplayFrame extends JDialog {
 		panel_5 = new JPanel();
 		detailsPanel.add(panel_5);
 
-		lblNewLabel_5 = new JLabel("Exception Type:");
+		lblNewLabel_5 = new JLabel("Exception Type:");	// NOI18N
 		panel_5.add(lblNewLabel_5);
 
 		typeTextArea = new JTextArea();
@@ -182,7 +182,7 @@ public class ExceptionDisplayFrame extends JDialog {
 		panel_6 = new JPanel();
 		detailsPanel.add(panel_6);
 
-		lblNewLabel_6 = new JLabel("Exception toString():");
+		lblNewLabel_6 = new JLabel("Exception toString():");	// NOI18N
 		panel_6.add(lblNewLabel_6);
 
 		toStringTextArea = new JTextArea();
@@ -191,7 +191,7 @@ public class ExceptionDisplayFrame extends JDialog {
 		panel_7 = new JPanel();
 		detailsPanel.add(panel_7);
 
-		lblNewLabel_7 = new JLabel("Cause (Inner Ex):");
+		lblNewLabel_7 = new JLabel("Cause (Inner Ex):");	// NOI18N
 		panel_7.add(lblNewLabel_7);
 
 		causeTextArea = new JTextArea();
@@ -202,11 +202,11 @@ public class ExceptionDisplayFrame extends JDialog {
 		contentPane.add(buttonPanel);
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-		copyButton = new JButton("Copy to Clipboard");
+		copyButton = new JButton("Copy to Clipboard");	// NOI18N
 		copyButton.setEnabled(false);
 		buttonPanel.add(copyButton);
 
-		closeButton = new JButton("Close");
+		closeButton = new JButton("Close");	// NOI18N
 		closeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -231,7 +231,7 @@ public class ExceptionDisplayFrame extends JDialog {
 		if (cause != null) {
 			causeTextArea.setText(cause.toString());
 		} else {
-			causeTextArea.setText("null");
+			causeTextArea.setText("null");	// NOI18N
 		}
 
 		pack();

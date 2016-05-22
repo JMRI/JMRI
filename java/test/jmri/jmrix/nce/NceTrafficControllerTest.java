@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -248,6 +249,6 @@ public class NceTrafficControllerTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTrafficControllerTest.class.getName());
+	 static Logger log = Logger.getLogger(NceTrafficControllerTest.class.getName());
 
 }

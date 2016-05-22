@@ -14,13 +14,18 @@
 
 package jmri.jmrix.nce.ncemon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.nce.*;
 import jmri.jmrix.nce.swing.*;
+import javax.swing.JOptionPane;
 
 
 public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListener, NcePanelInterface{
 
-    public NceMonPanel() {
+	private static final long serialVersionUID = 6106790197336170348L;
+
+	public NceMonPanel() {
         super();
     }
     
@@ -42,7 +47,11 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
 
     public void dispose() {
         // disconnect from the NceTrafficController
-        memo.getNceTrafficController().removeNceListener(this);
+        try {
+            memo.getNceTrafficController().removeNceListener(this);
+        } catch (java.lang.NullPointerException e){
+            log.error("Error on dispose " + e.toString());
+        }
         // and unwind swing
         super.dispose();
     }
@@ -60,7 +69,12 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
     public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the NceTrafficController
-        memo.getNceTrafficController().addNceListener(this);
+        try {
+            memo.getNceTrafficController().addNceListener(this);
+        } catch (java.lang.NullPointerException e){
+            log.error("Unable to start the NCE Command monitor");
+            JOptionPane.showMessageDialog(null, "An Error has occured that prevents the NCE Command Monitor from being loaded.\nPlease check the System Console for more information", "No Connection", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     public synchronized void message(NceMessage m) {  // receive a message and log it
@@ -88,7 +102,10 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
-        public Default() {
+
+		private static final long serialVersionUID = -7644336249246783644L;
+
+		public Default() {
             super("Nce Command Monitor", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 NceMonPanel.class.getName(), 
@@ -96,7 +113,7 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         }
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMonPanel.class.getName());
+	static Logger log = LoggerFactory.getLogger(NceMonPanel.class.getName());
 
 }
 

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import jmri.progdebugger.ProgDebugger;
 
 import javax.swing.JLabel;
@@ -223,7 +224,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( LongAddrVariableValueTest.class.getName());
+    static Logger log = Logger.getLogger( LongAddrVariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

@@ -4,7 +4,6 @@ package jmri.util.swing.multipane;
 
 import junit.framework.*;
 
-import java.io.File;
 import javax.swing.*;
 
 import jmri.util.swing.*;
@@ -19,9 +18,9 @@ public class PackageTest extends TestCase {
 
     public void testShow() {
         new MultiPaneWindow("Test of empty Multi Pane Window", 
-                new File("xml/config/apps/panelpro/Gui3LeftTree.xml"), 
-    	        new File("xml/config/apps/panelpro/Gui3Menus.xml"), 
-    	        new File("xml/config/apps/panelpro/Gui3MainToolBar.xml")
+                "xml/config/apps/panelpro/Gui3LeftTree.xml", 
+    	        "xml/config/apps/panelpro/Gui3Menus.xml", 
+    	        "xml/config/apps/panelpro/Gui3MainToolBar.xml"
         ).setVisible(true);
         
     	JFrame f = jmri.util.JmriJFrame.getFrame("Test of empty Multi Pane Window");
@@ -31,11 +30,10 @@ public class PackageTest extends TestCase {
     }
     
     public void testAction() {
-        MultiPaneWindow m =         new MultiPaneWindow("Test of Multi Pane Window function", 
-                new File("xml/config/apps/panelpro/Gui3LeftTree.xml"), 
-    	        new File("xml/config/apps/panelpro/Gui3Menus.xml"), 
-    	        new File("xml/config/apps/panelpro/Gui3MainToolBar.xml")
-        );
+        MultiPaneWindow m = new MultiPaneWindow("Test of Multi Pane Window function",
+                "xml/config/apps/panelpro/Gui3LeftTree.xml",
+                "xml/config/apps/panelpro/Gui3Menus.xml",
+                "xml/config/apps/panelpro/Gui3MainToolBar.xml");
         {
             JButton b = new JButton(new ButtonTestAction(
                                       "Open new frame", new jmri.util.swing.sdi.JmriJFrameInterface()));

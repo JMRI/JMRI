@@ -5,8 +5,6 @@ package jmri.jmrit.operations.locations;
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
 
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 
@@ -18,13 +16,17 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class LocationsTableAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 
     public LocationsTableAction(String s) {
     	super(s);
     }
 
+    public LocationsTableAction() {
+    	this(Bundle.getMessage("MenuLocations"));	// NOI18N
+    }
+
     static LocationsTableFrame f = null;
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void actionPerformed(ActionEvent e) {
         // create a location table frame
     	if (f == null || !f.isVisible()){

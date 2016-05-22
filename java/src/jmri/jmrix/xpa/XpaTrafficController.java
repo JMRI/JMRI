@@ -2,6 +2,8 @@
 
 package jmri.jmrix.xpa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
@@ -306,7 +308,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
 	}
 
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaTrafficController.class.getName());
+	static Logger log = LoggerFactory.getLogger(XpaTrafficController.class.getName());
 }
 
 

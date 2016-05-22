@@ -169,7 +169,9 @@ Please don't edit them manually.
 JHelpDev is now included in the JMRI dist.  To use the tool:
 <OL>
 <li>Make sure you've run "update" from SVN before getting started.</li>
-<LI>Start the tool by clicking on the jhelpdev.jar file.</LI>
+<LI>Start the tool by clicking on the jhelpdev.jar file. (If that doesn't work, try
+running either JHelpDev.csh or JHelpDev.bat, depending on what kind of
+computer you have)</LI>
 
 <LI>Once the window appears, select "Open Project" under the "File" menu.</LI>
 

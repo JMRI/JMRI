@@ -2,6 +2,9 @@
 
 package jmri.jmrix.ecos;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Encodes a message to an Ecos command station.
  * <P>
@@ -198,7 +201,7 @@ public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosMessage.class.getName());
 }
 
 /* @(#)EcosMessage.java */

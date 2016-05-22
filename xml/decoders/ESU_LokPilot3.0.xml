@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!--$Id$ -->
+<!--$Id: ESU_LokPilot3.0.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,7 +16,7 @@
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20090218"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080131"/>
   <version author="Jos Wils, wilsjos@orcon.net.nz" version="2.0" lastUpdated="20111103"/>
-<!--
+  <!--
      This decoder configuration file is based on ESU_LokPilotDCC.xml
      V 4, dated 20050619, by Walter Thompson. Which also acknowledged
      "the contribution of many others" including 'jake'.
@@ -49,9 +49,9 @@
         <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire"/>
         <size length="13.5" width="9" height="3.0" units="mm"/>
         <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokPilot micro DCC 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
@@ -66,9 +66,9 @@
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
         <size length="23.5" width="15.5" height="5.5" units="mm"/>
         <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokPilot DCC 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
@@ -85,8 +85,8 @@
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
         <size length="23.5" width="15.5" height="5.5" units="mm"/>
         <protocols>
-            <protocol>mfx</protocol>
-            <protocol>motorola</protocol>
+          <protocol>mfx</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokPilot XL 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other">
@@ -100,8 +100,8 @@
         <output name="8" label="   AUX6    " maxcurrent="600 mA" connection="other"/>
         <size length="64" width="25" height="11.5" units="mm"/>
         <protocols>
-            <protocol>dcc</protocol>
-            <protocol>motorola</protocol>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokPilot Fx 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium">
@@ -113,8 +113,8 @@
         <output name="6" label="   AUX4    " maxcurrent="250 mA" connection="wire"/>
         <size length="17.5" width="15.5" height="5.5" units="mm"/>
         <protocols>
-            <protocol>dcc</protocol>
-            <protocol>motorola</protocol>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
     </family>
@@ -415,7 +415,7 @@
         </enumVal>
         <label>Consist Address Active For F10 in Reverse</label>
       </variable>
-      <variable label="Enable address broadcast on channel 1" CV="28" mask="XXXXXXXV" default="0"  item="Advanced Group 1 Option 6">
+      <variable label="Enable address broadcast on channel 1" CV="28" mask="XXXXXXXV" default="0" item="Advanced Group 1 Option 6">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -426,7 +426,7 @@
         </enumVal>
         <label>Enable address broadcast on channel 1</label>
       </variable>
-      <variable label="Allow data transfer on channel 2" CV="28" mask="XXXXXXVX" default="0"  item="Advanced Group 1 Option 7">
+      <variable label="Allow data transfer on channel 2" CV="28" mask="XXXXXXVX" default="0" item="Advanced Group 1 Option 7">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -437,7 +437,7 @@
         </enumVal>
         <label>Allow data transfer on channel 2</label>
       </variable>
-      <variable label="Allow command confirmation on channel 1" CV="28" mask="XXXXXVXX" default="0"  item="Advanced Group 1 Option 8">
+      <variable label="Allow command confirmation on channel 1" CV="28" mask="XXXXXVXX" default="0" item="Advanced Group 1 Option 8">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -481,7 +481,7 @@
         </enumVal>
         <label>Analogue mode</label>
       </variable>
-      <variable label="Enable RailCom" CV="29" mask="XXXXVXXX" default="0"  item="Advanced Group 1 Option 5">
+      <variable label="Enable RailCom" CV="29" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -5973,7 +5973,7 @@
         </enumVal>
         <label>F15 Back up B Dynamic Brake</label>
       </variable>
-       <variable label="Auto Uncoupling Speed" CV="246" default="0" item="Advanced Group 1 Option 2">
+      <variable label="Auto Uncoupling Speed" CV="246" default="0" item="Advanced Group 1 Option 2">
         <decVal/>
         <label>Auto Uncoupling Speed</label>
       </variable>
@@ -7608,7 +7608,7 @@
       </label>
     </column>
     <name>Function Map</name>
-  </pane> 
+  </pane>
   <pane name="ESU">
     <column>
       <display item="Marklin Delta Mode"/>

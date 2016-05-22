@@ -1,14 +1,16 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
+import java.awt.Color;
+import jmri.NamedBeanHandle;
+import jmri.Sensor;
 import jmri.configurexml.*;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.*;
-
-import java.awt.Color;
-
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.PositionableShape objects
@@ -72,6 +74,11 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         }
         element.setAttribute("lineWidth", ""+p.getLineWidth());
         element.setAttribute("alpha", ""+p.getAlpha());
+
+		NamedBeanHandle<Sensor> handle = p.getControlSensorHandle();
+		if (handle!=null) {
+	        element.setAttribute("controlSensor", handle.getName());
+		}
     }
     
     public Element storeColor(String name, Color c) {
@@ -109,12 +116,20 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
     }
 
 	public void loadCommonAttributes(PositionableShape ps, int defaultLevel, Element element) {
-        // find coordinates
+        try {
+        	Attribute attr = element.getAttribute("controlSensor");
+        	if (attr!=null) {
+                ps.setControlSensor(attr.getValue());
+        	}
+        } catch ( NullPointerException e) { 
+            log.error("incorrect information for controlSensor of PositionableShape");
+        }
+        
+       // find coordinates
         int x = getInt(element, "x");
         int y = getInt(element, "y");
         ps.setLocation(x,y);
         
-        // find display psevel
         ps.setDisplayLevel(getInt(element, "level"));
         
         Attribute a = element.getAttribute("hidden");
@@ -153,11 +168,16 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         ps.setFillColor(getColor(element, "fillColor"));
         
         ps.makeShape();
+        ps.rotate(getInt(element, "degrees"));
+        
         ps.updateSize();
    }
 	
 	public Color getColor(Element element, String name) {
 		Element elem = element.getChild(name);
+		if (elem==null) {
+			return null;
+		}
 		try {
 	        int red = elem.getAttribute("red").getIntValue();
 	        int blue = elem.getAttribute("blue").getIntValue();
@@ -171,14 +191,29 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
 	
 	public int getInt(Element element, String name) {
 		try {
-	        int num  = element.getAttribute(name).getIntValue();
-	        return num;
-			
+			Attribute attr = element.getAttribute(name);
+			if (attr!=null) {
+		        int num  = attr.getIntValue();
+		        return num;				
+			}			
 		} catch (Exception e) {
             log.error("failed to convert integer attribute for "+name+" - "+e);			
 		}
 		return 0;
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableShapeXml.class.getName());
+	public float getFloat(Element element, String name) {
+		try {
+			Attribute attr = element.getAttribute(name);
+			if (attr!=null) {
+		        float num  = attr.getFloatValue();
+		        return num;
+			}						
+		} catch (Exception e) {
+            log.error("failed to convert integer attribute for "+name+" - "+e);			
+		}
+		return 0;
+	}
+	
+    static Logger log = LoggerFactory.getLogger(PositionableShapeXml.class.getName());
 }

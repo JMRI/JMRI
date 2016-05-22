@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.NamedBeanHandle;
 import java.util.ArrayList;
@@ -420,7 +422,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
     ArrayList <SignalHeadItem> _signalHeadItem = new ArrayList<SignalHeadItem>();
-    private static class SignalHeadItem {
+    private static class SignalHeadItem implements java.io.Serializable{
         SignalHeadItem(NamedBeanHandle<SignalHead> sh){
             namedHead = sh;
             if (namedHead.getBean().getClass().getName().contains("SingleTurnoutSignalHead")){
@@ -494,7 +496,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
         
         ArrayList <SignalTurnout> _signalTurnoutList = new ArrayList<SignalTurnout>();
-        private static class SignalTurnout {
+        private static class SignalTurnout implements java.io.Serializable {
             NamedBeanHandle<Turnout> _turnout;
             int _state;
 
@@ -578,7 +580,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
         
         ArrayList <SignalSensor> _signalSensorList = new ArrayList<SignalSensor>();
-        private static class SignalSensor {
+        private static class SignalSensor implements java.io.Serializable {
             NamedBeanHandle<Sensor> _Sensor;
             int _state;
            
@@ -694,5 +696,5 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalGroup.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultSignalGroup.class.getName());
 }

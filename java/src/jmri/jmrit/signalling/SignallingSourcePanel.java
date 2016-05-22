@@ -1,6 +1,8 @@
 package jmri.jmrit.signalling;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -391,6 +393,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
     }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignallingSourcePanel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SignallingSourcePanel.class.getName());
 
 }

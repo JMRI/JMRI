@@ -76,7 +76,7 @@ settings.
 
 	<DT>Edit</DT>
 	<DD>Push this button to edit the Signal Mast Logic. For more information see <A
-		HREF="SignalMastLogicAddEdit.shtml">Adding/Editing Signal Mast Logic</A>.</DD>
+		HREF="../Signalling/AddEditSignallingLogic.shtml">Adding/Editing Signal Mast Logic</A>.</DD>
 </DL>
 
 <H3>Add SignalMast Logic</H3>

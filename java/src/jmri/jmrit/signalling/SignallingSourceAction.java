@@ -2,6 +2,8 @@
 
 package jmri.jmrit.signalling;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
@@ -23,7 +25,7 @@ public class SignallingSourceAction extends AbstractAction {
     }
     
     public SignallingSourceAction(String s, jmri.SignalMast source) {
-        super(s);
+        super(s + " : " + source.getDisplayName());
         this.source=source;
     }
     
@@ -48,7 +50,7 @@ public class SignallingSourceAction extends AbstractAction {
 			}
 		f.setVisible(true);	
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignallingSourceAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(SignallingSourceAction.class.getName());
 }
 
 

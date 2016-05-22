@@ -76,7 +76,7 @@ c'est à partir du menu "Édition"
 Sélectionnez l'aspect dont le programme va apparaitre. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix peuvent varier avec le type de votre ordinateur.
 "Motif", "Windows", "MacOS" et "MacOS Adaptive" apparence native sous Linux,
-Windows, MacOS "Classic" et MacOS X, respectivement.
+Windows, MacOS "Classic" et Mac OS X, respectivement.
 
 <li> Dans la boîte de sélection en bas, vous pouvez choisir le format programmateur par défaut
 . Vous pouvez le remplacer à chaque fois que vous ouvrez le programmeur, donc c'est ici juste par commodité.

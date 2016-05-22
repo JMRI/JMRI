@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz.swing.systeminfo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -199,6 +201,6 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemInfoFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SystemInfoFrame.class.getName());
 
 }

@@ -45,6 +45,8 @@ package jmri.jmrit.withrottle;
  *	@version $Revision$
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;
@@ -262,11 +264,11 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
 
                 } catch (NoSuchMethodException ea) {
-                    log.warn(ea);
+                    log.warn(ea.getLocalizedMessage(), ea);
                 } catch (IllegalAccessException eb) {
-                    log.warn(eb);
+                    log.warn(eb.getLocalizedMessage(), eb);
                 } catch (java.lang.reflect.InvocationTargetException ec) {
-                    log.warn(ec);
+                    log.warn(ec.getLocalizedMessage(), ec);
                 }
             }
         }
@@ -318,13 +320,13 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             }
 
         }catch (NoSuchMethodException ea){
-            log.warn(ea);
+            log.warn(ea.getLocalizedMessage(), ea);
             return;
         }catch (IllegalAccessException eb){
-            log.warn(eb);
+            log.warn(eb.getLocalizedMessage(), eb);
             return;
         }catch (java.lang.reflect.InvocationTargetException ec){
-            log.warn(ec);
+            log.warn(ec.getLocalizedMessage(), ec);
             return;
         }
         
@@ -656,11 +658,11 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 if(log.isDebugEnabled()) log.debug("Throttle: "+functionThrottle.getLocoAddress()+", Function: " + receivedFunction+", set state: "+(!state));
             
             }catch (NoSuchMethodException ea){
-                log.warn(ea);
+                log.warn(ea.getLocalizedMessage(), ea);
             }catch (IllegalAccessException eb){
-                log.warn(eb);
+                log.warn(eb.getLocalizedMessage(), eb);
             }catch (java.lang.reflect.InvocationTargetException ec){
-                log.warn(ec);
+                log.warn(ec.getLocalizedMessage(), ec);
             }
             
         }else {	//	Function Button up
@@ -686,11 +688,11 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 }
             
             }catch (NoSuchMethodException ea){
-                log.warn(ea);
+                log.warn(ea.getLocalizedMessage(), ea);
             }catch (IllegalAccessException eb){
-                log.warn(eb);
+                log.warn(eb.getLocalizedMessage(), eb);
             }catch (java.lang.reflect.InvocationTargetException ec){
-                log.warn(ec);
+                log.warn(ec.getLocalizedMessage(), ec);
             }
             
         }
@@ -715,11 +717,11 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             setF.invoke(throttle, data);
 
         } catch (NoSuchMethodException ea) {
-            log.warn(ea);
+            log.warn(ea.getLocalizedMessage(), ea);
         } catch (IllegalAccessException eb) {
-            log.warn(eb);
+            log.warn(eb.getLocalizedMessage(), eb);
         } catch (java.lang.reflect.InvocationTargetException ec) {
-            log.warn(ec);
+            log.warn(ec.getLocalizedMessage(), ec);
         }
 
 
@@ -747,11 +749,11 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             setF.invoke(throttle, data);
 
         } catch (NoSuchMethodException ea) {
-            log.warn(ea);
+            log.warn(ea.getLocalizedMessage(), ea);
         } catch (IllegalAccessException eb) {
-            log.warn(eb);
+            log.warn(eb.getLocalizedMessage(), eb);
         } catch (java.lang.reflect.InvocationTargetException ec) {
-            log.warn(ec);
+            log.warn(ec.getLocalizedMessage(), ec);
         }
     }
     
@@ -777,6 +779,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         
     }
 
-    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleController.class.getName());
+    private static Logger log = LoggerFactory.getLogger(ThrottleController.class.getName());
 
 }

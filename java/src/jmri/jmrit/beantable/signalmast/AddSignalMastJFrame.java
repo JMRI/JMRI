@@ -41,8 +41,11 @@ public class AddSignalMastJFrame extends JmriJFrame {
     AddSignalMastPanel sigMastPanel = null;
     
     public void refresh(){
-        if(sigMastPanel!=null)
+        if(sigMastPanel!=null){
             sigMastPanel.updateSelectedDriver();
+            sigMastPanel.refreshHeadComboBox();
+            
+        }
     }
     
 }

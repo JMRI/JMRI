@@ -2,6 +2,8 @@
 
 package apps;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 import java.util.Enumeration;
 //import java.util.ArrayList;
@@ -79,11 +81,13 @@ public abstract class AbstractActionModel{
         while (e.hasMoreElements()) {
             Class<?> classes;
             String key = e.nextElement();
-            try {
-                classes = Class.forName(key);
-                classList.put(classes, rb.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class "+key);
+            if (!key.equals("")) { // ignoring empty lines in file
+                try {
+                    classes = Class.forName(key);
+                    classList.put(classes, rb.getString(key));
+                } catch (ClassNotFoundException ex) {
+                    log.error("Did not find class ["+key+"]");
+                }
             }
         }
     }
@@ -126,7 +130,7 @@ public abstract class AbstractActionModel{
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractActionModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractActionModel.class.getName());
 
 }
 

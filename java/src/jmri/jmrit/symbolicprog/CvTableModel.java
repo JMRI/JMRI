@@ -2,6 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import java.beans.*;
 
@@ -22,8 +24,6 @@ import jmri.*;
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 	
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
-
 	private int _numRows = 0;                // must be zero until Vectors are initialized
     static final int MAXCVNUM = 1024;
     private Vector<CvValue> _cvDisplayVector = new Vector<CvValue>();  // vector of CvValue objects, in display order
@@ -85,12 +85,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
     public String getColumnName(int col) {
         switch (col) {
-        case NUMCOLUMN: return rbt.getString("ColumnNameNumber");
-        case VALCOLUMN: return rbt.getString("ColumnNameValue");
-        case STATECOLUMN: return rbt.getString("ColumnNameState");
-        case READCOLUMN: return rbt.getString("ColumnNameRead");
-        case WRITECOLUMN: return rbt.getString("ColumnNameWrite");
-        case COMPARECOLUMN: return rbt.getString("ColumnNameCompare");
+        case NUMCOLUMN: return Bundle.getMessage("ColumnNameNumber");
+        case VALCOLUMN: return Bundle.getMessage("ColumnNameValue");
+        case STATECOLUMN: return Bundle.getMessage("ColumnNameState");
+        case READCOLUMN: return Bundle.getMessage("ColumnNameRead");
+        case WRITECOLUMN: return Bundle.getMessage("ColumnNameWrite");
+        case COMPARECOLUMN: return Bundle.getMessage("ColumnNameCompare");
         default: return "unknown";
         }
     }
@@ -145,13 +145,13 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         case STATECOLUMN:
             int state = _cvDisplayVector.elementAt(row).getState();
             switch (state) {
-            case CvValue.UNKNOWN:  		return rbt.getString("CvStateUnknown");
-            case CvValue.READ:  		return rbt.getString("CvStateRead");
-            case CvValue.EDITED:  		return rbt.getString("CvStateEdited");
-            case CvValue.STORED:  		return rbt.getString("CvStateStored");
-            case CvValue.FROMFILE:  	return rbt.getString("CvStateFromFile");
-            case CvValue.SAME:  		return rbt.getString("CvStateSame");
-            case CvValue.DIFF:  		return rbt.getString("CvStateDiff")+ " " +
+            case CvValue.UNKNOWN:  		return Bundle.getMessage("CvStateUnknown");
+            case CvValue.READ:  		return Bundle.getMessage("CvStateRead");
+            case CvValue.EDITED:  		return Bundle.getMessage("CvStateEdited");
+            case CvValue.STORED:  		return Bundle.getMessage("CvStateStored");
+            case CvValue.FROMFILE:  	return Bundle.getMessage("CvStateFromFile");
+            case CvValue.SAME:  		return Bundle.getMessage("CvStateSame");
+            case CvValue.DIFF:  		return Bundle.getMessage("CvStateDiff")+ " " +
             							_cvDisplayVector.elementAt(row).getDecoderValue();
             default: return "inconsistent";
             }
@@ -207,11 +207,11 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             _cvDisplayVector.addElement(cv);
             // connect to this CV to ensure the table display updates
             cv.addPropertyChangeListener(this);
-            JButton bw = new JButton(rbt.getString("ButtonWrite"));
+            JButton bw = new JButton(Bundle.getMessage("ButtonWrite"));
             _writeButtons.addElement(bw);
-            JButton br = new JButton(rbt.getString("ButtonRead"));
+            JButton br = new JButton(Bundle.getMessage("ButtonRead"));
             _readButtons.addElement(br);
-            JButton bc = new JButton(rbt.getString("ButtonCompare"));
+            JButton bc = new JButton(Bundle.getMessage("ButtonCompare"));
             _compareButtons.addElement(bc);
             if (infoOnly || readOnly) {
                 if (writeOnly) {
@@ -311,6 +311,6 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         _status = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CvTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(CvTableModel.class.getName());
 }
 

@@ -18,9 +18,26 @@ public class InternalSensorManager extends AbstractSensorManager {
      * @return new null
      */
     protected Sensor createNewSensor(String systemName, String userName) {
-        return new AbstractSensor(systemName, userName){
+        Sensor sen = new AbstractSensor(systemName, userName){
             public void requestUpdateFromLayout(){}
         };
+        try {
+            sen.setKnownState(getDefaultStateForNewSensors());
+        } catch (jmri.JmriException ex){
+            log.error("An error occured while trying to set initial state for sensor " + sen.getDisplayName());
+            log.error(ex.toString());
+        }
+        return sen;
+    }
+    
+    static int defaultState = Sensor.UNKNOWN;
+    
+    public static synchronized void setDefaultStateForNewSensors(int defaultSetting){
+        defaultState=defaultSetting;
+    }
+    
+    public static synchronized int getDefaultStateForNewSensors(){
+        return defaultState;
     }
     
     protected String prefix = "I";
@@ -40,7 +57,7 @@ public class InternalSensorManager extends AbstractSensorManager {
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         //Check to determine if the systemName is in use, return null if it is,

@@ -2,6 +2,8 @@
 
 package jmri.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.UserPreferencesManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -21,7 +23,7 @@ import java.util.Enumeration;
 import java.lang.reflect.Method;
 
 import java.io.File;
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 
 
@@ -314,7 +316,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
      * @param item String value of the specific item this is used for
      */
     public void showInfoMessage(String title, String message, String strClass, java.lang.String item) {
-        showInfoMessage(title, message, strClass, item, false, true, org.apache.log4j.Level.INFO);
+        showInfoMessage(title, message, strClass, item, false, true);
     }
     
     /**
@@ -332,17 +334,54 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
      * @param item String value of the specific item this is used for
      * @param sessionOnly Means this message will be suppressed in this JMRI session and not be remembered
      * @param alwaysRemember Means that the suppression of the message will be saved
-     * @param level Used to determine the type of message box that will be used.
      */
-    public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, org.apache.log4j.Level level) {
+    public void showErrorMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
+        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
+    }
+    
+    /**
+     * Show an info message ("don't forget ...")
+     * with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether
+     * to show it in the future.
+     * added flag to indicate that the message should be suppressed
+     * JMRI session only.
+     * The classString & item parameters should form a unique value
+     * @param title Message Box title
+     * @param message Message to be displayed
+     * @param strClass String value of the calling class
+     * @param item String value of the specific item this is used for
+     * @param sessionOnly Means this message will be suppressed in this JMRI session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be saved
+     */
+    public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
+        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
+    }
+    
+    /**
+     * Show an info message ("don't forget ...")
+     * with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether
+     * to show it in the future.
+     * added flag to indicate that the message should be suppressed
+     * JMRI session only.
+     * The classString & item parameters should form a unique value
+     * @param title Message Box title
+     * @param message Message to be displayed
+     * @param strClass String value of the calling class
+     * @param item String value of the specific item this is used for
+     * @param sessionOnly Means this message will be suppressed in this JMRI session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be saved
+     */
+    public void showWarningMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
+        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.WARNING_MESSAGE);
+    }
+
+    private void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
         final UserPreferencesManager p;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        int type = JOptionPane.INFORMATION_MESSAGE;
-        if (level == org.apache.log4j.Level.ERROR) {
-            type = JOptionPane.ERROR_MESSAGE;
-        } else if (level == org.apache.log4j.Level.WARN) {
-            type = JOptionPane.WARNING_MESSAGE;
-        }
 
         final String preference = strClass + "." + item;
 
@@ -1308,7 +1347,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
             // must be relative, but we want it to 
             // be relative to the preferences directory
             userprefsfilename = "UserPrefs"+System.getProperty("org.jmri.Apps.configFilename");
-            file = new File(XmlFile.prefsDir()+userprefsfilename);
+            file = new File(FileUtil.getUserFilesPath()+userprefsfilename);
         } else {
             userprefsfilename="UserPrefs"+configFileName.getName();
             file = new File(configFileName.getParent()+File.separator+userprefsfilename);
@@ -1329,5 +1368,5 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
 
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferences.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferences.class.getName());
 }

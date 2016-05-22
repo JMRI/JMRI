@@ -1,11 +1,11 @@
 package jmri.jmrit.operations.routes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.locations.Location;
@@ -23,8 +23,6 @@ import org.jdom.Element;
  */
 public class Route implements java.beans.PropertyChangeListener {
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
-
 	protected String _id = "";
 	protected String _name = "";
 	protected String _comment = "";
@@ -39,12 +37,12 @@ public class Route implements java.beans.PropertyChangeListener {
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
 	
-	public static final String LISTCHANGE_CHANGED_PROPERTY = "routeListChange";
-	public static final String DISPOSE = "dispose";
+	public static final String LISTCHANGE_CHANGED_PROPERTY = "routeListChange"; // NOI18N
+	public static final String DISPOSE = "dispose"; // NOI18N
 	
-	public static final String OKAY = rb.getString("Okay");
-	public static final String ORPHAN = rb.getString("Orphan");
-	public static final String ERROR = rb.getString("Error");
+	public static final String OKAY = Bundle.getMessage("Okay");
+	public static final String ORPHAN = Bundle.getMessage("Orphan");
+	public static final String ERROR = Bundle.getMessage("Error");
 	
 
 	public Route(String id, String name) {
@@ -61,7 +59,7 @@ public class Route implements java.beans.PropertyChangeListener {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)){
-			setDirtyAndFirePropertyChange("name", old, name);
+			setDirtyAndFirePropertyChange("nameChange", old, name); // NOI18N
 		}
 	}
 	
@@ -78,7 +76,7 @@ public class Route implements java.beans.PropertyChangeListener {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment)){
-			setDirtyAndFirePropertyChange("comment", old, comment);
+			setDirtyAndFirePropertyChange("commentChange", old, comment); // NOI18N
 		}
 	}
 
@@ -383,13 +381,13 @@ public class Route implements java.beans.PropertyChangeListener {
     public Route(org.jdom.Element e) {
 //        if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
-        if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
+        if ((a = e.getAttribute(Xml.ID)) != null )  _id = a.getValue();
         else log.warn("no id attribute in route element when reading operations");
-        if ((a = e.getAttribute("name")) != null )  _name = a.getValue();
-        if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
-        if (e.getChildren("location") != null) {
+        if ((a = e.getAttribute(Xml.NAME)) != null )  _name = a.getValue();
+        if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = a.getValue();
+        if (e.getChildren(Xml.LOCATION) != null) {
         	@SuppressWarnings("unchecked")
-            List<Element> l = e.getChildren("location");
+            List<Element> l = e.getChildren(Xml.LOCATION);
             if (log.isDebugEnabled()) log.debug("route: "+getName()+" has "+l.size()+" locations");
             for (int i=0; i<l.size(); i++) {
                 register(new RouteLocation(l.get(i)));
@@ -403,10 +401,10 @@ public class Route implements java.beans.PropertyChangeListener {
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
-        org.jdom.Element e = new org.jdom.Element("route");
-        e.setAttribute("id", getId());
-        e.setAttribute("name", getName());
-        e.setAttribute("comment", getComment());
+        org.jdom.Element e = new org.jdom.Element(Xml.ROUTE);
+        e.setAttribute(Xml.ID, getId());
+        e.setAttribute(Xml.NAME, getName());
+        e.setAttribute(Xml.COMMENT, getComment());
         List<String> l = getLocationsBySequenceList();
         for (int i=0; i<l.size(); i++) {
         	String id = l.get(i);
@@ -420,7 +418,7 @@ public class Route implements java.beans.PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled())
     		log.debug("route (" + getName() + ") sees property change: "
-    				+ e.getPropertyName() + " from (" +e.getSource()+ ") old: " + e.getOldValue() + " new: "
+    				+ e.getPropertyName() + " from (" +e.getSource()+ ") old: " + e.getOldValue() + " new: " // NOI18N
     				+ e.getNewValue());
     	// forward drops, pick ups, train direction, and max moves as a list change
     	if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY)
@@ -428,7 +426,7 @@ public class Route implements java.beans.PropertyChangeListener {
 				|| e.getPropertyName().equals(RouteLocation.TRAIN_DIRECTION_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(RouteLocation.MAXMOVES_CHANGED_PROPERTY)) {
 			setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null,
-					"RouteLocation");
+					"RouteLocation"); // NOI18N
 		}   	
     }
 
@@ -450,7 +448,7 @@ public class Route implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(Route.class.getName());
 
 }

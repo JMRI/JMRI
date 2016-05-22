@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
@@ -278,9 +280,9 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         else if(cv==0x0400) /* For CV1024, we need to send the version 3.6
                                command for CVs 1 to 256, sending a 0 for the
                                CV */
-          m.setElement(1,0x18);
+          m.setElement(1,XNetConstants.PROG_READ_MODE_CV_V36);
         else               /* and the version 3.6 command for CVs > 256 */
-          m.setElement(1,0x18|((cv&0x0300)>>8));
+          m.setElement(1,XNetConstants.PROG_READ_MODE_CV_V36|((cv&0x0300)>>8));
         m.setElement(2, (0xff &cv));
         m.setParity(); // Set the parity bit
         return m;
@@ -308,9 +310,9 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         else if(cv==0x0400) /* For CV1024, we need to send the version 3.6
                                command for CVs 1 to 256, sending a 0 for the
                                CV */
-          m.setElement(1,0x1c);
+          m.setElement(1,XNetConstants.PROG_WRITE_MODE_CV_V36);
         else                   /* and the version 3.6 command for CVs > 256 */
-          m.setElement(1,0x1c|((cv&0x0300)>>8));
+          m.setElement(1,XNetConstants.PROG_WRITE_MODE_CV_V36|((cv&0x0300)>>8));
         m.setElement(2, (0xff & cv));
         m.setElement(3, val);
         m.setParity(); // Set the parity bit
@@ -1403,7 +1405,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      }
 
      // initialize logging    
-     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMessage.class.getName());
+     static Logger log = LoggerFactory.getLogger(XNetMessage.class.getName());
 
 }
 

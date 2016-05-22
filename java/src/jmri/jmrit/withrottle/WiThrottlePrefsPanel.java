@@ -21,10 +21,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import jmri.jmrit.XmlFile;
 import java.io.File;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
+import jmri.util.FileUtil;
 
 public class WiThrottlePrefsPanel extends JPanel{
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
@@ -53,7 +53,7 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     public WiThrottlePrefsPanel(){
         if(jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class)==null){
-            jmri.InstanceManager.store(new jmri.jmrit.withrottle.WiThrottlePreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "WiThrottlePreferences.xml"), jmri.jmrit.withrottle.WiThrottlePreferences.class);
+            jmri.InstanceManager.store(new jmri.jmrit.withrottle.WiThrottlePreferences(FileUtil.getUserFilesPath()+ "throttle" +File.separator+ "WiThrottlePreferences.xml"), jmri.jmrit.withrottle.WiThrottlePreferences.class);
         }
         localPrefs = jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class);
         //  set local prefs to match instance prefs
@@ -301,6 +301,6 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     }
 
-    //private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiThrottlePrefsPanel.class.getName());
+    //private static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class.getName());
 
 }

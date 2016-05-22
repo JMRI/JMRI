@@ -2,6 +2,9 @@
 
 package jmri.jmrix.rps;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Tools for geometric transformations for RPS.
  *
@@ -11,7 +14,7 @@ package jmri.jmrix.rps;
 public class Transform {
     
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Transform.class.getName());
+    static Logger log = LoggerFactory.getLogger(Transform.class.getName());
 }
 
 /* @(#)Transform.java */

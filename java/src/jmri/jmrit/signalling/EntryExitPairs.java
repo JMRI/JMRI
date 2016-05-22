@@ -1,7 +1,7 @@
 package jmri.jmrit.signalling;
 
-import jmri.SignalHead;
-import jmri.SignalMast;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 import jmri.NamedBean;
 import jmri.InstanceManager;
@@ -12,17 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Hashtable;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 import javax.swing.JPanel;
 import jmri.jmrit.signalling.entryexit.*;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-
 
 /**
  * Implements an Entry Exit based method of setting turnouts, setting up signal logic and the 
@@ -42,7 +43,6 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 public class EntryExitPairs implements jmri.Manager{
 
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-    //static volatile EntryExitPairs _instance = null;
     
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 
@@ -52,6 +52,30 @@ public class EntryExitPairs implements jmri.Manager{
     public final static int NXBUTTONSELECTED = 0x08;
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
     public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
+    
+    private int settingTimer = 2000;
+    
+    public int getSettingTimer(){
+        return settingTimer;
+    }
+    
+    public void setSettingTimer(int i){
+        settingTimer = i;
+    }
+    
+    private Color settingRouteColor = null;
+    
+    public boolean useDifferentColorWhenSetting(){
+        return(settingRouteColor==null? false:true);
+    }
+    
+    public Color getSettingRouteColor(){
+        return settingRouteColor;
+    }
+    
+    public void setSettingRouteColor(Color col){
+        settingRouteColor = col;
+    }
     
     /**
     * Constant value to represent that the entryExit will only set up the
@@ -72,6 +96,8 @@ public class EntryExitPairs implements jmri.Manager{
     */
     public final static int FULLINTERLOCK = 0x02;
     
+    boolean allocateToDispatcher = false;
+    
     public final static int PROMPTUSER = 0x00;
     public final static int AUTOCLEAR = 0x01;
     public final static int AUTOCANCEL = 0x02;
@@ -86,7 +112,7 @@ public class EntryExitPairs implements jmri.Manager{
     public EntryExitPairs(){
         if(InstanceManager.configureManagerInstance()!=null)
             InstanceManager.configureManagerInstance().registerUser(this);
-        InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(propertyBlockManagerListener);
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
         
         glassPane.setOpaque(false);
         glassPane.setLayout(null);
@@ -97,13 +123,21 @@ public class EntryExitPairs implements jmri.Manager{
         }); 
     }
     
+    public void setDispatcherIntegration(boolean boo){
+        allocateToDispatcher = boo;
+    }
+    
+    public boolean getDispatcherIntegration(){
+        return allocateToDispatcher;
+    }
+    
     public JPanel getGlassPane(){
         return glassPane;
     }
 
     HashMap<PointDetails, Source> nxpair = new HashMap<PointDetails, Source>();
     
-    public void addNXSourcePoint(LayoutBlock facing, LayoutBlock protecting, NamedBean loc, LayoutEditor panel){
+    public void addNXSourcePoint(LayoutBlock facing, List<LayoutBlock> protecting, NamedBean loc, LayoutEditor panel){
         PointDetails point = providePoint(facing, protecting, panel);
         point.setRefObject(loc);
     }
@@ -211,6 +245,10 @@ public class EntryExitPairs implements jmri.Manager{
         return getEntryExitList();
     }
     
+    public List<NamedBean> getNamedBeanList() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     public void register(NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -235,18 +273,8 @@ public class EntryExitPairs implements jmri.Manager{
     private PointDetails providePoint(NamedBean source, LayoutEditor panel){
         PointDetails sourcePoint = getPointDetails(source, panel);
         if(sourcePoint==null){
-            LayoutBlock facing = null;
-            LayoutBlock protecting = null;
-            if(source instanceof SignalMast){
-                facing = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast((SignalMast)source, panel);
-                protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast((SignalMast)source, panel);
-            } else if (source instanceof Sensor) {
-                facing = InstanceManager.layoutBlockManagerInstance().getFacingBlockBySensor((Sensor)source, panel);
-                protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlockBySensor((Sensor)source, panel);
-            } else if (source instanceof SignalHead){
-                facing = InstanceManager.layoutBlockManagerInstance().getFacingBlock((SignalHead)source, panel);
-                protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlock((SignalHead)source, panel);
-            }
+            LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, panel);
+            List<LayoutBlock> protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectingBlocksByNamedBean(source, panel);
             if((facing==null) && (protecting==null)){
                 log.error("Unable to find facing and protecting block");
                 return null;
@@ -284,6 +312,115 @@ public class EntryExitPairs implements jmri.Manager{
 
         return total;
     }
+    
+    public void setMultiPointRoute(PointDetails requestpd, LayoutEditor panel){
+        for (PointDetails pd : pointDetails){
+            if(pd!=requestpd && pd.getPanel()==panel){
+                if(pd.getNXState()==NXBUTTONSELECTED){
+                    setMultiPointRoute(pd, requestpd);
+                    return;
+                }
+            }
+        }
+    }
+    
+    private void setMultiPointRoute(PointDetails fromPd, PointDetails toPd){
+        boolean cleardown = false;
+        if(fromPd.isRouteFromPointSet() && toPd.isRouteToPointSet())
+            cleardown = true;
+        for(LayoutBlock pro:fromPd.getProtecting()){
+            try{
+                jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(),pro, toPd.getFacing(), toPd.getProtecting().get(0), LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                if(result){
+                    ArrayList<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
+                    if(!blkList.isEmpty()){
+                        List<jmri.NamedBean> beanList = lbm.getLayoutBlockConnectivityTools().getBeansInPath(blkList, fromPd.getPanel(), jmri.Sensor.class);
+                        PointDetails fromPoint = fromPd;
+                        refCounter++;
+                        if(!beanList.isEmpty()){
+                            for(int i = 1; i<beanList.size(); i++){
+                                NamedBean nb = beanList.get(i);
+                                PointDetails cur = getPointDetails(nb, fromPd.getPanel());
+                                Source s = nxpair.get(fromPoint);
+                                if(s!=null)
+                                    routesToSet.add(new SourceToDest(s, s.getDestForPoint(cur), false, refCounter));
+                                fromPoint = cur;
+                            }
+                        }
+                        Source s = nxpair.get(fromPoint);
+                        if(s!=null)
+                            routesToSet.add(new SourceToDest(s, s.getDestForPoint(toPd), false, refCounter));
+                        processRoutesToSet();
+                        return;
+                    }
+                }
+            } catch (jmri.JmriException e){
+                //Can be considered normal if route is blocked
+            }
+        }
+        fromPd.setNXButtonState(NXBUTTONINACTIVE);
+        toPd.setNXButtonState(NXBUTTONINACTIVE);
+    }
+    
+    int refCounter = 0;
+    
+    ArrayList<SourceToDest> routesToSet = new ArrayList<SourceToDest>();
+    
+    static class SourceToDest {
+    
+        Source s = null;
+        DestinationPoints dp = null;
+        boolean direction = false;
+        int ref = -1;
+        
+        SourceToDest(Source s, DestinationPoints dp, boolean dir, int ref){
+            this.s = s;
+            this.dp = dp;
+            this.direction = dir;
+            this.ref = ref;
+        }
+    }
+    
+    int currentDealing = 0;
+    
+    synchronized void processRoutesToSet(){
+        if(routesToSet.isEmpty())
+            return;
+        Source s = routesToSet.get(0).s;
+        DestinationPoints dp = routesToSet.get(0).dp;
+        boolean dir = routesToSet.get(0).direction;
+        currentDealing = routesToSet.get(0).ref;
+        routesToSet.remove(0);
+        
+        dp.addPropertyChangeListener(propertyDestinationListener);
+        s.activeBean(dp, dir);
+    }
+    
+    //Removes the remaining routes for a given reference
+    synchronized void removeRemainingRoute(){
+        ArrayList<SourceToDest> toRemove = new ArrayList<SourceToDest>();
+        for(SourceToDest rts:routesToSet){
+            if(rts.ref==currentDealing){
+                toRemove.add(rts);
+                rts.dp.getDestPoint().setNXButtonState(NXBUTTONINACTIVE);
+            }
+        }
+        for(SourceToDest rts:toRemove){
+            routesToSet.remove(rts);
+        }
+    }
+    
+    protected PropertyChangeListener propertyDestinationListener = new PropertyChangeListener(){
+        public void propertyChange(PropertyChangeEvent e) {
+            ((DestinationPoints)e.getSource()).removePropertyChangeListener(this);
+            if(e.getPropertyName().equals("active")){
+                processRoutesToSet();
+            } else if (e.getPropertyName().equals("stacked") || e.getPropertyName().equals("failed") || e.getPropertyName().equals("noChange") ){
+                removeRemainingRoute();
+            }
+        }
+    };
 
     ArrayList<Object> destinationList = new ArrayList<Object>();
     
@@ -327,7 +464,7 @@ public class EntryExitPairs implements jmri.Manager{
    /**
     * Returns a point if already exists, or creates a new one if not.
     */
-    private PointDetails providePoint(LayoutBlock source, LayoutBlock protecting, LayoutEditor panel){
+    private PointDetails providePoint(LayoutBlock source, List<LayoutBlock> protecting, LayoutEditor panel){
         PointDetails sourcePoint = getPointDetails(source, protecting, panel);
         if(sourcePoint==null){
             sourcePoint = new PointDetails(source, protecting);
@@ -500,61 +637,7 @@ public class EntryExitPairs implements jmri.Manager{
     public final static int CANCELROUTE = 0;
     public final static int CLEARROUTE = 1;
     public final static int EXITROUTE = 2;
-    
-    
-
-    
-    /*public static void flashSensor(PointDetails pd){
-        for(SensorIcon si : pd.getPanel().sensorList){
-            if(si.getSensor()==pd.getSensor()){
-                si.flashSensor(2, Sensor.ACTIVE, Sensor.INACTIVE);
-            }
-        }
-    }
-    
-    public static void stopFlashSensor(PointDetails pd){
-        for(SensorIcon si : pd.getPanel().sensorList){
-            if(si.getSensor()==pd.getSensor()){
-                si.stopFlash();
-            }
-        }
-    }
-    
-    synchronized public void setNXButtonState(PointDetails nxPoint, int state){
-        if(nxPoint.getSensor()==null)
-            return;
-        if(state==NXBUTTONINACTIVE){
-            //If a route is set to or from out point then we need to leave/set the sensor to ACTIVE
-            if(nxPoint.isRouteToPointSet()){
-                state=NXBUTTONACTIVE;
-            } else if(nxPoint.isRouteFromPointSet()){
-                state=NXBUTTONACTIVE;
-            }
-        }
-        nxPoint.setNXState(state);
-        int sensorState = Sensor.UNKNOWN;
-        switch(state){
-            case NXBUTTONINACTIVE : sensorState = Sensor.INACTIVE;
-                                    break;
-            case NXBUTTONACTIVE   : sensorState = Sensor.ACTIVE;
-                                    break;
-            case NXBUTTONSELECTED : sensorState = Sensor.ACTIVE;
-                                    break;
-            default               : sensorState = Sensor.UNKNOWN;
-                                    break;
-        }
-        
-        //Might need to clear listeners at the stage and then reapply them after.
-        if(nxPoint.getSensor().getKnownState()!=sensorState){
-            nxPoint.removeSensorList();
-            try {
-                nxPoint.getSensor().setKnownState(sensorState);
-            } catch (jmri.JmriException ex){
-                log.error(ex);
-            }
-            nxPoint.addSensorList();
-        }
-    }*/
+    public final static int STACKROUTE = 4;
     
     public PointDetails getPointDetails(Object obj, LayoutEditor panel){
         for (int i = 0; i<pointDetails.size(); i++){
@@ -569,7 +652,7 @@ public class EntryExitPairs implements jmri.Manager{
     /*
     * Returns either an existing point, or creates a new one as required.
     */
-    PointDetails getPointDetails(LayoutBlock source, LayoutBlock destination, LayoutEditor panel){
+    PointDetails getPointDetails(LayoutBlock source, List<LayoutBlock> destination, LayoutEditor panel){
         PointDetails newPoint = new PointDetails(source, destination);
         newPoint.setPanel(panel);
         for (int i = 0; i<pointDetails.size(); i++){
@@ -594,6 +677,95 @@ public class EntryExitPairs implements jmri.Manager{
             return valid.getDisplayName();
         }
         return "empty";
+    }
+    
+    ArrayList<StackDetails> stackList = new ArrayList<StackDetails>();
+    
+    synchronized public void stackNXRoute(DestinationPoints dp, boolean reverse){
+        if(isRouteStacked(dp, reverse))
+            return;
+        stackList.add(new StackDetails(dp, reverse));
+        checkTimer.start();
+        if(stackWindow==null)
+            stackWindow = new StackNXWindow();
+        stackWindow.updateGUI();
+        stackWindow.setVisible(true);
+    }
+    
+    public List<DestinationPoints> getStackedInterlocks(){
+        List<DestinationPoints> dpList = new ArrayList<DestinationPoints>();
+        for(StackDetails st:stackList){
+            dpList.add(st.getDestinationPoint());
+        }
+        return dpList;
+    }
+    
+    public boolean isRouteStacked(DestinationPoints dp, boolean reverse){
+        Iterator<StackDetails> iter = stackList.iterator();
+        while(iter.hasNext()){
+            StackDetails st = iter.next();
+            if(st.getDestinationPoint()==dp && st.getReverse()==reverse)
+                return true;
+        }
+        return false;
+    }
+    
+    synchronized public void cancelStackedRoute(DestinationPoints dp, boolean reverse){
+        Iterator<StackDetails> iter = stackList.iterator();
+        while(iter.hasNext()){
+            StackDetails st = iter.next();
+            if(st.getDestinationPoint()==dp && st.getReverse()==reverse)
+                iter.remove();
+        }
+        stackWindow.updateGUI();
+        if(stackList.isEmpty()){
+            stackWindow.setVisible(false);
+            checkTimer.stop();
+        }
+    }
+    
+    StackNXWindow stackWindow;
+    
+    static class StackDetails{
+        DestinationPoints dp;
+        boolean reverse;
+
+        StackDetails(DestinationPoints dp, boolean reverse){
+            this.dp = dp;
+            this.reverse = reverse;
+        }
+        boolean getReverse(){
+            return reverse;
+        }
+        DestinationPoints getDestinationPoint(){
+            return dp;
+        }
+    }
+    
+    javax.swing.Timer checkTimer  = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                checkRoute();
+            }
+        });
+
+    synchronized void checkRoute(){
+        checkTimer.stop();
+        StackDetails[] tmp = new StackDetails[stackList.size()];
+        stackList.toArray(tmp);
+
+        for(StackDetails st:tmp){
+            if(!st.getDestinationPoint().isActive()){
+                //If the route is not alredy active then check
+                //If the route does get set then the setting process will remove the route from the stack
+                st.getDestinationPoint().setInterlockRoute(st.getReverse());
+            }
+        }
+
+        if(!stackList.isEmpty()){
+            checkTimer.start();
+        } else {
+            stackWindow.setVisible(false);
+        }
     }
     
     public void removePropertyChangeListener(PropertyChangeListener list, NamedBean obj, LayoutEditor panel){
@@ -625,7 +797,7 @@ public class EntryExitPairs implements jmri.Manager{
     public void automaticallyDiscoverEntryExitPairs(LayoutEditor editor, int interlockType) throws JmriException{
         //This is almost a duplicate of that in the DefaultSignalMastLogicManager
         runWhenStablised=false;
-        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         if(!lbm.isAdvancedRoutingEnabled()){
             throw new JmriException("advanced routing not enabled");
         }
@@ -636,7 +808,7 @@ public class EntryExitPairs implements jmri.Manager{
             log.debug("Layout block routing has not yet stabilsed, discovery will happen once it has");
             return;
         }
-        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class);
+        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
         Enumeration<NamedBean> en = validPaths.keys();
         EntryExitPairs eep = this;
         while (en.hasMoreElements()) {
@@ -675,5 +847,5 @@ public class EntryExitPairs implements jmri.Manager{
     };
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EntryExitPairs.class.getName());
+    static Logger log = LoggerFactory.getLogger(EntryExitPairs.class.getName());
 }

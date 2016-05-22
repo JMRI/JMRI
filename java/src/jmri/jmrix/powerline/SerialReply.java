@@ -2,6 +2,9 @@
 
 package jmri.jmrix.powerline;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Contains the data payload of a serial reply
@@ -49,7 +52,7 @@ abstract public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     abstract public String toMonitorString();
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
 
 }
 

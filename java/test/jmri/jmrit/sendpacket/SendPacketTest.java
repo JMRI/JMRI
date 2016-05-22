@@ -2,6 +2,7 @@
 
 package jmri.jmrit.sendpacket;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 /**
@@ -53,6 +54,6 @@ public class SendPacketTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SendPacketTest.class.getName());
+    static Logger log = Logger.getLogger(SendPacketTest.class.getName());
 
 }

@@ -55,6 +55,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
     JSpinner metersPerUnit = new JSpinner();
     JLabel metersPerUnitLabel = new JLabel(rba.getString("UnitM/U"));
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioListenerFrame(String title, AudioTableDataModel model) {
         super(title, model);
         layoutFrame();
@@ -95,12 +96,14 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         JButton ok;
         frame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
         ok.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             }
         });
     }
 
+    @Override
     public void resetFrame() {
         // Not required
     }
@@ -141,7 +144,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         }
     }
 
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioListenerFrame.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(AudioListenerFrame.class.getName());
 
 }
 

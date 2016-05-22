@@ -2,6 +2,8 @@
 
 package jmri.jmris.simpleserver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -81,6 +83,6 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
 	SimpleServer.instance().stop();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleServerFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SimpleServerFrame.class.getName());
 
 }

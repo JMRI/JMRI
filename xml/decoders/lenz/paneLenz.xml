@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id: accelDecel.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<pane name="Lenz" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2012-12-27</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+    </revision>
+  </revhistory>
+
+    <column>
+      <row>
+        <column>
+          <label label="RailCom Configuration">
+            <label>RailCom Configuration</label>
+            <label xml:lang="it">Configurazione RailCom</label>
+          </label>
+          <display item="RailCom Address"/>
+          <display item="RailCom Data"/>
+          <display item="RailCom Command"/>
+          <display item="Enable RailCom"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Fault Indication">
+            <label>Fault Indication</label>
+            <label xml:lang="it">Indicazione Guasti</label>
+          </label>
+          <display item="Light Short"/>
+          <display item="Overheating"/>
+          <display item="Motor Short"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Motor Configuration">
+            <label>Motor Configuration</label>
+            <label xml:lang="it">Configurazione Motore</label>
+          </label>
+          <display item="Motor type"/>
+          <display item="EMF Switch"/>
+          <display item="BEMF Control"/>
+          <display item="Motor Frequency"/>
+          <display item="Minimum PWM Value"/>
+          <display item="Motor Duty Cycle"/>
+          <display item="Motor Timeout"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+        <column>
+          <label label="           ">
+            <label>           </label>
+          </label>
+        </column>
+        <column>
+          <label label="Braking Configuration">
+            <label>Braking Configuration</label>
+            <label xml:lang="it">Configurazione Frenata</label>
+          </label>
+          <display item="Constant Braking"/>
+          <display item="ABC"/>
+          <display item="ABC Direction"/>
+          <display item="Push-Pull w/o Stop"/>
+          <display item="Push-Pull w Stop"/>
+          <display item="Stop on DC"/>
+          <display item="Braking Distance"/>
+          <display item="ABC Approach Speed"/>
+          <display item="Push-Pull Stop Time"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Tip: Constant Braking only works when momementum is enabled, and when not in switching gear">
+            <label>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</label>
+            <label xml:lang="it">La Frenata Costante funziona solo se è abilitata l'inerzia, e quando non in velocità da manovra</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <separator/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Decoder Software Version"/>
+        </column>
+      </row>
+    </column>
+    <name>Lenz</name>
+  </pane>

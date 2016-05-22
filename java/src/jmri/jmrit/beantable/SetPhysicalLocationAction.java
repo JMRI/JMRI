@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.util.PhysicalLocationPanel;
 import jmri.util.PhysicalLocation;
@@ -19,8 +21,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.awt.Dimension;
-
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
 
@@ -264,7 +264,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger
+    static Logger log = LoggerFactory
 	.getLogger(SetPhysicalLocationAction.class.getName());
 }
 

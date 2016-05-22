@@ -2,13 +2,10 @@
 
 package jmri;
 
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.WarrantManager;
-import jmri.jmrit.roster.RosterIconFactory;
-import jmri.jmrit.audio.DefaultAudioManager;
-import apps.gui3.TabbedPreferences;
-
+import jmri.implementation.NmraConsistManager;
+import jmri.implementation.DccConsistManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
@@ -17,15 +14,43 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+// Please don't add any more dependencies on other packages via import
+// statements.  Instead, add new items with the store/getDefault methods
+// described below.
+import jmri.jmrit.roster.RosterIconFactory;
+import jmri.jmrit.audio.DefaultAudioManager;
+import jmri.jmrit.vsdecoder.VSDecoderManager;
+import apps.gui3.TabbedPreferences;
+
 /**
- * Provides static members for locating various interface implementations.
- * These are the base of how JMRI objects are located.
- *<P>
- * The implementations of these interfaces are specific to the layout hardware, etc.
- * During initialization, objects of the right type are created and registered
- * with the ImplementationManager class, so they can later be retrieved by
- * non-system-specific code.
- *
+ * Provides methods for locating various interface implementations.
+ * These form the base for locating JMRI objects, including the key managers.
+ *<p>
+ * The structural goal is to have the jmri package not depend on the
+ * lower jmri.jmrit and jmri.jmrix packages, with the implementations
+ * still available at run-time through the InstanceManager.
+ *<p>
+ * To retrieve the default object of a specific type, do 
+ * {@link    InstanceManager#getDefault}
+ * where the argument is e.g. "SensorManager.class".
+ * In other words, you ask for the default object of a particular type.
+ *<p>
+ * Multiple items can be held, and are retrieved as a list with
+ * {@link    InstanceManager#getList}.
+ *<p>
+ * If a specific item is needed, e.g. one that has been constructed via
+ * a complex process during startup, it should be installed with
+ * {@link     InstanceManager#store}.
+ * If it's OK for the InstanceManager to create an object on first
+ * request, have that object's class implement the 
+ * {@link     InstanceManagerAutoDefault}
+ * flag interface. The InstanceManager will then construct a default
+ * object via the no-argument constructor when one is first needed.
+ *<p>
+ * For initialization of more complex objects, see the 
+ * {@link InstanceInitializer} mechanism and it's default implementation
+ * in {@link jmri.managers.DefaultInstanceInitializer}.
+ * 
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -39,59 +64,104 @@ import java.util.List;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @author                      Matthew Harris copyright (c) 2009
+ * @author			Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @author          Matthew Harris copyright (c) 2009
  * @version			$Revision$
  */
 public class InstanceManager {
 
     static private HashMap<Class<?>,ArrayList<Object>> managerLists;
     
-    static public <T> void store(T val, Class<T> type) {
+    /**
+     * Store an object of a particular type for later
+     * retrieval via {@link #getDefault} or {@link #getList}.
+     * @param item The object of type T to be stored
+     * @param type The class Object for the item's type.  This will be used
+     *               as the key to retrieve the object later.
+     */
+    static public <T> void store(T item, Class<T> type) {
         ArrayList<Object> l = managerLists.get(type);
         if (l==null) {
             l = new ArrayList<Object>();
             managerLists.put(type, l);
         }
-        l.add(val);
+        l.add(item);
     }
     
+    /**
+     * Retrieve a list of all objects of type T that were
+     * registered with {@link #store}.
+     * @param type The class Object for the items' type.
+     */
     static public <T> List<Object> getList(Class<T> type) {
         if (managerLists!=null)
             return managerLists.get(type);
         return null;
     }
     
+    /**
+     * Deregister all objects of a particular type.
+     * @param type The class Object for the items to be removed.
+     */
     static public <T> void reset(Class<T> type) {
+        if (managerLists == null) return;
         managerLists.put(type, null);
     }
     
-    static public <T> void deregister(T val, Class<T> type){
+    /**
+     * Remove an object of a particular type 
+     * that had earlier been registered with {@link #store}.
+     * @param item The object of type T to be deregistered
+     * @param type The class Object for the item's type.  
+     */
+    static public <T> void deregister(T item, Class<T> type){
+        if (managerLists == null) return;
         ArrayList<Object> l = managerLists.get(type);
         if(l!=null)
-            l.remove(val);
+            l.remove(item);
     }
 
     /**
-     * Get the first object of type T that was
-     * store(d). 
-     *
+     * Retrieve the last object of type T that was
+     * registered with {@link #store}.
+     * <p>
      * Someday, we may provide another way to set the default
-     * but for now it's the last one stored
+     * but for now it's the last one stored, see the
+     * {@link #setDefault} method.
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
-        List<Object> l = getList(type);
-        if (l == null) return null;
-        if (l.size()<1) return null;
+        if (managerLists == null) return null;
+        ArrayList<Object> l = managerLists.get(type);
+        if (l == null || l.size()<1) {
+            // see if need to autocreate
+            if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
+                // yes, make sure list is present before creating object
+                if (l==null) {
+                    l = new ArrayList<Object>();
+                    managerLists.put(type, l);
+                }
+                try {
+                    l.add(type.getConstructor((Class[])null).newInstance((Object[])null));
+                } catch (Exception e) {
+                    log.error("Exception creating default object", e); // unexpected
+                    return null;
+                }
+                return (T)l.get(l.size()-1);
+            } else {
+                return null;
+            }
+        }
         return (T)l.get(l.size()-1);
     }
     
     /**
-     * Set an object of type T as the default for that type 
-     *
-     * Now, we do that moving the item to the front;
-     * see the getDefault() method
+     * Set an object of type T as the default for that type.
+     *<p>
+     * Also registers (stores) the object if not already present. 
+     *<p>
+     * Now, we do that moving the item to the back of the list;
+     * see the {@link #getDefault} method
      */
     static public <T> void setDefault(Class<T> type, T val) {
         List<Object> l = getList(type);
@@ -217,16 +287,20 @@ public class InstanceManager {
         return o;
     }
 
-    static public OBlockManager oBlockManagerInstance()  {
-        if (instance().oBlockManager != null) return instance().oBlockManager;
-        instance().oBlockManager = (OBlockManager)initializer.getDefault(OBlockManager.class);
-        return instance().oBlockManager;
+    /**
+     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
+     */
+    @Deprecated
+    static public jmri.jmrit.logix.OBlockManager oBlockManagerInstance()  {
+        return getDefault(jmri.jmrit.logix.OBlockManager.class);
     }
 
-    static public WarrantManager warrantManagerInstance()  {
-        if (instance().warrantManager != null) return instance().warrantManager;
-        instance().warrantManager = (WarrantManager)initializer.getDefault(WarrantManager.class);
-        return instance().warrantManager;
+    /**
+     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
+     */
+    @Deprecated
+    static public jmri.jmrit.logix.WarrantManager warrantManagerInstance()  {
+        return getDefault(jmri.jmrit.logix.WarrantManager.class);
     }
 
     static public SectionManager sectionManagerInstance()  {
@@ -257,10 +331,12 @@ public class InstanceManager {
         return r;
     }
 
-    static public LayoutBlockManager layoutBlockManagerInstance()  {
-        if (instance().layoutBlockManager != null) return instance().layoutBlockManager;
-        instance().layoutBlockManager = (LayoutBlockManager)initializer.getDefault(LayoutBlockManager.class);
-        return instance().layoutBlockManager;
+    /**
+     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
+     */
+    @Deprecated
+    static public jmri.jmrit.display.layoutEditor.LayoutBlockManager layoutBlockManagerInstance()  {
+        return getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
     }
 
     static public ConditionalManager conditionalManagerInstance()  {
@@ -325,7 +401,12 @@ public class InstanceManager {
     static public RosterIconFactory rosterIconFactoryInstance()  { 
     	if (instance().rosterIconFactory == null) instance().rosterIconFactory = RosterIconFactory.instance();
     	return instance().rosterIconFactory; 
-    }    
+    }
+
+    static public VSDecoderManager vsdecoderManagerInstance() {
+	if (instance().vsdecoderManager == null) instance().vsdecoderManager = VSDecoderManager.instance();
+	return instance().vsdecoderManager;
+    }
 
     static private InstanceManager instance() {
         if (root==null){
@@ -415,9 +496,6 @@ public class InstanceManager {
         signalHeadManager = p;
     }
 
-    private OBlockManager oBlockManager = null;
-    private WarrantManager warrantManager = null;
-	
     private SectionManager sectionManager = null;
 	
     private TransitManager transitManager = null;
@@ -430,14 +508,12 @@ public class InstanceManager {
         store(p, RouteManager.class);
     }
 
-    private LayoutBlockManager layoutBlockManager = null;
-    static public void setLayoutBlockManager(LayoutBlockManager p) {
-        instance().addLayoutBlockManager(p);
-    }
-    protected void addLayoutBlockManager(LayoutBlockManager p) {
-        if (p!=layoutBlockManager && layoutBlockManager!=null && log.isDebugEnabled()) log.debug("LayoutBlockManager instance is being replaced: "+p);
-        if (p!=layoutBlockManager && layoutBlockManager==null && log.isDebugEnabled()) log.debug("LayoutBlockManager instance is being installed: "+p);
-        layoutBlockManager = p;
+    /**
+     * @deprecated Since 3.3.1, use @{link #store} directly.
+     */
+    @Deprecated
+    static public void setLayoutBlockManager(jmri.jmrit.display.layoutEditor.LayoutBlockManager p) {
+        store(p, jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
     }
 
     private ConditionalManager conditionalManager = null;
@@ -515,7 +591,9 @@ public class InstanceManager {
 	private MemoryManager memoryManager = null;
 	
 	private RosterIconFactory rosterIconFactory = null;
-    
+
+    private VSDecoderManager vsdecoderManager = null;
+
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
@@ -551,7 +629,7 @@ public class InstanceManager {
     // data members to hold contact with the property listeners
     final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstanceManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }
 
 /* @(#)InstanceManager.java */

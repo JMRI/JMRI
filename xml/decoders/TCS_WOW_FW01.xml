@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Simon Ginsburg" version="1" lastUpdated="20130522"/>
+        
+    <decoder>
+        <family name="WOW Sound" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
+             <model model="WOWSound Steam" numOuts="4" numFns="22" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD"
+                lowVersionID="1" highVersionID="1" productID="61">
+                <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+                <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+                <size length="2.860" width="0.680" height="0.145" units="inches"/>
+            </model>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+        <variables>
+            
+            <xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_FW86.xml"/>
+            
+            <xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV157_FW86.xml"/>
+            
+            <xi:include href="http://jmri.org/xml/decoders/tcs/CV249_CV252_FW86.xml"/>
+            
+            <!-- Sample CV for program test -->
+            <constant item="PICV" default="49" comment="CV used for Primary Index"/>
+            <constant item="SICV" default="50" comment="CV used for Secondary Index"/>
+            <ivariable label="Button 0 Sound" CVname="204.1.0" CV="204" PI="1" SI="0" item="Sound Option 1">
+                <indexedPairVal highCVname="203.1.0" order="highFirst"/>
+            </ivariable>
+    
+        </variables>
+        <resets>
+            <factReset label="Reset All CVs" CV="8" default="2"/>
+        </resets>
+    </decoder>
+    
+    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
+    
+    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
+
+</decoder-config>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

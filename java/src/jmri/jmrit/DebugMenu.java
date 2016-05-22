@@ -2,8 +2,9 @@
 
 package jmri.jmrit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.util.*;
 
 /**
  * Create a "Debug" menu containing the JMRI system-independent 
@@ -22,43 +23,38 @@ public class DebugMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.JmritDebugBundle");
+        setText(Bundle.getMessage("MenuDebug"));
 
-        setText(rb.getString("MenuDebug"));
-
-        add(new jmri.jmrit.MemoryFrameAction(rb.getString("MenuItemMemoryUsageMonitor")));
+        add(new jmri.jmrit.MemoryFrameAction(Bundle.getMessage("MenuItemMemoryUsageMonitor")));
         add(new JSeparator());
-        add(new jmri.jmrit.decoderdefn.InstallDecoderFileAction(rb.getString("MenuItemImportDecoderFile"), panel));
-        add(new jmri.jmrit.decoderdefn.InstallDecoderURLAction(rb.getString("MenuItemImportDecoderURL"), panel));
-        add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction(rb.getString("MenuItemRecreateDecoderIndex")));
-        add(new jmri.jmrit.roster.RecreateRosterAction(rb.getString("MenuItemRecreateRoster")));
+        add(new jmri.jmrit.decoderdefn.InstallDecoderFileAction(Bundle.getMessage("MenuItemImportDecoderFile"), panel));
+        add(new jmri.jmrit.decoderdefn.InstallDecoderURLAction(Bundle.getMessage("MenuItemImportDecoderURL"), panel));
+        add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction(Bundle.getMessage("MenuItemRecreateDecoderIndex")));
+        add(new jmri.jmrit.roster.RecreateRosterAction(Bundle.getMessage("MenuItemRecreateRoster")));
+        add(new jmri.jmrit.roster.UpdateDecoderDefinitionAction(Bundle.getMessage("MenuItemUpdateDecoderDefinition")));
         add(new JSeparator());
-        add(new jmri.jmrit.XmlFileCheckAction(rb.getString("MenuItemCheckXMLFile"), panel));
-        add(new jmri.jmrit.XmlFileValidateAction(rb.getString("MenuItemValidateXMLFile"), panel));
-        add(new jmri.jmrit.decoderdefn.NameCheckAction(rb.getString("MenuItemCheckDecoderNames"), panel));
-        add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction(rb.getString("MenuItemCheckProgrammerNames"), panel));
+        add(new jmri.jmrit.XmlFileCheckAction(Bundle.getMessage("MenuItemCheckXMLFile"), panel));
+        add(new jmri.jmrit.XmlFileValidateAction(Bundle.getMessage("MenuItemValidateXMLFile"), panel));
+        add(new jmri.jmrit.decoderdefn.NameCheckAction(Bundle.getMessage("MenuItemCheckDecoderNames"), panel));
+        add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction(Bundle.getMessage("MenuItemCheckProgrammerNames"), panel));
         add(new JSeparator());
-		add(new jmri.jmrit.LogixLoadAction(rb.getString("MenuItemLogixDisabled"), panel));
-        add(new jmri.jmrit.log.LogAction(rb.getString("MenuItemLogAction")));
-        add(new jmri.jmrit.log.LogOutputWindowAction(rb.getString("MenuItemLogOutputWindowAction")));
-        add(new jmri.util.swing.JmriNamedPaneAction(rb.getString("MenuItemLogTreeAction"), 
+		add(new jmri.jmrit.LogixLoadAction(Bundle.getMessage("MenuItemLogixDisabled"), panel));
+        add(new jmri.jmrit.log.LogAction(Bundle.getMessage("MenuItemLogAction")));
+        add(new jmri.jmrit.log.LogOutputWindowAction(Bundle.getMessage("MenuItemLogOutputWindowAction")));
+        add(new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"), 
             new jmri.util.swing.sdi.JmriJFrameInterface(),
             "jmri.jmrit.log.Log4JTreePane"));
         add(new JSeparator());
-	JMenu vsdMenu = new JMenu(rb.getString("VSDMenuItem"));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(rb.getString("VSDecoderManagerAction"), true));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(rb.getString("VSDecoderLocationManager"), null));
-	JMenu oldVsdMenu = new JMenu(rb.getString("OldVSDInterfaceMenuItem"));
-	oldVsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(rb.getString("OldVSDecoderWindow"), false));
-	oldVsdMenu.add(new jmri.jmrit.beantable.SetPhysicalLocationAction(rb.getString("OldSetReporterLocationsAction"), null));
-	oldVsdMenu.setEnabled(false);
-	vsdMenu.add(oldVsdMenu);
+	JMenu vsdMenu = new JMenu(Bundle.getMessage("MenuItemVSDecoder"));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("MenuItemVSDecoderManager"), true));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getMessage("MenuItemVSDecoderLocationManager"), null));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.VSDPreferencesAction(Bundle.getMessage("MenuItemVSDecoderPreferences")));
 	add(vsdMenu);
 
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugMenu.class.getName());
+    static Logger log = LoggerFactory.getLogger(DebugMenu.class.getName());
 }
 
 

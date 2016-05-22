@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.IdTag;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -156,6 +157,6 @@ public class DefaultIdTagManagerTest extends TestCase {
         };
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultIdTagManagerTest.class.getName());
+    static Logger log = Logger.getLogger(DefaultIdTagManagerTest.class.getName());
 
 }

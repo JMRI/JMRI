@@ -3,7 +3,6 @@
 package jmri.util.swing.multipane;
 
 import java.awt.*;
-import java.io.File;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -25,7 +24,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     /**
      * Create and initialize a multi-pane GUI window.
      */
-    public TwoPaneTBWindow(String name, File menubarFile, File toolbarFile) {
+    public TwoPaneTBWindow(String name, String menubarFile, String toolbarFile) {
         super(name);
         buildGUI(menubarFile, toolbarFile);
         pack();
@@ -56,7 +55,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         return upDownSplitPane;
     }
     
-    protected void buildGUI(File menubarFile, File toolbarFile) {
+    protected void buildGUI(String menubarFile, String toolbarFile) {
         configureFrame();
         addMainMenuBar(menubarFile);
         addMainToolBar(toolbarFile);
@@ -96,7 +95,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     
     JMenuBar menuBar = new JMenuBar();
     
-    protected void addMainMenuBar(File menuFile) {
+    protected void addMainMenuBar(String menuFile) {
         if (menuFile == null) return;
         
         JMenu[] menus = JMenuUtil.loadMenu(menuFile, this, this);
@@ -110,7 +109,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         return menuBar;
     }
     
-    protected void addMainToolBar(File toolBarFile) {
+    protected void addMainToolBar(String toolBarFile) {
         if (toolBarFile == null) return;
           
         toolBar = JToolBarUtil.loadToolBar(toolBarFile, this, this);

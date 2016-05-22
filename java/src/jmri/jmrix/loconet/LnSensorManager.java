@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 import jmri.JmriException;
 
@@ -27,8 +29,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         updateAll();
     }
     
-    LnTrafficController tc;
-    String prefix = "L";
+    protected LnTrafficController tc;
+    protected String prefix = "L";
     
     public String getSystemPrefix() { return prefix; }
 
@@ -156,7 +158,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                    showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         
@@ -177,7 +179,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
 
 }
 

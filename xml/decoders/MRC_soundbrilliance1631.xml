@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: MRC_soundbrilliance1631.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,21 +16,21 @@
   <version author="Peter Ulvestad" version="3" lastUpdated="20091011"/>
   <version author="Bob Jacobsen" version="2" lastUpdated="20071223"/>
   <version author="Bob Jacobsen" version="1" lastUpdated="20060326"/>
-<!-- made from the MRC_1626 file by Rick Beaber -->
-<!-- version 2 fixed a problem in CV 115/116 -->
-<!-- version 3 Moved consist functions to consist pane, added tooltips. -->
+  <!-- made from the MRC_1626 file by Rick Beaber -->
+  <!-- version 2 fixed a problem in CV 115/116 -->
+  <!-- version 3 Moved consist functions to consist pane, added tooltips. -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Diesel Sound 1631" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note only F0 to F12 are NMRA compatible -->
+        <!-- note only F0 to F12 are NMRA compatible -->
         <size length="48" width="17" height="7.5" units="mm"/>
       </model>
       <model model="Synch Diesel Sound 1632" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note only F0 to F12 are NMRA compatible -->
+        <!-- note only F0 to F12 are NMRA compatible -->
         <size length="48" width="17" height="7.5" units="mm"/>
       </model>
       <model model="Synch Diesel Sound 1633" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note only F0 to F12 are NMRA compatible -->
+        <!-- note only F0 to F12 are NMRA compatible -->
         <size length="48" width="17" height="7.5" units="mm"/>
       </model>
     </family>

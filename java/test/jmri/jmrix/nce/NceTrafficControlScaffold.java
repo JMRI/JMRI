@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import java.util.Vector;
 
 /** 
@@ -53,6 +54,6 @@ public class NceTrafficControlScaffold extends NceTrafficController {
 		return cmdListeners.size();
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTrafficControlScaffold.class.getName());
+	static Logger log = Logger.getLogger(NceTrafficControlScaffold.class.getName());
 
 }

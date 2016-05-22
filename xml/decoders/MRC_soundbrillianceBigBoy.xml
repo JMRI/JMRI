@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: MRC_soundbrillianceBigBoy.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,17 +14,17 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bill Chown" version="1" lastUpdated="20080308"/>
-<!-- made from the MRC_1656 file (Pete Cesaro) pdsteam@aol.com -->
-<!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
-<!-- works for both loco types, despite apparent differences in the documentation -->
+  <!-- made from the MRC_1656 file (Pete Cesaro) pdsteam@aol.com -->
+  <!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
+  <!-- works for both loco types, despite apparent differences in the documentation -->
   <version author="Bill Chown" version="2" lastUpdated="20080430"/>
-<!-- works for both Athearn N scale loco types, small errors corrected -->
+  <!-- works for both Athearn N scale loco types, small errors corrected -->
   <version author="Bill Chown" version="3" lastUpdated="20090109"/>
-<!-- works for both Athearn N scale loco types, comments and tooltips expanded -->
+  <!-- works for both Athearn N scale loco types, comments and tooltips expanded -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" comment="MRC Brilliance Sound Decoders" lowVersionID="31" highVersionID="31">
       <model model="Athearn Big Boy or Challenger" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note All 28 functions are NMRA compatible -->
+        <!-- note All 28 functions are NMRA compatible -->
         <size length="45" width="18" height="6.2" units="mm"/>
       </model>
     </family>

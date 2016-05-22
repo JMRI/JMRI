@@ -24,6 +24,11 @@ public class RosterFrameAction extends JmriAbstractAction {
     public RosterFrameAction(String s, WindowInterface wi) {
         super(s, wi);
     }
+    
+    public RosterFrameAction(String s, WindowInterface wi, boolean allowQuit) {
+        super(s, wi);
+        this.allowQuit=allowQuit;
+    }
      
     public RosterFrameAction(String s, Icon i, WindowInterface wi) {
         super(s, i, wi);

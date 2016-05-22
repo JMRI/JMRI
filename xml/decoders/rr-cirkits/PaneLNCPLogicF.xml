@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,1152 +11,1136 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file includes for LNCP files -->
-
 <!-- Panes to show Logic -->
-
-     <pane name="Logic F">
-    <column>
-      <row>
-        <column>
-          <label label="Each 'Logic Block' contains one or more Conditionals. Each Conditional contains">
-          </label> 
-          <label label="one or two Variables and may perform a single action when 'True'.  Each Logic">
+<pane name="Logic F">
+  <column>
+    <row>
+      <column>
+        <label label="Each 'Logic Block' contains one or more Conditionals. Each Conditional contains">
           </label>
-          <label label="Block is evaluated top down from one Conditional to the next until a Conditional">
+        <label label="one or two Variables and may perform a single action when 'True'.  Each Logic">
           </label>
-          <label label="is evaluated as 'True', or an 'End Logic Block' is encountered. If 'True', then its">
+        <label label="Block is evaluated top down from one Conditional to the next until a Conditional">
           </label>
-          <label label="'Action' is performed, and further evaluation of that block ceases.  Conditionals">
+        <label label="is evaluated as 'True', or an 'End Logic Block' is encountered. If 'True', then its">
           </label>
-          <label label="must be assigned in descending order from the most restrictive to the least">
+        <label label="'Action' is performed, and further evaluation of that block ceases.  Conditionals">
           </label>
-          <label label="restrictive aspect. Logic blocks are delineated by selecting the 'End Logic Block'">
+        <label label="must be assigned in descending order from the most restrictive to the least">
           </label>
-        </column>
-        <column>
-          <label label="       "/>
-        </column>
-        <column>
-          <label label="check box in the last Conditional of each block. For each Variable and Action">
+        <label label="restrictive aspect. Logic blocks are delineated by selecting the 'End Logic Block'">
           </label>
-          <label label="entry you may select either a 'LN' (LocoNet - Closed/Thrown) OR a 'DCC' (A mast">
+      </column>
+      <column>
+        <label label="       "/>
+      </column>
+      <column>
+        <label label="check box in the last Conditional of each block. For each Variable and Action">
           </label>
-          <label label="Address plus its Aspect) command. Any Variable with 'True' selected always">
+        <label label="entry you may select either a 'LN' (LocoNet - Closed/Thrown) OR a 'DCC' (A mast">
           </label>
-          <label label="evaluates as 'True'. All commands are entered as their actual LocoNet or DCC ">
+        <label label="Address plus its Aspect) command. Any Variable with 'True' selected always">
           </label>
-          <label label="address numbers. Eg. to send LT9 Closed enter 'Switch Request' '9' 'C'.">
+        <label label="evaluates as 'True'. All commands are entered as their actual LocoNet or DCC ">
           </label>
-          <label label="   ">
+        <label label="address numbers. Eg. to send LT9 Closed enter 'Switch Request' '9' 'C'.">
           </label>
-          <label label="Logic Blocks continue from this DecoderPro display 'Pane' to Logic G.">
+        <label label="   ">
           </label>
-        </column>
-      </row>
-      <row> 
-        <column>
-          <label label="       "/>
-        </column>
-      </row>
+        <label label="Logic Blocks continue from this DecoderPro display 'Pane' to Logic G.">
+          </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label label="       "/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label label="Conditional: 41 "/>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 41 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT41 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT41 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT41 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT41 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT41 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT41 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT41 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT41 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT41 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT41 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT41 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT41 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT41 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT41 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT41 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT41 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT41 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT41 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT41 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT41 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT41 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT41 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT41 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT41 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT41 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT41 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT41 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT41 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT41 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT41 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label label="  V1:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT41 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT41 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT41 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT41 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT41 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT41 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT41 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT41 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label label="  "/>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <display item="LT41 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label label=" "/>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 42 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT42 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT42 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT42 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT42 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT42 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT42 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT42 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT42 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT42 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT42 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT42 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT42 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT42 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT42 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT42 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT42 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT42 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT42 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT42 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT42 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT42 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT42 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT42 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT42 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT42 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT42 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT42 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT42 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT42 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT42 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label label=" V2:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT41 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT41 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT41 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT41 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT41 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT41 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT41 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT41 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT41 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT41 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT41 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT41 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <label label="     Action: "/>
+      </column>
       <separator/>
       <separator/>
-
-      <row>
-        <column>
-          <label label="Conditional: 43 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT43 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT43 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT43 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT43 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT43 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT43 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT43 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT43 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT43 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT43 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT43 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT43 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT43 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT43 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT43 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT43 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT43 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT43 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT43 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT43 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT43 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT43 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT43 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT43 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT43 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT43 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT43 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT43 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT43 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT43 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <display item="LT41 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT41 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT41 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT41 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT41 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT41 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT41 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT41 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT41 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label label=" "/>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label label="Conditional: 42 "/>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <label label="  V1:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT42 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT42 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT42 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT42 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT42 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT42 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT42 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT42 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label label="  "/>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 44 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT44 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT44 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT44 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT44 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT44 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT44 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT44 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT44 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT44 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT44 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT44 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT44 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT44 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT44 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT44 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT44 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT44 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT44 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT44 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT44 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT44 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT44 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT44 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT44 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT44 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT44 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT44 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT44 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT44 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT44 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <display item="LT42 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label label=" "/>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <label label=" V2:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT42 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT42 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT42 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT42 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT42 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT42 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT42 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT42 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT42 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT42 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT42 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT42 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 45 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT45 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT45 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT45 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT45 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT45 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT45 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT45 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT45 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT45 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT45 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT45 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT45 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT45 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT45 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT45 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT45 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT45 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT45 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT45 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT45 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT45 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT45 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT45 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT45 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT45 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT45 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT45 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT45 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT45 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT45 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label label="     Action: "/>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <display item="LT42 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT42 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT42 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT42 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT42 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT42 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT42 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT42 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT42 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label label=" "/>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label label="Conditional: 43 "/>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 46 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT46 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT46 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT46 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT46 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT46 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT46 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT46 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT46 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT46 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT46 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT46 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT46 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT46 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT46 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT46 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT46 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT46 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT46 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT46 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT46 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT46 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT46 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT46 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT46 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT46 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT46 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT46 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT46 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT46 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT46 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label label="  V1:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT43 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT43 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT43 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT43 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT43 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT43 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT43 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT43 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label label="  "/>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <display item="LT43 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label label=" "/>
+      </column>
       <separator/>
       <separator/>
-
-      <row>
-        <column>
-          <label label="Conditional: 47 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT47 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT47 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT47 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT47 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT47 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT47 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT47 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT47 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT47 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT47 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT47 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT47 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT47 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT47 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT47 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT47 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT47 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT47 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT47 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT47 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT47 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT47 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT47 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT47 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT47 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT47 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT47 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT47 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT47 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT47 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label label=" V2:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT43 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT43 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT43 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT43 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT43 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT43 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT43 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT43 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT43 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT43 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT43 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT43 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <label label="     Action: "/>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 48 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT48 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT48 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT48 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT48 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT48 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT48 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT48 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT48 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT48 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT48 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT48 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT48 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT48 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT48 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT48 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT48 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT48 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT48 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT48 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT48 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT48 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT48 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
-        </column>
-        <column>
-          <display item="LT48 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT48 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT48 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT48 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT48 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT48 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT48 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT48 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <display item="LT43 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT43 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT43 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT43 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT43 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT43 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT43 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT43 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT43 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label label=" "/>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label label="Conditional: 44 "/>
+      </column>
       <separator/>
       <separator/>
-    </column>
-  </pane>
- 
- 	  	 
+      <column>
+        <label label="  V1:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT44 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT44 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT44 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT44 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT44 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT44 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT44 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT44 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label label="  "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT44 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label label=" "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label=" V2:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT44 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT44 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT44 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT44 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT44 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT44 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT44 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT44 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT44 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT44 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT44 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT44 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label="     Action: "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT44 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT44 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT44 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT44 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT44 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT44 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT44 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT44 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT44 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label label=" "/>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label label="Conditional: 45 "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label="  V1:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT45 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT45 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT45 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT45 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT45 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT45 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT45 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT45 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label label="  "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT45 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label label=" "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label=" V2:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT45 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT45 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT45 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT45 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT45 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT45 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT45 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT45 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT45 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT45 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT45 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT45 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label="     Action: "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT45 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT45 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT45 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT45 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT45 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT45 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT45 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT45 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT45 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label label=" "/>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label label="Conditional: 46 "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label="  V1:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT46 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT46 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT46 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT46 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT46 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT46 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT46 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT46 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label label="  "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT46 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label label=" "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label=" V2:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT46 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT46 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT46 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT46 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT46 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT46 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT46 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT46 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT46 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT46 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT46 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT46 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label="     Action: "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT46 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT46 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT46 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT46 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT46 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT46 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT46 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT46 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT46 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label label=" "/>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label label="Conditional: 47 "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label="  V1:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT47 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT47 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT47 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT47 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT47 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT47 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT47 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT47 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label label="  "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT47 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label label=" "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label=" V2:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT47 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT47 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT47 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT47 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT47 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT47 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT47 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT47 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT47 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT47 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT47 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT47 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label="     Action: "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT47 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT47 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT47 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT47 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT47 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT47 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT47 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT47 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT47 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label label=" "/>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label label="Conditional: 48 "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label="  V1:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT48 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT48 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT48 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT48 Var1 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT48 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT48 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT48 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT48 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label label="  "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT48 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label label=" "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label=" V2:"/>
+      </column>
+      <column>
+        <label label=""/>
+      </column>
+      <column>
+        <display item="LT48 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT48 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT48 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT48 Var2 Address" tooltip="LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT48 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT48 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT48 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT48 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT48 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT48 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT48 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT48 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label label="     Action: "/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT48 Output Mode" format="offradiobutton" tooltip="Select message encoding format to LocoNet messages" label=""/>
+      </column>
+      <column>
+        <display item="LT48 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT48 Output Type" tooltip="Select LocoNet Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT48 Output Address" tooltip="Enter LocoNet Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT48 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT48 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT48 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT48 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT48 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+  </column>
+</pane>

@@ -2,6 +2,8 @@
 
 package jmri.util.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 /**
@@ -52,7 +54,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
         }      
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriNamedPaneAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriNamedPaneAction.class.getName());
 }
 
 /* @(#)JmriAbstractAction.java */

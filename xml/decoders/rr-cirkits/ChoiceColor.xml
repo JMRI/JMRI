@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,12 +11,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file includes for LNCP files -->
-
 <!-- Color choices for LocoNet output signals -->
-
 <enumVal>
   <enumChoice choice=" Yellow "/>
   <enumChoice choice=" alt R/Y"/>
@@ -36,5 +31,3 @@
   <enumChoice choice=" G blink"/>
   <enumChoice choice=" dark   "/>
 </enumVal>
-      
- 	  	 

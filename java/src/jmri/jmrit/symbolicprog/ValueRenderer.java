@@ -8,6 +8,8 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -34,5 +36,5 @@ public class ValueRenderer implements TableCellRenderer {
 			return new JLabel("Unknown value type!");
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ValueEditor.class.getName());
+	static Logger log = LoggerFactory.getLogger(ValueEditor.class.getName());
 }

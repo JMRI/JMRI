@@ -2,6 +2,8 @@
 
 package jmri.jmrix.grapevine.serialdriver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.grapevine.SerialPortController;
 import jmri.jmrix.grapevine.SerialSensorManager;
 import jmri.jmrix.grapevine.SerialTrafficController;
@@ -255,6 +257,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

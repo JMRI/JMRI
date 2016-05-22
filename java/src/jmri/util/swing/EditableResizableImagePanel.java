@@ -1,5 +1,7 @@
 package jmri.util.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -160,5 +162,5 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         setImagePath(dest.getPath());
     }
     
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditableResizableImagePanel.class.getName());
+    static private Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class.getName());
 }

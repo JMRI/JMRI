@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.*;
 
 import javax.swing.*;
@@ -9,8 +11,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -23,8 +23,6 @@ import jmri.util.table.ButtonRenderer;
  * @version   $Revision$
  */
 public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener {
-
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
     
     public static final int SORTBYNAME = 1;
     public static final int SORTBYID = 2;
@@ -138,19 +136,19 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
     public String getColumnName(int col){
         switch (col) {
-        case IDCOLUMN: return rb.getString("Id");
-        case NAMECOLUMN: return rb.getString("TrackName");
-        case LENGTHCOLUMN: return rb.getString("Length");
-        case USEDLENGTHCOLUMN: return rb.getString("Used");
-        case RESERVEDCOLUMN: return rb.getString("Reserved");
-        case ENGINESCOLUMN: return rb.getString("Engines");
-        case CARSCOLUMN: return rb.getString("Cars");
-        case PICKUPSCOLUMN: return rb.getString("Pickup");
-        case DROPSCOLUMN: return rb.getString("Drop");
-        case POOLCOLUMN: return rb.getString("Pool");
-        case PLANPICKUPCOLUMN: return rb.getString("PlanPickUp");
+        case IDCOLUMN: return Bundle.getMessage("Id");
+        case NAMECOLUMN: return Bundle.getMessage("TrackName");
+        case LENGTHCOLUMN: return Bundle.getMessage("Length");
+        case USEDLENGTHCOLUMN: return Bundle.getMessage("Used");
+        case RESERVEDCOLUMN: return Bundle.getMessage("Reserved");
+        case ENGINESCOLUMN: return Bundle.getMessage("Engines");
+        case CARSCOLUMN: return Bundle.getMessage("Cars");
+        case PICKUPSCOLUMN: return Bundle.getMessage("Pickup");
+        case DROPSCOLUMN: return Bundle.getMessage("Drop");
+        case POOLCOLUMN: return Bundle.getMessage("Pool");
+        case PLANPICKUPCOLUMN: return Bundle.getMessage("PlanPickUp");
         case EDITCOLUMN: return "";		//edit column
-        default: return "unknown";
+        default: return "unknown"; // NOI18N
         }
     }
 
@@ -191,11 +189,11 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     		tef.requestFocus();
     	}
     	if(row >= tracksList.size())
-    		return "ERROR row "+row;
+    		return "ERROR row "+row; // NOI18N
     	String tracksId = tracksList.get(row);
     	Track track = _location.getTrackById(tracksId);
     	if (track == null)
-    		return "ERROR track unknown "+row;
+    		return "ERROR track unknown "+row; // NOI18N
         switch (col) {
         case IDCOLUMN: return track.getId();
         case NAMECOLUMN: return track.getName();
@@ -211,8 +209,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         	if (track.getIgnoreUsedLengthPercentage() > 0)
         		return track.getIgnoreUsedLengthPercentage()+"%";
         	return "";
-        case EDITCOLUMN: return rb.getString("Edit");
-        default: return "unknown "+col;
+        case EDITCOLUMN: return Bundle.getMessage("Edit");
+        default: return "unknown "+col; // NOI18N
         }
     }
 
@@ -237,7 +235,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		String tracksId = tracksList.get(row);
     	Track tracks = _location.getTrackById(tracksId);
     	tef.initComponents(_location, tracks);
-    	tef.setTitle(rb.getString("EditTrack"));
+    	tef.setTitle(Bundle.getMessage("EditTrack"));
     	focusEditFrame = true;
     }
 
@@ -276,6 +274,6 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         fireTableDataChanged();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrackTableModel.class.getName());
 }
 

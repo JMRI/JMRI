@@ -3,6 +3,8 @@
  */
 package jmri.configurexml.turnoutoperations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 //import java.lang.reflect.Constructor;
@@ -39,5 +41,5 @@ public class NoFeedbackTurnoutOperationXml extends CommonTurnoutOperationXml {
         }
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NoFeedbackTurnoutOperation.class.getName());
+    static Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperation.class.getName());
 }

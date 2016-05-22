@@ -8,6 +8,7 @@
     <modifier>+dev</modifier>
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
     <sensor systemName="IS1" inverted="false" userName="User 1">
       <systemName>IS1</systemName>
       <userName>User 1</userName>

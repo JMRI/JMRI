@@ -1,5 +1,7 @@
 package jmri.jmrix.tams.configurexml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -34,5 +36,5 @@ public class TamsTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         return loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsTurnoutManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsTurnoutManagerXml.class.getName());
 }

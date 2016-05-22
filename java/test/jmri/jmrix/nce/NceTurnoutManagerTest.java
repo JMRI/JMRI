@@ -8,6 +8,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -68,6 +69,6 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
 		return suite;
 	}
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTurnoutManagerTest.class.getName());
+	 static Logger log = Logger.getLogger(NceTurnoutManagerTest.class.getName());
 
 }

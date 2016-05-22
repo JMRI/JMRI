@@ -2,6 +2,8 @@
 
 package jmri.jmrix.srcp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -24,6 +26,13 @@ public class SRCPTurnout extends AbstractTurnout {
 	public SRCPTurnout(int number) {
             super("DT"+number);
             _number = number;
+
+            // send message requesting initilization
+            String text = "INIT 1 GA "+_number+" N\n";
+            
+        // create and send the message itself
+		SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage(text), null);
+
             // At construction, register for messages
 	}
 
@@ -67,7 +76,7 @@ public class SRCPTurnout extends AbstractTurnout {
 
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPTurnout.class.getName());
+	static Logger log = LoggerFactory.getLogger(SRCPTurnout.class.getName());
 
 }
 

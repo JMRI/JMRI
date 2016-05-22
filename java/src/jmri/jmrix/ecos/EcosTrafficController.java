@@ -2,6 +2,8 @@
 
 package jmri.jmrix.ecos;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
 import java.util.List;
 
@@ -346,7 +348,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         if(adaptermemo==null) return "U";
         return adaptermemo.getSystemPrefix();
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
 }
 
 

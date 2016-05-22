@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -47,7 +49,7 @@ public class LnNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnNamedPaneAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnNamedPaneAction.class.getName());
 }
 
 /* @(#)LnNamedPaneAction.java */

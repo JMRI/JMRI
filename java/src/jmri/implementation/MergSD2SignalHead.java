@@ -14,6 +14,8 @@
 
 package jmri.implementation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
 
@@ -90,6 +92,8 @@ public class MergSD2SignalHead extends DefaultSignalHead {
             case 4: if ((newAppearance == RED) || (newAppearance == YELLOW) || (newAppearance == GREEN) || (newAppearance == LUNAR))
                         valid=true;
                     break;
+            default : valid = false;
+                      break;
         }
         if ((oldAppearance != newAppearance) && (valid)){
             updateOutput();
@@ -212,16 +216,14 @@ public class MergSD2SignalHead extends DefaultSignalHead {
 	 */
     public void setHome(boolean boo) {mHome = boo;}
     
-    final static private java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-    
     final static private int[] validStates2AspectHome = new int[]{
         RED, 
         GREEN
     };
 
     final static private String[] validStateNames2AspectHome = new String[]{
-        rb.getString("SignalHeadStateRed"),
-        rb.getString("SignalHeadStateGreen")
+        Bundle.getMessage("SignalHeadStateRed"),
+        Bundle.getMessage("SignalHeadStateGreen")
     };
     
     final static private int[] validStates2AspectDistant = new int[]{
@@ -229,8 +231,8 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         GREEN
     };
     final static private String[] validStateNames2AspectDistant = new String[]{
-        rb.getString("SignalHeadStateYellow"),
-        rb.getString("SignalHeadStateGreen")
+        Bundle.getMessage("SignalHeadStateYellow"),
+        Bundle.getMessage("SignalHeadStateGreen")
     };
     
     final static private int[] validStates3Aspect = new int[]{
@@ -240,9 +242,9 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     };
     
     final static private String[] validStateNames3Aspect = new String[]{
-        rb.getString("SignalHeadStateRed"),
-        rb.getString("SignalHeadStateYellow"),
-        rb.getString("SignalHeadStateGreen")
+        Bundle.getMessage("SignalHeadStateRed"),
+        Bundle.getMessage("SignalHeadStateYellow"),
+        Bundle.getMessage("SignalHeadStateGreen")
     };
     
     final static private int[] validStates4Aspect = new int[]{
@@ -253,10 +255,10 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     };
     
     final static private String[] validStateNames4Aspect = new String[]{
-        rb.getString("SignalHeadStateRed"),
-        rb.getString("SignalHeadStateYellow"),
-        rb.getString("SignalHeadStateLunar"),
-        rb.getString("SignalHeadStateGreen")
+        Bundle.getMessage("SignalHeadStateRed"),
+        Bundle.getMessage("SignalHeadStateYellow"),
+        Bundle.getMessage("SignalHeadStateLunar"),
+        Bundle.getMessage("SignalHeadStateGreen")
     };
     
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
@@ -290,6 +292,6 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergSD2SignalHead.class.getName());
+    static Logger log = LoggerFactory.getLogger(MergSD2SignalHead.class.getName());
     
 }

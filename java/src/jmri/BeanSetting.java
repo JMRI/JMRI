@@ -1,5 +1,8 @@
 package jmri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Represent a Named Bean (e.g.&nbsp;Turnout) 
  * and specific setting for it.
@@ -62,5 +65,5 @@ public class BeanSetting  {
     private final NamedBeanHandle<NamedBean> _namedBean;
     final private int _setting;
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanSetting.class.getName());
+    static final Logger log = LoggerFactory.getLogger(BeanSetting.class.getName());
 }

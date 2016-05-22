@@ -1,5 +1,4 @@
 // Consist.java
-
 package jmri;
 
 import java.util.ArrayList;
@@ -11,147 +10,164 @@ import java.util.ArrayList;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author              Paul Bender Copyright (C) 2003-2008
- * @version             $Revision$
+ *
+ * @author Paul Bender Copyright (C) 2003-2008
+ * @version $Revision$
  */
 public interface Consist {
 
-	// Constants for the ConsistType
-	// For Advanced Consists
-        public final static int ADVANCED_CONSIST = 0;
+    // Constants for the ConsistType
+    // For Advanced Consists
+    public final static int ADVANCED_CONSIST = 0;
+    // For Command Station Consists
+    // This is for a: Digitrax Universal Consist,
+    // or Lenz Double Header,or NCE "old Style Consist",etc
+    public final static int CS_CONSIST = 1;
+    // Position Constants
+    // 0x00 represents the lead locomotive
+    // 0xFF represents the trailing (or rear) locomotive in the consist
+    // All other values in between are middle locomotives
+    public final static int POSITION_LEAD = 0x00;
+    public final static int POSITION_TRAIL = 0xFF;
 
-	// For Command Station Consists
-        // This is for a: Digitrax Universal Consist, 
-        // or Lenz Double Header,or NCE "old Style Consist",etc
-        public final static int CS_CONSIST = 1;  
+    /**
+     * A method for cleaning up the consist
+     */
+    public void dispose();
 
-        // Position Constants
-        // 0x00 represents the lead locomotive
-        // 0xFF represents the trailing (or rear) locomotive in the consist
-        // All other values in between are middle locomotives
-        public final static int POSITION_LEAD = 0x00;
-        public final static int POSITION_TRAIL = 0xFF;
+    /**
+     * Set the Consist Type
+     */
+    public void setConsistType(int consist_type);
 
-	// A method for cleaning up the consist
-	public void dispose();
+    /**
+     * Get the Consist Type
+     */
+    public int getConsistType();
 
-	// Set the Consist Type
-	public void setConsistType(int consist_type);
+    /**
+     * Get the Consist Address
+     */
+    public DccLocoAddress getConsistAddress();
 
-	// get the Consist Type
-	public int getConsistType();
+    /**
+     * Is the specific address allowed? (needed for system specific
+     * restrictions)
+     */
+    public boolean isAddressAllowed(DccLocoAddress address);
 
-	// get the Consist Address
-	public DccLocoAddress getConsistAddress();
+    /**
+     * Is there a size limit for this type of consist?
+     *
+     * @return -1 if no limit; 0 if the Consist Type is not supported; or the
+     * total number of usable spaces if the consist has a limit (do not subtract
+     * used spaces).
+     */
+    public int sizeLimit();
 
-	// is the specific address allowed? (needed for system specific 
- 	// restrictions)
-	public boolean isAddressAllowed(DccLocoAddress address);
+    /**
+     * Get a list of the locomotives in the consist
+     */
+    public ArrayList<DccLocoAddress> getConsistList();
 
-	/**
-	 * is there a size limit for this type of consist?
-	 * returns -1 if no limit
-	 * returns 0 if the Consist Type is not supported
-	 * returns the total number of useable spaces if the consist has a 
-         * limit (do not subtract used spaces).
-	 */
-	public int sizeLimit();
+    /**
+     * Does the consist contain the specified locomotive address?
+     */
+    public boolean contains(DccLocoAddress address);
 
-	// get a list of the locomotives in the consist
-	public ArrayList<DccLocoAddress> getConsistList();
-	
-	// does the consist contain the specified locomotive address?
-	public boolean contains(DccLocoAddress address);
+    /**
+     * Get the relative direction setting for a specific locomotive in the
+     * consist
+     */
+    public boolean getLocoDirection(DccLocoAddress address);
 
-	// get the relative direction setting for a specific 
-	// locomotive in the consist
-	public boolean getLocoDirection(DccLocoAddress address);
-	
-        /*
-	 * Add a Locomotive to a Consist
-	 * @param LocoAddress is the Locomotive address to add to the locomotive
-	 * @param directionNormal is True if the locomotive is traveling 
-         *        the same direction as the consist, or false otherwise.
-         */
-	public void add(DccLocoAddress LocoAddress, boolean directionNormal);
+    /**
+     * Add a Locomotive to a Consist
+     *
+     * @param address is the Locomotive address to add to the locomotive
+     * @param directionNormal is True if the locomotive is traveling the same
+     * direction as the consist, or false otherwise.
+     */
+    public void add(DccLocoAddress address, boolean directionNormal);
 
-        /*
-	 *  Restore a Locomotive to a Consist, but don't write to the command 
-         *  station.  This is used for restoring the consist from a file 
-         *  or adding a consist read from the command station.
-	 *  @param LocoAddress is the Locomotive address to add to the consist
-	 *  @param directionNormal is True if the locomotive is traveling 
-         *        the same direction as the consist, or false otherwise.
-         */
-	public void restore(DccLocoAddress LocoAddress, boolean directionNormal);
+    /**
+     * Restore a Locomotive to a Consist, but don't write to the command
+     * station. This is used for restoring the consist from a file or adding a
+     * consist read from the command station.
+     *
+     * @param address is the Locomotive address to add to the consist
+     * @param directionNormal is True if the locomotive is traveling the same
+     * direction as the consist, or false otherwise.
+     */
+    public void restore(DccLocoAddress address, boolean directionNormal);
 
-        /*
-	 *  Remove a Locomotive from this Consist
-	 *  @param address is the Locomotive address to add to the locomotive
-         */
-	public void remove(DccLocoAddress LocoAddress);
+    /**
+     * Remove a Locomotive from this Consist
+     *
+     * @param address is the Locomotive address to add to the locomotive
+     */
+    public void remove(DccLocoAddress address);
 
-        /*
-         *  Set the position of a locomotive within the consist
-         *  @param address is the Locomotive address
-         *  @param position is a constant representing the position within
-         *         the consist.
-         */
-        public void setPosition(DccLocoAddress address,int position);
+    /**
+     * Set the position of a locomotive within the consist
+     *
+     * @param address is the Locomotive address
+     * @param position is a constant representing the position within the
+     * consist.
+     */
+    public void setPosition(DccLocoAddress address, int position);
 
-        /*
-         * Get the position of a locomotive within the consist
-         * @param address is the Locomotive address of interest
-         * @return integer equal to jmri.Consist.POSITION_LEAD for the 
-         *                                      designated lead locomotive.
-         *                equal to jmri.Consist.POSITION_TRAIL for the 
-         *                                      designated trailing locomotive.
-         *                between 1 and 254 for other locomotives in the consist
-         */
-        public int getPosition(DccLocoAddress address);
+    /**
+     * Get the position of a locomotive within the consist
+     *
+     * @param address is the Locomotive address of interest
+     * @return integer equal to jmri.Consist.POSITION_LEAD for the designated
+     * lead locomotive. equal to jmri.Consist.POSITION_TRAIL for the designated
+     * trailing locomotive. between 1 and 254 for other locomotives in the
+     * consist
+     */
+    public int getPosition(DccLocoAddress address);
 
-	/* 
-	 * Add a Listener for consist events
-	 * @param Listener is a consistListener object
-         */
-	public void addConsistListener(jmri.ConsistListener Listener);
+    /**
+     * Add a listener for consist events
+     *
+     * @param listener is a consistListener object
+     */
+    public void addConsistListener(jmri.ConsistListener listener);
 
-	/* 
-	 * Remove a Listener for consist events
-	 * @param Listener is a consistListener object
-         */
-	public void removeConsistListener(jmri.ConsistListener Listener);
+    /**
+     * Remove a listener for consist events
+     *
+     * @param listener is a consistListener object
+     */
+    public void removeConsistListener(jmri.ConsistListener listener);
 
+    /**
+     * Set the text ID associated with the consist
+     *
+     * @param ID is a string identifier for the consist
+     */
+    public void setConsistID(String ID);
 
-	/*
-	 * Set the text ID associated with the consist
-         * @param String is a string identifier for the consist
-         */
-	public void setConsistID(String ID);
-	
-	/*
-	 * Get the text ID associated with the consist
-         * @return String identifier for the consist
-         * 	   default value is the string Identifier for the 
-	 *	   consist address.
-         */
-	public String getConsistID();
+    /**
+     * Get the text ID associated with the consist
+     *
+     * @return String identifier for the consist default value is the string
+     * Identifier for the consist address.
+     */
+    public String getConsistID();
 
-	/*
-         * Reverse the order of the consist and the direction
-	 * the locomotives are traveling
-	 */
-	public void reverse();
-
+    /**
+     * Reverse the order of the consist and the direction the locomotives are
+     * traveling
+     */
+    public void reverse();
 }
-

@@ -1,23 +1,22 @@
 //JsonSignalMastServer.java
 package jmri.jmris.json;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
-
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalMast;
 import jmri.jmris.AbstractSignalMastServer;
 import jmri.jmris.JmriConnection;
-
-import org.apache.log4j.Logger;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import static jmri.jmris.json.JSON.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * JSON Web Socket interface between the JMRI SignalMast manager and a
- * network connection
+ * JSON Web Socket interface between the JMRI SignalMast manager and a network
+ * connection
  *
  * @author Paul Bender Copyright (C) 2010
  * @version $Revision: 21313 $
@@ -26,59 +25,62 @@ public class JsonSignalMastServer extends AbstractSignalMastServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    
-    static Logger log = Logger.getLogger(JsonSignalMastServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonSignalMastServer.class);
 
     public JsonSignalMastServer(JmriConnection connection) {
-    	super();
-    	this.connection = connection;
-    	this.mapper = new ObjectMapper();
+        super();
+        this.connection = connection;
+        this.mapper = new ObjectMapper();
     }
-    
+
     /*
      * Protocol Specific Abstract Functions
      */
     @Override
     public void sendStatus(String signalMastName, String status) throws IOException {
-    	ObjectNode root = this.mapper.createObjectNode();
-    	root.put("type", "signalMast");
-    	ObjectNode data = root.putObject("data");
-    	data.put("name", signalMastName);
-    	data.put("state", status);
-    	this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        ObjectNode root = this.mapper.createObjectNode();
+        root.put(TYPE, SIGNAL_MAST);
+        ObjectNode data = root.putObject(DATA);
+        data.put(NAME, signalMastName);
+        data.put(STATE, status);
+        this.connection.sendMessage(this.mapper.writeValueAsString(root));
     }
 
     @Override
     public void sendErrorStatus(String signalMastName) throws IOException {
-		ObjectNode root = this.mapper.createObjectNode();
-		root.put("type", "error");
-		ObjectNode data = root.putObject("error");
-		data.put("name", signalMastName);
-		data.put("code", -1);
-		data.put("message", "Error accessing signalMast");
-		this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        ObjectNode root = this.mapper.createObjectNode();
+        root.put(TYPE, ERROR);
+        ObjectNode data = root.putObject(ERROR);
+        data.put(NAME, signalMastName);
+        data.put(CODE, -1);
+        data.put(MESSAGE, Bundle.getMessage("ErrorObject", SIGNAL_MAST, signalMastName));
+        this.connection.sendMessage(this.mapper.writeValueAsString(root));
     }
 
     @Override
-	public void parseStatus(String statusString) throws JmriException, IOException {
-		this.parseRequest(this.mapper.readTree(statusString).path("data"));
-	}
-	
+    public void parseStatus(String statusString) throws JmriException, IOException {
+        this.parseRequest(this.mapper.readTree(statusString).path(DATA));
+    }
+
     public void parseRequest(JsonNode data) throws JmriException, IOException {
-    	String name = data.path("name").asText();
-    	String state = data.path("state").asText();
-    	if (state == "") {  //if not passed, retrieve current and respond
-    		SignalMast sm = InstanceManager.signalMastManagerInstance().getSignalMast(name); 
-    		state = sm.getAspect();
-			if ((sm.getHeld()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
-	    		state = "Held";
-			} else if ((sm.getLit()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
-	    		state = "Dark";
-			}
-    		this.sendStatus(name, state);
-    	} else { //else set the aspect to the state passed in
-    		this.setSignalMastAspect(name, state);
-    	}
-    	this.addSignalMastToList(name);
+        String name = data.path(NAME).asText();
+        String state = data.path(STATE).asText();
+        if ("".equals(state)) {  //if not passed, retrieve current and respond
+            SignalMast sm = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+            try {
+                state = sm.getAspect();
+                if ((sm.getHeld()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
+                    state = ASPECT_HELD;
+                } else if ((sm.getLit()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
+                    state = ASPECT_DARK;
+                }
+                this.sendStatus(name, state);
+            } catch (Exception ex) {
+                this.sendErrorStatus(name);
+            }
+        } else { //else set the aspect to the state passed in
+            this.setSignalMastAspect(name, state);
+        }
+        this.addSignalMastToList(name);
     }
 }

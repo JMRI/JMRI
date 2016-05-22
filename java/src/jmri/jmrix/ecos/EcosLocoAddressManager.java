@@ -1,5 +1,7 @@
 package jmri.jmrix.ecos;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.ecos.utilities.*;
 import java.util.Enumeration;
 import jmri.jmrit.roster.Roster;
@@ -568,6 +570,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                 EcosLocoAddress tmploco = null;
                                 //The first part of the messages is always the object id.
                                 strde = objectdetail[0];
+                                strde=strde.trim();
                                 int object = Integer.parseInt(strde);
                                 if ( (1000<=object) && (object<2000)) {
                                     tmploco = provideByEcosObject(strde);
@@ -816,5 +819,5 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         //monitorLocos(monitorState);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoAddressManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
 }

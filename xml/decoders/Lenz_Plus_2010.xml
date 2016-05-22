@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
-
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Lenz_Plus_2010.xml 22121 2012-12-30 02:57:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,15 +12,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-<decoder-config>
-	<version 
-            author="John A. Stewart alex.stewart@crc.ca"
-            version="1" lastUpdated="20100427" 
-    />
-	
-
-<!-- 
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="John A. Stewart alex.stewart@crc.ca" version="1" lastUpdated="20100427"/>
+  <!-- 
 
 Decoder definitions; have recieved decoders with pamphlets dated March 2010. There are 
 many changes over older decoder definitions, thus the start on a new file.
@@ -41,1466 +33,454 @@ Silver direct+ Silent-Back EMF DCC Decoder
     cv7 -  95
     cv128 - 5
 -->
-
-<!--
+  <!--
 nmraWarrant="yes" nmraWarrantStart="200604"
 -->
-
-<decoder>
-	<family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="95" lowVersionID="95"
-		comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" >
-
-		<model model="Gold small wired - #10410-xx" numOuts="2" numFns="14" lowVersionID="95"
-			maxMotorCurrent="0.5A (peak=0.8A)" formFactor="HO">
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-		</model>
-        
-		<model model="Gold small plugin - #10411-xx" numOuts="2" numFns="14" lowVersionID="95"
-			maxMotorCurrent="0.5A (peak=0.8A)" formFactor="HO">
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Purple" />
-            <output name="5" label="E - Brown" />
-		</model>
-        
-        
-        <model model="Gold JST - #10432-xx" numOuts="5" numFns="14" lowVersionID="95"
-			maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Purple" />
-            <output name="5" label="E - Brown" />
-		</model>
-
-        
-		<model model="Gold NMRA - #10433-01" numOuts="5" numFns="14" lowVersionID="95"
-			maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Purple" />
-            <output name="5" label="E - Brown" />
-		</model>
-        
-		<model model="Gold MAXI - #10440-xx" numOuts="5" numFns="14" lowVersionID="95"
-			maxMotorCurrent="3.0A (peak=5.0A)" formFactor="HO">
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Purple" />
-            <output name="5" label="E - Brown" />
-		</model>
-        
-        <model model="Silver direct+ - #10330-01" numOuts="5" numFns="14" lowVersionID="95"
-			maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Purple" />
-            <output name="5" label="E - Brown" />
-		</model>
-        
-	</family>
-
-	<programming
-		direct="yes" paged="yes" register="yes" ops="yes"/>
-
-	<variables>
-		<variable label="Primary Address (1-127)" CV="1"
-			item="Short Address" default="03"
-			comment="Range 1-127">
-			<shortAddressVal/>
-		</variable>
-
-		<variable label="Minimum Starting Voltage" CV="2"
-			item="Vstart" default="1"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-			</variable>
-	
-		<variable label="Starting Delay" CV="3"
-			item="Accel" default="6"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Braking Delay" CV="4"
-			item="Decel" default="5"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-		
-		<variable label="Maximum Speed" CV="5"
-			item="Vhigh" default="255"
-			comment="Sets the maximum voltage at full throttle">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Mid speed Vmid" CV="6"
-			item="Vmid" default="48"
-			comment ="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Decoder Version No: " CV="7" readOnly="yes"
-			item="Decoder Version" default="95">
-			<decVal/>
-		</variable>
-
-		
-		<variable label="Manufacturer ID: " CV="8" readOnly="yes"
-			item="Manufacturer" default="99">
-			<decVal/>
-		</variable>
-
-		<variable label="Manufacturer ID - Reset" CV="8"
-			item="Reset"
-			comment="Writing a value of 8 or 33 will reset decoder to factory defaults" >
-			<decVal/>
-		</variable>
-
-		<variable label="Back EMF Repetition Rate (0-63)" CV="9"
-			item="Total PWM Period" default="15"
-			comment ="Range 0-63">
-			<decVal min="0" max="63"/>
-		</variable>
-
-		<variable label="Extended Address (0-9999)" CV="17"
-			item="Long Address" default="100"
-			comment="4 digit address (Range 0-9999)">
-			<longAddressVal/>
-		</variable>
-
-		<variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV"
-			item="Consist Address" default="0"
-			comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-			<decVal min="0" max="127"/>
-		</variable>
-		
-		<variable label="Consist Direction" CV="19" mask="VXXXXXXX"
-			comment="A consist address over 127 will also set this bit" >
-			<enumVal>
-				<enumChoice choice="Forward"></enumChoice>
-				<enumChoice choice="Reversed"></enumChoice>
-			</enumVal>
-		</variable>
-
-		<variable label="Ch. 1 for Address" CV="28" mask="XXXXXXXV"
-			item="RailCom Address" default="1">
-			<enumVal>
-				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Enabled"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Ch. 2 for Data" CV="28" mask="XXXXXXVX"
-			item="RailCom Data" default="1">
-			<enumVal>
-				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Enabled"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Ch. 1 for Command Ack." CV="28" mask="XXXXXVXX"
-			item="RailCom Command" default="0">
-			<enumVal>
-				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Enabled"/>
-			</enumVal>
-		</variable>
-	
-		<variable label="Locomotive Direction in Forward" CV="29" mask="XXXXXXXV"
-			item="Locomotive Direction" default="0">
-			<enumVal>
-				<enumChoice choice="Normal"/>
-				<enumChoice choice="Reversed"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Speed Steps (Headlight Mode)" CV="29" mask="XXXXXXVX"
-			item="Speed Step Mode" default="1">
-			<enumVal>
-				<enumChoice choice="14"/>
-				<enumChoice choice="28/128"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Loco can operate on conventional DC" CV="29" mask="XXXXXVXX" 
-			item="Analog (DC) Operation" default="1">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Enable RailCom" CV="29" mask="XXXXVXXX" 
-			item="Enable RailCom" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-			</enumVal>
-		</variable>
-
-
-		<variable label="Speed Table Selection" CV="29" mask="XXXVXXXX"
-			item="Speed Table Definition">
-			<enumVal>
-				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
-				<enumChoice choice="Use the Speed Table"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
-			item="Address Format">
-			<enumVal>
-				<enumChoice choice="2 digit addressing"/>
-				<enumChoice choice="4 digit addressing"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Light short-circuit" CV="30" mask="XXXXXXXV" 
-			item="Light Short" >
-			<enumVal>
-				<enumChoice choice="Okay"/>
-				<enumChoice choice="Fault"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Overheating" CV="30" mask="XXXXXXVX" 
-			item="Overheating" default="0">
-			<enumVal>
-				<enumChoice choice="Okay"/>
-				<enumChoice choice="Fault"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Motor short-circuit" CV="30" mask="XXXXXVXX" 
-			item="Motor Short" default="0">
-			<enumVal>
-				<enumChoice choice="Okay"/>
-				<enumChoice choice="Fault"/>
-			</enumVal>
-		</variable>
-
-        <variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1" tooltip="CV 33" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" tooltip="CV 33" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3" tooltip="CV 33" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4" tooltip="CV 33" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5" tooltip="CV 33" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-  
-
-        <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" tooltip="CV 34" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX" minOut="2" tooltip="CV 34" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3" tooltip="CV 34" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4" tooltip="CV 34" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5" tooltip="CV 34" > <enumVal>
-                <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-  
-<!--
-        <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="99" minFn="99" tooltip="FW CV 35" > <enumVal>
-                    <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="99" minFn="99" tooltip="fw CV 35" > <enumVal>
-                    <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F1 controls output 3" CV="35" default="1" mask="XXXXXVXX" minOut="99" minFn="99" tooltip="FW CV 35" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="99" minFn="99" tooltip="FW CV 35" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="99" minFn="99" tooltip="FW CV 35" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
--->
-
-
-        <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2" tooltip="CV 36" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2" tooltip="CV 36" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2" tooltip="CV 36" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F2 controls output 4" CV="36" default="1" mask="XXXXVXXX" minOut="4" minFn="2" tooltip="CV 36" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2" tooltip="CV 36" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
- 
-        <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 37" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 37" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 37" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 37" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 37" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
- 
-        <variable label="F4 controls output 1" CV="38" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 38" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F4 controls output 2" CV="38" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 38" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F4 controls output 3" CV="38" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 38" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F4 controls output 4" CV="38" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 38" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F4 controls output 5" CV="38" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 38" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
- 
-        <variable label="F5 controls output 1" CV="39" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 39" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F5 controls output 2" CV="39" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 39" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F5 controls output 3" CV="39" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 39" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F5 controls output 4" CV="39" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 39" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F5 controls output 5" CV="39" default="1" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 39" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
- 
-        <variable label="F6 controls output 1" CV="40" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 40" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F6 controls output 2" CV="40" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 40" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F6 controls output 3" CV="40" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 40" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F6 controls output 4" CV="40" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 40" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F6 controls output 5" CV="40" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 40" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
- 
-        <variable label="F7 controls output 1" CV="41" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 41" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F7 controls output 2" CV="41" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 41" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 41" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F7 controls output 4" CV="41" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 41" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F7 controls output 5" CV="41" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 41" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-        <variable label="F8 controls output 1" CV="42" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 42" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F8 controls output 2" CV="42" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 42" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F8 controls output 3" CV="42" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 42" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F8 controls output 4" CV="42" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 42" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F8 controls output 5" CV="42" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 42" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-        <variable label="F9 controls output 1" CV="43" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 43" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F9 controls output 2" CV="43" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 43" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F9 controls output 3" CV="43" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 43" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F9 controls output 4" CV="43" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 43" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F9 controls output 5" CV="43" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 43" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-        <variable label="F10 controls output 1" CV="44" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 44" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F10 controls output 2" CV="44" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 44" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F10 controls output 3" CV="44" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 44" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F10 controls output 4" CV="44" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 44" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F10 controls output 5" CV="44" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 44" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-        <variable label="F11 controls output 1" CV="45" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 45" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F11 controls output 2" CV="45" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 45" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F11 controls output 3" CV="45" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 45" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F11 controls output 4" CV="45" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 45" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F11 controls output 5" CV="45" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 45" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-        <variable label="F12 controls output 1" CV="46" mask="XXXXXXXV" minOut="1" minFn="3" tooltip="CV 46" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F12 controls output 2" CV="46" mask="XXXXXXVX" minOut="2" minFn="3" tooltip="CV 46" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F12 controls output 3" CV="46" mask="XXXXXVXX" minOut="3" minFn="3" tooltip="CV 46" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F12 controls output 4" CV="46" mask="XXXXVXXX" minOut="4" minFn="3" tooltip="CV 46" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-        <variable label="F12 controls output 5" CV="46" mask="XXXVXXXX" minOut="5" minFn="3" tooltip="CV 46" > <enumVal>
-            <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-		<variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV"
-			item="Motor type" default="0"
-			comment="Range 0-5">
-			<enumVal>
-				<enumChoice choice="0 "/>
-				<enumChoice choice="1 "/>
-				<enumChoice choice="2 "/>
-				<enumChoice choice="3 "/>
-				<enumChoice choice="4 "/>
-				<enumChoice choice="5 "/>
-			</enumVal>
-			</variable>
-		
-		<variable label="EMF Switch" CV="50" mask="XXVXXXXX" 
-			item="EMF Switch" default="0">
-			<enumVal>
-				<enumChoice choice="Inactive"/>
-				<enumChoice choice="Active"/>
-			</enumVal>
-		</variable>
-
-		<variable label="BEMF Control" CV="50" mask="XVXXXXXX" 
-			item="BEMF Control" default="0">
-			<enumVal>
-				<enumChoice choice="On "/>
-				<enumChoice choice="Off"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Motor Drive Frequency" CV="50" mask="VXXXXXXX" 
-			item="Motor Frequency" default="0">
-			<enumVal>
-				<enumChoice choice="High "/>
-				<enumChoice choice="Low "/>
-			</enumVal>
-		</variable>
-
-		<variable label="Constant Braking Distance" CV="51" mask="XXXXXXXV"
-			item="Constant Braking" default="0">
-  			<enumVal>
-				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Enabled"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Automatic Braking Control" CV="51" mask="XXXXXXVX"
-			item="ABC" default="0">
-  			<enumVal>
-				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Enabled"/>
-			</enumVal>
-		</variable>
-
-		<variable label="ABC direction dependancy" CV="51" mask="XXXXXVXX"
-			item="ABC Direction" default="0">
-  			<enumVal>
-				<enumChoice choice="Enabled"/>
-				<enumChoice choice="Disabled"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Push-Pull without Stop" CV="51" mask="XXXXVXXX"
-			item="Push-Pull w/o Stop" default="0">
-  			<enumVal>
-				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Enabled"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Push-Pull with Stop" CV="51" mask="XXXVXXXX"
-			item="Push-Pull w Stop" default="0">
-  			<enumVal>
-				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Enabled"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Stop on DC (RailCom off only)" CV="51" mask="XXVXXXXX"
-			item="Stop on DC" default="0">
-  			<enumVal>
-				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Enabled"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Constant braking distance with speed step 0" CV="51" mask="VXXXXXXX"
-			item="Constant braking" default="0">
-  			<enumVal>
-				<enumChoice choice="Disabled"/>
-				<enumChoice choice="Enabled"/>
-			</enumVal>
-		</variable>
-        
-		<variable label="Braking Distance in Constant Mode (0-255)" CV="52"
-			item="Braking Distance" default="50"
-			comment ="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Slow approach speed with ABC (0-255)" CV="53"
-			item="ABC Approach Speed" default="48"
-			comment ="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-	
-		<variable label="Push-Pull stop time (0-255 seconds) " CV="54"
-			item="Push-Pull Stop Time" default="4"
-			comment ="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Dimming Intensity, Output A (0-255)" CV="55"
-			item="Global lighting option 1" default="255"
-			tooltip="CV55 - Sets intensity of dimmed headlight (larger number = brighter light)">
-			<decVal min="0" max="255"/>
-		</variable>
-	
-		<variable label="Dimming Intensity, Output B (0-255)" CV="56"
-			item="Global lighting option 2" default="255"
-			tooltip="CV56 - Sets intensity of dimmed headlight (larger number = brighter light)">
-			<decVal min="0" max="255"/>
-		</variable>
-
-
-		<variable label="Enable dimming with F1" CV="57" mask="XXXXXXXV"
-			tooltip="Toggle light dimming 'on' using F1">
-			<enumVal> <enumChoice choice="No"/>	<enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable dimming with F2" CV="57" mask="XXXXXXVX"
-			tooltip="Toggle light dimming 'on' using F2">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable dimming with F3" CV="57" mask="XXXXXVXX"
-			tooltip="Toggle light dimming 'on' using F3">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable dimming with F4" CV="57" mask="XXXXVXXX"
-			tooltip="Toggle light dimming 'on' using F4">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable dimming with F5" CV="57" mask="XXXVXXXX"
-			tooltip="Toggle light dimming 'on' using F5">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable dimming with F6" CV="57" mask="XXVXXXXX"
-			tooltip="Toggle light dimming 'on' using F6">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable dimming with F7" CV="57" mask="XVXXXXXX"
-			tooltip="Toggle light dimming 'on' using F7">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable dimming with F8" CV="57" mask="VXXXXXXX"
-			tooltip="Toggle light dimming 'on' using F8">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-
-		<variable label="Enable Low Speed with F1" CV="58" mask="XXXXXXXV"
-			tooltip="Toggle low speed switching gear 'on' using F1">
-			<enumVal> <enumChoice choice="No"/>	<enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable Low Speed with F2" CV="58" mask="XXXXXXVX"
-			tooltip="Toggle low speed switching gear 'on' using F2">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable Low Speed with F3" CV="58" mask="XXXXXVXX"
-			default="1" tooltip="Toggle low speed switching gear 'on' using F3">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable Low Speed with F4" CV="58" mask="XXXXVXXX"
-			tooltip="Toggle low speed switching gear 'on' using F4">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable Low Speed with F5" CV="58" mask="XXXVXXXX"
-			tooltip="Toggle low speed switching gear 'on' using F5">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable Low Speed with F6" CV="58" mask="XXVXXXXX"
-			tooltip="Toggle low speed switching gear 'on' using F6">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable Low Speed with F7" CV="58" mask="XVXXXXXX"
-			tooltip="Toggle low speed switching gear 'on' using F7">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Enable Low Speed with F8" CV="58" mask="VXXXXXXX"
-			tooltip="Toggle low speed switching gear 'on' using F8">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-
-		<variable label="Disable momentum with F1" CV="59" mask="XXXXXXXV"
-			tooltip="Toggle acceleration and deceleration delays 'off' using F1">
-			<enumVal> <enumChoice choice="No"/>	<enumChoice choice="Yes"/>	</enumVal>
-		</variable>
-		<variable label="Disable momentum with F2" CV="59" mask="XXXXXXVX"
-			tooltip="Toggle acceleration and deceleration delays 'off' using F2">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Disable momentum with F3" CV="59" mask="XXXXXVXX"
-			tooltip="Toggle acceleration and deceleration delays 'off' using F3">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Disable momentum with F4" CV="59" mask="XXXXVXXX"
-			default="1" tooltip="Toggle acceleration and deceleration delays 'off' using F4">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Disable momentum with F5" CV="59" mask="XXXVXXXX"
-			tooltip="Toggle acceleration and deceleration delays 'off' using F5">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Disable momentum with F6" CV="59" mask="XXVXXXXX"
-			tooltip="Toggle acceleration and deceleration delays 'off' using F6">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Disable momentum with F7" CV="59" mask="XVXXXXXX"
-			tooltip="Toggle acceleration and deceleration delays 'off' using F7">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Disable momentum with F8" CV="59" mask="VXXXXXXX"
-			tooltip="Toggle acceleration and deceleration delays 'off' using F8">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-
-		<variable label="Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) " CV="60"
-			item="Lighting effects A/B" default="0"
-			comment ="Range 0-44">
-			<decVal min="0" max="44"/>
-		</variable>
-
-		<variable label="Toggle effect (outputs A/B) with F1" CV="61" mask="XXXXXXXV"
-			tooltip="Toggle Lighting Effect for outputs A and B 'off' using F1">
-			<enumVal> <enumChoice choice="No"/>	<enumChoice choice="Yes"/>	</enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs A/B) with F2" CV="61" mask="XXXXXXVX"
-			tooltip="Toggle Lighting Effect for outputs A and B 'off' using F2">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs A/B) with F3" CV="61" mask="XXXXXVXX"
-			tooltip="Toggle Lighting Effect for outputs A and B 'off' using F3">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs A/B) with F4" CV="61" mask="XXXXVXXX"
-			tooltip="Toggle Lighting Effect for outputs A and B 'off' using F4">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs A/B) with F5" CV="61" mask="XXXVXXXX"
-			tooltip="Toggle Lighting Effect for outputs A and B 'off' using F5">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs A/B) with F6" CV="61" mask="XXVXXXXX"
-			tooltip="Toggle Lighting Effect for outputs A and B 'off' using F6">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs A/B) with F7" CV="61" mask="XVXXXXXX"
-			tooltip="Toggle Lighting Effect for outputs A and B 'off' using F7">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs A/B) with F8" CV="61" mask="VXXXXXXX"
-			tooltip="Toggle Lighting Effect for outputs A and B 'off' using F8">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-
-		<variable label="Enter the value corresponding to the desired lighting effect for D/C outputs (0-53) " CV="62"
-			minOut="4" 
-			item="Lighting effects C/D" default="0"
-			comment ="Range 0-53">
-			<decVal min="0" max="53"/>
-		</variable>
-
-		<variable label="Flashing frequency for outputs C and D (255 = .13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)" CV="63"
-			minOut="4" 
-			tooltip="Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))"
-			item="Function 3 options" default="32"
-			comment ="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Toggle effect (outputs C/D) with F1" CV="64" mask="XXXXXXXV" 
-			minOut="4" 
-			tooltip="Toggle Lighting Effect for outputs C and D 'off' using F1">
-			<enumVal> <enumChoice choice="No"/>	<enumChoice choice="Yes"/>	</enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs C/D) with F2" CV="64" mask="XXXXXXVX"
-			minOut="4"  
-			tooltip="Toggle Lighting Effect for outputs C and D 'off' using F2">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs C/D) with F3" CV="64" mask="XXXXXVXX"
-			minOut="4" 
-			tooltip="Toggle Lighting Effect for outputs C and D 'off' using F3">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs C/D) with F4" CV="64" mask="XXXXVXXX"
-			minOut="4" 
-			tooltip="Toggle Lighting Effect for outputs C and D 'off' using F4">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs C/D) with F5" CV="64" mask="XXXVXXXX"
-			minOut="4" 
-			tooltip="Toggle Lighting Effect for outputs C and D 'off' using F5">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs C/D) with F6" CV="64" mask="XXVXXXXX"
-			minOut="4" 
-			tooltip="Toggle Lighting Effect for outputs C and D 'off' using F6">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs C/D) with F7" CV="64" mask="XVXXXXXX"
-			minOut="4" 
-			tooltip="Toggle Lighting Effect for outputs C and D 'off' using F7">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		<variable label="Toggle effect (outputs C/D) with F8" CV="64" mask="VXXXXXXX"
-			minOut="4" 
-			tooltip="Toggle Lighting Effect for outputs C and D 'off' using F8">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-
-		<variable label="Speed Table" CV="67">
-			<speedTableVal/>
-		</variable>
-
-		<variable label="User Identification #1" CV="105"
-			item="User Id #1" default="255"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="User Identification #2" CV="106"
-			item="User Id #2" default="255"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>	
-
-		<variable label="Motor timeout on loss of DCC (Gold only)" CV="112"
-			tooltip="Duration of motor timeout t = value * 16 ms"
-			item="Motor Timeout" default="16"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>	
-
-		<variable label="Minimum PWM (Types 4, 5 only)" CV="113"
-			item="Minimum PWM Value" default="40"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Duty Cycle (Types 4, 5 only)" CV="114"
-			item="Motor Duty Cycle" default="10"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-        
-        <variable label="Asymetric DCC Sensitivity" CV="115"
-            item="Asymetric DCC Sens" default="12"
-            comment="Range 0-255">
-            <decVal min="0" max="255"/>
-        </variable>
-
-		<variable label="Dimming Intensity, Output C (0-255)" CV="116"
-			item="Global lighting option 3" default="255"
-            minOut="3"
-			tooltip="CV116 - Sets intensity of dimmed headlight (larger number = brighter light)">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Dimming Intensity, Output D (0-255)" CV="117"
-			item="Global lighting option 4" default="255"
-            minOut="4"
-			tooltip="CV117 - Sets intensity of dimmed headlight (larger number = brighter light)">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Dimming Intensity, Output E (0-255)" CV="118"
-			item="Global lighting option 5" default="255"
-            minOut="5"
-			tooltip="CV118 - Sets intensity of dimmed headlight (larger number = brighter light)">
-			<decVal min="0" max="255"/>
-		</variable>
-        
-
-		<variable label="CV indicator for SUSI, offset 800 (Gold only)" CV="126"
-			item="SUSI Indicator" default="102"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="CV transport device for SUSI (Gold only)" CV="127"
-			minOut="4" 
-			item="SUSI transport" default="0"
-			comment="Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-
-		<variable label="Decoder Software Version (read only): " CV="128" readOnly="yes"
-			item="Decoder Software Version" default="5">
-			<decVal/>
-		</variable>
-		
-        <variable label="Function 1 Forwards" CV="35"
-            tooltip="cv35; add A + B + C + D + E; range 0-31"
-			item="F1FMap" default="4"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-        
-        
-        <variable label="Function 1 Backwards" CV="47"
-            tooltip="cv47; add A + B + C + D + E; range 0-31"
-			item="F1RMap" default="4"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Coupling control forward" CV="145"
-            tooltip="cv145; add A + B + C + D + E; range 0-31"
-			item="CFOR" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-        
-        
-        <variable label="Coupling control back" CV="146"
-            tooltip="cv146; add A + B + C + D + E; range 0-31"
-			item="CBACK" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-        
-		<variable label="    Coupler kick duration" CV="147"
-			item="CKICK" default="30"
-			tooltip="cv147, Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="    Decoupling movement" CV="148"
-			item="CMOVE" default="80"
-			tooltip="cv148, Range 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
-
-
-   
-        <variable label="Function 13" CV="129"
-            tooltip="cv129; add A + B + C + D + E; range 0-31"
-			item="F13Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 14" CV="130"
-            tooltip="cv130; add A + B + C + D + E; range 0-31"
-			item="F14Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 15" CV="131"
-            tooltip="cv131; add A + B + C + D + E; range 0-31"
-			item="F15Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 16" CV="132"
-            tooltip="cv132; add A + B + C + D + E; range 0-31"
-			item="F16Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 17" CV="133"
-            tooltip="cv133; add A + B + C + D + E; range 0-31"
-			item="F17Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 18" CV="134"
-            tooltip="cv134; add A + B + C + D + E; range 0-31"
-			item="F18Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 19" CV="135"
-            tooltip="cv135; add A + B + C + D + E; range 0-31"
-			item="F19Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 20" CV="136"
-            tooltip="cv136; add A + B + C + D + E; range 0-31"
-			item="F20Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 21" CV="137"
-            tooltip="cv137; add A + B + C + D + E; range 0-31"
-			item="F21Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 22" CV="138"
-            tooltip="cv138; add A + B + C + D + E; range 0-31"
-			item="F22Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 23" CV="139"
-            tooltip="cv139; add A + B + C + D + E; range 0-31"
-			item="F23Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 24" CV="140"
-            tooltip="cv140; add A + B + C + D + E; range 0-31"
-			item="F24Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 25" CV="141"
-            tooltip="cv141; add A + B + C + D + E; range 0-31"
-			item="F25Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 26" CV="142"
-            tooltip="cv142; add A + B + C + D + E; range 0-31"
-			item="F26Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 27" CV="143"
-            tooltip="cv143; add A + B + C + D + E; range 0-31"
-			item="F27Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        <variable label="Function 28" CV="144"
-            tooltip="cv144; add A + B + C + D + E; range 0-31"
-			item="F28Map" default="0"
-			comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-        
-        
-	</variables>
-
-        <resets>
-           <factReset label="Reset All CVs" CV="8" default="33"/>
-        </resets>
-
-
-
-</decoder>
-
-<pane name="Lenz Functions">
-	<column>
-		<row>
-			<column>
-				<label label=" "/>
-				<label label=" "/>
-				<label label="Select which function"/>
-				<label label="disables momentum:"/>
-				<label label=" "/>
-
-				<display item="Disable momentum with F1" format="checkbox"/>
-				<display item="Disable momentum with F2" format="checkbox"/>
-				<display item="Disable momentum with F3" format="checkbox"/>
-				<display item="Disable momentum with F4" format="checkbox"/>
-				<display item="Disable momentum with F5" format="checkbox"/>
-				<display item="Disable momentum with F6" format="checkbox"/>
-				<display item="Disable momentum with F7" format="checkbox"/>
-				<display item="Disable momentum with F8" format="checkbox"/>				
-			</column>
-
-			<column>
-				<label label="        "/>
-			</column>
-
-			<column>
-				<label label=" "/>
-				<label label=" "/>
-				<label label="Select which function"/>
-				<label label="enables switching gear:"/>
-				<label label=" "/>
-				<display item="Enable Low Speed with F1" format="checkbox"/>
-				<display item="Enable Low Speed with F2" format="checkbox"/>
-				<display item="Enable Low Speed with F3" format="checkbox"/>
-				<display item="Enable Low Speed with F4" format="checkbox"/>
-				<display item="Enable Low Speed with F5" format="checkbox"/>
-				<display item="Enable Low Speed with F6" format="checkbox"/>
-				<display item="Enable Low Speed with F7" format="checkbox"/>
-				<display item="Enable Low Speed with F8" format="checkbox"/>							
-			</column>
-		
-			<column>
-				<label label="        "/>
-			</column>
-
-			<column>
-				<label label=" "/>
-				<label label=" "/>
-				<label label="Select which function enables"/>
-				<label label="light dimming for A and B outputs:"/>
-				<label label=" "/>
-				<display item="Enable dimming with F1" format="checkbox"/>
-				<display item="Enable dimming with F2" format="checkbox"/>
-				<display item="Enable dimming with F3" format="checkbox"/>
-				<display item="Enable dimming with F4" format="checkbox"/>
-				<display item="Enable dimming with F5" format="checkbox"/>
-				<display item="Enable dimming with F6" format="checkbox"/>
-				<display item="Enable dimming with F7" format="checkbox"/>
-				<display item="Enable dimming with F8" format="checkbox"/>							
-			</column>
-		</row>
-
-		<row>				
-			<column>				
-				<label label=" "/>
-				<label label=" "/>
-				<label label="Select which function toggles"/>
-				<label label="lighting effects on/off for outputs A and B:"/>
-				<label label=" "/>
-
-				<display item="Toggle effect (outputs A/B) with F1" format="checkbox"/>
-				<display item="Toggle effect (outputs A/B) with F2" format="checkbox"/>
-				<display item="Toggle effect (outputs A/B) with F3" format="checkbox"/>
-				<display item="Toggle effect (outputs A/B) with F4" format="checkbox"/>
-				<display item="Toggle effect (outputs A/B) with F5" format="checkbox"/>
-				<display item="Toggle effect (outputs A/B) with F6" format="checkbox"/>
-				<display item="Toggle effect (outputs A/B) with F7" format="checkbox"/>
-				<display item="Toggle effect (outputs A/B) with F8" format="checkbox"/>
-				<label label=" "/>				
-			</column>
-
-			<column>
-				<label label="        "/>
-			</column>
-
-			<column>
-				<label label=" "/>
-				<label label=" "/>
-				<label label="Select which function toggles" />
-				<label label="lighting effects on/off for outputs C and D:"/>
-				<label label=" "/>
-				<display item="Toggle effect (outputs C/D) with F1" format="checkbox"/>
-				<display item="Toggle effect (outputs C/D) with F2" format="checkbox"/>
-				<display item="Toggle effect (outputs C/D) with F3" format="checkbox"/>
-				<display item="Toggle effect (outputs C/D) with F4" format="checkbox"/>
-				<display item="Toggle effect (outputs C/D) with F5" format="checkbox"/>
-				<display item="Toggle effect (outputs C/D) with F6" format="checkbox"/>
-				<display item="Toggle effect (outputs C/D) with F7" format="checkbox"/>
-				<display item="Toggle effect (outputs C/D) with F8" format="checkbox"/>
-				<label label=" "/>							
-			</column>
-		</row>
-	</column>
-</pane>
-
-<pane name="Lenz Extended Mapping">
-	<column>
-        <separator/>
-        <row>
-            <column>
-                <label label="F1 Forward/backward mapping.               "/>
-                <label label=" "/>
-                <label label="To tie an output to a F1 forward or backward, add in the value of the letter:A=1; B=2; C=4; D=8; E=16"/>
-                <label label=" "/>
-                <label label="Note that the range for each Function entry is 0 to 31."/>
-            </column>
-			<column>
-				<label label=" "/>
-			</column>
-            
-       </row>
-       <separator/>
-     
-        <row>
-			<column>
-                <display item="F1FMap" />
-            </column>
-            <column>
-                <label label="                       "/>
-            </column>
-            <column>
-                <display item="F1RMap" />
-            </column>
-			<column>
-				<label label="                              "/>
-			</column>
-        </row>
-        <separator/>
-
-       
-       
-        <row>
-            <column>
-                <label label=" "/>
-                <label label="F13-F28 mapping"/>
-                <label label=" "/>
-                <label label="To tie an output to a Function, add in the value of the letter:A=1; B=2; C=4; D=8; E=16"/>
-                <label label=" "/>
-                <label label="Note that the range for each Function entry is 0 to 31."/>
-            </column>
-     
-			<column>
-				<label label="        "/>
-			</column>
-            
-
-        </row>
-        
-            <separator/>            
-        <row>
-			<column>
-                <display item="F13Map" />
-                <display item="F17Map" />
-                <display item="F21Map" />
-                <display item="F25Map" />
-            </column>
-
-			<column>
-                <display item="F14Map" />
-                <display item="F18Map" />
-                <display item="F22Map" />
-                <display item="F26Map" />
-            </column>
-
-			<column>
-                <display item="F15Map" />
-                <display item="F19Map" />
-                <display item="F23Map" />
-                <display item="F27Map" />
-            </column>
-
-			<column>
-                <display item="F16Map" />
-                <display item="F20Map" />
-                <display item="F24Map" />
-                <display item="F28Map" />
-            </column>
-			<column>
-				<label label="                "/>
-			</column>
-		</row>
-        <separator/>
-            
-        <row>
-            <column>
-                <label label=" "/>
-                <label label="Coupling, decoupling              "/>
-                <label label=" "/>
-                <label label="To tie an output to a F1 forward or backward, add in the value of the letter:A=1; B=2; C=4; D=8; E=16"/>
-                <label label=" "/>
-                <label label="Note that the range for each Function entry is 0 to 31."/>
-            </column>
-			<column>
-				<label label=" "/>
-			</column>
-       </row>
-       <separator/>
-        <row>
-			<column>
-                <display item="CFOR" />
-            </column>
-            <column>
-                <label label="                       "/>
-            </column>
-            <column>
-                <display item="CBACK" />
-            </column>
-			<column>
-				<label label="                              "/>
-			</column>
-        </row>
-        
-        <row>
-			<column>
-                <display item="CKICK" />
-            </column>
-            <column>
-                <label label="                       "/>
-            </column>
-            <column>
-                <display item="CMOVE" />
-            </column>
-			<column>
-				<label label="                              "/>
-			</column>
-        </row>
-
-        
-        
-        <separator/>
-
-
+  <decoder>
+    <family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="95" lowVersionID="95" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
+      <model model="Gold small wired - #10410-xx" numOuts="2" numFns="14" lowVersionID="95" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="HO">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+      </model>
+      <model model="Gold small plugin - #10411-xx" numOuts="2" numFns="14" lowVersionID="95" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="HO">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+        <output name="3" label="C - Green"/>
+        <output name="4" label="D - Purple"/>
+        <output name="5" label="E - Brown"/>
+      </model>
+      <model model="Gold JST - #10432-xx" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+        <output name="3" label="C - Green"/>
+        <output name="4" label="D - Purple"/>
+        <output name="5" label="E - Brown"/>
+      </model>
+      <model model="Gold NMRA - #10433-01" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+        <output name="3" label="C - Green"/>
+        <output name="4" label="D - Purple"/>
+        <output name="5" label="E - Brown"/>
+      </model>
+      <model model="Gold MAXI - #10440-xx" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="3.0A (peak=5.0A)" formFactor="HO">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+        <output name="3" label="C - Green"/>
+        <output name="4" label="D - Purple"/>
+        <output name="5" label="E - Brown"/>
+      </model>
+      <model model="Silver direct+ - #10330-01" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+        <output name="3" label="C - Green"/>
+        <output name="4" label="D - Purple"/>
+        <output name="5" label="E - Brown"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>
+      <variable label="Decoder Version No: " CV="7" readOnly="yes" item="Decoder Version" default="95">
+        <decVal/>
+      </variable>
+      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer" default="99">
+        <decVal/>
+      </variable>
+      <variable label="Manufacturer ID - Reset" CV="8" item="Reset" comment="Writing a value of 8 or 33 will reset decoder to factory defaults">
+        <decVal/>
+      </variable>
+      <variable label="Back EMF Repetition Rate (0-63)" CV="9" item="Total PWM Period" default="15" comment="Range 0-63">
+        <decVal min="0" max="63"/>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
+      <!-- this were moved earlier to fix a Xerces XInclude bug that would not -->
+      <!-- allow you to next inclusion of parts/enum-disabledEnabled.xml if it -->
+      <!-- had been included first directly from the top level of the XML file -->
+      <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/railcom_cv28_29.xml"/>
+
+      <variable label="Locomotive Direction in Forward" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
+        <enumVal>
+          <enumChoice choice="Normal"/>
+          <enumChoice choice="Reversed"/>
+        </enumVal>
+      </variable>
+      <variable label="Speed Steps (Headlight Mode)" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+        <enumVal>
+          <enumChoice choice="14"/>
+          <enumChoice choice="28/128"/>
+        </enumVal>
+      </variable>
+      <variable label="Loco can operate on conventional DC" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable label="Speed Table Selection" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+        <enumVal>
+          <enumChoice choice="Use Vstart, Vmid, Vhigh"/>
+          <enumChoice choice="Use the Speed Table"/>
+        </enumVal>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+        <enumVal>
+          <enumChoice choice="2 digit addressing"/>
+          <enumChoice choice="4 digit addressing"/>
+        </enumVal>
+      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>
+
+      <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
+        <enumVal>
+          <enumChoice choice="0 "/>
+          <enumChoice choice="1 "/>
+          <enumChoice choice="2 "/>
+          <enumChoice choice="3 "/>
+          <enumChoice choice="4 "/>
+          <enumChoice choice="5 "/>
+        </enumVal>
+      </variable>
+      <variable label="EMF Switch" CV="50" mask="XXVXXXXX" item="EMF Switch" default="0">
+        <enumVal>
+          <enumChoice choice="Inactive"/>
+          <enumChoice choice="Active"/>
+        </enumVal>
+      </variable>
+      <variable label="BEMF Control" CV="50" mask="XVXXXXXX" item="BEMF Control" default="0">
+        <enumVal>
+          <enumChoice choice="On "/>
+          <enumChoice choice="Off"/>
+        </enumVal>
+      </variable>
+      <variable label="Motor Drive Frequency" CV="50" mask="VXXXXXXX" item="Motor Frequency" default="0">
+        <enumVal>
+          <enumChoice choice="High "/>
+          <enumChoice choice="Low "/>
+        </enumVal>
+      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
+
+      <variable label="Constant braking distance with speed step 0" CV="51" mask="VXXXXXXX" item="Constant braking" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
+
+      <variable label="Dimming Intensity, Output A (0-255)" CV="55" item="Global lighting option 1" default="255" tooltip="CV55 - Sets intensity of dimmed headlight (larger number = brighter light)">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Dimming Intensity, Output B (0-255)" CV="56" item="Global lighting option 2" default="255" tooltip="CV56 - Sets intensity of dimmed headlight (larger number = brighter light)">
+        <decVal min="0" max="255"/>
+      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/fn_ctrl_57_59.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/lighting_cv60_cv64.xml"/>
+
+      <variable label="Speed Table" CV="67">
+	     <speedTableVal/>
+	  </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+
+      <variable label="Motor timeout on loss of DCC (Gold only)" CV="112" tooltip="Duration of motor timeout t = value * 16 ms" item="Motor Timeout" default="16" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Minimum PWM (Types 4, 5 only)" CV="113" item="Minimum PWM Value" default="40" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Duty Cycle (Types 4, 5 only)" CV="114" item="Motor Duty Cycle" default="10" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Asymetric DCC Sensitivity" CV="115" item="Asymetric DCC Sens" default="12" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Dimming Intensity, Output C (0-255)" CV="116" item="Global lighting option 3" default="255" minOut="3" tooltip="CV116 - Sets intensity of dimmed headlight (larger number = brighter light)">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Dimming Intensity, Output D (0-255)" CV="117" item="Global lighting option 4" default="255" minOut="4" tooltip="CV117 - Sets intensity of dimmed headlight (larger number = brighter light)">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Dimming Intensity, Output E (0-255)" CV="118" item="Global lighting option 5" default="255" minOut="5" tooltip="CV118 - Sets intensity of dimmed headlight (larger number = brighter light)">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="CV indicator for SUSI, offset 800 (Gold only)" CV="126" item="SUSI Indicator" default="102" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="CV transport device for SUSI (Gold only)" CV="127" minOut="4" item="SUSI transport" default="0" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Decoder Software Version (read only): " CV="128" readOnly="yes" item="Decoder Software Version" default="5">
+        <decVal/>
+      </variable>
+      <variable label="Function 1 Forwards" CV="35" tooltip="cv35; add A + B + C + D + E; range 0-31" item="F1FMap" default="4" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 1 Backwards" CV="47" tooltip="cv47; add A + B + C + D + E; range 0-31" item="F1RMap" default="4" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Coupling control forward" CV="145" tooltip="cv145; add A + B + C + D + E; range 0-31" item="CFOR" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Coupling control back" CV="146" tooltip="cv146; add A + B + C + D + E; range 0-31" item="CBACK" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="    Coupler kick duration" CV="147" item="CKICK" default="30" tooltip="cv147, Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="    Decoupling movement" CV="148" item="CMOVE" default="80" tooltip="cv148, Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Function 13" CV="129" tooltip="cv129; add A + B + C + D + E; range 0-31" item="F13Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 14" CV="130" tooltip="cv130; add A + B + C + D + E; range 0-31" item="F14Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 15" CV="131" tooltip="cv131; add A + B + C + D + E; range 0-31" item="F15Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 16" CV="132" tooltip="cv132; add A + B + C + D + E; range 0-31" item="F16Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 17" CV="133" tooltip="cv133; add A + B + C + D + E; range 0-31" item="F17Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 18" CV="134" tooltip="cv134; add A + B + C + D + E; range 0-31" item="F18Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 19" CV="135" tooltip="cv135; add A + B + C + D + E; range 0-31" item="F19Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 20" CV="136" tooltip="cv136; add A + B + C + D + E; range 0-31" item="F20Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 21" CV="137" tooltip="cv137; add A + B + C + D + E; range 0-31" item="F21Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 22" CV="138" tooltip="cv138; add A + B + C + D + E; range 0-31" item="F22Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 23" CV="139" tooltip="cv139; add A + B + C + D + E; range 0-31" item="F23Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 24" CV="140" tooltip="cv140; add A + B + C + D + E; range 0-31" item="F24Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 25" CV="141" tooltip="cv141; add A + B + C + D + E; range 0-31" item="F25Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 26" CV="142" tooltip="cv142; add A + B + C + D + E; range 0-31" item="F26Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 27" CV="143" tooltip="cv143; add A + B + C + D + E; range 0-31" item="F27Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Function 28" CV="144" tooltip="cv144; add A + B + C + D + E; range 0-31" item="F28Map" default="0" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33"/>
+    </resets>
+  </decoder>
+
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
+
+  <pane name="Lenz Extended Mapping">
+    <column>
+      <separator/>
+      <row>
+        <column>
+          <label label="F1 Forward/backward mapping.               "/>
+          <label label=" "/>
+          <label label="To tie an output to a F1 forward or backward, add in the value of the letter:A=1; B=2; C=4; D=8; E=16"/>
+          <label label=" "/>
+          <label label="Note that the range for each Function entry is 0 to 31."/>
+        </column>
+        <column>
+          <label label=" "/>
+        </column>
+      </row>
+      <separator/>
+      <row>
+        <column>
+          <display item="F1FMap"/>
+        </column>
+        <column>
+          <label label="                       "/>
+        </column>
+        <column>
+          <display item="F1RMap"/>
+        </column>
+        <column>
+          <label label="                              "/>
+        </column>
+      </row>
+      <separator/>
+      <row>
+        <column>
+          <label label=" "/>
+          <label label="F13-F28 mapping"/>
+          <label label=" "/>
+          <label label="To tie an output to a Function, add in the value of the letter:A=1; B=2; C=4; D=8; E=16"/>
+          <label label=" "/>
+          <label label="Note that the range for each Function entry is 0 to 31."/>
+        </column>
+        <column>
+          <label label="        "/>
+        </column>
+      </row>
+      <separator/>
+      <row>
+        <column>
+          <display item="F13Map"/>
+          <display item="F17Map"/>
+          <display item="F21Map"/>
+          <display item="F25Map"/>
+        </column>
+        <column>
+          <display item="F14Map"/>
+          <display item="F18Map"/>
+          <display item="F22Map"/>
+          <display item="F26Map"/>
+        </column>
+        <column>
+          <display item="F15Map"/>
+          <display item="F19Map"/>
+          <display item="F23Map"/>
+          <display item="F27Map"/>
+        </column>
+        <column>
+          <display item="F16Map"/>
+          <display item="F20Map"/>
+          <display item="F24Map"/>
+          <display item="F28Map"/>
+        </column>
+        <column>
+          <label label="                "/>
+        </column>
+      </row>
+      <separator/>
+      <row>
+        <column>
+          <label label=" "/>
+          <label label="Coupling, decoupling              "/>
+          <label label=" "/>
+          <label label="To tie an output to a F1 forward or backward, add in the value of the letter:A=1; B=2; C=4; D=8; E=16"/>
+          <label label=" "/>
+          <label label="Note that the range for each Function entry is 0 to 31."/>
+        </column>
+        <column>
+          <label label=" "/>
+        </column>
+      </row>
+      <separator/>
+      <row>
+        <column>
+          <display item="CFOR"/>
+        </column>
+        <column>
+          <label label="                       "/>
+        </column>
+        <column>
+          <display item="CBACK"/>
+        </column>
+        <column>
+          <label label="                              "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="CKICK"/>
+        </column>
+        <column>
+          <label label="                       "/>
+        </column>
+        <column>
+          <display item="CMOVE"/>
+        </column>
+        <column>
+          <label label="                              "/>
+        </column>
+      </row>
+      <separator/>
     </column>
-</pane>
+  </pane>
+  <pane name="Lenz">
+    <column>
+      <row>
+        <column>
+          <label label="RailCom Configuration"/>
+          <display item="RailCom Address"/>
+          <display item="RailCom Data"/>
+          <display item="RailCom Command"/>
+          <display item="Enable RailCom"/>
+          <label label=" "/>
+          <label label="Fault Indication"/>
+          <display item="Light Short"/>
+          <display item="Overheating"/>
+          <display item="Motor Short"/>
+          <label label=" "/>
+          <label label="Motor Configuration"/>
+          <display item="Motor type"/>
+          <display item="EMF Switch"/>
+          <display item="BEMF Control"/>
+          <display item="Motor Frequency"/>
+          <display item="Minimum PWM Value"/>
+          <display item="Motor Duty Cycle"/>
+          <display item="Motor Timeout"/>
+          <label label=" "/>
+        </column>
+        <column>
+          <label label="           "/>
+        </column>
+        <column>
+          <label label="Braking Configuration"/>
+          <display item="Constant Braking"/>
+          <display item="ABC"/>
+          <display item="ABC Direction"/>
+          <display item="Asymetric DCC Sens"/>
+          <display item="Push-Pull w/o Stop"/>
+          <display item="Push-Pull w Stop"/>
+          <display item="Stop on DC"/>
+          <display item="Braking Distance"/>
+          <display item="Constant braking"/>
+          <display item="ABC Approach Speed"/>
+          <display item="Push-Pull Stop Time"/>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label=" "/>
+          <label label="Tip: Constant Braking only works when momementum is enabled, and when not in switching gear"/>
+          <label label=" "/>
+          <separator/>
+          <label label=" "/>
+          <display item="Decoder Software Version"/>
+        </column>
+      </row>
+    </column>
+  </pane>
 
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
 
-
-<pane name="Lenz">
-	<column>
-		<row>
-			<column>
-				<label label="RailCom Configuration"/>
-				<display item="RailCom Address" />
-				<display item="RailCom Data" />
-				<display item="RailCom Command" />
-				<display item="Enable RailCom" />
-				<label label=" "/>
-				<label label="Fault Indication"/>
-				<display item="Light Short" />
-				<display item="Overheating" />
-				<display item="Motor Short" />
-				<label label=" "/>
-				<label label="Motor Configuration"/>
-				<display item="Motor type" />
-				<display item="EMF Switch" />
-				<display item="BEMF Control" />
-				<display item="Motor Frequency" />
-				<display item="Minimum PWM Value" />
-				<display item="Motor Duty Cycle" />
-				<display item="Motor Timeout" />
-				<label label=" "/>								
-			</column>
-
-			<column>
-				<label label="           "/>
-			</column>
-
-			<column>
-				<label label="Braking Configuration"/>
-				<display item="Constant Braking" />
-				<display item="ABC" />
-				<display item="ABC Direction" />
-                <display item="Asymetric DCC Sens" />
-				<display item="Push-Pull w/o Stop" />
-				<display item="Push-Pull w Stop" />
-				<display item="Stop on DC" />
-				<display item="Braking Distance" />
-                <display item="Constant braking" />
-				<display item="ABC Approach Speed" />
-				<display item="Push-Pull Stop Time" />
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>											
-			</column>
-		</row>
-
-		<row>	
-			<column>
-				<label label=" "/>
-				<label label="Tip: Constant Braking only works when momementum is enabled, and when not in switching gear"/>
-				<label label=" "/>
-				<separator/>
-				<label label=" "/>
-		   		<display item="Decoder Software Version" />
-			</column>
- 		</row>
-	</column>
-</pane>
-
-
-<pane name="Lenz Lighting">
-	<column>
-		<row>
-			<column>
-				<label label=" "/>
-				<label label="The CV values on this page are unique in that each CV represents the lighting selection for two different outputs."/>
-				<label label="The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output."/>
-				<label label=" "/>
-				<separator/>
-				<label label=" "/>
-				<label label="Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A."/>
-				<label label=" "/>
-				<separator/>
-			</column>
-		</row>
-
-		<row>
-			<column>
-				<label label=" "/>
-				<label label="The following lighting effects are"/>
-				<label label="available for outputs A and B"/>
-				<label label=" "/>
-				<label label="No effect    "/>
-				<label label="Mars light   "/>
-				<label label="Gyra light   "/>
-				<label label="Strobe       "/>
-				<label label="Double Strobe"/>
-				<label label=" "/>				
-			</column>
-
-			<column>
-				<label label="        "/>
-			</column>
-
-			<column>
-				<label label=" "/>
-				<label label="Output B"/>
-				<label label=" (Tens)"/>
-				<label label=" "/>
-				<label label="   0"/>
-				<label label="   1"/>
-				<label label="   2"/>
-				<label label="   3"/>
-				<label label="   4"/>
-				<label label=" "/>					
-			</column>
-		
-			<column>
-				<label label="        "/>
-			</column>
-
-			<column>
-				<label label=" "/>
-				<label label="Output A"/>
-				<label label=" (Ones)"/>
-				<label label=" "/>
-				<label label="   0"/>
-				<label label="   1"/>
-				<label label="   2"/>
-				<label label="   3"/>
-				<label label="   4"/>
-				<label label=" "/>							
-			</column>
-
-			<column>
-				<label label="                                                          "/>
-			</column>
-		</row>
-
-		<row>	
-			<column>
-				<display item="Lighting effects A/B" />
-				<label label=" "/>
-				<separator/>
-			</column>
-		</row>
-
-		<row>				
-			<column>				
-				<label label=" "/>
-				<label label="The following lighting effects are"/>
-				<label label="available for output D"/>
-				<label label=" "/>
-				<label label="No effect                      "/>
-				<label label="Flashing with output C         "/>
-				<label label="Flashing alternate to output C "/>
-				<label label="Flickering type 2 (less smooth)"/>
-				<label label="Flickering type 3 (excitedly)  "/>
-				<label label="                               "/>
-				<label label=" "/>
-			</column>
-
-			<column>
-				<label label="        "/>
-			</column>
-
-			<column>
-				<label label=" "/>
-				<label label="Output D"/>
-				<label label=" (Tens)"/>
-				<label label=" "/>
-				<label label="   0"/>
-				<label label="   1"/>
-				<label label="   2"/>
-				<label label="   3"/>
-				<label label="   4"/>
-				<label label=" "/>
-				<label label=" "/>
-			</column>
-		
-			<column>
-				<label label="        "/>
-			</column>
-
-			<column>
-				<label label=" "/>
-				<label label="Output C"/>
-				<label label=" (Ones)"/>
-				<label label=" "/>
-				<label label="   0"/>
-				<label label="   1"/>
-				<label label="   2"/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-			</column>
-
-			<column>
-				<label label="        "/>
-			</column>
-
-			<column>				
-				<label label=" "/>
-				<label label="The following lighting effects are"/>
-				<label label="available for output C"/>
-				<label label=" "/>
-				<label label="No effect                 "/>
-				<label label="Flashing                  "/>
-				<label label="Flickering type 1 (smooth)"/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-			</column>
-		</row>
-	
-		<row>	
-			<column>
-				<display item="Lighting effects C/D" />
-				<label label=" "/>
-			</column>
-		</row>
-	</column>
-</pane>
-
-
-<pane name="SUSI">
-	<column>
-		<row>
-			<column>
-				<label label="              S.U.S.I. Variables"/>
-				<label label=" "/>
-				<display item="SUSI Indicator" />
-				<display item="SUSI transport" />											
-			</column>		
-		</row>	
-	</column>
-</pane>
-
-
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneSUSI.xml"/>
 </decoder-config>
-
-
-
- 	  	 

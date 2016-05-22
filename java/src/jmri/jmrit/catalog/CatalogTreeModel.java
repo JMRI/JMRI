@@ -2,11 +2,13 @@
 
 package jmri.jmrit.catalog;
 
-import jmri.jmrit.XmlFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import jmri.util.FileUtil;
 
 /**
  * TreeModel used by CatalogPane to create a tree of resources.
@@ -35,7 +37,7 @@ public class CatalogTreeModel extends DefaultTreeModel {
         // we manually create the first node, rather than use
         // the routine, so we can name it.
         insertResourceNodes("resources", resourceRoot, dRoot);
-        XmlFile.ensurePrefsPresent("resources");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
         insertFileNodes("files", fileRoot, dRoot);
 
     }
@@ -117,8 +119,8 @@ public class CatalogTreeModel extends DefaultTreeModel {
      * Starting point in the .jar file for the "icons" part of the tree
      */
     static final String resourceRoot = "resources";
-    static final String fileRoot = jmri.jmrit.XmlFile.prefsDir()+"resources";
+    static final String fileRoot = FileUtil.getUserFilesPath()+"resources";
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogTreeModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(CatalogTreeModel.class.getName());
 }
 

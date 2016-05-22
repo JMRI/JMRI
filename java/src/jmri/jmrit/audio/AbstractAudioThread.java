@@ -60,10 +60,12 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
         alive(SET, false);
     }
 
+    @Override
     public boolean alive() {
         return alive(GET, NA);
     }
     
+    @Override
     public void die() {
         die(SET, true);
     }

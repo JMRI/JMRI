@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.audio.swing.AudioSourceFrame;
 import jmri.jmrit.audio.swing.AudioListenerFrame;
 import jmri.jmrit.audio.swing.AudioBufferFrame;
@@ -71,7 +73,7 @@ public class AudioTableAction extends AbstractTableAction {
      * @param actionName
      */
     public AudioTableAction(String actionName) {
-	   super(actionName);
+        super(actionName);
 
         // disable ourself if there is no primary Audio manager available
         if (jmri.InstanceManager.audioManagerInstance()==null) {
@@ -90,6 +92,7 @@ public class AudioTableAction extends AbstractTableAction {
         JButton addSourceButton = new JButton(rba.getString("ButtonAddSource"));
         atp.addToBottomBox(addSourceButton);
         addSourceButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addSourcePressed(e);
             }
@@ -97,6 +100,7 @@ public class AudioTableAction extends AbstractTableAction {
         JButton addBufferButton = new JButton(rba.getString("ButtonAddBuffer"));
         atp.addToBottomBox(addBufferButton);
         addBufferButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addBufferPressed(e);
             }
@@ -129,6 +133,7 @@ public class AudioTableAction extends AbstractTableAction {
      * Create the JTable DataModels, along with the changes
      * for the specific case of Audio objects
      */
+    @Override
     protected void createModel() {
         // ensure that the AudioFactory has been initialised
         if(InstanceManager.audioManagerInstance().getActiveAudioFactory()==null) {
@@ -146,6 +151,7 @@ public class AudioTableAction extends AbstractTableAction {
         return atp;
     }
 
+    @Override
     protected void setTitle() {
         atf.setTitle(rb.getString("TitleAudioTable"));
     }
@@ -155,6 +161,7 @@ public class AudioTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.AudioTable";
     }
     
+    @Override
     protected void addPressed(ActionEvent e) {
         log.warn("This should not have happened");
     }
@@ -255,10 +262,12 @@ public class AudioTableAction extends AbstractTableAction {
                 };
                 javax.swing.SwingUtilities.invokeLater(t);
                 break;
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioTableAction.class.getName());
 
     /**
      * Define abstract AudioTableDataModel
@@ -269,6 +278,7 @@ public class AudioTableAction extends AbstractTableAction {
 
         public static final int EDITCOL = NUMCOLUMN;
 
+        @SuppressWarnings({"OverridableMethodCallInConstructor", "LeakingThisInConstructor"})
         public AudioTableDataModel(char subType) {
             super();
             this.subType = subType;
@@ -276,13 +286,17 @@ public class AudioTableAction extends AbstractTableAction {
             updateNameList();
         }
 
+        @Override
         public AudioManager getManager() { return InstanceManager.audioManagerInstance(); }
         /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
         public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+        @Override
         protected String getMasterClassName() { return getClassName(); }
 
+        @Override
         public Audio getBySystemName(String name) { return InstanceManager.audioManagerInstance().getBySystemName(name); }
 
+        @Override
         public Audio getByUserName(String name) { return InstanceManager.audioManagerInstance().getByUserName(name); }
 
         /**
@@ -335,6 +349,7 @@ public class AudioTableAction extends AbstractTableAction {
             }
         }
 
+        @Override
         public String getValue(String systemName) {
             Object m = InstanceManager.audioManagerInstance().getBySystemName(systemName);
             return (m!=null) ? m.toString(): "";
@@ -421,9 +436,10 @@ public class AudioTableAction extends AbstractTableAction {
                     new JButton(AbstractTableAction.rb.getString("ButtonEdit")));
         }
         
-            protected String getBeanType(){
-                return "Audio";
-            }
+        @Override
+        protected String getBeanType(){
+            return "Audio";
+        }
     }
 
     /**
@@ -471,8 +487,10 @@ public class AudioTableAction extends AbstractTableAction {
         }
     }
     
+    @Override
     public String getClassDescription() { return rb.getString("TitleAudioTable"); }
     
+    @Override
     protected String getClassName() { return AudioTableAction.class.getName(); }
 }
 

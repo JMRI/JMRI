@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.jmrix.sprog.SprogCommandStation;
 
@@ -92,7 +94,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogOpsModeProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class.getName());
 
 }
 

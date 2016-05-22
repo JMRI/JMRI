@@ -1,8 +1,9 @@
 package jmri.jmrit.throttle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 
@@ -13,8 +14,6 @@ import javax.swing.AbstractAction;
  *  @version $Revision$
  */
 public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
-
-	static ResourceBundle rb = ThrottleBundle.bundle();
 
 	/**
 	 * Constructor
@@ -39,6 +38,6 @@ public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
 	}
 
 	// initialize logging
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
 
 }
