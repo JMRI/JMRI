@@ -45,6 +45,8 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Create the panel used to select the decoder
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "return values for jmri.InstanceManager.programmerManagerInstance() and programmerManagerInstance().getGlobalProgrammer() are checked known to be non-null before the getGlobalProgrammer().getCanRead() call is executed.")
     @Override
     protected JPanel layoutDecoderSelection() {
         JPanel pane1a = new JPanel();

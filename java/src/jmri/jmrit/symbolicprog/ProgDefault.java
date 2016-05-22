@@ -35,7 +35,11 @@ public class ProgDefault {
         XmlFilenameFilter filter = new XmlFilenameFilter();
         if (fp.exists()) {
             sp = fp.list(filter);
-            np = sp.length;
+            if(sp!=null) { 
+               np = sp.length;
+            } else {
+               np = 0;
+            }
         } else {
             log.warn(FileUtil.getUserFilesPath() + "programmers was missing, though tried to create it");
         }
@@ -48,7 +52,11 @@ public class ProgDefault {
         String[] sx;
         if (fp.exists()) {
             sx = fp.list(filter);
-            nx = sx.length;
+            if(sx!=null) {
+               nx = sx.length;
+            } else {
+               nx = 0;
+            }
             if (log.isDebugEnabled()) {
                 log.debug("Got " + nx + " programmers from " + fp.getPath());
             }
@@ -73,11 +81,15 @@ public class ProgDefault {
         // But for now I can live with that.
         String sbox[] = new String[np + nx];
         int n = 0;
-        for (String s : sp) {
-            sbox[n++] = s.substring(0, s.length() - 4);
+        if(np>0) {
+            for (String s : sp) {
+               sbox[n++] = s.substring(0, s.length() - 4);
+            }
         }
-        for (String s : sx) {
-            sbox[n++] = s.substring(0, s.length() - 4);
+        if(nx>0) {
+           for (String s : sx) {
+               sbox[n++] = s.substring(0, s.length() - 4);
+           }
         }
         return sbox;
     }
