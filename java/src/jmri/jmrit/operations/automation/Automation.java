@@ -615,6 +615,10 @@ public class Automation implements java.beans.PropertyChangeListener {
                         step(); // continue running by doing the next action
                     }
                 } else if (evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+                    if ((boolean) evt.getNewValue() == true) {
+                        log.debug("User halted successful action");
+                        setNextAutomationItem();
+                    }
                     stop();
                 }
             }
