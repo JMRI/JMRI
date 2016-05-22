@@ -57,21 +57,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         fcScript.setDialogTitle(rb.getString("MessageSelectDirectory"));
         fcScript.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fcScript.setAcceptAllFileFilterUsed(false);
-        bScript.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // get the file
-                fcScript.showOpenDialog(null);
-                if (fcScript.getSelectedFile() == null) {
-                    return; // cancelled
-                }
-                scriptLocation.setText(fcScript.getSelectedFile() + File.separator);
-                validate();
-                if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
-                    ((JFrame)getTopLevelAncestor()).pack();
-                }
-            }
-        });
+        bScript.addActionListener(new OpenAction(fcScript, scriptLocation));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         JLabel scripts = new JLabel(rb.getString("ScriptDir"));
@@ -98,21 +84,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         fcUser.setDialogTitle(rb.getString("MessageSelectDirectory"));
         fcUser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fcUser.setAcceptAllFileFilterUsed(false);
-        bUser.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // get the file
-                fcUser.showOpenDialog(null);
-                if (fcUser.getSelectedFile() == null) {
-                    return; // cancelled
-                }
-                userLocation.setText(fcUser.getSelectedFile() + File.separator);
-                validate();
-                if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
-                    ((JFrame)getTopLevelAncestor()).pack();
-                }
-            }
-        });
+        bUser.addActionListener(new OpenAction(fcUser, userLocation));
         p.add(bUser);
         return p;
     }
@@ -179,5 +151,28 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
     @Override
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
+    }
+    
+    private class OpenAction extends AbstractAction {
+        JFileChooser chooser;
+        JTextField field;
+        OpenAction(JFileChooser chooser, JTextField field) {
+            this.chooser = chooser;
+            this.field = field;
+        }
+        @Override
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="protected by if instanceof")
+        public void actionPerformed(ActionEvent e) {
+            // get the file
+            chooser.showOpenDialog(null);
+            if (chooser.getSelectedFile() == null) {
+                return; // cancelled
+            }
+            field.setText(chooser.getSelectedFile() + File.separator);
+            validate();
+            if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
+                ((JFrame)getTopLevelAncestor()).pack();
+            }
+        }
     }
 }

@@ -49,6 +49,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public String getBeanType() {
         return Bundle.getMessage("BeanNameTurnout");
     }
+    
+    private String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+    private String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
     /**
      * Handle a request to change state, typically by sending a message to the
@@ -94,8 +97,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * layout and hope for the best.
      */
     public void setCommandedState(int s) {
-        log.debug("set commanded state for turnout " + getSystemName() + " to "
-                + s);
+        log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(), 
+                (s==Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
@@ -802,7 +805,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         String speed = _straightSpeed;
         if (_straightSpeed.equals("Global")) {
             speed = InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed();
-        } else if (speed.equals("Block")) {
+        }
+        if (speed.equals("Block")) {
             return -1;
         }
         try {

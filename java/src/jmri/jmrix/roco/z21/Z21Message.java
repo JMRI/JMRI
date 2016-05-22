@@ -116,7 +116,7 @@ public class Z21Message extends AbstractMRMessage {
     /*
      * @return z21 message for serial number request.
      */
-    static Z21Message getSerialNumberRequestMessage() {
+    public static Z21Message getSerialNumberRequestMessage() {
         Z21Message retval = new Z21Message(4);
         retval.setElement(0, 0x04);
         retval.setElement(1, 0x00);
@@ -126,14 +126,88 @@ public class Z21Message extends AbstractMRMessage {
     }
 
     /*
+     * @return z21 message for serial number request.
+     */
+    public static Z21Message getLanGetHardwareInfoRequestMessage() {
+        Z21Message retval = new Z21Message(4);
+        retval.setElement(0, 0x04);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0x1A);
+        retval.setElement(3, 0x00);
+        return retval;
+    }
+
+    /*
      * @return z21 message for LAN_LOGOFF request.
      */
-    static Z21Message getLanLogoffRequestMessage() {
-        Z21Message retval = new Z21Message(4);
+    public static Z21Message getLanLogoffRequestMessage() {
+        Z21Message retval = new Z21Message(4){
+           @Override 
+           public boolean replyExpected() {
+               return false; // Loging off generates no reply.
+           }
+        };
         retval.setElement(0, 0x04);
         retval.setElement(1, 0x00);
         retval.setElement(2, 0x30);
         retval.setElement(3, 0x00);
+        return retval;
+    }
+
+    /**
+     * @return z21 message for LAN_GET_BROADCAST_FLAGS request.
+     */
+    public static Z21Message getLanGetBroadcastFlagsRequestMessage() {
+        Z21Message retval = new Z21Message(4);
+        retval.setElement(0, 0x04);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0x51);
+        retval.setElement(3, 0x00);
+        return retval;
+    }
+
+    /**
+     * Set the boradcast flags as described in section 2.16 of the 
+     * Roco Z21 Protocol Manual.
+     * <P>
+     * Brief descriptions of the flags are as follows (losely 
+     * translated from German with the aid of google translate).
+     * <P>
+     * <UL>
+     * <LI>0x00000001 send XPressNet related information (track 
+     * power on/off, programming mode, short circuit, broadcast stop, 
+     * locomotive information, turnout information).</LI>
+     * <LI>0x00000002 send data changes that occur on the RMBUS.</LI>
+     * <LI>0x00000004 (deprecated by Roco) send Railcom Data</LI>
+     * <LI>0x00000100 send changes in system state (such as track voltage)
+     * <LI>0x00010000 send changes to locomotives on XPressNet (must also have
+     * 0x00000001 set.</LI>
+     * <LI>0x01000000 forward LocoNet data to the client.  Does not send 
+     * Locomotive or turnout data.</LI>
+     * <LI>0x02000000 send Locomotive specific LocoNet data to the client.</LI>
+     * <LI>0x04000000 send Turnout specific LocoNet data to the client.</LI>
+     * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI 
+     * </UL>
+     * <P>
+     * @param flags integer representing the flags (32 bits).
+     * @return z21 message for LAN_SET_BROADCAST_FLAGS request.
+     */
+    public static Z21Message getLanSetBroadcastFlagsRequestMessage(int flags) {
+        Z21Message retval = new Z21Message(8){
+           @Override 
+           public boolean replyExpected() {
+               return false; // setting the broadcast flags generates 
+                             // no reply.
+           }
+        };
+        retval.setElement(0, 0x08);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0x50);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, (flags & 0x000000ff) );
+        retval.setElement(5, (flags & 0x0000ff00)>>8 );
+        retval.setElement(6, (flags & 0x00ff0000)>>16 );
+        retval.setElement(7, (flags & 0xff000000)>>24 );
         return retval;
     }
 

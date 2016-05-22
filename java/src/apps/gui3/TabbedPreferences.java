@@ -84,7 +84,7 @@ public class TabbedPreferences extends AppConfigBase {
     JList<String> list;
     JButton save;
     JScrollPane listScroller;
-    int initialisationState = 0x00;
+    private int initialisationState = 0x00;
 
     public static final int UNINITIALISED = 0x00;
     public static final int INITIALISING = 0x01;
@@ -201,13 +201,13 @@ public class TabbedPreferences extends AppConfigBase {
         return initialisationState;
     }
 
-    private void setInitalisationState(int state) {
+    public synchronized void setInitalisationState(int state) { // currently only used in init(), but synchronized in case added elsewhere later
         int old = this.initialisationState;
         this.initialisationState = state;
         this.firePropertyChange(INITIALIZATION, old, state);
     }
 
-    public int getInitialisationState() {
+    public synchronized int getInitialisationState() { // not an atomic read, because of time between assignment and propertyChange notification in set
         return this.initialisationState;
     }
 
@@ -285,7 +285,7 @@ public class TabbedPreferences extends AppConfigBase {
             preferencesArray.add(itemBeingAdded);
             // As this is a new item in the selection list, we need to update
             // the JList.
-            if (initialisationState == INITIALISED) {
+            if (getInitialisationState() == INITIALISED) {
                 updateJList();
             }
         }

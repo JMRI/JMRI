@@ -2,7 +2,6 @@ package jmri.web.servlet.panel;
 
 import java.awt.Color;
 import java.util.List;
-import javax.swing.JComponent;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -255,10 +254,5 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     protected String getJsonPanel(String name) {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
-    }
-
-    @Override
-    protected JComponent getPanel(String name) {
-        return ((LayoutEditor) getEditor(name)).getTargetPanel();
     }
 }

@@ -164,7 +164,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             }
             // match and select in tree
             for (int i = 0; i < _valueArray.length; i++) {
-                if (e.getActionCommand().toString().equals(_itemArray[i])) {
+                if (e.getActionCommand().equals(_itemArray[i])) {
                     // now select in the tree
                     TreePath path = _pathArray[i];
                     for (JTree tree : trees) {

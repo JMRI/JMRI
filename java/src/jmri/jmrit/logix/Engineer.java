@@ -262,7 +262,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return;
         }
         if (_throttle.getSpeedSetting()<=0 && (endSpeedType.equals(Warrant.Stop) || endSpeedType.equals(Warrant.EStop))) {
-            _waitForClear = true;
+            synchronized(this) {
+                _waitForClear = true;
+            }
             _speedType = endSpeedType;
             return;
         }
@@ -840,7 +842,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 if (stop) break;
                             }
                             if ((_speedType.equals(Warrant.Stop) || _speedType.equals(Warrant.EStop)) && speed<=0.0f) {
-                                _waitForClear = true;
+                                synchronized(this) {
+                                    _waitForClear = true;
+                                }
                             }
                         }
                     }                   
@@ -853,8 +857,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 });
                 _lock.unlock();
             }
-            if (_debug) log.debug("rampSpeed complete to \""+endSpeedType+
+            synchronized(this) {
+               if (_debug) log.debug("rampSpeed complete to \""+endSpeedType+
                     "\" _waitForClear= "+_waitForClear+" on warrant "+_warrant.getDisplayName());
+            }
             checkHalt();
         }
     }
