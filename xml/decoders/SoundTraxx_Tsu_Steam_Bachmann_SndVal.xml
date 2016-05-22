@@ -33,7 +33,8 @@
   <!-- Version 4        Update following publication of datasheet 20150512 for 2-8-4 Berkshire              -->
   <!-- Version 5        Renamed family  to "Tsunami Steam Bachmann Sound Value"                             -->
   <!--                  Previous def. kept in file "SoundTraxx_Bachmann_SndVal_Stm_deprecated.xml"          -->
-  <!--                  Add [HO] 4-4-0, 4-6-0 - [N] 4-6-2 K4          -->
+  <!--                  Add [HO] 4-4-0, 4-6-0 - [N] 4-6-2 K4                                                -->
+  <!--                  Renamed "Alco 2-6-0" in "2-6-0 Mogul - Alco [HO]"                                   -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
