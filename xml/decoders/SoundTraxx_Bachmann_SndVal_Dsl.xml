@@ -23,6 +23,7 @@
   <version author="Alain Le Marchand" version="7.1" lastUpdated="20150524"/>
   <version author="Alain Le Marchand" version="7.2" lastUpdated="20150525"/>
   <version author="Marc N Fournier" version="8" lastUpdated="20160419"/>
+  <version author="Alain Le Marchand" version="9" lastUpdated="20160522"/>
 
   <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders        -->
   <!-- version 1	Based on the "Soundtraxx_Tsu_Diesel files.                                          -->
@@ -44,7 +45,8 @@
   <!-- version 7.1  Updated comment attribute in family description                                     -->
   <!-- version 7.2  CV113 only available for SD70ACe, GEVO and GG1                                      -->
   <!--              Update following publication of datasheet 20150425 for GP7                          -->
-  <!-- version 8	Add EMD GP38-2, EMD GP40															-->
+  <!-- version 8    Add EMD GP38-2, EMD GP40                                                            -->
+  <!-- version 9    Add EMD SD45 (N scale)                                                      	-->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -52,7 +54,7 @@
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO &amp; N locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value">
-      <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" comment="Diesel Prime Mover Alco 244">
+      <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" formFactor="HO" comment="Diesel Prime Mover Alco 244">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -79,7 +81,7 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
-      <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco_FB2" comment="Diesel Prime Mover Alco 244">
+      <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco_FB2" formFactor="HO" comment="Diesel Prime Mover Alco 244">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -106,7 +108,7 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
-      <model model="Alco RS3" numOuts="2" numFns="14" connector="other" productID="Alco_RS3" comment="Diesel Prime Mover Alco 244">
+      <model model="Alco RS3" numOuts="2" numFns="14" connector="other" productID="Alco_RS3" formFactor="HO" comment="Diesel Prime Mover Alco 244">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -133,7 +135,7 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
-      <model model="Alco S2" numOuts="2" numFns="14" connector="other" productID="Alco_S2" comment="Diesel Prime Mover Alco 539 Turbo">
+      <model model="Alco S2" numOuts="2" numFns="14" connector="other" productID="Alco_S2" formFactor="HO" comment="Diesel Prime Mover Alco 539 Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -160,7 +162,7 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
-      <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco_S4" comment="Diesel Prime Mover Alco 539 Turbo">
+      <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco_S4" formFactor="HO" comment="Diesel Prime Mover Alco 539 Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -221,7 +223,7 @@
             <functionlabel num="6" lockable="true">Lighted # Boards</functionlabel>
         </functionlabels>
       </model>
-      <model model="EMD F7A" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" comment="Diesel Prime Mover EMD567 Non-Turbo">
+      <model model="EMD F7A" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -248,7 +250,7 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
-      <model model="EMD F7B" numOuts="2" numFns="14" connector="other" productID="EMD_F7B" comment="Diesel Prime Mover EMD567 Non-Turbo">
+      <model model="EMD F7B" numOuts="2" numFns="14" connector="other" productID="EMD_F7B" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -275,7 +277,7 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
-      <model model="EMD GP7" numOuts="2" numFns="14" connector="other" productID="EMD_GP7" comment="Diesel Prime Mover EMD567 Non-Turbo">
+      <model model="EMD GP7" numOuts="2" numFns="14" connector="other" productID="EMD_GP7" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -302,7 +304,7 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
-	  <model model="EMD GP38-2" numOuts="2" numFns="14" connector="other" productID="EMD_GP382" comment="Diesel Prime Mover EMD645 Non-Turbo">
+	  <model model="EMD GP38-2" numOuts="2" numFns="14" connector="other" productID="EMD_GP382" formFactor="HO" comment="Diesel Prime Mover EMD645 Non-Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -316,9 +318,9 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="Dynamic|Brakes">	
+        <output name="7" label="Dynamic|Brakes">
 			<label xml:lang="it">Freni|dinam</label>
-		</output>	
+		</output>
         <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
         </output>
@@ -331,7 +333,7 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
-	  <model model="EMD GP40" numOuts="2" numFns="14" connector="other" productID="EMD_GP40" comment="Diesel Prime Mover EMD645 Turbo">
+	  <model model="EMD GP40" numOuts="2" numFns="14" connector="other" productID="EMD_GP40" formFactor="HO" comment="Diesel Prime Mover EMD645 Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -345,7 +347,7 @@
         <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
         </output>
-        <output name="7" label="Dynamic|Brakes">	
+        <output name="7" label="Dynamic|Brakes">
 			<label xml:lang="it">Freni|dinam</label>
 		</output>
 		<output name="8" label="Short|Horn">
@@ -360,10 +362,10 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
-      <model model="EMD SD70ACe" numOuts="2" numFns="14" connector="other" productID="EMD_SD70ACe" comment="Diesel Prime Mover EMD 16-710 G3C-T2">
+      <model model="EMD SD45" numOuts="2" numFns="14" connector="other" productID="EMD_SD45" formFactor="N" comment="(N scale) Diesel Prime Mover EMD 645 Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
-            <label xml:lang="it">FX5|Regola 17</label>								
+            <label xml:lang="it">FX5|Regola 17</label>
         </output>
         <output name="4" label="FX6|Mode">
             <label xml:lang="it">FX6|Modo</label>
@@ -391,8 +393,8 @@
         <functionlabels>
             <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
         </functionlabels>
-      </model>
-      <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" comment="Diesel Prime Mover GE GEVO V12">
+      </model>      
+      <model model="EMD SD70ACe" numOuts="2" numFns="14" connector="other" productID="EMD_SD70ACe" formFactor="HO" comment="Diesel Prime Mover EMD 16-710 G3C-T2">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -424,7 +426,39 @@
             <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
         </functionlabels>
       </model>
-      <model model="GG1" numOuts="2" numFns="14" connector="other" productID="GG1" comment="GE-Altoona Electric">
+      <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" formFactor="HO" comment="Diesel Prime Mover GE GEVO V12">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+        </output>
+        <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+        </output>
+        <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+        </functionlabels>
+      </model>
+      <model model="GG1" numOuts="2" numFns="14" connector="other" productID="GG1" formFactor="HO" comment="GE-Altoona Electric">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -487,7 +521,7 @@
         <label xml:lang="fr">Accelération (0-255)</label>
         <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
-      <variable CV="3" item="Accel" default="6" include="Alco_RS3,Alco_S2,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+      <variable CV="3" item="Accel" default="6" include="Alco_RS3,Alco_S2,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
         <label xml:lang="it">Accellerazione (0-255)</label>
@@ -501,7 +535,7 @@
         <label xml:lang="fr">Décélération (0-255)</label>
         <label xml:lang="de">Bremszeit (0-255)</label>
       </variable>
-      <variable CV="4" item="Decel" default="5" include="Alco_RS3,Alco_S2,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD70ACe,GE_ES44AC" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+      <variable CV="4" item="Decel" default="5" include="Alco_RS3,Alco_S2,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
         <label xml:lang="it">Decellerazione (0-255)</label>
@@ -729,7 +763,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls Backup Light</label>
       </variable>
-      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1" include="Alco_S2,Alco_RS3,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD70ACe,GE_ES44AC,GG1">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1" include="Alco_S2,Alco_RS3,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls Backup Light</label>
       </variable>
@@ -897,7 +931,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dynamics</label>
       </variable>
-      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" default="1" include="EMD_GP382,EMD_GP40,EMD_DD40AX,EMD_SD70ACe,GE_ES44AC,GG1">
+      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" default="1" include="EMD_GP382,EMD_GP40,EMD_DD40AX,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dynamics</label>
       </variable>
@@ -1573,7 +1607,7 @@
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
-      <variable CV="63" item="Radio Power Conversion" default="35" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+      <variable CV="63" item="Radio Power Conversion" default="35" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
@@ -1594,11 +1628,11 @@
         <label>Reverse Trim (0-255)</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable CV="112" mask="XXXXXXXV" item="Sound Option 6" default="0" exclude="EMD_GP7,EMD_GP382,EMD_GP40" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
+      <variable CV="112" mask="XXXXXXXV" item="Sound Option 6" default="0" exclude="EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>
       </variable>
-      <variable CV="112" mask="XXXXXXVX" item="Sound Option 5" default="0" exclude="EMD_GP7,EMD_GP382,EMD_GP40" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
+      <variable CV="112" mask="XXXXXXVX" item="Sound Option 5" default="0" exclude="EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Radiator Fan Enable</label>
       </variable>
@@ -1614,7 +1648,7 @@
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
-      <variable CV="114" item="Sound Group 3 Option 2" default="6" include="EMD_GP7,EMD_GP382,EMD_GP40" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+      <variable CV="114" item="Sound Group 3 Option 2" default="6" include="EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
@@ -1754,7 +1788,7 @@
         <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_GP382,EMD_GP40" comment="Show these horns for the models (productID) listed below" tooltip="Selects which airhorn to use">
+      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_GP382,EMD_GP40,EMD_SD45" comment="Show these horns for the models (productID) listed below" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Nathan P3">
             <choice>Nathan P3</choice>
@@ -1823,7 +1857,7 @@
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="64" include="Alco_RS3,EMD_F7A,EMD_DD40AX,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD70ACe" tooltip="Sets the volume of the bell">
+      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="64" include="Alco_RS3,EMD_F7A,EMD_DD40AX,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe" tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
@@ -1851,7 +1885,7 @@
         <decVal/>
         <label>Engine Exhaust Volume</label>
       </variable>
-      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="196" tooltip="Sets the volume of the diesel engine exhaust" include="EMD_GP7,EMD_GP382,EMD_GP40,">
+      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="196" tooltip="Sets the volume of the diesel engine exhaust" include="EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45">
         <decVal/>
         <label>Engine Exhaust Volume</label>
       </variable>
@@ -1875,10 +1909,14 @@
         <decVal/>
         <label>Pantograph Volume</label>
       </variable>
-	  <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="120" include="EMD_GP382,EMD_GP40" tooltip="Sets the volume of the pantograph">
+      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="120" include="EMD_GP382,EMD_GP40" tooltip="Sets the volume of the pantograph">
         <decVal/>
         <label>Dynamic brake Volume</label>
       </variable>
+      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="196" include="EMD_SD45" tooltip="Sets the volume of the pantograph">
+        <decVal/>
+        <label>Dynamic brake Volume</label>
+      </variable>      
       <variable CV="134" mask="VVVVVVVV" item="Sound Setting 17" default="148" include="GG1" tooltip="Sets the volume of the blower">
         <decVal/>
         <label>Blower Volume</label>
@@ -1930,7 +1968,7 @@
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="80" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="80" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
@@ -1942,7 +1980,7 @@
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="8" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="8" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
