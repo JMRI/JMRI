@@ -14,7 +14,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<project name="JMRI" default="debug" basedir=".">
+<project name="JMRI" default="debug" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
 
     <!-- basedir="." means all paths are relative to the top level -->
     <!-- directory in the project.  We expect that lib et al will  -->
@@ -109,6 +109,7 @@
     <property name="scriptdir"    value="${basedir}/scripts"/>
     <property name="javadir"      value="${basedir}/java"/>
     <property name="doctarget"    value="${javadir}/doc"/>
+    <property name="coveragetarget" value="${basedir}/coveragereport"/>
     <property name="source"       value="${javadir}/src"/>
     <property name="target"       value="${javadir}/classes"/>
     <property name="test"         value="${javadir}/test"/>
@@ -239,6 +240,11 @@
         </sequential>
     </macrodef>
 
+    <!-- Java Code Coverage -->
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="lib/jacocoant.jar" />
+    </taskdef>
+
     <!-- end of definitions -->
 
     <!-- target definitions start here -->
@@ -313,6 +319,8 @@
             <fileset file="jmri-fb.html"/>
             <fileset dir="temp"/>
             <fileset dir="lib/cachedir"/>
+            <fileset dir="${coveragetarget}"/>
+            <fileset file="jacoco.exec"/>
         </delete>
     </target>
 
@@ -1056,6 +1064,7 @@
     </target>
 
     <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
+        <jacoco:coverage destfile="jacoco.exec">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1073,8 +1082,32 @@
             </test>
 
         </junit>
+        </jacoco:coverage>
     </target>
 
+    <target name="headless-coveragereport" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+ 
+          <structure name="AntTestReporting">
+              <classfiles>
+                  <fileset dir="${target}">
+                      <include name="**/*.class" />
+                      <!-- Exclude classes necessary for testing only from the code coverage report-->
+                      <exclude name="**/*Test*.class" />
+                      <!-- Exclude inner classes -->
+                      <exclude name="**/*$*.class" />
+                  </fileset>
+              </classfiles>
+          </structure>
+ 
+          <html destdir="${coveragetarget}" />
+       </jacoco:report>
+    </target>
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
@@ -1161,6 +1194,7 @@
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
+        <jacoco:coverage destfile="jacoco.exec">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1175,7 +1209,35 @@
             </test>
 
         </junit>
+        </jacoco:coverage>
     </target>
+
+
+    <target name="alltest-coveragereport" depends="logalltest" description="Generate Test Coverage Report from logalltest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+ 
+          <structure name="AntTestReporting">
+              <classfiles>
+                  <fileset dir="${target}">
+                      <include name="**/*.class" />
+                      <!-- Exclude classes necessary for testing only from the code coverage report-->
+                      <exclude name="**/*Test*.class" />
+                      <!-- Exclude inner classes -->
+                      <exclude name="**/*$*.class" />
+                  </fileset>
+              </classfiles>
+          </structure>
+ 
+          <html destdir="${coveragetarget}" />
+       </jacoco:report>
+    </target>
+
+
 
     <!-- end of test execution targets -->
 
@@ -1291,7 +1353,7 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing,-accessibility,-html,-syntax"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xdoclint:all,-missing,-accessibility,-html"/> <!-- dropping some 1.8 warnings -->
 
             <group title="Core" packages="jmri"/>
             <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
@@ -1354,7 +1416,7 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing,-accessibility,-html,-syntax"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xdoclint:all,-missing,-accessibility,-html"/> <!-- dropping some 1.8 warnings -->
             <doclet name="org.umlgraph.doclet.UmlGraphDoc"
                                   path="${libdir}/UmlGraph-5.7.jar">
                 <param name="-attributes"/>
