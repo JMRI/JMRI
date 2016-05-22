@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.7ish-201605221813-Alain Le Marchand on Sun May 22 20:13:52 CEST 2016 $Id$-->
-  <decoderIndex version="740">
+  <!--Written by JMRI version 4.3.7ish-201605222055-Alain Le Marchand on Sun May 22 22:55:12 CEST 2016 $Id$-->
+  <decoderIndex version="742">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -10032,8 +10032,8 @@
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
       </family>
-      <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO &amp; N locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Dsl.xml">
-        <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" comment="Diesel Prime Mover Alco 244">
+      <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO &amp; N locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Dsl_deprecated.xml">
+        <model show="no" model="Alco FA2" replacementModel="Alco FA2" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" formFactor="HO" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10063,7 +10063,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco_FB2" comment="Diesel Prime Mover Alco 244">
+        <model show="no" model="Alco FB2" replacementModel="Alco FB2" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="Alco_FB2" formFactor="HO" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10093,7 +10093,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="Alco RS3" numOuts="2" numFns="14" connector="other" productID="Alco_RS3" comment="Diesel Prime Mover Alco 244">
+        <model show="no" model="Alco RS3" replacementModel="Alco RS3" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="Alco_RS3" formFactor="HO" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10123,7 +10123,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="Alco S2" numOuts="2" numFns="14" connector="other" productID="Alco_S2" comment="Diesel Prime Mover Alco 539 Turbo">
+        <model show="no" model="Alco S2" replacementModel="Alco S2" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="Alco_S2" formFactor="HO" comment="Diesel Prime Mover Alco 539 Turbo">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10153,7 +10153,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco_S4" comment="Diesel Prime Mover Alco 539 Turbo">
+        <model show="no" model="Alco S4" replacementModel="Alco S4" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="Alco_S4" formFactor="HO" comment="Diesel Prime Mover Alco 539 Turbo">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10183,7 +10183,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="EMD DD40AX" numOuts="4" numFns="14" connector="other" productID="EMD_DD40AX" comment="(N or HO scale) Diesel Prime Mover 2 × EMD 645E3A">
+        <model show="no" model="EMD DD40AX" replacementModel="EMD DD40AX" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="4" numFns="14" connector="other" productID="EMD_DD40AX" comment="(N or HO scale) Diesel Prime Mover 2 × EMD 645E3A">
           <versionCV lowVersionID="82" />
           <output name="3" label="Flashing|Lights">
             <label xml:lang="it">Flash|Luci</label>
@@ -10219,7 +10219,7 @@
             <functionlabel num="6" lockable="true">Lighted # Boards</functionlabel>
           </functionlabels>
         </model>
-        <model model="EMD F7A" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" comment="Diesel Prime Mover EMD567 Non-Turbo">
+        <model show="no" model="EMD F7A" replacementModel="EMD F7A" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10249,7 +10249,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="EMD F7B" numOuts="2" numFns="14" connector="other" productID="EMD_F7B" comment="Diesel Prime Mover EMD567 Non-Turbo">
+        <model show="no" model="EMD F7B" replacementModel="EMD F7B" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="EMD_F7B" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10279,7 +10279,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="EMD GP7" numOuts="2" numFns="14" connector="other" productID="EMD_GP7" comment="Diesel Prime Mover EMD567 Non-Turbo">
+        <model show="no" model="EMD GP7" replacementModel="EMD GP7" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="EMD_GP7" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10309,7 +10309,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="EMD GP38-2" numOuts="2" numFns="14" connector="other" productID="EMD_GP382" comment="Diesel Prime Mover EMD645 Non-Turbo">
+        <model show="no" model="EMD GP38-2" replacementModel="EMD GP38-2" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="EMD_GP382" formFactor="HO" comment="Diesel Prime Mover EMD645 Non-Turbo">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10340,7 +10340,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="EMD GP40" numOuts="2" numFns="14" connector="other" productID="EMD_GP40" comment="Diesel Prime Mover EMD645 Turbo">
+        <model show="no" model="EMD GP40" replacementModel="EMD GP40" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="EMD_GP40" formFactor="HO" comment="Diesel Prime Mover EMD645 Turbo">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10371,7 +10371,7 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="EMD SD70ACe" numOuts="2" numFns="14" connector="other" productID="EMD_SD70ACe" comment="Diesel Prime Mover EMD 16-710 G3C-T2">
+        <model show="no" model="EMD SD45" replacementModel="EMD SD45" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="EMD_SD45" formFactor="N" comment="(N scale) Diesel Prime Mover EMD 645 Turbo">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10405,7 +10405,7 @@
             <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
           </functionlabels>
         </model>
-        <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" comment="Diesel Prime Mover GE GEVO V12">
+        <model show="no" model="EMD SD70ACe" replacementModel="EMD SD70ACe" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="EMD_SD70ACe" formFactor="HO" comment="Diesel Prime Mover EMD 16-710 G3C-T2">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -10439,7 +10439,41 @@
             <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
           </functionlabels>
         </model>
-        <model model="GG1" numOuts="2" numFns="14" connector="other" productID="GG1" comment="GE-Altoona Electric">
+        <model show="no" model="GE ES44AC" replacementModel="GE ES44AC" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" formFactor="HO" comment="Diesel Prime Mover GE GEVO V12">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          </functionlabels>
+        </model>
+        <model show="no" model="GG1" replacementModel="GG1" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="GG1" formFactor="HO" comment="GE-Altoona Electric">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -13333,6 +13367,492 @@
         <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
         <functionlabel num="12" lockable="true">Coupler</functionlabel>
       -->
+        </functionlabels>
+      </family>
+      <family name="Tsunami Diesel Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO &amp; N diesel locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Tsu_Diesel_Bachmann_SndVal.xml">
+        <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" formFactor="HO" comment="Diesel Prime Mover Alco 244">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco_FB2" formFactor="HO" comment="Diesel Prime Mover Alco 244">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="Alco RS3" numOuts="2" numFns="14" connector="other" productID="Alco_RS3" formFactor="HO" comment="Diesel Prime Mover Alco 244">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="Alco S2" numOuts="2" numFns="14" connector="other" productID="Alco_S2" formFactor="HO" comment="Diesel Prime Mover Alco 539 Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco_S4" formFactor="HO" comment="Diesel Prime Mover Alco 539 Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="EMD DD40AX" numOuts="4" numFns="14" connector="other" productID="EMD_DD40AX" comment="(N or HO scale) Diesel Prime Mover 2 × EMD 645E3A">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="Flashing|Lights">
+            <label xml:lang="it">Flash|Luci</label>
+          </output>
+          <output name="4" label="# Board|Lights">
+            <label xml:lang="it"># Board|Luci</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Flashing Light</functionlabel>
+            <functionlabel num="6" lockable="true">Lighted # Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="EMD F7A" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="EMD F7B" numOuts="2" numFns="14" connector="other" productID="EMD_F7B" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="EMD GP7" numOuts="2" numFns="14" connector="other" productID="EMD_GP7" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="EMD GP38-2" numOuts="2" numFns="14" connector="other" productID="EMD_GP382" formFactor="HO" comment="Diesel Prime Mover EMD645 Non-Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="EMD GP40" numOuts="2" numFns="14" connector="other" productID="EMD_GP40" formFactor="HO" comment="Diesel Prime Mover EMD645 Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="EMD SD45" numOuts="2" numFns="14" connector="other" productID="EMD_SD45" formFactor="N" comment="(N scale) Diesel Prime Mover EMD 645 Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="EMD SD70ACe" numOuts="2" numFns="14" connector="other" productID="EMD_SD70ACe" formFactor="HO" comment="Diesel Prime Mover EMD 16-710 G3C-T2">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" formFactor="HO" comment="Diesel Prime Mover GE GEVO V12">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GG1" numOuts="2" numFns="14" connector="other" productID="GG1" formFactor="HO" comment="GE-Altoona Electric">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="Fans|RPM +" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Compressor|RPM -" />
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Fans</functionlabel>
+            <functionlabel num="6" lockable="true">Air Compressor</functionlabel>
+          </functionlabels>
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Air Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="7" lockable="true">Dimming</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
         </functionlabels>
       </family>
       <family name="Tsunami Diesel Bowser OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Bowser Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Bowser.xml">
