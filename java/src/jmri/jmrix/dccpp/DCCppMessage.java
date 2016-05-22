@@ -1,4 +1,3 @@
-// DCCppMessage.java
 package jmri.jmrix.dccpp;
 
 import java.util.regex.Matcher;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on XNetMessage by Bob Jacobsen and Paul Bender
  */
@@ -2135,5 +2133,3 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(DCCppMessage.class.getName());
 
 }
-
-/* @(#)DCCppMessage.java */
