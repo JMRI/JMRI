@@ -847,7 +847,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if (_lastDate.equals((new java.util.GregorianCalendar()).getGregorianChange()))
             return NONE; // return an empty string for the default date.
         SimpleDateFormat format =
-                new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  // NOI18N
         return format.format(_lastDate);
     }
 
@@ -876,17 +876,17 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         // create a date object from the value.
         try {
             // try the new format (with seconds).
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  // NOI18N
             _lastDate = formatter.parse(date);
         } catch (java.text.ParseException pe0) {
             // try the old 12 hour format (no seconds).
             try {
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");  // NOI18N
                 _lastDate = formatter.parse(date);
             } catch (java.text.ParseException pe1) {
                 try {
                     // try 24hour clock.
-                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");  // NOI18N
                     _lastDate = formatter.parse(date);
                 } catch (java.text.ParseException pe2) {
                     log.warn("Not able to parse date: {} for rolling stock ({})", date, toString());

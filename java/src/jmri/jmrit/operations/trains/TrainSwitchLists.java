@@ -59,7 +59,7 @@ public class TrainSwitchLists extends TrainCommon {
      * @param location The Location needing a switch list
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "CarManager only provides Car Objects")
+            justification = "CarManager only provides Car Objects") // NOI18N
     public void buildSwitchList(Location location) {
         // Append switch list data if not operating in real time
         boolean newTrainsOnly = !Setup.isSwitchListRealTime();
@@ -393,7 +393,7 @@ public class TrainSwitchLists extends TrainCommon {
                                 String s = pickupUtilityCars(carList, car, !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
                                 if (s != null) {
                                     newLine(fileOut,
-                                            TrainSwitchListText.getStringHoldCar().split("\\{")[0] + s.trim());
+                                            TrainSwitchListText.getStringHoldCar().split("\\{")[0] + s.trim()); // NOI18N
                                 }
                             } else {
                                 newLine(fileOut, MessageFormat.format(
