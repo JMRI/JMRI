@@ -1,4 +1,3 @@
-// MergMessage.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanMessage;
@@ -18,13 +17,12 @@ import org.slf4j.LoggerFactory;
  * X00000123. We choose a fixed number, either 4 or 8 bytes when sending
  * GridConnectMessages to keep MERG CAN-RS/USB adapters happy. The 11 bit
  * standard header is left justified in these 4 bytes. The 29 bit standard
- * header is sent as {@literal <11 bit SID><0><1><0>< 18 bit EID>}
+ * header is sent as {@code <11 bit SID><0><1><0>< 18 bit EID>}
  * N or R indicates a normal or remote frame, in position 6 or 10 d0 - d7 are
  * the (up to) 8 data bytes
  * <P>
  *
  * @author Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
  */
 public class MergMessage extends GridConnectMessage {
 
@@ -115,5 +113,3 @@ public class MergMessage extends GridConnectMessage {
 
     private final static Logger log = LoggerFactory.getLogger(MergMessage.class.getName());
 }
-
-/* @(#)MergMessage.java */

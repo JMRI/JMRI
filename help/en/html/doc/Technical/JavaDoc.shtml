@@ -86,10 +86,10 @@ You also have to (sometimes) end your paragraph tags:
 Note that HTML 4.01 wants paragraph tags to be ended with &lt;/p&gt; or &lt;/p&gt;, and that you can't have a list inside a paragraph.
 <p>
 Some error messages and their translations:
-<ul>
-<li>"malformed HTML; bad HTML entity": Probably use of &amp;, &lt; or &gt; characters on the indicated line
-<li>"bad use of '&gt;'": Probably using '&gt;' as a character, e.g. A -&gt; B. If so, replace with &gt; or wrap the line with @literal
-</ul>
+<dl>
+<dt>"malformed HTML"</dt><dt>"bad HTML entity"</dt><dd>Probably use of &amp;, &lt; or &gt; characters on the indicated line</dd>
+<dt>"bad use of '&gt;'"</dt><dd>Probably using '&gt;' as a character, e.g. A -&gt; B. If so, replace with "&amp;gt;" or wrap the line with @literal</dd>
+</dl>
 
 Finally, note that this JavaDoc line is malformed:
 <code><pre>
