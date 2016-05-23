@@ -406,9 +406,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * Sets rolling stock location on the layout
      *
      * @param location
-     * @param track (yard, spur, staging, or interchange track)
-     * @param force when true place rolling stock ignore track length, type, &
-     *            road
+     * @param track    (yard, spur, staging, or interchange track)
+     * @param force    when true place rolling stock ignore track length, type,
+     *                 {@literal &} road
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, "road" if rolling stock road isn't acceptable, or
      *         "length" if the rolling stock length didn't fit.
@@ -494,9 +494,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * Sets rolling stock destination on the layout
      *
      * @param destination
-     * @param track (yard, spur, staging, or interchange track)
-     * @param force when true ignore track length, type, & road when setting
-     *            destination
+     * @param track       (yard, spur, staging, or interchange track)
+     * @param force       when true ignore track length, type, {@literal &} road
+     *                    when setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit.
      */

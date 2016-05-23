@@ -157,14 +157,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
    /**
-     * @return the current Look & Feel default font size
+     * @return the current {@literal Look & Feel} default font size
      */
     public int getDefaultFontSize() {
         return defaultFontSize;
     }
 
    /**
-     * Called to load the current Look & Feel default font size, based on looking up the "List.font" size
+     * Called to load the current {@literal Look & Feel} default font size, based on looking up the "List.font" size
      * <br><br>
      * The value can be can be read by calling {@link #getDefaultFontSize()}
      */
