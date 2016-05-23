@@ -133,7 +133,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected void restartTimer(int delay) {
         if (timer == null) {

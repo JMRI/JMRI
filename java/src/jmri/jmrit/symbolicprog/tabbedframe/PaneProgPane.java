@@ -84,6 +84,7 @@ import org.slf4j.LoggerFactory;
  * a variable depending on what has previously happened. It should write every
  * variable (at least) once.
  * <DT>Read All<DD>This should read every variable once.
+ * <img src="doc-files/PaneProgPane-ReadAllSequenceDiagram.png">
  * <DT>Read Changes<DD>This should read every variable that's marked as changed.
  * Currently, we use a common definition of changed with the write operations,
  * and that someday might have to change.
@@ -96,6 +97,85 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap Copyright (C) 2014
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
+ */
+ /*
+ * @startuml jmri/jmrit/symbolicprog/tabbedframe/doc-files/PaneProgPane-ReadAllSequenceDiagram.png
+ * actor User
+ * box "PaneProgPane"
+ * participant readPaneAll
+ * participant prepReadPane
+ * participant nextRead
+ * participant executeRead
+ * participant propertyChange
+ * participant replyWhileProgrammingVar
+ * participant restartProgramming
+ * end box
+ * box "VariableValue"
+ * participant readAll
+ * participant readChanges
+ * end box
+ *
+ * control Programmer
+ * User -> readPaneAll: Read All Sheets
+ * activate readPaneAll
+ * readPaneAll -> prepReadPane
+ * activate prepReadPane
+ * prepReadPane --> readPaneAll
+ * deactivate prepReadPane
+ * deactivate prepReadPane
+ * readPaneAll -> nextRead
+ * activate nextRead
+ * nextRead -> executeRead
+ * activate executeRead
+ * executeRead -> readAll
+ * activate readAll
+ * readAll -> Programmer
+ * activate Programmer 
+ * readAll --> executeRead
+ * deactivate readAll
+ * executeRead --> nextRead
+ * deactivate executeRead
+ * nextRead --> readPaneAll
+ * deactivate nextRead
+ * deactivate readPaneAll
+ * == Callback after read completes ==
+ * Programmer -> propertyChange
+ * activate propertyChange
+ * note over propertyChange
+ * if the first read failed, 
+ * setup a second read of 
+ * the same value.
+ * otherwise, setup a read of 
+ * the next value.
+ * end note
+ * deactivate Programmer
+ * propertyChange -> User: CV value or error
+ * propertyChange -> replyWhileProgrammingVar
+ * activate replyWhileProgrammingVar
+ * replyWhileProgrammingVar -> restartProgramming
+ * activate restartProgramming
+ * restartProgramming -> nextRead
+ * activate nextRead
+ * nextRead -> executeRead
+ * activate executeRead
+ * executeRead -> readAll
+ * activate readAll
+ * readAll -> Programmer
+ * activate Programmer 
+ * readAll --> executeRead
+ * deactivate readAll
+ * executeRead -> nextRead
+ * deactivate executeRead
+ * nextRead --> restartProgramming
+ * deactivate nextRead
+ * restartProgramming --> replyWhileProgrammingVar
+ * deactivate restartProgramming
+ * replyWhileProgrammingVar --> propertyChange
+ * deactivate replyWhileProgrammingVar
+ * deactivate propertyChange 
+ * deactivate Programmer
+ * == callaback triggered repeat occurs until no more values ==
+ * @enduml 
  */
 public class PaneProgPane extends javax.swing.JPanel
         implements java.beans.PropertyChangeListener {
@@ -551,8 +631,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read changes on sheet" button, this sets in motion a
-     * continuing sequence of "read" operations on the variables & CVs in the
-     * Pane. Only variables in states marked as "changed" will be read.
+     * continuing sequence of "read" operations on the variables {@literal &}
+     * CVs in the Pane. Only variables in states marked as "changed" will be
+     * read.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -604,11 +685,11 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read Full Sheet" button, this sets in motion a continuing
-     * sequence of "read" operations on the variables & CVs in the Pane. The
-     * read mechanism only reads variables in certain states (and needs to do
-     * that to handle error processing right now), so this is implemented by
-     * first setting all variables and CVs on this pane to TOREAD in
-     * prepReadPaneAll, then starting the execution.
+     * sequence of "read" operations on the variables {@literal &} CVs in the
+     * Pane. The read mechanism only reads variables in certain states (and
+     * needs to do that to handle error processing right now), so this is
+     * implemented by first setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -1185,8 +1266,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare changes on sheet" button, this sets in motion a
-     * continuing sequence of "confirm" operations on the variables & CVs in the
-     * Pane. Only variables in states marked as "changed" will be checked.
+     * continuing sequence of "confirm" operations on the variables {@literal &}
+     * CVs in the Pane. Only variables in states marked as "changed" will be
+     * checked.
      *
      * @return true is a confirm has been started, false if the pane is
      *         complete.
@@ -1204,11 +1286,11 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare Full Sheet" button, this sets in motion a continuing
-     * sequence of "confirm" operations on the variables & CVs in the Pane. The
-     * read mechanism only reads variables in certain states (and needs to do
-     * that to handle error processing right now), so this is implemented by
-     * first setting all variables and CVs on this pane to TOREAD in
-     * prepReadPaneAll, then starting the execution.
+     * sequence of "confirm" operations on the variables {@literal &} CVs in the
+     * Pane. The read mechanism only reads variables in certain states (and
+     * needs to do that to handle error processing right now), so this is
+     * implemented by first setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
      *
      * @return true is a confirm has been started, false if the pane is
      *         complete.

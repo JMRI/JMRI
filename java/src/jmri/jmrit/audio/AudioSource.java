@@ -548,7 +548,7 @@ public interface AudioSource extends Audio {
      * this method will return a different random number that lies between the
      * two settings:
      * <pre>
-     * minimum &lt= number of loops &lt= maximum
+     * minimum {@literal <=} number of loops {@literal <=} maximum
      * </pre> Default value = 0
      * <p>
      * Applies only to sub-types:

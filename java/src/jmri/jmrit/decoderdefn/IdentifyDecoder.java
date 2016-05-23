@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Contains manufacturer-specific code to generate a 3rd "productID" identifier,
  * in addition to the manufacturer ID and model ID:<ul>
- * <li>QSI: (mfgID == 113) write 254=>CV49, write 4=>CV50, then CV56 is high
- * byte, write 5=>CV50, then CV56 is low byte of ID
+ * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
+ * then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of ID
  * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID
  * <li>TCS: (mfgID == 153) CV249 is ID
  * <li>Zimo: (mfgID == 145) CV250 is ID

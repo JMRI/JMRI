@@ -616,8 +616,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     /**
-     * Action of family radio button MultisensorItemPanel & IndicatorTOItem must
-     * overides
+     * Action of family radio button MultisensorItemPanel {@literal &}
+     * IndicatorTOItem must overrides
      */
     protected void setFamily(String family) {
         _family = family;

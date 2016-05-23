@@ -71,8 +71,9 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
  * speed table
  * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue
- * (Vstart & Vhigh not written)
- * @author Dave Heap - generate cvList array to incorporate Vstart & Vhigh
+ * (Vstart {@literal &} Vhigh not written)
+ * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &}
+ * Vhigh
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
