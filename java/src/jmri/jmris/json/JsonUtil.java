@@ -638,7 +638,7 @@ public class JsonUtil {
      * @param locale
      * @param id     The id of an entry in the roster.
      * @return a roster entry in JSON notation
-     * @deprcated since 4.3.5
+     * @deprecated since 4.3.5
      */
     @Deprecated
     static public JsonNode getRosterEntry(Locale locale, String id) {
