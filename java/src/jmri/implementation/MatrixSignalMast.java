@@ -329,12 +329,12 @@ public class MatrixSignalMast extends AbstractSignalMast {
             log.debug("Empty char[] received");
         }
         for (int i = 0; i < BitNum; i++) {
-            if (bits[i] == '1' && getTurnoutBean(i).getCommandedState() == Turnout.THROWN) { // no need to set a state already set
-                // NPE ERROR HERE
-                getTurnoutBean(i).setCommandedState(Turnout.CLOSED);
-            } else if (bits[i] == '0'  && getTurnoutBean(i).getCommandedState() == Turnout.CLOSED) {
-                getTurnoutBean(i).setCommandedState(Turnout.THROWN);
-            } else if (bits[i] == 'n') {
+            //if (bits[i] == '1' && getTurnoutBean(i).getCommandedState() == Turnout.THROWN) { // no need to set a state already set
+                //getTurnoutBean(i).setCommandedState(Turnout.CLOSED); // NPE ERROR HERE
+            //} else if (bits[i] == '0'  && getTurnoutBean(i).getCommandedState() == Turnout.CLOSED) {
+                //getTurnoutBean(i).setCommandedState(Turnout.THROWN); // NPE ERROR HERE
+            //} else if
+            if (bits[i] == 'n') {
                 // let pass, extra chars up to 5 are not defined
             } else {
                 // invalid char
