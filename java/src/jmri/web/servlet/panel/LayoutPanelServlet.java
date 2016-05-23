@@ -130,13 +130,20 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     if (!b.getUserName().isEmpty()) {
                         elem.setAttribute("username", b.getUserName());
                     }
-                    //don't send invalid sensors
+                    // get occupancy sensor from layoutblock if valid
                     if (!b.getOccupancySensorName().isEmpty()) {
                         Sensor s = sm.getSensor(b.getOccupancySensorName());
                         if (s != null) {
                             elem.setAttribute("occupancysensor", s.getSystemName()); //send systemname
                         }
+                    //if layoutblock has no occupancy sensor, use one from block, if it is populated
+                    } else { 
+                        Sensor s = b.getBlock().getSensor(); 
+                        if (s != null) {
+                            elem.setAttribute("occupancysensor", s.getSystemName()); //send systemname
+                        }
                     }
+
                     elem.setAttribute("occupiedsense", Integer.toString(b.getOccupiedSense()));
                     elem.setAttribute("trackcolor", ColorUtil.colorToString(b.getBlockTrackColor()));
                     elem.setAttribute("occupiedcolor", ColorUtil.colorToString(b.getBlockOccupiedColor()));
