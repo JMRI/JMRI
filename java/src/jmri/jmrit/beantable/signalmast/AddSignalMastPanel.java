@@ -970,7 +970,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
         }
-        //clearPanel(); // close and dispose Jpanel
+        clearPanel(); // close and dispose Jpanel
     }
 
     /**
@@ -1600,8 +1600,7 @@ public class AddSignalMastPanel extends JPanel {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect);
             matrixAspect.put(aspect, aspectpanel); // store in Hashmap
-            // fill in aspect properties here: set disabled? load check box values? to do: load existing values
-            //aspectpanel.setAspectBits(getBits(aspect, bitString));
+            // values are filled in later
         }
         matrixMastPanel.removeAll();
         matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(matrixAspect.size() + 3, 2));
@@ -1709,7 +1708,9 @@ public class AddSignalMastPanel extends JPanel {
         bitNum = newColNum;
         // show/hide column labels (if any)
         // hide/show output choices per Aspect
-        //updateMatrixMastPanel();
+        if (inEditMode == false) {
+            updateMatrixMastPanel(); // not while in edit mode! deletes all info for aspects
+        }
         validate();
         if (getTopLevelAncestor() != null) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame) getTopLevelAncestor()).getPreferredSize());

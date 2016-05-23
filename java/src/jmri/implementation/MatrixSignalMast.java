@@ -36,7 +36,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     */
     int BitNum = 5;
 
-    String errorChars = "n";
+    String errorChars = "nnnnn";
     char[] errorBits = errorChars.toCharArray();
 
     String UnLitChars = "00000"; // default starting value
@@ -328,12 +328,12 @@ public class MatrixSignalMast extends AbstractSignalMast {
         if (bits == null){
             log.debug("Empty char[] received");
         }
-        for (int i = 0; i < 2; i++) {
-            if (bits[i] == '1') {
+        for (int i = 0; i < BitNum; i++) {
+            if (bits[i] == '1' && getTurnoutBean(i).getCommandedState() == Turnout.THROWN) { // no need to set a state already set
                 // NPE ERROR HERE
-                //outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.CLOSED);
-            } else if (bits[i] == '0') {
-                //outputsToBeans.get("output" + i).getBean().setCommandedState(Turnout.THROWN);
+                getTurnoutBean(i).setCommandedState(Turnout.CLOSED);
+            } else if (bits[i] == '0'  && getTurnoutBean(i).getCommandedState() == Turnout.CLOSED) {
+                getTurnoutBean(i).setCommandedState(Turnout.THROWN);
             } else if (bits[i] == 'n') {
                 // let pass, extra chars up to 5 are not defined
             } else {
@@ -361,8 +361,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         if (i < 0 || i > outputsToBeans.size() ) {
             return null;
         }
-        outputsToBeans.get("output" + i).getBean();
-        return null;
+        return outputsToBeans.get("output" + i).getBean();
     }
 
 /*    public String getTurnoutName(int i) {
