@@ -45,22 +45,26 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a TransitTable GUI.
  *
- * <P This file is part of JMRI. <P JMRI is open source software; you can
- * redistribute it and/or modify it under the terms of version 2 of the GNU
- * General Public License as published by the Free Software Foundation. See the
- * "COPYING" file for a copy of this license. <P JMRI is distributed in the hope
- * that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
+ * <P>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is open source software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published by the
+ * Free Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008, 2010, 2011
  */
 public class TransitTableAction extends AbstractTableAction {
 
     /**
-     * Create an action with a specific title. <P Note that the argument is the
-     * Action title, not the title of the resulting frame. Perhaps this should
-     * be changed? @param actionName
+     * Create an action with a specific title.
+     * <P>
+     * Note that the argument is the Action title, not the title of the
+     * resulting frame. Perhaps this should be changed? @param actionName
      */
     public TransitTableAction(String actionName) {
         super(actionName);

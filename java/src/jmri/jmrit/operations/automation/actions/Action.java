@@ -44,7 +44,7 @@ public abstract class Action {
      * Mask off menu bits.
      * 
      * @param code
-     * @return code & ActionCodes.CODE_MASK
+     * @return code {@literal &} ActionCodes.CODE_MASK
      */
     protected int getCode(int code) {
         return code & ActionCodes.CODE_MASK;

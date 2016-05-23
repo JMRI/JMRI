@@ -63,8 +63,8 @@ abstract public class AbstractThrottle implements DccThrottle {
     protected SystemConnectionMemo adapterMemo;
 
     /**
-     * speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
-     * This is an bound parameter.
+     * speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
+     * emergency stop. This is an bound parameter.
      *
      * @return speed
      */

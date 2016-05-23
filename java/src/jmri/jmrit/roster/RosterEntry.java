@@ -256,9 +256,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Ensure the entry has a valid filename. If none exists, create one based
      * on the ID string. Does _not_ enforce any particular naming; you have to
-     * check separately for "&lt.none&gt." or whatever your convention is for
-     * indicating an invalid name. Does replace the space, period, colon, slash
-     * and backslash characters so that the filename will be generally usable.
+     * check separately for {@literal "<none>"} or whatever your convention is
+     * for indicating an invalid name. Does replace the space, period, colon,
+     * slash and backslash characters so that the filename will be generally
+     * usable.
      */
     public void ensureFilenameExists() {
         // if there isn't a filename, store using the id

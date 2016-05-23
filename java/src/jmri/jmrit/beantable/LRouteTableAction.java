@@ -1796,7 +1796,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * @throw IllegalArgumentException if "user input no good"
+     * @throws IllegalArgumentException if "user input no good"
      * @return The number of conditionals after the creation.
      */
     int makeRouteConditional(int numConds, /*boolean onChange,*/ ArrayList<ConditionalAction> actionList,
@@ -1884,7 +1884,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * @throw IllegalArgumentException if "user input no good"
+     * @throws IllegalArgumentException if "user input no good"
      * @return The number of conditionals after the creation.
      */
     int makeAlignConditional(int numConds, ArrayList<ConditionalAction> actionList,

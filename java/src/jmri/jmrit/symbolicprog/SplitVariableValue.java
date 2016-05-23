@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * The original use is for addresses of stationary (accessory)
  * <P>
  * Factor and Offset are applied when going <i>to</i> value of the variable
- * <i>to</> the CV values:
+ * <i>to</i> the CV values:
  * <PRE>
  * Value to put in CVs = ((value in text field) - Offset)/Factor
  * Value to put in text field = ((value in CVs) * Factor) + Offset

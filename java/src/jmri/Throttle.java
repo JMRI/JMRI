@@ -96,8 +96,8 @@ public interface Throttle {
     public static final String F28Momentary = "F28Momentary"; // NOI18N
 
     /**
-     * Speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
-     * This is an bound property.
+     * Speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
+     * emergency stop. This is an bound property.
      *
      * @return the speed as a percentage of maximum possible speed
      */
