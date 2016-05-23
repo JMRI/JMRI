@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.nce.simulator;
 
 import java.io.DataInputStream;
@@ -42,79 +41,60 @@ import org.slf4j.LoggerFactory;
  * www.ncecorporation.com/pdf/ bincmds.pdf
  * <p>
  *
- * Command	Description	#bytes rtn	Responses 		<br>
- * 0x80 NOP, dummy instruction (1) !				<br>
- * 0x81 xx xx yy assign loco xxxx to cab cc (1) !, 1,2			<br>
- * 0x82 read clock (2) <hours><minutes>		<br>
- * 0x83 Clock stop (1) !				<br>
- * 0x84 Clock start (1) !				<br>
- * 0x85 xx xx Set clock hr./min (1) !,3				<br>
- * 0x86 xx Set clock 12/24 (1) !,3				<br>
- * 0x87 xx Set clock ratio (1) !,3				<br>
- * 0x88 xxxx Dequeue packet by loco addr (1) !, 1,2			<br>
- * 0x89 Enable main trk, kill prog (1) !				<br>
- * 0x8A yy Return status of AIU yy (4)
- * <current hi byte> <current lo byte> <change hi byte> <change lo byte> <br>
- * 0x8B Kill main trk, enable prog (1) !				<br>
- * 0x8C dummy inst. returns	"!" followed CR/LF(3) !0x0D, 0x0A <br>
- * 0x8D xxxx mm Set speed mode of loco xxxx to mode mm, 1=14, 2=28, 3=128 (1) !,
- * 1,3<speed mode, 0 to 3>	<br>
- * 0x8E aaaa nn<16 data bytes>
- * Write nn bytes, start at aaaa Must have 16 data bytes, pad them out to 16 if
- * necessary	(1) !,4			<br>
- * <P>
- * 0x8F aaaa Read 16 bytes, start at aaaa(16) 16 bytes	<br>
- * 0x90 cc xx... Send 16 char message to Cab ccLCD line 3. xx = 16 ASCII char
- * (1) ! ,2		<br>
- * 0x91 cc xx Send 16 char message to cab cc LCD line 4. xx=16 ASCII (1) !,2
- * <br>
- * 0x92 cc xx Send 8 char message to cab cc LCD line 2 right xx=8 char (1) !,2
- * <br>
- * 0x93 ss<3 byte packet> Queue 3 byte packet to temp _Q send ss times (1) !
- * <br>
- * 0x94 ss<4 byte packet> Queue 4 byte packet to temp _Q send ss times (1) !
- * <br>
- * 0x95 ss<5 byte packet> Queue 5 byte packet to temp_Q send ss times (1) !			<br>
- * 0x96 ss<6 byte packet> Queue 6 byte packet to temp _Q send ss times (1) !
- * <br>
- * 0x97 aaaa xx Write 1 byte to aaaa (1) !			<br>
- * 0x98 aaaa xx xxWrite 2 bytes to aaaa (1) !			<br>
- * 0x99 aaaa<4 data bytes> Write 4 bytes to aaaa (1) !			<br>
- * 0x9A aaaa<8 data bytes> Write 8 bytes to aaaa (1) !			<br>
- * 0x9B yy Return status of AIU yy (short form of command 0x8A) (2)
- * <current hi byte><current lo byte><br>
- * 0x9C xx Execute macro number xx (1) !, 0,3		<br>
- * 0x9D aaaa Read 1 byte from aaaa (1) 1 byte				<br>
- * 0x9E Enter programming track mode(1) !=success 3=short circuit	<br>
- * 0x9F Exit programming track mode (1) !=success	<br>
- * 0xA0 aaaa xx Program CV aa with data xx in paged mode 			<br>
- * (1) !=success 0=program track	<br>
- * 0xA1 aaaa Read CV aaaa in paged mode Note: cv data followed by ! for OK. 0xFF
- * followed by 3 for can't read CV (2) !, 0,3	<br>
- * 0xA2<4 data bytes> Locomotive control command (1) !,1		<br>
- * 0xA3<3 bytepacket> Queue 3 byte packet to TRK _Q (replaces any packet with
- * same address if it exists)	(1) !,1		<br>
- * 0xA4<4 byte packet> Queue 4 byte packet to TRK _Q (1) !,1		<br>
- * 0xA5<5 byte packet> Queue 5 byte packet to TRK _Q (1) !,1		<br>
- * 0xA6 rr dd Program register rr with dd (1) !=success	0=no program track <br>
- * 0xA7 rr Read register rr. Note: cv data followed by ! for OK. 0xFF followed
- * by 3 for can't read CV (2) !,3	0=no program track <br>
- * 0xA8 aaaa dd Program CV aaaa with dd in direct mode.	(1) !=success 0=no
- * program track<br>
- * 0xA9 aaaa Read CV aaaa in direct mode. Note: cv data followed by ! for OK.
- * 0xFF followed by 3 for can't read CV (2) !,3<br>
- * 0xAA Return software revision number. Format: VV.MM.mm (3) 3 data bytes	<br>
- * 0xAB Perform soft reset of command station (like cycling power) (0) Returns
- * nothing									<br>
- * 0xAC Perform hard reset of command station. Reset to factory defaults (Note:
- * will change baud rate to 9600)(0) Returns nothing<br>
- * 0xAD <4 data bytes>Accy/signal and macro commands (1) !,1 		<br>
- *
+ {@literal
+  Command	Description	#bytes rtn	Responses 
+  0x80 NOP, dummy instruction (1) !				
+  0x81 xx xx yy assign loco xxxx to cab cc (1) !, 1,2		
+  0x82 read clock (2) <hours><minutes>	
+  0x83 Clock stop (1) !			
+  0x84 Clock start (1) !		
+  0x85 xx xx Set clock hr./min (1) !,3			
+  0x86 xx Set clock 12/24 (1) !,3		
+  0x87 xx Set clock ratio (1) !,3	
+  0x88 xxxx Dequeue packet by loco addr (1) !, 1,2	
+  0x89 Enable main trk, kill prog (1) !			
+  0x8A yy Return status of AIU yy (4) <current hi byte> <current lo byte> <change hi byte> <change lo byte>
+  0x8B Kill main trk, enable prog (1) !
+  0x8C dummy inst. returns	"!" followed CR/LF(3) !0x0D, 0x0A <br>
+  0x8D xxxx mm Set speed mode of loco xxxx to mode mm, 1=14, 2=28, 3=128 (1) !, 1,3<speed mode, 0 to 3>
+  0x8E aaaa nn<16 data bytes> Write nn bytes, start at aaaa Must have 16 data bytes, pad them out to 16 if necessary	(1) !,4		
+  0x8F aaaa Read 16 bytes, start at aaaa(16) 16 bytes
+  0x90 cc xx... Send 16 char message to Cab ccLCD line 3. xx = 16 ASCII char (1) ! ,2		
+  0x91 cc xx Send 16 char message to cab cc LCD line 4. xx=16 ASCII (1) !,2
+  0x92 cc xx Send 8 char message to cab cc LCD line 2 right xx=8 char (1) !,2
+  0x93 ss<3 byte packet> Queue 3 byte packet to temp _Q send ss times (1) !
+  0x94 ss<4 byte packet> Queue 4 byte packet to temp _Q send ss times (1) !
+  0x95 ss<5 byte packet> Queue 5 byte packet to temp_Q send ss times (1) !		
+  0x96 ss<6 byte packet> Queue 6 byte packet to temp _Q send ss times (1) !
+  0x97 aaaa xx Write 1 byte to aaaa (1) !
+  0x98 aaaa xx xxWrite 2 bytes to aaaa (1) !
+  0x99 aaaa<4 data bytes> Write 4 bytes to aaaa (1) !
+  0x9A aaaa<8 data bytes> Write 8 bytes to aaaa (1) !
+  0x9B yy Return status of AIU yy (short form of command 0x8A) (2) <current hi byte><current lo byte><br>
+  0x9C xx Execute macro number xx (1) !, 0,3
+  0x9D aaaa Read 1 byte from aaaa (1) 1 byte
+  0x9E Enter programming track mode(1) !=success 3=short circuit
+  0x9F Exit programming track mode (1) !=success
+  0xA0 aaaa xx Program CV aa with data xx in paged mode (1) !=success 0=program track
+  0xA1 aaaa Read CV aaaa in paged mode Note: cv data followed by ! for OK. 0xFF followed by 3 for can't read CV (2) !, 0,3
+  0xA2<4 data bytes> Locomotive control command (1) !,1
+  0xA3<3 bytepacket> Queue 3 byte packet to TRK _Q (replaces any packet with same address if it exists)	(1) !,1
+  0xA4<4 byte packet> Queue 4 byte packet to TRK _Q (1) !,1
+  0xA5<5 byte packet> Queue 5 byte packet to TRK _Q (1) !,1
+  0xA6 rr dd Program register rr with dd (1) !=success	0=no program track
+  0xA7 rr Read register rr. Note: cv data followed by ! for OK. 0xFF followed by 3 for can't read CV (2) !,3	0=no program track 
+  0xA8 aaaa dd Program CV aaaa with dd in direct mode.	(1) !=success 0=no program track
+  0xA9 aaaa Read CV aaaa in direct mode. Note: cv data followed by ! for OK.
+  0xFF followed by 3 for can't read CV (2) !,3 
+  0xAA Return software revision number. Format: VV.MM.mm (3) 3 data bytes
+  0xAB Perform soft reset of command station (like cycling power) (0) Returns nothing
+  0xAC Perform hard reset of command station. Reset to factory defaults (Note: will change baud rate to 9600)(0) Returns nothing
+  0xAD <4 data bytes>Accy/signal and macro commands (1) !,1 
+}
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author	Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision$
  */
 public class SimulatorAdapter extends NcePortController implements
         jmri.jmrix.SerialPortAdapter, Runnable {

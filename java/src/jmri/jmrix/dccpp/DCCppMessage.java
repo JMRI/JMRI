@@ -144,7 +144,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Parse a string and generate/return a DCCppMessage object
      * 
-     * @param s String of DCC++ message without the < > brackets
+     * @param s String of DCC++ message without the {@literal < >} brackets
      * @return DCCppMessage
      */
     
@@ -1372,7 +1372,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
-     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV Value)
+     *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV Value)}
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if verificaiton read fails
      */
     public static DCCppMessage makeWriteDirectCVMsg(int cv, int val) {
@@ -1414,7 +1414,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
-     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)
+     *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)}
      *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
      */    
     public static DCCppMessage makeBitWriteDirectCVMsg(int cv, int bit, int val) {
