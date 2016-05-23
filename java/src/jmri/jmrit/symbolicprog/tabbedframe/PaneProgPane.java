@@ -84,7 +84,7 @@ import org.slf4j.LoggerFactory;
  * a variable depending on what has previously happened. It should write every
  * variable (at least) once.
  * <DT>Read All<DD>This should read every variable once.
- * <img src=<"doc-files/PaneProgPane-ReadAllSequenceDiagram.png">
+ * <img src="doc-files/PaneProgPane-ReadAllSequenceDiagram.png">
  * <DT>Read Changes<DD>This should read every variable that's marked as changed.
  * Currently, we use a common definition of changed with the write operations,
  * and that someday might have to change.
