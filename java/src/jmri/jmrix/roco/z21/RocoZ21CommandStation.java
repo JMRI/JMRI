@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * Locomotive or turnout data.</LI>
  * <LI>0x02000000 send Locomotive specific LocoNet data to the client.</LI>
  * <LI>0x04000000 send Turnout specific LocoNet data to the client.</LI>
- * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI
+ * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI>
  * </UL>
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001 
