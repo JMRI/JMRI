@@ -1,4 +1,3 @@
-// IdentifyDecoder.java
 package jmri.jmrit.decoderdefn;
 
 import org.slf4j.Logger;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
