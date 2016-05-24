@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created and
- * provide rotation & scaling services.
+ * provide rotation {@literal &} scaling services.
  * <p>
  * We store both a "URL" for finding the file this was made from (so we can load
  * this later), plus a shorter "name" for display.
@@ -334,8 +334,8 @@ public class NamedIcon extends ImageIcon {
 
     /**
      * Scale as a percentage
-     *
-     * public void scale(int s, Component comp) { //log.info("scale= "+s+",
+     */
+    /* public void scale(int s, Component comp) { //log.info("scale= "+s+",
      * "+getDescription()); if (s<1) { return; } scale(s/100.0, comp); }
      */
     public void scale(double scale, Component comp) {

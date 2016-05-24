@@ -57,8 +57,8 @@ public interface ThrottleManager {
     public boolean requestThrottle(int address, ThrottleListener l);
 
     /**
-     * Request a throttle, given a decoder address & whether it is a long or
-     * short DCC address. When the decoder address is located, the
+     * Request a throttle, given a decoder address {@literal &} whether it is a
+     * long or short DCC address. When the decoder address is located, the
      * ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
      *

@@ -1,4 +1,3 @@
-// Bean.java
 package jmri.beans;
 
 import java.beans.PropertyChangeEvent;
@@ -48,11 +47,6 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      * Fire an indexed property change on the Event dispatch (Swing) thread. Use
      * {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, boolean, boolean)}
      * directly to fire this notification on another thread.
-     *
-     * @param propertyName
-     * @param index
-     * @param oldValue
-     * @param newValue
      */
     protected void fireIndexedPropertyChange(String propertyName, int index, boolean oldValue, boolean newValue) {
         ThreadingUtil.runOnGUIEventually(() -> {
@@ -64,11 +58,6 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      * Fire an indexed property change on the Event dispatch (Swing) thread. Use
      * {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, int, int)}
      * directly to fire this notification on another thread.
-     *
-     * @param propertyName
-     * @param index
-     * @param oldValue
-     * @param newValue
      */
     protected void fireIndexedPropertyChange(String propertyName, int index, int oldValue, int newValue) {
         ThreadingUtil.runOnGUIEventually(() -> {
@@ -80,11 +69,6 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      * Fire an indexed property change on the Event dispatch (Swing) thread. Use
      * {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, java.lang.Object, java.lang.Object)}
      * directly to fire this notification on another thread.
-     *
-     * @param propertyName
-     * @param index
-     * @param oldValue
-     * @param newValue
      */
     protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
         ThreadingUtil.runOnGUIEventually(() -> {
@@ -96,10 +80,6 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      * Fire an indexed property change on the Event dispatch (Swing) thread. Use
      * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, boolean, boolean)}
      * directly to fire this notification on another thread.
-     *
-     * @param key
-     * @param oldValue
-     * @param value
      */
     protected void firePropertyChange(String key, boolean oldValue, boolean value) {
         ThreadingUtil.runOnGUIEventually(() -> {
@@ -111,8 +91,6 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      * Fire an indexed property change on the Event dispatch (Swing) thread. Use
      * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.beans.PropertyChangeEvent)}
      * directly to fire this notification on another thread.
-     *
-     * @param evt
      */
     protected void firePropertyChange(PropertyChangeEvent evt) {
         ThreadingUtil.runOnGUIEventually(() -> {
@@ -125,9 +103,6 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, int, int)}
      * directly to fire this notification on another thread.
      *
-     * @param key
-     * @param value
-     * @param oldValue
      */
     protected void firePropertyChange(String key, int oldValue, int value) {
         ThreadingUtil.runOnGUIEventually(() -> {
@@ -140,9 +115,6 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)}
      * directly to fire this notification on another thread.
      *
-     * @param key
-     * @param oldValue
-     * @param value
      */
     protected void firePropertyChange(String key, Object oldValue, Object value) {
         ThreadingUtil.runOnGUIEventually(() -> {

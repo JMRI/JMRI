@@ -112,7 +112,8 @@ public interface SensorManager extends Manager {
      * @param curAddress - The hardware address of the turnout we which to
      * @param prefix     - The System Prefix used to make up the systemName
      *                   check.
-     * @returns           - null if the system name made from prefix and curAddress is in use
+     * @return           - null if the system name made from prefix and curAddress is in use
+     * @throws jmri.JmriException
      */
     public @Nullable String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 

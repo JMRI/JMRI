@@ -1111,8 +1111,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Display the X & Y coordinates of the Positionable item and provide a
-     * dialog menu item to edit them.
+     * Display the {@literal X & Y} coordinates of the Positionable item and
+     * provide a dialog menu item to edit them.
      *
      * @param p     The item to add the menu item to
      * @param popup The menu item to add the action to
