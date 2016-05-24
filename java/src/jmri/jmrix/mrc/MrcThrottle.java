@@ -189,7 +189,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      *
      * @param speed Number from 0 to 1, or less than zero for emergency stop

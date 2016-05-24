@@ -306,8 +306,8 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
-    * 
+     * Internal routine to handle timer starts {@literal &} restarts
+     * 
      * @param delay timer delay
      */
     static protected void restartTimer(int delay) {

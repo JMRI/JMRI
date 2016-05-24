@@ -592,8 +592,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
-    * 
+     * Internal routine to handle timer starts {@literal &} restarts
+     * 
      * @param delay timer delay
      */
     static protected void restartTimer(int delay) {

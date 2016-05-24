@@ -6,7 +6,7 @@ import jmri.jmrix.SystemConnectionMemo;
 /**
  * Minimal implementation of SystemConnectionMemo.
  *
- * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
+ * @author Randall Wood {@literal <randall.h.wood@alexandriasoftware.com>}
  */
 public class RpsSystemConnectionMemo extends SystemConnectionMemo {
 

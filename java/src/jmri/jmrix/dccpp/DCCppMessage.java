@@ -1172,12 +1172,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    Note that many decoders and controllers combine the ADDRESS and SUBADDRESS into a single number, N,
      *    from  1 through a max of 2044, where
      *    
-     *    N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0
+     *    {@code N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0}
      *    
      *    OR
      *    
-     *    ADDRESS = INT((N - 1) / 4) + 1
-     *    SUBADDRESS = (N - 1) % 4
+     *    {@code ADDRESS = INT((N - 1) / 4) + 1}
+     *    {@code SUBADDRESS = (N - 1) % 4}
      *    
      *    returns: NONE
     */
