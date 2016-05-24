@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
  * then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of ID
  * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID
+ * <li>Hornby: (mfgID == 48) CV159 is ID
  * <li>TCS: (mfgID == 153) CV249 is ID
  * <li>Zimo: (mfgID == 145) CV250 is ID
  * </ul>
@@ -63,6 +64,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder ID CV 249");
             readCV(249);
             return false;
+        } else if (mfgID == 48) {  // Hornby
+            statusUpdate("Read decoder ID CV 159");
+            readCV(159);
+            return false;
         } else if (mfgID == 145) {  // Zimo
             statusUpdate("Read decoder ID CV 250");
             readCV(250);
@@ -85,6 +90,9 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             writeCV(50, 4);
             return false;
         } else if (mfgID == 153) {  // TCS
+            productID = value;
+            return true;
+        } else if (mfgID == 48) {  // Hornby
             productID = value;
             return true;
         } else if (mfgID == 145) {  // Zimo
