@@ -60,14 +60,14 @@ public class XNetReplyTest extends TestCase {
         XNetMessage x = new XNetMessage("12 34 AB 03 19 06 0B B1");
         XNetReply m = new XNetReply(x);
         Assert.assertEquals("length", x.getNumDataElements(), m.getNumDataElements());
-        Assert.assertEquals("0th byte", x.getElement(0), m.getElement(0));
-        Assert.assertEquals("1st byte", x.getElement(1), m.getElement(1));
-        Assert.assertEquals("2nd byte", x.getElement(2), m.getElement(2));
-        Assert.assertEquals("3rd byte", x.getElement(3), m.getElement(3));
-        Assert.assertEquals("4th byte", x.getElement(4), m.getElement(4));
-        Assert.assertEquals("5th byte", x.getElement(5), m.getElement(5));
-        Assert.assertEquals("6th byte", x.getElement(6), m.getElement(6));
-        Assert.assertEquals("7th byte", x.getElement(7), m.getElement(7));
+        Assert.assertEquals("0th byte", x.getElement(0)& 0xFF, m.getElement(0)& 0xFF);
+        Assert.assertEquals("1st byte", x.getElement(1)& 0xFF, m.getElement(1)& 0xFF);
+        Assert.assertEquals("2nd byte", x.getElement(2)& 0xFF, m.getElement(2)& 0xFF);
+        Assert.assertEquals("3rd byte", x.getElement(3)& 0xFF, m.getElement(3)& 0xFF);
+        Assert.assertEquals("4th byte", x.getElement(4)& 0xFF, m.getElement(4)& 0xFF);
+        Assert.assertEquals("5th byte", x.getElement(5)& 0xFF, m.getElement(5)& 0xFF);
+        Assert.assertEquals("6th byte", x.getElement(6)& 0xFF, m.getElement(6)& 0xFF);
+        Assert.assertEquals("7th byte", x.getElement(7)& 0xFF, m.getElement(7)& 0xFF);
     }
 
     // check parity operations
