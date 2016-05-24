@@ -286,7 +286,8 @@ public interface SignalMastLogic {
      * Use this to determine if the signalmast logic is stored in the panel file
      * and if all the information is stored.
      *
-     * @param store one of STOREALL, STOREMASTSONLY or STORENONE
+     * @param store one of {@link #STOREALL}, {@link #STOREMASTSONLY} or
+     *              {@link #STORENONE}
      */
     public void setStore(int store, SignalMast destination);
 
