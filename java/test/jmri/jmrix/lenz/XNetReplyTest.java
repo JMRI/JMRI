@@ -33,6 +33,43 @@ public class XNetReplyTest extends TestCase {
         Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
     }
 
+    // Test the string constructor with an empty string paramter.
+    public void testStringCtorEmptyString() {
+        XNetReply m = new XNetReply("");
+        Assert.assertEquals("length", 0, m.getNumDataElements());
+        Assert.assertTrue("empty reply",m.toString().equals(""));
+    }
+
+    // Test the copy constructor.
+    public void testCopyCtor() {
+        XNetReply x = new XNetReply("12 34 AB 03 19 06 0B B1");
+        XNetReply m = new XNetReply(x);
+        Assert.assertEquals("length", x.getNumDataElements(), m.getNumDataElements());
+        Assert.assertEquals("0th byte", x.getElement(0), m.getElement(0));
+        Assert.assertEquals("1st byte", x.getElement(1), m.getElement(1));
+        Assert.assertEquals("2nd byte", x.getElement(2), m.getElement(2));
+        Assert.assertEquals("3rd byte", x.getElement(3), m.getElement(3));
+        Assert.assertEquals("4th byte", x.getElement(4), m.getElement(4));
+        Assert.assertEquals("5th byte", x.getElement(5), m.getElement(5));
+        Assert.assertEquals("6th byte", x.getElement(6), m.getElement(6));
+        Assert.assertEquals("7th byte", x.getElement(7), m.getElement(7));
+    }
+
+    // Test the XNetMessage constructor.
+    public void testXNetMessageCtor() {
+        XNetMessage x = new XNetMessage("12 34 AB 03 19 06 0B B1");
+        XNetReply m = new XNetReply(x);
+        Assert.assertEquals("length", x.getNumDataElements(), m.getNumDataElements());
+        Assert.assertEquals("0th byte", x.getElement(0)& 0xFF, m.getElement(0)& 0xFF);
+        Assert.assertEquals("1st byte", x.getElement(1)& 0xFF, m.getElement(1)& 0xFF);
+        Assert.assertEquals("2nd byte", x.getElement(2)& 0xFF, m.getElement(2)& 0xFF);
+        Assert.assertEquals("3rd byte", x.getElement(3)& 0xFF, m.getElement(3)& 0xFF);
+        Assert.assertEquals("4th byte", x.getElement(4)& 0xFF, m.getElement(4)& 0xFF);
+        Assert.assertEquals("5th byte", x.getElement(5)& 0xFF, m.getElement(5)& 0xFF);
+        Assert.assertEquals("6th byte", x.getElement(6)& 0xFF, m.getElement(6)& 0xFF);
+        Assert.assertEquals("7th byte", x.getElement(7)& 0xFF, m.getElement(7)& 0xFF);
+    }
+
     // check parity operations
     public void testParity() {
         XNetReply m;
@@ -86,6 +123,13 @@ public class XNetReplyTest extends TestCase {
     public void testGetElementBCD(){
        XNetReply m=new XNetReply("63 14 01 04 72");
        Assert.assertEquals("getElementBCD Return Value",(long)14,(long)m.getElementBCD(1));
+    }
+
+    // check skipPrefix
+    public void testSkipPrefix(){
+       XNetReply m=new XNetReply("63 14 01 04 72");
+       // skip prefix currently always returns -1, there is no prefix.
+       Assert.assertEquals("skipPrefix return value",-1,(long)m.skipPrefix(0));
     }
 
 
