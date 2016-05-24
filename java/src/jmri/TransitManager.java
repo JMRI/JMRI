@@ -119,7 +119,7 @@ public class TransitManager extends AbstractManager
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
     public Transit getTransit(String name) {
