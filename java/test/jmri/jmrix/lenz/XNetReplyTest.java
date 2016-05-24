@@ -240,16 +240,38 @@ public class XNetReplyTest extends TestCase {
 
     // getting the address from a feedback response
     public void testGetTurnoutMsgAddr() {
-        // feedback message for turnout
+        // feedback message for turnout 21
         XNetReply r = new XNetReply("42 05 04 43");
         Assert.assertEquals("Turnout Message Address", 21, r.getTurnoutMsgAddr());
+        // feedback message for turnout 23
+        r = new XNetReply("42 05 14 53");
+        Assert.assertEquals("Turnout Message Address", 23, r.getTurnoutMsgAddr());
+        // feedback message for a feedback encoder, should return -1.
+        r = new XNetReply("42 05 48 0F");
+        Assert.assertEquals("Turnout Message Address for Feedback encoder", -1, r.getTurnoutMsgAddr() );
+
+        // feedback message for a non-feedback message, should return -1.
+        r = new XNetReply("63 10 01 04 76");
+        Assert.assertEquals("Turnout Message Address for Feedback Other message", -1, r.getTurnoutMsgAddr() );
+
     }
 
     // getting the address from a broadcast feedback response
     public void testGetBroadcastTurnoutMsgAddr() {
-        // feedback message for turnout
+        // feedback message for turnout 21
         XNetReply r = new XNetReply("42 05 04 43");
         Assert.assertEquals("Broadcast Turnout Message Address", 21, r.getTurnoutMsgAddr(1));
+
+        // feedback message for turnout 23
+        r = new XNetReply("42 05 14 53");
+        Assert.assertEquals("Broadcast Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
+        // feedback message for a feedback encoder, should return -1.
+        r = new XNetReply("42 05 48 0F");
+        Assert.assertEquals("Broadcast Turnout Message Address for Feedback encoder", -1, r.getTurnoutMsgAddr(1) );
+
+        // feedback message for a non-feedback message, should return -1.
+        r = new XNetReply("63 10 01 04 76");
+        Assert.assertEquals("Broadcast Turnout Message Address for Feedback Other message", -1, r.getTurnoutMsgAddr() );
     }
 
     // getting the feedback message type (turnout without feedback, 
@@ -278,11 +300,23 @@ public class XNetReplyTest extends TestCase {
 
     // getting the status from a turnout feedback response
     public void testGetTurnoutMmessageStatus() {
-        // feedback message for turnout
+        // feedback message for turnout 22, closed
         XNetReply r = new XNetReply("42 05 04 43");
         Assert.assertEquals("Turnout Status", jmri.Turnout.CLOSED, r.getTurnoutStatus(0));
+        // feedback message for turnout 22, thrown
         r = new XNetReply("42 05 08 4F");
         Assert.assertEquals("Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(0));
+
+	// ask for address 21
+	Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(1));
+        // feedback message for turnout 21, closed
+        r = new XNetReply("42 05 01 46");
+        Assert.assertEquals("Turnout Status", jmri.Turnout.CLOSED, r.getTurnoutStatus(1));
+        // feedback message for turnout 21, thrown
+        r = new XNetReply("42 05 02 45");
+        Assert.assertEquals("Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1));
+	// ask for address 22.
+	Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(0));
     }
 
     // getting the status from a turnout broadcast feedback response
