@@ -554,7 +554,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     SprogSystemConnectionMemo adaptermemo;
 
     /**
-     * @brief get user name
+     * Get user name
      * 
      * @return the user name
      */
@@ -567,7 +567,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * @brief get system prefix
+     * Get system prefix
      * 
      * @return the system prefix
      */
