@@ -1364,6 +1364,8 @@
             <arg value="500"/><!-- change from default 100 warnings -->
             <arg value="-Xmaxerrs"/>
             <arg value="500"/><!-- change from default 100 errors -->
+            <!-- disable output of custom @navassoc tag - used for UML image generation -->
+            <tag name="navassoc" enabled="false"/>
 
             <group title="Core" packages="jmri"/>
             <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
