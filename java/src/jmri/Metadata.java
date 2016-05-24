@@ -37,7 +37,7 @@ public class Metadata {
     /**
      * Return the value of the named meta data, or any valid system property.
      *
-     * @param name
+     * @param name name of meta data or property to return
      * @return String value of requested data or null
      */
     public static String getBySystemName(String name) {

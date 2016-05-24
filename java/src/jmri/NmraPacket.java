@@ -661,10 +661,10 @@ public class NmraPacket {
      * processing of the speed value.
      *
      * @param full     must be true
-     * @param address
-     * @param longAddr
+     * @param address  DCC address
+     * @param longAddr true if DCC address is long; false if short
      * @param speed    speed step value 0 - 31 for insertion into DC packet
-     * @param fwd
+     * @param fwd      true for forward direction; false for reverse
      */
     public static byte[] speedStep28Packet(Boolean full, int address, boolean longAddr, int speed, boolean fwd) {
         if (log.isDebugEnabled()) {

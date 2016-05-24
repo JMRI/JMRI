@@ -42,7 +42,7 @@ public interface SensorManager extends Manager {
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
     public @Nullable Sensor getSensor(@Nonnull String name);
@@ -113,7 +113,7 @@ public interface SensorManager extends Manager {
      * @param prefix     - The System Prefix used to make up the systemName
      *                   check.
      * @return           - null if the system name made from prefix and curAddress is in use
-     * @throws jmri.JmriException
+     * @throws jmri.JmriException if problem calculating next address
      */
     public @Nullable String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 

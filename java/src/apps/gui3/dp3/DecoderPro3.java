@@ -86,7 +86,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
      * Force our test size. Superclass method set to max size, filling real
      * window.
      *
-     * @param d
+     * @param d size to use (ignored in this case)
      */
     @Override
     protected void displayMainFrame(java.awt.Dimension d) {

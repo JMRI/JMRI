@@ -35,7 +35,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     /**
      *
-     * @param fileChooser
+     * @param fileChooser {@link JFileChooser} to use for file selection
      * @return true if successful
      */
     protected boolean loadFile(JFileChooser fileChooser) {
