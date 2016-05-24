@@ -127,7 +127,7 @@ public class RosterServlet extends HttpServlet {
      *
      * This method responds to the following GET URL patterns: <ul>
      * <li>/roster/group/&lt;group%20name&gt;</li>
-     * <li>/roster/group/&lt;group%20name&gt;?filter=filter[&filter=filter]</li>
+     * <li>/roster/group/&lt;group%20name&gt;?filter=filter[&amp;filter=filter]</li>
      * </ul>
      *
      * This method responds to the POST URL
@@ -173,7 +173,7 @@ public class RosterServlet extends HttpServlet {
      *
      * This method responds to the following GET URL patterns: <ul>
      * <li>/roster/</li> <li>/roster/list</li>
-     * <li>/roster/list?filter=filter[&filter=filter]</li> </ul>
+     * <li>/roster/list?filter=filter[&amp;filter=filter]</li> </ul>
      *
      * This method responds to POST URLs <code>/roster</code> and
      * <code>/roster/list</code> with a JSON payload for the filter.

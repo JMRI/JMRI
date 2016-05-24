@@ -300,7 +300,7 @@ public class StringUtil {
      *
      * @param s	        collection of strings
      * @param delimiter
-     * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
+     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
      */
     public static String join(Collection<String> s, String delimiter) {
         StringBuffer buffer = new StringBuffer();
@@ -319,7 +319,7 @@ public class StringUtil {
      *
      * @param s	        collection of strings
      * @param delimiter
-     * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
+     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
      */
     public static String join(String[] s, String delimiter) {
         StringBuffer buffer = new StringBuffer();

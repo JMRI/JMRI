@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * <li>{@link #eval(java.io.File, javax.script.Bindings)}</li>
  * <li>{@link #eval(java.io.File, javax.script.ScriptContext)}</li>
  * <li>{@link #eval(java.lang.String, javax.script.ScriptEngine)}</li>
- * <li>{@link #runScript(java.io.File)</li>
+ * <li>{@link #runScript(java.io.File)}</li>
  * </ul>
  * Evaluating a script using <code>getEngine*(java.lang.String).eval(...)</code>
  * methods will not respect the <code>jython.exec</code> property, although all
