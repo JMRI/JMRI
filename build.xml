@@ -1101,6 +1101,9 @@
                       <exclude name="**/*Test*.class" />
                       <!-- Exclude inner classes -->
                       <exclude name="**/*$*.class" />
+                      <!-- Exclude testing infrastructure classes -->
+                      <exclude name="apps/tests/Log4jFixture.class" />
+                      <exclude name="**/*Scaffold*.class" />
                   </fileset>
               </classfiles>
           </structure>
@@ -1229,6 +1232,9 @@
                       <exclude name="**/*Test*.class" />
                       <!-- Exclude inner classes -->
                       <exclude name="**/*$*.class" />
+                      <!-- Exclude testing infrastructure classes -->
+                      <exclude name="apps/tests/Log4jFixture.class" />
+                      <exclude name="**/*Scaffold*.class" />
                   </fileset>
               </classfiles>
           </structure>
