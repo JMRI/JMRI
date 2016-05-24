@@ -245,6 +245,24 @@
         <classpath path="lib/jacocoant.jar" />
     </taskdef>
 
+    <!-- fileset for the jacoco targets. -->
+    <fileset id="jacocofileset" dir="${target}">
+        <include name="**/*.class" />
+        <!-- Exclude classes necessary for testing only from the code coverage report-->
+        <exclude name="**/*Test*.class" />
+        <!-- Exclude testing infrastructure classes -->
+        <exclude name="**/*Scaffold.class" />
+        <exclude name="**/*JUnit*.class" />
+        <exclude name="**/*Demo.class" />
+        <exclude name="**/*Mock*.class" />
+        <exclude name="jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class" />
+        <exclude name="jmri/jmrix/openlcb/SampleFactory.class" />
+        <exclude name="jmri/util/swing/SamplePane.class" />
+        <exclude name="apps/tests/Log4jFixture.class" />
+    </fileset>
+
+
+
     <!-- end of definitions -->
 
     <!-- target definitions start here -->
@@ -1095,16 +1113,7 @@
  
           <structure name="AntTestReporting">
               <classfiles>
-                  <fileset dir="${target}">
-                      <include name="**/*.class" />
-                      <!-- Exclude classes necessary for testing only from the code coverage report-->
-                      <exclude name="**/*Test*.class" />
-                      <!-- Exclude inner classes -->
-                      <exclude name="**/*$*.class" />
-                      <!-- Exclude testing infrastructure classes -->
-                      <exclude name="apps/tests/Log4jFixture.class" />
-                      <exclude name="**/*Scaffold*.class" />
-                  </fileset>
+                 <fileset refid="jacocofileset"/>
               </classfiles>
           </structure>
  
@@ -1226,16 +1235,7 @@
  
           <structure name="AntTestReporting">
               <classfiles>
-                  <fileset dir="${target}">
-                      <include name="**/*.class" />
-                      <!-- Exclude classes necessary for testing only from the code coverage report-->
-                      <exclude name="**/*Test*.class" />
-                      <!-- Exclude inner classes -->
-                      <exclude name="**/*$*.class" />
-                      <!-- Exclude testing infrastructure classes -->
-                      <exclude name="apps/tests/Log4jFixture.class" />
-                      <exclude name="**/*Scaffold*.class" />
-                  </fileset>
+                 <fileset refid="jacocofileset"/>
               </classfiles>
           </structure>
  
