@@ -96,7 +96,7 @@ public abstract class Action {
     }
 
     public String getActionString() {
-        return getFormatedMessage("{0}{1}{2}{3}{4}{5}");
+        return getFormatedMessage("{0}{1}{2}{3}{4}{5}"); // NOI18N
     }
 
     public String getActionSuccessfulString() {
