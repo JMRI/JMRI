@@ -12,7 +12,7 @@ import jmri.jmrit.roster.RosterObject;
  *
  * This object allows groups to be manipulated as Java beans.
  *
- * @author Randall Wood {@literal <randall.h.wood@alexandriasoftware.com>}
+ * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
 public class RosterGroup extends Bean implements RosterObject {
 

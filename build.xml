@@ -1360,6 +1360,10 @@
                 <include name="jmri/**"/>
             </packageset>
             <arg value="-Xdoclint:all,-missing,-accessibility,-html"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xmaxwarns"/>
+            <arg value="500"/><!-- change from default 100 warnings -->
+            <arg value="-Xmaxerrs"/>
+            <arg value="500"/><!-- change from default 100 errors -->
 
             <group title="Core" packages="jmri"/>
             <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>

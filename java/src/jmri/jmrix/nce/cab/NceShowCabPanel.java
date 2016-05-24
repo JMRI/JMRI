@@ -97,9 +97,9 @@ import org.slf4j.LoggerFactory;
  *
  * ;lower nibble bit 0 =1 if setup advanced consist in process
  *
- * FLAGS2 EQU 93 ;bit 0 = \ ;bit 1 = >Number of recalls for this cab ;bit 2 = /
- * 1-6 valid ;bit 3 = 1=refresh LCD on ProCab ;bit 4 = Do not use ;bit 5 = Do
- * not use ;bit 6 = Do not use ;bit 7 = Do not use
+ * FLAGS2 EQU 93 ;bit 0 = \ ;bit 1 = {@literal >}Number of recalls for this cab
+ * ;bit 2 = / 1-6 valid ;bit 3 = 1=refresh LCD on ProCab ;bit 4 = Do not use
+ * ;bit 5 = Do not use ;bit 6 = Do not use ;bit 7 = Do not use
  *
  * FLAGS1 EQU 101 ;bit0 - 0 = type a or type C cab, 1 = type b or type d ;bit1 -
  * 0 = cab type not determined, 1 = it has ;bit2 - 0 = Do not use ;bit3 - 0 = Do

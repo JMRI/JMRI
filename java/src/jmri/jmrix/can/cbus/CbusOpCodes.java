@@ -75,7 +75,7 @@ public class CbusOpCodes {
     }
 
     /**
-     * Hashmap for decoding CBUS opcodes <opc, string description>
+     * Hashmap for decoding CBUS opcodes {@code <opc, string description>}
      */
     public static final Map<Integer, String> opcodeMap = createMap();
 
