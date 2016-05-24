@@ -258,7 +258,7 @@
         <exclude name="jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class" />
         <exclude name="jmri/jmrix/openlcb/SampleFactory.class" />
         <exclude name="jmri/util/swing/SamplePane.class" />
-        <exclude name="apps/tests/Log4jFixture.class" />
+        <exclude name="apps/tests/Log4JFixture.class" />
     </fileset>
 
 
