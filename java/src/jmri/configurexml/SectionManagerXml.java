@@ -141,8 +141,8 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * Create a SectionManager object of the correct class, then register and
      * fill it.
      *
-     * @param sharedSections Top level Element to unpack.
-     * @param perNodeSections
+     * @param sharedSections  Top level Element to unpack.
+     * @param perNodeSections Per-node Element to unpack.
      * @return true if successful
      */
     @Override
@@ -157,8 +157,9 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * additional info needed for a specific Section type, invoke this with the
      * parent of the set of Section elements.
      *
-     * @param sharedSections Element containing the Section elements to load.
-     * @param perNodeSections
+     * @param sharedSections  Element containing the Section elements to load.
+     * @param perNodeSections Per-node Element containing the Section elements
+     *                        to load.
      */
     public void loadSections(Element sharedSections, Element perNodeSections) {
         List<Element> sectionList = sharedSections.getChildren("section");
