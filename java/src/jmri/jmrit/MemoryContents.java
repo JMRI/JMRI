@@ -357,7 +357,7 @@ public class MemoryContents {
      * <p>
      * <code>! KeyName: Value</code>
      *
-     * @param file
+     * @param file file to read
      * @throws FileNotFoundException               if the file does not exist
      * @throws MemoryFileRecordLengthException     if a record line is too long
      *                                             or short
@@ -721,7 +721,8 @@ public class MemoryContents {
      *
      * @param w Writer to which the character stream is sent
      * @throws IOException                         upon file access problem
-     * @throws MemoryFileAddressingFormatException
+     * @throws MemoryFileAddressingFormatException if unsupported addressing
+     *                                             format
      */
     public void writeHex(Writer w) throws IOException, MemoryFileAddressingFormatException {
         writeHex(w, 16);
@@ -750,7 +751,8 @@ public class MemoryContents {
      * @param blockSize    is the maximum number of bytes defined in a data
      *                     record
      * @throws IOException                         upon file access problem
-     * @throws MemoryFileAddressingFormatException
+     * @throws MemoryFileAddressingFormatException if unsupported addressing
+     *                                             format
      */
     public void writeHex(Writer writer, boolean writeKeyVals, int blockSize)
             throws IOException, MemoryFileAddressingFormatException {
@@ -776,7 +778,8 @@ public class MemoryContents {
      * @param writer    Writer to which the character stream is sent
      * @param blocksize is the maximum number of bytes defined in a data record
      * @throws IOException                         upon file access problem
-     * @throws MemoryFileAddressingFormatException
+     * @throws MemoryFileAddressingFormatException if unsupported addressing
+     *                                             format
      */
     private void writeHex(Writer writer, int blockSize)
             throws IOException, MemoryFileAddressingFormatException {
@@ -948,7 +951,7 @@ public class MemoryContents {
      *
      * @param location location within programmatic representation of memory to
      *                 report
-     * @return the value found at the specified location.\
+     * @return the value found at the specified location.
      */
     public int getLocation(int location) {
         currentPage = location / PAGESIZE;
@@ -1194,8 +1197,8 @@ public class MemoryContents {
      * key does not exist, a new key/value pair comment is added to the
      * key/value storage list.
      *
-     * @param keyName
-     * @param value
+     * @param keyName key to use
+     * @param value   value to store
      */
     public void addKeyValueComment(String keyName, String value) {
         int keyIndex;
@@ -1249,7 +1252,7 @@ public class MemoryContents {
      * the writeHex method.
      * <p>
      * @param writer Writer to which the character stream is sent
-     * @throws IOException
+     * @throws IOException if problems writing data to file
      */
     public void writeComments(Writer writer) throws IOException {
         for (String s : keyValComments) {
@@ -1445,7 +1448,7 @@ public class MemoryContents {
             super(s);
         }
     }
-    
+
     /**
      * Summarize contents
      */
@@ -1459,6 +1462,6 @@ public class MemoryContents {
         }
         return new String(retval);
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(MemoryContents.class.getName());
 }
