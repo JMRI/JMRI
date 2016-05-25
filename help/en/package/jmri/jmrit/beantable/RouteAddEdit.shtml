@@ -1,101 +1,105 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Adding/Editing Routes</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Route Add Edit">
+<html lang="en">
+<head>
+<title>JMRI: Adding/Editing Routes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="author" content="Bob Jacobsen">
+<meta name="author" content="Egbert Broerse">
+<meta name="keywords" content="JMRI help Route Add Edit">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<!--#include virtual="/Style" -->
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1><A NAME="Adding/Editing Routes"></A>Adding/Editing Routes</H1>
+<h1><a name="Adding/Editing Routes"></a>Adding/Editing Routes</h1>
 
-<P>The first thing you must do when creating a route is name it. In
-the box labeled "Route System Name" enter a unique name for your route.
-You can optionally enter a more descriptive name in the "Route User
-Name" box.</P>
-<P>The radio button below the "Route User Name" allows you to show
+<p>After clicking <strong>Add...</strong> below the Route table, the following panel appears:</p>
+		
+<a href="RouteAddEdit.png">
+   <img src="RouteAddEdit.png" 
+        width="515" height="395" >
+</a>
+
+<p>The first thing you must do when creating a route is name it. In
+the box labeled "System Name" enter a unique name for your Route.
+You can optionally enter a more descriptive name in the "User
+Name" box.</p>
+<p>The radio button below the "User Name" allows you to show
 only the turnouts or sensors that are part of this route. There are two
-tables below the "Show" button, the first one contains turnouts and the
-second contains sensors. Click the "Include" box in either table to add
-the desired turnouts or sensor to your route. Next to the "Include" box
-is the action that the turnout or sensor can perform when the route is
-triggered. For example, if you wish the turnout to throw when the route
-is triggered select "Set Thrown" in the drop down box.</P>
-<P>Below the turnout and sensor tables are three optional features.
-Playing a sound file, running a script, and specifying a sensor to go
-active when all the turnouts specified for the route are correctly
-aligned. Sound files and Scripts are configured by hitting the
-appropriate &quot;Set&quot; button and selecting the sound file to be
-played, or the script file to be run when the route is triggered. To add
-a sensor which will go active when the turnouts are aligned, enter the
-sensor system name in the box. The sensor will go Active when the
-turnouts are correctly aligned for the route.</P>
-<P>A route can be optionally triggered by any of the three sensors
-shown in the table. Enter their names (system name or user name) and
-select the action that will trigger the route. Logic choices are
-described in detail <A
-	HREF="..\..\..\..\html\tools\Routes.shtml#sensorlogic">Controlling
-Routes from Sensors</A>.</P>
-<P>A route can be also triggered by a turnout. Enter the name of the
-turnout (system name or user name) and select the turnout action that
-will trigger the route. Logic choices are explained in detail <A
-	HREF="..\..\..\..\html\tools\Routes.shtml#turnoutlogic">Controlling
-Routes from a Turnout</A>.</P>
+tables below the "Show:" radio buttons; the first one contains Turnouts and the
+second contains Sensors. Click the "Include" box in either table to add
+the desired Turnouts or Sensor to your route. Next to the "Include" box
+is the action that the included Turnouts or Sensors can perform when the Route is
+triggered. For example, if you wish the Turnout to be Thrown when the Route
+is triggered select "Set Thrown" in the drop down box.</p>
+<p>Below the Turnout and Sensor tables are three optional features:
+	<ul>
+	<li>Playing a sound file</li>
+	<li>running a script and</li>
+	<li>specifying a sensor to go active when all the turnouts specified
+	for the route are correctly aligned.</li>
+	</ul>
+<p>Sound files and Scripts are configured by hitting the
+appropriate &quot;...&quot; button and selecting the sound file to be
+played or the script file to be run when the Route is triggered.<br>
+To add a Sensor which will go active when all turnouts are properly aligned,
+elect the Sensor from the list. The Sensor will go Active when the
+Turnouts are correctly aligned for the Route.</p>
+<p>A Route can optionally be triggered by any of up to three sensors.
+Select them from the three drop down lists and for each
+select the condition that will trigger the Route. Logic choices are
+described under <a
+	href="..\..\..\..\html\tools\Routes.shtml#sensorlogic">Controlling
+Routes from Sensors</a>.</p>
+<p>A Route can be also triggered by a Turnout. Select this Control Turnout
+from the list and select the turnout Action that
+will trigger the Route. Logic choices are explained under 
+<a href="..\..\..\..\html\tools\Routes.shtml#turnoutlogic">Controlling
+Routes from a Turnout</a>.</p>
 
-<P>In some cases, it might be necessary to delay or slow down the
-rate that JMRI sends commands to change turnouts on the layout. By
-entering a value in the "added delay" box, you can increase the amount
-of time (in milliseconds) between turnout commands when this route is
-triggered. By default JMRI inserts a minimum delay of 250 milliseconds
-(1/4 of a second) between turnout commands.</P>
-<P>The next text box allows you to enter a turnout that will lock
-this route. When a route is locked, all of the turnouts defined for the
-route become locked. See <A HREF="#Turnout lock feature"> below </A> for more info.</P>
-<P>Once you are satisfied with your route, use the "Add Route"
-button to create the route. To save your route you must use the "Store
+<p>In some cases, it might be necessary to delay (slow down) the
+rate JMRI sends commands to change the Turnouts on the layout. By
+entering a value in the "Added Delay" box, you can increase the amount
+of time (in milliseconds) between turnout commands when this Route is
+triggered. By default JMRI inserts a delay of 250 milliseconds
+(1/4 of a second) between turnout commands.</p>
+<p>The next drop down allows you to select a Turnout that will lock
+this route. When a Route is Locked, all of the Turnouts defined for the
+Route become <a href="#Turnout lock feature">Locked</a>.</p>
+<p>Once you are satisfied with your Route, use the "Add"
+button to create the new Route. To save your Route you must still use the "Store
 Panel" command which can be found under the "Panels" main menu. If you
-decide that you need to change your route, use the "Edit" and "Update
-Route" buttons to modify your route.</P>
+decide that you need to change your Route, use the "Edit" and "Update
+Route" buttons to modify it.</p>
 
-<H2><A NAME="Turnout lock feature">Turnout lock feature</A></H2>
+<h2><a name="Turnout lock feature">Turnout Lock feature</a></h2>
 
-<P>The turnout lock feature allows you to selectively disable
-accessory (turnouts) commands from cabs and/or locally-wired pushbuttons. JMRI
+<p>The Turnout Lock feature allows you to selectively disable
+accessory (turnout) commands from cabs and/or locally-wired pushbuttons. JMRI
 disables pushbuttons by sending pushbutton disable commands to the
-turnout decoders when the route is locked, and enables the pushbuttons
-when the route is unlocked. When locking a turnout from cab commands,
-the JMRI program will monitor the turnout's accessory address and if it
+Turnout decoders when the Route is locked, and enables the pushbuttons
+when the Route is unlocked. When locking a Turnout from cab commands,
+the JMRI program will monitor the Turnout's accessory address and if it
 detects a change command from a cab, will cancel the command immediately
-by sending out the opposite command to the turnout. All turnouts that
-are being monitored by the JMRI program and are included in the route
-will be locked.</P>
-<P>To help you select a set of turnouts to lock or unlock, a route
-can be locked or unlocked. In the route edit window, an optional lock
-control turnout is available. You can use the lock control turnout to
-enable or disable the route lock function from a panel turnout icon, a
-layout turnout or a phantom turnout. A phantom turnout is a turnout that
-can be accessed by your cab but doesn't actually exist on your layout.</P>
-<P>For more information on how to set turnouts to be lockable,
-please see the <A HREF="TurnoutTable.shtml#Turnout%20lock%20feature">Turnout
-Table page</A>.</P>
+by sending out the opposite command to the Turnout. All Turnouts that
+are being monitored by the JMRI program and are included in the Route
+will be locked.</p>
+<p>To help you select a series of Turnouts to lock or unlock, a complete Route
+can be locked or unlocked. In the "Edit Route" pane, an optional Lock
+Control Turnout is available as the last drop down. You can use the Lock Control
+Turnout to enable or disable the Route Lock function from a Panel Turnout icon, a
+layout turnout or a phantom Turnout. A phantom Turnout is a turnout that
+can be accessed by your cab but doesn't actually exist on your layout.</p>
+<p>For more information on how to set Turnouts to be lockable, see the 
+<a href="TurnoutTable.shtml#Turnout%20lock%20feature">Turnouts Table page</a>.</p>
 
+<p>Back to the <a href="RouteTable.shtml">Route Table help page<a>.</p>
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
-
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

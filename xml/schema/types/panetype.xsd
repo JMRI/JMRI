@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- Schema for JMRI programmer definitions       -->
+
+<!-- $Id$ -->
+
+<!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+    <!-- need variable -->
+    
+    <!-- not yet in proper Venetian blind form -->
+    <!-- needs to share the pane type with programmer definition -->
+    
+    <!-- need documentation, etc -->
+
+    <!-- need attribute restrictions -->
+    <!-- need attribute defaults -->
+    
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+<xs:annotation>
+    <xs:documentation>
+      Types used in defining DecoderPro panes in both decoder and programmer XML files.
+    </xs:documentation>
+    <xs:appinfo>
+        <jmri:usingclass configurexml="false">jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane</jmri:usingclass>
+        <jmri:usingclass configurexml="false">jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame</jmri:usingclass>
+    </xs:appinfo>
+</xs:annotation>
+
+  <xs:complexType name="PaneType">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="name" type="PreservedTextType" minOccurs="0">
+        <xs:annotation><xs:documentation>
+        The name element is allowed to appear in two places, but the preferred one
+        is at the start of the panes element (this position).  name elements at the end of
+        the pane element are deprecated, and should not be
+        used in new definitions..
+        </xs:documentation></xs:annotation>
+      </xs:element>
+
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) providing copyright information in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+    
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+    
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+      
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+        Qualifies whether the content of this pane element will appear in the interface, depending
+        on the value in other pre-defined variables.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+
+      <xs:choice>
+        <xs:element name="row" type="PaneRowType" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element name="column" type="PaneColumnType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element name="grid" type="GridType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element name="group" type="PaneGroupType" minOccurs="0" maxOccurs="unbounded" />
+      </xs:choice>
+            
+    </xs:choice>
+    <xs:attribute name="tooltip" type="xs:string"/>
+    <xs:attribute name="nameFmt" type="labelItemType" default="label">
+      <xs:annotation><xs:documentation>
+      Specifies whether the text displayed in the interface should
+      come from the "item" or "label" of the underlying variable.
+      </xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="include" type="xs:string" default=""/>
+    <xs:attribute name="exclude" type="xs:string" default=""/>
+  </xs:complexType>
+  
+  <xs:simpleType name="labelItemType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's either "label" or "item".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="item"/>
+      <xs:enumeration value="label"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="QualifierType">
+    <xs:sequence minOccurs="1" maxOccurs="1">
+      <xs:element name="variableref" />
+      <xs:element name="relation">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="ge"/>
+            <xs:enumeration value="gt"/>
+            <xs:enumeration value="lt"/>
+            <xs:enumeration value="le"/>
+            <xs:enumeration value="eq"/>
+            <xs:enumeration value="ne"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="value">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int" />
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PaneRowType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGroupType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="grid" type="GridType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="PaneColumnType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGroupType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="grid" type="GridType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="PaneGroupType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGroupType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="grid" type="GridType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="include" type="xs:string" default=""/>
+    <xs:attribute name="exclude" type="xs:string" default=""/>
+  </xs:complexType>
+  
+  <xs:complexType name="PaneGenericGroupType">
+    <xs:annotation>
+      <xs:documentation>
+      Used only by "group" fragment files, where group type is indeterminate.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="griditem" type="GridItemType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGenericGroupType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="grid" type="GridType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="include" type="xs:string" default=""/>
+    <xs:attribute name="exclude" type="xs:string" default=""/>
+  </xs:complexType>
+  
+  <xs:complexType name="PaneGridGroupType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="griditem" type="GridItemType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGridGroupType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="include" type="xs:string" default=""/>
+    <xs:attribute name="exclude" type="xs:string" default=""/>
+  </xs:complexType>
+  
+  <xs:complexType name="GridType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="griditem" type="GridItemType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGridGroupType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="gridx" type="xs:string" />
+    <xs:attribute name="gridy" type="xs:string" />
+    <xs:attribute name="gridwidth" type="xs:string" />
+    <xs:attribute name="gridheight" type="xs:string" />
+    <xs:attribute name="weightx" type="xs:double" />
+    <xs:attribute name="weighty" type="xs:double" />
+    <xs:attribute name="anchor" type="xs:string" />
+    <xs:attribute name="fill" type="xs:string" />
+    <xs:attribute name="insets" type="xs:string" />
+    <xs:attribute name="ipadx" type="xs:integer" />
+    <xs:attribute name="ipady" type="xs:integer" />
+  </xs:complexType>
+  
+  <xs:complexType name="GridItemType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGroupType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="grid" type="GridType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="gridx" type="xs:string" />
+    <xs:attribute name="gridy" type="xs:string" />
+    <xs:attribute name="gridwidth" type="xs:string" />
+    <xs:attribute name="gridheight" type="xs:string" />
+    <xs:attribute name="weightx" type="xs:double" />
+    <xs:attribute name="weighty" type="xs:double" />
+    <xs:attribute name="anchor" type="xs:string" />
+    <xs:attribute name="fill" type="xs:string" />
+    <xs:attribute name="insets" type="xs:string" />
+    <xs:attribute name="ipadx" type="xs:integer" />
+    <xs:attribute name="ipady" type="xs:integer" />
+  </xs:complexType>
+  
+  <xs:complexType name="LabelType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded"><!-- allows any order of elements -->
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+        Qualifies whether this label will appear in the interface, depending
+        on the value in other pre-defined variables.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="text" type="PreservedTextType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Provide internationalized label text; first in JMRI 3.7.5</xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="label" type="xs:string"/>
+  </xs:complexType>
+  
+  <xs:complexType name="SoundLabelType">
+    <xs:sequence minOccurs="0" maxOccurs="1">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+    </xs:sequence>
+    <xs:attribute name="num" type="xs:integer"/>
+  </xs:complexType>
+  
+  <xs:complexType name="DisplayType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="label" type="PreservedTextType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Provide internationalized label text</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="tooltip" type="PreservedTextType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="item" type="xs:string"/>
+    <xs:attribute name="label" type="xs:string"/>
+    <xs:attribute name="format">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="default" />
+                <xs:enumeration value="vslider" />
+                <xs:enumeration value="hslider" />
+                <xs:enumeration value="hslider-percent" />
+                <xs:enumeration value="radiobuttons" />
+                <xs:enumeration value="checkbox" />
+                <xs:enumeration value="onradiobutton" />
+                <xs:enumeration value="offradiobutton" />
+                <xs:enumeration value="tree" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="layout">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="left" />
+                <xs:enumeration value="right" />
+                <xs:enumeration value="below" />
+                <xs:enumeration value="above" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="tooltip" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:element name="pane" type="PaneType">
+    <xs:annotation><xs:documentation>
+      Can appear as top-level element in xml/programmer/parts files.
+    </xs:documentation></xs:annotation>
+  </xs:element>
+
+</xs:schema>

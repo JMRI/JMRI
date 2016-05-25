@@ -1,137 +1,136 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          @(#)package.html	1.60 98/01/27
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template.html
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  @(#)package.html	1.60 98/01/27
+        Provides an XML-based mechanism for storing and restoring configurations.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template.html
+        <P>
+            This is intended to satisfy a number of requirements:
+        <UL>
+            <LI>No XML-specific code in the objects being loaded/stored.
+            <LI>Separation at the package level between load/store code and the configured objects
+            <LI>Customizable storage of complex objects
+            <LI>Control over the order in which complex objects are recreated during load.
+        </UL>
 
--->
-</head>
-<body bgcolor="white">
+        <P>
 
-Provides an XML-based mechanism for storing and restoring configurations.
+            To do this:
+        <OL>
+            <LI>The application registers relevant objects with the
+                ConfigXmlManager class.  These objects are usually the higher-level
+                managers; since code has to be written for the actual class
+                of these objects, you should design to have a minimal
+                number of them.  For example, a LayoutManager object of the
+                specific LocoNetLayoutManager class might be registered.
+            <LI>The ConfigXmlManager checks that an adapter class
+                for that object exists.  The adapter class for an object
+                of package and class "p.c" is located at
+                runtime by searching for a class called "p.configurexml.cXml",
+                and must implement jmri.configurexml.Adapter.
+            <LI>When a store operation is required, the ConfigXmlManager
+                object iterates over the set of registered objects.  For each,
+                it creates an adapter object and requests a store operation, which
+                returns a JDOM Element which is added to the output XML.
+            <LI>When a load operation is required, the input XML file
+                is iterated through.  For each top-level Element, an adapter
+                object of the described type is created and passed the Element.
+                Note that the adapter should register the objects it creates!
+        </ol>
 
-<P>
-This is intended to satisfy a number of requirements:
-<UL>
-<LI>No XML-specific code in the objects being loaded/stored.
-<LI>Separation at the package level between load/store code and the configured objects
-<LI>Customizable storage of complex objects
-<LI>Control over the order in which complex objects are recreated during load.
-</UL>
+        <P>
+            We choose to put the adapters in a separate package to
+            encourage the reduction of coupling, and make it clear that
+            they are separate (you can get a source tree without them
+            from CVS easily, for example).  But this means
+            that package-level member variables are not automatically
+            visible.  For one class, you can get around this by subclassing.
+            We'll have to see whether this is a real problem or not.
 
-<P>
+        <P>
+            On read, the right class has to be found to
+            handle any given top-level XML element.  We do this
+            in an ugly fashion by putting the class name in the
+            "class" attribute. This prevents the XML output from
+            being portable from program to program, an unfortunate
+            loss, but for the time being it seems a reasonable compromise.
 
-To do this:
-<OL>
-<LI>The application registers relevant objects with the
-ConfigXmlManager class.  These objects are usually the higher-level
-managers; since code has to be written for the actual class
-of these objects, you should design to have a minimal
-number of them.  For example, a LayoutManager object of the
-specific LocoNetLayoutManager class might be registered.
-<LI>The ConfigXmlManager checks that an adapter class
-for that object exists.  The adapter class for an object
-of package and class "p.c" is located at
-runtime by searching for a class called "p.configurexml.cXml",
-and must implement jmri.configurexml.Adapter.
-<LI>When a store operation is required, the ConfigXmlManager
-object iterates over the set of registered objects.  For each,
-it creates an adapter object and requests a store operation, which
-returns a JDOM Element which is added to the output XML.
-<LI>When a load operation is required, the input XML file
-is iterated through.  For each top-level Element, an adapter
-object of the described type is created and passed the Element.
-Note that the adapter should register the objects it creates!
-</ol>
+        <P>
+            The various types do still have element names (e.g. "turnouts")
+            so that we can have a rational DTD.
 
-<P>
-We choose to put the adapters in a separate package to
-encourage the reduction of coupling, and make it clear that
-they are separate (you can get a source tree without them
-from CVS easily, for example).  But this means
-that package-level member variables are not automatically
-visible.  For one class, you can get around this by subclassing.
-We'll have to see whether this is a real problem or not.
+        <P>The order of loading is the order in the XML file, as written.
+            The write order is the registration order.  This constrains
+            how certain registrations at startup are done.
+            In particular, the layout tree has a problem:  It seems it should be
+            instantiated before the turnout managers, etc, so that it can
+            listen as their contents are added.  But if it's created first, it
+            has no turnout manager instance to connect to yet.  The solution to
+            this seems to be support for an "InstanceListener" in the InstanceManager so
+            that objects can learn about the creation of new basic instances.
 
-<P>
-On read, the right class has to be found to
-handle any given top-level XML element.  We do this
-in an ugly fashion by putting the class name in the
-"class" attribute. This prevents the XML output from
-being portable from program to program, an unfortunate
-loss, but for the time being it seems a reasonable compromise.
+        <P>
+            There are four levels of information, used to ensure
+            that prerequisites are present during a load:
+        <UL>
+            <LI>Pref
+            <LI>Config
+            <LI>Tool
+            <LI>User
+        </UL>
 
-<P>
-The various types do still have element names (e.g. "turnouts")
-so that we can have a rational DTD.
+        <a id="schema"></a>
+        <h2>Schema management</h2>
 
-<P>The order of loading is the order in the XML file, as written.
-The write order is the registration order.  This constrains
-how certain registrations at startup are done.
-In particular, the layout tree has a problem:  It seems it should be
-instantiated before the turnout managers, etc, so that it can
-listen as their contents are added.  But if it's created first, it
-has no turnout manager instance to connect to yet.  The solution to
-this seems to be support for an "InstanceListener" in the InstanceManager so
-that objects can learn about the creation of new basic instances.
+        Validation is via XML Schema. (Use of DTDs ended in the 2.9 development series.)
 
-<P>
-There are four levels of information, used to ensure
-that prerequisites are present during a load:
-<UL>
-<LI>Pref
-<LI>Config
-<LI>Tool
-<LI>User
-</UL>
+        <p>
+            Schemas for these files are found in the
+            <a href="http://jmri.org/xml/schema/">xml/schema</a>
+            directory.
+        <p>
+            A rudimentary version control system is provided by schema file naming, i.e.
+        <ul>
+            <li>layout-config.xsd - the original, not to be changed any more.
+            <li>layout-config-2-9-6.xsd - manually created when the first non-backward-compatible XML content 
+                change was made after the release of JMRI 2.9.3, this accumulates changes
+                until some later non-backward-compatible change is made.
+        </ul>
 
-<a id="DTD"></a>
-<h2>DTD management</h2>
+        When a non-backward compatible change is made to XML persistance,
+        the following steps are needed:
+        <ul>
+            <li>Copy the existing schema to one with the next version name (e.g.
+                while building the 2.7.4 release, 
+                copy layout-config-2-7-4.xsd to layout-config-2-7-5.xsd)
+                and commit to SVN.
+            <li>Update the comment on the previous file.
+            <li>Update the references in the 
+                {@link jmri.configurexml.ConfigXmlManager} code.
+        </ul>
+        For more information, see the 
+        <a href="http://jmri.org/help/en/html/doc/Technical/XmlSchema.shtml">schema management page</a>.
 
-During the JMRI 2.9.* development series, we are moving to XML Schema
-for content definition, and away from DTDs.  This section
-remains while that migration takes place, and if you have to
-deal with a problem in an older file.
+        <h2>Related Documentation</h2>
 
-<p>
-DTDs for these files are found in the
-<a href="http://jmri.org/xml/DTD/">xml/DTD</a>
-directory.
-<p>
-A rudimentary version control system is provided by DTD naming, i.e.
-<ul>
-<li>layout-config.dtd - the original, not to be changed any more.
-<li>layout-config-2-7-5.dtd - manually created when the first XML content 
-change was made after the release of JMRI 2.7.4, this accumulates changes
-until 2.7.5 is released.
-</ul>
+        For overviews, tutorials, examples, guides, and tool documentation, please see:
+        <ul>
+            <li><a href="http://jmri.org/help/en/html/doc/Technical/XmlPersistance.shtml">JMRI XML persistance page</a>
+            <li><a href="http://jmri.org/help/en/html/doc/Technical/index.shtml">JMRI project technical info</a>
+            <li><a href="http://jmri.org/">JMRI project overview page</a>
+        </ul>
 
-The first time a change is made to XML persistance after a release,
-the following steps are needed:
-<ul>
-<li>Copy the existing DTD to one with the next version name (e.g.
-while building the 2.7.4 release, 
-copy layout-config-2-7-4.dtd to layout-config-2-7-5.dtd)
-and commit to CVS.
-<li>Update the comment on the previous file.
-<li>Update the references in the 
-{@link jmri.configurexml.ConfigXmlManager} code.
-</ul>
+        <!-- Put @see and @since tags down here. -->
 
-<h2>Related Documentation</h2>
-
-For overviews, tutorials, examples, guides, and tool documentation, please see:
-<ul>
-  <li><a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/XmlPersistance.shtml">JMRI XML persistance page</a>
-  <li><a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/index.shtml">JMRI project technical info</a>
-  <li><a href="http://jmri.sourceforge.net/">JMRI project overview page</a>
-</ul>
-
-<!-- Put @see and @since tags down here. -->
-
-</body>
+    </body>
 </html>

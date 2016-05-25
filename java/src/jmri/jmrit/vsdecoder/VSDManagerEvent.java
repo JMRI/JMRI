@@ -18,41 +18,42 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
 import java.util.EventObject;
 
 @SuppressWarnings("serial")
 public class VSDManagerEvent extends EventObject {
 
-    public static enum EventType { NONE, DECODER_LIST_CHANGE, PROFILE_LIST_CHANGE }  // propertyChangeEvents fired by the Manager.
+    public static enum EventType {
+
+        NONE, DECODER_LIST_CHANGE, PROFILE_LIST_CHANGE
+    }  // propertyChangeEvents fired by the Manager.
 
     VSDManagerEvent.EventType type;
     Object data;
 
     public VSDManagerEvent(VSDecoderManager source) {
-	this(source, VSDManagerEvent.EventType.NONE, null);
+        this(source, VSDManagerEvent.EventType.NONE, null);
     }
 
     public VSDManagerEvent(VSDecoderManager source, VSDManagerEvent.EventType t) {
-	this(source, t, null);
+        this(source, t, null);
     }
 
     public VSDManagerEvent(VSDecoderManager source, VSDManagerEvent.EventType t, Object d) {
-	super(source);
-	type = t;
-	data = d;
+        super(source);
+        type = t;
+        data = d;
     }
 
     public void setType(VSDManagerEvent.EventType t) {
-	type = t;
+        type = t;
     }
 
     public VSDManagerEvent.EventType getType() {
-	return(type);
+        return (type);
     }
 
     public Object getData() {
-	return(data);
+        return (data);
     }
 }
-

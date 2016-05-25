@@ -7,12 +7,15 @@ package jmri.web.servlet.panel;
 import java.util.List;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
+import jmri.jmris.json.JSON;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,6 +24,7 @@ import org.jdom.output.XMLOutputter;
 public class ControlPanelServlet extends AbstractPanelServlet {
 
     private static final long serialVersionUID = -8086671279145186127L;
+    private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
 
     @Override
     protected String getPanelType() {
@@ -29,22 +33,19 @@ public class ControlPanelServlet extends AbstractPanelServlet {
 
     @Override
     protected String getXmlPanel(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("Getting " + getPanelType() + " for " + name);
-        }
+        log.debug("Getting {} for {}", getPanelType(), name);
         try {
             ControlPanelEditor editor = (ControlPanelEditor) getEditor(name);
 
             Element panel = new Element("panel");
 
             JFrame frame = editor.getTargetFrame();
-            log.info("Target Frame [" + frame.getTitle() + "]");
 
             panel.setAttribute("name", name);
             panel.setAttribute("height", Integer.toString(frame.getContentPane().getHeight()));
             panel.setAttribute("width", Integer.toString(frame.getContentPane().getWidth()));
-            panel.setAttribute("panelheight", Integer.toString(frame.getContentPane().getHeight()));
-            panel.setAttribute("panelwidth", Integer.toString(frame.getContentPane().getWidth()));
+            panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
+            panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
 
             panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
@@ -58,9 +59,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
 
             // include contents
             List<Positionable> contents = editor.getContents();
-            if (log.isDebugEnabled()) {
-                log.debug("N elements: " + contents.size());
-            }
+            log.debug("N elements: {}", contents.size());
             for (Positionable sub : contents) {
                 if (sub != null) {
                     try {
@@ -68,6 +67,15 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                         if (e != null) {
                             if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
                                 e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
+                            }
+                            try {
+                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+                            } catch (NullPointerException ex) {
+                                if (sub.getNamedBean() == null) {
+                                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+                                } else {
+                                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+                                }
                             }
                             parsePortableURIs(e);
                             panel.addContent(e);
@@ -79,7 +87,10 @@ public class ControlPanelServlet extends AbstractPanelServlet {
             }
 
             Document doc = new Document(panel);
-            XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
+            XMLOutputter out = new XMLOutputter();
+            out.setFormat(Format.getPrettyFormat()
+                    .setLineSeparator(System.getProperty("line.separator"))
+                    .setTextMode(Format.TextMode.TRIM));
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {

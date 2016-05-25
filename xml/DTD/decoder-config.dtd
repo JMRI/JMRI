@@ -385,18 +385,15 @@
 <!ATTLIST pane comment CDATA #IMPLIED >
 
 <!-- The column element describes each column in the pane -->
-<!ELEMENT column ((row | display | label | separator | cvtable | indxcvtable | fnmapping | dccaddress )*)>
+<!ELEMENT column ((row | display | label | separator | cvtable | fnmapping | dccaddress )*)>
 <!-- The row element describes each row in the pane -->
-<!ELEMENT row ((column | display | label | separator | cvtable | indxcvtable | fnmapping | dccaddress )*)>
+<!ELEMENT row ((column | display | label | separator | cvtable | fnmapping | dccaddress )*)>
 
 <!-- Insert a separator line -->
 <!ELEMENT separator EMPTY>
 
 <!-- Insert a cv table -->
 <!ELEMENT cvtable EMPTY>
-
-<!-- Insert an indexed cv table -->
-<!ELEMENT indxcvtable EMPTY>
 
 <!-- Insert a function mapping display/edit panel -->
 <!ELEMENT fnmapping EMPTY>

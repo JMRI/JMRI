@@ -1,4 +1,3 @@
-// ExternalLinkContentViewerUI.java
 package jmri.util;
 
 import java.awt.Desktop;
@@ -21,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * To use:
  * SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
- * <P.
+ * <P>
  *
  * @since JMRI 2.5.3 (or perhaps later, please check CVS)
  */

@@ -1,6 +1,5 @@
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -12,12 +11,23 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPTurnoutManager class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPTurnoutManagerTest extends TestCase {
 
     public void testCtor() {
         SRCPTurnoutManager m = new SRCPTurnoutManager();
+        Assert.assertNotNull(m);
+    }
+
+    public void testBusCtor() {
+        SRCPTrafficController et = new SRCPTrafficController() {
+            @Override
+            public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
+                // we aren't actually sending anything to a layout.
+            }
+        };
+        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(et, "TEST", 1);
+        SRCPTurnoutManager m = new SRCPTurnoutManager(memo, memo.getBus());
         Assert.assertNotNull(m);
     }
 
@@ -48,5 +58,4 @@ public class SRCPTurnoutManagerTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = Logger.getLogger(SRCPTurnoutManagerTest.class.getName());
 }

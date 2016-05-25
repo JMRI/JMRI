@@ -47,7 +47,7 @@
      </revision>    
 </revhistory>
 
-  <aspecttable>AAR-2</aspecttable>
+  <aspecttable>AAR 1946</aspecttable>
   <name>Single searchlight high permissive signal</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
   <description>Appearances for one-searchlight signal head with number or letter plate</description>
@@ -160,6 +160,11 @@
 
      <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 

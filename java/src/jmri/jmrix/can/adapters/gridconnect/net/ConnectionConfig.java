@@ -1,31 +1,30 @@
 // ConnectionConfig.java
-
 package jmri.jmrix.can.adapters.gridconnect.net;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.ResourceBundle;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import jmri.jmrix.can.ConfigurationManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Definition of objects to handle configuring a connection
- * via a NetworkDriverAdapter object.
+ * Definition of objects to handle configuring a connection via a
+ * NetworkDriverAdapter object.
  *
- * @author      Bob Jacobsen   Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @version	$Revision$
  */
- public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
-	public final static String NAME = "CAN via GridConnect Network Interface";
+    public final static String NAME = "CAN via GridConnect Network Interface";
+
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
      */
-    
-    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
     }
 
@@ -35,65 +34,76 @@ import jmri.jmrix.can.ConfigurationManager;
     public ConnectionConfig() {
         super();
     }
-    
-    public String name() { return NAME; }
-    
+
+    public String name() {
+        return NAME;
+    }
+
+    @SuppressWarnings("unchecked")
     @Override
-    protected void checkInitDone(){
-        if (log.isDebugEnabled()) log.debug("init called for "+name());
-        if (init) return;
+    protected void checkInitDone() {
+        if (log.isDebugEnabled()) {
+            log.debug("init called for " + name());
+        }
+        if (init) {
+            return;
+        }
         super.checkInitDone();
 
         updateUserNameField();
 
-        ((JComboBox)options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
+        ((JComboBox<Option>) options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateUserNameField();
             }
         });
     }
-    
+
     void updateUserNameField() {
         String selection = options.get("Protocol").getItem();
         String newUserName = "MERG";
-        if(ConfigurationManager.OPENLCB.equals(selection)){
+        if (ConfigurationManager.OPENLCB.equals(selection)) {
             newUserName = "OpenLCB";
-        } else if (ConfigurationManager.RAWCAN.equals(selection)){
+        } else if (ConfigurationManager.RAWCAN.equals(selection)) {
             newUserName = "CANraw";
-        } else if(ConfigurationManager.TEST.equals(selection)){
+        } else if (ConfigurationManager.TEST.equals(selection)) {
             newUserName = "CANtest";
         }
         connectionNameField.setText(newUserName);
-        
-        if(!adapter.getSystemConnectionMemo().setUserName(newUserName)){
-            for (int x = 2; x<50; x++){
-                if(adapter.getSystemConnectionMemo().setUserName(newUserName+x)){
+
+        if (!adapter.getSystemConnectionMemo().setUserName(newUserName)) {
+            for (int x = 2; x < 50; x++) {
+                if (adapter.getSystemConnectionMemo().setUserName(newUserName + x)) {
                     connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     break;
                 }
             }
         }
     }
+
     /**
      * Access to current selected command station mode
      */
     /*public String getMode() {
-        return opt2Box.getSelectedItem().toString();
-    }*/
-    
-    public boolean isPortAdvanced() { return false; }
-    public boolean isOptList1Advanced() { return false; }
-    
+     return opt2Box.getSelectedItem().toString();
+     }*/
+    public boolean isPortAdvanced() {
+        return false;
+    }
+
+    public boolean isOptList1Advanced() {
+        return false;
+    }
+
     protected void setInstance() {
-        if (adapter==null){
+        if (adapter == null) {
             adapter = new NetworkDriverAdapter();
         }
     }
-    
-    protected ResourceBundle getActionModelResourceBundle(){
+
+    protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
-    
-    static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
-}
 
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
+}

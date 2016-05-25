@@ -1,9 +1,6 @@
-<?xml version="1.0"?>
-<!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
-
+<?xml version="1.0" encoding="utf-8"?>
 <!-- This is an example of how a club can create a programmer -->
 <!-- definition to ease standard programming of decoders      -->
-
 <!-- This file is part of JMRI.  Copyright 2007.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -15,63 +12,57 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-<programmer-config>
-<!-- $Id$ -->
-		<version author="Bob Jacobsen" 
-					version="2" lastUpdated="20020112"/>
-
-    <programmer 
-                decoderFilePanes="no" showEmptyPanes="default"
-                showFnLanelPane="yes" showRosterMediaPane="yes">
-		<!-- want this to always look the same, so -->
-		<!-- don't include panes from the decoder file -->
-
-	<pane name="Controls">
-		<column>
-
-			<dccaddress/>
-
-			<display item="Locomotive Direction" />
-			<display item="Analog (DC) Operation"/>
-			<separator/>
-			<display item="Speed Table Definition" format="radiobuttons"/>
-			<separator/>
-			<display item="Kick Start"/>
-			<display item="Accel"/>
-			<display item="Decel"/>
-		</column>
-		<column>
-			<row>
-				<column>
-					<display item="Vstart" layout="below" format="vslider" label=""/>
-					<display item="Vstart" layout="below"/>
-				</column>
-				<column>
-					<display item="Vmid" layout="below" format="vslider" label=""/>
-					<display item="Vmid" layout="below"/>
-				</column>
-				<column>
-					<display item="Vhigh" layout="below" format="vslider" label=""/>
-					<display item="Vhigh" layout="below"/>
-				</column>
-			</row>
-			<display item="Forward Trim"/>
-			<display item="Reverse Trim"/>
-		</column>
-	</pane>	
-	
-	<pane name="Speed Table">
-		<column>
-			<row>
-				<display item="Speed Table Definition" 
-					format="checkbox"/>
-			</row>   <!-- two rows to allow the items to center themselves -->
-			<row>
-			<display item="Speed Table" layout="above"/>
-			</row>
-		</column>
-	</pane>
-	
-</programmer>
+<programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <!-- $Id$ -->
+  <version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
+  <programmer decoderFilePanes="no" showEmptyPanes="default" showFnLanelPane="yes" showRosterMediaPane="yes">
+    <!-- want this to always look the same, so -->
+    <!-- don't include panes from the decoder file -->
+    <pane>
+      <name>Controls</name>
+      <column>
+        <dccaddress/>
+        <display item="Locomotive Direction"/>
+        <display item="Analog (DC) Operation"/>
+        <separator/>
+        <display item="Speed Table Definition" format="radiobuttons"/>
+        <separator/>
+        <display item="Kick Start"/>
+        <display item="Accel"/>
+        <display item="Decel"/>
+      </column>
+      <column>
+        <row>
+          <column>
+            <display item="Vstart" layout="below" format="vslider" label=""/>
+            <display item="Vstart" layout="below"/>
+          </column>
+          <column>
+            <display item="Vmid" layout="below" format="vslider" label=""/>
+            <display item="Vmid" layout="below"/>
+          </column>
+          <column>
+            <display item="Vhigh" layout="below" format="vslider" label=""/>
+            <display item="Vhigh" layout="below"/>
+          </column>
+        </row>
+        <display item="Forward Trim"/>
+        <display item="Reverse Trim"/>
+      </column>
+      <name xml:lang="it">Controlli</name>
+    </pane>
+    <pane>
+      <name>Speed Table</name>
+      <column>
+        <row>
+          <display item="Speed Table Definition" format="checkbox"/>
+        </row>
+        <!-- two rows to allow the items to center themselves -->
+        <row>
+          <display item="Speed Table" layout="above"/>
+        </row>
+      </column>
+      <name xml:lang="it">Tabella Velocità</name>
+    </pane>
+  </programmer>
 </programmer-config>

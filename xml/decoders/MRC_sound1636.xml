@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="5.1" lastUpdated="20150501"/>
+  <version author="Alain Le Marchand" version="5" lastUpdated="20150427"/>
+  <version author="Peter Ulvestad" version="4" lastUpdated="20111107"/>
+  <version author="Peter Ulvestad" version="3" lastUpdated="20091003"/>
+  <version author="Bob Jacobsen" version="2" lastUpdated="20071223"/>
+  <version author="Paul Bender" version="1" lastUpdated="20060723"/>
+  <!-- made from the MRC_1631 file by Rick Beaber -->
+  <!-- version 2 fixed a problem in CV 115/116 -->
+  <!-- version 3 added many tooltips -->
+  <!-- restore function variables which were accidentaly removed -->
+  <!-- version 5  New family for all MRC N scale: "Sound Decoders - N Scale" -->
+  <!--            File MRC_soundbrilliance1827.xml renamed MRC_sound1827.xml -->
+  <!--            Added function labels.                                     -->
+  <!-- version 5.1: Bell Ring Rate (CV54) on Sound pane                      -->
+  <decoder>
+    <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1636 - N Scale - Atlas Diesels" numOuts="2" numFns="19" maxTotalCurrent="0.75A" productID="1636" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In - replaces most Atlas N scale loco’s PC boards">
+        <!-- note only F0 to F12 are NMRA compatible -->
+        <size length="70" width="9.2" height="5.8" units="mm"/>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="true">Air Release</functionlabel>
+        <functionlabel num="4" lockable="true">Coupling</functionlabel>
+        <functionlabel num="5" lockable="true">Brake Release/Squeal</functionlabel>
+        <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+        <functionlabel num="8" lockable="true">Notch Down/Loco Sound</functionlabel>
+        <functionlabel num="9" lockable="true">Notch Up/Loco Sound</functionlabel>
+        <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+        <functionlabel num="11" lockable="true">Air Compressor</functionlabel>
+        <functionlabel num="12" lockable="true">Engine cooling fan</functionlabel>
+        <functionlabel num="13" lockable="true">Short Air Release</functionlabel>
+        <functionlabel num="14" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+        <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="17" lockable="true">Flange Noise</functionlabel>
+        <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+        <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" item="Vstart" default="0">
+        <decVal max="32"/>
+        <label>Start Voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+      </variable>
+      <variable CV="3" tooltip="sets the acceleration rate (delay) [range 0-32]" item="Accel" default="0">
+        <decVal max="32"/>
+        <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-32)</label>
+        <label xml:lang="fr">Accelération (0-32)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-32)</label>
+      </variable>
+      <variable CV="4" tooltip="sets the deceleration rate (delay) [range 0-32]" item="Decel" default="0">
+        <decVal max="32"/>
+        <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-32)</label>
+        <label xml:lang="fr">Décélération (1-32)</label>
+        <label xml:lang="de">Bremszeit (1-32)</label>
+      </variable>
+      <variable CV="5" tooltip="sets the motor voltage at the top Speed Step [range 0-32]" item="Vhigh" default="32">
+        <decVal max="32"/>
+        <label>Top Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-32):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <variable CV="7" readOnly="yes" tooltip="is the Decoder ID, Read Only" item="Decoder Version">
+        <decVal/>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+        <label>Manufacturer Version No: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" tooltip="is the Manufacturer ID, MRC=143, Read Only" item="Manufacturer" default="143">
+        <decVal/>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+        <label>Manufacturer ID: </label>
+      </variable>
+      <!-- CV=19 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=21 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
+     <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+      <variable CV="49" tooltip="turns sound on or off" item="Sound Option 1" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Sound On/Off</label>
+      </variable>
+      <variable CV="50" item="Sound Option 2" default="4" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Horn Type</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable CV="51" item="Sound Setting 1" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Horn Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="52" item="Sound Option 3" default="3" comment="Range 0-9">
+        <decVal max="9"/>
+        <label>Bell Type</label>
+        <comment>Range 0-9</comment>
+      </variable>
+      <variable CV="53" item="Sound Setting 2" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Bell Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="54" item="Sound Group 3 Option 2" default="3" comment="Range 0-50">
+        <decVal max="50"/>
+        <label>Bell Ring Rate</label>
+        <comment>Range 0-50</comment>
+      </variable>
+      <variable CV="55" item="Sound Setting 4" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Diesel Rumble Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="56" item="Sound Setting 5" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Brake Squeal Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable item="Sound Setting 6" CV="57" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Dynamic Brake Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable item="Sound Setting 7" CV="58" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Air Release Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="59" item="Sound Setting 8" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Air Pump Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="60" item="Sound Setting 11" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Safety Pop Value Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="61" item="Sound Setting 12" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Engine Cooling Fan Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="62" item="Sound Setting 13" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Coupling Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="63" item="Sound Setting 14" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Random Noise Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="64" item="Sound Setting 15" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Rail wheel clack</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <variable item="Sound Option 4" CV="115" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Auto Brake squeal</label>
+      </variable>
+      <variable item="Sound Option 5" CV="116" default="1">
+        <enumVal>
+          <enumChoice choice="Type 1">
+            <choice>Type 1</choice>
+          </enumChoice>
+          <enumChoice choice="Type 2">
+            <choice>Type 2</choice>
+          </enumChoice>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Coupling Sound Type</label>
+      </variable>
+      <variable item="Global lighting option 4" CV="117" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <label>Lights Enable/Disable</label>
+      </variable>
+      <variable CV="119" item="Sound Setting 16" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Coupling Fire Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="120" item="Sound Setting 17" default="3" comment="Range 0-3">
+        <decVal max="3"/>
+        <label>Brake Release Volume</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable item="Sound Option 6" CV="121" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <label>Random Noise</label>
+      </variable>
+      <variable item="Sound Option 7" CV="122" default="1">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="RPM and notch synchro to speed">
+            <choice>RPM and notch synchro to speed</choice>
+          </enumChoice>
+          <enumChoice choice="linear RPM synchro to speed">
+            <choice>linear RPM synchro to speed</choice>
+          </enumChoice>
+          <enumChoice choice="notch up/down with F8/F9">
+            <choice>notch up/down with F8/F9</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Diesel Sound Type</label>
+      </variable>
+      <variable item="Speed Table Selection" CV="124" default="0">
+        <enumVal>
+          <enumChoice choice="Linear">
+            <choice>Linear</choice>
+          </enumChoice>
+          <enumChoice choice="Slow increase at slow speed">
+            <choice>Slow increase at slow speed</choice>
+          </enumChoice>
+          <enumChoice choice="Fast increase at slow speed">
+            <choice>Fast increase at slow speed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Select Speed Curve</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="125" default="1">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane>
+    <column>
+      <label>
+        <text>MRC NOTE: Some DCC systems do not have enough power on the program track for programming</text>
+      </label>
+      <label>
+        <text>sound decoders. If your system is one of these, There are Program Track Boosters availlable</text>
+      </label>
+      <label>
+        <text>from aftermarket DCC suppliers.</text>
+      </label>
+    </column>
+    <name>MRC</name>
+  </pane>
+</decoder-config>

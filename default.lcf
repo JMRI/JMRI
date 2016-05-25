@@ -1,4 +1,11 @@
-# Default log4j configuration file for JMRI project development.
+# Default logging configuration file for JMRI project development.
+#
+# If making changes here that should be included in the distribution
+# please also update the file for distribution at 'scripts/default.lcf'
+
+# #############################################################
+#  Log4J configuration
+# #############################################################
 
 # Output is sent to system.err, generally a console window.
 # The output info consists of relative time, priority, thread name,
@@ -8,7 +15,7 @@
 # For the general syntax of property based configuration files see the
 # documentation of org.apache.log4j.PropertyConfigurator.
 
-# Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
+# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
 
 # The root category is set to log priority INFO and above
 # to the console (A1), to rolling log files (T), and to a single file (R).
@@ -75,27 +82,26 @@ log4j.appender.T.MaxBackupIndex=2
 
 # Default Jetty server to only logging WARN since it can be verbose at points
 log4j.category.org.eclipse.jetty=WARN
+log4j.category.org.eclipse.jetty.server.handler=WARN
+
+# Turning off logging for Java Xerces; emits WARNING messages during routine use
+log4j.category.org.jdom2.transform=SEVERE
+
+# Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l routinely
+log4j.category.com.strangeberry=OFF
+log4j.category.javax.jmdns=OFF
 
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
 # log4j.category.jmri.jmrit.beantable.LogixTableAction=DEBUG
 # log4j.category.jmri.jmrit.display=DEBUG
-# log4j.category.jmri.jmrit.display.IndicatorTurnoutIcon=DEBUG
 # log4j.category.jmri.jmrit.display.IndicatorTrackPaths=DEBUG
 # log4j.category.jmri.jmrit.logix=DEBUG
-# log4j.category.jmri.jmrit.logix.Engineer=DEBUG
-# log4j.category.jmri.jmrit.logix.OBlock=DEBUG
-# log4j.category.jmri.jmrit.logix.Portal=DEBUG
-# log4j.category.jmri.jmrit.logix.Warrant=DEBUG
-# log4j.category.jmri.jmrit.logix.WarrantFrame=DEBUG
-# log4j.category.jmri.jmrit.logix.WarrantTableAction=DEBUG
+# log4j.category.jmri.jmrit.progsupport=TRACE
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.jmrix=DEBUG
 # log4j.category.jmri.jmrix.can=DEBUG
-# log4j.category.jmri.jmrix.openlcb=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
 # log4j.category.org.eclipse.jetty=INFO

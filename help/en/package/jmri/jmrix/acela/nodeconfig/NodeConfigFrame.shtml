@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Configure Acela Nodes
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help configure grapevine node">
+ </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help configure grapevine node">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,8 +21,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Welcome to the Acela Help pages
-</H1>
+<h1>Acela Node Configuration Tool</h1>
+
 This is the help/jmri/jmrix/acela/nodeconfig/NodeConfigFrame help page
 <p>
 Thank you for reading this, hopefully the few minutes you spend reading this will save you hours down the road.
@@ -68,47 +66,48 @@ You can go ahead and edit your preferences file (i.e. DecoderProConfig2.xml or P
 It is recommended that you configure your CTI Acela network in three steps: Establish Your Connection, Discover Your CTI Acela Network, and then Customize Your Configuration.
 <h3>Establish the Connection
 </h3>
-With the CTI Aclea system powered on and connected to your computer, start JMRI  (DecoderPro or PanelPro).
+With the CTI Acela system powered on and connected to your computer, start JMRI  (DecoderPro or PanelPro).
 <p>
 From the main menu select <Edit> and then select <Preferences>.  
 <p>
-In the preferences page select Acela as either the Main connection or as one of the auxillary connections.  Usually, Acela will be one of your auxillary connections since it cannot actually run the trains.  For the rest of this documentation it will be assumed that you selected CTI Acela as an Auxillary Connection.
+In the preferences page select Acela as either the Main connection or as one of the auxiliary connections.  Usually, Acela will be one of your auxiliary connections since it cannot actually run the trains.  For the rest of this documentation it will be assumed that you selected CTI Acela as an Auxiliary Connection.
 <p>
-You then need to select the correct serial port.  Make sure that you get this right.  If this is an auxillary connection, the serial port is probably something like Com4 or Com5 (and probably not Com3).
+You then need to select the correct serial port.  Make sure that you get this right.  If this is an auxiliary connection, the serial port is probably something like Com4 or Com5 (and probably not Com3).
 <p>
 Press the <Save> button.  The JMRI program will end.  
 <p>
 If you look at your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml depending upon which program you ran) you should see a connection entry with the specified serial port.
 It will look something like (note the second "connection port" line):
 <p>
-&lt?xml version="1.0" encoding="UTF-8"?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 <p>
-&lt?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+&lt;?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?&gt;
 <p>
-&lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
+&lt;!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd"&gt;
 <p>
-&lt layout-config>
+&lt; layout-config&gt;
 <p>
-  &lt connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
+  &lt; connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" /&gt;
 <p>
-  &lt gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
+  &lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" /&gt;
 <p>
-  &lt programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
+  &lt; programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" /&gt;
 <p>
-  &lt connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
+  &lt; connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" /&gt;
 <p>
-  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$-->
+  &lt;!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$--&gt;
 <p>
-&lt/layout-config>
+&lt;/layout-config&gt;
+
 <h3>Let JMRI discover your CTI Acela network configuration  
 </h3>
 Restart JMRI (DecoderPro or PanelPro).  If you specified the correct serial port in the previous step then the JMRI software should automatically connect to the CTI Acela network, reset the Acela node and then poll the CTI Acela network and discover which modules (JMRI calls a module a node) you have and in what order.
 <p>
 JMRI will create a node for each module that it finds.
 <p>
-You can see what it found by once again going to the preferences menu (Main menu then Edit menu then preferences) and again clicking the show advanced preferences checkbox to see the auxillary connections.
+You can see what it found by once again going to the preferences menu (Main menu then Edit menu then preferences) and again clicking the show advanced preferences checkbox to see the auxiliary connections.
 <p>
-Now select the "Configure Nodes" button and you should see the Acelta Configure Nodes panel.
+Now select the "Configure Nodes" button and you should see the Acela Configure Nodes panel.
 <p>
 The first section is entitled The Nodes in the Network and it will display a two letter symbol for each CTI Acela node that was found.
 <p>
@@ -118,180 +117,180 @@ If you now look at your configuration file (i.e. DecoderProConfig2.xml or PanelP
 <p>
 It will look something like (note the lines after the second "connection port" line):
 <p>
-&lt?xml version="1.0" encoding="UTF-8"?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 <p>
-&lt?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+&lt;?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?&gt;
 <p>
-&lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
+&lt;!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd"&gt;
 <p>
-&lt layout-config>
+&lt; layout-config&gt;
 <p>
-  &lt connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
+  &lt; connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" /&gt;
 <p>
-  &lt gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
+  &lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" /&gt;
 <p>
-  &lt programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
+  &lt; programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" /&gt;
 <p>
-  &lt connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
+  &lt; connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" /&gt;
 <p>
-    &lt node name="0">
+    &lt; node name="0"&gt;
 <p>
-      &lt parameter name="nodetype">AC&lt/parameter>
+      &lt; parameter name="nodetype">AC&amp;lt/parameter&gt;
 <p>
-    &lt/node>
+    &lt;/node>
 <p>
-    &lt node name="1">
+    &lt; node name="1"&gt;
 <p>
-      &lt parameter name="nodetype">TB&lt/parameter>
+      &lt; parameter name="nodetype"&gt;TB&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype0">CG&lt/parameter>
+      &lt; parameter name="sensortype0"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity0">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity0"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold0">4&lt/parameter>
+      &lt; parameter name="sensorthreshold0"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype1">CG&lt/parameter>
+      &lt; parameter name="sensortype1"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity1">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity1"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold1">4&lt/parameter>
+      &lt; parameter name="sensorthreshold1"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype2">CG&lt/parameter>
+      &lt; parameter name="sensortype2"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity2">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity2"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold2">4&lt/parameter>
+      &lt; parameter name="sensorthreshold2"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype3">CG&lt/parameter>
+      &lt; parameter name="sensortype3"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity3">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity3"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold3">4&lt/parameter>
+      &lt; parameter name="sensorthreshold3"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputwired0">NO&lt/parameter>
+      &lt; parameter name="outputwired0"&gt;NO&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit0">OFF&lt/parameter>
+      &lt; parameter name="outputinit0"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputwired1">NO&lt/parameter>
+      &lt; parameter name="outputwired1"&gt;NO&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit1">OFF&lt/parameter>
+      &lt; parameter name="outputinit1"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputwired2">NO&lt/parameter>
+      &lt; parameter name="outputwired2"&gt;NO&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit2">OFF&lt/parameter>
+      &lt; parameter name="outputinit2"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputwired3">NO&lt/parameter>
+      &lt; parameter name="outputwired3"&gt;NO&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit3">OFF&lt/parameter>
+      &lt; parameter name="outputinit3"&gt;OFF&lt;/parameter&gt;
 <p>
-    &lt/node>
+    &lt;/node&gt;
 <p>
-    &lt node name="2">
+    &lt; node name="2"&gt;
 <p>
-      &lt parameter name="nodetype">WM&lt/parameter>
+      &lt; parameter name="nodetype"&gt;WM&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype0">CG&lt/parameter>
+      &lt; parameter name="sensortype0"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity0">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity0"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold0">4&lt/parameter>
+      &lt; parameter name="sensorthreshold0"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype1">CG&lt/parameter>
+      &lt; parameter name="sensortype1"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity1">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity1"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold1">4&lt/parameter>
+      &lt; parameter name="sensorthreshold1"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype2">CG&lt/parameter>
+      &lt; parameter name="sensortype2"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity2">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity2"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold2">4&lt/parameter>
+      &lt; parameter name="sensorthreshold2"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype3">CG&lt/parameter>
+      &lt; parameter name="sensortype3"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity3">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity3"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold3">4&lt/parameter>
+      &lt; parameter name="sensorthreshold3"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype4">CG&lt/parameter>
+      &lt; parameter name="sensortype4"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity4">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity4"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold4">4&lt/parameter>
+      &lt; parameter name="sensorthreshold4"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype5">CG&lt/parameter>
+      &lt; parameter name="sensortype5"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity5">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity5"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold5">4&lt/parameter>
+      &lt; parameter name="sensorthreshold5"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype6">CG&lt/parameter>
+      &lt; parameter name="sensortype6"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity6">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity6"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold6">4&lt/parameter>
+      &lt; parameter name="sensorthreshold6"&gt;4&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensortype7">CG&lt/parameter>
+      &lt; parameter name="sensortype7"&gt;CG&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorpolarity7">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity7"&gt;INV&lt;/parameter&gt;
 <p>
-      &lt parameter name="sensorthreshold7">4&lt/parameter>
+      &lt; parameter name="sensorthreshold7"&gt;4&lt;/parameter&gt;
 <p>
-    &lt/node>
+    &lt;/node&gt;
 <p>
-    &lt node name="3">
+    &lt; node name="3"&gt;
 <p>
-      &lt parameter name="nodetype">YM&lt/parameter>
+      &lt; parameter name="nodetype"&gt;YM&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit0">OFF&lt/parameter>
+      &lt; parameter name="outputinit0"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit1">OFF&lt/parameter>
+      &lt; parameter name="outputinit1"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit2">OFF&lt/parameter>
+      &lt; parameter name="outputinit2"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit3">OFF&lt/parameter>
+      &lt; parameter name="outputinit3"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit4">OFF&lt/parameter>
+      &lt; parameter name="outputinit4"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit5">ACT&lt/parameter>
+      &lt; parameter name="outputinit5"&gt;ACT&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit6">OFF&lt/parameter>
+      &lt; parameter name="outputinit6"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit7">ACT&lt/parameter>
+      &lt; parameter name="outputinit7"&gt;ACT&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit8">OFF&lt/parameter>
+      &lt; parameter name="outputinit8"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit9">OFF&lt/parameter>
+      &lt; parameter name="outputinit9"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit10">OFF&lt/parameter>
+      &lt; parameter name="outputinit10"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit11">OFF&lt/parameter>
+      &lt; parameter name="outputinit11"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit12">OFF&lt/parameter>
+      &lt; parameter name="outputinit12"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit13">OFF&lt/parameter>
+      &lt; parameter name="outputinit13"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit14">OFF&lt/parameter>
+      &lt; parameter name="outputinit14"&gt;OFF&lt;/parameter&gt;
 <p>
-      &lt parameter name="outputinit15">OFF&lt/parameter>
+      &lt; parameter name="outputinit15"&gt;OFF&lt;/parameter&gt;
 <p>
-    &lt/node>
+    &lt;/node&gt;
 <p>
-  &lt/connection>
+  &lt;/connection&gt;
 <p>
-  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$-->
+  &lt;!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$--&gt;
 <p>
-&lt/layout-config>
+&lt;/layout-config>
 <p>
 You can always get back to this state by erasing your configuration file and repeating these two steps.
 <h3>Customize your configuration
 </h3>
 Restart JMRI  (DecoderPro or PanelPro).
 <p>
-Once again go to the preferences menu (Main menu then Edit menu then preferences) and again click the show advanced preferences checkbox to see the auxillary connections.
+Once again go to the preferences menu (Main menu &gt; Edit menu &gt; Preferences) and again click the show advanced preferences checkbox to see the auxiliary connections.
 <p>
-Again select the "Configure Nodes" button and go to the Acelta Configure Nodes panel.
+Again select the "Configure Nodes" button and go to the Acela Configure Nodes panel.
 <p>
 The first section which is entitled "The Nodes in the Network" should display the network the same as it did in the previous step.
 <p>
@@ -360,47 +359,50 @@ Larger values correspond to heavier filtering.
 By default, JMRI initializes all sensor circuits to Car Gap, Reverse Polarity, and a threshold of 4.  This seems to work rather well for the CTI supplied Infrared Sensor Kits.
 <p>
 Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.
-<h3>Configuring Outputs
-</h3>
-If an output circuit is being controlled by a relay then the relay can be wired in one of three ways:
-<ul>
-<li>Normally Open
-<ul>
-<li>If no control power is applied to the relay then the circuit between the common terminal and the normally open terminal will be open, that is, it will behave as if a switch is turned off.
-<li>When wired in this manner the relay will operate like the transistors in one of the other Acela (CTI) modules (i.e. a Switchman).
-<li>The circuit could simply turn a light on or off, or it could switch something of higher current such as track power to a block (say, in the case of a staging track that stores lighted passenger cars, or engines).
-</ul>
-<li>Normally Closed
-<ul>
-<li>If no control power is applied to the relay then the circuit between the common terminal and the normally closed terminal will be closed, that is, it will behave as if a switch is turned on.
-<li>When wired in this manner the output circuit will operate opposite of normal -- that is, Off will mean on and On will mean off.
-<li>This is useful if you want the circuit to behave as if the relay were not there when the module has no power or has not been initialized. 
-<li>This could switch track power off if wanted, but would default to on if no control power was applied to the CTI module (i.e. the CTI units are not powered up or not initialized).
-</ul>
-<li>As a router
-<ul>
-<li>When wired in this manner the signal is connected to the common terminal and then one possible route is connected to the NO terminal and the second possible route is connected to the NC terminal.
-<li>This is useful if you want the relay to route say DCC current to the rail (say, via the NC terminal) or route say Programming Mode current to the rail (say, via the NO terminal). 
-<li>Another use for this would be to control a Tortoise Switch Machine by routing either +voltage or -voltage to the stall motor. 
-<li>When used in this mode, set the default to Normally Open or Normally Closed depending upon how you want the circuit to operate if no control power was applied to the CTI module (i.e. the CTI units are not powered up or not initialized).
-</ul>
-</ul>
-The output circuit can also have an initial state or default configuration:
-<ul>
+
+<h3>Configuring Outputs</h3>
+<p>If an output circuit is being controlled by a relay then the relay can be wired in one of three ways:
+	<ul>
+	<li>Normally Open
+		<ul>
+		<li>If no control power is applied to the relay then the circuit between the common terminal and the normally open terminal will be open, that is, it will behave as if a switch is turned off.
+		<li>When wired in this manner the relay will operate like the transistors in one of the other Acela (CTI) modules (i.e. a Switchman).
+		<li>The circuit could simply turn a light on or off, or it could switch something of higher current such as track power to a block (say, in the case of a staging track that stores lighted passenger cars, or engines).
+		</ul>
+	<li>Normally Closed
+		<ul>
+		<li>If no control power is applied to the relay then the circuit between the common terminal and the normally closed terminal will be closed, that is, it will behave as if a switch is turned on.
+		<li>When wired in this manner the output circuit will operate opposite of normal -- that is, Off will mean on and On will mean off.
+		<li>This is useful if you want the circuit to behave as if the relay were not there when the module has no power or has not been initialized. 
+		<li>This could switch track power off if wanted, but would default to on if no control power was applied to the CTI module (i.e. the CTI units are not powered up or not initialized).
+		</ul>
+		<li>As a router
+			<ul>
+			<li>When wired in this manner the signal is connected to the common terminal and then one possible route is connected to the NO terminal and the second possible route is connected to the NC terminal.
+			<li>This is useful if you want the relay to route say DCC current to the rail (say, via the NC terminal) or route say Programming Mode current to the rail (say, via the NO terminal). 
+			<li>Another use for this would be to control a Tortoise Switch Machine by routing either +voltage or -voltage to the stall motor. 
+			<li>When used in this mode, set the default to Normally Open or Normally Closed depending upon how you want the circuit to operate if no control power was applied to the CTI module (i.e. the CTI units are not powered up or not initialized).
+			</ul>
+		</ul>
+	The output circuit can also have an initial state or default configuration:
+	<ul>
+
 <li>Normally Off
-<ul>
-<li>On initialization, the output circuit will be set to off.
-</ul>
+	<ul>
+	<li>On initialization, the output circuit will be set to off.
+	</ul>
 <li>Normally On (or Active)
-<ul>
-<li>On initialization, the output circuit will be set to on.
-<li>This is useful if you want to switch the power on for Infrared Transmitter LEDs.
-<li>By wiring them through a CTI Acela output circuit that defaults to Normally Open and Normally On, one can ensure that the LED (which cannot normally be seen) is only on when the CTI Acela network is on and initialized.
-</ul>
+	<ul>
+	<li>On initialization, the output circuit will be set to on.
+	<li>This is useful if you want to switch the power on for Infrared Transmitter LEDs.
+	<li>By wiring them through a CTI Acela output circuit that defaults to Normally Open and Normally On, one can ensure that the LED (which cannot normally be seen) is only on when the CTI Acela network is on and initialized.
+	</ul>
 </ul>
 
-Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.
+<p>Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.
+
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

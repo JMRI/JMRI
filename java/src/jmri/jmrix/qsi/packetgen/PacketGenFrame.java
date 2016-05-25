@@ -1,88 +1,96 @@
 // PacketGenFrame.java
-
 package jmri.jmrix.qsi.packetgen;
 
-import java.awt.*;
-import javax.swing.*;
-
-import jmri.jmrix.qsi.QsiTrafficController;
+import java.awt.Dimension;
+import javax.swing.BoxLayout;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
+import jmri.jmrix.qsi.QsiTrafficController;
 
 /**
- * Frame for user input of QSI messages. Input is a 
- * sequence of hex pairs, including the length, but not the
- * lead 'A', checksum or final 'E'.
+ * Frame for user input of QSI messages. Input is a sequence of hex pairs,
+ * including the length, but not the lead 'A', checksum or final 'E'.
  *
- * @author			Bob Jacobsen   Copyright (C) 2007, 2008
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @version	$Revision$
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.qsi.QsiListener {
 
-	// member declarations
-	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-	javax.swing.JButton sendButton = new javax.swing.JButton();
-	javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4372308600267781524L;
+    // member declarations
+    javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+    javax.swing.JButton sendButton = new javax.swing.JButton();
+    javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-	public PacketGenFrame() {
-	    super();
-	}
+    public PacketGenFrame() {
+        super();
+    }
 
-	public void initComponents() throws Exception {
-		// the following code sets the frame's initial state
+    public void initComponents() throws Exception {
+        // the following code sets the frame's initial state
 
-		jLabel1.setText("Command:");
-		jLabel1.setVisible(true);
+        jLabel1.setText("Command:");
+        jLabel1.setVisible(true);
 
-		sendButton.setText("Send");
-		sendButton.setVisible(true);
-		sendButton.setToolTipText("Send packet");
+        sendButton.setText("Send");
+        sendButton.setVisible(true);
+        sendButton.setToolTipText("Send packet");
 
-		packetTextField.setText("");
-		packetTextField.setToolTipText("Enter command as hex string");
-		packetTextField.setMaximumSize(
-			new Dimension(packetTextField.getMaximumSize().width,
-						  packetTextField.getPreferredSize().height
-				)
-			);
+        packetTextField.setText("");
+        packetTextField.setToolTipText("Enter command as hex string");
+        packetTextField.setMaximumSize(
+                new Dimension(packetTextField.getMaximumSize().width,
+                        packetTextField.getPreferredSize().height
+                )
+        );
 
-		setTitle("Send QSI command");
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setTitle("Send QSI command");
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-		getContentPane().add(jLabel1);
-		getContentPane().add(packetTextField);
-		getContentPane().add(sendButton);
+        getContentPane().add(jLabel1);
+        getContentPane().add(packetTextField);
+        getContentPane().add(sendButton);
 
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sendButtonActionPerformed(e);
+            }
+        });
 
-		sendButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				sendButtonActionPerformed(e);
-			}
-		});
+        // pack for display
+        pack();
+    }
 
-		// pack for display
-		pack();
-	}
-
-  	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-  		QsiTrafficController.instance().sendQsiMessage(createPacket(packetTextField.getText()), this);
-  	}
+    public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
+        QsiTrafficController.instance().sendQsiMessage(createPacket(packetTextField.getText()), this);
+    }
 
     /**
      * Create a well-formed packet from a String
+     *
      * @param s
      * @return The packet, with contents filled-in
      */
     QsiMessage createPacket(String s) {
         // gather bytes in result
         byte b[] = jmri.util.StringUtil.bytesFromHexString(s);
-        if (b.length == 0) return null;  // no such thing as a zero-length message
+        if (b.length == 0) {
+            return null;  // no such thing as a zero-length message
+        }
         QsiMessage m = new QsiMessage(b.length);
-        for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
+        for (int i = 0; i < b.length; i++) {
+            m.setElement(i, b[i]);
+        }
         return m;
     }
 
-  	public void  message(QsiMessage m) {}  // ignore replies
-  	public void  reply(QsiReply r) {} // ignore replies
+    public void message(QsiMessage m) {
+    }  // ignore replies
+
+    public void reply(QsiReply r) {
+    } // ignore replies
 
 }

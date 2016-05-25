@@ -1,16 +1,16 @@
-// UssCtcTest.java
-
 package jmri.jmrit.ussctc;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc package
- * @author	Bob Jacobsen  Copyright 2007
+ *
+ * @author	Bob Jacobsen Copyright 2007
  * @version	$Revision$
  */
 public class UssCtcTest extends TestCase {
-
 
     // from here down is testing infrastructure
     public UssCtcTest(String s) {
@@ -34,7 +34,12 @@ public class UssCtcTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

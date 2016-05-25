@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/operations-trains.xsl"?>
+<?xml-stylesheet href="/xml/XSLT/operations-trains.xsl" type="text/xsl"?>
 <!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-trains.dtd">
-
 <operations-config>
-  <!--Written by JMRI version 20131014-0221-Daniel Boudreau on Wed Oct 16 21:33:18 EDT 2013 $Id$-->
+  <!--Written by JMRI version 20150330-1700-Daniel Boudreau on Mon Apr 27 16:35:56 EDT 2015 $Id$-->
   <options>
-    <trainOptions buildMessages="true" buildReport="true" printPreview="true" openFile="false" runFile="false" trainAction="Move" />
+    <trainOptions buildMessages="true" buildReport="true" printPreview="true" openFile="false" runFile="false" trainAction="Reset" />
+    <rowColorOptions rowColorManual="true" rowColorBuidFailed="" rowColorBuilt="" rowColorTrainEnRoute="" rowColorTerminated="" />
     <trainScheduleOptions activeId="" />
     <manifestCreator>
       <directory name="csvManifests" />
       <runFile name="MC4JMRI.xls" />
       <commonFile name="CSVFilesFile.txt" />
     </manifestCreator>
+    <switchlistCreator>
+      <directory name="csvSwitchLists" />
+      <runFile name="MC4JMRI.xls" />
+      <commonFile name="CSVFilesFile.txt" />
+    </switchlistCreator>
   </options>
   <trains>
-    <train id="3" name="BB" description="Bakersfield - Sweeper" departHour="07" departMinute="50" route="Bksfld-Loop" routeId="4" skip="4r14%%4r16%%4r4%%4r6%%" carRoadOperation="All" carRoadOption="All" carLoadOption="All" carOwnerOption="All" builtStartYear="" builtEndYear="" numberEngines="1" engineRoad="" engineModel="SW1200" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP1017" status="Terminated" comment="Sweeper, picks up cars and returns to Bakersfield" showTimes="true" carTypes="Boxcar%%Caboose%%Coilcar%%Flat Timber%%FlatBH%%FlatBHPp%%FlatBHWd%%FlatTimb%%FlatTrailer%%FlatWood%%Flatcar%%Gon-pipe%%Gon-scrap%%Gondola%%HopChem%%HopCmnt%%HopGrain%%HopSand%%Hopper%%Stock%%Tank Gas%%Tank Kero%%Tank Oil%%Diesel%%">
+    <train id="3" name="BB" description="Bakersfield - Sweeper" departHour="07" departMinute="50" builtStartYear="" builtEndYear="" numberEngines="1" engineRoad="" engineModel="SW1200" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP1017" status="Train reset" TerminationDate="" RequestedCars="0" statusCode="0" comment="Sweeper, picks up cars and returns to Bakersfield" showTimes="true">
+      <rowColor name="" />
       <route name="Bksfld-Loop" id="4">
         <skips>
           <location name="Hillsboro" id="4r14" />
@@ -50,7 +56,8 @@
         <locoType name="Diesel" />
       </types>
     </train>
-    <train id="10" name="LS" description="Lakeview - Susanville" departHour="07" departMinute="20" route="Lakeview-Susanville" routeId="14" skip="14r2%%14r5%%" carRoadOperation="All" carRoadOption="All" carLoadOption="All" carOwnerOption="All" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP5160" status="Terminated" comment="Staging to staging" showTimes="true" carTypes="Boxcar%%Caboose%%Coilcar%%Flat Timber%%FlatBH%%FlatBHPp%%FlatBHWd%%FlatTimb%%FlatTrailer%%FlatWood%%Flatcar%%Gon-pipe%%Gon-scrap%%Gondola%%HopChem%%HopCmnt%%HopGrain%%HopSand%%Hopper%%Reefer%%Reefer Meat%%Reefer Milk%%ReeferIce%%Stock%%Tank Chem%%Tank Corn Sy%%Tank Food%%Tank Gas%%Tank Kero%%Tank Oil%%Tank Veg%%Diesel%%">
+    <train id="10" name="LS" description="Lakeview - Susanville" departHour="07" departMinute="20" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP5160" status="Train reset" TerminationDate="" RequestedCars="0" statusCode="0" comment="Staging to staging" showTimes="true">
+      <rowColor name="" />
       <route name="Lakeview-Susanville" id="14">
         <skips>
           <location name="Farmington" id="14r2" />
@@ -92,7 +99,8 @@
         <locoType name="Diesel" />
       </types>
     </train>
-    <train id="11" name="SL" description="Susanville - Lakeview" departHour="10" departMinute="00" route="Susanville-Lakeview" routeId="15" skip="15r11%%15r9%%" carRoadOperation="All" carRoadOption="All" carLoadOption="All" carOwnerOption="All" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP5162" status="Terminated" comment="Staging to staging" showTimes="true" carTypes="Boxcar%%Caboose%%Coilcar%%Flat Timber%%FlatBH%%FlatBHPp%%FlatBHWd%%FlatTimb%%FlatTrailer%%FlatWood%%Flatcar%%Gon-pipe%%Gon-scrap%%Gondola%%HopChem%%HopCmnt%%HopGrain%%HopSand%%Hopper%%Reefer%%Reefer Meat%%Reefer Milk%%ReeferIce%%Stock%%Tank Chem%%Tank Corn Sy%%Tank Food%%Tank Gas%%Tank Kero%%Tank Oil%%Tank Veg%%Diesel%%">
+    <train id="11" name="SL" description="Susanville - Lakeview" departHour="10" departMinute="00" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SSW4501" status="Train reset" TerminationDate="4/27/2015 16:26 " RequestedCars="24" statusCode="0" comment="Staging to staging" showTimes="true">
+      <rowColor name="" />
       <route name="Susanville-Lakeview" id="15">
         <skips>
           <location name="Farmington" id="15r11" />
@@ -134,7 +142,8 @@
         <locoType name="Diesel" />
       </types>
     </train>
-    <train id="12" name="BL" description="Coal Train" departHour="09" departMinute="00" route="Blsfld-Lakeview" routeId="12" skip="" carRoadOperation="All" carRoadOption="All" carLoadOption="All" carOwnerOption="All" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP4805" status="Terminated" comment="Large yard to staging" showTimes="true" carTypes="Caboose%%Coal%%HopCoal%%HopCoal-E%%Diesel%%">
+    <train id="12" name="BL" description="Coal Train" departHour="09" departMinute="00" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP4805" status="Train reset" TerminationDate="" RequestedCars="0" statusCode="0" comment="Large yard to staging" showTimes="true">
+      <rowColor name="" />
       <route name="Blsfld-Lakeview" id="12" />
       <types>
         <carType name="Caboose" />
@@ -144,7 +153,8 @@
         <locoType name="Diesel" />
       </types>
     </train>
-    <train id="13" name="LB" description="Coal Train" departHour="07" departMinute="10" route="Lakeview-Bksfld Coal" routeId="18" skip="" carRoadOperation="All" carRoadOption="All" carLoadOption="All" carOwnerOption="All" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP3029" status="Terminated" comment="Staging to large yard with sidings and interchange" showTimes="true" carTypes="Caboose%%HopCoal%%HopCoal-E%%Diesel%%">
+    <train id="13" name="LB" description="Coal Train" departHour="07" departMinute="10" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP3029" status="Train reset" TerminationDate="" RequestedCars="0" statusCode="0" comment="Staging to large yard with sidings and interchange" showTimes="true">
+      <rowColor name="" />
       <route name="Lakeview-Bksfld Coal" id="18" />
       <types>
         <carType name="Caboose" />
@@ -153,7 +163,8 @@
         <locoType name="Diesel" />
       </types>
     </train>
-    <train id="17" name="P" description="Port Arthur Local" departHour="06" departMinute="30" route="Port Arthur" routeId="17" skip="" carRoadOperation="All" carRoadOption="All" carLoadOption="All" carOwnerOption="All" builtStartYear="" builtEndYear="" numberEngines="1" engineRoad="" engineModel="" requires="0" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP5010" status="Terminated" comment="Local that only serves Port Arthur" showTimes="true" carTypes="Boxcar%%Coal%%Coilcar%%Flat Timber%%FlatBH%%FlatBHPp%%FlatBHWd%%FlatTimb%%FlatTrailer%%FlatWood%%Flatcar%%Gon-pipe%%Gon-scrap%%Gondola%%HopChem%%HopCmnt%%HopCoal%%HopCoal-E%%HopGrain%%HopSand%%Hopper%%Reefer%%Reefer Meat%%Reefer Milk%%ReeferIce%%Stock%%Tank Chem%%Tank Corn Sy%%Tank Food%%Tank Gas%%Tank Kero%%Tank Oil%%Tank Veg%%Diesel%%">
+    <train id="17" name="P" description="Port Arthur Local" departHour="06" departMinute="30" builtStartYear="" builtEndYear="" numberEngines="1" engineRoad="" engineModel="" requires="0" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP5010" status="Train reset" TerminationDate="" RequestedCars="0" statusCode="0" comment="Local that only serves Port Arthur" showTimes="true">
+      <rowColor name="" />
       <route name="Port Arthur" id="17" />
       <types>
         <carType name="Boxcar" />
@@ -192,7 +203,8 @@
         <locoType name="Diesel" />
       </types>
     </train>
-    <train id="18" name="LBX" description="Lakeview - Bakersfield Extra" departHour="11" departMinute="00" route="Lakeview-Bksfld" routeId="11" skip="" carRoadOperation="All" carRoadOption="All" carLoadOption="All" carOwnerOption="All" builtStartYear="" builtEndYear="" numberEngines="0" engineRoad="" engineModel="" requires="0" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP5294" status="Terminated" comment="Does not service coal cars" showTimes="true" carTypes="Boxcar%%Caboose%%Coilcar%%Flat Timber%%FlatBH%%FlatBHPp%%FlatBHWd%%FlatTimb%%FlatTrailer%%FlatWood%%Flatcar%%Gon-pipe%%Gon-scrap%%Gondola%%HopChem%%HopCmnt%%HopGrain%%HopSand%%Hopper%%Passenger%%Reefer%%Reefer Meat%%Reefer Milk%%ReeferIce%%Stock%%Tank Chem%%Tank Corn Sy%%Tank Food%%Tank Gas%%Tank Kero%%Tank Oil%%Tank Veg%%Diesel%%Steam%%">
+    <train id="18" name="LBX" description="Lakeview - Bakersfield Extra" departHour="11" departMinute="00" builtStartYear="" builtEndYear="" numberEngines="0" engineRoad="" engineModel="" requires="0" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP5294" status="Train reset" TerminationDate="" RequestedCars="0" statusCode="0" comment="Does not service coal cars" showTimes="true">
+      <rowColor name="" />
       <route name="Lakeview-Bksfld" id="11" />
       <types>
         <carType name="Boxcar" />
@@ -231,7 +243,8 @@
         <locoType name="Steam" />
       </types>
     </train>
-    <train id="19" name="BLX" description="Bakersfield - Lakeview Extra" departHour="00" departMinute="00" route="Blsfld-Lakeview" routeId="12" skip="" carRoadOperation="All" carRoadOption="All" carLoadOption="All" carOwnerOption="All" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SSW4545" status="Terminated" comment="Does not service coal cars" showTimes="true" carTypes="Baggage%%Boxcar%%Caboose%%Coilcar%%Flat Timber%%FlatBH%%FlatBHPp%%FlatBHWd%%FlatTimb%%FlatTrailer%%FlatWood%%Flatcar%%Gon-pipe%%Gon-scrap%%Gondola%%HopChem%%HopCmnt%%HopGrain%%HopSand%%Hopper%%MOW%%MOWBox%%Passenger%%Reefer%%Reefer Meat%%Reefer Milk%%ReeferIce%%Stock%%Tank Chem%%Tank Corn Sy%%Tank Food%%Tank Gas%%Tank Kero%%Tank Oil%%Tank Veg%%Diesel%%Steam%%">
+    <train id="19" name="BLX" description=" Extra {0} {1}" departHour="00" departMinute="00" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="false" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="true" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SSW4545" status="Train reset" TerminationDate="" RequestedCars="0" statusCode="0" comment="Does not service coal cars" showTimes="true">
+      <rowColor name="" />
       <route name="Blsfld-Lakeview" id="12" />
       <types>
         <carType name="Baggage" />
@@ -273,6 +286,95 @@
         <locoType name="Steam" />
       </types>
     </train>
+    <train id="20" name="To Storage" description="Five finger cars to storage boxes" departHour="00" departMinute="00" builtStartYear="" builtEndYear="" numberEngines="0" engineRoad="" engineModel="" requires="1" cabooseRoad="" buildNormal="false" toTerminal="true" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="false" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SP5162" status="Train reset" TerminationDate="3/8/2015 11:31 " RequestedCars="22" statusCode="0" comment="Doesn't break down coal trains" showTimes="true" leg2Options="8" leg2Engines="0" leg2Road="" leg2Model="" leg2CabooseRoad="" leg2Start="19r3">
+      <rowColor name="" />
+      <route name="To Storage" id="19" />
+      <types>
+        <carType name="Baggage" />
+        <carType name="Boxcar" />
+        <carType name="Caboose" />
+        <carType name="Coilcar" />
+        <carType name="Flat Timber" />
+        <carType name="FlatBH" />
+        <carType name="FlatBHPp" />
+        <carType name="FlatBHWd" />
+        <carType name="FlatTimb" />
+        <carType name="FlatTrailer" />
+        <carType name="FlatWood" />
+        <carType name="Flatcar" />
+        <carType name="Gon-pipe" />
+        <carType name="Gon-scrap" />
+        <carType name="Gondola" />
+        <carType name="HopChem" />
+        <carType name="HopCmnt" />
+        <carType name="HopGrain" />
+        <carType name="HopSand" />
+        <carType name="Hopper" />
+        <carType name="MOW" />
+        <carType name="MOWBox" />
+        <carType name="Passenger" />
+        <carType name="Reefer" />
+        <carType name="Reefer Meat" />
+        <carType name="Reefer Milk" />
+        <carType name="ReeferIce" />
+        <carType name="Stock" />
+        <carType name="Tank Chem" />
+        <carType name="Tank Corn Sy" />
+        <carType name="Tank Food" />
+        <carType name="Tank Gas" />
+        <carType name="Tank Kero" />
+        <carType name="Tank Oil" />
+        <carType name="Tank Veg" />
+        <locoType name="Diesel" />
+        <locoType name="Steam" />
+      </types>
+    </train>
+    <train id="21" name="From Storage" description="Five finger cars from storage" departHour="00" departMinute="00" builtStartYear="" builtEndYear="" numberEngines="2" engineRoad="" engineModel="" requires="0" cabooseRoad="" buildNormal="false" toTerminal="true" allowLocalMoves="true" allowReturn="false" allowThroughCars="true" serviceAll="false" sendCustomStaging="false" buildConsist="false" built="false" build="false" buildFailed="false" buildFailedMessage="" printed="false" modified="false" switchListStatus="" leadEngine="SSW4545" status="Train reset" TerminationDate="" RequestedCars="22" statusCode="0" comment="Example of how to create a train that gets locos and cars from storage boxes." showTimes="true">
+      <rowColor name="" />
+      <route name="From Storage" id="20" />
+      <types>
+        <carType name="Baggage" />
+        <carType name="Boxcar" />
+        <carType name="Caboose" />
+        <carType name="Coal" />
+        <carType name="Coilcar" />
+        <carType name="Flat Timber" />
+        <carType name="FlatBH" />
+        <carType name="FlatBHPp" />
+        <carType name="FlatBHWd" />
+        <carType name="FlatTimb" />
+        <carType name="FlatTrailer" />
+        <carType name="FlatWood" />
+        <carType name="Flatcar" />
+        <carType name="Gon-pipe" />
+        <carType name="Gon-scrap" />
+        <carType name="Gondola" />
+        <carType name="HopChem" />
+        <carType name="HopCmnt" />
+        <carType name="HopCoal" />
+        <carType name="HopCoal-E" />
+        <carType name="HopGrain" />
+        <carType name="HopSand" />
+        <carType name="Hopper" />
+        <carType name="MOW" />
+        <carType name="MOWBox" />
+        <carType name="Passenger" />
+        <carType name="Reefer" />
+        <carType name="Reefer Meat" />
+        <carType name="Reefer Milk" />
+        <carType name="ReeferIce" />
+        <carType name="Stock" />
+        <carType name="Tank Chem" />
+        <carType name="Tank Corn Sy" />
+        <carType name="Tank Food" />
+        <carType name="Tank Gas" />
+        <carType name="Tank Kero" />
+        <carType name="Tank Oil" />
+        <carType name="Tank Veg" />
+        <locoType name="Diesel" />
+        <locoType name="Steam" />
+      </types>
+    </train>
   </trains>
   <schedules>
     <schedule id="1" name="Sunday" trainIds="" />
@@ -284,4 +386,3 @@
     <schedule id="7" name="Saturday" trainIds="" />
   </schedules>
 </operations-config>
-

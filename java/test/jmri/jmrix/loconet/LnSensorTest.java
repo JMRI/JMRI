@@ -1,6 +1,5 @@
-// LnSensorTest.java
 package jmri.jmrix.loconet;
-import org.apache.log4j.Logger;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -8,15 +7,15 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
- * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version         $Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2001, 2002
  */
 public class LnSensorTest extends TestCase {
 
     public void testLnSensorCreate() {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        Assert.assertNotNull("exists", lnis );
+        Assert.assertNotNull("exists", lnis);
 
         LnSensor t = new LnSensor("LS042", lnis, "L");
 
@@ -33,7 +32,6 @@ public class LnSensorTest extends TestCase {
         LocoNetMessage m;
 
         // notify the Ln that somebody else changed it...
-
         m = new LocoNetMessage(4);
         m.setOpCode(0xb2);         // OPC_INPUT_REP
         m.setElement(1, 0x15);     // all but lowest bit of address
@@ -51,13 +49,11 @@ public class LnSensorTest extends TestCase {
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
     }
 
-
     // LnSensor test for setting state
     public void testLnSensorSetState() throws jmri.JmriException {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        Assert.assertNotNull("exists", lnis );
-        
+        Assert.assertNotNull("exists", lnis);
 
         LnSensor t = new LnSensor("LS043", lnis, "L");
 
@@ -69,8 +65,8 @@ public class LnSensorTest extends TestCase {
     public void testLnSensorStatusRequest() {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        Assert.assertNotNull("exists", lnis );
-        
+        Assert.assertNotNull("exists", lnis);
+
         LnSensor t = new LnSensor("LS042", lnis, "L");
 
         t.requestUpdateFromLayout();
@@ -79,14 +75,13 @@ public class LnSensorTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public LnSensorTest(String s) {
-    	super(s);
+        super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LnSensor.class.getName()};
+        String[] testCaseName = {LnSensorTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -96,9 +91,12 @@ public class LnSensorTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(LnSensorTest.class.getName());
-
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

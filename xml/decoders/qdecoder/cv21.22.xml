@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-18</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation from NMRA/cv21.22.xml v7</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+  <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F1</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F1</label>
+    <label xml:lang="de">Verbundadresse aktiv für F1</label>
+    <label>Consist Address Active For F1</label>
+  </variable>
+  <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F2</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F2</label>
+    <label xml:lang="de">Verbundadresse aktiv für F2</label>
+    <label>Consist Address Active For F2</label>
+  </variable>
+  <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F3</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F3</label>
+    <label xml:lang="de">Verbundadresse aktiv für F3</label>
+    <label>Consist Address Active For F3</label>
+  </variable>
+  <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F4</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F4</label>
+    <label xml:lang="de">Verbundadresse aktiv für F4</label>
+    <label>Consist Address Active For F4</label>
+  </variable>
+  <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F5</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F5</label>
+    <label xml:lang="de">Verbundadresse aktiv für F5</label>
+    <label>Consist Address Active For F5</label>
+  </variable>
+  <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F6</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F6</label>
+    <label xml:lang="de">Verbundadresse aktiv für F6</label>
+    <label>Consist Address Active For F6</label>
+  </variable>
+  <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F7</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F7</label>
+    <label xml:lang="de">Verbundadresse aktiv für F7</label>
+    <label>Consist Address Active For F7</label>
+  </variable>
+  <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F8</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F8</label>
+    <label xml:lang="de">Verbundadresse aktiv für F8</label>
+    <label>Consist Address Active For F8</label>
+  </variable>
+  <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F-Luci Avanti</label>
+    <label xml:lang="fr">Adresse UM active pour FL en avant</label>
+    <label xml:lang="de">Verbundadresse aktiv für FL vorwärts</label>
+    <label>Consist Address Active For FL in Forward</label>
+  </variable>
+  <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F-Luci Indietro</label>
+    <label xml:lang="fr">Adresse UM active pour FL en arr</label>
+    <label xml:lang="de">Verbundadresse aktiv für FL rückwärts</label>
+    <label>Consist Address Active For FL in Reverse</label>
+  </variable>
+  <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F9</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F9</label>
+    <label xml:lang="de">Verbundadresse aktiv für F9</label>
+    <label>Consist Address Active For F9</label>
+  </variable>
+  <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F10</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F10</label>
+    <label xml:lang="de">Verbundadresse aktiv für F10</label>
+    <label>Consist Address Active For F10</label>
+  </variable>
+  <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F11</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F11</label>
+    <label xml:lang="de">Verbundadresse aktiv für F11</label>
+    <label>Consist Address Active For F11</label>
+  </variable>
+  <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="1">
+    <enumVal>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+        <choice xml:lang="fr">Adresse locomotive seulement</choice>
+        <choice xml:lang="de">Nur Lok Adresse</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+        <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+        <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F12</label>
+    <label xml:lang="fr">Adresse d'Unité Multiple active pour F12</label>
+    <label xml:lang="de">Verbundadresse aktiv für F12</label>
+    <label>Consist Address Active For F12</label>
+  </variable>
+</variables>

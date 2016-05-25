@@ -1,191 +1,277 @@
-<?xml version="1.0"?>
-
-   <!-- version  author="Jack Shall lcrr@bellsouth.net" version="11" lastUpdated="20100819"	-->
-   <!-- version  author="Mark Waters mark16w-jmri@yahoo.co.uk" version="3" lastUpdated="20110910"	-->
-
-   <!-- Version 2 - added additional lighting options to functions 3 and 4	-->
-   <!-- Version 3 - added output 7 and 8 behavior 					-->
-
-
-<pane name="Lights" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-    <column>
-        <label label=" "/>
-        <display item="Directional Headlights"/>
-        <display item="Global lighting option 1"/>
-        <display item="Global lighting option 2"/>
-        <display item="Global lighting option 3"/>
-        <display item="Global lighting option 4"/>
-        <display item="Global lighting option 5"/>
-        <display item="Global lighting option 6"/>
-        <display item="Global lighting option 7"/>
-        <display item="Global lighting option 8"/>
-        <label label=" "/>
-        <label label=" "/>
-        <display item="Function F0F effect generated"/>
-        <display item="Function F0F behavior"/>
-        <display item="Function F0F options"/>
-        <display item="Function F0F option 1"/>
-        <display item="Function F0F option 2"/>
-        <display item="Function F0F option 3"/>
-        <display item="Function F0F option 4"/>
-        <display item="Function F0F check 1" format="checkbox"/>
-        <display item="Function F0F check 2" format="checkbox"/>
-        <display item="Function F0F check 3" format="checkbox"/>
-        <display item="Function F0F check 4" format="checkbox"/>
-        <display item="Function F0F check 5" format="checkbox"/>
-        <label label=" "/>
-        <display item="Function F0R effect generated"/>
-        <display item="Function F0R behavior"/>
-        <display item="Function F0R options"/>
-        <display item="Function F0R option 1"/>
-        <display item="Function F0R option 2"/>
-        <display item="Function F0R option 3"/>
-        <display item="Function F0R option 4"/>
-        <display item="Function F0R check 1" format="checkbox"/>
-        <display item="Function F0R check 2" format="checkbox"/>
-        <display item="Function F0R check 3" format="checkbox"/>
-        <display item="Function F0R check 4" format="checkbox"/>
-        <display item="Function F0R check 5" format="checkbox"/>
-        <label label=" "/>
-        <display item="Function 1 effect generated"/>
-        <display item="Function 1 behavior"/>
-        <display item="Function 1 options"/>
-        <display item="Function 1 option 1"/>
-        <display item="Function 1 option 2"/>
-        <display item="Function 1 option 3"/>
-        <display item="Function 1 option 4"/>
-        <display item="Function 1 check 1" format="checkbox"/>
-        <display item="Function 1 check 2" format="checkbox"/>
-        <display item="Function 1 check 3" format="checkbox"/>
-        <display item="Function 1 check 4" format="checkbox"/>
-        <display item="Function 1 check 5" format="checkbox"/>
-       	<label label=" "/>
-        <display item="Function 2 effect generated"/>
-        <display item="Function 2 behavior"/>
-        <display item="Function 2 options"/>
-        <display item="Function 2 option 1"/>
-        <display item="Function 2 option 2"/>
-        <display item="Function 2 option 3"/>
-        <display item="Function 2 option 4"/>
-        <display item="Function 2 check 1" format="checkbox"/>
-        <display item="Function 2 check 2" format="checkbox"/>
-        <display item="Function 2 check 3" format="checkbox"/>
-        <display item="Function 2 check 4" format="checkbox"/>
-        <display item="Function 2 check 5" format="checkbox"/>
-       	<label label=" "/>
-        <display item="Function 3 effect generated"/>
-        <display item="Function 3 behavior"/>
-        <display item="Function 3 options"/>
-        <display item="Function 3 option 1"/>
-        <display item="Function 3 option 2"/>
-        <display item="Function 3 option 3"/>
-        <display item="Function 3 option 4"/>
-        <display item="Function 3 check 1" format="checkbox"/>
-        <display item="Function 3 check 2" format="checkbox"/>
-        <display item="Function 3 check 3" format="checkbox"/>
-        <display item="Function 3 check 4" format="checkbox"/>
-        <display item="Function 3 check 5" format="checkbox"/>
-        <label label=" "/>
-        <display item="Function 4 effect generated"/>
-        <display item="Function 4 behavior"/>
-        <display item="Function 4 options"/>
-        <display item="Function 4 option 1"/>
-        <display item="Function 4 option 2"/>
-        <display item="Function 4 option 3"/>
-        <display item="Function 4 option 4"/>
-        <display item="Function 4 check 1" format="checkbox"/>
-        <display item="Function 4 check 2" format="checkbox"/>
-        <display item="Function 4 check 3" format="checkbox"/>
-        <display item="Function 4 check 4" format="checkbox"/>
-        <display item="Function 4 check 5" format="checkbox"/>
-        <label label=" "/>
-        <display item="Function 5 effect generated"/>
-        <display item="Function 5 behavior"/>
-        <display item="Function 5 options"/>
-        <label label=" "/>
-        <display item="Function 6 effect generated"/>
-        <display item="Function 6 behavior"/>
-        <display item="Function 6 options"/>
-        <label label=" "/>
-        <display item="Function 7 effect generated"/>
-        <display item="Function 7 behavior"/>
-        <display item="Function 7 options"/>
-        <label label=" "/>
-        <display item="Function 8 effect generated"/>
-        <display item="Function 8 behavior"/>
-        <display item="Function 8 options"/>
-        <label label=" "/>
-        <display item="Function 9 effect generated"/>
-        <label label=" "/>
-        <display item="Function 10 effect generated"/>
-    </column>
-    <column>
-        <label label=" "/>
-        <display item="Function 11 effect generated"/>
-        <display item="Function 12 effect generated"/>
-        <display item="Function 13 effect generated"/>
-        <display item="Function 14 effect generated"/>
-        <display item="Function 15 effect generated"/>
-        <display item="Function 16 effect generated"/>
-        <display item="Function 17 effect generated"/>
-        <display item="Function 18 effect generated"/>
-        <display item="Function 19 effect generated"/>
-        <display item="Function 20 effect generated"/>
-        <display item="Function 21 effect generated"/>
-        <display item="Function 22 effect generated"/>
-        <display item="Function 23 effect generated"/>
-        <display item="Function 24 effect generated"/>
-        <display item="Function 25 effect generated"/>
-        <display item="Function 26 effect generated"/>
-        <display item="Function 27 effect generated"/>
-        <display item="Function 28 effect generated"/>
-    </column>
-    <column>
-        <label label=" "/>
-        <display item="Output 1 effect generated"/>
-        <display item="Output 1 behavior"/>
-        <display item="Output 1 options"/>
-        <display item="Output 1 option 1"/>
-        <label label=" "/>
-        <display item="Output 2 effect generated"/>
-        <display item="Output 2 behavior"/>
-        <display item="Output 2 options"/>
-        <display item="Output 2 option 1"/>
-        <label label=" "/>
-        <display item="Output 3 effect generated"/>
-        <display item="Output 3 behavior"/>
-        <display item="Output 3 options"/>
-        <display item="Output 3 option 1"/>
-        <label label=" "/>
-        <display item="Output 4 effect generated"/>
-        <display item="Output 4 behavior"/>
-        <display item="Output 4 options"/>
-        <display item="Output 4 option 1"/>
-        <label label=" "/>
-        <display item="Output 5 effect generated"/>
-        <display item="Output 5 behavior"/>
-        <display item="Output 5 options"/>
-        <display item="Output 5 option 1"/>
-        <label label=" "/>
-        <display item="Output 6 effect generated"/>
-        <display item="Output 6 behavior"/>
-        <display item="Output 6 options"/>
-        <display item="Output 6 option 1"/>
-        <label label=" "/>
-        <display item="Output 7 effect generated"/>
-        <display item="Output 7 behavior"/>
-        <display item="Output 7 options"/>
-        <display item="Output 7 option 1"/>
-        <label label=" "/>
-        <display item="Output 8 effect generated"/>
-        <display item="Output 8 behavior"/>
-        <display item="Output 8 options"/>
-        <display item="Output 8 option 1"/>
-        <label label=" "/>
-        <display item="Output 9 effect generated"/>
-        <display item="Output 9 behavior"/>
-        <label label=" "/>
-        <display item="Output 10 effect generated"/>
-        <display item="Output 10 behavior"/>
-    </column>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- version  author="Jack Shall lcrr@bellsouth.net" version="11" lastUpdated="20100819"	-->
+<!-- version  author="Mark Waters mark16w-jmri@yahoo.co.uk" version="3" lastUpdated="20110910"	-->
+<!-- Version 2 - added additional lighting options to functions 3 and 4	-->
+<!-- Version 3 - added output 7 and 8 behavior 					-->
+<!-- Version 4 - added full items for functions 5 to 8			-->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Lights</name>
+  <name xml:lang="it">Luci</name>
+  <name xml:lang="de">Licht</name>
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Directional Headlights"/>
+    <display item="Global lighting option 1"/>
+    <display item="Global lighting option 2"/>
+    <display item="Global lighting option 3"/>
+    <display item="Global lighting option 4"/>
+    <display item="Global lighting option 5"/>
+    <display item="Global lighting option 6"/>
+    <display item="Global lighting option 7"/>
+    <display item="Global lighting option 8"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function F0F effect generated"/>
+    <display item="Function F0F behavior"/>
+    <display item="Function F0F options"/>
+    <display item="Function F0F option 1"/>
+    <display item="Function F0F option 2"/>
+    <display item="Function F0F option 3"/>
+    <display item="Function F0F option 4"/>
+    <display item="Function F0F check 1" format="checkbox"/>
+    <display item="Function F0F check 2" format="checkbox"/>
+    <display item="Function F0F check 3" format="checkbox"/>
+    <display item="Function F0F check 4" format="checkbox"/>
+    <display item="Function F0F check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function F0R effect generated"/>
+    <display item="Function F0R behavior"/>
+    <display item="Function F0R options"/>
+    <display item="Function F0R option 1"/>
+    <display item="Function F0R option 2"/>
+    <display item="Function F0R option 3"/>
+    <display item="Function F0R option 4"/>
+    <display item="Function F0R check 1" format="checkbox"/>
+    <display item="Function F0R check 2" format="checkbox"/>
+    <display item="Function F0R check 3" format="checkbox"/>
+    <display item="Function F0R check 4" format="checkbox"/>
+    <display item="Function F0R check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 1 effect generated"/>
+    <display item="Function 1 behavior"/>
+    <display item="Function 1 options"/>
+    <display item="Function 1 option 1"/>
+    <display item="Function 1 option 2"/>
+    <display item="Function 1 option 3"/>
+    <display item="Function 1 option 4"/>
+    <display item="Function 1 check 1" format="checkbox"/>
+    <display item="Function 1 check 2" format="checkbox"/>
+    <display item="Function 1 check 3" format="checkbox"/>
+    <display item="Function 1 check 4" format="checkbox"/>
+    <display item="Function 1 check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 2 effect generated"/>
+    <display item="Function 2 behavior"/>
+    <display item="Function 2 options"/>
+    <display item="Function 2 option 1"/>
+    <display item="Function 2 option 2"/>
+    <display item="Function 2 option 3"/>
+    <display item="Function 2 option 4"/>
+    <display item="Function 2 check 1" format="checkbox"/>
+    <display item="Function 2 check 2" format="checkbox"/>
+    <display item="Function 2 check 3" format="checkbox"/>
+    <display item="Function 2 check 4" format="checkbox"/>
+    <display item="Function 2 check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 3 effect generated"/>
+    <display item="Function 3 behavior"/>
+    <display item="Function 3 options"/>
+    <display item="Function 3 option 1"/>
+    <display item="Function 3 option 2"/>
+    <display item="Function 3 option 3"/>
+    <display item="Function 3 option 4"/>
+    <display item="Function 3 check 1" format="checkbox"/>
+    <display item="Function 3 check 2" format="checkbox"/>
+    <display item="Function 3 check 3" format="checkbox"/>
+    <display item="Function 3 check 4" format="checkbox"/>
+    <display item="Function 3 check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 4 effect generated"/>
+    <display item="Function 4 behavior"/>
+    <display item="Function 4 options"/>
+    <display item="Function 4 option 1"/>
+    <display item="Function 4 option 2"/>
+    <display item="Function 4 option 3"/>
+    <display item="Function 4 option 4"/>
+    <display item="Function 4 check 1" format="checkbox"/>
+    <display item="Function 4 check 2" format="checkbox"/>
+    <display item="Function 4 check 3" format="checkbox"/>
+    <display item="Function 4 check 4" format="checkbox"/>
+    <display item="Function 4 check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 5 effect generated"/>
+    <display item="Function 5 behavior"/>
+    <display item="Function 5 options"/>
+    <display item="Function 5 option 1"/>
+    <display item="Function 5 option 2"/>
+    <display item="Function 5 option 3"/>
+    <display item="Function 5 option 4"/>
+    <display item="Function 5 check 1" format="checkbox"/>
+    <display item="Function 5 check 2" format="checkbox"/>
+    <display item="Function 5 check 3" format="checkbox"/>
+    <display item="Function 5 check 4" format="checkbox"/>
+    <display item="Function 5 check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 6 effect generated"/>
+    <display item="Function 6 behavior"/>
+    <display item="Function 6 options"/>
+    <display item="Function 6 option 1"/>
+    <display item="Function 6 option 2"/>
+    <display item="Function 6 option 3"/>
+    <display item="Function 6 option 4"/>
+    <display item="Function 6 check 1" format="checkbox"/>
+    <display item="Function 6 check 2" format="checkbox"/>
+    <display item="Function 6 check 3" format="checkbox"/>
+    <display item="Function 6 check 4" format="checkbox"/>
+    <display item="Function 6 check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 7 effect generated"/>
+    <display item="Function 7 behavior"/>
+    <display item="Function 7 options"/>
+    <display item="Function 7 option 1"/>
+    <display item="Function 7 option 2"/>
+    <display item="Function 7 option 3"/>
+    <display item="Function 7 option 4"/>
+    <display item="Function 7 check 1" format="checkbox"/>
+    <display item="Function 7 check 2" format="checkbox"/>
+    <display item="Function 7 check 3" format="checkbox"/>
+    <display item="Function 7 check 4" format="checkbox"/>
+    <display item="Function 7 check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 8 effect generated"/>
+    <display item="Function 8 behavior"/>
+    <display item="Function 8 options"/>
+    <display item="Function 8 option 1"/>
+    <display item="Function 8 option 2"/>
+    <display item="Function 8 option 3"/>
+    <display item="Function 8 option 4"/>
+    <display item="Function 8 check 1" format="checkbox"/>
+    <display item="Function 8 check 2" format="checkbox"/>
+    <display item="Function 8 check 3" format="checkbox"/>
+    <display item="Function 8 check 4" format="checkbox"/>
+    <display item="Function 8 check 5" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 9 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 10 effect generated"/>
+  </column>
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function 11 effect generated"/>
+    <display item="Function 12 effect generated"/>
+    <display item="Function 13 effect generated"/>
+    <display item="Function 14 effect generated"/>
+    <display item="Function 15 effect generated"/>
+    <display item="Function 16 effect generated"/>
+    <display item="Function 17 effect generated"/>
+    <display item="Function 18 effect generated"/>
+    <display item="Function 19 effect generated"/>
+    <display item="Function 20 effect generated"/>
+    <display item="Function 21 effect generated"/>
+    <display item="Function 22 effect generated"/>
+    <display item="Function 23 effect generated"/>
+    <display item="Function 24 effect generated"/>
+    <display item="Function 25 effect generated"/>
+    <display item="Function 26 effect generated"/>
+    <display item="Function 27 effect generated"/>
+    <display item="Function 28 effect generated"/>
+  </column>
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 1 effect generated"/>
+    <display item="Output 1 behavior"/>
+    <display item="Output 1 options"/>
+    <display item="Output 1 option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 2 effect generated"/>
+    <display item="Output 2 behavior"/>
+    <display item="Output 2 options"/>
+    <display item="Output 2 option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 3 effect generated"/>
+    <display item="Output 3 behavior"/>
+    <display item="Output 3 options"/>
+    <display item="Output 3 option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 4 effect generated"/>
+    <display item="Output 4 behavior"/>
+    <display item="Output 4 options"/>
+    <display item="Output 4 option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 5 effect generated"/>
+    <display item="Output 5 behavior"/>
+    <display item="Output 5 options"/>
+    <display item="Output 5 option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 6 effect generated"/>
+    <display item="Output 6 behavior"/>
+    <display item="Output 6 options"/>
+    <display item="Output 6 option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 7 effect generated"/>
+    <display item="Output 7 behavior"/>
+    <display item="Output 7 options"/>
+    <display item="Output 7 option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 8 effect generated"/>
+    <display item="Output 8 behavior"/>
+    <display item="Output 8 options"/>
+    <display item="Output 8 option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 9 effect generated"/>
+    <display item="Output 9 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 10 effect generated"/>
+    <display item="Output 10 behavior"/>
+  </column>
 </pane>

@@ -1,45 +1,39 @@
-// AudioSource.java
-
 package jmri.jmrit.audio;
 
-import jmri.Audio;
-import javax.vecmath.Vector3f;
 import java.util.Queue;
-
+import javax.vecmath.Vector3f;
+import jmri.Audio;
 
 /**
  * Represent an AudioSource, a place to store or control sound information.
  * <P>
- * The AbstractAudio class contains a basic implementation of the state and messaging
- * code, and forms a useful start for a system-specific implementation.
- * Specific implementations in the jmrix package, e.g. for LocoNet and NCE, will
- * convert to and from the layout commands.
+ * The AbstractAudio class contains a basic implementation of the state and
+ * messaging code, and forms a useful start for a system-specific
+ * implementation. Specific implementations in the jmrix package, e.g. for
+ * LocoNet and NCE, will convert to and from the layout commands.
  * <P>
- * The states  and names are Java Bean parameters, so that listeners can be
+ * The states and names are Java Bean parameters, so that listeners can be
  * registered to be notified of any changes.
  * <P>
- * Each AudioSource object has a two names.  The "user" name is entirely free form, and
- * can be used for any purpose.  The "system" name is provided by the system-specific
- * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
+ * Each AudioSource object has a two names. The "user" name is entirely free
+ * form, and can be used for any purpose. The "system" name is provided by the
+ * system-specific implementations, and provides a unique mapping to the layout
+ * control system (e.g. LocoNet, NCE, etc) and address within that system.
  * <P>
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision$
+ * @author Matthew Harris copyright (c) 2009
  */
 public interface AudioSource extends Audio {
 
@@ -51,7 +45,7 @@ public interface AudioSource extends Audio {
     /**
      * Constant to define that this source should not loop when played
      */
-    public static final int LOOP_NONE       = 0;
+    public static final int LOOP_NONE = 0;
 
     /**
      * Sets the position of this AudioSource object
@@ -61,6 +55,7 @@ public interface AudioSource extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @param pos 3d position vector
      */
     public void setPosition(Vector3f pos);
@@ -73,6 +68,7 @@ public interface AudioSource extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @param x x-coordinate
      * @param y y-coordinate
      * @param z z-coordinate
@@ -80,8 +76,8 @@ public interface AudioSource extends Audio {
     public void setPosition(float x, float y, float z);
 
     /**
-     * Sets the position of this AudioSource object in x and y planes with
-     * z plane position fixed at zero
+     * Sets the position of this AudioSource object in x and y planes with z
+     * plane position fixed at zero
      * <p>
      * Equivalent to setPosition(x, y, 0.0f)
      * <p>
@@ -90,20 +86,22 @@ public interface AudioSource extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @param x x-coordinate
      * @param y y-coordinate
      */
     public void setPosition(float x, float y);
 
     /**
-     * Returns the position of this AudioSource object as a
-     * 3-dimensional vector.
+     * Returns the position of this AudioSource object as a 3-dimensional
+     * vector.
      * <p>
      * Applies only to sub-types:
      * <ul>
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @return 3d position vector
      */
     public Vector3f getPosition();
@@ -117,13 +115,14 @@ public interface AudioSource extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @return 3d position vector
      */
     public Vector3f getCurrentPosition();
 
     /**
-     * Method to reset the current position of this AudioSource object to
-     * the initial position as defined by setPosition.
+     * Method to reset the current position of this AudioSource object to the
+     * initial position as defined by setPosition.
      * <p>
      * Applies only to sub-types:
      * <ul>
@@ -141,6 +140,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param relative position relative or absolute
      */
     public void setPositionRelative(boolean relative);
@@ -154,6 +154,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return boolean position relative
      */
     public boolean isPositionRelative();
@@ -166,6 +167,7 @@ public interface AudioSource extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @param vel 3d velocity vector
      */
     public void setVelocity(Vector3f vel);
@@ -178,6 +180,7 @@ public interface AudioSource extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @return 3d velocity vector
      */
     public Vector3f getVelocity();
@@ -189,6 +192,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return AudioBuffer the AudioBuffer object bound to this AudioSource
      */
     public AudioBuffer getAssignedBuffer();
@@ -200,7 +204,9 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
-     * @return sysName the SystemName of the AudioBuffer bound to this AudioSource
+     *
+     * @return sysName the SystemName of the AudioBuffer bound to this
+     *         AudioSource
      */
     public String getAssignedBufferName();
 
@@ -211,6 +217,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param audioBuffer the AudioBuffer object to bind to this AudioSource
      */
     public void setAssignedBuffer(AudioBuffer audioBuffer);
@@ -222,8 +229,9 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
-     * @param sysName the SystemName of the AudioBuffer (i.e. IAB1) to bind
-     * to this AudioSource
+     *
+     * @param sysName the SystemName of the AudioBuffer (i.e. IAB1) to bind to
+     *                this AudioSource
      */
     public void setAssignedBuffer(String sysName);
 
@@ -239,7 +247,6 @@ public interface AudioSource extends Audio {
 //     */
 //    @Deprecated
 //    public boolean bindAudioBuffer(AudioBuffer audioBuffer);
-
     /**
      * Queues the linked AudioBuffer object to this Source's buffer queue
      * <p>
@@ -247,6 +254,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param audioBuffers the AudioBuffer object to enqueue to this AudioSource
      */
     public boolean queueBuffers(Queue<AudioBuffer> audioBuffers);
@@ -266,6 +274,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return True if bound to an AudioBuffer
      */
     public boolean isBound();
@@ -277,6 +286,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return True if AudioBuffers are queued.
      */
     public boolean isQueued();
@@ -291,6 +301,7 @@ public interface AudioSource extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @return gain setting of this AudioSource
      */
     public float getGain();
@@ -305,6 +316,7 @@ public interface AudioSource extends Audio {
      * <li>Listener
      * <li>Source
      * <ul>
+     *
      * @param gain the gain of this AudioSource
      */
     public void setGain(float gain);
@@ -320,6 +332,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return pitch of this AudioSource
      */
     public float getPitch();
@@ -335,6 +348,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param pitch the pitch of this AudioSource
      */
     public void setPitch(float pitch);
@@ -348,6 +362,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return Reference Distance of this AudioSource
      */
     public float getReferenceDistance();
@@ -358,16 +373,17 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * The Reference Distance is one of the main parameters you have for
-     * controlling the way that sounds attenutate with distance.
-     * A Source with Reference Distance set to 5 (meters) will be at maximum
-     * volume while it is within 5 metere of the listener, and start to fade
-     * out as it moves further away. At 10 meters it will be at half volume,
-     * and at 20 meters at a quarter volume, etc ...
+     * controlling the way that sounds attenutate with distance. A Source with
+     * Reference Distance set to 5 (meters) will be at maximum volume while it
+     * is within 5 metere of the listener, and start to fade out as it moves
+     * further away. At 10 meters it will be at half volume, and at 20 meters at
+     * a quarter volume, etc ...
      * <p>
      * Applies only to sub-types:
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param referenceDistance the Reference Distance for this AudioSource
      */
     public void setReferenceDistance(float referenceDistance);
@@ -377,8 +393,8 @@ public interface AudioSource extends Audio {
      * <p>
      * Default value = Audio.MAX_DISTANCE
      * <p>
-     * The maximum distance is that where the volume of the sound would
-     * normally be zero.
+     * The maximum distance is that where the volume of the sound would normally
+     * be zero.
      * <p>
      * Applies only to sub-types:
      * <ul>
@@ -392,13 +408,14 @@ public interface AudioSource extends Audio {
      * <p>
      * Default value = Audio.MAX_DISTANCE
      * <p>
-     * The maximum distance is that where the volume of the sound would
-     * normally be zero.
+     * The maximum distance is that where the volume of the sound would normally
+     * be zero.
      * <p>
      * Applies only to sub-types:
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param maximumDistance maximum distance of this source
      */
     public void setMaximumDistance(float maximumDistance);
@@ -412,6 +429,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param rollOffFactor roll-off factor
      */
     public void setRollOffFactor(float rollOffFactor);
@@ -435,6 +453,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return boolean loop
      */
     public boolean isLooped();
@@ -448,6 +467,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param loop infinite loop setting
      */
     public void setLooped(boolean loop);
@@ -462,6 +482,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return number of loops
      */
     public int getMinLoops();
@@ -480,6 +501,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param loops minimum number of loops
      */
     public void setMinLoops(int loops);
@@ -494,6 +516,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return maximum number of loops
      */
     public int getMaxLoops();
@@ -512,26 +535,27 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param loops maximum number of loops
      */
     public void setMaxLoops(int loops);
 
     /**
-     * The number of times that this AudioSource should loop, or
-     * LOOP_CONTINUOUS for infinite looping.
+     * The number of times that this AudioSource should loop, or LOOP_CONTINUOUS
+     * for infinite looping.
      * <p>
-     * When the minimum and maximum number of loops are different, each call
-     * to this method will return a different random number that lies between
-     * the two settings:
+     * When the minimum and maximum number of loops are different, each call to
+     * this method will return a different random number that lies between the
+     * two settings:
      * <pre>
-     * minimum &lt= number of loops &lt= maximum
-     * </pre>
-     * Default value = 0
+     * minimum {@literal <=} number of loops {@literal <=} maximum
+     * </pre> Default value = 0
      * <p>
      * Applies only to sub-types:
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return number of loops
      */
     public int getNumLoops();
@@ -621,7 +645,6 @@ public interface AudioSource extends Audio {
 //     * @return time in milliseconds to wait
 //     */
 //    public int getLoopDelay();
-
     /**
      * Set the length of time in milliseconds to fade this source in
      * <p>
@@ -631,6 +654,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param fadeInTime fade-in time in milliseconds
      */
     public void setFadeIn(int fadeInTime);
@@ -644,6 +668,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return fade-in time in milliseconds
      */
     public int getFadeIn();
@@ -657,6 +682,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param fadeOutTime fade-out time in milliseconds
      */
     public void setFadeOut(int fadeOutTime);
@@ -670,6 +696,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return fade-in time in milliseconds
      */
     public int getFadeOut();
@@ -685,6 +712,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @param dopplerFactor factor to apply in doppler calculations
      */
     @Deprecated
@@ -701,6 +729,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
+     *
      * @return factor to apply in doppler calculations
      */
     @Deprecated
@@ -789,8 +818,8 @@ public interface AudioSource extends Audio {
     public void fadeIn();
 
     /**
-     * Method to fade out and then stop this AudioSource Object only when it
-     * is already playing.
+     * Method to fade out and then stop this AudioSource Object only when it is
+     * already playing.
      * <p>
      * If not playing, command is ignored.
      * <p>
@@ -802,5 +831,3 @@ public interface AudioSource extends Audio {
     public void fadeOut();
 
 }
-
-/* @(#)AudioSource.java */

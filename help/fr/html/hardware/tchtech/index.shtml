@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- $Id: index.shtml,v 1.3 2008/11/11 00:09:08 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-20-06-->
+<!-- $Id$ -->
+<!-- Translated  by Blorec Herv&#224; le 2011-20-06-->
 <title>JMRI: TCH Technology System no longer supported</title>
 
 <!-- Style -->
@@ -22,11 +22,11 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: TCH System Technology n'est plus supporté
+JMRI: TCH System Technology n'est plus support&#224;
 </h1>
 
 
-À compter du Novembre 10, 2008, JMRI ne supporte plus le matériel de technologie TCH.
+A compter du Novembre 10, 2008, JMRI ne supporte plus le mat&#224;riel de technologie TCH.
 
 <!--#include virtual="/Footer" -->
 </body>

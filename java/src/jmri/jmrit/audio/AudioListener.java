@@ -1,44 +1,38 @@
-// AudioListener.java
-
 package jmri.jmrit.audio;
 
-import jmri.Audio;
 import javax.vecmath.Vector3f;
-
+import jmri.Audio;
 
 /**
  * Represent an AudioListener, a place to store or control sound information.
  * <P>
- * The AbstractAudio class contains a basic implementation of the state and messaging
- * code, and forms a useful start for a system-specific implementation.
- * Specific implementations in the jmrix package, e.g. for LocoNet and NCE, will
- * convert to and from the layout commands.
+ * The AbstractAudio class contains a basic implementation of the state and
+ * messaging code, and forms a useful start for a system-specific
+ * implementation. Specific implementations in the jmrix package, e.g. for
+ * LocoNet and NCE, will convert to and from the layout commands.
  * <P>
- * The states  and names are Java Bean parameters, so that listeners can be
+ * The states and names are Java Bean parameters, so that listeners can be
  * registered to be notified of any changes.
  * <P>
- * Each AudioListener object has a two names.  The "user" name is entirely free form, and
- * can be used for any purpose.  The "system" name is provided by the system-specific
- * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
+ * Each AudioListener object has a two names. The "user" name is entirely free
+ * form, and can be used for any purpose. The "system" name is provided by the
+ * system-specific implementations, and provides a unique mapping to the layout
+ * control system (e.g. LocoNet, NCE, etc) and address within that system.
  * <P>
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision$
+ * @author Matthew Harris copyright (c) 2009
  */
 public interface AudioListener extends Audio {
 
@@ -50,6 +44,7 @@ public interface AudioListener extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @param pos 3d position vector
      */
     public void setPosition(Vector3f pos);
@@ -62,6 +57,7 @@ public interface AudioListener extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @param x x-coordinate
      * @param y y-coordinate
      * @param z z-coordinate
@@ -69,8 +65,8 @@ public interface AudioListener extends Audio {
     public void setPosition(float x, float y, float z);
 
     /**
-     * Sets the position of this AudioListener object in x and y planes with
-     * z plane position fixed at zero
+     * Sets the position of this AudioListener object in x and y planes with z
+     * plane position fixed at zero
      * <p>
      * Equivalent to setPosition(x, y, 0.0f)
      * <p>
@@ -79,20 +75,22 @@ public interface AudioListener extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @param x x-coordinate
      * @param y y-coordinate
      */
     public void setPosition(float x, float y);
 
     /**
-     * Returns the position of this AudioListener object as a
-     * 3-dimensional vector.
+     * Returns the position of this AudioListener object as a 3-dimensional
+     * vector.
      * <p>
      * Applies only to sub-types:
      * <ul>
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @return 3d position vector
      */
     public Vector3f getPosition();
@@ -106,13 +104,14 @@ public interface AudioListener extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @return 3d position vector
      */
     public Vector3f getCurrentPosition();
 
     /**
-     * Method to reset the current position of this AudioListener object to
-     * the initial position as defined by setPosition.
+     * Method to reset the current position of this AudioListener object to the
+     * initial position as defined by setPosition.
      * <p>
      * Applies only to sub-types:
      * <ul>
@@ -130,6 +129,7 @@ public interface AudioListener extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @param vel 3d velocity vector
      */
     public void setVelocity(Vector3f vel);
@@ -137,9 +137,7 @@ public interface AudioListener extends Audio {
     /**
      * Returns the velocity of this AudioListener object
      *
-     * Applies only to sub-types:
-     *   - Listener
-     *   - Source
+     * Applies only to sub-types: - Listener - Source
      *
      * @return 3d velocity vector
      */
@@ -152,6 +150,7 @@ public interface AudioListener extends Audio {
      * <ul>
      * <li>Listener
      * </ul>
+     *
      * @param at 3d vector representing the position
      * @param up 3d vector representing the look-at point
      */
@@ -164,9 +163,9 @@ public interface AudioListener extends Audio {
      * <ul>
      * <li>Listener
      * </ul>
-     * @param which the orientation vector to return:
-     *              == AT - position;
-     *              == UP - look-at point
+     *
+     * @param which the orientation vector to return: == AT - position; == UP -
+     *              look-at point
      * @return vector representing the chosen orientation vector
      */
     public Vector3f getOrientation(int which);
@@ -178,9 +177,9 @@ public interface AudioListener extends Audio {
      * <ul>
      * <li>Listener
      * </ul>
-     * @param which the orientation vector to return:
-     *              == AT - position;
-     *              == UP - look-at point
+     *
+     * @param which the orientation vector to return: == AT - position; == UP -
+     *              look-at point
      * @return vector representing the chosen orientation vector
      */
     public Vector3f getCurrentOrientation(int which);
@@ -193,6 +192,7 @@ public interface AudioListener extends Audio {
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @return float gain
      */
     public float getGain();
@@ -202,14 +202,15 @@ public interface AudioListener extends Audio {
      * <p>
      * Applicable values 0.0f to 1.0f
      * <p>
-     * When applied to Listeners, has the effect of altering the master gain
-     * (or volume)
+     * When applied to Listeners, has the effect of altering the master gain (or
+     * volume)
      * <p>
      * Applies only to sub-types:
      * <ul>
      * <li>Listener
      * <li>Source
      * </ul>
+     *
      * @param gain
      */
     public void setGain(float gain);
@@ -229,6 +230,7 @@ public interface AudioListener extends Audio {
      * <ul>
      * <li>Listener
      * </ul>
+     *
      * @param metersPerUnit Meters per unit ratio
      */
     public void setMetersPerUnit(float metersPerUnit);
@@ -249,10 +251,9 @@ public interface AudioListener extends Audio {
      * <ul>
      * <li>Listener
      * </ul>
+     *
      * @return Meters per unit ratio
      */
     public float getMetersPerUnit();
 
 }
-
-/* @(#)AudioListener.java */

@@ -1,61 +1,64 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-<TITLE>
-JMRI: XPressNet
+<title>JMRI Hardware Support - XPressNet</title>
 
-</TITLE>
-<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<META content="Paul Bender" name=Author>
-<META name="keywords" content="XPressNet java model railroad JMRI install">
+<meta content="Paul Bender, Egbert Broerse" name="Author">
+<meta name="keywords" content="XPressNet java model railroad JMRI install">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-
-<H1>
-	JMRI Hardware Guide: XPressNet
-</H1>
-
-<H2>Overview</H2>
-
-    XPressNet is a Command Bus used by
-	<a href="http://www.atlasrr.com">Atlas</a>,
-	<a href="http://www.lenz.com">Lenz</a>,
-    <a href="http://www.hornby.com">Hornby</a>,
-        <a href="http://www.opendcc.org">OpenDCC (DIY)</a>,
-        <a href="http://usuaris.tinet.cat/fmco/home_en.htm">Paco Canada (DIY)</a>,
-	<a href="http://www.ztccontrols.com">ZTC Controls</a>,
-        <a href="http://www.viessmann-modell.com/">Viessmann</a>, and
-	<a href="http://www.roco.co.at">Roco</a>.
-    It was developed by Lenz.  
+<h1>Hardware Support: XPressNet</h1>
+		<p>
+    XPressNet is a Command Bus developed by Lenz and used by:
+		<a href="http://www.atlasrr.com">Atlas</a>,
+		<a href="http://www.hornby.com/uk-en/">Hornby</a>,
+		<a href="http://www.lenz.com">Lenz</a>,        
+		<a href="http://www.opendcc.de/index_e.html">OpenDCC (DIY)</a>,
+		<a href="http://usuaris.tinet.cat/fmco/home_en.htm">Paco Canada (DIY)</a>,
+		<a href="http://www.roco.co.at">Roco</a>		
+		<a href="http://www.viessmann-modell.com/">Viessmann</a> and		
+		<a href="http://www.ztccontrols.com">ZTC Controls</a>.
+    <p>  
     The XPressNet specification (available from
     the <a href="http://www.lenzusa.com/techinfo/index.htm">Lenz website</a>) 
     specifies the electrical communications standards and
-    command set needed for devices to communicate with the command station.
-    While the command stations support the same commands over the XPressNet
-    connection, they do not all use the same connectors.  It may be necessary
-    to build an adapter to plug a device into a command station from another
-    manufacturer.   
+    command set needed for devices to communicate with the command station.</p>
+    
+<ul><!-- TOC -->
+	<li><a href="#hardware">Hardware</a></li>
+	<li><a href="#limitations">Limitations</a></li>
+	<li><a href="#connecting">Connecting with:</a>
+		<ul>
+		<li><a href="#connectLi100">LI100, LI100, LI101 or LI101F</a>
+		<li><a href="#connectLiusb">LIUSB</a>
+		<li><a href="#connectLiusbServer">LIUSB Server</a>
+		<li><a href="#connectLiusbEthernet">LIUSB Ethernet</a>
+		<li><a href="#connectSim">XPressNet Simulator</a>
+		<li><a href="#connectZtc">ZTC 640</a>
+		<li><a href="#connectElite">Hornby Elite USB</a>
+		<li><a href="#connectXtncp">XnTcp adapter</a>
+		<li><a href="#connectXpa">XPA and a modem</a>
+	</ul>
+	<li><a href="#tools">JMRI XPressNet Tools</a></li>
+	<li><a href="#documentation">Documentation</a></li>
+</ul>
 
-<H2>Supported Hardware</H2>
-
-<H3>Command Stations</H3>
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Command Station</h3>
 
 <p>The XPressNet protocol allows the DCC manufacturers that use it to 
 select what functionality they wish to provide in their command stations.
@@ -66,93 +69,93 @@ JMRI - if the hardware doesn't support it, it isn't there to be used by
 JMRI.
 
 <p>In general, the features that JMRI cares about can be grouped into three
-areas - operating locomotives and turnouts on the layout, programming decoders
-on a programming track or in ops mode, and getting feedback from the layout
-(the state of turnouts, ops-mode feedback, etc).  The following table tries to
-show what systems support these features.  System specific limitations 
+areas:
+	<ul>
+	<li><strong>Operating</strong> Locomotives and Turnouts on the layout
+	<li><strong>Programming</strong> decoders on a programming track or in ops mode
+	<li>Getting <strong>Feedback</strong> from the layout (the state of turnouts, ops-mode feedback, etc.)
+	</ul>
+The following table tries to
+show which systems support these three feature groups. System specific limitations 
 are also expressed in the <a href=#Limitations>Limitations</a> section of 
-this page
+each system below.
 
 <div class=list>
     <dl>
     <dt class=left>Full</dt>
     <dd class=first>
-	<h4><font color="#00FF00">Operating</font>
-	    <font color="#00FF00">Programming</font>
-	    <font color="#00FF00">Feedback</font>
-	</H4>
+	<h4>Operating &nbsp; Programming &nbsp; Feedback</h4>
 	<ul>
-	    <li> Lenz LZ100 based systems (software version 3.x)</li>
-	    <li> Lenz LZV100 based systems (software version 3.x)</li>
-            <li> Paco Canada's NanoX-S88 </li>
+	    <li>Lenz LZ100 based systems (software version 3.x)</li>
+	    <li>Lenz LZV100 based systems (software version 3.x)</li>
+        <li>OpenDCC's Command Center</li>
+        <li>Paco Canada's NanoX-S88 </li>
 	</ul>
     </dd>
     <dt class=left>Partial</dt>
     <dd>
 
-	<h4><font color="#00FF00">Operating</font>
-	    <font color="#00FF00">Programming</font>
-	    <font color="#FF0000"><strike>Feedback</strike></font>
-	</H4>
+	<h4>Operating &nbsp; Programming &nbsp; 
+	<font color="#FF0000"><strike>Feedback</strike></font>
+	</h4>
 	<ul>
-	    <li> Roco LocoMaus 2 (Roco Part number 10760) </li>
-	    <li> Roco MultiMouse (Roco Part number 10810) </li>
-            <li> Hornby Elite </li>
-            <li> Paco Canada's NanoX </li>
+	    <li>Roco LocoMaus 2 (Roco Part number 10760) </li>
+	    <li>Roco MultiMouse (Roco Part number 10810) </li>
+        <li>Hornby Elite </li>
+        <li>Paco Canada's NanoX </li>
 	</ul>
     </dd>
     <dt class=left>Minimal</dt>
     <dd>
-	<h4><font color="#00FF00">Operating</font>
-	    <font color="#FF0000"><strike>Programming</strike></font>
+	<h4>Operating &nbsp; 
+	<font color="#FF0000"><strike>Programming</strike></font> &nbsp; 
 	    <font color="#FF0000"><strike>Feedback</strike></font>
-	</H4>
+	</h4>
 	<ul>
-	    <li> Atlas Commander</li>
-	    <li> Lenz Compact</li>
-	    <li> Lenz LH200</li>
+	    <li>Atlas Commander</li>
+	    <li>Lenz Compact</li>
+	    <li>Lenz LH200</li>
 	    <li>ZTC Controls ZTC511 (with Command Station Software version 4.0)</li>
 	</ul>
 	<h4><font color="#FF0000"><strike>Operating</strike></font>
-	    <font color="#00FF00">Programming</font>
+	    &nbsp; Programming &nbsp; 
 	    <font color="#FF0000"><strike>Feedback</strike></font>
-	</H4>
+	</h4>
 	<ul>
 	    <li> Lenz BlackBox</li>
 	</ul>
-	<h4><font color="#FF0000"><strike>Operating</strike></font>
-	    <font color="#FF0000"><strike>Programming</strike></font>
-	    <font color="#00FF00">Feedback</font>
-	</H4>
-	<ul>
-            <li> Paco Canada's GenLI-S88 (adds Feedback to existing XPressNet System)</li>
-            <li> Paco Canada's RS2PC (adds RS-Bus based Feedback without XPressNet)</li>
-        </ul>
+	<h4><font color="#FF0000"><strike>Operating</strike></font> &nbsp; 
+	    <font color="#FF0000"><strike>Programming</strike></font> &nbsp; 
+	    Feedback
+	</h4>
+		<ul>
+        <li>Paco Canada's GenLI-S88 (adds Feedback to existing XPressNet System)</li>
+        <li>Paco Canada's RS2PC (adds RS-Bus based Feedback without XPressNet)</li>
+    </ul>
     </dd>
     <dt class=left>Unknown</dt>
     <dd>
-	<h4>These are untested, but should be at least partially supported</h4>
+	<h4>The following systems are untested, but should be at least partially supported:</h4>
 	<ul>
 	    <li>ZTC Controls ZTC521 (with XPressNet (aka X-Bus V3.0) software)</li>
-            <li>Hornby Select</li>
-            <li>OpenDCC's Command Center</li>
-            <li>Viessmann Commander</li>
-            <li>Roco 10830 multiZENTRAl-PRO</li>
+	    <li>Hornby Select</li>
+	    <li>Viessmann Commander</li>
+	    <li>Roco 10830 multiZENTRAl-PRO</li>
 	</ul>
     </dd>
     </dl>
 </div>
 
-<H3>Computer Interfaces</H3>
+<h3>Computer Interfaces</h3>
 
-    <p>There are currently twelve computer interfaces supported by JMRI:
-    <ul>
-	<li>The Lenz LI100 is Lenz's original computer interface.  It is
-	limited to a serial port speed of 9600 baud. 
-	 
-	<li>The Lenz LI100F is an improved version of the LI100.  It supports
-	serial port speeds of 9600 and 19,200 baud.  The Factory default is
-	9600 baud.
+	<p>Currently 14 XpressNet computer interfaces are supported by JMRI:
+	<ul>
+	<li>The Lenz LI100 is Lenz's original computer interface. It is
+	limited to a serial port speed of 9,600 baud. 
+	
+	<li>The Lenz LI100F is an improved version of the LI100. It supports
+	serial port speeds of 9,600 and 19,200 baud. The Factory default is
+	9,600 baud.
 	
 	<li>The Lenz LI101F is Lenz's latest serial port based 
 	computer interface.  It is significantly different than the LI100 and 
@@ -164,23 +167,27 @@ this page
 	speeds of 19,200, 38,400, 57,600, and 115,200 baud.  The factory 
 	default is 19,200 baud.
 	
-	<li>The Lenz LI-USB is Lenz's first USB based computer interface.
+	<li>The Lenz LI-USB (Lenz part number 23150 ) is Lenz's first USB based computer interface.
 	Internally, the device contains a USB to RS232 serial adapter, and 
 	an XPressNet interface circuit similar to that of the LI101F.  
 	Note:  If you are using the XPressNet version 3.6 update in your command station, 
 	you should also update your LI-USB to version 3.6.  There are instructions
-	<a href="http://groups.yahoo.com/group/DigitalPlusbyLenz/message/13501">in this user group message</a> or on <a href="http://www.lenzusa.com/manuals/xpressnet/liusbupdatev36.pdf">the Lenz website</a>.
+	<a href="https://groups.yahoo.com/neo/groups/DigitalPlusbyLenz/conversations/topics/13501">in this user group message</a> 
+	or on <a href="http://www.lenzusa.com/manuals/xpressnet/liusbupdatev36.pdf">the Lenz website</a>.
 	The device is configured via a software tool provided by Lenz which 
-	runs on Windows only.  We have provided a tool that will allow users 
-        of other operating systems to configure their LIUSB as well.  On 
-        Windows, starting with version 2.7.2, JMRI supports interfacing with 
-        the LIUSB through the Lenz LIUSBServer.
-
-        <li>The Lenz LI-USB-Ethernet (Lenz part number 23151) is a revised version of the LIUSB which includes 
-        built in Ethernet adapter.  The USB connection on the device is provided by a Microchip chipset and registers itself as a USB CDC-ACM (Abstract Control Model) device.  For Windows users, Connection via the USB port will be identical to the previous version of the LIUSB.  For Linux users, the device will appear as a /dev/ttyACMx device (where x is replaced with a number.)  For Mac OS X users, the device name will be /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit number)</p>
-
-<p>The protocol used to connect to the device via USB is identical to the prior LIUSB device, so the USB connection is supported by any JMRI version with support for the LIUSB.  When configuring to communicate with the device via USB, be sure that Flow Control is turned off.</p>  
-<p>Connection via the Ethernet connection is available through the LIUSB Ethernet connection type, which was first made available in version 2.13.7.</p>
+	runs on Windows only. JMRI provides a tool that will allow users 
+	of other operating systems to configure their LIUSB as well. On 
+	Windows, starting with version 2.7.2, JMRI supports interfacing with 
+	the LIUSB through the Lenz LIUSB Server.
+	
+	<li>The Lenz LI-USB-Ethernet (Lenz part number 23151) is a revised version of the LIUSB which includes a built-in Ethernet adapter. The USB connection on the device is provided by a
+	Microchip chipset and registers itself as a USB CDC-ACM (Abstract Control Model) device.  
+	For Windows users, connection via the USB port will be identical to the previous 
+	version of the LIUSB.  
+	For Linux users, the device will appear as a /dev/ttyACMx device (where x is replaced with a number).  
+	For Mac OS X users, the device name will be /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit number)<br />
+	The protocol used to connect to the device via USB is identical to the prior LIUSB device, so the USB connection is supported by any JMRI version with support for the LIUSB. When configuring to communicate with the device via USB, be sure that <b>Flow Control is turned off.</b><br />
+	Connection via an Ethernet connection is available through the LIUSB Ethernet connection type, which was first made available in JMRI version 2.13.7.
 	
 	<li>In addition to the Lenz purpose built computer interfaces, we have
 	also included support for using an XPressNet Phone Adapter (XPA) as an
@@ -188,80 +195,72 @@ this page
 	relatively slow, and it only allows controlling mobile and stationary
 	decoders, but it may be perfect for someone who is interested in trying
 	out the control functions of a computer before deciding to go with a
-	full fledged interface. Note that an XPA cannot be used to program 
-        decoders!
-    
-    <li>The ZTC Controls ZTC640 is ZTC's USB interface.  We have had limited 
-    experience with this device, though the current JMRI drivers are 
-    believed to be stable.  Operationally, the device appears to be similar 
-    to the Lenz LIUSB.
-    
-    <li>The Hornby Elite's built-in USB interface can also be used.  
-    Hornby has provided 
-    limited information about how the device works, and currently only 
-    provides a USB driver for Windows, so we are unsure of it's usability
-    with other operating systems.  As with the ZTC640, we have had limited 
-    experience with this device, though the current JMRI drivers are 
-    believed to be stable. <b>NOTE: The first JMRI release supporting the 
-    Hornby Elite USB connection is version 2.1.2</b>
+	full fledged interface. Note that <b>an XPA cannot be used to program 
+	decoders</b>.
 	
-	<li>The 
-	<A HREF="http://www.terdina.net/rails/">XnTcp</a>
+	<li>The ZTC Controls ZTC640 is ZTC's USB interface.  We have had limited 
+	experience with this device, though the current JMRI drivers are 
+	believed to be stable.  Operationally, the device appears to be similar 
+	to the Lenz LIUSB.
+	
+	<li>The Hornby Elite's built-in USB interface can also be used.  
+	Hornby has provided 
+	limited information about how the device works, and currently only 
+	provides a USB driver for Windows, so we are unsure of it's usability
+	with other operating systems.  As with the ZTC640, we have had limited 
+	experience with this device, though the current JMRI drivers are 
+	believed to be stable. <b>Note: The first JMRI release supporting the 
+	Hornby Elite USB connection is version 2.1.2</b>
+	
+	<li>The <a href="http://www.terdina.net/rails/">XnTcp</a>
 	interface allows you to connect to your XPressNet layout 
 	via Ethernet-based networking from the JMRI programs.
-	<b>NOTE: The first JMRI release supporting the 
-    XnTcp adapter is version 2.1.5</b>
+	<b>Note: The first JMRI release supporting the 
+	XnTcp adapter is version 2.1.5</b>
+	
+	<li>Paco Canada's 
+	<a href="http://usuaris.tinet.cat/fmco/lokmaus_en.html#genli">GenLi</a>
+	is a do-it-yourself XPressNet interfaces that emulate an LI100.  There 
+	is also a USB version of this device.  To configure these devices in JMRI,
+	please see the instructions for configuring the Lenz LI100.
+	
+	<li>Paco Canada's 
+	<a href="http://usuaris.tinet.cat/fmco/lokmaus_en.html#genlis88">Gen-LI-S88</a>
+	has the same functionality as a GenLI, plus adds an S88 feedback module. 
+	It can be used to add feedback to an existing XPressNet equipped layout. To 
+	configure this devices in JMRI, please see the instructions for configuring
+	the Lenz LI100.
+	
+	<li> Paco Canada's 
+	<a href="http://usuaris.tinet.cat/fmco/rs_en.html#RS2PC">RS2PC</a> 
+	Interface 
+	allows adding Lenz (and compatible) RS Feedback Bus modules to a system 
+	that does not support the RS Feedback Bus. To configure this devices in 
+	JMRI, please see the instructions for configuring the Lenz LI100.
+	
+	<li>Like Paco Canada's GenLi project, there is an interface called 
+	<a href="http://www.sleutelspoor.nl/technieken/S88XPressNetLI-V0.2.pdf">S88XpressNetLi</a>, 
+	which is designed and built by Karst Drenth and <a href="http://people.zeelandnet.nl/rosoft/">Wim Ros</a>, 
+	and consists of a small print (available as kit or built module) with 2 XPressNet connectors, a
+	serial interface (9600baud at the moment), and a S88 connection (both traditional and S88-N connectors).
+	
+	<li>The OpenDCC project has two interfaces for use with JMRI.  
+	The OpenDCC <a href="http://www.opendcc.de/elektronik/opendcc/opendcc_e.html">Command Station</a> and 
+	the <a href="http://www.opendcc.de/elektronik/gateway/gateway.html">OpenDCC Gateway</a>.  These devices should be configured as LI100F devices with the port speed set to 19,200bps. The OpenDCC Command Station provides feedback via an S88 connection.
+	</ul>
 
-    <li> Paco Canada's 
-    <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genli">GenLi</a>
-    is a do-it-yourself XPressNet interfaces that emulate an LI100.  There 
-    is also a USB version of this device.  To configure these devices in JMRI,
-    please see the instructions for configuring the Lenz LI100.
+<a name="Limitations"><h2>Limitations</h2></a>
 
-    <li> Paco Canada's 
-    <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genlis88">Gen-LI-S88</a>
-    has the same functionality as a GenLI, plus adds an S88 feedback module. 
-    It can be used to add feedback to an existing XPressNet equipped layout. To 
-    configure this devices in JMRI, please see the instructions for configuring
-    the Lenz LI100.
-
-    <li> Paco Canada's 
-    <a href="http://www.tinet.org/~fmco/rs_en.html#RS2PC">RS2PC</a> 
-    Interface 
-    allows adding Lenz (and compatible) RS Feedback Bus modules to a system 
-    that does not support the RS Feedback Bus. To configure this devices in 
-    JMRI, please see the instructions for configuring the Lenz LI100.
-
-    <li>Like Paco Canada's GenLi project, there is an interface called 
-    <a href="http://www.sleutelspoor.nl/technieken/S88XPressNetLI-V0.2.pdf">S88XpressNetLi</a>, 
-    which is designed and built by Karst Drenth and <a href="http://people.zeelandnet.nl/rosoft/">Wim Ros</a>, 
-    and consists of a small print (available as kit or built module) with 2 XPressNet connectors, a
-    serial interface (9600baud at the moment), and a S88 connection (both traditional and S88-N connectors).
-    
-
-    <li> The OpenDCC project has two potential interfaces for use with JMRI.  
-    The OpenDCC <a href="http://www.opendcc.org/elektronik/opendcc/opendcc_hw_sch_e.html">Command Station</a> and 
-    the <a href="http://www.opendcc.org/elektronik/gateway/gateway.html">OpenDCC Gateway</a>.  
-    These interfaces are untested, but should be supported by JMRI.
-
-
-    </ul>
-    
-
-    <P>
-    
-<a name=Limitations>
-<H2>Limitations</H2>
-<div class=list>
-    <dl>
-    	<dt class=left>JMRI</dt>
+<div class="list">
+  <dl>
+  <dt class=left>JMRI</dt>
 	<dd class=first>
 	<p>JMRI supports the current version (XBus/XPressNet Version 3.0).  We
-	may add XBus Version 1.0 and 2.0 support in the future which will allow
+	may add XBus Version 1.0 and 2.0 support in the future, which will allow
 	all XBus based systems to work with JMRI.
 	</dd>
 
-	<dt class=left>Atlas</dt>
+	<dt class="left">Atlas</dt>
 	<dd>
 	<p>The Atlas Commander provides support only for operation of 
 	equipment on a layout (running trains and throwing switches)
@@ -271,23 +270,22 @@ this page
 	<p>If you have an Atlas Commander, and would like to use it 
         to control your layout from the computer, an XPA and Hayes 
         Compatible Modem may be a more cost effective solution than the 
-	LI100,LI100F,LI101F,or LIUSB
-
+	LI100, LI100F, LI101F or LIUSB
 	</dd>
 
-        <dt class = left>Hornby</dt>
-        <dd>
-        <p> We provide support for the Hornby Elite using it's built in USB 
-        connection.  The Elite can be used for operating equipment on a layout 
-        (running trains and throwing switches) and for programming from JMRI.
+	<dt class="left">Hornby</dt>
+	<dd>
+	<p> We provide support for the Hornby Elite using it's built in USB 
+	connection. The Elite can be used for operating equipment on a layout 
+	(running trains and throwing switches) and for programming from JMRI.
+	
+	<p> It is unknown at this point in time if we can control either an
+	Elite or a Select using one of the other interfaces.  Hornby's manuals
+	warn against using their equipment with that of other manufacturers, so
+	we expect some incompatibilities in this area.
+	</dd>
 
-        <p> It is unknown at this point in time if we can control either an
-        Elite or a Select using one of the other interfaces.  Hornby's manuals
-        warn against using their equipment with that of other manufacturers, so         we expect some incompatibilities in this area.
-
-        </dd>
-
-	<dt class=left>Lenz</dt>
+	<dt class="left">Lenz</dt>
 	<dd>
 	<p>We have a pretty good handle on what instructions each Lenz Command
 	station should support. If you find that you cannot perform a function you
@@ -311,7 +309,7 @@ this page
 	<p>If you have either an LH200 or a Compact, and wish to add 
 	computer control to your layout, an XPA and Hayes Compatible 
 	Modem may be a more cost effective solution than the LI100, 
-	LI100F, LI101F, or LIUSB
+	LI100F, LI101F, or LIUSB.
 	
 	<p>The BlackBox is a standalone decoder programmer.
 	It can be connected through an XPressNet interface (such as the
@@ -319,88 +317,86 @@ this page
 	instructions for creating that cable in the LZV100 manual.
 	The BlackBox only does programming, and cannot operate either
 	locomotives or accessory decoders (turnouts) on the layout.
-	
 	</dd>
-	<dt class=left>Roco</dt>
+	
+	<dt class="left">Roco</dt>
 	<dd>
-        <p>NOTE: Roco calls their implementation of XPressNet RocoNet.  
+    <p>Note: Roco calls their XPressNet implementation "RocoNet".  
 
 	<p>The Roco LocoMaus 2 (Roco Part number 10760) has been shown to 
 	support operating equipment on a layout (running trains and throwing 
 	switches) as well as programming locomotives on the programming 
 	track.
-	<p>For programming in service mode, the LocoMaus2 appears to only 
-	be able to write to CVs.
+	<p>For programming in service mode, the LocoMaus 2 appears to only 
+	be able to write to CV's.
 	<p>It is not known at this point in time if the LocoMaus 2 
 	supports Operations Mode Programming.
 
 	<p>The LocoMaus 2 does not support feedback.
 
-        <p>The Roco MultiMaus (Roco Part number 10810) has been shown to 
-        support operating equipment on a layout (running trains and throwing 
-        switches) and programming locomotives in both service and operations 
-        mode.
-
-        <p>The Roco multiZENTRAL-PRO (Roco Part number 10830) is the new 
-        command station for use with Roco's MultiMaus-PRO wireless throttles.  
-        The unit features a built in USB port, but it is unknown at this time 
-        how we can utilize it.
- 
-        <p>The multiZENTRAL-PRO also provides ports for connecting a RocoNet 
-        device (MultiMaus,LocoMaus 2, etc).  These ports can be used to 
-        connect one of the supported XPressNet computer interfaces, but it 
-        is unknown at this point what, if any, limitations exist when using 
-        this connection.
+	<p>The Roco MultiMaus (Roco Part number 10810) has been shown to 
+	support operating equipment on a layout (running trains and throwing 
+	switches) and programming locomotives in both service and operations 
+	mode.
+	
+	<p>The Roco multiZENTRAL-PRO (Roco Part number 10830) is the new 
+	command station for use with Roco's MultiMaus-PRO wireless throttles.  
+	The unit features a built in USB port, but it is unknown at this time 
+	how we can utilize it.
+	
+	<p>The multiZENTRAL-PRO also provides ports for connecting a RocoNet 
+	device (MultiMaus, LocoMaus 2, etc).  These ports can be used to 
+	connect one of the supported XPressNet computer interfaces, but it 
+	is unknown at this point what, if any, limitations exist when using 
+	this connection.
 	</dd>
      
-        <dt class=left>OpenDCC</dt>
-        <dd>
+	<dt class="left">OpenDCC</dt>
+	<dd>
+	<p>The <a href="http://www.opendcc.de/elektronik/opendcc/opendcc_e.html">OpenDCC Command Station</a> should be supported by JMRI through 
+	either the RS232 port or the built in USB port.  
+	
+	<p>This device should be configured as an LI100F device with the port speed set to 19,200 bps.
+	</dd>
+	
+	<dt class="left">Paco Canada</dt>
+	<dd>
+	<p>Paco Canada has two versions of his do-it-yourself Nanox DCC system
+	available, both are compatible with JMRI.
+	
+	<p>The original NanoX DCC system supports operating equipment on a 
+	layout (running trains and throwing switches) and programming 
+	locomotives.
+	
+	<p>The NanoX-S88 adds feedback capabilities to the NanoX system.   
+	This feedback comes through the use of S88 compatible feedback 
+	modules.
+	
+	<p>Paco Canada also provides two methods for adding feedback to 
+	non-feedback equipped systems.  
+	
+	<p>The Gen-LI-S88is an XPressNet interface that includes an S88 
+	feedback module, so it can be used to add feedback to an existing 
+	XPressNet equipped layout.
+	
+	<p>The  RS2PC interface allows adding Lenz (and compatible) RS Feedback 
+	Bus modules to a system that does not support the RS Feedback Bus.  
+	This device does not require an XPressNet connection. 
+	</dd>
+	
+	<dt class="left">Viessmann</dt>
+	<dd>
+	<p> The Viessmann Commander's Low Speed Bus port supports the 
+	XPressNet protocol.  We should be able to use this to connect 
+	using one of the supported XPressNet computer interfaces, but the
+	limitations of this port have not been determined.
+	
+	<p> Viessmann has indicated the Commander's built in USB port can 
+	only be used for updating the firmware and sending data to the 
+	commander, not for operating the device.
+	</dd>
 
-        <p>The OpenDCC Command Station should be supported by JMRI through 
-        either it's RS232 port or it's built in USB port.  
-
-        <p>We have no confirmation at this point in time that anyone has attempted this configuration.
-
-
-        </dd>
- 
-        <dt class=left>Paco Canada</dt>
-        <dd>
-        <p> Paco Canada has two versions of his do-it-yourself Nanox DCC system         available,  both are compatible with JMRI.
-
-        <p> The original NanoX DCC system supports operating equipment on a 
-        layout (running trains and throwing switches) and programming 
-        locomotives.
-
-        <p> The NanoX-S88 adds feedback capabilities to the NanoX system.   
-        This feedback comes through the use of S88 compatible feedback 
-        modules.
-
-        <p> Paco Canada also provides two methods for adding feedback to 
-        non-feedback equipped systems.  
-
-        <p> The Gen-LI-S88is an XPressNet interface that includes an S88 
-        feedback module, so it can be used to add feedback to an existing 
-        XPressNet equipped layout.
-       
-        <p> The  RS2PC interface allows adding Lenz (and compatible) RS Feedback 
-        Bus modules to a system that does not support the RS Feedback Bus.  
-        This device does not require an XPressNet connection. 
-
-        </dd>
-        <dt class=left>Viessmann</dt>
-        <dd>
-        <p> The Viessmann Commander's Low Speed Bus port supports the 
-        XPressNet protocol.  We should be able to use this to connect 
-        using one of the supported XPressnet computer interfaces, but the
-        limitations of this port have not been determined.
-
-        <p> Viessmann has indicated the Commander's built in USB port can 
-        only be used for updating the firmware and sending data to the 
-        commander, not for operating the device.
-        </dd>
-
-	<dt class=left>ZTC</dt>
+	<dt class="left">ZTC</dt>
 	<dd>
 	<p>The ZTC Controls ZTC511 (with Command Station software 
 	version 4.0) has been shown to support operating equipment on a 
@@ -420,24 +416,30 @@ this page
 	<p>If you have either ZTC system and wish to add computer 
     control to your layout, an XPA and Hayes Compatible Modem may 
     be a more cost effective solution than one of the purpose built
-    interfaces.
-       
+    interfaces.       
 	</dd>
-    	<dt class=left>XPA and Hayes Compatible Modem</dt>
+	
+  <dt class="left">XPA and Hayes Compatible Modem</dt>
 	<dd>
 	<p>If you choose to use an XPA and a Hayes Compatible Modem to 
 	control your XPressNet based system, you will be limited to 
 	control of locomotives and accessory decoders.
 	You cannot program decoders from a computer using the XPA,
-	regardless of which system you have.
-	
+	regardless of which system you have.	
 	</dd>
-
-    </dl>
+</dl>
 </div>
 
+<a name="connecting"></a><h2>Connecting</h2>
 
-<H2>Connecting to an XPressNet based DCC System using a Lenz LI100, LI101F, or LI101F</H2>
+<h3>Wiring</h3>
+<p>
+While the Command Stations mentioned on this page support the same commands over the XPressNet
+connection, they do not all use the same hardware connectors.  It may be necessary
+to build an adapter to plug an XPressNet accessory into a Command Station from another
+manufacturer.</p>
+
+<a name="connectLi100"></a><h3>Connecting using a Lenz LI100, LI101F, or LI101F</h3>
 <ol>
     <li>Connect your Lenz LI100, LI100F, or LI101F to your DCC Command
     station via their XPressNet connections.  Then connect the
@@ -467,23 +469,13 @@ this page
     Windows and Linux, and "no" on MacOS 8/9 and Mac OS X.   
     Except when debugging problems, you should leave this at the default.
 
-    <li>The series of radio buttons labeled "GUI style" allows you to
-    select how the program will look.  "Metal" is the native Java look
-    available on all types.  Other choices will vary with your computer
-    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
-
-    <li>In the bottom selection box, you can pick the default
-    programmer format. You can override this each time you open the
-    programmer, so this is here just for convenience.
-
     <li>Click "Save".  You'll be asked if it's OK for the program to
     quit, click "Yes".
 
     <li>Restart the program. You should be up and running.
 </ol>
 
-<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB.</H2>
+<a name="connectLiusb"></a><h3>Connecting using a Lenz LIUSB</h3>
 
 <ol> 
     <li>To connect your computer to one of these XPressNet based DCC
@@ -491,30 +483,37 @@ this page
     to your DCC command station via their XPressNet connections.  Then
     connect the LIUSB to your computer's USB port using the supplied
     cable.
-
-    <li>In order to use the LIUSB with JMRI, you must first install a
-    software driver on your computer.  Internally, the device contains a
-    FTDI FT232BM USB to Serial converter.  There are two drivers available
-    for this device, make sure you obtain the Virtual Comm Port (VCP)
-    driver.
-
-    <P>The device drivers for Windows are included on the CD that
-    comes with the device.
-
-    <p> The device drivers for Linux are included with recent versions of
-    the Linux kernel
-
-    <p> Device drivers for Linux, and MacOS (8,9 and X ) and Windows are
-    available from the <a href="http://www.ftdichip.com/">FTDI  website</a>.
-    (A direct link to the drivers that is current as of this writing is <a 
-    href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>)
-    
-    <P> When the device drivers are installed, and the LIUSB is connected
+    <li>Install the appropriate drivers.
+	    <ul>
+	    <li> For the LIUSB (Lenz part Number 23150) with JMRI, you must first install a
+	    software driver on your computer.  Internally, the device contains a
+	    FTDI FT232BM USB to Serial converter.  There are two drivers available
+	    for this device, make sure you obtain the Virtual Comm Port (VCP)
+	    driver.<br />
+	    The device drivers for Windows are included on the CD that
+	    comes with the device.<br />
+	    The device drivers for Linux are included with recent versions of
+	    the Linux kernel.<br />
+	    Device drivers for Linux, and MacOS (8,9 and X ) and Windows are
+	    available from the <a href="http://www.ftdichip.com/">FTDI  website</a>
+	    (direct link to the drivers current as of this writing: <a 
+	    href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>).
+	    </li>
+	    <li>Fort the LIUSB-Ethernet (Lenz part Number 23151) in USB mode with JMRI, you must first install a
+	    software driver on your computer.  Internally, the device contains a
+	    The USB connection on the device is provided by a Microchip chipset that 
+	    registers itself as a USB CDC-ACM (Abstract Control Model) device.  
+	    Functionally, the device acts like a serial port. The Lenz documentation
+	    indicates the drivers for Windows 7 and MacOS are installed automatically
+	    if the computer is connected to the internet. For Linux, the drivers are
+	    part of the standard kernel distribution.
+	    </li>
+	    </ul>
+    <p> When the device drivers are installed, and the LIUSB is connected
     to both your PC and your DCC system, the LIUSB should have a Red
     LED turned on, indicating the XPressNet connection is OK, and a green 
     LED turned on, indicating the USB connection is OK.
-
-    <P><b>NOTE: If you have installed the Lenz software, make sure none
+    <p><b>NOTE: If you have installed the Lenz software, make sure none
     of it is running.  This includes the LI-Server, which may be running
     in the background.</b>
 
@@ -526,38 +525,31 @@ this page
     <li>Select "Lenz LIUSB" from the top selection box. You can
     then select the proper serial port in the second selection box.
     
-    
     <li>The baud rate selection box should be set to 57,600 baud.
     
-    <li>The fourth box should be left on "hardware flow control"
-    unless you later consistently get a message about the LIUSB control
-    leads being improperly set up, in which case you might want to try to
-    bypass that by selecting "no flow control".
+    <li>The fourth box should be 
+    <ol>
+	    <li>(<b>for the Lenz LIUSB, Lenz Part 23150</b>) left on "hardware flow control"
+	    unless you later consistently get a message about the LIUSB control
+	    leads being improperly set up, in which case you might want to try to
+	    bypass that by selecting "no flow control".</li>
+	    <li>(<b>for  the Lenz LIUSB-Ethernet, Lenz Part 23151</b>) set to "no flow control" (the LIUSB-Ethernet does not support flow control).</li>
+		</ol>
 
-    <li><b>This option has been removed starting in version 2.9.5</b>
-    Check Buffer Status When Sending?  Defaults to "yes" on 
-    Windows and Linux, and "no" on MacOS 8/9 and Mac OS X.   
+    <li><b>This option has been removed starting in JMRI version 2.9.5</b>
+    Check Buffer Status When Sending?  Defaults to "Yes" on 
+    Windows and Linux, and "No" on MacOS 8/9 and Mac OS X.   
     Except when debugging problems, you should leave this at the default.
 
-    <li>The series of radio buttons labeled "GUI style" allows you to
-    select how the program will look.  "Metal" is the native Java look
-    available on all types.  Other choices will vary with your computer
-    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
-
-    <li>In the bottom selection box, you can pick the default
-    programmer format. You can override this each time you open the
-    programmer, so this is here just for convenience.
-
-    <li>Click "Save".  You'll be asked if it's OK for the program to  
+    <li>Click "Save". You'll be asked if it's OK for the program to  
     quit, click "Yes".
 
     <li>Restart the program. You should be up and running.
 </ol>
 
-<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB and the Lenz LIUSB Server. (Windows Only) </H2>
+<a name="connectLiusbServer"></a><h3>Connecting using a Lenz LIUSB and the Lenz LIUSB Server (Windows Only)</h3>
 
-<b>NOTE: The first JMRI release supporting the Lenz LIUSB Server connection is 2.7.2</b> 
+<b>Note: The first JMRI release supporting the Lenz LIUSB Server connection is 2.7.2</b> 
 <ol> 
     <li>To connect your computer to one of these XPressNet based DCC
     systems, you can use a Lenz LIUSB interface unit and the Lenz LIUSB 
@@ -569,12 +561,12 @@ this page
     the Lenz drivers and software.  These are provided on the CD that comes 
     with the LIUSB.  
     
-    <P> When the device drivers are installed, and the LIUSB is connected
+    <p> When the device drivers are installed, and the LIUSB is connected
     to both your PC and your DCC system, the LIUSB should have a Red
     LED turned on, indicating the XPressNet connection is OK, and a green 
     LED turned on, indicating the USB connection is OK.
 
-    <P><b>NOTE: to use the LIUSB server, you MUST install the Lenz software
+    <p><b>NOTE: to use the LIUSB server, you MUST install the Lenz software
     and the LI-Server must be running.</b>
 
     <li>Once the drivers are installed, you are ready to configure
@@ -585,58 +577,52 @@ this page
     <li>Select "Lenz LIUSB Server" from the top selection box. There are no
     additional configuration steps required to use the LI-Server.
     
-    <li>The series of radio buttons labeled "GUI style" allows you to
-    select how the program will look.  "Metal" is the native Java look
-    available on all types.  Other choices will vary with your computer
-    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
-
-    <li>In the bottom selection box, you can pick the default
-    programmer format. You can override this each time you open the
-    programmer, so this is here just for convenience.
-
     <li>Click "Save".  You'll be asked if it's OK for the program to  
     quit, click "Yes".
 
     <li>Restart the program. You should be up and running.
 </ol>
 
-<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB Ethernet (Lenz Part Number 23151) via the Ethernet connection</H2>
+<a name="connectLiusbEthernet"></a><h3>Connecting using a Lenz LIUSB Ethernet (Lenz Part Number 23151) via the Ethernet connection</h3>
 
-<b>NOTE: The first JMRI release supporting the Lenz LIUSB Ethernet connection is 2.13.7</b> 
+<b>Note: The first JMRI release supporting the Lenz LIUSB Ethernet connection was v 2.13.7.</b> 
 <ol> 
     <li>To connect your computer to one of these XPressNet based DCC
-    systems, you can use a Lenz LIUSB Ethernet interface unit in ethernet mode.     Connect the LIUSB to your DCC command station via their XPressNet 
-    connection, then connect the LIUSB Ethernet to your computer Network using i
-    the supplied ethernet cable.
-    
-    <P> When the device is properly connected to the XPressNet, the Red 
-    XPressNet LED will turn on.  
-    <P> When the Ethernet is properly connected, a Green status LED will turn 
-    on.  This LED is located on the ethernet port itself.  drivers are 
-    installed, and the LIUSB is connected
+    systems, you can use a Lenz LIUSB Ethernet interface unit in Ethernet mode.<br>     
+    Connect the LIUSB to your DCC Command Station via their XPressNet 
+    connection, then connect the LIUSB Ethernet to your computer Network using
+    the supplied Ethernet cable.<br>
+    When the device is properly connected to the XPressNet, the Red 
+    XPressNet LED will turn on.<br>
+    When the Ethernet is properly connected, a Green status LED will turn 
+    on. This LED is located on the ethernet port itself. This signals the drivers are 
+    installed, and the LIUSB is connected.</p></li>
 
     <li>Once the device is connected, refer to the device documentation 
-    for information on setting the IP address.  The default IP address 
+    for information on setting the IP address. The default IP address 
     is 192.168.0.200.  Make note of the IP address for use when configuring 
-    the device.
+    the device.  If the IP address is unknown, and your system supports 
+    auto-configuration via the MDNS protocol (also known as Bonjour), you can open a web browser to <a href="http://XPressNet.local./">http://XPressNet.local./</a>.<br> 
+    In the LIUSB-Ethernet Configuration interface, the IP address appears in 
+    the  field circled in the image below:<br>
+		<a href="images/LIUSBEthernetIPAddressField.PNG"><img src="images/LIUSBEthernetIPAddressField.PNG" width="400" height="427" alt="LIUSB-Ethernet Configuration web interface with IP Address circled."></a>
+		</li>
 
     <li>Start one of the JMRI-based programs, Then go to the preferences 
     panel. This opens automatically the first time a program is run, or you 
     can select it from the "Edit" menu.  
 
-    <li>Select "Lenz LIUSB Ethernet" from the top selection box.  Enter
-    the IP address you saved earlier into the box labeld "IP Address".
-    
-    <li>The series of radio buttons labeled "GUI style" allows you to
-    select how the program will look.  "Metal" is the native Java look
-    available on all types.  Other choices will vary with your computer
-    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
-
-    <li>In the bottom selection box, you can pick the default
-    programmer format. You can override this each time you open the
-    programmer, so this is here just for convenience.
+    <li>Select "Lenz LIUSB Ethernet" from the top selection box.  There are two configuration options available for the LIUSB-Ethernet.  You may choose to use Manual configuration (the default) or Automatic configuration:  
+    <ul>
+			<li>To use <strong>Manual configuration</strong>, enter the IP address you saved 
+			earlier into the box labeled "IP Address", as shown in the image below:<br>
+			<a href="images/ConfigurationIPFields.PNG"><img src="images/ConfigurationIPFields.PNG" width="606" height="210" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating the IP address to be copied."></a>
+			</li>
+			<li><strong>Automatic configuration</strong> is optional if you set the IP Address of your LIUSB-Ethernet device to a fixed value.  If you use DHCP to configure the LIUSB-Ethernet's IP address, it is highly recommended that you use Automatic Configuration.<br>
+			To use Automatic Configuration, check the Automatic Configuration checkbox. as shown in the image below:<br>
+			<a href="images/LIUSBEthernetAutoConfigureCheckboxes.PNG"><img src="images/LIUSBEthernetAutoConfigureCheckboxes.PNG" width="595" height="216" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating automatic configuration."></a>
+			</li>
+    </ul></li>
 
     <li>Click "Save".  You'll be asked if it's OK for the program to  
     quit, click "Yes".
@@ -644,33 +630,22 @@ this page
     <li>Restart the program. You should be up and running.
 </ol>
 
-<H2>Connecting to the XPressNet Simulator</H2>
-<b>NOTE: The first JMRI release supporting the Lenz LIUSB Server connection is 2.5.5</b> 
-
+<a name="connectsim"></a><h3>Connecting to the XPressNet Simulator</h3>
 <ol> 
-    <li> Start one of the JMRI-based programs, Then go to the preferences panel.    This opens automatically the first time a program is run, or you can select
+    <li> Start one of the JMRI-based programs, Then go to the preferences panel.    
+    This opens automatically the first time a program is run, or you can select
      it from the "Edit" menu.  
 
     <li>Select "XPressNet Simulator" from the top selection box. There are no
     additional configuration steps required to use the XPressNet Simulator.
     
-    <li>The series of radio buttons labeled "GUI style" allows you to
-    select how the program will look.  "Metal" is the native Java look
-    available on all types.  Other choices will vary with your computer
-    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
-
-    <li>In the bottom selection box, you can pick the default
-    programmer format. You can override this each time you open the
-    programmer, so this is here just for convenience.
-
     <li>Click "Save".  You'll be asked if it's OK for the program to  
     quit, click "Yes".
 
     <li>Restart the program. You should be up and running.
 </ol> 
 
-<H2>Connecting to an XPressNet based DCC System using a ZTC ZTC640.</H2>
+<a name="connectZtc"></a><h3>Connecting using a ZTC ZTC640</h3>
 
 <ol> 
     <li>To connect your computer to one of these XPressNet based DCC
@@ -685,7 +660,7 @@ this page
     for this device, make sure you obtain the Virtual Comm Port (VCP)
     driver.
 
-    <P>The device drivers for Windows are included on the CD that
+    <p>The device drivers for Windows are included on the CD that
     comes with the device.
 
     <p>The device drivers for Linux are included with recent versions of
@@ -693,13 +668,13 @@ this page
 
     <p>Device drivers for Linux, and MacOS (8,9 and X ) and Windows are
     available from the <a href="http://www.ftdichip.com/">FTDI  website</a>.
-    (A direct link to the drivers that is current as of this writing is <a 
+    (direct link to the drivers current as of this writing: <a 
     href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>)
     
-    <P>When the device drivers are installed, and the ZTC640 is connected
+    <p>When the device drivers are installed, and the ZTC640 is connected
     to both your PC and your DCC system, the ZTC640 should have a Red
-    LED turned on, indicating the XPressNet connection is OK, and a green 
-    LED turned on, indicating the USB connection is OK.
+    LED turned on, indicating the XPressNet connection is okay, and a green 
+    LED turned on, indicating the USB connection is okay.
 
     <li>Once the drivers are installed, you are ready to configure
     JMRI.  Start one of the JMRI-based programs, Then go to the
@@ -718,25 +693,15 @@ this page
     Windows and Linux, and "no" on MacOS 8/9 and Mac OS X. 
     Except when debugging problems, you should leave this at the default.
 
-    <li>The series of radio buttons labeled "GUI style" allows you to
-    select how the program will look.  "Metal" is the native Java look
-    available on all types.  Other choices will vary with your computer
-    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
-
-    <li>In the bottom selection box, you can pick the default
-    programmer format. You can override this each time you open the
-    programmer, so this is here just for convenience.
-
-    <li>Click "Save".  You'll be asked if it's OK for the program to  
-    quit, click "Yes".
+    <li>Click "Save".  You'll be asked if it's okay for the program to  
+    quit; click "Yes".
 
     <li>Restart the program. You should be up and running.
 </ol>
 
-<H2>Connecting to an XPressNet using the Hornby Elite's built in USB connection.</H2>
+<a name="connectElite"></a><h3>Connecting using the Hornby Elite's built in USB connection</h3>
 
-<b>NOTE: The first JMRI release supporting the Hornby Elite's built-in 
+<b>Note: The first JMRI release supporting the Hornby Elite's built-in 
 USB connection is 2.1.2</b> 
 
 <ol> 
@@ -747,7 +712,7 @@ USB connection is 2.1.2</b>
     <li>In order to use the Hornby Elite's built in USB port, you must 
     first install a software driver on your computer.  
 
-    <P> The device drivers for Windows are included on the CD that
+    <p> The device drivers for Windows are included on the CD that
     comes with the device and from the <a href="http://www.hornby.com/customer-support/downloads/elite-driver-download-and-installation,110,HAR.html">Hornby Website</a>.
 
     <p>It is unknown at this point if there are device drivers available for
@@ -773,25 +738,15 @@ USB connection is 2.1.2</b>
     Windows and Linux, and "no" on MacOS 8/9 and Mac OS X.   
     Except when debugging problems, you should leave this at the default.
 
-    <li>The series of radio buttons labeled "GUI style" allows you to
-    select how the program will look.  "Metal" is the native Java look
-    available on all types.  Other choices will vary with your computer
-    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
-    on Linux, Windows, MacOS "Classic" and Mac OS X respectively.
-
-    <li>In the bottom selection box, you can pick the default
-    programmer format. You can override this each time you open the
-    programmer, so this is here just for convenience.
-
     <li>Click "Save".  You'll be asked if it's OK for the program to  
     quit, click "Yes".
 
     <li>Restart the program. You should be up and running.
 </ol>
 
-<H2>Connecting to an XPressNet via an XnTcp adapter.</H2>
+<a name="connectXntcp"></a><h3>Connecting via an XnTcp adapter</h3>
 
-<p><b>NOTE: The first JMRI release supporting the 
+<p><b>Note: The first JMRI release supporting the 
 XnTcp adapter is 2.1.5</b> 
 
 More information on the XnTcp adapter can be found on its
@@ -812,8 +767,8 @@ The preferences store the NetBios name of the interface,
 rather than the storing the IP address digits, 
 since the IP address can change due to DHCP addressing.
 
-<H2>Connecting to an XPressNet based DCC System using the XPA and a modem</H2>
-
+<a name="connectXpa"></a><h3>Connecting using the XPA and a modem</h3>
+<p>
    We have developed an alternative method for connecting to an XPressNet based
    system which should prove to be more cost effective on XPressNet based
    systems that do not support programming or feedback via the LI100, LI100F, or
@@ -829,8 +784,8 @@ since the IP address can change due to DHCP addressing.
     modem card or an external serial modem.
 
     <li>Next, Connect the "Phone In" jack on your XPA to the "Wall In" jack 
-	on your modem using the cable supplied with the XPA for connecting a 
-	telephone to the XPA.
+		on your modem using the cable supplied with the XPA for connecting a 
+		telephone to the XPA.
 
     <li>Then go to the preferences panel of a JMRI-based program. This opens
     automatically the first time a program is run, or you can select it from
@@ -842,59 +797,56 @@ since the IP address can change due to DHCP addressing.
     <li>The baud rate selection box should default to 9600 baud. At this point
     in time, this can not be changed.
 
-    <li>The series of radio buttons labeled "GUI style" allows you to select
-    how the program will look. "Metal" is the native Java look available on all
-    types. Other choices will vary with your computer type. "Motif", "Windows",
-    "MacOS" and "MacOS Adaptive" look native on Linux, Windows, MacOS "Classic"
-    and Mac OS X respectively.
-
-    <li>In the bottom selection box, you can pick the default programmer
-    format. You can override this each time you open the programmer, so this is
-    here just for convenience.
-
     <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".
 
     <li>Restart the program. You should be up and running.
 </ol>
 
-<H2>Documentation</H2>
+<a name="tools"></a><h2>JMRI XPressNet Tools</h2>
+<img src="images/XpressNetMenu.png" width="236" height="224" align="right" alt="Menu">
+	<p>The following tools are available from the XPressNet menu when this connection is active (click on the name to read more on each tool):
+		<ul>
+		<li><a href="CreateXNetLogFile.shtml">XPressNet Traffic (Monitor)</a></li>
+		<li><a href="XNetSystemInformationtool.shtml">XPressNet System
+		Information</a> - This tool displays the software version and type of
+		the Command Station and the software version of the LI100/LI100F/LI101F
+		connected to the computer.</li>
+		<li>Send XpressNet Command</li>
+		<li>Command Station Database Manager</li>		
+		<li><a href="LI101Configurationtool.shtml">LI101 Configuration Manager</a> -
+		to configures the LI101 computer interface</li>
+		<li>LIUSB Configuration Manager</li>		
+		<li>LZ100 Configuration Manager</li>
+		<li><a href="LZV100Configurationtool.shtml">LZV100 Configuration Manager</a>
+		- to configure the LZV100 Command and Power Station</li>
+		<li>LV102 Configuration Manager</li>		
+		</ul>
 
-<H3>Off Site Documentation</H3>
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
 	<ul>
-    		<li><a href="http://www.atlasrr.com/dcc/CommanderManual1.pdf">Atlas Commander Manual</a>
-                (pdf file; 363 kb)</li>
-
-    		<li><a href="http://www.atlasrr.com/consisting.htm">Atlas
-        	Commander Consisting Instructions</a> (not included in the above manual)</li>
-
-    		<li><a href="http://www.lenzusa.com/manuals/index.htm">Lenz Product Manuals</a></li>
-
-    		<li><a href="http://www.lenzusa.com/techinfo/index.htm">Lenz XPressNet Documentation</a></li>
+		<li><a href=XNetAddressing.shtml>Lenz Feedback bus Address Names</a> 
+		<li><a href=CreateXNetLogFile.shtml>How To Create an XPressNet Log file</a>
 	</ul>
-<H3>JMRI Documentation</H3>
+
+<h3>Third Party info</h3>
 	<ul>
-    		<li><a href=XNetAddressing.shtml>Lenz Feedback bus Addresses</a> 
-    		<li><a href=CreateXNetLogFile.shtml>How To Create an XPressNet Log file</a>
+		<li><a href="http://www.atlasrr.com/dcc/CommanderManual1.pdf">Atlas Commander Manual</a>
+            (pdf file; 363 kb)</li>
+
+		<li><a href="http://www.atlasrr.com/consisting.htm">Atlas
+    	Commander Consisting Instructions</a> (not included in the above manual)</li>
+
+		<li><a href="http://www.lenzusa.com/manuals/index.htm">Lenz Product Manuals</a></li>
+
+		<li><a href="http://www.lenzusa.com/techinfo/index.htm">Lenz XPressNet Documentation</a></li>
 	</ul>
 
-<h2>XPressNet Specific Tools</h2>
-    The following XPressNet Specific Tools are provided as part of the JMRI
-    package (click on the name for more information) 
-    <ul>
-
-	<li><a href=LZV100Configurationtool.shtml>LZV100 Configuration Tool</a>
-	- This is a tool to configure the LZV100 command and power station via
-	  software
-	<li><a href=LI101Configurationtool.shtml>LI101 Configuration Tool</a> -
-	This tool configures the LI101 computer interface via software
-
-	<li><a href=XNetSystemInformationtool.shtml>XPressNet System
-	Information</a> - This tool obtains the software version and type of
-	the command station and the Software version of the LI100/LI100F/LI101F
-	connected to the computer.
-    </ul>
-
+<h3>Credits</h3>
+<p>Thanks to Paul Bender and others for implementing XPressNet
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -1,15 +1,14 @@
 package jmri.jmrix.can.cbus.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
 
 /**
- * Provides load and store functionality for
- * configuring CbusTurnoutManagers.
+ * Provides load and store functionality for configuring CbusTurnoutManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
  * @version $Revision$
@@ -22,18 +21,19 @@ public class CbusTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
     }
 
     public void setStoreElementClass(Element turnouts) {
-        turnouts.setAttribute("class",this.getClass().getName());
+        turnouts.setAttribute("class", this.getClass().getName());
     }
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManagerXml.class.getName());
 
 }

@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Python.shtml,v 1.2 2008/06/12 15:04:15 jacobsen Exp $ -->
- <!-- Translated  by Blorec Hervé le 2011-09-27-->
+<!-- $Id$ -->
+ <!-- UpDated  by Blorec Herv&#233; 2013-09-26-->
 <title>JMRI: The Python/Jython language</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -25,47 +25,47 @@
 <H2>
 JMRI: Le langage Python/Jython</H2>
 
-<A HREF="http://www.python.org">Python</a> est un langage de script couramment utilisé qui est
-disponible sur de nombreux types d'ordinateurs. Une variante basée sur Java, appelé
+<A HREF="http://www.python.org">Python</a> est un langage de script couramment utilis&#233; qui est
+disponible sur de nombreux types d'ordinateurs. Une variante bas&#233;e sur Java, appel&#233;
 <A HREF="http://www.jython.org"> Jython </a>,
-a été intégré avec JMRI pour rendre facile le contrôle d'un chemin de fer miniature
-à partir de la ligne de commande d'un ordinateur. Pour nos besoins, les deux
-langages sont entièrement identiques.
+a &#233;t&#233; int&#233;gr&#233; avec JMRI pour rendre facile le contr&#244;le d'un chemin de fer miniature
+&#224; partir de la ligne de commande d'un ordinateur. Pour nos besoins, les deux
+langages sont enti&#232;rement identiques.
 
 <P>
-Si comme moi vous préférez lire le papier,
-il ya beaucoup de livres disponibles sur Python.
-Peut-être l'un des meilleurs pour les débutants est
+Si comme moi vous pr&#233;f&#233;rez lire le papier,
+il y a beaucoup de livres disponibles sur Python.
+Peut-&#234;tre l'un des meilleurs pour les d&#233;butants est
 <A HREF="http://www.oreilly.com/catalog/lpython2/"> "Learning Python" </a>
-publié par O'Reilly. Il contient plus que ce que que vous devez vraiment savoir, cependant.
+publi&#233; par O'Reilly. Il contient plus que ce que que vous devez vraiment savoir, cependant.
 
 
 <p>Le
 <A HREF="http://www.jython.org"> site jython.org  </a>
-a quelques informations d'introduction, même si leur
-<A HREF="http://www.python.org/doc/tut/tut.html"> tutoriel </A> (lien cassé le 19/01/2012)
-passe trop de temps sur les détails d'ingénierie
-au début. Vous pouvez sauter à la
-partie<a  href="http://www.python.org/doc/tut/node5.html"> sur la langue elle-même </a>.(lien cassé le 19/01/2012)
+a quelques informations d'introduction, m&#234;me si leur
+<A HREF="http://www.python.org/doc/tut/tut.html"> tutoriel </A> (lien cass&#233; le 19/01/2012)
+passe trop de temps sur les d&#233;tails d'ing&#233;nierie
+au d&#233;but. Vous pouvez sauter &#224; la
+partie<a  href="http://www.python.org/doc/tut/node5.html"> sur la langue elle-m&#234;me </a>.(lien cass&#233; le 19/01/2012)
 
 <P>
 Les non-programmeurs pourraient vouloir commencer avec quelques-unes des
- ressources répertoriées  <A HREF="http://www.python.org/moin/BeginnersGuide"> pour eux </a>
+ ressources r&#233;pertori&#233;es  <A HREF="http://www.python.org/moin/BeginnersGuide"> pour eux </a>
 sur le site de python.
 
-<p> Si vous êtes intéressés par les
+<p> Si vous &#234;tes int&#233;ress&#233;s par les
 techniques sous-jacentes du langage,
 IBM developerWorks a deux bons articles
 <A HREF="http://www-106.ibm.com/developerworks/java/library/j-jython.html"> ici </a>
 et
 <A HREF="http://www-106.ibm.com/developerworks/java/library/j-alj07064/"> ici </a>.
-Ils ont aussi un tutoriel intéressant
-<A HREF="http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02"> ici </a>, même si vous avez besoin de vous
-enregistrer avec votre adresse email pour y accéder.
+Ils ont aussi un tutoriel int&#233;ressant
+<A HREF="http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02"> ici </a>, m&#234;me si vous avez besoin de vous
+enregistrer avec votre adresse email pour y acc&#233;der.
 </p>
 
 <P>
-Regarder les exemples du répertoire "jython« de la distribution JMRI
+Regarder les exemples du r&#233;pertoire "jython" de la distribution JMRI
 pourrait aussi vous aider.
 
 
@@ -73,10 +73,10 @@ pourrait aussi vous aider.
 
 La seule chose la plus bizarre sur Python est l'indentation des questions.
 
-Au lieu d'utiliser les caractères {et} pour indiquer le début et la
-fin d'un bloc ou une fonction, c'est fait avec l'indentation en Python.
-Bien sûr, dans un C-comme le langage populaire en général l'indentation est faite n'importe où,
-mais il faut un peu d'habitude que vous <em> arriviez </em> à le faire
+Au lieu d'utiliser les caract&#232;res {et} pour indiquer le d&#233;but et la
+fin d'un bloc ou d'une fonction, c'est fait avec l'indentation en Python.
+Bien s&#251;r,comme dans un C le langage populaire en g&#233;n&#233;ral l'indentation est faite n'importe o&#249;,
+mais il faut un peu d'habitude pour que vous <em>arriviez</em> &#224; le faire
 en Python.
   
 
@@ -89,11 +89,11 @@ Par exemple, cela est une erreur de syntaxe:
     b = 21
    
 </pre>
-parce que ces déclarations, bien que logiquement regroupés au même niveau dans le programme,
-ne sont pas indentées de la même manière. Cela sonne comme une douleur au début,
- mais vous vous habituerez rapidement à elle. Ensuite, il rend les choses comme suit
-assez facile à lire, sans avoir à s'inquiéter de savoir où l'{et
-} Aller:
+parce que ces d&#233;clarations, bien que logiquement regroup&#233;s au m&#234;me niveau dans le programme,
+ne sont pas indent&#233;es de la m&#234;me mani&#232;re. Cela sonne comme une douleur au d&#233;but,
+ mais vous vous habituerez rapidement &#224; elle. Ensuite, il rend les choses comme suit
+assez facile &#224; lire, sans avoir &#224; s'inqui&#233;ter de savoir o&#249; l'{et
+}aller:
 
 <pre>
          if now == -1):
@@ -102,8 +102,8 @@ assez facile à lire, sans avoir à s'inquiéter de savoir où l'{et
                  done = 0
          print done
   </PRE>
-Si vous obtenez un message à propos de "Syntax error", regardez le numéro de la ligne indiquée
- pour voir si votre indentation n'est pas alignée.
+Si vous obtenez un message &#224; propos de "Syntax error", regardez le num&#233;ro de la ligne indiqu&#233;e
+ pour voir si votre indentation n'est pas align&#233;e.
 <!--#include virtual="/Footer" -->
 </body>
 </html>

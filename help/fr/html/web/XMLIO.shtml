@@ -1,9 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2012-01-23-->
+<!-- Translated by Blorec Herv&#233; le 2012-01-23-->
 <html lang="fr">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: XMLIO.shtml,v 1.8 2011/04/28 02:00:00 mstevetodd Exp $ -->
+<!-- $Id: XMLIO.shtml 21598 2012-11-07 19:44:52Z mstevetodd  -->
+<!-- Translated by Herv&#233; Blorec 2013-10-08 -->
 <title>JMRI: XML IO Servlet</title>
 
 <!-- Style -->
@@ -25,172 +26,206 @@
 JMRI: XML IO Servlet
 </H1>
 
-Le servlet JMRI XML fournit un accès Web aux services JMRI.
+Le servlet JMRI XML fournit un acc&#232;s Web bi-directionnel aux services JMRI.
 
 <p>
-La vie servlet dans le paquet 
+Le servlet vit dans le paquet 
 <A href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">jmri.web.servlet.xmlio</a>
-, et fournit un accès Web au
+, et fournit un acc&#232;s Web au
 <a href="http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html"> JMRI XML IO paquet</a>.
-Par défaut, le mini serveur JMRI enverra tout URL qui commence par/xmlio à ce servlet.
-
-<p>
-Il y a plusieurs exemples de pages qui montrent comment cela peut être utilisé:
+Par d&#233;faut, le serveur web JMRI enverra tout URL qui commence par/xmlio &#224; ce servlet. Il liste tous les
+&#233;l&#233;ments connus d'un type sp&#233;cifi&#233;, accepte des changements de la valeur/&#233;tat ​​des &#233;l&#233;ments, et r&#233;pond avec
+valeur actuelle/&#233;tat ​​des &#233;l&#233;ments. Si envoy&#233; une liste d'&#233;l&#233;ments avec des valeurs actuelles, il "surveillera" les changements
+de tous ces &#233;l&#233;ments, retournant les valeurs nouvelles. </p>
+El&#233;ment types compl&#232;ments support&#233;s :<ul>
+<li>alimentation</li>
+<li>aiguillage</li>
+<li>capteurr</li>
+<li>t&#234;te signal</li>
+<li>m&#226;t signal</li>
+<li>m&#233;moire</li>
+<li>itin&#233;raire</li>
+</ul>
+Les types d'&#233;l&#233;ments de liste seule:<ul>
+<li>Liste</li>
+<li>trame</li>
+<li>panneau</li>
+<li>m&#233;tadata</li>
+<li>Chemin de fer</li>
+</ul>
+Le R&#233;gulateur est un cas unique, la syntaxe l&#233;g&#232;rement diff&#233;rente, soutient la lecture et les modifications, mais pas la liste ou la surveillance: <ul>
+<li>R&#233;gulateur</li>
+</ul>
+Il y a plusieurs exemples de pages qui montrent comment cela peut &#234;tre utilis&#233;:
 <dl>
 <dt> <a href="http://localhost:12080/web/request.html"> web/request.html</a>
-<dd> Rend une seule requête XML pour tous les capteurs disponibles, et montre leur statut dans un tableau.
+<dd> Rend une seule requ&#234;te XML pour tous les capteurs disponibles, et montre leur statut dans un tableau.
 <dt> <a href="http://localhost:12080/web/monitor.html"> web/monitor.html</a>
-<dd> utilise les requêtes retardées pour surveiller l'état de tous les capteurs,
-la mise à jour d'une table lors de tout changement.
+<dd> utilise les requ&#234;tes temporis&#233;es pour surveiller l'&#233;tat de tous les capteurs,
+la mise &#224; jour d'une table lors de tout changement.
 <dt> <a href="http://localhost:12080/web/throttle.html"> web/throttle.html</a>
-<dd> Envoie une commande de vitesse pour une locomotive DCC sur le réseau quand une touche est enfoncée.
+<dd> Envoie une commande de vitesse pour une locomotive DCC sur le r&#233;seau quand une touche est enfonc&#233;e.
 <dt> <a href="http://localhost:12080/web/turnoutPanel.html"> web/turnoutPanel.html</a>
-Exemple <dd> d'un panneau de contrôle sur une page web. Pour l'utiliser, configurer JMRI pour utiliser
-"Simulateur LocoNet" (si vous n'avez pas une connexion LocoNet déjà, en JMRI
-2.9.7 ou plus tard, la démonstration utilise  des dispositifs "interne" et ce n'est pas nécessaire)
-et de créer des aiguillages 1 à 4.
+<dd> Exemple d'un panneau de commande sur une page web. 
 <dt> <a href="http://localhost:12080/web/turnoutPanel.html"> web/turnoutMonitor.html</a>
-<dd> Table Aiguillage plus complexes, avec des boutons pour dévié et mettre direct un aiguillage.
+<dd> Table Aiguillage plus complexes, avec des boutons pour mettre un aiguillage d&#233;vi&#233; ou droit.
+<dt> <a href="http://localhost:12080/web/JMRI_XMLIO_test.html"> web/JMRI_XMLIO_test.html </a>
+<dd> Utile pour envoyer plusieurs commandes au serveur xmlio et voir les r&#233;ponses.
+<dt> <a href = "http://localhost:12080/web/JMRIMobile. html "> web / JMRIMobile.html </a>
+<dd> Utile le serveur xmlio pour r&#233;cup&#233;rer des donn&#233;es &#224; partir de JMRI, l'envoi et le suivi des changements des modificationsdes &#233;l&#233;ments.
 </Dl>
 
 <p>
-S'il vous plaît noter que ce servlet a seulement été utilisé avec
+S'il vous pla&#238;t noter que ce servlet a seulement &#233;t&#233; utilis&#233; avec
 le
-<a href="MiniServer.shtml"> mini-serveur JMRI</a>, et peut
-ne pas fonctionner avec d'autres conteneurs de servlets. Nous nous sommes engagés à
+<a href="index.shtml">Serveur Web JMRI</a>, et peut
+ne pas fonctionner avec d'autres conteneurs de servlets. Nous nous sommes engag&#233;s &#224;
 le faire fonctionner, cependant, entrer en contact avec
-les développeurs JMRI si vous rencontrez des problèmes.
+les d&#233;veloppeurs JMRI si vous rencontrez des probl&#232;mes.
 
 <h2>Format Demande </h2>
 
-Le schéma XML est défini dans le
-<a href="http://jmri.org/xml/schema/xmlio.xsd"> document schéma xmlio.xsd </a>.
-
-<p> Voici quelques exemple des demandes et réponses.
+Le sch&#233;ma XML est d&#233;fini dans le
+<a href="http://jmri.org/xml/schema/xmlio.xsd"> document sch&#233;ma xmlio.xsd </a>.
+<p> Il ya aussi une syntaxe bas&#233;e sur les attributs disponibles. (voir les exemples de l'&#233;tat ci-dessous) Le serveur xmlio r&#233;pond avec la m&#234;me syntaxe que celle qu'utilise la demande. </p>
+<p> Voici quelques exemple des demandes et r&#233;ponses.
 
 <h3> Obtenir le statut des objets individuels</h3>
 
 Demande:
 
-<code> <pre>
-<xmlio>
-  <item>
-    <type> aiguillage</type>
-    <name> IT12</name>
- </Item>
-  <item>
-    Capteur <type></type>
-    <name> capteur Ouest</name>
- </Item>
-  <item>
-    <type> puissance</type>
-    <name> puissance</name>
- </Item>
-</Xmlio>
-</Pre></code>
 
-Réponse:
-<code> <pre>
-<xmlio>
-  <item>
-    <type> aiguillage</type>
-    <name> IT12</name>
-    <value> 2</value>
- </Item>
-  <item>
-    Capteur <type></type>
-    <name> capteur Ouest</name>
-    <value> 4</value>
- </Item>
-  <item>
-    <type> puissance</type>
-    <name> puissance</name>
-    <value> 2</value>
- </Item>
-</Xmlio>
-</Pre></code>
+<code><pre>
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;turnout&lt;/type&gt;
+    &lt;name&gt;IT12&lt;/name&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;West sensor&lt;/name&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;power&lt;/type&gt;
+    &lt;name&gt;power&lt;/name&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre></code>
 
-La "valeur" élément est insérée dans la demande, et puis est
-retournée comme réponse. Vous pouvez simplement tourner autour de la réponse et l'utiliser
-comme une autre demande. Si la "valeur" des éléments sont présents pour tous les articles,
-la réponse ne sera restituée que lorsque l'un ou plusieurs des 
-état de l'élément inclus a changé pour quelque chose de différent.
+<code><pre>
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;turnout&lt;/type&gt;
+    &lt;name&gt;IT12&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;West sensor&lt;/name&gt;
+    &lt;value&gt;4&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;power&lt;/type&gt;
+    &lt;name&gt;power&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre></code>
+
+La "valeur" &#233;l&#233;ment est ins&#233;r&#233;e dans la demande, et puis est
+retourn&#233;e comme r&#233;ponse. Vous pouvez simplement tourner autour de la r&#233;ponse et l'utiliser
+comme une autre demande. Si la "valeur" &#233;l&#233;ments est pr&#233;sente pour tous les articles,
+la r&#233;ponse ne sera restitu&#233;e que lorsque l'un ou plusieurs des 
+&#233;tat de l'&#233;l&#233;ment inclus a chang&#233; pour quelque chose de diff&#233;rent.
 
 <h3> Obtenez tous les objets d'un type</h3>
 
-<code> <pre>
-<xmlio>
-  <list>
-   <type>Capteur</type>
- </List>
-</Xmlio>
+Demande:
+
+<code><pre>
+&lt;xmlio&gt;
+  &lt;list&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+  &lt;/list&gt;
+&lt;/xmlio&gt;
+</pre></code>
+
+R&#233;ponse:
+<code><pre>
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;IS1&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;IS2&lt;/name&gt;
+    &lt;value&gt;4&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;West sensor&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre></code>
 </Pre></code>
 
-Réponse:
-<code> <pre>
-<xmlio>
-  <item>
-   <type> Capteur </type>
-    <name> IS1</name>
-    <value> 2</value>
- </Item>
-  <item>
-    Capteur <type></type>
-    <name> IS2</name>
-    <value> 4</value>
- </Item>
-  <item>
-    <type>Capteur </type>
-    <name> capteur Ouest</name>
-    <value> 2</value>
- </Item>
-</Xmlio>
-</Pre></code>
+La r&#233;ponse peut &#234;tre retourn&#233;e et utilis&#233;e comme la prochaine requ&#234;te.
 
-La réponse peut être retournée et utilisée comme la prochaine requête.
-
-<h3> Régler le statut d'un objet</h3>
+<h3> R&#233;gler le statut d'un objet</h3>
 
 Demande:
 
-<code> <pre>
-<xmlio>
-  <item>
-    <type> aiguillage</type>
-    <name> IT12</name>
-    <set> 2</set>
- </Item>
-</Xmlio>
-</Pre></code>
+<code><pre>
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;turnout&lt;/type&gt;
+    &lt;name&gt;IT12&lt;/name&gt;
+    &lt;set&gt;2&lt;/set&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre></code>
 
-Réponse:
-<code> <pre>
-<xmlio>
-  <item>
-    <type>aiguillage</type>
-    <name> IT12</name>
-    <value> 2</value>
- </Item>
-</Xmlio>
-</Pre></code>
+R&#233;ponse:
+<code><pre>
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;turnout&lt;/type&gt;
+    &lt;name&gt;IT12&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre></code>
 
-L'élément "set" de la demande résulte de l'état
-étant fixé à la valeur donnée, et puis 'est
-retournée dans la réponse comme un élément de valeur avec la
-valeur correcte à ce point.
+L'&#233;l&#233;ment "set" de la demande r&#233;sulte de l'&#233;tat
+ fix&#233; &#224; la valeur donn&#233;e, et puis est
+retourn&#233;e dans la r&#233;ponse comme un &#233;l&#233;ment de valeur avec la
+valeur correcte &#224; ce point.
 
 <p>
-Toutes les écritures sont faites avant que les valeurs soient recueillies pour tout lecture,
-mais il n'y a aucune garantie que les conséquences de l'écrit
-soientt propagées complètement.
+Toutes les &#233;critures sont faites avant que les valeurs soient recueillies pour toute lecture,
+mais il n'y a aucune garantie que les cons&#233;quences de l'&#233;crit
+soient propag&#233;es compl&#232;tement.
 
-<h3>Contrôle un régulateur</h3>
+<h3> D&#233;finir le statut d'un objet (syntaxe bas&#233;e sur les attributs) </h3>
 
-Un élément <throttle>
-peut être utilisé pour contrôler un régulateur via le
-ThrottleManager DCC par défaut. La première utilisation
-alloue l'accélérateur, et tous les postérieurs utilisent
- les attributs présents:
+<h3>Contr&#244;le un r&#233;gulateur</h3>
+Demande:
+<code><pre>
+&lt;turnout name="IT12" set="2" /&gt;
+</pre></code>
+R&#233;ponse:
+<code><pre>
+&lt;turnout name="IT12" value="2" /&gt;
+</pre></code>
+
+Un &#233;l&#233;ment <throttle>
+peut &#234;tre utilis&#233; pour contr&#244;ler un r&#233;gulateur via le
+ThrottleManager DCC par d&#233;faut. La premi&#232;re utilisation
+alloue le r&#233;gulateur, et tous les post&#233;rieurs utilisent
+ les attributs pr&#233;sents:
 
 <code> <pre>
 <xmlio>
@@ -199,24 +234,24 @@ alloue l'accélérateur, et tous les postérieurs utilisent
         <vitesse> 0,75</vitesse>
         <forward> true</forward>
         <F3> False</F3>
-   </Gaz>
+   </throttle>
 </Xmlio>
 
 </Pre></code>
 
-Un élément régulateur est retourné inchangée.
+Un &#233;l&#233;ment r&#233;gulateur est retourn&#233; inchang&#233;.
 
-<h2> Documents associés</h2>
+<h2>Documents associ&#233;s</h2>
 
 C.F. K H Wolf, K Froitzheim, M Weber,
-Département des Systèmes Distribués, Université d'Ulm,
-«La vidéo interactive et contrôle à distance via le World Wide Web»,
+Department of Distributed Systems, Universit&#233; d'Ulm,
+"Interactive Video and Remote Control via the World Wide Web",
 dans "Lecture Notes in Computer Science", Springer, Berlin, 1996.
 <br>
-Auparavant dans le volume 7, numéro 5 de "Märklin Digital Newsletter",
+Auparavant dans le volume 7, num&#233;ro 5 de "Märklin Digital Newsletter",
 Dr T Catherall Ed, Septembre/Octobre 1995,
-<a Page href="http://web.archive.org/web/*/http://rr-vs.informatik.uni-ulm.de/rr/">  référencé</a>
-<a href="http://rr.informatik.tu-freiberg.de/index.php?con=home&sel=&lang=eng&js=1&"> rehosted</a>.
+<a  href="http://web.archive.org/web/*/http://rr-vs.informatik.uni-ulm.de/rr/"> Page r&#233;f&#233;renc&#233;e</a>
+<a href="http://rr.informatik.tu-freiberg.de/index.php?con=home&sel=&lang=eng&js=1&"> r&#233;h&#233;berg&#233;e</a>.
 
 
 <!--#include virtual="/Footer" -->

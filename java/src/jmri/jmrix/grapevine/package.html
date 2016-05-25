@@ -1,48 +1,48 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        This package handles communications for the ProTrak Grapevine hardware.
+        <P>
+            Note that the zero Grapevine address is used for error
+            messages, and does not correspond to a node.  The nodes
+            have addresses 1 through 127. These are mapped to e.g. GT1 through GT126001
+            for their first outputs.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <h2>TODO</h2>
+        <ul>
+            <li>SerialLight needs to be updated to work; see SerialTurnout for communications
+            <li>Add a tool to check for existing nodes by requesting software version
+            <li>Add a tool to change a node address?
+            <li>Automatically create a SerialNode if a message from an unknown address arrives?
+            <li>Update the node type based on info received in response to software version message
+            <li>Error handling/reporting - start by capturing address 0 messages
+            <li>setOutputBit() should be removed (in SerialLight, among other places)
+        </ul>
+        <h2>Related Documentation</h2>
 
-  Copyright 2003
+        Other sources of documentation
+        <ul>
+            <li><a href="http://www.protrak.cc">ProTrak web site</a>
+        </ul>
 
--->
-</head>
-<body bgcolor="white">
+        <!-- Put @see and @since tags down here. -->
+        <!-- @see jmri.InstanceManager -->
+        <!-- @since 1.7.3 -->
 
-This package handles communications for the ProTrak Grapevine hardware.
-<P>
-Note that the zero Grapevine address is used for error
-messages, and does not correspond to a node.  The nodes
-have addresses 1 through 127. These are mapped to e.g. GT1 through GT126001
-for their first outputs.
+        @since 2.1.1
 
-<h2>TODO</h2>
-<ul>
-<li>SerialLight needs to be updated to work; see SerialTurnout for communications
-<li>Add a tool to check for existing nodes by requesting software version
-<li>Add a tool to change a node address?
-<li>Automatically create a SerialNode if a message from an unknown address arrives?
-<li>Update the node type based on info received in response to software version message
-<li>Error handling/reporting - start by capturing address 0 messages
-<li>setOutputBit() should be removed (in SerialLight, among other places)
-</ul>
-<h2>Related Documentation</h2>
-
-Other sources of documentation
-<ul>
-  <li><a href="http://www.protrak.cc">ProTrak web site</a>
-</ul>
-
-<!-- Put @see and @since tags down here. -->
-<!-- @see jmri.InstanceManager -->
-<!-- @since 1.7.3 -->
-
-@since 2.1.1
-
-</body>
+    </body>
 </html>

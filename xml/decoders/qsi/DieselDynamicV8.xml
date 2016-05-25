@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,11 +12,11 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file for QSi V8 files -->
 <!-- Diesel dynamic brake selections -->
-<ienumVal>
-  <ienumChoice choice="Native Dynamic Brake" value="1"/>
-  <ienumChoice choice="Dynamic 1"/>
-  <ienumChoice choice="Baldwin Dynamics"/>
-  <ienumChoice choice="Dynamic 2"/>
-  <ienumChoice choice="EMD E9 Dynamics"/>
-  <ienumChoice choice="GE Dynamics"/>
-</ienumVal>
+<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Native Dynamic Brake" value="1"/>
+  <enumChoice choice="Dynamic 1"/>
+  <enumChoice choice="Baldwin Dynamics"/>
+  <enumChoice choice="Dynamic 2"/>
+  <enumChoice choice="EMD E9 Dynamics"/>
+  <enumChoice choice="GE Dynamics"/>
+</enumVal>

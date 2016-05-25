@@ -1,5 +1,3 @@
-// DataSourceTest.java
-
 package jmri.jmrix.pricom.pockettester;
 
 import junit.framework.Assert;
@@ -9,8 +7,9 @@ import junit.framework.TestSuite;
 
 /**
  * JUnit tests for the DataSource class
- * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2005
+ * @version	$Revision$
  */
 public class DataSourceTest extends TestCase {
 
@@ -21,7 +20,6 @@ public class DataSourceTest extends TestCase {
         d.initComponents();
         Assert.assertTrue("valid instance after init", DataSource.instance() != null);
     }
-
 
     // test version handling
     public void testVersion() {
@@ -39,8 +37,10 @@ public class DataSourceTest extends TestCase {
     }
 
     // avoid spurious error messages
-    void setup() { DataSource.existingInstance = null; }
-    
+    void setup() {
+        DataSource.existingInstance = null;
+    }
+
     // from here down is testing infrastructure
     public DataSourceTest(String s) {
         super(s);
@@ -59,4 +59,3 @@ public class DataSourceTest extends TestCase {
     }
 
 }
-

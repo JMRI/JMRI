@@ -1,5 +1,4 @@
 // SpeedoReply.java
-
 package jmri.jmrix.bachrus;
 
 import org.slf4j.Logger;
@@ -8,33 +7,36 @@ import org.slf4j.LoggerFactory;
 /**
  * SpeedoReply.java
  *
- * Description:		Carries the reply to an SprogMessage
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @author			Andrew Crosland  Copyright (C) 2010
- * @version			$Revision$
+ * Description:	Carries the reply to an SprogMessage
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @author	Andrew Crosland Copyright (C) 2010
+ * @version	$Revision$
  */
 public class SpeedoReply {
 	// This should be an extension af AbstractMRReply and needs re-factoring
 
-	// create a new one
-	public  SpeedoReply() {
-          unsolicited = false;
-	}
+    // create a new one
+    public SpeedoReply() {
+        unsolicited = false;
+    }
 
-	// copy one
-	@SuppressWarnings("null")
-	public  SpeedoReply(SpeedoReply m) {
-          this();
-		if (m == null) {
-			log.error("copy ctor of null message");
-		    return;
-		}
-		_nDataChars = m._nDataChars;
+    // copy one
+    @SuppressWarnings("null")
+    public SpeedoReply(SpeedoReply m) {
+        this();
+        if (m == null) {
+            log.error("copy ctor of null message");
+            return;
+        }
+        _nDataChars = m._nDataChars;
         unsolicited = m.unsolicited;
-		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
-	}
+        for (int i = 0; i < _nDataChars; i++) {
+            _dataChars[i] = m._dataChars[i];
+        }
+    }
 
-	// from String
+    // from String
     public SpeedoReply(String s) {
         this();
         _nDataChars = s.length();
@@ -43,8 +45,13 @@ public class SpeedoReply {
         }
     }
 
-	public void setOpCode(int i) { _dataChars[0]= (char)i;}
-	public int getOpCode() {return _dataChars[0];}
+    public void setOpCode(int i) {
+        _dataChars[0] = (char) i;
+    }
+
+    public int getOpCode() {
+        return _dataChars[0];
+    }
 
     public final void setUnsolicited() {
         unsolicited = true;
@@ -54,31 +61,39 @@ public class SpeedoReply {
         return unsolicited;
     }
 
-	// accessors to the bulk data
-	public int getNumDataElements() {return _nDataChars;}
-	public int getElement(int n) {return _dataChars[n];}
-	public void setElement(int n, int v) {
-		_dataChars[n] = (char) v;
-		_nDataChars = Math.max(_nDataChars, n+1);
-	}
+    // accessors to the bulk data
+    public int getNumDataElements() {
+        return _nDataChars;
+    }
+
+    public int getElement(int n) {
+        return _dataChars[n];
+    }
+
+    public void setElement(int n, int v) {
+        _dataChars[n] = (char) v;
+        _nDataChars = Math.max(_nDataChars, n + 1);
+    }
 
     public int getCount() {
         // don't return 0 as it will cause an exception
-        if (_nDataChars < 9) { return -1; }
+        if (_nDataChars < 9) {
+            return -1;
+        }
         try {
             return Integer.valueOf(this.toString().substring(2, 8), 16);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             return 0;
         }
     }
 
     public int getSeries() {
-        if (_nDataChars < 7) { return 0; }
+        if (_nDataChars < 7) {
+            return 0;
+        }
         try {
             return Integer.valueOf(this.toString().substring(1, 2));
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             return 0;
         }
     }
@@ -105,8 +120,8 @@ public class SpeedoReply {
 
     int skipWhiteSpace(int index) {
         // start at index, passing any whitespace & control characters at the start of the buffer
-        while (index < getNumDataElements() - 1 &&
-                ((char) getElement(index) <= ' ')) {
+        while (index < getNumDataElements() - 1
+                && ((char) getElement(index) <= ' ')) {
             index++;
         }
         return index;
@@ -118,7 +133,7 @@ public class SpeedoReply {
     private int _nDataChars;
     private char _dataChars[] = new char[maxSize];
     private boolean unsolicited;
-    static Logger log = LoggerFactory.getLogger(SpeedoReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class.getName());
 }
 
 /* @(#)SpeedoReply.java */

@@ -1,26 +1,30 @@
 // HexFileFrame.java
-
 package jmri.jmrix.loconet.hexfile;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.*;
-import jmri.util.JmriJFrame;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import jmri.jmrix.loconet.LnCommandStationType;
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Frame to inject LocoNet messages from a hex file
- * This is a sample frame that drives a test App.  It controls reading from
- * a .hex file, feeding the information to a LocoMonFrame (monitor) and
- * connecting to a LocoGenFrame (for sending a few commands).
- * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision$
+ * Frame to inject LocoNet messages from a hex file This is a sample frame that
+ * drives a test App. It controls reading from a .hex file, feeding the
+ * information to a LocoMonFrame (monitor) and connecting to a LocoGenFrame (for
+ * sending a few commands).
+ *
+ * @author	Bob Jacobsen Copyright 2001, 2002
+ * @version $Revision$
  */
 public class HexFileFrame extends JmriJFrame {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -2625562807572301674L;
     // member declarations
     javax.swing.JButton openHexFileButton = new javax.swing.JButton();
     javax.swing.JButton filePauseButton = new javax.swing.JButton();
@@ -29,18 +33,16 @@ public class HexFileFrame extends JmriJFrame {
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 
     // to find and remember the log file
-    final javax.swing.JFileChooser inputFileChooser = 
-            jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
+    final javax.swing.JFileChooser inputFileChooser
+            = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
 
     public HexFileFrame() {
         super();
-        //adaptermemo = new LocoNetSystemConnectionMemo();
     }
-    
-    //LocoNetSystemConnectionMemo adaptermemo = null;
 
+    //LocoNetSystemConnectionMemo adaptermemo = null;
     public void initComponents() throws Exception {
-        if (port==null){
+        if (port == null) {
             log.error("initComponents called before adapter has been set");
         }
         // the following code sets the frame's initial state
@@ -85,32 +87,30 @@ public class HexFileFrame extends JmriJFrame {
         pane3.add(jButton1);
         getContentPane().add(pane3);
 
-
         openHexFileButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    openHexFileButtonActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                openHexFileButtonActionPerformed(e);
+            }
+        });
         filePauseButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    filePauseButtonActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                filePauseButtonActionPerformed(e);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    jButton1ActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                jButton1ActionPerformed(e);
+            }
+        });
         delayField.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    delayFieldActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                delayFieldActionPerformed(e);
+            }
+        });
 
         // create a new Hex file handler, set its delay
         //port = new LnHexFilePort();
         //port.setDelay(Integer.valueOf(delayField.getText()).intValue());
-
         // and make the connections
         //configure();
     }
@@ -123,7 +123,7 @@ public class HexFileFrame extends JmriJFrame {
         super.dispose();
 
     }
-    
+
     LnPacketizer packets = null;
 
     public void openHexFileButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -133,8 +133,9 @@ public class HexFileFrame extends JmriJFrame {
         int retVal = inputFileChooser.showOpenDialog(this);
 
         // handle selection or cancel
-        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-
+        if (retVal != JFileChooser.APPROVE_OPTION) {
+            return;  // give up if no file selected
+        }
         // call load to process the file
         port.load(inputFileChooser.getSelectedFile());
 
@@ -143,11 +144,10 @@ public class HexFileFrame extends JmriJFrame {
 
         // reach here while file runs.  Need to return so GUI still acts,
         // but that normally lets the button go back to default.
-
     }
 
     public void configure() {
-        if (port==null){
+        if (port == null) {
             log.error("initComponents called before adapter has been set");
             return;
         }
@@ -157,31 +157,35 @@ public class HexFileFrame extends JmriJFrame {
         connected = true;
 
         // create memo
-        port.getAdapterMemo().setSlotManager(new SlotManager(packets));
-        port.getAdapterMemo().setLnTrafficController(packets);
+        port.getSystemConnectionMemo().setLnTrafficController(packets);
 
         // do the common manager config
-        port.getAdapterMemo().configureCommandStation(true, false, "<unknown>",   // full featured by default
-                                            false, false);
-        port.getAdapterMemo().configureManagers();
-        LnSensorManager LnSensorManager = (LnSensorManager)port.getAdapterMemo().getSensorManager();
+        port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // full featured by default
+                false, false);
+        port.getSystemConnectionMemo().configureManagers();
+        LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
         LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState"));
+
         // Install a debug programmer, replacing the existing LocoNet one
-        port.getAdapterMemo().setProgrammerManager(
-                new jmri.progdebugger.DebugProgrammerManager(port.getAdapterMemo()));
+        jmri.ProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();
+        port.getSystemConnectionMemo().setProgrammerManager(
+                new jmri.progdebugger.DebugProgrammerManager(port.getSystemConnectionMemo()));
         jmri.InstanceManager.setProgrammerManager(
-                port.getAdapterMemo().getProgrammerManager());
+                port.getSystemConnectionMemo().getProgrammerManager());
+        jmri.InstanceManager.deregister(ep, jmri.ProgrammerManager.class);
+        jmri.InstanceManager.deregister(ep, jmri.AddressedProgrammerManager.class);
+        jmri.InstanceManager.deregister(ep, jmri.GlobalProgrammerManager.class);
 
         // Install a debug throttle manager, replacing the existing LocoNet one
-        port.getAdapterMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getAdapterMemo()));
+        port.getSystemConnectionMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getSystemConnectionMemo()));
         jmri.InstanceManager.setThrottleManager(
-                port.getAdapterMemo().getThrottleManager());
+                port.getSystemConnectionMemo().getThrottleManager());
 
         // start operation of packetizer
         packets.startThreads();
         sourceThread = new Thread(port);
         sourceThread.start();
-            
+
         jmri.jmrix.loconet.ActiveFlag.setActive();
 
     }
@@ -194,24 +198,29 @@ public class HexFileFrame extends JmriJFrame {
 
     @SuppressWarnings("deprecation")
     public void jButton1ActionPerformed(java.awt.event.ActionEvent e) {  // resume button
-	sourceThread.resume();
+        sourceThread.resume();
         // sinkThread.resume();
     }
 
     public void delayFieldActionPerformed(java.awt.event.ActionEvent e) {
         // if the hex file has been started, change its delay
-        if (port!=null) port.setDelay(Integer.valueOf(delayField.getText()).intValue());
+        if (port != null) {
+            port.setDelay(Integer.valueOf(delayField.getText()).intValue());
+        }
     }
-
-
 
     private Thread sourceThread;
     //private Thread sinkThread;
-    
-    public void setAdapter(LnHexFilePort adapter) { port = adapter; }
-    public LnHexFilePort getAdapter() { return port; }
+
+    public void setAdapter(LnHexFilePort adapter) {
+        port = adapter;
+    }
+
+    public LnHexFilePort getAdapter() {
+        return port;
+    }
     private LnHexFilePort port = null;
 
-    static Logger log = LoggerFactory.getLogger(HexFileFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexFileFrame.class.getName());
 
 }

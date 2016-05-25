@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
 <!--                                                                        -->
@@ -12,122 +12,76 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new pane file for SoundTraxx Tsunami -->
-<pane name="Reverb">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
-      <label label="REVERB CONTROLS AND MIXER">
-        <label>REVERB CONTROLS AND MIXER</label>
+      <label>
+        <text>REVERB CONTROLS AND MIXER</text>
+        <text xml:lang="it">CONTROLLO RIVERBERO E MIXER</text>
       </label>
     </row>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <row>
       <display item="Reverb Control"/>
     </row>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <row>
       <column>
         <row>
-          <display item="Reverb Output Level" layout="above" label="">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
+          <display item="Reverb Output Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Reverb Output Level" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Reverb Delay" layout="above" label="">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
+          <display item="Reverb Delay" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Reverb Delay" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Reverb Gain" layout="above" label="">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
+          <display item="Reverb Gain" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Reverb Gain" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Whistle Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
+          <display item="Whistle Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Whistle Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
-        </label>
-        <row>
-          <display item="Bell Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
+          <label><text> </text></label>
+        <row>          
+          <display item="Bell Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Bell Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Exhaust Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
+          <display item="Exhaust Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Exhaust Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Air Pump Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
+          <display item="Air Pump Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Air Pump Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
-        </label>
+          <label><text> </text></label>
         <row>
-          <display item="Prime Mover 3 Reverb Level" layout="above" label="">
-            <label/>
-          </display>
-          <label label=" ">
-            <label> </label>
-          </label>
+          <display item="Prime Mover 3 Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
           <display item="Prime Mover 3 Reverb Level" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
-        </label>
+          <label><text> </text></label>
       </column>
     </row>
   </column>
   <name>Reverb</name>
+  <name xml:lang="it">Riverbero</name>
 </pane>

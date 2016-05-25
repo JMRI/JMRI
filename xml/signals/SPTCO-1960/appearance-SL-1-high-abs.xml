@@ -1,39 +1,58 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
-
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2009</year><year>2010</year><holder>JMRI</holder>
+    <year>2009</year>
+    <year>2010</year>
+    <holder>JMRI</holder>
   </copyright>
-  
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
-        <email>dick@rr-cirkits.com</email>
-    </author>    
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+      <email>dick@rr-cirkits.com</email>
+    </author>
     <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
-        <email>jake@physics.berkeley.edu</email>
-    </author>    
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-        <revnumber>1</revnumber>
-        <date>2010-01-25</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>Initial version</revremark>
-    </revision>    
+      <revnumber>1</revnumber>
+      <date>2010-01-25</date>
+      <authorinitials>DB</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
     <revision>
-        <revnumber>1.1</revnumber>
-        <date>2010-01-26</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>Typo corrections</revremark>
-    </revision>    
+      <revnumber>1.1</revnumber>
+      <date>2010-01-26</date>
+      <authorinitials>DB</authorinitials>
+      <revremark>Typo corrections</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.30</revnumber>
+      <date>2015-05-12</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added aspect mapping</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>SPTCO-1960</aspecttable>
@@ -72,4 +91,90 @@
     </appearance>
 
   </appearances>
-</appearancetable>  
+  
+  <specificappearances>
+    <!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Home Signal Red</aspect>
+    </danger>
+    <held>
+      <aspect>Home Signal Red</aspect>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <!-- Start of Aspect Mapping -->
+
+    <aspectMapping>
+      <advancedAspect>Block Signal Green</advancedAspect>
+      <ourAspect>Block Signal Green</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Block Signal Green for Main Route</advancedAspect>
+      <ourAspect>Block Signal Green</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Block Signal Green for Diverging Route</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Block Signal Yellow over Green</advancedAspect>
+      <ourAspect>Approach Medium - Flashing Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Signal Yellow</advancedAspect>
+      <ourAspect>Approach Medium - Flashing Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium - Flashing Yellow</advancedAspect>
+      <ourAspect>Block Signal Green</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Distant Signal Yellow</advancedAspect>
+      <ourAspect>Approach Medium - Flashing Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Grade Signal Red</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Home Signal Yellow for Diverging Route</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Home Signal Red over Lunar</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Home Signal Red</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Flashing Yellow</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Flashing White</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Home Signal Red, with Triangular Plate</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+
+</appearancetable>

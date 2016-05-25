@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20140309"/>
+  <version author="Alain Le Marchand" version="1" lastUpdated="20140308"/>
+  <!-- Version 1 - Created from Lenz_LE077XF.xml v7.1 - Atlas branded versions of LE062XF and LE063FX (Alain Le Marchand) -->
+  <!-- Version 1.1 - Change description for light options to match reality - unclear manual from Atlas - Set default Manufacturer address to 127 = Atlas (Alain Le Marchand) -->
+  <decoder>
+    <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="45" highVersionID="45" comment="Factory installed decoders in Atlas N scale locomotives. NCE and Lenz rebranded by Atlas (changed Manufucturer ID to Atlas) http://www.atlasrr.com/pdf/Atlas_N-Scale_Decoder_Applications.pdf">
+      <model model="LE062XF by Lenz (Part #490299)" numOuts="2">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+      </model>
+      <model model="LE063XF by Lenz (Part #447299)" numOuts="2">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+      </model>
+    </family>
+    <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <variable CV="1" comment="Short address" item="Short Address" default="03">
+        <shortAddressVal/>
+        <label>Primary Address</label>
+        <label xml:lang="it">Indirizzo Primario</label>
+        <comment>Short address</comment>
+        <comment xml:lang="it">Indirizzo Corto</comment>
+      </variable>
+      <variable CV="2" item="Vstart" comment="Range 0-31">
+        <decVal/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+        <comment>Range 0-31</comment>
+        <comment xml:lang="it">Valori 0-31</comment>
+      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <!-- deleted max and mid voltage-->
+      <variable CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+        <label>Manufacturer Version No: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="127">
+        <decVal/>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+        <label>Manufacturer ID: </label>
+      </variable>
+      <variable item="Manufacturer ID - Reset" CV="8" default="99">
+        <decVal/>
+        <label>Manufacturer ID - Reset</label>
+        <label xml:lang="it">ID Costruttore</label>
+      </variable>
+      <!-- Deleted all CV 13 references-->
+      <variable CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
+        <longAddressVal/>
+        <label>Long Address</label>
+        <label xml:lang="it">Indirizzo Lungo</label>
+        <comment>4 digit address (Range 0001-9999)</comment>
+        <comment xml:lang="it">4 cifre (Valori 0001-9999)</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable CV="23" default="255" item="Consist Acceleration Adjustment" comment="Additional Acceleration rate info for fine-tuning. (Range 0-255)">
+        <decVal min="0" max="255"/>
+        <label>Acceleration Trim (range 0-255)</label>
+        <label xml:lang="it">Regolaz.Accellerazione (0-255)</label>
+        <comment>Additional Acceleration rate info for fine-tuning. (Range 0-255)</comment>
+        <comment xml:lang="it">Aggiustamento per regolazione fine accell. (Valori 0-255)</comment>
+      </variable>
+      <variable CV="24" default="255" item="Consist Deceleration Adjustment" comment="Additional Deceleration (braking) rate info for fine-tuning. (Range 0-255)">
+        <decVal min="0" max="255"/>
+        <label>Deceleration Trim (range 0-255)</label>
+        <label xml:lang="it">Regolaz.Decellerazione (0-255)</label>
+        <comment>Additional Deceleration (braking) rate info for fine-tuning. (Range 0-255)</comment>
+         <comment xml:lang="it">Aggiustamento per regolazione fine frenata. (Valori 0-255)</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29address.xml"/>
+      <variable item="Accel/Decel Trim" CV="50" mask="XXXXXXXV" comment="Governs how loco acts in DC track block">
+        <enumVal>
+          <enumChoice choice="Accel/Decel trim OFF">
+            <choice>Accel/Decel trim OFF</choice>
+            <choice xml:lang="it">Regolaz. Accell/Frenata OFF</choice>
+          </enumChoice>
+          <enumChoice choice="Accel/Decel trim ON">
+            <choice>Accel/Decel trim ON</choice>
+            <choice xml:lang="it">Regolaz. Accell/Frenata ON</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Accel/Decel Trim</label>
+        <label xml:lang="it">Regolazione Accell/Decell.</label>
+        <comment>Governs how loco acts in DC track block</comment>
+        <comment xml:lang="it">Governa come la loco reagisce in blocchi analogici</comment>
+      </variable>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
+      <!-- CV=51 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv51_DirectionalHeadlights.xml"/>
+      <variable CV="51" mask="XXXXXXVX" item="Global lighting option 1" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+        <enumVal>
+          <enumChoice choice="Dimming Disabled">
+            <choice>Dimming Disabled</choice>
+            <choice xml:lang="it">Smorzamento Luci disabilitato</choice>
+          </enumChoice>
+          <enumChoice choice="Dimming Enabled">
+            <choice>Dimming Enabled</choice>
+            <choice xml:lang="it">Smorzamento Luci abilitato</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Functional Headlight Dimming (F1 if directional, F4 if not)</label>
+        <label xml:lang="it">Smorzamento Luci (F1 per direzionali, F4 altrimenti)</label>
+      </variable>
+      <variable CV="51" mask="XXXXXVXX" item="Global lighting option 2" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Enable Front light dimming</label>
+        <label xml:lang="it">Abilita Smorzamento Luci Frontali</label>
+      </variable>
+      <variable CV="51" mask="XXXXVXXX" item="Global lighting option 3" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Enable Rear light dimming</label>
+        <label xml:lang="it">Abilita Smorzamento Luci Retro</label>
+      </variable>
+      <variable CV="52" item="Global lighting option 4" default="64">
+        <decVal/>
+        <label>Dimming Value</label>
+        <label xml:lang="it">Valore Smorzamento</label>
+      </variable>
+      <variable CV="56" item="Function 4 options" default="15" minOut="3">
+        <decVal min="0" max="255"/>
+        <label>Output C, D blink rate</label>
+        <label xml:lang="it">Uscita C,D Frequenza lampeggio</label>
+      </variable>
+      <variable CV="53" minOut="3" item="Function 3 effect generated" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output C blinks</label>
+        <label xml:lang="it">Uscita C lampeggia</label>
+      </variable>
+      <variable CV="53" minOut="3" item="Function 4 effect generated" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output D blinks</label>
+        <label xml:lang="it">Uscita D lampeggia</label>
+      </variable>
+      <variable CV="53" minOut="3" item="Function 4 behavior" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output C, D are ditch lights</label>
+        <label xml:lang="it">Uscita C = Ditch</label>
+      </variable>
+      <variable CV="54" mask="XXXXXXXV" minOut="3" minFn="1" item="F1 controls output 3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output C</label>
+        <label xml:lang="it">F1 controlla Uscita C</label>
+      </variable>
+      <variable CV="54" mask="XXXXXXVX" minOut="3" minFn="2" item="F2 controls output 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output C</label>
+        <label xml:lang="it">F2 controlla Uscita C</label>
+      </variable>
+      <variable CV="54" mask="XXXXXVXX" minOut="3" minFn="3" item="F3 controls output 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output C</label>
+        <label xml:lang="it">F3 controlla Uscita C</label>
+      </variable>
+      <variable CV="54" mask="XXXXVXXX" minOut="3" minFn="4" item="F4 controls output 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output C</label>
+        <label xml:lang="it">F4 controlla Uscita C</label>
+      </variable>
+      <variable CV="54" mask="XXXVXXXX" minOut="3" minFn="5" item="F5 controls output 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output C</label>
+        <label xml:lang="it">F5 controlla Uscita C</label>
+      </variable>
+      <variable CV="54" mask="XXVXXXXX" minOut="3" minFn="6" item="F6 controls output 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output C</label>
+        <label xml:lang="it">F6 controlla Uscita C</label>
+      </variable>
+      <variable CV="54" mask="XVXXXXXX" minOut="3" minFn="7" item="F7 controls output 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output C</label>
+        <label xml:lang="it">F7 controlla Uscita C</label>
+      </variable>
+      <variable CV="54" mask="VXXXXXXX" minOut="3" minFn="8" item="F8 controls output 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output C</label>
+        <label xml:lang="it">F8 controlla Uscita C</label>
+      </variable>
+      <variable CV="55" mask="XXXXXXXV" minOut="4" minFn="1" item="F1 controls output 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output D</label>
+        <label xml:lang="it">F1 controlla Uscita D</label>
+      </variable>
+      <variable CV="55" mask="XXXXXXVX" minOut="4" minFn="2" item="F2 controls output 4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output D</label>
+        <label xml:lang="it">F2 controlla Uscita D</label>
+      </variable>
+      <variable CV="55" mask="XXXXXVXX" minOut="4" minFn="3" item="F3 controls output 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output D</label>
+        <label xml:lang="it">F3 controlla Uscita D</label>
+      </variable>
+      <variable CV="55" mask="XXXXVXXX" minOut="4" minFn="4" item="F4 controls output 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output D</label>
+        <label xml:lang="it">F4 controlla Uscita D</label>
+      </variable>
+      <variable CV="55" mask="XXXVXXXX" minOut="4" minFn="5" item="F5 controls output 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output D</label>
+        <label xml:lang="it">F5 controlla Uscita D</label>
+      </variable>
+      <variable CV="55" mask="XXVXXXXX" minOut="4" minFn="6" item="F6 controls output 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output D</label>
+        <label xml:lang="it">F6 controlla Uscita D</label>
+      </variable>
+      <variable CV="55" mask="XVXXXXXX" minOut="4" minFn="7" item="F7 controls output 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output D</label>
+        <label xml:lang="it">F7 controlla Uscita D</label>
+      </variable>
+      <variable CV="55" mask="VXXXXXXX" minOut="4" minFn="8" item="F8 controls output 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output D</label>
+        <label xml:lang="it">F8 controlla Uscita D</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+        <label xml:lang="it">Tabella Velocità</label>
+      </variable>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
+    </variables>
+  </decoder>
+  <pane>
+    <name>Lenz</name>
+    <column>
+      <display item="Accel/Decel Trim"/>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+  </pane>
+</decoder-config>

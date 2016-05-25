@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchemaExamples.shtml,v 1.3 2010/02/03 06:17:40 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-09-06--> 
+<!-- $Id$ -->
+<!-- Updatedated by Blorec Herv&#233;  2013-09-09--> 
 <html lang="fr">
 <head>
     <TITLE>
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -30,21 +30,21 @@
 
 	<div id="mainContent">
 
-<H1>JMRI: XML Exemples de Schéma </H1>
+<H1>JMRI: XML Exemples de Sch&#233;ma </H1>
 
 Cette page contient des exemples de divers fragments Examples de Schema XML
 que vous pourriez trouver utiles.
 Pour une analyse de l'utilisation JMRI de Schema, XML, y compris des
-infos sur les modes de préférence et de l'organisation, voir
+infos sur les modes de pr&#233;f&#233;rence et de l'organisation, voir
 <a href="XmlSchema.shtml"> une autre page </a>.
 
-<h2>Elément avec juste le contenu du texte, pas d'attributs</h2>
+<h2>El&#233;ment avec juste le contenu du texte, pas d'attributs</h2>
 
 <code><pre>
 &lt;xs:element name="someData" minOccurs="0" maxOccurs="1"&gt;
 </pre></code>
 
-Cela ne veut pas préciser les frappe. Si vous souhaitez par exemple faire respecter les entier:
+Cela ne veut pas pr&#233;ciser les frappe. Si vous souhaitez par exemple faire respecter les entier:
 
 <code><pre>
 &lt;xs:element name="someIntThing" &gt;
@@ -56,9 +56,9 @@ Cela ne veut pas préciser les frappe. Si vous souhaitez par exemple faire respe
 &lt;/xs:element&gt;
 </pre></code>
 
-<h2>Elément avec seulement des attributs, pas de contenu</h2>
+<h2>El&#233;ment avec seulement des attributs, pas de contenu</h2>
 
-Forme privilégiées Store Venetien:
+Forme privil&#233;gi&#233;es Store Venitien:
 
 <code><pre>
 &lt;xs:element name="sample" type="SampleType" 
@@ -70,8 +70,8 @@ Forme privilégiées Store Venetien:
 &lt;/xs:complexType&gt;
 </pre></code>
 
-Peut aussi être combiné si vous pensez qu'il est peu probable qu'il soit
-utilisé ailleur:
+Peut aussi &#234;tre combin&#233; si vous pensez qu'il est peu probable qu'il soit
+utilis&#233; ailleur:
 
 <code><pre>
 &lt;xs:element name="sample" 
@@ -83,7 +83,7 @@ utilisé ailleur:
 &lt;/xs:element&gt;
 </pre></code>
 
-<h2>Elément avec du contenu  texte et les attributs</h2>
+<h2>El&#233;ment avec du contenu  texte et des attributs</h2>
 
 <code><pre>
 &lt;xs:element name="someIntThing" &gt;
@@ -100,8 +100,8 @@ utilisé ailleur:
 
 <h2>Limiter un attribut pour certaines valeurs</h2>
 
-Si vous voulez faire cela, ça vaut la peine de définir un type général
-qui peux être réutilisé. Ceux-ci sont en xml/schema/types/general.xsd.
+Si vous voulez faire cela, &#231;a vaut la peine de d&#233;finir un type g&#233;n&#233;ral
+qui peux &#234;tre r&#233;utilis&#233;. Ceux-ci sont en xml/schema/types/general.xsd.
 
 <code><pre>
 &lt;xs:simpleType name="yesNoType"&gt;
@@ -123,9 +123,9 @@ Puis le mettre sur un attribut est simple:
 &lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
 </pre></code>
 
-<h2>Elément avec le contenu du texte restreint</h2>
+<h2>El&#233;ment avec le contenu du texte restreint</h2>
 
-Pas un attribut, un élément:
+Pas un attribut, un &#233;l&#233;ment:
 
 <code><pre>
 &lt;xs:element name="relation"&gt;
@@ -142,9 +142,9 @@ Pas un attribut, un élément:
 
 <h2>Groupes d'Attribut </h2>
 
-Des groupes d'attributs sont bons pour représenter un ensemble d'attributs
-lus et écrits ainsi que par une routine de service commune.
-Exemple de définition:
+Des groupes d'attributs sont bons pour repr&#233;senter un ensemble d'attributs
+lus et &#233;crits ainsi que par une routine de service commune.
+Exemple de d&#233;finition:
 
 <code><pre>
 &lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;

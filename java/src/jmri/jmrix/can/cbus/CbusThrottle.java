@@ -1,78 +1,78 @@
 package jmri.jmrix.can.cbus;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-
 import jmri.DccThrottle;
+import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle via AbstractThrottle with code specific
- * to a Cbus connection.
+ * An implementation of DccThrottle via AbstractThrottle with code specific to a
+ * Cbus connection.
  * <P>
- * Speed in the Throttle interfaces and AbstractThrottle is a float, but in CBUS is an int
- * with values from 0 to 127.
+ * Speed in the Throttle interfaces and AbstractThrottle is a float, but in CBUS
+ * is an int with values from 0 to 127.
  * <P>
- * @author  Andrew Crosland Copyright (C) 2009
+ * @author Andrew Crosland Copyright (C) 2009
  * @version $Revision$
  */
 public class CbusThrottle extends AbstractThrottle {
+
     private CbusCommandStation cs = null;
-    private int address;
     private int _handle = -1;
+    private DccLocoAddress dccAddress = null;
 
     /**
      * Constructor
+     *
      * @param address The address this throttle relates to.
      */
     public CbusThrottle(CanSystemConnectionMemo memo, LocoAddress address, int handle) {
         super(memo);
 
         log.debug("Throttle created");
-        DccLocoAddress dccAddress = (DccLocoAddress)address;
         cs = (CbusCommandStation) adapterMemo.get(jmri.CommandStation.class);
         _handle = handle;
 
         // cache settings
         this.speedSetting = 0;
-        this.f0           = false;
-        this.f1           = false;
-        this.f2           = false;
-        this.f3           = false;
-        this.f4           = false;
-        this.f5           = false;
-        this.f6           = false;
-        this.f7           = false;
-        this.f8           = false;
-        this.f8           = false;
-        this.f9           = false;
-        this.f10          = false;
-        this.f11          = false;
-        this.f12          = false;
+        this.f0 = false;
+        this.f1 = false;
+        this.f2 = false;
+        this.f3 = false;
+        this.f4 = false;
+        this.f5 = false;
+        this.f6 = false;
+        this.f7 = false;
+        this.f8 = false;
+        this.f8 = false;
+        this.f9 = false;
+        this.f10 = false;
+        this.f11 = false;
+        this.f12 = false;
 
         // extended values
-        this.f13          = false;
-        this.f14          = false;
-        this.f15          = false;
-        this.f16          = false;
-        this.f17          = false;
-        this.f18          = false;
-        this.f19          = false;
-        this.f20          = false;
-        this.f21          = false;
-        this.f22          = false;
-        this.f23          = false;
-        this.f24          = false;
-        this.f25          = false;
-        this.f26          = false;
-        this.f27          = false;
-        this.f28          = false;
+        this.f13 = false;
+        this.f14 = false;
+        this.f15 = false;
+        this.f16 = false;
+        this.f17 = false;
+        this.f18 = false;
+        this.f19 = false;
+        this.f20 = false;
+        this.f21 = false;
+        this.f22 = false;
+        this.f23 = false;
+        this.f24 = false;
+        this.f25 = false;
+        this.f26 = false;
+        this.f27 = false;
+        this.f28 = false;
 
-        this.address      = dccAddress.getNumber();
-        this.isForward    = true;
+        this.dccAddress = (DccLocoAddress) address;
+        this.isForward = true;
 
 //        switch(slot.decoderType())
 //        {
@@ -107,21 +107,21 @@ public class CbusThrottle extends AbstractThrottle {
 
         // cache settings
         this.speedSetting = speed & 0x7f;
-        this.f0           = (f0f4 & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0;
-        this.f1           = (f0f4 & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1;
-        this.f2           = (f0f4 & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2;
-        this.f3           = (f0f4 & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3;
-        this.f4           = (f0f4 & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4;
-        this.f5           = (f5f8 & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5;
-        this.f6           = (f5f8 & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6;
-        this.f7           = (f5f8 & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7;
-        this.f8           = (f5f8 & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8;
-        this.f9           = (f9f12 & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9;
-        this.f10          = (f9f12 & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10;
-        this.f11          = (f9f12 & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11;
-        this.f12          = (f9f12 & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12;
+        this.f0 = (f0f4 & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0;
+        this.f1 = (f0f4 & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1;
+        this.f2 = (f0f4 & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2;
+        this.f3 = (f0f4 & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3;
+        this.f4 = (f0f4 & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4;
+        this.f5 = (f5f8 & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5;
+        this.f6 = (f5f8 & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6;
+        this.f7 = (f5f8 & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7;
+        this.f8 = (f5f8 & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8;
+        this.f9 = (f9f12 & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9;
+        this.f10 = (f9f12 & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10;
+        this.f11 = (f9f12 & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11;
+        this.f12 = (f9f12 & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12;
 
-        this.isForward    = (speed & 0x80) == 0x80;
+        this.isForward = (speed & 0x80) == 0x80;
     }
 
     /*
@@ -140,105 +140,101 @@ public class CbusThrottle extends AbstractThrottle {
         speedStepMode = Mode;
         super.setSpeedStepMode(speedStepMode);
         switch (speedStepMode) {
-            case DccThrottle.SpeedStepMode28: mode = CbusConstants.CBUS_SS_28; break;
-            case DccThrottle.SpeedStepMode14: mode = CbusConstants.CBUS_SS_14; break;
-            default: mode = CbusConstants.CBUS_SS_128; break;
+            case DccThrottle.SpeedStepMode28:
+                mode = CbusConstants.CBUS_SS_28;
+                break;
+            case DccThrottle.SpeedStepMode14:
+                mode = CbusConstants.CBUS_SS_14;
+                break;
+            default:
+                mode = CbusConstants.CBUS_SS_128;
+                break;
         }
         cs.setSpeedSteps(_handle, mode);
-   }
+    }
 
     /**
      * Convert a CBUS speed integer to a float speed value
      */
     protected float floatSpeed(int lSpeed) {
-        if (lSpeed == 0) return 0.f;
-        else if (lSpeed == 1) return -1.f;   // estop
-        else return ( (lSpeed-1)/126.f);
+        if (lSpeed == 0) {
+            return 0.f;
+        } else if (lSpeed == 1) {
+            return -1.f;   // estop
+        } else {
+            return ((lSpeed - 1) / 126.f);
+        }
     }
 
     /**
-     * Convert a float speed value to a CBUS speed integer
-     */
-    protected int intSpeed(float fSpeed) {
-      if (fSpeed == 0.f)
-        return 0;
-      else if (fSpeed < 0.f)
-        return 1;   // estop
-      // add the 0.5 to handle float to int round for positive numbers
-      return (int)(fSpeed * 126.f + 0.5) + 1 ;
-    }
-
-    /**
-     * Send the CBUS message to set the state of locomotive
-     * direction and functions F0, F1, F2, F3, F4
+     * Send the CBUS message to set the state of locomotive direction and
+     * functions F0, F1, F2, F3, F4
      */
     @Override
     protected void sendFunctionGroup1() {
-        int new_fn = ((getF0() ? CbusConstants.CBUS_F0 : 0) |
-                (getF1() ? CbusConstants.CBUS_F1 : 0) |
-                (getF2() ? CbusConstants.CBUS_F2 : 0) |
-                (getF3() ? CbusConstants.CBUS_F3 : 0) |
-                (getF4() ? CbusConstants.CBUS_F4 : 0));
+        int new_fn = ((getF0() ? CbusConstants.CBUS_F0 : 0)
+                | (getF1() ? CbusConstants.CBUS_F1 : 0)
+                | (getF2() ? CbusConstants.CBUS_F2 : 0)
+                | (getF3() ? CbusConstants.CBUS_F3 : 0)
+                | (getF4() ? CbusConstants.CBUS_F4 : 0));
         cs.setFunctions(1, _handle, new_fn);
     }
 
     /**
-     * Send the CBUS message to set the state of
-     * functions F5, F6, F7, F8
+     * Send the CBUS message to set the state of functions F5, F6, F7, F8
      */
     @Override
     protected void sendFunctionGroup2() {
-        int new_fn = ((getF5() ? CbusConstants.CBUS_F5 : 0) |
-                (getF6() ? CbusConstants.CBUS_F6 : 0) |
-                (getF7() ? CbusConstants.CBUS_F7 : 0) |
-                (getF8() ? CbusConstants.CBUS_F8 : 0));
+        int new_fn = ((getF5() ? CbusConstants.CBUS_F5 : 0)
+                | (getF6() ? CbusConstants.CBUS_F6 : 0)
+                | (getF7() ? CbusConstants.CBUS_F7 : 0)
+                | (getF8() ? CbusConstants.CBUS_F8 : 0));
         cs.setFunctions(2, _handle, new_fn);
     }
 
     /**
-     * Send the CBUS message to set the state of
-     * functions F9, F10, F11, F12
+     * Send the CBUS message to set the state of functions F9, F10, F11, F12
      */
     @Override
     protected void sendFunctionGroup3() {
-        int new_fn = ((getF9() ? CbusConstants.CBUS_F9 : 0) |
-                (getF10() ? CbusConstants.CBUS_F10 : 0) |
-                (getF11() ? CbusConstants.CBUS_F11 : 0) |
-                (getF12() ? CbusConstants.CBUS_F12 : 0));
+        int new_fn = ((getF9() ? CbusConstants.CBUS_F9 : 0)
+                | (getF10() ? CbusConstants.CBUS_F10 : 0)
+                | (getF11() ? CbusConstants.CBUS_F11 : 0)
+                | (getF12() ? CbusConstants.CBUS_F12 : 0));
         cs.setFunctions(3, _handle, new_fn);
     }
 
     /**
-     * Send the CBUS message to set the state of
-     * functions F13, F14, F15, F16, F17, F18, F19, F20
+     * Send the CBUS message to set the state of functions F13, F14, F15, F16,
+     * F17, F18, F19, F20
      */
     @Override
     protected void sendFunctionGroup4() {
-        int new_fn = ((getF13() ? CbusConstants.CBUS_F13 : 0) |
-                (getF14() ? CbusConstants.CBUS_F14 : 0) |
-                (getF15() ? CbusConstants.CBUS_F15 : 0) |
-                (getF16() ? CbusConstants.CBUS_F16 : 0) |
-                (getF17() ? CbusConstants.CBUS_F17 : 0) |
-                (getF18() ? CbusConstants.CBUS_F18 : 0) |
-                (getF19() ? CbusConstants.CBUS_F19 : 0) |
-                (getF20() ? CbusConstants.CBUS_F20 : 0));
+        int new_fn = ((getF13() ? CbusConstants.CBUS_F13 : 0)
+                | (getF14() ? CbusConstants.CBUS_F14 : 0)
+                | (getF15() ? CbusConstants.CBUS_F15 : 0)
+                | (getF16() ? CbusConstants.CBUS_F16 : 0)
+                | (getF17() ? CbusConstants.CBUS_F17 : 0)
+                | (getF18() ? CbusConstants.CBUS_F18 : 0)
+                | (getF19() ? CbusConstants.CBUS_F19 : 0)
+                | (getF20() ? CbusConstants.CBUS_F20 : 0));
         cs.setFunctions(4, _handle, new_fn);
     }
 
     /**
-     * Send the CBUS message to set the state of
-     * functions F21, F22, F23, F24, F25, F26, F27, F28
+     * Send the CBUS message to set the state of functions F21, F22, F23, F24,
+     * F25, F26, F27, F28
      */
     @Override
     protected void sendFunctionGroup5() {
-        int new_fn = ((getF21() ? CbusConstants.CBUS_F21 : 0) |
-                (getF22() ? CbusConstants.CBUS_F22 : 0) |
-                (getF23() ? CbusConstants.CBUS_F23 : 0) |
-                (getF24() ? CbusConstants.CBUS_F24 : 0) |
-                (getF25() ? CbusConstants.CBUS_F25 : 0) |
-                (getF26() ? CbusConstants.CBUS_F26 : 0) |
-                (getF27() ? CbusConstants.CBUS_F27 : 0) |
-                (getF28() ? CbusConstants.CBUS_F28 : 0));
+        int new_fn = ((getF21() ? CbusConstants.CBUS_F21 : 0)
+                | (getF22() ? CbusConstants.CBUS_F22 : 0)
+                | (getF23() ? CbusConstants.CBUS_F23 : 0)
+                | (getF24() ? CbusConstants.CBUS_F24 : 0)
+                | (getF25() ? CbusConstants.CBUS_F25 : 0)
+                | (getF26() ? CbusConstants.CBUS_F26 : 0)
+                | (getF27() ? CbusConstants.CBUS_F27 : 0)
+                | (getF28() ? CbusConstants.CBUS_F28 : 0));
         cs.setFunctions(5, _handle, new_fn);
     }
 
@@ -255,8 +251,8 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Update the state of locomotive functions F5, F6, F7, F8 in response
-     * to a message from the hardware
+     * Update the state of locomotive functions F5, F6, F7, F8 in response to a
+     * message from the hardware
      */
     protected void updateFunctionGroup2(int fns) {
         this.f5 = ((fns & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5);
@@ -266,8 +262,8 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Update the state of locomotive functions F9, F10, F11, F12 in response
-     * to a message from the hardware
+     * Update the state of locomotive functions F9, F10, F11, F12 in response to
+     * a message from the hardware
      */
     protected void updateFunctionGroup3(int fns) {
         this.f9 = ((fns & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9);
@@ -277,8 +273,8 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Update the state of locomotive functions F13, F14, F15, F16, F17, F18, F19, F20 in response
-     * to a message from the hardware
+     * Update the state of locomotive functions F13, F14, F15, F16, F17, F18,
+     * F19, F20 in response to a message from the hardware
      */
     protected void updateFunctionGroup4(int fns) {
         this.f13 = ((fns & CbusConstants.CBUS_F13) == CbusConstants.CBUS_F13);
@@ -292,8 +288,8 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Update the state of locomotive functions F21, F22, F23, F24, F25, F26, F27, F28 in response
-     * to a message from the hardware
+     * Update the state of locomotive functions F21, F22, F23, F24, F25, F26,
+     * F27, F28 in response to a message from the hardware
      */
     protected void updateFunctionGroup5(int fns) {
         this.f21 = ((fns & CbusConstants.CBUS_F21) == CbusConstants.CBUS_F21);
@@ -307,46 +303,106 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Update the state of a single function in response to a message fromn the hardware
+     * Update the state of a single function in response to a message fromn the
+     * hardware
      */
     protected void updateFunction(int fn, boolean state) {
         switch (fn) {
-            case 0:	this.f0 = state; break;
-            case 1:	this.f1 = state; break;
-            case 2:	this.f2 = state; break;
-            case 3:	this.f3 = state; break;
-            case 4:	this.f4 = state; break;
-            case 5:	this.f5 = state; break;
-            case 6:	this.f6 = state; break;
-            case 7:	this.f7 = state; break;
-            case 8:	this.f8 = state; break;
-            case 9:	this.f9 = state; break;
-            case 10:	this.f10 = state; break;
-            case 11:	this.f11 = state; break;
-            case 12:	this.f12 = state; break;
-            case 13:	this.f13 = state; break;
-            case 14:	this.f14 = state; break;
-            case 15:	this.f15 = state; break;
-            case 16:	this.f16 = state; break;
-            case 17:	this.f17 = state; break;
-            case 18:	this.f18 = state; break;
-            case 19:	this.f19 = state; break;
-            case 20:	this.f20 = state; break;
-            case 21:	this.f21 = state; break;
-            case 22:	this.f22 = state; break;
-            case 23:	this.f23 = state; break;
-            case 24:	this.f24 = state; break;
-            case 25:	this.f25 = state; break;
-            case 26:	this.f26 = state; break;
-            case 27:	this.f27 = state; break;
-            case 28:	this.f28 = state; break;
+            case 0:
+                this.f0 = state;
+                break;
+            case 1:
+                this.f1 = state;
+                break;
+            case 2:
+                this.f2 = state;
+                break;
+            case 3:
+                this.f3 = state;
+                break;
+            case 4:
+                this.f4 = state;
+                break;
+            case 5:
+                this.f5 = state;
+                break;
+            case 6:
+                this.f6 = state;
+                break;
+            case 7:
+                this.f7 = state;
+                break;
+            case 8:
+                this.f8 = state;
+                break;
+            case 9:
+                this.f9 = state;
+                break;
+            case 10:
+                this.f10 = state;
+                break;
+            case 11:
+                this.f11 = state;
+                break;
+            case 12:
+                this.f12 = state;
+                break;
+            case 13:
+                this.f13 = state;
+                break;
+            case 14:
+                this.f14 = state;
+                break;
+            case 15:
+                this.f15 = state;
+                break;
+            case 16:
+                this.f16 = state;
+                break;
+            case 17:
+                this.f17 = state;
+                break;
+            case 18:
+                this.f18 = state;
+                break;
+            case 19:
+                this.f19 = state;
+                break;
+            case 20:
+                this.f20 = state;
+                break;
+            case 21:
+                this.f21 = state;
+                break;
+            case 22:
+                this.f22 = state;
+                break;
+            case 23:
+                this.f23 = state;
+                break;
+            case 24:
+                this.f24 = state;
+                break;
+            case 25:
+                this.f25 = state;
+                break;
+            case 26:
+                this.f26 = state;
+                break;
+            case 27:
+                this.f27 = state;
+                break;
+            case 28:
+                this.f28 = state;
+                break;
         }
     }
-	
+
     /**
      * Set the speed.
      * <P>
      * This intentionally skips the emergency stop value of 1.
+     *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
@@ -364,15 +420,16 @@ public class CbusThrottle extends AbstractThrottle {
         log.debug("Sending speed/dir for speed: " + new_spd);
         cs.setSpeedDir(_handle, new_spd);
 
-        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+        }
         record(speed);
     }
 
     /**
-     * Update the throttles speed setting without sending to hardware.
-     * Used to support CBUS sharing by taking speed received <b>from</b> the
-     * hardware in an OPC_DSPD message.
+     * Update the throttles speed setting without sending to hardware. Used to
+     * support CBUS sharing by taking speed received <b>from</b> the hardware in
+     * an OPC_DSPD message.
      *
      * @param speed integer speed value
      */
@@ -389,57 +446,59 @@ public class CbusThrottle extends AbstractThrottle {
         }
         log.debug("Updated speed/dir for speed: " + new_spd);
 
-        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+        }
     }
 
     /**
      * Set the direction and reset speed.
      */
     @Override
-    public void setIsForward(boolean forward)
-    {
+    public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);
-        if (old != isForward)
-            notifyPropertyChangeListener("IsForward", old, isForward );
+        if (old != isForward) {
+            notifyPropertyChangeListener("IsForward", old, isForward);
+        }
     }
 
     /**
-     * Update the throttles direction without sending to hardware.
-     * Used to support CBUS sharing by taking direction received <b>from</b> the
+     * Update the throttles direction without sending to hardware. Used to
+     * support CBUS sharing by taking direction received <b>from</b> the
      * hardware in an OPC_DSPD message.
      *
      * @param forward
      */
-    public void updateIsForward(boolean forward)
-    {
+    public void updateIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
         updateSpeedSetting(intSpeed(speedSetting));
-        if (old != isForward)
-            notifyPropertyChangeListener("IsForward", old, isForward );
+        if (old != isForward) {
+            notifyPropertyChangeListener("IsForward", old, isForward);
+        }
     }
 
     @Override
     public String toString() {
         return getLocoAddress().toString();
     }
-    
+
     /**
      * Return the handle for this throttle
-     * 
-     * @return  integer session handle
+     *
+     * @return integer session handle
      */
     public int getHandle() {
         return _handle;
     }
 
     /**
-     * Received a session not present error form command station saying the session
-     * has timed out. This code is the same as throttleDispose() without releasing
-     * the session that would trigger a KLOC message to the command station.
+     * Received a session not present error form command station saying the
+     * session has timed out. This code is the same as throttleDispose() without
+     * releasing the session that would trigger a KLOC message to the command
+     * station.
      */
     public void throttleTimedOut() {
         _handle = -1;
@@ -450,12 +509,12 @@ public class CbusThrottle extends AbstractThrottle {
 
         mRefreshTimer = null;
         cs = null;
-        
+
     }
-    
+
     /**
-     * Dispose when finished with this object.  After this, further usage of
-     * this Throttle object will result in a JmriException.
+     * Dispose when finished with this object. After this, further usage of this
+     * Throttle object will result in a JmriException.
      */
     @Override
     public void throttleDispose() {
@@ -471,7 +530,7 @@ public class CbusThrottle extends AbstractThrottle {
         mRefreshTimer = null;
         cs = null;
         finishRecord();
-     }
+    }
 
     javax.swing.Timer mRefreshTimer = null;
 
@@ -499,13 +558,12 @@ public class CbusThrottle extends AbstractThrottle {
 
     }
 
-
     @Override
     public LocoAddress getLocoAddress() {
-        return new DccLocoAddress(address, CbusThrottleManager.isLongAddress(address));
+        return dccAddress;
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CbusThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusThrottle.class.getName());
 
 }

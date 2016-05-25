@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: cv21.22.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,1437 +13,454 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Vstart" CV="2" default="3">
-        <decVal/>
-      </variable>
-      <variable label="Acceleration" CV="3" default="16" item="Accel">
-        <decVal/>
-      </variable>
-      <variable label="Deceleration" CV="4" default="12" item="Decel">
-        <decVal/>
-      </variable>
-      <variable label="Vhigh" CV="5" default="255">
-        <decVal/>
-      </variable>
-      <variable label="Vmid" CV="6" default="88">
-        <decVal/>
-      </variable>
-      <variable label="Decoder Version" CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer">
-        <decVal/>
-      </variable>
-      <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - FL" CV="14" mask="XXXXXXXV" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog Mode Function Status - FL(f)</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F9" CV="14" mask="XXXXXXVX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F10" CV="14" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F12" CV="14" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F13" CV="14" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F14" CV="14" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Analog Mode Function Status - F15" CV="14" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Decoder Lock ID number" CV="15" mask="XXXXVVVV" item="Advanced Group 1 Option 9" default="0">
-        <decVal max="16"/>
-      </variable>
-      <variable label="Preset Lock ID number" CV="16" mask="XXXXVVVV" item="Advanced Group 1 Option 10" default="0">
-        <decVal max="16"/>
-      </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-      </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/esu/v4cv21.22.xml"/>
-      <variable label="Brake on Asymmetrical DCC - higher voltage on right rail" CV="27" mask="XXXXXXXV" item="Advanced Group 2 Option 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Brake on Asymmetrical DCC - higher voltage on left rail" CV="27" mask="XXXXXXVX" item="Advanced Group 2 Option 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Brake on Zimo HLU commands" CV="27" mask="XXXXXVXX" item="Advanced Group 2 Option 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Brake on DC, polarity against direction" CV="27" mask="XXXXVXXX" item="Advanced Group 2 Option 4" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Brake on DC, polarity same direction" CV="27" mask="XXXVXXXX" item="Advanced Group 2 Option 5" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="RailCom Channel 1 Address Broadcast" CV="28" mask="XXXXXXXV" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 3" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="RailCom Channel 2 Data Transmission" CV="28" mask="XXXXXXVX" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 4" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="RailCom Plus Auto Loco Recognition" CV="28" mask="VXXXXXXX" include="54400,54499,54800,54899,5489,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 2" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Normal Direction of Motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Analog Operation Enabled" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Analog Conversion Mode</label>
-      </variable>
-      <variable label="RailCom Enable" CV="29" mask="XXXXVXXX" default="1" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use Table">
-            <choice>Use Table</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Index register H" CV="31" default="16">
-        <decVal/>
-      </variable>
-      <variable label="Index register L" CV="32" default="0">
-        <decVal/>
-      </variable>
-      <variable label="DCC Protocol" CV="47" mask="XXXXXXXV" default="1" item="ESU V4 Extra Protocols Option 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="M4 Protocol" CV="47" mask="XXXXXXVX" default="0" include="" item="ESU V4 Extra Protocols Option 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Marklin Motorola Protocol" CV="47" mask="XXXXXVXX" default="1" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Selectrix Protocol" CV="47" mask="XXXXVXXX" default="1" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="BEMF" CV="49" mask="XXXXXXXV" default="1" item="EMF Enable">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Motor PWM Frequency" CV="49" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="20 kHz">
-            <choice>20 kHz</choice>
-          </enumChoice>
-          <enumChoice choice="40 kHz">
-            <choice>40 kHz</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Compatibility Option 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Marklin Additional Addresses" CV="49" mask="VXXXVXXX" default="0" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Miscellaneous Option 3">
-        <enumVal>
-          <enumChoice choice="No additional addresses" value="0"/>
-          <enumChoice choice="Use 2 addresses" value="1"/>
-          <enumChoice choice="Use 3 addresses" value="16"/>
-          <enumChoice choice="Use 4 addresses" value="17"/>
-        </enumVal>
-      </variable>
-      <variable label="Automatic Speed Step Detection" CV="49" mask="XXXVXXXX" default="1" item="ESU V4 Extra Miscellaneous Option 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="LGB Function Button Mode" CV="49" mask="XXVXXXXX" default="0" exclude="LPmV4,LPmV4DCC" item="ESU V4 Extra Compatibility Option 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Zimo Manual Function" CV="49" mask="XVXXXXXX" default="0" item="ESU V4 Extra Compatibility Option 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>LGB Function Button Mode</label>
-      </variable>
-      <variable label="AC Analog Mode" CV="50" mask="XXXXXXXV" default="1" include="54400,54499,LPV4,LPV4DCC" item="Analog (AC) Mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="DC Analog Mode" CV="50" mask="XXXXXXVX" default="1" item="Analog (DC) Mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="BEMF Parameter 'I' Slow" CV="51" default="0" item="EMF Option 4">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Parameter 'K' Slow" CV="52" default="32" item="Motor Option 1">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Reference Voltage" CV="53" default="140" item="EMF Control Reference">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Parameter 'K'" CV="54" default="48" item="EMF Option 1">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Parameter 'I'" CV="55" default="32" item="EMF Option 2">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Dynamic Drive Control" CV="56" default="255" item="EMF Option 3">
-        <decVal/>
-        <label>BEMF Dynamic Drive Control'</label>
-      </variable>
-      <variable label="Forward Trim" CV="66" default="128" comment="Range 0-255">
-        <decVal/>
-        <comment>Range 0-255</comment>
-      </variable>
-      <xi:include href="http://jmri.org/xml/decoders/esu/mfxSpeedTable.xml"/>
-      <variable label="Reverse Trim" CV="95" default="128" comment="Range 0-255">
-        <decVal/>
-        <comment>Range 0-255</comment>
-      </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable label="Rate for Blinking Effects" CV="112" default="20" tooltip="Unit is 0.05 seconds" item="ESU V4 Extra Function Output Settings Slider 1">
-        <decVal/>
-      </variable>
-      <variable label="Power Pack Maintain Time" CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Power Handling Slider 1">
-        <decVal/>
-      </variable>
-      <variable label="Remember Current Function States" CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Extra Power Handling Option 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label xml:lang="fr">Sauvegarde fonction</label>
-      </variable>
-      <variable label="Remember Current Speed" CV="122" mask="XXXXXXVX" default="1" item="ESU V4 Extra Power Handling Option 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label xml:lang="fr">Sauvegarde vitesse actuelle</label>
-      </variable>
-      <variable label="ABC Mode slow speed" CV="123" default="100" item="Advanced Group 1 Option 5">
-        <decVal/>
-      </variable>
-      <variable label="Preserve Driving Direction when Changing from Analog to Digital" CV="124" mask="XXXXXXXV" default="0" item="ESU V4 Extra Miscellaneous Option 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Decoder Lock Enabled" CV="124" mask="XXXXXXVX" default="0" item="Advanced Group 1 Option 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Decoder Lock</label>
-      </variable>
-      <variable label="Serial protocol for C-Sinus" CV="124" mask="XXXXVXXX" default="0" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC" item="ESU V4 Extra Compatibility Option 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Adaptive Regulation Frequency" CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Motor Overload Protection" CV="124" mask="XXVXXXXX" default="0" include="54400,54499" item="Motor Option 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <variable label="Start Volts in DC Mode" CV="125" default="90" item="Analog Vstart">
-        <decVal/>
-      </variable>
-      <variable label="Maximum Speed in DC mode" CV="126" default="130" item="Analog Vhigh">
-        <decVal/>
-      </variable>
-      <variable label="Start Volts in AC Mode" CV="127" default="90" include="54400,54499,LPV4,LPV4DCC" item="Analog (AC) Vstart">
-        <decVal/>
-      </variable>
-      <variable label="Maximum Speed in AC mode" CV="128" default="130" include="54400,54499,LPV4,LPV4DCC" item="Analog (AC) Vhigh">
-        <decVal/>
-      </variable>
-      <variable label="Analog Mode Function Hysteresis" CV="129" default="15" item="Radio Power Conversion">
-        <decVal/>
-      </variable>
-      <variable label="Analog Mode Motor Hysteresis" CV="130" default="5" item="Analog Power Conversion">
-        <decVal/>
-      </variable>
-      <variable label="Grade Crossing Hold Time" CV="132" default="80" tooltip="Unit is 0.0625 seconds" item="ESU V4 Extra Function Output Settings Slider 2">
-        <decVal/>
-      </variable>
-      <variable label="ABC detection threshold" CV="134" mask="XXVVVVVV" default="12" item="Advanced Group 1 Option 6">
-        <decVal min="4" max="32"/>
-      </variable>
-      <variable label="Fan Speed Trim" CV="138" default="128" include="54400,54499,54800,54899,54898" item="ESU V4 Extra Smoke Unit Slider 2">
-        <decVal/>
-        <label>Smoke Unit Minimum Steam Chuff Duration</label>
-      </variable>
-      <variable label="Temperature Trim" CV="139" default="128" include="54400,54499,54800,54899,54898" item="ESU V4 Extra Smoke Unit Slider 3">
-        <decVal/>
-        <label>Smoke Unit Maximum Steam Chuff Duration</label>
-      </variable>
-      <variable label="Power Off Timeout" CV="140" default="0" tooltip="Unit is 5 seconds" include="54400,54499,54800,54899,54898" item="ESU V4 Extra Smoke Unit Slider 1">
-        <decVal/>
-        <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
-      </variable>
-      <variable label="Auto Uncoupling Speed" CV="246" default="0" item="ESU V4 Extra Auto Uncoupling Slider 1">
-        <decVal/>
-      </variable>
-      <variable label="Auto Uncoupling Remove Time" CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 3">
-        <decVal/>
-      </variable>
-      <variable label="Auto Uncoupling Push Time" CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 2">
-        <decVal/>
-      </variable>
-      <variable label="Prime Mover Startup Delay if Virtual Drive Sound Enabled" CV="252" include="LPV4,LPV4DCC,LPmV4,LPmV4DCC" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Extra Miscellaneous Slider 1">
-        <decVal/>
-      </variable>
-      <variable label="Constant Brake Mode - Brake Rate" CV="253" default="0" item="Advanced Group 1 Option 1">
-        <decVal/>
-      </variable>
-      <variable label="Constant Brake Mode - Brake Distance Forward" CV="254" default="0" item="Advanced Group 1 Option 2">
-        <decVal/>
-      </variable>
-      <variable label="Constant Brake Mode - Brake Distance Backward" CV="255" default="0" item="Advanced Group 1 Option 3">
-        <decVal/>
-      </variable>
-      <variable label="Constant Brake Mode - Constant Brake Distance on speed step 0" CV="27" mask="VXXXXXXX" default="0" item="Advanced Group 1 Option 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      <!-- Indexed variables -->
-      <constant item="PICV" default="31" comment="CV used for Primary Index"/>
-      <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
-      <!-- Firmware Version -->
-      <ivariable label="Firmware Build Number" CVname="285.0.255" CV="285" PI="0" SI="255" readOnly="yes" item="Firmware Build Number">
-        <indexedPairVal highCVname="286.0.255"/>
-      </ivariable>
-      <ivariable label="Firmware Build Number highCV" CVname="286.0.255" CV="286" PI="0" SI="255" readOnly="yes" comment="Dummy to work around sheet operations/indexedPairVal issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Minor Version" CVname="287.0.255" CV="287" PI="0" SI="255" readOnly="yes" item="Firmware Minor Version">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Major Version" CVname="288.0.255" CV="288" PI="0" SI="255" readOnly="yes" item="Firmware Major Version">
-        <indexedVal/>
-      </ivariable>
-      <!-- Function Outputs -->
-      <ivariable label="Headlight [1] Mode" CVname="259.16.0" CV="259" PI="16" SI="0" default="1" item="ESU V4 Function Output 1 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="260.16.0" CV="260" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="260.16.0" CV="260" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 1 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="261.16.0" CV="261" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Slider 3" tooltip="Units = 0.4 sec">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="262.16.0" CV="262" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="262.16.0" CV="262" PI="16" SI="0" default="31" item="ESU V4 Function Output 1 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="262.16.0" CV="262" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="262.16.0" CV="262" PI="16" SI="0" default="31" item="ESU V4 Function Output 1 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="262.16.0" CV="262" PI="16" SI="0" default="31" item="ESU V4 Function Output 1 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="262.16.0" CV="262" PI="16" SI="0" default="31" item="ESU V4 Function Output 1 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="262.16.0" CV="262" PI="16" SI="0" default="31" item="ESU V4 Function Output 1 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-       <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-       <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-       <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-       <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-       <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-       <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="264.16.0" CV="264" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="264.16.0" CV="264" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="264.16.0" CV="264" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="264.16.0" CV="264" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="264.16.0" CV="264" PI="16" SI="0" default="0" item="ESU V4 Function Output 1 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Rearlight [1] Mode" CVname="267.16.0" CV="267" PI="16" SI="0" default="1" item="ESU V4 Function Output 3 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="268.16.0" CV="268" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="268.16.0" CV="268" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 3 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="269.16.0" CV="269" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Slider 3" tooltip="Units = 0.4 sec">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="270.16.0" CV="270" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="270.16.0" CV="270" PI="16" SI="0" default="31" item="ESU V4 Function Output 3 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="270.16.0" CV="270" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="270.16.0" CV="270" PI="16" SI="0" default="31" item="ESU V4 Function Output 3 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="270.16.0" CV="270" PI="16" SI="0" default="31" item="ESU V4 Function Output 3 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="270.16.0" CV="270" PI="16" SI="0" default="31" item="ESU V4 Function Output 3 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="270.16.0" CV="270" PI="16" SI="0" default="31" item="ESU V4 Function Output 3 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="272.16.0" CV="272" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="272.16.0" CV="272" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="272.16.0" CV="272" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="272.16.0" CV="272" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="272.16.0" CV="272" PI="16" SI="0" default="0" item="ESU V4 Function Output 3 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="AUX1 [1] Mode" CVname="275.16.0" CV="275" PI="16" SI="0" default="1" item="ESU V4 Function Output 5 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="276.16.0" CV="276" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="276.16.0" CV="276" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 5 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="277.16.0" CV="277" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Slider 3" tooltip="Units = 0.4 sec">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="278.16.0" CV="278" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="278.16.0" CV="278" PI="16" SI="0" default="31" item="ESU V4 Function Output 5 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="278.16.0" CV="278" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="278.16.0" CV="278" PI="16" SI="0" default="31" item="ESU V4 Function Output 5 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="278.16.0" CV="278" PI="16" SI="0" default="31" item="ESU V4 Function Output 5 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="278.16.0" CV="278" PI="16" SI="0" default="31" item="ESU V4 Function Output 5 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="278.16.0" CV="278" PI="16" SI="0" default="31" item="ESU V4 Function Output 5 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="280.16.0" CV="280" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="280.16.0" CV="280" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="280.16.0" CV="280" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="280.16.0" CV="280" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="280.16.0" CV="280" PI="16" SI="0" default="0" item="ESU V4 Function Output 5 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="AUX2 [1] Mode" CVname="283.16.0" CV="283" PI="16" SI="0" default="1" item="ESU V4 Function Output 7 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="284.16.0" CV="284" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="284.16.0" CV="284" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 7 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="285.16.0" CV="285" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Slider 3" tooltip="Units = 0.4 seconds">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="286.16.0" CV="286" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="286.16.0" CV="286" PI="16" SI="0" default="31" item="ESU V4 Function Output 7 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="286.16.0" CV="286" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="286.16.0" CV="286" PI="16" SI="0" default="31" item="ESU V4 Function Output 7 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="286.16.0" CV="286" PI="16" SI="0" default="31" item="ESU V4 Function Output 7 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="286.16.0" CV="286" PI="16" SI="0" default="31" item="ESU V4 Function Output 7 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="286.16.0" CV="286" PI="16" SI="0" default="31" item="ESU V4 Function Output 7 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="288.16.0" CV="288" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="288.16.0" CV="288" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="288.16.0" CV="288" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="288.16.0" CV="288" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="288.16.0" CV="288" PI="16" SI="0" default="0" item="ESU V4 Function Output 7 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="AUX3 Mode" CVname="291.16.0" CV="291" PI="16" SI="0" default="1" item="ESU V4 Function Output 9 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="292.16.0" CV="292" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="292.16.0" CV="292" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 9 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="293.16.0" CV="293" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Slider 3" tooltip="Units = 0.4 sec">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="294.16.0" CV="294" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="294.16.0" CV="294" PI="16" SI="0" default="31" item="ESU V4 Function Output 9 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="294.16.0" CV="294" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="294.16.0" CV="294" PI="16" SI="0" default="31" item="ESU V4 Function Output 9 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="294.16.0" CV="294" PI="16" SI="0" default="31" item="ESU V4 Function Output 9 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="294.16.0" CV="294" PI="16" SI="0" default="31" item="ESU V4 Function Output 9 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="294.16.0" CV="294" PI="16" SI="0" default="31" item="ESU V4 Function Output 9 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="296.16.0" CV="296" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="296.16.0" CV="296" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="296.16.0" CV="296" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="296.16.0" CV="296" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="296.16.0" CV="296" PI="16" SI="0" default="0" item="ESU V4 Function Output 9 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="AUX4 Mode" CVname="299.16.0" CV="299" PI="16" SI="0" default="1" item="ESU V4 Function Output 10 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="300.16.0" CV="300" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="300.16.0" CV="300" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 10 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="301.16.0" CV="301" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Slider 3" tooltip="Units = 0.4 sec">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="302.16.0" CV="302" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="302.16.0" CV="302" PI="16" SI="0" default="31" item="ESU V4 Function Output 10 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="302.16.0" CV="302" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="302.16.0" CV="302" PI="16" SI="0" default="31" item="ESU V4 Function Output 10 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="302.16.0" CV="302" PI="16" SI="0" default="31" item="ESU V4 Function Output 10 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="302.16.0" CV="302" PI="16" SI="0" default="31" item="ESU V4 Function Output 10 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="302.16.0" CV="302" PI="16" SI="0" default="31" item="ESU V4 Function Output 10 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="304.16.0" CV="304" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="304.16.0" CV="304" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="304.16.0" CV="304" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="304.16.0" CV="304" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="304.16.0" CV="304" PI="16" SI="0" default="0" item="ESU V4 Function Output 10 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Headlight [2] Mode" CVname="355.16.0" CV="355" PI="16" SI="0" default="1" item="ESU V4 Function Output 2 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="356.16.0" CV="356" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="356.16.0" CV="356" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 2 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="357.16.0" CV="357" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Slider 3" tooltip="Units = 0.4 sec">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="358.16.0" CV="358" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="358.16.0" CV="358" PI="16" SI="0" default="31" item="ESU V4 Function Output 2 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="358.16.0" CV="358" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="358.16.0" CV="358" PI="16" SI="0" default="31" item="ESU V4 Function Output 2 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="358.16.0" CV="358" PI="16" SI="0" default="31" item="ESU V4 Function Output 2 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="358.16.0" CV="358" PI="16" SI="0" default="31" item="ESU V4 Function Output 2 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="358.16.0" CV="358" PI="16" SI="0" default="31" item="ESU V4 Function Output 2 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-       <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-       <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-       <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-       <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-       <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-       <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="359.16.0" CV="359" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="360.16.0" CV="360" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="360.16.0" CV="360" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="360.16.0" CV="360" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="360.16.0" CV="360" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="360.16.0" CV="360" PI="16" SI="0" default="0" item="ESU V4 Function Output 2 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Rearlight [2] Mode" CVname="363.16.0" CV="363" PI="16" SI="0" default="1" item="ESU V4 Function Output 4 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="364.16.0" CV="364" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="364.16.0" CV="364" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 4 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="365.16.0" CV="365" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Slider 3" tooltip="Units = 0.4 sec">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="366.16.0" CV="366" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="366.16.0" CV="366" PI="16" SI="0" default="31" item="ESU V4 Function Output 4 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="366.16.0" CV="366" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="366.16.0" CV="366" PI="16" SI="0" default="31" item="ESU V4 Function Output 4 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="366.16.0" CV="366" PI="16" SI="0" default="31" item="ESU V4 Function Output 4 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="366.16.0" CV="366" PI="16" SI="0" default="31" item="ESU V4 Function Output 4 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="366.16.0" CV="366" PI="16" SI="0" default="31" item="ESU V4 Function Output 4 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="367.16.0" CV="367" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="368.16.0" CV="368" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="368.16.0" CV="368" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="368.16.0" CV="368" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="368.16.0" CV="368" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="368.16.0" CV="368" PI="16" SI="0" default="0" item="ESU V4 Function Output 4 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="AUX1 [2] Mode" CVname="371.16.0" CV="371" PI="16" SI="0" default="1" item="ESU V4 Function Output 6 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="372.16.0" CV="372" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="372.16.0" CV="372" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 6 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="373.16.0" CV="373" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Slider 3" tooltip="Units = 0.4 sec">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="374.16.0" CV="374" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="374.16.0" CV="374" PI="16" SI="0" default="31" item="ESU V4 Function Output 6 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="374.16.0" CV="374" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="374.16.0" CV="374" PI="16" SI="0" default="31" item="ESU V4 Function Output 6 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="374.16.0" CV="374" PI="16" SI="0" default="31" item="ESU V4 Function Output 6 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="374.16.0" CV="374" PI="16" SI="0" default="31" item="ESU V4 Function Output 6 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="374.16.0" CV="374" PI="16" SI="0" default="31" item="ESU V4 Function Output 6 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="375.16.0" CV="375" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="376.16.0" CV="376" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="376.16.0" CV="376" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="376.16.0" CV="376" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="376.16.0" CV="376" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="376.16.0" CV="376" PI="16" SI="0" default="0" item="ESU V4 Function Output 6 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="AUX2 [2] Mode" CVname="379.16.0" CV="379" PI="16" SI="0" default="1" item="ESU V4 Function Output 8 effect generated" mask="XXXVVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Function Switch On Delay" CVname="380.16.0" CV="380" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Switch Off Delay" CVname="380.16.0" CV="380" PI="16" SI="0" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 8 Slider 2" tooltip="Units = 0.4 sec">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Function Auto Switch Off" CVname="381.16.0" CV="381" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Slider 3" tooltip="Units = 0.4 seconds">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness CV" CVname="382.16.0" CV="382" PI="16" SI="0" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Brightness" CVname="382.16.0" CV="382" PI="16" SI="0" default="31" item="ESU V4 Function Output 8 Slider 5" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
-      <ivariable label="Mode" CVname="382.16.0" CV="382" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Option 1" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Heating control"/>
-          <ienumChoice choice="Fan control"/>
-        </ienumVal>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>22</value></qualifier>
-      </ivariable>
-      <ivariable label="Coupler Force" CVname="382.16.0" CV="382" PI="16" SI="0" default="31" item="ESU V4 Function Output 8 Slider 7" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>28</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan Speed" CVname="382.16.0" CV="382" PI="16" SI="0" default="31" item="ESU V4 Function Output 8 Slider 11" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Standing heat" CVname="382.16.0" CV="382" PI="16" SI="0" default="31" item="ESU V4 Function Output 8 Slider 14" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Chuff power" CVname="382.16.0" CV="382" PI="16" SI="0" default="31" item="ESU V4 Function Output 8 Slider 8" mask="XXXVVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 1" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Acceleration rate" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Slider 12" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Minimum driving heat" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Slider 15" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Fan power" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Slider 9" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Phase Reverse" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Check 6" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Grade Crossing" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Fwd" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Rule 17 Rev" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Dimmer" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="LED Mode" CVname="383.16.0" CV="383" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>15</value></qualifier>
-      </ivariable>
-      <ivariable label="Special Function CV 2" CVname="384.16.0" CV="384" PI="16" SI="0" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Fan Decceleration rate" CVname="384.16.0" CV="384" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Slider 13" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
-      </ivariable>
-      <ivariable label="Maximum driving heat" CVname="384.16.0" CV="384" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Slider 16" mask="XXXXVVVV">
-        <indexedVal max="31"/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
-      </ivariable>
-      <ivariable label="Timeout" CVname="384.16.0" CV="384" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Slider 10" tooltip="Units = 0.25 sec">
-        <indexedVal/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
-      </ivariable>
-      <ivariable label="Startup Time" CVname="384.16.0" CV="384" PI="16" SI="0" default="0" item="ESU V4 Function Output 8 Slider 6">
-        <indexedVal/>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
-        <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
-      </ivariable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+  <variable item="Vstart" CV="2" default="3" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Vstart</label>
+    <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+  </variable>
+  <variable CV="3" default="16" item="Accel">
+    <decVal/>
+    <label>Acceleration</label>
+    <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
+  </variable>
+  <variable CV="4" default="12" item="Decel">
+    <decVal/>
+    <label>Deceleration</label>
+    <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
+  </variable>
+  <variable item="Vhigh" CV="5" default="255" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Vhigh</label>
+  </variable>
+  <variable item="Vmid" CV="6" default="88" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Vmid</label>
+  </variable>
+  <variable CV="7" readOnly="yes" item="Decoder Version">
+    <decVal/>
+    <label>Decoder Version</label>
+  </variable>
+  <variable CV="8" readOnly="yes" default="151" item="Manufacturer">
+    <decVal/>
+    <label>Manufacturer ID</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F1</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F2</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F3</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F4</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F5</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F6</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F7</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F8</label>
+  </variable>
+  <variable item="Analog Mode Function Status - FL" CV="14" mask="XXXXXXXV" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - FL</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F9</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F10</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F11</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F12" CV="14" mask="XXXVXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F12</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F13" CV="14" mask="XXVXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F13</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F14" CV="14" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F14</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F15" CV="14" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F15</label>
+  </variable>
+  <variable CV="15" mask="XXXXVVVV" item="ESU V4 Advanced Decoder Lock Option 2" default="0" tooltip="Set this to match value below and decoder will unlock">
+    <decVal max="16"/>
+    <label>Decoder Lock ID number</label>
+  </variable>
+  <variable CV="16" mask="XXXXVVVV" item="ESU V4 Advanced Decoder Lock Option 3" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
+    <decVal max="16"/>
+    <label>Preset Lock ID number</label>
+  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4cv21.22.xml"/>
+  <variable CV="27" mask="XXXXXXXV" item="ESU V4 Advanced Brake Sections Option 1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>ABC brake on Asymmetrical DCC - higher voltage on right rail</label>
+  </variable>
+  <variable CV="27" mask="XXXXXXVX" item="ESU V4 Advanced Brake Sections Option 2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>ABC brake on Asymmetrical DCC - higher voltage on left rail</label>
+  </variable>
+  <variable CV="27" mask="XXXXXVXX" item="ESU V4 Advanced Brake Sections Option 11">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Brake on Zimo HLU commands</label>
+  </variable>
+  <variable CV="27" mask="XXXXVXXX" item="ESU V4 Advanced Brake Sections Option 13" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Brake on DC, polarity against direction</label>
+  </variable>
+  <variable CV="27" mask="XXXVXXXX" item="ESU V4 Advanced Brake Sections Option 12" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Brake on DC, polarity same direction</label>
+  </variable>
+  <variable CV="28" mask="XXXXXXXV" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 3" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>RailCom Channel 1 Address Broadcast</label>
+  </variable>
+  <variable CV="28" mask="XXXXXXVX" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 4" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>RailCom Channel 2 Data Transmission</label>
+  </variable>
+  <variable CV="28" mask="VXXXXXXX" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 2" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>RailCom Plus Auto Loco Recognition</label>
+  </variable>
+  <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+    <enumVal>
+      <enumChoice choice="Forward">
+        <choice>Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Reverse">
+        <choice>Reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Normal Direction of Motion</label>
+  </variable>
+  <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+    <enumVal>
+      <enumChoice choice="14">
+        <choice>14</choice>
+      </enumChoice>
+      <enumChoice choice="28/128 (recommended)">
+        <choice>28/128 (recommended)</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Speed Steps</label>
+  </variable>
+  <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Analog Conversion Mode</label>
+  </variable>
+  <variable CV="29" mask="XXXXVXXX" default="1" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>RailCom Enable</label>
+  </variable>
+  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" exclude="LokPilot Fx V4.0">
+    <enumVal>
+      <enumChoice choice="Use Vstart, Vmid, Vhigh">
+        <choice>Use Vstart, Vmid, Vhigh</choice>
+      </enumChoice>
+      <enumChoice choice="Use Table">
+        <choice>Use Table</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Use Speed Table</label>
+  </variable>
+  <variable item="Index register H" CV="31" default="16">
+    <decVal/>
+    <label>Index register H</label>
+  </variable>
+  <variable item="Index register L" CV="32" default="0">
+    <decVal/>
+    <label>Index register L</label>
+  </variable>
+  <variable CV="47" mask="XXXXXXXV" default="1" item="ESU V4 Advanced Protocols Option 1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>DCC Protocol</label>
+  </variable>
+  <variable CV="47" mask="XXXXXXVX" default="0" include="LokPilot XL V4.0,LokSound XL V4.0" item="ESU V4 Advanced Protocols Option 4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>M4 Protocol</label>
+  </variable>
+  <variable CV="47" mask="XXXXXVXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Protocols Option 2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Marklin Motorola Protocol</label>
+  </variable>
+  <variable CV="47" mask="XXXXVXXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Protocols Option 3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Selectrix Protocol</label>
+  </variable>
+  <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Enable" exclude="LokPilot Fx V4.0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>BEMF</label>
+  </variable>
+  <variable item="Motor PWM Frequency" CV="49" mask="XXXXXXVX" default="1" exclude="LokPilot Fx V4.0">
+    <enumVal>
+      <enumChoice choice="20 kHz">
+        <choice>20 kHz</choice>
+      </enumChoice>
+      <enumChoice choice="40 kHz">
+        <choice>40 kHz</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Motor PWM Frequency</label>
+  </variable>
+  <variable CV="49" mask="XXXXXVXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Compatibility Option 2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Marklin Delta Mode</label>
+  </variable>
+  <variable CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Protocols Option 11">
+    <enumVal>
+      <enumChoice choice="No additional addresses" value="0"/>
+      <enumChoice choice="Use 2 addresses" value="1"/>
+      <enumChoice choice="Use 3 addresses" value="16"/>
+      <enumChoice choice="Use 4 addresses" value="17"/>
+    </enumVal>
+    <label>Marklin Additional Addresses</label>
+  </variable>
+  <variable CV="49" mask="XXXVXXXX" default="1" item="ESU V4 Adavanced Speed Step Option 1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Automatic Speed Step Detection</label>
+  </variable>
+  <variable CV="49" mask="XXVXXXXX" default="0" exclude="LokPilot Micro V4.0,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Compatibility Option 1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>LGB Function Button Mode</label>
+  </variable>
+  <variable CV="49" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Compatibility Option 3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>ZIMO Manual Function Mode</label>
+  </variable>
+  <variable CV="50" mask="XXXXXXXV" default="1" exclude="ESU LokSound Select,LokSound Micro V4.0,LokPilot V4.0 DCC,LokPilot Micro V4.0,LokPilot Micro V4.0 DCC" item="Analog (AC) Mode">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>AC Analog Mode</label>
+  </variable>
+  <variable CV="50" mask="XXXXXXVX" default="1" item="Analog (DC) Mode">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>DC Analog Mode</label>
+  </variable>
+  <variables exclude="LokPilot Fx V4.0">
+    <variable CV="51" default="0" item="EMF Option 4">
+      <decVal/>
+      <label>BEMF Parameter 'I' Slow</label>
+    </variable>
+    <variable CV="52" default="15" item="EMF Option 3">
+      <decVal/>
+      <label>BEMF Parameter 'K' Slow</label>
+    </variable>
+    <variable CV="53" default="140" item="EMF Control Reference">
+      <decVal/>
+      <label>BEMF Reference Voltage</label>
+    </variable>
+    <variable CV="54" default="50" item="EMF Option 1">
+      <decVal/>
+      <label>BEMF Parameter 'K'</label>
+    </variable>
+    <variable CV="55" default="100" item="EMF Option 2">
+      <decVal/>
+      <label>BEMF Parameter 'I'</label>
+    </variable>
+    <variable CV="56" default="255" item="EMF Feedback Cutout">
+      <decVal/>
+      <label>BEMF Control Range</label>
+    </variable>
+    <variable CV="10" default="8" item="Motor Option 1">
+      <decVal min="4" max="8"/>
+      <label>BEMF Sampling Period</label>
+    </variable>
+    <variable item="Forward Trim" CV="66" default="128" comment="Range 0-255">
+      <decVal/>
+      <comment>Range 0-255</comment>
+      <label>Forward Trim</label>
+    </variable>
+    <variable item="Speed Table" CV="67">
+      <speedTableVal min="1" max="255" mfx="true"/>
+      <label>Speed Table</label>
+      <label xml:lang="it">Tabella Velocità</label>
+    </variable>
+    <variable item="Reverse Trim" CV="95" default="128" comment="Range 0-255">
+      <decVal/>
+      <comment>Range 0-255</comment>
+      <label>Reverse Trim</label>
+    </variable>
+  </variables>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+  <variable CV="112" default="20" tooltip="Unit is 0.05 seconds" item="ESU V4 Function Settings General Slider 1">
+    <decVal/>
+    <label>Rate for Blinking Effects</label>
+  </variable>
+  <variable CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Advanced Power Pack Slider 1" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Power Pack Maintain Time</label>
+  </variable>
+  <variable CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Advanced Memory Settings Option 1)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Remember Current Function States</label>
+    <label xml:lang="fr">Sauvegarde fonction</label>
+  </variable>
+  <variable CV="122" mask="XXXXXXVX" default="1" item="ESU V4 Advanced Memory Settings Option 2)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Remember Current Speed</label>
+    <label xml:lang="fr">Sauvegarde vitesse actuelle</label>
+  </variable>
+  <variable CV="123" default="100" item="ESU V4 Advanced Brake Sections Slider 2">
+    <decVal/>
+    <label>ABC mode reduced speed</label>
+  </variable>
+  <variable CV="124" mask="XXXXXXXV" default="0" item="ESU V4 Adavanced Preserve Direction Option 1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Preserve Driving Direction when Changing from Analog to Digital</label>
+  </variable>
+  <variable CV="124" mask="XXXXXXVX" default="0" item="ESU V4 Advanced Decoder Lock Option 1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Decoder Lock Enable</label>
+  </variable>
+  <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot V4.0 DCC,LokSound Select L" item="ESU V4 Advanced Compatibility Option 4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Serial User Standard Interface</label>
+  </variable>
+  <variable CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period" exclude="LokPilot Fx V4.0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+    <label>Adaptive Regulation Frequency</label>
+  </variable>
+  <variable CV="124" mask="XXVXXXXX" default="0" include="ESU LokSound V4.0" item="Motor Option 2" exclude="LokSound Micro V4.0,LokSound XL V4.0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Motor Overload Protection</label>
+  </variable>
+  <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1" exclude="LokSound Micro V4.0,LokSound XL V4.0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Stop immediately on speed step 0</label>
+  </variable>
+  <variable CV="125" default="90" item="Analog Vstart">
+    <decVal/>
+    <label>Start Volts in DC Mode</label>
+  </variable>
+  <variable CV="126" default="130" item="Analog Vhigh">
+    <decVal/>
+    <label>Maximum Speed in DC mode</label>
+  </variable>
+  <variable CV="127" default="90" exclude="ESU LokSound Select,LokSound Micro V4.0,LokPilot V4.0 DCC,LokPilot Micro V4.0,LokPilot Micro V4.0 DCC" item="Analog (AC) Vstart">
+    <decVal/>
+    <label>Start Volts in AC Mode</label>
+  </variable>
+  <variable CV="128" default="130" exclude="ESU LokSound Select,LokSound Micro V4.0,LokPilot V4.0 DCC,LokPilot Micro V4.0,LokPilot Micro V4.0 DCC" item="Analog (AC) Vhigh">
+    <decVal/>
+    <label>Maximum Speed in AC mode</label>
+  </variable>
+  <variable CV="129" default="15" item="Radio Power Conversion">
+    <decVal/>
+    <label>Analog Mode Function Hysteresis</label>
+  </variable>
+  <variable CV="130" default="5" item="Analog Power Conversion">
+    <decVal/>
+    <label>Analog Mode Motor Hysteresis</label>
+  </variable>
+  <variable CV="132" default="80" tooltip="Unit is 0.0625 seconds" item="ESU V4 Function Settings General Slider 2">
+    <decVal/>
+    <label>Grade Crossing Hold Time</label>
+  </variable>
+  <variable CV="134" mask="XXVVVVVV" default="12" item="ESU V4 Advanced Brake Sections Slider 1">
+    <decVal min="4" max="32"/>
+    <label>ABC voltage detection threshold</label>
+  </variable>
+  <variable CV="138" default="128" item="ESU V4 Function Settings Smoke Unit Slider 2" exclude="LokPilot Fx V4.0" include="ESU LokSound V4.0,LokSound Select L">
+    <decVal/>
+    <label>Fan Speed Trim</label>
+  </variable>
+  <variable CV="139" default="128" item="ESU V4 Function Settings Smoke Unit Slider 3" include="ESU LokSound V4.0,LokSound Select L">
+    <decVal/>
+    <label>Temperature Trim</label>
+  </variable>
+  <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Function Settings Smoke Unit Slider 1" include="ESU LokSound V4.0,LokSound Select L">
+    <decVal/>
+    <label>Smoke Unit Automatic Power Off Time</label>
+  </variable>
+  <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4" include="ESU LokSound V4.0,LokSound Select L">
+    <decVal/>
+    <label>Preheating Temperature for Secondary Smoke Unit</label>
+  </variable>
+  <variable CV="246" default="0" item="ESU V4 Function Settings Auto Uncoupling Slider 1" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Auto Uncoupling Speed</label>
+  </variable>
+  <variable CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Function Settings Auto Uncoupling Slider 3" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Auto Uncoupling Remove Time</label>
+  </variable>
+  <variable CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Function Settings Auto Uncoupling Slider 2" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Auto Uncoupling Push Time</label>
+  </variable>
+  <variable CV="252" include="ESU LokPilot V4.0" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Advanced Starting Delay Slider 1">
+    <decVal/>
+    <label>&lt;html&gt;Prime Mover Startup Delay&lt;br&gt;if Virtual Drive Sound Enabled&lt;/html&gt;</label>
+  </variable>
+  <variable CV="253" default="0" tooltip="Unit is 0.25 seconds" item="ESU V4 Advanced Constant Brake Option 1" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Constant Brake Time</label>
+  </variable>
+  <variable CV="254" default="0" item="ESU V4 Advanced Constant Brake Option 2" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Constant Brake Distance Forward</label>
+  </variable>
+  <variable CV="255" default="0" item="ESU V4 Advanced Constant Brake Option 3" exclude="LokPilot Fx V4.0">
+    <decVal/>
+    <label>Constant Brake Distance Backward</label>
+  </variable>
+  <variable CV="27" mask="VXXXXXXX" default="0" item="ESU V4 Advanced Constant Brake Option 4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Constant Brake Distance on speed step 0</label>
+  </variable>
+  <!-- Indexed variables -->
+  <constant item="PICV" default="31" comment="CV used for Primary Index"/>
+  <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
+  <!-- Firmware Version -->
+  <variable CV="0.255.285" readOnly="yes" item="Firmware Build Number">
+    <splitVal highCV="0.255.286"/>
+    <label>Firmware Build Number</label>
+  </variable>
+  <variable CV="0.255.287" readOnly="yes" item="Firmware Minor Version">
+    <decVal/>
+    <label>Firmware Minor Version</label>
+  </variable>
+  <variable CV="0.255.288" readOnly="yes" item="Firmware Major Version">
+    <decVal/>
+    <label>Firmware Major Version</label>
+  </variable>
+  <!-- Decoder Information -->
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/> -->
+  <!-- Function Outputs -->
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/> -->
 </variables>

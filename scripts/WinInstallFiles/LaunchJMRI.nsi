@@ -25,6 +25,17 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.20.0
+; - Allow options to be specified either as '/' or '-'
+; - Add option '/J' to pass JVM option
+; -------------------------------------------------------------------------
+; - Version 0.1.19.0
+; - Bring heap size calculation into line with Linux and OS X launchers
+; - Increase minimum memory requirement to 96 MB
+; - Change maximum memory requirement to be between 192 and 768 and to use
+; - maximum of half physical physical available RAM when above 192
+; - Allow use of '/profile' parameter to specify specific profile
+; -------------------------------------------------------------------------
 ; - Version 0.1.18.0
 ; - Check if application is already running with option to continue
 ; - or abort
@@ -122,13 +133,14 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "© 1997-2013 JMRI Community"   ; Copyright string
-!define VER        "0.1.18.0"                     ; Launcher version
+!define COPYRIGHT  "© 1997-2016 JMRI Community"   ; Copyright string
+!define VER        "0.1.20.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
-!define MINMEM     20                             ; Minimum memory in Mbyte
-!define MAXMEM     640                            ; Maximum memory in Mbyte
+!define MINMEM     96                             ; Minimum memory in Mbyte
+!define HIMAXMEM   768                            ; Highest Maximum memory
+!define LOMAXMEM   192                            ; Lowest Maximum memory
 
 ; -------------------------------------------------------------------------
 ; - End of basic information
@@ -145,10 +157,12 @@ Var CLASSPATH  ; holds the class path for JMRI .jars
 Var CLASS      ; holds the class to launch
 Var APPNAME    ; holds the application name
 Var OPTIONS    ; holds the JRE options
+Var JVMOPTIONS ; holds the additonal JRE options passed via '/J'
 Var JMRIOPTIONS ; holds the JMRI-specific options (read from JMRI_OPTIONS)
 Var JMRIPREFS  ; holds the path to user preferences (read from JMRI_PREFSDIR)
 Var JMRIHOME   ; holds the path to JMRI program files (read from JMRI_HOME)
 Var JMRIUSERHOME ; holds the path to user files (read from JMRI_USERHOME)
+Var JMRIPROFILE ; holds the file to use for profile
 Var CALCMAXMEM ; holds the calculated maximum memory
 Var PARAMETERS ; holds the commandline parameters (class and config file)
 Var NOISY      ; used to determine if console should be visible or not
@@ -219,6 +233,7 @@ Section "Main"
   DetailPrint "Parameters: $PARAMETERS"
   DetailPrint "Noisy: $NOISY"
   DetailPrint "Force32bit: $FORCE32BIT"
+  DetailPrint "Profile: $JMRIPROFILE"
 
   ; -- First determine if we're running on x64
   DetailPrint "Testing for x64..."
@@ -299,27 +314,39 @@ Section "Main"
   ; -- Get the memory status
   StrCmp ${ARCH_32BIT} $x64 Notx64
   Call GetSystemMemoryStatus64
-  Goto CalcFreeMem
+  Goto CalcMem
   Notx64:
     Call GetSystemMemoryStatus
-  CalcFreeMem:
+  CalcMem:
   System::Int64Op $4 / 1048576
   Pop $4
-  DetailPrint "FreeMemory: $4m"
-  StrCpy $CALCMAXMEM $4
-  IntCmp $CALCMAXMEM ${MAXMEM} cmp_done cmp_max_lt cmp_max_gt
-  cmp_max_lt:
-    ; -- Check that the free memory is >= MINMEM
-    IntCmp $CALCMAXMEM ${MINMEM} cmp_done cmp_min_lt cmp_done
-    Goto cmp_done
+  DetailPrint "PhysicalMemory: $4m"
+  ; -- Check that physical memory is >= MINMEM
+  IntCmp $4 ${MINMEM} cmp_max cmp_min_lt cmp_max
   cmp_min_lt:
-    ; -- If insufficient free memory, stop with an error
-    MessageBox MB_OK|MB_ICONSTOP "Not enough free memory to start. JMRI requires at least ${MINMEM} MBytes free memory."
+    ; -- If insufficient physical memory, stop with an error
+    MessageBox MB_OK|MB_ICONSTOP "Not enough available memory to start. JMRI requires at least ${MINMEM} MBytes memory."
     Goto Exit
+  cmp_max:
+    ; -- Check if 1/2 physical memory is between LOMAXMEM and HIMAXMEM
+    IntOp $CALCMAXMEM $4 / 2
+    DetailPrint "Check if $CALCMAXMEMm is between ${LOMAXMEM}m and ${HIMAXMEM}m"
+    IntCmp $CALCMAXMEM ${HIMAXMEM} cmp_done cmp_max_lt cmp_max_gt
   cmp_max_gt:
-    ; -- If free memory greater than MAXMEM, set to MAXMEM
-    StrCpy $CALCMAXMEM ${MAXMEM}
+    ; -- 1/2 physical memory is greater than HIMAXMEM,
+    ; -- so set to HIMAXMEM
+    DetailPrint "Greater than HIMAXMEM: ${HIMAXMEM}m"
+    StrCpy $CALCMAXMEM ${HIMAXMEM}
     Goto cmp_done
+  cmp_max_lt:
+    ; -- 1/2 physical memory is less than HIMAXMEM
+    ; --
+    DetailPrint "Less than HIMAXMEM: ${HIMAXMEM}m"
+    DetailPrint "Check if $CALCMAXMEMm is less than ${LOMAXMEM}m"
+    IntCmp $CALCMAXMEM ${LOMAXMEM} cmp_done cmp_use_lomax cmp_done
+    cmp_use_lomax:
+      DetailPrint "Use LOMAXMEM: ${LOMAXMEM}m"
+      StrCpy $CALCMAXMEM ${LOMAXMEM}
   cmp_done:
   DetailPrint "MinMemory: ${MINMEM}m"
   DetailPrint "MaxMemory: $CALCMAXMEMm"
@@ -332,7 +359,12 @@ Section "Main"
   ; -- If not defined, it returns an empty value
   ReadEnvStr $JMRIOPTIONS "JMRI_OPTIONS"
 
-  StrCpy $OPTIONS "$JMRIOPTIONS -noverify"
+  ; -- Add profile (if specified)
+  StrCmp $JMRIPROFILE "" contOptions
+    StrCpy $JMRIOPTIONS '$JMRIOPTIONS -Dorg.jmri.profile="$JMRIPROFILE"'
+  
+  contOptions:
+  StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
@@ -471,7 +503,7 @@ Function .onInit
   Call GetParameters
   Pop $0
   StrCmp $0 "" 0 cmdlineOk
-    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] [/32bit] class [config]'"
+    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] [/32bit] [/profile <profileID>] [/JOPTION] class [config]'"
     Abort
 
   cmdlineOk:
@@ -480,12 +512,19 @@ Function .onInit
   Call GetWord
   Pop $1
   StrCpy $2 $1 1
-  StrCmp $2 "/" cmdlineOptsGet cmdlineOptsDone
+  StrCmp $2 "/" cmdlineOptsGet
+  StrCmp $2 "-" cmdlineOptsGet cmdlineOptsDone
   cmdlineOptsGet:
   ; -- Process the possible commandline options
-  StrCmp $1 "/debug" optsDebug
-  StrCmp $1 "/noisy" optsNoisy
-  StrCmp $1 "/32bit" opts32bit
+  ; -- Strip first character
+  StrCpy $2 $1 "" 1
+  StrCmp $2 "debug" optsDebug
+  StrCmp $2 "noisy" optsNoisy
+  StrCmp $2 "32bit" opts32bit
+  StrCmp $2 "profile" optsProfile
+  ; -- Now check if we've got a '/J | -J' option
+  StrCpy $2 $2 1
+  StrCmp $2 "J" optsJVMOpts
   ; -- If we've got here, the commandline option is not known so give an error.
     MessageBox MB_OK|MB_ICONSTOP "Command line option '$1' not known."
     Abort
@@ -501,6 +540,30 @@ Function .onInit
   
   opts32bit:
   StrCpy $FORCE32BIT ${FLAG_YES}
+  Goto cmdLoop
+  
+  optsProfile:
+  Push $0
+  Call GetParameters
+  Pop $0
+  Push $0
+  Call GetWord
+  Pop $JMRIPROFILE
+  StrCpy $2 $JMRIPROFILE 1
+  StrCmp $2 '"' 0 cmdLoop
+    StrCpy $JMRIPROFILE $JMRIPROFILE "" 1
+    Goto cmdLoop
+    
+  optsJVMOpts:
+  ; -- Format is '-J-Dsun.java2d.hdiaware=true'
+  ; -- to pass '-Dsun.java2d.hdiaware=true'
+  ; -- $1 already contains complete option with '-J' prefix
+  StrCpy $2 $1 "" 2  ; strip first 2 chars
+  StrCmp $JVMOPTIONS "" optsJVMcont
+    ; -- add space if more than one option
+    StrCpy $JVMOPTIONS `$JVMOPTIONS `
+  optsJVMcont:
+  StrCpy $JVMOPTIONS `$JVMOPTIONS$2`
   Goto cmdLoop
 
   cmdlineOptsDone:

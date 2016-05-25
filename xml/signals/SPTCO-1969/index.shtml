@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: index.shtml 25755 2014-05-03 21:25:55Z jacobsen $ -->
+<title>JMRI: Southern Pacific 1969 Signalling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Southern Pacific 1969 Signalling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to the 
+1969 Southern Pacific Transportation Company rules as 
+described in the "Rules and Regulations of the Transportation Department" booklet.
+
+<p>
+The Southern Pacific 1969 rulebook may be available in the files section of the JMRI users' Yahoo group.
+
+<p>
+There are three icon sets defined for most masts.
+
+<ul>
+<li>noflash - a set of static icons depicting high signals
+<li>shaped  - a set of animated icons depicting high signals
+<li>dwarf   - a set of animated icons depicting low signals
+</ul>
+
+Not all masts have a dwarf form and those affected masts do not have the dwarf icon set. If using the animated icons be sure to set the rotation of the mast to 0.
+
+<p>
+Default DCC aspect numbers have been chosen to match the BNSF and UP definitions so that hardware that is compatible with those definitions can be used with this one too.
+
+<p>
+To backdate this definition to be compatible with the 1960 rulebook it is just a simple matter of disabling the flashing red restricting aspect in the edit dialogue on any searchlight masts which have it.
+
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-SL-3-L.xml">Triple searchlight with Lunar on lower head</a>
+<li><a href="appearance-SL-2-Y.xml">Double searchlight with flashing yellow marker lamp</a>
+<li><a href="appearance-SL-2-L.xml">Double searchlight Lunar on lower head</a>
+<li><a href="appearance-SL-2-A.xml">Double searchlight absolute signal</a>
+<li><a href="appearance-SL-1-W.xml">Single searchlight with flashing white marker lamp</a>
+<li><a href="appearance-SL-1-PP.xml">Single searchlight with triangular 'P' plate</a>
+<li><a href="appearance-SL-1-P.xml">Single searchlight with number plate</a>
+<li><a href="appearance-SL-1-G.xml">Single searchlight with circular 'G' plate</a>
+<li><a href="appearance-SL-1-D.xml">Single searchlight distant with 'D' prefixed number plate</a>
+<li><a href="appearance-SL-1-A.xml">Single searchlight absolute signal</a>
+<li><a href="appearance-SE-3-A.xml">Triple arm semaphore absolute</a>
+<li><a href="appearance-SE-2-P.xml">Double arm semaphore with number plate</a>
+<li><a href="appearance-SE-2-A.xml">Double arm semaphore absolute</a>
+<li><a href="appearance-SH-2-A.xml">Double arm semaphore/searchlight hybrid absolute</a>
+<li><a href="appearance-SE-1-PP.xml">Single arm semaphore with triangular 'P' plate</a>
+<li><a href="appearance-SE-1-G.xml">Single arm semaphore with circular 'G' plate</a>
+<li><a href="appearance-SE-1-A.xml">Single arm semaphore absolute</a>
+<li><a href="appearance-SH-1-A.xml">Single arm semaphore/searchlight hybrid absolute</a>
+</ul>
+
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

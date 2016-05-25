@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtTToTTurnout.shtml,v 1.4 2010/01/09 22:25:56 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-24--> 
+<!--  $Id$ -->
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Set Signals at Throat-to-Throat Turnouts Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Dave Duchamp" name=Author>
     <META name="keywords" content="JMRI help Layout Editor panel">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,209 +24,168 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Jeux de Signaux pour Aiguillage Pointe à Pointe </H1>
+<H1>D&#233;finir Signaux pour Aiguillage Pointe &#224; Pointe </H1>
 <h2> Introduction</h2>
 <p>
-Cet outil fournit une procédure automatisée pour l'attribution des signaux à deux aiguillages
-proches orientés pointe à pointe, avec les pointes reliées par un
-segment de voie. Cette disposition est utilisée, où quatre voies se rejoignent
-dans une petite zone, si étroitement que les signaux ne peuvent pas être placés aux pointes des aiguillages
-Une telle configuration est utilisée pour modéliser unr traversée jonction double, par exemple, mais peut aussi
-se produire dans d'autres contextes. Chacun des deux aiguillages peut être soit un aiguillage à droite (D),
-à gauche (G) ou symétrique (Y) . Schématiquement, la configuration finale pointe à pointe se présente comme indiqué ci-dessous:</p>
+Cet outil fournit une proc&#233;dure automatis&#233;e pour l'attribution des signaux &#224; deux aiguillages
+proches orient&#233;s pointe &#224; pointe, avec les pointes reli&#233;es par un
+segment de voie. Cette disposition est utilis&#233;e, o&#249; quatre voies se rejoignent
+dans une petite zone, si &#233;troitement que les signaux ne peuvent pas &#234;tre plac&#233;s aux pointes des aiguillages
+Une telle configuration est utilis&#233;e pour mod&#233;liser unr travers&#233;e jonction double, par exemple, mais peut aussi
+se produire dans d'autres contextes. Chacun des deux aiguillages peut &#234;tre soit un aiguillage &#224; droite (D),
+&#224; gauche (G) ou sym&#233;trique (Y) . Sch&#233;matiquement, la configuration finale pointe &#224; pointe se pr&#233;sente comme indiqu&#233; ci-dessous:</p>
 <A Href="./images/DoubleXover8.gif"><IMG SRC = "./images/TToTTurnout8.gif"
 ALIGN= CENTER WIDTH= "280" height= "75" hspace= "0" vspace= "0"></A>
 <p>
-Si nécessaire, cet outil va placer des icônes de signal sur le TCO pour les voies directe et divergente des deux aiguillages, et il sera mis en place une logique de contrôle pour les signaux
-spécifiés. Soit un ou deux signaux peuvant être
-placés à chacune des voie des deux aiguillage. La jambe continue est la voie connectée
-lorsque l'aiguillage est «DIRECTE», et la jambe divergente est la voie connectée lorsque
-l'aiguillage est «DÉVIÉE».</p>
+Si n&#233;cessaire, cet outil va placer des ic&#244;nes de signal sur le TCO pour les voies directes et divergentes des deux aiguillages, et il sera mis en place une logique de contr&#244;le pour les signaux
+sp&#233;cifi&#233;s. Soit un ou deux signaux peuvant &#234;tre
+plac&#233;s &#224; chacune des voie des deux aiguillage. La voie droite est la voie connect&#233;e
+lorsque l'aiguillage est"DROIT", et la voie divergente est la voie connect&#233;e lorsque
+l'aiguillage est"D&#201;VI&#201;E".</p>
 <p>
-Avant de sélectionner cet outil, les deux 
-aiguillages doivent être connectés sur le TCO tête bêche par un segment de voie
-, et les signaux requis doivent être dans la Table Signal. Cet outil place 
+Avant de s&#233;lectionner cet outil, les deux 
+aiguillages doivent &#234;tre connect&#233;s sur le TCO t&#234;te b&#234;che par un segment de voie
+, et les signaux requis doivent &#234;tre dans le Tableau Signal. Cet outil place 
 le signal que lorsque la voie principale des aiguillage est verticale ou horizontale
-(Ou presque verticale ou horizontale) sur le TCO, donc la conception de votre TCO doit en tenir compte. La logique de contrôle créée par cet outil ne fonctionne correctement que
-si chacun des tronçons de voie reliés aux jambes directes et divergentes
-des deux aiguillages est affecté à un canton différent. Elle fonctionne mieux si le
-segment de voie reliant les deuxpointes et les deux aiguillages sont un cinquième
-canton différent, mais ce n'est pas nécessaire.</p>
+(Ou presque verticale ou horizontale) sur le TCO, donc la conception de votre TCO doit en tenir compte. La logique de contr&#244;le cr&#233;&#233;e par cet outil ne fonctionne correctement que
+si chacun des tron&#231;ons de voie reli&#233;s aux voiesdirectes et divergentes
+des deux aiguillages est affect&#233; &#224; un canton diff&#233;rent. Elle fonctionne mieux si le
+segment de voie reliant les deux pointes des deux aiguillages sont un cinqui&#232;me
+canton diff&#233;rent, mais ce n'est pas n&#233;cessaire.</p>
 <p>
-Lorsque cet élément est sélectionné, une boîte de dialogue apparaît pour la saisie des noms (système ou
-utilisateur) des deux aiguillages, et les noms (système ou utilisateur) de quatre à huit
-signaux à attribués aux deux aiguillages. Vous pouvez entrer à la fois les noms des aguillages
-s, ou entrer un seul aiguillage et permettre au programme de trouver l'autre. Pour
-vérifier que le second aiguillage a été trouvé correctement, cliquez sur le bouton  <b>Obtenir Sauvegarde</b>.</P>
-<p>
-Pour chaque signal, des cases à cocher sont disponibles pour sélectionner
- une icône si elle doit être placée sur le TCO, et la logique de contrôle si elle
-doit être créée pour le signal. Peu importe si les icônes
-sont placées ou si la logique est créée, l'Éditeur de TCO va enregistrer que les entrées
-signaux sont affectées à l'aiguillages spécifié.</p>
-<p>
-Lorsque les deux aiguillages ont cette configuration en utilisant cet outil d'intallation de pointe à pointe, 
-l'Éditeur de TCO conserve la trace de ce fait. Donc, si vous sélectionnez <b> Définir des signaux ...</b>
-le menu contextuel de n'importe quel aiguillage, vous reviendrez à ce dialogue avec les deux
-aiguillages remplis. Si vous avez plus tard, le désir de «dissocier» les deux aiguillages
-et d'ajouter des signaux à la pointe, pour chacun des aiguillages, sélectionnez
-<b> Définir Signaux à l'aiguillage ...</b>, remplissez le nom de l'aiguillage manuellement, entrez les
-signaux, et cliquez sur <b>Terminé </b>.
-
-
-Si nécessaire, cet outil va placer des icônes de signal sur le panneau pour les voies continue
-et divergentes des deux aiguillages, et mettrs en place une logique de contrôle pour
-les signaux spécifiés. Soit un ou deux signaux peuvent être
-placés à chaque jambe de l'aiguillage. La jambe continue est la voie connectée
-lorsque l'aiguillage est «Directe», et la jambe divergente est la voie connectée lorsque
-l'aiguillage est «Dévié».</p>
-<p>
-Avant de sélectionner cet outil, les deux 
-aiguillages doivent être connectés  pointe à pointe par un segment de voie
-sur le TCO , et les signaux requis doivent être dans la Table de Signal. Cet outil place 
-le signal que lorsque la voie principale des aiguillages est verticale ou horizontale
-(Ou presque verticale ou horizontale) sur le TCO, donc la conception de votre panneau doit en tenir compte
-. La logique de contrôle créée par cet outil ne fonctionne correctement
-que si chacun des tronçons de voie reliés aux jambes continue et divergentes
-des deux aiguillages est affectée à un canton différent. Elle fonctionne mieux si le
-segment de voie reliant les deux pointes et les deux aiguillages est un cinquième
-canton différent, mais ce n'est pas nécessaire.</p>
-<p>
-Lorsque cet élément est sélectionné, une boîte de dialogue apparaît pour la saisie des noms (système ou
-utilisateur) des deux aiguillages, et les noms (système ou utilisateur) de quatre à huit
- signaux pour être attribués aux deux aiguillages. Vous pouvez entrer soit les noms des aiguillages
+Lorsque cet &#233;l&#233;ment est s&#233;lectionn&#233;, une bo&#238;te de dialogue appara&#238;t pour la saisie des noms (syst&#232;me ou
+utilisateur) des deux aiguillages, et les noms (syst&#232;me ou utilisateur) de quatre &#224; huit
+signaux attribu&#233;s aux deux aiguillages. Vous pouvez entrer &#224; la fois les noms des aiguillages
 , ou entrer un seul aiguillage et permettre au programme de trouver l'autre. Pour
-vérifier que le second aiguillage a été trouvé correctement, cliquez sur le bouton <b>Obtenir
-Sauvegarde</b>.</P>
+v&#233;rifier que le second aiguillage a &#233;t&#233; trouv&#233; correctement, cliquez sur le bouton  <b>Obtenir Sauvegarde</b>.</P>
 <p>
-Pour chaque signal, des cases à cocher sont disponibles pour sélectionner
-si une icône doit être placée sur le TCO, et si la logique de contrôle doit
-doit être créée pour le signal. Peu importe si les icônes
-sont placées ou si la logique est créée, l'Éditeur de TCO va enregistrer que les entrées
-signaux sont affectées à l'aiguillages spécifié.</p>
+Pour chaque signal, des cases &#224; cocher sont disponibles pour s&#233;lectionner
+ une ic&#244;ne si elle doit &#234;tre plac&#233;e sur le TCO, et la logique de commande si elle
+doit &#234;tre cr&#233;&#233;e pour le signal. Peu importe si les ic&#244;nes
+sont plac&#233;es ou si la logique est cr&#233;&#233;e, l'&#201;diteur de TCO va enregistrer que les entr&#233;es
+signaux sont affect&#233;es &#224; l'aiguillages sp&#233;cifi&#233;.</p>
 <p>
-Lorsque deux aiguillages sont configurés pointe tête - bêche en utilisant cet outil, l'Éditeur de TCO
- conserve la trace de ce fait. Donc, si vous sélectionnez <b>Définir des signaux ...</b> dans
-le menu contextuel de n'importe quel aiguillage, vous reviendrez à ce dialogue avec les deux
-aiguillages remplis. Si vous aves plus tard, le désir de «dissocier» les deux aiguillages
-et d'ajouter des signaux à la pointe, pour chacun des aiguillages, sélectionnez
- <b>Définir Signaux  de l'aiguillage ...</b>, remplissez le nom de l'aiguillage manuellement, entrez
-les signaux, et cliquez sur Terminé <b></b>.
+Lorsque les deux aiguillages ont cette configuration en utilisant cet outil d'intallation de pointe &#224; pointe, 
+l'&#201;diteur de TCO conserve la trace de ce fait. Donc, si vous s&#233;lectionnez <b> D&#233;finir des signaux ...</b>
+le menu contextuel de n'importe quel aiguillage, vous reviendrez &#224; ce dialogue avec les deux
+aiguillages remplis. Si vous avez plus tard, le d&#233;sir de"dissocier" les deux aiguillages
+et d'ajouter des signaux &#224; la pointe, pour chacun des aiguillages, s&#233;lectionnez
+<b> D&#233;finir Signaux &#224; l'aiguillage ...</b>, remplissez le nom de l'aiguillage manuellement, entrez les
+signaux, et cliquez sur <b>Termin&#233; </b>.
 
-<h3>Boite de Dialogue de Définition des Signaux aux Aiguillages Pointe à la Pointe</h3>
+<h3>Boite de Dialogue de D&#233;finition des Signaux aux Aiguillages Pointe &#224; Pointe</h3>
 <p>
 Dans le <b>Nom Aiguillage 1</b> et <b> Nom Aiguillage 2 </b>, entrez le nom
-(Système ou utilisateur) d'un ou des deux aiguillages. Si un seul est entré, l'
-outil va trouver l'autre lorsque les boutond <b>Terminé</b> ou <b>Obtenir Sauvegarde</b> sont
-cliqués. Si l'outil ne peut pas trouver le second aiguillage, ou si les deux aiguillages entrés
- ne sont pas  connectés pointe à pointe sur le panneau 
-par un segment de voie , un message d'erreur en résultera . Il ne fait aucune différence
+(Syst&#232;me ou utilisateur) d'un ou des deux aiguillages. Si un seul est entr&#233;, l'
+outil va trouver l'autre lorsque les bouton <b>Termin&#233;</b> ou <b>Obtenir Sauvegarde</b> sont
+cliqu&#233;s. Si l'outil ne peut pas trouver le second aiguillage, ou si les deux aiguillages entr&#233;s
+ ne sont pas  connect&#233;s pointe &#224; pointe sur le panneau 
+par un segment de voie , un message d'erreur en r&#233;sultera  Il ne fait aucune diff&#233;rence
 entre l'aiguillage que vous appelez <b>Aiguillage 1</b> et celui que vous appelez <b>Aiguillage 2</b>.</p>
 <p>
-Les noms de Signaux (soit système ou utilisateur) sont entrés dans la section suivante. Si
-les signaux à ces aiguillages ont été saisis précédemment, cliquez <b>Obternir Sauvegarde</b> pour récupérer les noms des signaux  précédemment entrés.
-L'outil fournit l'entrée de deux signaux à chacune des voies continue et
+Les noms de Signaux (soit syst&#232;me ou utilisateur) sont entr&#233;s dans la section suivante. Si
+les signaux &#224; ces aiguillages ont &#233;t&#233; saisis pr&#233;c&#233;demment, cliquez <b>Obtenir Sauvegarde</b> pour r&#233;cup&#233;rer les noms des signaux  pr&#233;c&#233;demment entr&#233;s.
+L'outil fournit l'entr&#233;e de deux signaux &#224; chacune des voies continues et
  divergentes de chaque aiguillage (comme le montre la figure ci-dessus). Ces signaux
- indiquent l'état du passage vers la voie continue ou divergente de l'autre
-aiguillage. D'abord le signal situé à <b> Aiguillage 1 - voie continue
-</b> est entré. Le signal <b>voie continue </b>  est requis, mais le signal
+ indiquent l'&#233;tat du passage vers la voie continue ou divergente de l'autre
+aiguillage. D'abord le signal situ&#233; &#224; <b> Aiguillage 1 - voie continue
+</b> est entr&#233;. Le signal <b>voie continue </b>  est requis, mais le signal
  <b>voie divergente</b> est facultatif. Si seulement le signal<b> voie continue
-</b> est entré, l'outil suppose que le signal est à la fois la signalisation des voies des autres
- aiguillages, pareillement quand un seul signal est placé à
+</b> est entr&#233;, l'outil suppose que le signal est &#224; la fois la signalisation des voies des autres
+ aiguillages, pareillement quand un seul signal est plac&#233; &#224;
 la pointe d'un aiguillage unique.</p>
 <p>
-Le signal suivant situé à <b> Aiguillage 1 - voie déviée</b> est entré.
-N'oubliez pas qu'il s'agit de la jambe de l'aiguillage 1  qui est connectée lorsque l'aiguillage est DÉVIÉ
-. Lorsque les deux signaux sont entrés, le signal le plus proches signale l'
-état de la voie continue (la voie DIRECTE de l'aiguillage ) de l'autres aiguillage.
-De même, les signal situés à <b>Aiguillage 2 - voie continue</b> et <b>l'aiguillage  2 - voie déviée</b> sont entrés</p>
+Le signal suivant situ&#233; &#224; <b> Aiguillage 1 - voie d&#233;vi&#233;e</b> est entr&#233;.
+N'oubliez pas qu'il s'agit de la voie de l'aiguillage 1 qui est connect&#233;e lorsque l'aiguillage est D&#201;VI&#201;
+. Lorsque les deux signaux sont entr&#233;s, le signal le plus proches signale l'
+&#233;tat de la voie continue (la voie DIRECTE de l'aiguillage ) de l'autres aiguillage.
+De m&#234;me, les signaaux situ&#233;s &#224; <b>Aiguillage 2 - voie continue</b> et <b>l'aiguillage 2 - voie d&#233;vi&#233;e</b> sont entr&#233;s</p>
 <p>
-S'il y avait un signal précédemment attribué à toute les
-positions, et vous entrez un <i>autre</i> signal dans le même lieu,
-le signal remplacera le signal précédent, et l'icône du
-signal précédent (s'il y en avait un) sera supprimé à partir du
-TCO. De même, si vous remplacez un signal précédemment affecté<b>Divergents</b>
- avec une entrée vide (pas de signal), l'entrée précédente est supprimée, et
-il n'y aura aucun signal à cette position. <b> Si un signal
- est modifié, vous devez refaire toute la logique qu'implique la modification.</b> En particulier,
-Si vous supprimez un signal divergent, vous devez refaire la logique du signal continu situé sur la même voie.</p>
+S'il y avait un signal pr&#233;c&#233;demment attribu&#233; &#224; toute les
+positions, et vous entrez un <i>autre</i> signal dans le m&#234;me lieu,
+le signal remplacera le signal pr&#233;c&#233;dent, et l'ic&#244;ne du
+signal pr&#233;c&#233;dent (s'il y en avait un) sera supprim&#233; &#224; partir du
+TCO. De m&#234;me, si vous remplacez un signal pr&#233;c&#233;demment affect&#233; <b>Divergent</b>
+ avec une entr&#233;e vide (pas de signal), l'entr&#233;e pr&#233;c&#233;dente est supprim&#233;e, et
+il n'y aura aucun signal &#224; cette position. <b> Si un signal
+ est modifi&#233;, vous devez refaire toute la logique qu'implique la modification.</b> En particulier,
+Si vous supprimez un signal divergent, vous devez refaire la logique du signal droit situ&#233; sur la m&#234;me voie.</p>
 <p>
-Cochez <b> Ajouter Icône de Signal au TCO</b> pour demander que l'icône d'un signal
- soit placée sur le panneau à la position indiquée de l'aiguillage. Cet outil
-ne peut placer une icône de signal que sur les aiguillage qui sont presque à la verticale ou presque à l'
-horizontale. Si ce n'est pas le cas, un message est imprimé, et vous devez placer
-l'icône de signal manuellement en utilisant la barre d'outils Éditeur de TCO. Peu importe, le
-Nom du signal qui est attribué à la position spécifiée  de l'aiguillage. Cette affectation
+Cochez <b>Ajouter Ic&#244;ne de Signal au TCO</b> pour demander que l'ic&#244;ne d'un signal
+ soit plac&#233;e sur le panneau &#224; la position indiqu&#233;e de l'aiguillage. Cet outil
+ne peut placer une ic&#244;ne de signal que sur les aiguillage qui sont presque &#224; la verticale ou presque &#224; l'
+horizontale. Si ce n'est pas le cas, un message est imprim&#233;, et vous devez placer
+l'ic&#244;ne de signal manuellement en utilisant la barre d'outils &#201;diteur de TCO. Peu importe, le
+Nom du signal qui est attribu&#233; &#224; la position sp&#233;cifi&#233;e  de l'aiguillage. Cette affectation
 est importante pour la mise en place de la logique pour d'autres signaux sur la voie.</p>
 <p>
-cochez <b> Configurer Logique</b> pour demander que l'outil mette en place une logique de contrôle du signal
-. Pour chacun de ces signaux, l'outil crée une simple
-Logique de signal pour chaque signal, et en plus crée un Logix qui assure que le signal placé sur
-l'aiguillage  n'est pas dévié contre le signal qui est
-placé sur la jambe. L'outil va tenter d'installer la logique et de remplir automatiquement les
-entrées avec les informations disponibles. Si l'outil n'a pas assez
-d'informations disponibles pour mettre en place la logique, un message en résultera, et vous aurez
-à y revenir  plus tard, après que plusieurs cantons (avec des capteurs d'occupation) et/ou signaux aient
-été attribués aux aiguillages et aux limites de bloc sur le TCO.</p>
+Cochez <b> Configurer Logique</b> pour demander que l'outil mette en place une logique de commandee du signal
+. Pour chacun de ces signaux, l'outil cr&#233;e une Logique Simple de signal pour chaque signal, et en plus cr&#233;e un Logix qui assure que le signal plac&#233; sur
+l'aiguillage  n'est pas d&#233;vi&#233; contre le signal qui est
+plac&#233; sur la voie. L'outil va tenter d'installer la logique et de remplir automatiquement les
+entr&#233;es avec les informations disponibles. Si l'outil n'a pas assez
+d'informations disponibles pour mettre en place la logique, un message en r&#233;sultera, et vous aurez
+&#224; y revenir  plus tard, apr&#232;s que plusieurs cantons (avec des capteurs d'occupation) et/ou signaux aient
+&#233;t&#233; attribu&#233;s aux aiguillages et aux limites de canton sur le TCO.</p>
 <h3> Notes</h3>
 <p>
-L'outil mettra en place la Simple Logique Signal pour définir tous les signaux
-rouges si le canton contenant les deux aiguillages et leur voie connectées sont occupés. Si ce n'est pas ce que vous voulez, vous devez éditer la simple logique signal  
+L'outil mettra en place la Logique Simple Signal pour d&#233;finir tous les signaux
+rouges si le canton contenant les deux aiguillages et leur voie connect&#233;es sont occup&#233;s. Si ce n'est pas ce que vous voulez, vous devez &#233;diter la logique simple signal  
 en supprimant le capteur d'occupation de ce bloc.</p>
 <p>
 Lors de la configuration logique, cet outil va suivre la voie dans 
-un canton jusqu'à ce qu'il trouve un signal à la fin du canton où
- l'aiguillage est signalé. Si votre réseau contient des sections qui sont
-signalées et des sections qui ne le sont pas, pour obtenir que cet outil pour mette en place une logique
-correctement, vous pourriez avoir besoin de créer et d'affecter un signal virtuel (un signal qui
-ne correspond pas à un signal réel sur le réseau) à la fin du canton non signalé
- qui relie la voie qui est signalée avec une voie qui n'est pas signalée.
-(Vous n'avez pas besoin d'ajouter une icône pour le signal virtuel sur votre TCO, mais il
-doit exister dans votre table signal, et doit être affecté à un aiguillage ou un canton
-limite àl'aide d'un outil ... Définir Signaux.) Si un canton se termine par un
-heurtoir, aucun signal virtuel est requis à la fin du heurtoir.</p>
+un canton jusqu'&#224; ce qu'il trouve un signal &#224; la fin du canton o&#249;
+ l'aiguillage est signal&#233;. Si votre r&#233;seau contient des sections qui sont
+signal&#233;es et des sections qui ne le sont pas, pour obtenir que cet outil mette en place une logique
+correctement, vous pourriez avoir besoin de cr&#233;er et d'affecter un signal virtuel (un signal qui
+ne correspond pas &#224; un signal r&#233;el sur le r&#233;seau) &#224; la fin du canton non signal&#233;
+ qui relie la voie qui est signal&#233;e avec une voie qui n'est pas signal&#233;e.
+(Vous n'avez pas besoin d'ajouter une ic&#244;ne pour le signal virtuel sur votre TCO, mais il
+doit exister dans votre tableau signal, et doit &#234;tre affect&#233; &#224; un aiguillage ou un canton
+limite &#224; l'aide d'un outil ... D&#233;finir Signaux.) Si un canton se termine par un
+heurtoir, aucun signal virtuel n'est requis &#224; la fin du heurtoir.</p>
 <p>
-Si un canton a un aiguillage interne ( l'aiguillage, et les tronçons de voie à sa
+Si un canton a un aiguillage interne ( l'aiguillage, et les tron&#231;ons de voie &#224; sa
  pointes et ses branches sont contenue au sein du canton), le programme va attendre les signaux
-de cet aiguillage, même si ce n'est pas à la fin du canton. Cependant, parfois
- l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilisé dans un canton.
-En suivant la voie à travers un canton, le programme va sauter l'aiguillage interne non signalé
- si <b> Passer Aiguillages Internes Non Signalé </b> est coché dans le menu <b>Outils</b> de
-l'Éditeur de TCO .
+de cet aiguillage, m&#234;me si ce n'est pas &#224; la fin du canton. Cependant, parfois
+ l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilis&#233; dans un canton.
+En suivant la voie &#224; travers un canton, le programme va sauter l'aiguillage interne non signal&#233;
+ si <b> Passer Aiguillages Internes Non Signal&#233; </b> est coch&#233; dans le menu <b>Outils</b> de
+l'&#201;diteur de TCO .
 Il avertira toujours de ce qu'il fait. <b> Utilisez cette option avec
-prudence.</b> Il n'y a pas de signal de protection contre un aiguillage ignoré
-mal réglé, si un aiguillage interne non signalé n'est pas réglée correctement,
-un déraillement des trains pourrait en résulter.</p>
+prudence.</b> Il n'y a pas de signal de protection contre un aiguillage ignor&#233;
+mal r&#233;gl&#233;, si un aiguillage interne non signal&#233; n'est pas r&#233;gl&#233;e correctement,
+un d&#233;raillement des trains pourrait en r&#233;sulter.</p>
 <p>
-Lors du réglage du Logix utilisé dans la logique de contrôle, l'outil crée un 
-capteur interne pour communiquer avec la Simple Logique Signal. Le Logix 
-apparaîtra dans votre Table Logix, et le capteur interne apparaîtra dans votre
-Table Capteur. Les noms systèmes de la sonde Logix et interne sera, IX ou
-IS suivie par TTT_X_HHH, où TTT est le nom système de l'aiguillage où le 
-signal est situé, soit X est C ou T, selon que le signal
- est situé sur la voie continue (DIRECTE) ou de la divergente (DÉVIÉE)
-, et HHH est le nom du système du signal. Le but de cette Logix
-est de s'assurer que l'aspect du signal sera rouge si l'aiguillage où 
-est situé le signal est allumé contre la voie du signal allumé.</p>
+Lors du r&#233;glage du Logix utilis&#233; dans la logique de commande, l'outil cr&#233;e un 
+capteur interne pour communiquer avec la Logique Simple Signal. Le Logix 
+appara&#238;tra dans votre Tableau Logix, et le capteur interne appara&#238;tra dans votre
+Tableau Capteur. Les noms syst&#232;mes du capteur Logix et interne sera, IX ou
+IS suivie par TTT_X_HHH, o&#249; TTT est le nom syst&#232;me de l'aiguillage o&#249; le 
+signal est situ&#233;, soit X est C ou T, selon que le signal
+ est situ&#233; sur la voie continue (DROITE) ou de la divergente (D&#201;VI&#201;E)
+, et HHH est le nom du syst&#232;me du signal. Le but de cette Logix
+est de s'assurer que l'aspect du signal sera rouge si l'aiguillage o&#249; 
+est situ&#233; le signal est allum&#233; contre la voie du signal allum&#233;.</p>
 <p>
 Cet outil met en place trois aspects de signalisation. Quand un signal montre l'
-état lors du passage à une voie déviée, l'outil sera mis en place pour limiter la
+&#233;tat lors du passage &#224; une voie d&#233;vi&#233;e, l'outil sera mis en place pour limiter la
 vitesse (l'aspect le moins restrictive n'est pas vert, mais jaune), et le signal
 montrera jaune quand il serait contraire au vert. Vous pouvez changer cela avec
 une modification simple (voir ci-dessous).</p>
 <p>
-Si vous avez une situation particulière pour un signal, vous pouvez avoir à modifier les
+Si vous avez une situation particuli&#232;re pour un signal, vous pouvez avoir &#224; modifier les
 informations saisies par cet outil dans la simple logique signal. Si vous
 aimeriez avoir quatre aspects de signalisation, vous pouvez facilement modifier manuellement la logique
-pour y parvenir. De même, par une modification manuelle simple de la logique, vous pouvez
-ajouter un balisage lumineux d'approche. Si vous ne voulez pas le jaune lors du déplacement vers l'itinéraire divergent
-, mais préférez le vert, ouvrez la Simple Logique Signal  pour le signal  que vous voulez
-changer et décochez <b> Vitesse Limitée</b>. La boîte de dialogue Simple Logique Signal peut
-être accessible depuis le menu contextuel de chaque icône de signal. Si votre situation spéciale
- ne peut pas être manipulée par un Signal Logique Simple, vous devez vous référer à un
-Logix pour adapter le signal logique à vos besoins.</p>
+pour y parvenir. De m&#234;me, par une modification manuelle simple de la logique, vous pouvez
+ajouter un balisage lumineux d'approche. Si vous ne voulez pas le jaune lors du d&#233;placement vers l'itin&#233;raire divergent
+, mais pr&#233;f&#233;rez le vert, ouvrez la Logique Simple Signal pour le signal que vous voulez
+changer et d&#233;cochez <b>Vitesse Limit&#233;e</b>. La bo&#238;te de dialogue Logique Simple Signal peut
+&#234;tre accessible depuis le menu contextuel de chaque ic&#244;ne de signal. Si votre situation sp&#233;ciale
+ ne peut pas &#234;tre manipul&#233;e par un Logique Simple Signal, vous devez vous r&#233;f&#233;rer &#224; un
+Logix pour adapter le signal logique &#224; vos besoins.</p>
 <p>
-<b>S'il vous plaît rappelez vous de sauver votre panneau après l'utilisation de cet outil.</b></p>
+<b>S'il vous pla&#238;t rappelez vous de sauver votre panneau apr&#232;s l'utilisation de cet outil.</b></p>
 
 <!--#include virtual="/Footer" -->
 </body>

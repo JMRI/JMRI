@@ -1,27 +1,29 @@
 // PowerPanelAction.java
-
 package jmri.jmrix.sprog.swing;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a
- * PowerPanelFrame object.
+ * Swing action to create and register a PowerPanelFrame object.
  *
- * @author	    Bob Jacobsen    Copyright (C) 2001
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version $Revision$
  */
 public class PowerPanelAction extends AbstractAction {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8975098374222170676L;
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
 
     public PowerPanelAction(String s) {
-	super(s);
+        super(s);
 
-	// disable ourself if there is no power Manager
-        if (jmri.InstanceManager.powerManagerInstance()==null) {
+        // disable ourself if there is no power Manager
+        if (jmri.InstanceManager.powerManagerInstance() == null) {
             setEnabled(false);
         }
     }

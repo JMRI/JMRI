@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoNetSim.shtml,v 1.1 2008/01/13 04:24:44 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-09-14-->
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI Hardware Guide: LocoNet Simulator
+      JMRI Hardware Guide: LocoNet&reg; Simulator
  </TITLE>
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="stylesheet" type="text/css"  href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
@@ -27,38 +27,59 @@
     <div id="mainContent">
 
       <h1> 
-     Guide Matériel JMRI: Simulateur LocoNet 
+     Guide Mat&#233;riel JMRI: Simulateur LocoNet&reg; 
       </h1>
 
-Si JMRI est configuré pour utiliser une connexion Digitrax LocoNet, mais
+Si JMRI est configur&#233; pour utiliser une connexion Digitrax LocoNet&reg;, mais
  que la connexion n'est pas disponible, plusieurs aspects du programme peuvent
 ne pas fonctionner. C'est parce que le programme a besoin d'interagir avec
-LocoNet pendant le fonctionnement normal, et sans les réponses attendues
-de la LocoNet il apparaîtra essentiellement mort.
+LocoNet pendant le fonctionnement normal, et sans les r&#233;ponses attendues
+de la LocoNet il appara&#238;tra essentiellement mort.
 <P>
-La "simulateur LocoNet" a été créé pour rendre possible l'utilisation de JMRI
-en mode déconnecté. Ceci est utile par exemple si vous voulez développer
-un panneau alors que vous êtes loin de votre réseau miniature.
+Le "Simulateur LocoNet" a &#233;t&#233; cr&#233;&#233; pour rendre possible l'utilisation de JMRI
+en mode d&#233;connect&#233;. Ceci est utile par exemple si vous voulez d&#233;velopper
+un panneau alors que vous &#234;tes loin de votre r&#233;seau miniature.
 <P>
-Pour utiliser le simulateur LocoNet, sélectionnez-le comme votre connexion réseau dans les
-préférences, enregistrer les préférences, quitter et redémarrer le programme. vous devriez
-alors être en mesure d'accéder à des éléments tels que LocoNet, aiguillages, capteurs, signaux, etc
-Certaines des fonctionnalités les plus avancées, tel que le programmeur BDL168, ne seront
-pas totalement fonctionnelles, mais vous devriez être capable de faire toutes les étapes pour construire
-et éditer des panneaux.
+Pour utiliser le simulateur LocoNet, s&#233;lectionnez-le comme votre connexion r&#233;seau dans les
+pr&#233;f&#233;rences, enregistrer les pr&#233;f&#233;rences, quitter et red&#233;marrer le programme. vous devriez
+alors &#234;tre en mesure d'acc&#233;der &#224; des &#233;l&#233;ments tels que LocoNet, aiguillages, capteurs, signaux, etc
+Certaines des fonctionnalit&#233;s les plus avanc&#233;es, tel que le programmeur BDL168, ne seront
+pas totalement fonctionnelles, mais vous devriez &#234;tre capable de faire toutes les &#233;tapes pour construire
+et &#233;diter des panneaux.
 <P>
-Lorsque votre ordinateur est connecté à LocoNet encore, vous pouvez changer les
-préférences pour la connexion adéquate, par exemple une LocoBuffer-USB, et utiliser le panneau que
-vous avez créé.
+Lorsque votre ordinateur est connect&#233; &#224; LocoNet encore, vous pouvez changer les
+pr&#233;f&#233;rences pour la connexion ad&#233;quate, par exemple une LocoBuffer-USB, et utiliser le panneau que
+vous avez cr&#233;&#233;.
 
-<h2>Fichiers Hexadécimaux  </h2>
-Le simulateur peut également lire et relire les traces de l'activité hexadécimal LocoNet
-pour voir comment le programme va réagir. Chaque ligne de la trace est un
-paquets LocoNet unique en caractères hexadécimaux. Vous pouvez créer un de ceux-ci 
-par exemple en tournant sur l'options  «montrer des lignes de données brutes rangées » dans une fenêtre  Moniteur LocoNet, et
-ayant le moniteur écrivant dans un fichier journal. Vous aurez à modifier le
-fichiers résultant pour supprimer les lignes lisibles par l'homme, laissant juste les 
-données brutes hexadécimales.
+<h2>Fichiers Hexad&#233;cimaux  </h2>
+Le simulateur peut &#233;galement lire et relire les traces de l'activit&#233; hexad&#233;cimal LocoNet
+pour voir comment le programme va r&#233;agir. Chaque ligne de la trace est un
+paquets LocoNet unique en caract&#232;res hexad&#233;cimaux. Vous pouvez cr&#233;er un de ceux-ci 
+par exemple en mettant l'options sur On «montrer des lignes de donn&#233;es brutes rang&#233;es » dans une fen&#234;tre  Moniteur LocoNet, et
+ayant le moniteur &#233;crivant dans un fichier Rapport. Vous aurez &#224; modifier le
+fichier r&#233;sultant pour supprimer les lignes lisibles par l'homme, laissant juste les 
+donn&#233;es brutes hexad&#233;cimales.
+
+Un exemple de fichier hexad&#233;cimale est montr&#233; ici:
+
+   
+    <p><span style="font-family: monospace">A1&nbsp;0B&nbsp;00&nbsp;55&nbsp;&crarr;</span></p>
+<p><span style="font-family: monospace">B0&nbsp;2D&nbsp;10&nbsp;72&nbsp;&crarr;</span></p>
+<p><span style="font-family: monospace">BB&nbsp;10&nbsp;00&nbsp;54&nbsp;&crarr;</span></p>
+<p>Noter que chaque valeur h&#233;xa doit &#234;tre deux caracr&#232;res H&#233;xa valides plus un espace. Chaque
+message (ligne) doit &#234;tre termin&#233; par un retour chariot.  Noter qu'il y a un espace imm&#233;diatement avant le retour chariot!.!</p>
+<p>La s&#233;quence ci-dessus se traduirait par le trafic LocoNet suivante, pr&#233;sent&#233;e comme d&#233;cod&#233; par l'outil Moniteur LocoNet (avec des Donn&#233;es Brutes affich&#233;es):</p>
+<p><span style="font-family: monospace">[A1 0B 00 55]  d&#233;finit la loco dans le slot 11 direction en Avant, F0=Off, F1=Off, F2=Off, F3=Off, F4=Off.</span></p>
+<p><span style="font-family: monospace">[B0 2D 10 72]  Requ&#234;te pour Commuter LT46 () vers D&#233;vi&#233; (sortie On).</span></p>
+<p><span style="font-family: monospace">[BB 10 00 54]  Requ&#234;te data/status pour le slot 16.</span></p>
+<p>Comme il n'y a pas de Central, tle dernier message ne recevra pas de r&#233;ponse.
+<!--#include virtual="/Footer" -->
+<h1><a name="SeeAlso">Voir aussi</h1>
+<p>Le <a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Moniteur LocoNet</a> 
+    Outil de captures et d'interpr&#233;tations des messages sur LocoNet.</p>
+<p>Le LocoNet&reg; Personal Use Edition 1.0 Sp&#233;cification est disponible sur le<a href="http://www.digitrax.com"> site Web Digitrax</a>.</p>
+<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+
 
 <!--#include virtual="/Footer" -->
 </body>

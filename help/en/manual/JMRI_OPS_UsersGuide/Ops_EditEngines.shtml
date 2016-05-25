@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Edit Locomotive</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent"><a name="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h2>OperationsPro: Edit Locomotive</h2>
+
+<div align="right">
+<p><a href="Ops_Engines_menu.shtml">Back </a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+<hr>
+
+<table border="0" cellpadding="2" cellspacing="1" width="90%">
+<tbody>
+<tr>
+<td align="left" valign="top" width="49%"><img src="images/Ops_EditEngine.png" alt="edit engine" height="708" width="450"></td>
+<td align="left" valign="top" width="51%">
+<p>I now edit the <strong>Road</strong> to
+<select name="select9" id="select9"><option>UP</option></select> for Union Pacific with the <a style="font-weight: bold;" href="Ops_EngineAttributes.shtml">Edit button</a>.</p>
+<p><strong>Road Number</strong> was imported correctly.</p>
+<p><strong>Model</strong> was imported correctly. <a style="font-weight: bold;" href="Ops_EngineAttributes.shtml">Edit button</a></p>
+<p><strong>Type </strong>was not in Roster so set to
+<select name="select10" id="select10"><option>Diesel</option></select>. <a style="font-weight: bold;" href="Ops_EngineAttributes.shtml">Edit button</a></p>
+<p><strong>Length</strong> was set to default
+<select name="select11" id="select11"><option>50</option></select>
+so edit to
+<select name="select12" id="select12"><option>95</option></select>
+which is the correct length of body not including couplers. <a style="font-weight: bold;" href="Ops_EngineAttributes.shtml">Edit button</a></p>
+<p style="font-weight: bold;"><strong>Location and Track</strong></p><p style="font-weight: bold;"><strong>Location</strong> is not imported
+from the Roster, So I located the Locomotive at
+<select name="select13" id="select13"><option>North Yard</option></select>
+and set on
+<select name="select14" id="select14"><option>Track2</option></select>.</p>
+<p><strong>Horsepower</strong> was not
+imported, so set to <input name="textfield5" id="textfield5" value="1600" size="15"> as this model was basically
+two 2500 HP units on a single frame.</p>
+
+<p><strong>Optional </strong></p>
+<p><strong>Consist </strong>not set. <a style="font-weight: bold;" href="Ops_EngineAttributes.shtml">Edit button</a></p>
+<p><strong>Built </strong>not entered.</p>
+<p><strong>Owner</strong> is not imported, so selected
+<select name="select15" id="select15"><option>DaleTripp</option></select>.</p>
+<p><a style="font-weight: bold;" href="Ops_EngineAttributes.shtml">Edit button</a></p>
+<p>No <strong>Comment</strong> for this Locomotive</p>
+<p>Now to store your changes by pressing <input name="button13" id="button13" value="Save" type="submit"> and add the edits to any edited menu item.</p>
+<p> <input name="button14" id="button14" value="Add " type="submit"> updates your Operations Locomotive Roster.</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p>Take a look at the OperationsPro Locomotives Roster. Note the highlighted entry which we just edited.</p>
+<p><img style="width: 1021px; height: 327px;" alt="updated" src="images/Ops_EditEngineUpdated.png"></p>
+<p>Continue until all editing is completed. Save and exit the Edit Locomotive window.</p>
+
+<hr>
+<div align="right">
+<p><a href="Ops_Engines_menu.shtml">Back </a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

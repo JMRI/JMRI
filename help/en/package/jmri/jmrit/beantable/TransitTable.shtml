@@ -1,21 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Transit Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Dave Duchamp" name=Author>
-    <META name="keywords" content="JMRI help Transit Table">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Dave Duchamp" name="Author">
+    <meta name="keywords" content="JMRI help Transit Table">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -23,11 +16,10 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Transits and the Transit Table
-</H1>
-<H2>What is a Transit?
-</H2
-<P>A <b>Transit</b> is a group of two or more connected 
+<h1>Transits and the Transit Table</h1>
+<h2>What is a Transit?</h2>
+
+<p>A <b>Transit</b> is a group of two or more connected 
 <b><a href="SectionTable.shtml">Sections</a></b> that describes a route around 
 the layout of a train traveling in a given direction. A Section may be 
 in multiple Transits, and may be in a given Transit multiple times. Sections are 
@@ -45,7 +37,7 @@ be multiple "3rd" Sections, any of which might be used to travel between the 2nd
 Transits also provide for reverse loops. To provide for back-and-forth running, e.g. 
 for trolley cars, an option is provided in Dispatcher to automatically reverse the 
 direction of running through a Transit when the train reaches the end of its 
-Transit, and have the train run in reverse to the beginning of its Transit.</P>
+Transit, and have the train run in reverse to the beginning of its Transit.</p>
 <p>Transits support both manual and automatic operation of trains.  When a train 
 is running in automatic mode, Transits provide for <b>Actions</b> to be 
 activated when a train reaches a designated Section in the Transit. An 
@@ -54,8 +46,8 @@ example, when the train enters a Section, or when the train stops. A variety of
 actions are possible, such as pausing the train for a user-designated 
 number of fast clock minutes (a station stop), reverting to manual mode for local manual 
 operation, or sounding the horn on a sound decoder.</p>
-<H2>How are Transits Activated and Used?
-</H2
+
+<h2>How are Transits Activated and Used?</h2>
 <p>Transits are static objects. They specify routes for trains to follow around the 
 layout. Transits do not run trains, or keep track of running trains. A Transit 
 becomes part of the train running process when it is <i>activated</i> by being 
@@ -92,40 +84,39 @@ or semi-automatically by the computer. If a requested Section is currently in
 use, a request for assignment is placed in the dispatcher's queue. When a Section 
 is freed, the queue is scanned for the highest priority train requesting it.</p>
 
-<H2>Using the Transit Table to Set Up Transits
-</H2>
-<p>Transits are set up in the Transit Table.  When set up, Transits are independent 
+<h2>Using the Transit Table to Set Up Transits</h2>
+<p>Transits are set up in the Transit Table. When set up, Transits are independent 
 of the trains that use them.  
-<P></P>
-<P>All Transits that currently exist can be referenced
-using the <b>Transit Table</b> tool under <b>Tables</b> in the Tools menu of most 
-JMRI programs. There are seven columns in the Transit Table:</P>
-<UL>
-<LI><b>System Name</b> - The system name is assigned to the Transit when it's created, 
-and can't be changed.</LI>
-<LI><b>User Name</b> - If you're interested in having your Transits carry "human 
-readable" names, you can click in the "User Name" column and change that information
-to whatever you want.</LI>
-<LI><b>State</b> - The state of a Transit tells whether a section is <b>IDLE</b> 
-(available for activation and assignment to a train), or <b>ASSIGNED</b> (linked 
-to a train to form an Active Train). The state of a newly added Transit is always 
-<b>IDLE</b>.</LI>
-<LI><b>Comment</b> - This column is for your use to record any comment you may want
-to use to keep track of your Transits. It is for information only.</LI>
-<LI>Click the <b>Delete</b> button in a specific row to delete the Transit in that 
-row. Use this button with caution! Do not delete a running Transit.</LI>
-<LI>Click the <b>Edit</b> button in a row to view or change entered information
-for a Transit. System name cannot be changed. User name may be changed, 
-Sections may be redefined, etc. Only one Transit may be edited at a time. A 
-Transit may not be edited if another is being created, or if the Transit is 
-not in the IDLE state.</LI>
-<LI>Click the <b>Duplicate</b> button in a row to add another Transit identical 
-to this one. Clicking this button is similar to clicking the <b>Add...</b> 
-button (see below) except the information from this Transit is copied into the 
-Add/Edit Transit window. This option offers an easy way to enter multiple copies 
-of a Transit when multiple trains must follow the same route at the same time.
-</LI></UL>
-<P>To define a new Transit, click the <b><A HREF="TransitAddEdit.shtml">Add...</a>
+<p>All Transits that currently exist can be referenced
+using the <b>Transits</b> tool under <b>Tables</b> in the Tools menu of most 
+JMRI programs. There are seven columns in the Transit Table:</p>
+	<ul>
+	<li><b>System Name</b> - The system name is assigned to the Transit when it's created, 
+	and can't be changed.</li>
+	<li><b>User Name</b> - If you're interested in having your Transits carry "human 
+	readable" names, you can click in the "User Name" column and change that information
+	to whatever you want.</li>
+	<li><b>State</b> - The state of a Transit tells whether a section is <b>IDLE</b> 
+	(available for activation and assignment to a train), or <b>ASSIGNED</b> (linked 
+	to a train to form an Active Train). The state of a newly added Transit is always 
+	<b>IDLE</b>.</li>
+	<li><b>Comment</b> - This column is for your use to record any comment you may want
+	to use to keep track of your Transits. It is for information only.</li>
+	<li>Click the <b>Delete</b> button in a specific row to delete the Transit in that 
+	row. Use this button with caution! Do not delete a running Transit.</li>
+	<li>Click the <b>Edit</b> button in a row to view or change entered information
+	for a Transit. System name cannot be changed. User name may be changed, 
+	Sections may be redefined, etc. Only one Transit may be edited at a time. A 
+	Transit may not be edited if another is being created, or if the Transit is 
+	not in the IDLE state.</li>
+	<li>Click the <b>Duplicate</b> button in a row to add another Transit identical 
+	to this one. Clicking this button is similar to clicking the <b>Add...</b> 
+	button (see below) except the information from this Transit is copied into the 
+	Add/Edit Transit window. This option offers an easy way to enter multiple copies 
+	of a Transit when multiple trains must follow the same route at the same time.
+	</li>
+	</ul>
+<p>To define a new Transit, click the <b><a href="TransitAddEdit.shtml">Add...</a>
 </b> button. An Add/Edit Transit window will 
 be brought up that will allow you to designate the Sections in the new Transit.  
 (Obviously, Sections must be defined before any Transit can be created.) Since a 
@@ -141,12 +132,11 @@ bringing up the context menu on each and selecting <b>Add to Transit</b>.  When 
 destination SignalMast on your route select <b>Add to Transit and Complete</b>.  Please note that
 you will have to manually save the transits to disk.
 
-<H2>Setting up for Continuous Running
-</H2>
+<h2>Setting up for Continuous Running</h2>
 <p> A Transit may be set up for continuous running, allowing an Active Train to 
 travel through its Transit multiple times without being terminated and 
 re-activated. Provided its Transit is set up for continuous running, 
-each time an Active Train completes travelling through its Transit, the Active 
+each time an Active Train completes traveling through its Transit, the Active 
 Train optionally may be automatically reset by Dispatcher so it 
 is ready to run through its Transit again.  For continuous running, an Active 
 Train must start and end in the same Section, and must be pointed in the same 
@@ -156,8 +146,8 @@ and both must be set up for running in the same direction. This applies to
 both manual running of trains and automatic running of trains. For more 
 information on setting the continuous running option, visit the help file for 
 the <a href="../dispatcher/NewTrain.shtml">Activate New Train</a> window.</p>
-<H2>Specifying Actions for Automatic Running 
-</H2>
+
+<h2>Specifying Actions for Automatic Running </h2>
 <p>Transits support a variety of <b>Actions</b> that automatically happen when a train is 
 run through the Transit in Automatic mode.  One or more <b>Actions</b> may be specified 
 with each Section in the Transit. <b>Action</b> are initiated when their associated 
@@ -167,14 +157,17 @@ when the <b>Action</b> is to be performed, and a <i>What</i> part, that specifie
 task is to be performed. A commonly used Action, for example, is "When the train starts, 
 turn on its headlight." More information on Actions is located in the Actions
 
-<H2>Saving Transits to Disk
-</H2>
-<P> Use the Store item in the File menu to save Transit information to disk. This 
+<h2>Saving Transits to Disk</h2>
+<p> Use the Store item in the File menu to save Transit information to disk. This 
 information is saved with the configuration in an XML file, along
 with control panel setup and similar items.  To store your panels in the same 
-file (recommended), select <b>File>Store>Store Configuration and Panels To 
-File...</b> or select <b>Panels>Store panels...</b> in the main JMRI window.
-</P>
+file (recommended), select <b>File</b> -&gt; <b>Store > Store Configuration and Panels To 
+File...</b> or select <b>Panels > Store panels...</b> in the main JMRI window.
+</p>
+
 <!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>

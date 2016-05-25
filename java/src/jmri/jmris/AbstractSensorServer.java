@@ -4,7 +4,8 @@ package jmri.jmris;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -19,8 +20,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractSensorServer {
 
+    private final HashMap<String, SensorListener> sensors;
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensorServer.class);
+
     public AbstractSensorServer() {
-        sensors = new ArrayList<String>();
+        sensors = new HashMap<String, SensorListener>();
     }
 
     /*
@@ -33,15 +37,15 @@ abstract public class AbstractSensorServer {
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
     synchronized protected void addSensorToList(String sensorName) {
-        if (!sensors.contains(sensorName)) {
-            sensors.add(sensorName);
-            InstanceManager.sensorManagerInstance().getSensor(sensorName)
-                    .addPropertyChangeListener(new SensorListener(sensorName));
+        if (!sensors.containsKey(sensorName)) {
+            sensors.put(sensorName, new SensorListener(sensorName));
+            InstanceManager.sensorManagerInstance().getSensor(sensorName).addPropertyChangeListener(sensors.get(sensorName));
         }
     }
 
     synchronized protected void removeSensorFromList(String sensorName) {
-        if (sensors.contains(sensorName)) {
+        if (sensors.containsKey(sensorName)) {
+            InstanceManager.sensorManagerInstance().getSensor(sensorName).removePropertyChangeListener(sensors.get(sensorName));
             sensors.remove(sensorName);
         }
     }
@@ -75,9 +79,16 @@ abstract public class AbstractSensorServer {
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch (JmriException ex) {
             log.error("set sensor active", ex);
         }
+    }
+
+    public void dispose() {
+        for (Map.Entry<String, SensorListener> sensor : this.sensors.entrySet()) {
+            InstanceManager.sensorManagerInstance().getSensor(sensor.getKey()).removePropertyChangeListener(sensor.getValue());
+        }
+        this.sensors.clear();
     }
 
     public void setSensorInactive(String sensorName) {
@@ -104,7 +115,7 @@ abstract public class AbstractSensorServer {
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch (JmriException ex) {
             log.error("set sensor inactive", ex);
         }
     }
@@ -135,7 +146,4 @@ abstract public class AbstractSensorServer {
         String name = null;
         Sensor sensor = null;
     }
-    protected ArrayList<String> sensors = null;
-    String newState = "";
-    static Logger log = LoggerFactory.getLogger(AbstractSensorServer.class);
 }

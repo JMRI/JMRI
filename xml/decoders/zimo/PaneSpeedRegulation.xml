@@ -1,27 +1,65 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Speed Regulation">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Speed Regulation</name>
   <column>
-    <label label="To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco"/>
-    <label label="on track with correct direction set, F0 turned off and enough distance from the Start marker"/>
-    <label label="to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135"/>
-    <label label="using a cab or the Single CV Programmer, then drive the loco through the marked section at"/>
-    <label label="a mid speed, turning F0 on at the Start marker and off at the End marker."/>
-    <label label=" "/>
-    <label label="If several calibration runs are performed at different speeds and the Calibration Result read"/>
-    <label label="after each one, the Calibration Result should be approximately the same"/>
-    <label label=" "/>
-    <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only"/>
-    <label label=" "/>
-    <label label=" "/>
+    <label>
+      <text>To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco</text>
+      <text xml:lang="it">Per calibrare la velocità, segnare un decimo di unità in scala (Milgio o Km)</text>
+    </label>
+    <label>
+      <text>on track with correct direction set, F0 turned off and enough distance from the Start marker</text>
+      <text xml:lang="it">sulle rotaie,con F0 in Off e a distanza sufficente dal segno di inizio tratta</text>
+    </label>
+    <label>
+      <text>to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135</text>
+      <text xml:lang="it">per permetterle di accellerare (azzerare l'inerzia se necessario). Scrivere un '1' in CV 135</text>
+    </label>
+    <label>
+      <text>using a cab or the Single CV Programmer, then drive the loco through the marked section at</text>
+      <text xml:lang="it">usando un Cab o il Programmatore per le singole CV. Far avanzare a velocità media la loco</text>
+    </label>
+    <label>
+      <text>a mid speed, turning F0 on at the Start marker and off at the End marker.</text>
+      <text xml:lang="it">lungo il tratto. Premere F0 all'inizio del tratto e alla fine</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>If several calibration runs are performed at different speeds and the Calibration Result read</text>
+      <text xml:lang="it">Se si eseguono diverse calibrazioni a varie velocità, leggendo il risultato della calibrazione</text>
+    </label>
+    <label>
+      <text>after each one, the Calibration Result should be approximately the same</text>
+      <text xml:lang="it">dopo ognuna, i risultati dovrebbero essere simili tra loro</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only">
+       <label xml:lang="it">Risultati Calibrazione</label>
+    </display>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <column>
-        <display item="km/h speed regulation control and range" label="Speed Regulation Control"/>
+        <display item="km/h speed regulation control and range" label="Speed Regulation Control">
+          <label xml:lang="it">Controllo regolazione velocità</label>
+        </display>
       </column>
       <column>
-        <label label=" Miles or Kilometres per hour per (128) Speed Step"/>
+        <label>
+          <text> Miles or Kilometres per hour per (128) Speed Step</text>
+          <text xml:lang="it">Miglia o Kilometri all'ora per (128) Step di Velocità</text>
+        </label>
       </column>
     </row>
   </column>
+  <name xml:lang="it">Regolazione velocità</name>
 </pane>

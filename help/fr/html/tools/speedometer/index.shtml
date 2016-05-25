@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2012-01-21-->
+<!-- UpDated by Blorec Herv&#233; le 2013-10-01-->
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008/02/17 04:07:54 jacobsen Exp $ -->
+<!-- $Id$ -->
 <title>JMRI: Speedometer</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -22,52 +22,53 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h2>Tachymètre</h2>
+<h2>Tachym&#232;tre</h2>
 
 <p> (Voir aussi la page
-sur la vitesse des NCE <a href="NCE-Speedometer.shtml"></A>)</p>
+sur le tachym&#232;tre NCE <a href="NCE-Speedometer.shtml"></A>) et le 
+<a href="../../hardware/bachrus/index.shtml">tachym&#232;tre Bachrus</a>)</p></p>
 
-Les bibliothèques JMRI
-contiennent un outil compteur que vous pouvez utiliser directement depuis l'écran,
+Les biblioth&#232;ques JMRI
+contiennent un outil compteur que vous pouvez utiliser directement depuis l'&#233;cran,
 ou le construire dans vos propres applications
 <P>
 Avant vous devrez configurer la mesure de la vitesse .
 <P>
 Pour ce faire, entrez le nombre de capteurs dans les trois champs. C'est un
-nombre (comme 23) pour l'adresse du BDL16, DS54, le canal qui
-présentera un rapport lors du changement d'occupation. La façon la plus simple pour obtenir le bon numéro
- est d'ouvrir une fenêtre "Moniteur", et déposer une
-locomotive sur le canton qui vous êtes intéresse. Vous verrez 
-le message du capteur, avec le numéro, dans la fenêtre qui ressemble à 
+nombre (comme 23) pour l'adresse du BDL16, DS54, etc le canal qui
+rapporte le changement d'occupation. La fa&#231;on la plus simple pour obtenir le bon num&#233;ro
+ est d'ouvrir une fen&#234;tre "Moniteur", et d&#233;poser une
+locomotive sur le canton qui vous &#234;tes int&#233;resse. Vous verrez 
+le message du capteur, avec le num&#233;ro, dans la fen&#234;tre qui ressemble &#224; 
 quelque chose comme ceci:
 <PRE>
     General sensor input report: contact 161 (DS54 20 ch1 Sw  input)
         (BDL16 10 A2) is Lo
 </PRE>
-Le numéro de contact, 161 dans ce cas, est ce que vous voulez.
+Le num&#233;ro de contact, 161 dans ce cas, est ce que vous voulez.
 <P>
 Il y a trois capteurs afin que vous puissiez avoir un intervalle plus court pour les
 vitesses lentes et un intervalle plus long pour des vitesses rapides.
-L'intervalle est à partir du capteur 1 à capteur 2, et à partir du capteur de 1 à
+L'intervalle est du capteur 1 &#224; capteur 2, et du capteur de 1 &#224;
 capteur 3.
 <P>
-Vous devez également choisir "à l'entrée" ou "à la sortie» pour chacun des
-capteurs. Ceci dit si le démarrage/arrêt de l'horloge  lorsque le capteur
-montre que le canton est d'abord occupé, ou quand il montre que le canton est
- inoccupé.
+Vous devez &#233;galement choisir "&#224; l'entr&#233;e" ou "&#224; la sortie" pour chacun des
+capteurs. Ceci dit soit le d&#233;marrage/arr&#234;t de l'horloge  lorsque le capteur
+montre que le canton est d'abord occup&#233;, soit quand il montre que le canton est
+ inoccup&#233;.
 <P>
-Vous pouvez également entrer la distance en echelle en pieds entre les différents
-points. Si vous utilisez "sur l'entrée", la mesure utilise l'entrée
+Vous pouvez &#233;galement entrer la distance en echelle en pieds entre les diff&#233;rents
+points. Si vous utilisez "sur l'entr&#233;e", la mesure utilise l'entr&#233;e
 fin du bloc.
 <P>
-Enfin, cliquez sur le bouton "Démarrer". Les trois petits points rouges le long
-le côté droit commenceront à changer de couleur pour indiquer l'état des 
-capteurs sélectionnés: rouge pour "inconnu", aucun message encore vu; Blanc
-pour les «inoccupé»; vert ou jaune pour «occupé».
+Enfin, cliquez sur le bouton "D&#233;marrer". Les trois petits points rouges sur
+le c&#244;t&#233; droit commenceront &#224; changer de couleur pour indiquer l'&#233;tat des 
+capteurs s&#233;lectionn&#233;s: rouge pour "inconnu", aucun message encore vu; Blanc
+pour  "inoccup&#233;"; vert ou jaune pour "occup&#233;".
 <P>
-Une fois que vous cliquez sur le bouton Démarrer, vous ne pouvez pas modifier la configuration.
-Il suffit de fermer cette fenêtre et ouvrir un autre. Vous pouvez avoir plusieurs
-fenêtres d'outils tachymètre ouverte si vous le souhaitez.
+Une fois que vous cliquez sur le bouton D&#233;marrer, vous ne pouvez pas modifier la configuration.
+Il suffit de fermer cette fen&#234;tre et ouvrir un autre. Vous pouvez avoir plusieurs
+fen&#234;tres d'outils tachym&#232;tre ouvertes si vous le souhaitez.
 
 <!--#include virtual="/Footer" -->
 </body>

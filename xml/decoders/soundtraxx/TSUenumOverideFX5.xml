@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
 <!--                                                                        -->
@@ -12,11 +12,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new include file for SoundTraxx Tsunami -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Normal FX5 operation">
     <choice>Normal FX5 operation</choice>
+    <choice xml:lang="it">Operazioni Normali FX5</choice>
   </enumChoice>
   <enumChoice choice="When FX5 is on, headlight, backup light and FX6 turn off">
     <choice>When FX5 is on, headlight, backup light and FX6 turn off</choice>
+    <choice xml:lang="it">Quando FX5 in On, Luci Frontali, Luci retro e FX6 Spenta (off)</choice>
   </enumChoice>
 </enumVal>

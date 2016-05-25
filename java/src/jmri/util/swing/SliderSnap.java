@@ -1,5 +1,3 @@
-// SliderSnap.java
-
 /*
  * Copyright (c) 2011 Michael Kneebone. All Rights Reserved.
  *
@@ -28,7 +26,6 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package jmri.util.swing;
 
 import java.awt.EventQueue;
@@ -49,24 +46,23 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSliderUI;
 
 /**
- * This corrects the behaviour of JSliders to correctly snap whilst
- * sliding, rather than to snap after sliding.
+ * This corrects the behaviour of JSliders to correctly snap whilst sliding,
+ * rather than to snap after sliding.
  * <p>
- * This was originally published by Michael Kneebone in 
+ * This was originally published by Michael Kneebone in
  * <a href="http://www.javaspecialists.eu/archive/Issue148.html">
  * issue 148 of "Java Specialists' Newsletter"</a>
  * to whom credit is given.
  * <p>
- * This version is updated with bug fixes compared to that published above
- * and was provided by Michael Kneebone.
+ * This version is updated with bug fixes compared to that published above and
+ * was provided by Michael Kneebone.
  * <p>
- * Minor changes and bug fixes were made by Matthew Harris when
- * incorporating this into JMRI.
+ * Minor changes and bug fixes were made by Matthew Harris when incorporating
+ * this into JMRI.
  * <p>
  *
- * @author  Michael Kneebone    Copyright (c) 2007, 2011
- * @author  Matthew Harris      Copyright (c) 2011
- * @version $Revision$
+ * @author Michael Kneebone Copyright (c) 2007, 2011
+ * @author Matthew Harris Copyright (c) 2011
  */
 public class SliderSnap extends BasicSliderUI {
 
@@ -76,15 +72,16 @@ public class SliderSnap extends BasicSliderUI {
     private static Class<? extends ComponentUI> sliderClass;
     private static Method xForVal;
     private static Method yForVal;
-    private static ReinitListener reinitListener = new ReinitListener();
+    private static final ReinitListener reinitListener = new ReinitListener();
 
     public SliderSnap() {
         super(null);
     }
 
     /**
-     * Returns the UI as normal, but intercepts the call, so that a
-     * listener can be attached
+     * Returns the UI as normal, but intercepts the call, so that a listener can
+     * be attached
+     *
      * @param c the slider component
      * @return a ComponentUI object with attached listener
      */
@@ -97,7 +94,7 @@ public class SliderSnap extends BasicSliderUI {
             Method m = (Method) defaults.get(sliderClass);
             if (m == null) {
                 m = sliderClass.getMethod("createUI", //NOI18N
-                        new Class<?>[] {JComponent.class});
+                        new Class<?>[]{JComponent.class});
                 defaults.put(sliderClass, m);
             }
             ComponentUI uiObject = (ComponentUI) m.invoke(null, new Object[]{c});
@@ -105,7 +102,7 @@ public class SliderSnap extends BasicSliderUI {
                 c.addHierarchyListener(new MouseAttacher());
             }
             return uiObject;
-        } catch (Exception e) {
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }
@@ -122,7 +119,7 @@ public class SliderSnap extends BasicSliderUI {
             // Needs to run on the Event Despatch Thread for data visibility
             try {
                 EventQueue.invokeAndWait(init);
-            } catch (Exception e) {
+            } catch (InterruptedException | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -130,12 +127,12 @@ public class SliderSnap extends BasicSliderUI {
 
     /**
      * Called to attach mouse listeners to the JSlider
+     *
      * @param c JSlider to be attached to
      */
     private static void attachTo(JSlider c) {
         MouseMotionListener[] listeners = c.getMouseMotionListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            MouseMotionListener m = listeners[i];
+        for (MouseMotionListener m : listeners) {
             if (m instanceof TrackListener) {
                 // Remove the original listener
                 c.removeMouseMotionListener(m);
@@ -154,17 +151,17 @@ public class SliderSnap extends BasicSliderUI {
         /**
          * Parent MouseMotionListener
          */
-        private MouseMotionListener delegate;
+        private final MouseMotionListener delegate;
 
         /**
          * Original Look and Feel implementation
          */
-        private BasicSliderUI ui;
+        private final BasicSliderUI ui;
 
         /**
          * Our slider
          */
-        private JSlider slider;
+        private final JSlider slider;
 
         /**
          * Offset of mouse click from centre of slider thumb
@@ -179,6 +176,7 @@ public class SliderSnap extends BasicSliderUI {
 
         /**
          * UI can change at any point, so need to listen for this
+         *
          * @param evt property change event
          */
         @Override
@@ -193,10 +191,11 @@ public class SliderSnap extends BasicSliderUI {
         }
 
         /**
-         * Implements the actual 'snap while dragging' behaviour.
-         * If snap to ticks is enabled on this slider, then the location
-         * for the nearest tick/label is calculated and the click
-         * location is translated before being passed to the delegate.
+         * Implements the actual 'snap while dragging' behaviour. If snap to
+         * ticks is enabled on this slider, then the location for the nearest
+         * tick/label is calculated and the click location is translated before
+         * being passed to the delegate.
+         *
          * @param evt MouseEvent
          */
         @Override
@@ -230,20 +229,22 @@ public class SliderSnap extends BasicSliderUI {
         }
 
         /**
-         * When the slider is clicked we need to record the offset
-         * from the thumb centre.
+         * When the slider is clicked we need to record the offset from the
+         * thumb centre.
+         *
          * @param evt MouseEvent
          */
         @Override
         public void mousePressed(MouseEvent evt) {
-            int pos = (slider.getOrientation() == JSlider.HORIZONTAL) ?
-                evt.getX() : evt.getY();
+            int pos = (slider.getOrientation() == JSlider.HORIZONTAL)
+                    ? evt.getX() : evt.getY();
             int loc = getLocationForValue(getSnappedValue(evt));
             this.offset = (loc < 0) ? 0 : pos - loc;
         }
 
         /**
          * Pass MouseEvent straight through to delegate
+         *
          * @param evt MouseEvent
          */
         @Override
@@ -253,6 +254,7 @@ public class SliderSnap extends BasicSliderUI {
 
         /**
          * Pass MouseEvent straight through to delegate
+         *
          * @param evt MouseEvent
          */
         @Override
@@ -262,6 +264,7 @@ public class SliderSnap extends BasicSliderUI {
 
         /**
          * Pass MouseEvent straight through to delegate
+         *
          * @param evt MouseEvent
          */
         @Override
@@ -271,6 +274,7 @@ public class SliderSnap extends BasicSliderUI {
 
         /**
          * Pass MouseEvent straight through to delegate
+         *
          * @param evt MouseEvent
          */
         @Override
@@ -280,6 +284,7 @@ public class SliderSnap extends BasicSliderUI {
 
         /**
          * Pass MouseEvent straight through to delegate
+         *
          * @param evt MouseEvent
          */
         @Override
@@ -288,8 +293,9 @@ public class SliderSnap extends BasicSliderUI {
         }
 
         /**
-         * Calculates the nearest snapable value given a MouseEvent.
-         * Code adapted from BasicSliderUI
+         * Calculates the nearest snapable value given a MouseEvent. Code
+         * adapted from BasicSliderUI
+         *
          * @param evt MouseEvent
          * @return nearest snapable value
          */
@@ -297,8 +303,8 @@ public class SliderSnap extends BasicSliderUI {
             // Determine current value based on orientation
             int value = slider.getOrientation()
                     == JSlider.HORIZONTAL
-                    ? ui.valueForXPosition(evt.getX())
-                    : ui.valueForYPosition(evt.getY());
+                            ? ui.valueForXPosition(evt.getX())
+                            : ui.valueForYPosition(evt.getY());
 
             // Now determine if we should adjust the value
             int snappedValue = value;
@@ -324,8 +330,9 @@ public class SliderSnap extends BasicSliderUI {
         }
 
         /**
-         * Provides the x or y co-ordinate for a slider value
-         * depending on orientation
+         * Provides the x or y co-ordinate for a slider value depending on
+         * orientation
+         *
          * @param value the value to get location for
          * @return appropriate x or y co-ordinate
          */
@@ -334,20 +341,18 @@ public class SliderSnap extends BasicSliderUI {
                 // Reflectively call slider ui code
                 Method m = slider.getOrientation()
                         == JSlider.HORIZONTAL
-                        ? xForVal : yForVal;
-                Integer result = (Integer) m.invoke(ui, new Object[]{Integer.valueOf(value)});
-                return result.intValue();
-            } catch (InvocationTargetException e) {
-                return -1;
-            } catch (IllegalAccessException e) {
+                                ? xForVal : yForVal;
+                Integer result = (Integer) m.invoke(ui, new Object[]{value});
+                return result;
+            } catch (InvocationTargetException | IllegalAccessException e) {
                 return -1;
             }
         }
     }
 
     /**
-     * Listens for when the JSlider becomes visible then
-     * attaches the mouse listeners, then removes itself.
+     * Listens for when the JSlider becomes visible then attaches the mouse
+     * listeners, then removes itself.
      */
     private static class MouseAttacher implements HierarchyListener {
 
@@ -383,8 +388,7 @@ public class SliderSnap extends BasicSliderUI {
     }
 
     /**
-     * Initialises the reflective methods and adjusts the current
-     * Look and Feel
+     * Initialises the reflective methods and adjusts the current Look and Feel
      */
     private static class Init implements Runnable {
 
@@ -418,5 +422,3 @@ public class SliderSnap extends BasicSliderUI {
     }
 
 }
-
-/* @(#)SliderSnap.java */

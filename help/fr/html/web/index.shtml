@@ -1,13 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><!-- Translated by Blorec Hervé le 2012-01-23-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Herv&#233; le 2013-10-07-->
 <html lang="fr">
 <head>
-<!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.14 2011/03/12 21:26:57 jacobsen Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name = "viewport" content = "width = device-width" />
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
@@ -23,229 +21,182 @@
 <div id="mainContent">
 
 <h1> 
-JMRI:  Accès  Web
-</H1>
+JMRI:  Acc&#232;s  Web
+</h1>
 
-JMRI peuvent fournir un accès Internet à votre réseau miniature.
+JMRI peut fournir un acc&#232;s Internet &#224; votre r&#233;seau miniature.
 
 <p>
-La méthode de base a été développée par Konrad Froetzheim et ses collègues
-au début des années 1990 pour leur «Model Railroad Internet».
-Un serveur web standard communique avec le navigateur de l'utilisateur web normal, acceptant
-les requêtes HTTP de la manière habituelle.
-Ces demandes sont remis à un petit "connecteur JMRI", qui les interprète
- et renvoie les informations à partir JMRI pour revenir au navigateur.
+La m&#233;thode de base a &#233;t&#233; d&#233;velopp&#233;e par Konrad Froetzheim et ses coll&#232;gues
+au d&#233;but des ann&#233;es 1990 pour leur "Internet Model Railroad".
+Un serveur web standard communique avec le navigateur web normal de l'utilisateur  acceptant
+les requ&#234;tes HTTP de la mani&#232;re habituelle.
 
 <p>
 Par exemple, l'utilisateur peut avoir son navigateur qui demande le 
-contenu actuel d'un panneau JMRI, qui est
-retourné au navigateur comme une image à afficher.
-Ou l'utilisateur peut cliquer sur l'image d'un panneau JMRI,
-qui provoque le navigateur de demander un clic dans la même position sur un panneau JMRI.
+contenu actuel d'un trame JMRI (fen&#234;tre), qui est
+retourn&#233; au navigateur comme une image &#224; afficher.
+L'utilisateur peut cliquer sur l'image d'un panneau JMRI,
+qui provoque le navigateur de demander un clic &#224; la m&#234;me position sur ce panneau JMRI.
 JMRI agit sur ce clic,
-et renvoie également  une image du panneau mis à jour.
+et renvoie &#233;galement  une image du panneau mis &#224; jour.
+Ainsi les applications client trl que <a href="http://withrottle.com" target=_new>WiThrottle</a> et
+<a href="http://enginedriver.rrclubs.org" target=_new>EngineDriver</a> peuvent utiliser le serveur web JMRI pour fournir des capacit&#233;s additionnelles telles que l'acc&#232;s au panneau et aux ic&#244;nes figurant sur la liste.
 
-id="Start"><a
-<h2>Démarrage de l'Accès Web  </h2>
 
-JMRI Web Access est inclus dans les téléchargements JMRI habituels.
-Pour l'utiliser, vous avez juste à le démarrer.
+<a id="Start"></a>
+<h2>D&#233;marrage de l'Acc&#232;s Web</h2>
 
-<p>
-Avant de tenter d'utiliser l'accès Internet,
-s'il vous plaît assurez-vous que la configuration de base de votre application JMRI
-travaille.
-Vérifiez que vous pouvez communiquer correctement avec et faire fonctionner votre réseau.
+JMRI Web Access est inclus dans les t&#233;l&#233;chargements JMRI habituels.
+Pour l'utiliser, vous avez juste &#224; le d&#233;marrer.
 
 <p>
-<img align="right" height="117" src="images/Startup.jpg" width="312"/>
-Pour commencer l'accès au Web à partir des menus, sélectionnez "Démarrer le Mini Serveur Web "
-sous la rubrique «Debogage» du menu. Une petite fenêtre s'ouvre pour confirmer qu'
-il a commencé, et vous montrer l'URL qu'il utilise.
+Avant de tenter d'utiliser l'acc&#232;s Internet,
+s'il vous pla&#238;t assurez-vous que la configuration de base de votre application JMRI
+est active.
+V&#233;rifiez que vous pouvez communiquer correctement avec et faire fonctionner votre r&#233;seau.
 
 <p>
-Ensuite, vérifiez la connexion.
+
+Pour commencer l'acc&#232;s au Web &#224; partir des menus, s&#233;lectionnez "D&#233;marrer le Mini Serveur Web "
+sous la rubrique "Debogage" du menu. 
+<p>
+Ensuite, v&#233;rifiez la connexion.
 
 <p>
-Si vous utilisez un navigateur web Bonjour/Zeroconf-permis, comme
-Safari ou
-<a href="http://www.bonjourfoxy.net/"> Firefox </a>,
-vous devriez voir un "JMRI sur (nom de votre ordinateur)"»
-le site web dans l'onglet "Bonjour". Vous pouvez simplement cliquer sur celui-ci
-pour se rendre à la page d'accueil du serveur Web JMRI.
+Si vous utilisez un navigateur web Bonjour/Zeroconf activ&#233;, comme
+Safari 
+vous devriez voir un site web "Mon Chemin de Fer JMRI" dans l'onglet "Bonjour". Les utilisateurs de Chrome et FireFox peuvent activer la caract&#233;tistique avec le <a href="http://dnssd.me" target=_new> plug-in DNSSD</a>
+pour obtenir la page d'accueil du serveur Web JMRI.
 
 <p>
-Sinon, entrez l'URL à partir du message "le serveur Web a commencé ..."
-, qui sera quelque chose comme "http://10.0.1.7:12080/index.html"
-(Ou si vous naviguez sur le même ordinateur en ce moment,
-href="http://localhost:12080/index.html"><a cliquez ici </a>, ou appuyez sur le bouton
-"Ouvrir dans le navigateur" ).
-Le port par défaut est 12080, mais cela peut être changé en
-Préférences MiniServer.
-Vous devriez voir un écran de bienvenue.
-
-<p>
-Ensuite, faisons en sorte que vous pouvez accéder aux fonctions JMRI.
-Dans le menu Outils, sélectionnez JMRI "Contrôle  Alimentation", qui devrait ouvrir une nouvelle fenêtre.
+Ensuite, faisons en sorte que vous pouvez acc&#233;der aux fonctions JMRI.
+Dans le menu Outils, s&#233;lectionnez JMRI "Commande  Alimentation", qui devrait ouvrir une nouvelle fen&#234;tre.
 Puis cliquez sur
 <a href="http://localhost:12080/panel/Power%20Control.html"> ce lien </a>
 ou entrez l'URL
 <code><pre>
-20Control.html% http://localhost:12080/panel/Power
+http://localhost:12080/frame/Power%20Control.html
 </Pre></code>
-Cela devrait afficher la fenêtre de ContrôleAlimentation de votre navigateur Web.
+Cela devrait afficher la fen&#234;tre de  Commande Alimentation de votre navigateur Web.
 (Remarque: "localhost" est un alias pour votre 
-ordinateur, si vous souhaitez accéder à l'ordinateur exécutant JMRI depuis un autre ordinateur,
+ordinateur, si vous souhaitez acc&#233;der &#224; l'ordinateur ex&#233;cutant JMRI depuis un autre ordinateur,
 remplacer "localhost"
-avec l'adresse IP affichée sur l'écran principal, par exemple,
+avec l'adresse IP affich&#233;e sur l'&#233;cran principal, par exemple,
 <code><pre>
-20Control.html% http://127.0.0.1:12080/panel/Power
+http://192.168.1.7:12080/frame/Power%20Control.html
 </Pre></code>
 ou quelque chose de similaire)
-Si tout fonctionne, vous devriez voir la fenêtre Contrôle Alimentation sur votre écran navigateur.
-Cliquez sur le bouton "On" pour alimenter le réseau suite.
+Si tout fonctionne, vous devriez voir la fen&#234;tre Commande Alimentation sur votre &#233;cran navigateur.
+Cliquez sur le bouton "On" pour alimenter le r&#233;seau .
 
 id="Configure"><a
 <h2> Configuration </h2>
 
-Vous pouvez utiliser
-"<a Href="../../package/apps/TabbedPreferences.shtml"> Préférences </a>"
-pour dire à JMRI de
-démarrer le serveur à chaque fois que vous démarrez le programme.
+Vous pouvez utiliser les
+"<a Href="../../package/apps/TabbedPreferences.shtml"> Pr&#233;f&#233;rences </a>"
+pour dire &#224; JMRI de
+d&#233;marrer le serveur &#224; chaque fois que vous d&#233;marrez le programme.
 <p>
-Pour ce faire, ouvrez la fenêtre Préférences, sélectionnez le
-"Démarrage", puis
-cliquez sur "Ajouter action". Dans la boîte de nouvelles sélections 
-apparaîssent, sélectionnez "Démarrer Miniserver Web».
+Pour ce faire, ouvrez la fen&#234;tre Pr&#233;f&#233;rences, s&#233;lectionnez l'onglet
+"D&#233;marrage", puis
+cliquez sur "Ajouter action". Dans la nouvelle bo&#238;te de s&#233;lections qui 
+appara&#238;t, s&#233;lectionnez "D&#233;marrer Serveur Web".
 N'oubliez pas de sauvegarder vos changements!
 
+<h2>Pr&#233;f&#233;rences Serveur Web</h2>
+Il y a un certain nombre de param&#232;tres li&#233;s au Serveur Web que vous pouvez modifier dans les Pr&#233;f&#233;rences Serveur Web
+(voir image &#224; droite, cliquez pour agrandir)
+Le port par d&#233;faut MiniServer est 12080, mais cela peut &#234;tre modifi&#233; &#224; l'aide de
+la bo&#238;te de dialogue Pr&#233;f&#233;rences MiniServer.
 
-Le port par défaut MiniServer est 12080, mais cela peut être modifié à l'aide de
-la boîte de dialogue Préférences MiniServer.
+<a id="URLs">
+<h2> Acc&#232;s aux URLs</h2>
+Vous pouvez cr&#233;er vos propres pages Web en utilisant n'importe quel outil que vous souhaitez.
+Pour acc&#233;der &#224; JMRI depuis ces pages, vous avez 
+besoin de conna&#238;tre les URL correctes pour demander les services que vous souhaitez.
+Plusieurs exemples sont li&#233;s depuis l'index.html (Page d'accueil su Serveur Web JMRI)
 
+<h2>Ouvrir Acc&#232;s Fen&#234;tre (Image)</h2>
+    Pour afficher toutes les fen&#234;tres JMRI <em>d&#233;j&#224; ouverte</em> comme une image <b>clicable</b> qui est p&#233;riodiquement rafra&#238;chie, utiliser un URL comme:
+    
+    <code><pre><a href="http://127.0.0.1:12080/frame/Monitor%20Slots.html">http://127.0.0.1:12080/frame/Monitor%20Slots.html</a> </pre></code>
+    <code><pre><a href="http://127.0.0.1:12080/frame/Analog%20Clock.html">http://127.0.0.1:12080/frame/Analog%20Clock.html</a></pre></code></a>
+    <code><pre><a href="http://127.0.0.1:12080/frame/Turnout%20Table.html">http://127.0.0.1:12080/frame/Turnout%20Table.html</a></pre></code></a>
+  <p>Notez le titre du cadre dans l'URL, suivi de ". html". Remplacez les espaces dans le titre par "% 20".</p>
+    Pour la liste courante, g&#233;n&#233;rant dynamiquement des fen&#234;tres disponibles, utilisez cet URL:
+    <code><pre><a href="http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a></pre></code>
+    <p><em>Note:</em> R&#233;gler par d&#233;faut comme d&#233;lai de rafra&#238;chissement, des cadres non autoris&#233;s et l'utilisation ajax dans les Pr&#233;f&#233;rences du serveur Web. </P>
+     Vous pouvez remplacer les valeurs par d&#233;faut pour des pages individuelles en utilisant les param&#232;tresms suivants dans votre URL:
+    <ul>
+    <li><b>plain</b> (cacher les liens en bas de page)</li>
+    <li><b>protect</b> (prot&#233;ger le cadre des clics de l'utilisateur, ex: image en lecture seule, mais avec rafra&#238;chissement)</li>
+    <li><b>ajax</b> (utiliser ajax pour les mises &#224; jour)</li>
+
+ Example, montrant sans lien, proteg&#233;, utilisant ajax pour rafra&#238;chir toutes les 12 secondes:
+    <code><pre><a href="http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12">http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12</a></pre></code>
+
+Vous pouvez aussi appeler le <b>WebThrottle</b> directement:
+<code> <pre>
+<a href="http://localhost:12080/web/webThrottle.html" target="_blank"> http://localhost:12080/web/webThrottle.html </a>
+</pre> </code></a>
+Voir page de d&#233;marrage <b>serveur web JMRI</b> pour plus d'informations ou passer &#224; la page d'aide: <b>WebThrottle</b> 
+<code> <pre>
+<a href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml</a>
+</pre> </code>
+
+<h2>Pour afficher un fichier local </h2>
+Un fichier HTML local (page web), fichier texte ou graphique peut &#234;tre
+affich&#233; avec l'URL appropri&#233;.
 <p>
-La page "index.html" que vous avez utilisé dans le
-section précédente
-est créé automatiquement par le programme dans les 
- préférences du répertoire JMRI. Vous pouvez l'éditer pour
-l'affichage que vous voulez, par défaut, JMRI ne modifiera pas si elle existe.
-Vous pouvez inclure des liens vers des pages web hors JMRI, et
-des liens vers différentes pages JMRI servies, voir ci-dessous.
-D'autre part, nous améliorions régulièrement la page, vous pouvez activer "Reconstruire index.html?" dans les Préférences
-pour laisser JMRI le remplacer par la nouvelle version.
+Les fichiers dans votre r&#233;pertoire des pr&#233;f&#233;rences JMRI peuvent &#234;tre
+accessible via un URL qui commence par "prefs":
+<code> <pre>
+<a href="http://localhost:12080/prefs"> http://localhost:12080/prefs </a>
+</pre> </code>
+<p>
+Les fichiers dans certains r&#233;pertoires dans le r&#233;pertoire du programme JMRI peuvent &#234;tre
+accessible via un URL qui commence par "dist":
+<code> <pre>
+<a href="http://localhost:12080/dist/help/en/webindex.shtml">http://localhost:12080/dist/help/en/webindex.shtml</a>
+</pre> </code>
+fera r&#233;f&#233;rence &#224; l'index du syst&#232;me d'aide, tandis que
+<code> <pre>
+<a  href="http://localhost:12080/dist/resources/logo.gif">http://localhost:12080/dist/resources/logo.gif</a>
+</pre> </code>
+va charger un graphique &#224; partir du r&#233;pertoire des ressources logo JMRI.
+"dist / web" et "dist / xml" travaille aussi comme pr&#233;fixes.
 
-id="URLs"><a
-<h2> Accès aux URLs</h2>
-Vous pouvez créer vos propres pages Web en utilisant n'importe quel outil que vous  souhaitez.
-Pour accéder à JMRI depuis ces pages, vous avez 
-besoin de connaître les URL correctes pour demander les services que vous souhaitez.
-Plusieurs exemples sont disponibles dans le répertoire "web" de la distribution.
 
-<h3> Pour afficher une liste formatée JMRI </h3>
+<h2> Affichage des fichiers du panneau format&#233; </h2>
 
-Pour obtenir une vue joliment formaté de votre liste JMRI simplement aller à:
+Les "fichiers de panneau" que JMRI utilise pour stocker la configuration
+et les informations d'affichage peuvent &#234;tre affich&#233;s dans une forme pratique par un navigateur Web.
+Le serveur web JMRI fonctionne avec votre navigateur pour faire ce formatage.
+Vous pouvez ensuite visualiser, imprimer, enregistrer, etc le fichier au format.
+Par exemple, pour afficher "myFile.xml" &#224; partir du r&#233;pertoire JMRI pr&#233;f&#233;rences, utilisez
+<code> <pre>
+<a href="http://localhost:12080/prefs/MyFile.xml"> http://localhost:12080/prefs/MyFile.xml </a>
+</pre> </code
+
+
+<h3> Pour afficher une liste format&#233;e JMRI </h3>
+
+Pour obtenir une vue joliment format&#233; de votre liste JMRI simplement aller &#224;:
 <code><pre>
-<a href="http://localhost:12080/prefs/roster.xml"> http://localhost:12080/prefs/roster.xml </a>
+<a href="http://localhost:12080/roster?format=xml"> http://localhost:12080/roster?format=xml </a>
 </Pre></code>
 Notez que ceci est votre fichier roster.xml qui s'affiche uniquement en utilisant une transformation XSLT.
 
-<h3> Pour arriver à l'application régulateur web </h3>
+<h2><a name="security">s&#233;curit&#233;</a></h2>
 
-Pour utiliser l'application régulateur Web, vous pouvez aller à:
-<code><pre>
-<a href="http://localhost:12080/prefs/roster.html"> http://localhost:12080/prefs/roster.html </a>
-</Pre></code>
-il affichera une liste de locomotive cliquable générée  en utilisant votre liste JMRI, chaque clic sur une locomotive va générer et d'ouvrir un régulateur web InControl dans une nouvelle fenêtre du navigateur.
+<p>Par d&#233;faut, JMRI permet uniquement un acc&#232;s limit&#233; &#224; votre ordinateur.
+Seuls les fichiers qui se trouvent dans le r&#233;pertoire de distribution JMRI
+ou le r&#233;pertoire JMRI preferences seront fournis en r&#233;ponse &#224; des
+demandes. Ce n'est pas la s&#233;curit&#233; &#233;tanche &#224; tout, cependant, et vous devriez faire
+attention &#224; ne pas mettre un contenu important dans ces r&#233;pertoires ou les lier
+&#224; d'autres parties de votre ordinateur.</p>
 
-Ou utilisez le inControl.html directement en utilisant ses paramètres pour le configurer. (Voir page mini serveur web de départ pour info)
-
-<h3> Pour Afficher une Fenêtre Cliquable JMRI </h3>
-Pour afficher toute fenêtre JMRI <i> ouverte </i>  comme une image cliquable
- qui se rafraîchit périodiquement, utiliser une URL comme:
-<code><pre>
-<A href="http://localhost:12080/panel/Power%20Control.html">http://localhost:12080/panel/Power%20Control.html</a>
-</Pre></code>
-où la dernière partie de l'URL est le nom
-de la fenêtre désirée. Notez que vous devez
-remplacer les espaces par "% 20" pour rendre le nom d'une
-URL valide, et que le nom se termine par ". html".
-<p>
-Par défaut, ceci rafraîchit l'image toutes les 5 secondes, et actualise également une
-secondes après que vous cliquiez dessus. Vous pouvez changer l'intervalle d'actualisation dans les Préférences MiniServer
-ou par l'ajout d'un modificateur à la fin de l'URL:
-<code><pre>
-<A href="http://localhost:12080/panel/Power%20Control.html?retry=12.3">http://localhost:12080/panel/Power%20Control.html?retry=12.3</a>
-</Pre></code>
-
-<h3> Pour Afficher une Fenêtre JMRI comme une Image </h3>
-
-Pour afficher le contenu de toute fenêtre JMRI <i>ouverte</i>  comme une image, utilisez
-une URL comme:
-<code><pre>
-<A href="http://localhost:12080/panel/Power%20Control.png">http://localhost:12080/panel/Power%20Control.png</a>
-</Pre></code>
-où le "nom de fichier" partie de l'URL est le nom
-de la fenêtre désirée. Notez que vous devez
-remplacer les espaces par "% 20" pour rendre le nom d'une
-URL valide. Vous pouvez également intégrer cette URL dans une balise IMG.
-
-<h3> Pour afficher un Fichier Local </h3> href="http://localhost:12080/panel/Power%20Control.png">http://localhost:12080/panel/Power%20Control.png</a>
-Un fichier HTML local (page web), fichier graphique ou texte peut être
-affiché en utilisant l'URL appropriée.
-<p>
-Les fichiers dans les préférences de votre répertoire JMRI peut être
-accessible via une URL qui commence par "prefs":
-<code><pre>
-<a href="http://localhost:12080/prefs/index.html"> http://localhost:12080/prefs/index.html </a>
-</Pre></code>
-(Le fichier index.html est dans votre répertoire de préférences)
-<p>
-Les fichiers dan certains répertoires dans le répertoire du programme JMRI peuvent être
-accessibles via une URL qui commence par "dist":
-<code><pre>
-<A href="http://localhost:12080/dist/help/en/webindex.shtml">http://localhost:12080/dist/help/en/webindex.shtml</a>
-</Pre></code>
-fera référence à l'index du système d'aide, tandis que
-<code><pre>
-<A  href="http://localhost:12080/dist/resources/logo.gif">http://localhost:12080/dist/resources/logo.gif</a>
-</Pre></code>
-va charger un logo JMRI graphique à partir du répertoire des ressources.
-"Dist/web" et "dist/xml" fonctionnent également comme des préfixes.
-
-<h3> Affichage des fichiers Panneaux formatés </h3>
-
-Les "fichiers de panneau" qui utilise JMRI pour stocker la configuration
-et afficher des informations peuvent être affichés dans un format pratique
- par un navigateur web.
-Le serveur web JMRI fonctionne avec votre navigateur pour
-faire le formatage.
-Vous pouvez alors visualiser, imprimer, enregistrer, etc le fichier formaté.
-Par exemple, pour afficher "MyFile.xml" à partir du répertoire JMRI préférences, utilisez
-<code><pre>
-<a href="http://localhost:12080/prefs/MyFile.xml"> http://localhost:12080/prefs/MyFile.xml </a>
-</Pre></code>
-
-<h3> XML et accès Ajax </h3>
-
-JMRI fournit XML et Ajax accès via un
-<a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html"> XML IO servlet personnalisés</a>.
-
-<p>
-Il ya trois pages d'exemples qui montrent comment cela peut être utilisé:
-<dl>
-<dt><a href="http://localhost:12080/web/request.html"> web/request.html </a>
-<dd> Rend une seule requête XML pour tous les capteurs disponibles, et montre leur statut dans un tableau.
-<dt><a href="http://localhost:12080/web/monitor.html"> web/monitor.html </a>
-<dd> utilise les requêtes retardées pour surveiller l'état de tous les capteurs,
-la mise à jour d'une table lors de tout changement.
-<dt><a href="http://localhost:12080/web/throttle.html"> web/throttle.html </a>
-<dd> Envoie une commande de vitesse pour une locomotive DCC sur la réseau quand une touche est enfoncée.
-</Dl>
-
-<p>
-Par défaut, ceci est configuré pour gérer les URLs qui commencent par "/xmlio".
-Les Informations sur l'utilisation et la personnalisation peuvent être trouvées sur une
-<a Page href="XMLIO.shtml"> séparés </a>..
 </div>
 <!--#include virtual="/Footer" -->
 </body>

@@ -27,10 +27,10 @@
 <H1>Send LocoNet Packet
 </H1>
     
-<a href="../../../../../html/apps/LocoTools/images/SendPkt.gif">
-    <img src="../../../../../html/apps/LocoTools/images/SendPkt.gif"
-         width="200" height="100"
-         alt="Command Station Slot Monitor" align="right"></a>
+<a href="../../../../../html/apps/LocoTools/images/Send_LocoNet_Packet_Plain.png">
+    <img src="../../../../../html/apps/LocoTools/images/Send_LocoNet_Packet_Plain.png"
+         width="268" height="156"
+         alt="Send LocoNet Packet window" align="right"></a>
 <br>
 
 The "Send LocoNet Packet" tool lets you
@@ -52,10 +52,10 @@ The bottom section lets you enter from one to four packets
 that will be repeatedly sent in sequence, with user-defined delays in between.
 Press the "Go" button to start the transmission sequence, and press it again
 to stop the sequence.
-
-<p>
-More information on the general controls is available on
-<a href="../../AbstractMonFrame.shtml">another page</a>.
+<a href="../../../../../html/apps/LocoTools/images/Send_LocoNet_Packet_Sequence.png">
+    <img src="../../../../../html/apps/LocoTools/images/Send_LocoNet_Packet_Sequence.png"
+         width="267" height="155"
+         alt="Send LocoNet Packet window" align="right"></a>
 
 <!--#include virtual="/Footer" -->
 </body>

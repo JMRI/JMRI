@@ -1,20 +1,18 @@
 package jmri.jmrix.srcp.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrix.srcp.SRCPSensorManager;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
-
-import jmri.jmrix.srcp.SRCPSensorManager;
 
 /**
- * Provides load and store functionality for
- * configuring SRCPSensorManagers.
+ * Provides load and store functionality for configuring SRCPSensorManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2013
- * @version $Revision$
  */
 public class SRCPSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -23,19 +21,20 @@ public class SRCPSensorManagerXml extends jmri.managers.configurexml.AbstractSen
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class",this.getClass().getName());
+        sensors.setAttribute("class", this.getClass().getName());
     }
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // create the master object
         SRCPSensorManager.instance();
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPSensorManagerXml.class.getName());
 }

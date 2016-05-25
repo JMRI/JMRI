@@ -1,28 +1,23 @@
-// CanMessageTest.java
-
 package jmri.jmrix.can;
 
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.can.TrafficControllerScaffold;
-
 /**
  * Tests for the jmri.jmrix.can.CanMessage class
  *
- * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision$
+ * @author Bob Jacobsen Copyright 2008, 2009
  */
 public class CanMessageTest extends CanMRCommonTest {
 
     public void testCopyCtor() {
         CanMessage m1 = new CanMessage(0x12);
         m1.setExtended(true);
-        
+
         CanMessage m2 = new CanMessage(m1);
         Assert.assertTrue("extended", m2.isExtended());
-        Assert.assertTrue("header", m2.getHeader()==0x12);
+        Assert.assertTrue("header", m2.getHeader() == 0x12);
     }
 
     public void testEqualsOp() {
@@ -36,16 +31,16 @@ public class CanMessageTest extends CanMRCommonTest {
         m3.setExtended(false);
 
         Assert.assertTrue("equals self", m1.equals(m1));
-        Assert.assertTrue("equals copy", m1.equals(new CanMessage(m1)));        
+        Assert.assertTrue("equals copy", m1.equals(new CanMessage(m1)));
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }
-    
+
     public void testEqualsReply() {
         CanMessage m1 = new CanMessage(0, 0x12);
         m1.setExtended(true);
         m1.setNumDataElements(0);
-        
+
         CanReply m2 = new CanReply();
         m2.setExtended(true);
         m2.setHeader(0x12);
@@ -59,13 +54,13 @@ public class CanMessageTest extends CanMRCommonTest {
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }
-    
+
     public void testEqualsData() {
         CanMessage m1 = new CanMessage(0x12);
         m1.setNumDataElements(2);
         m1.setElement(0, 0x81);
         m1.setElement(1, 0x12);
-        
+
         CanMessage m2 = new CanMessage(0x12);
         m2.setNumDataElements(2);
         m2.setElement(0, 0x81);
@@ -77,18 +72,18 @@ public class CanMessageTest extends CanMRCommonTest {
         m3.setElement(1, 0x82);
 
         Assert.assertTrue("equals self", m1.equals(m1));
-        Assert.assertTrue("equals copy", m1.equals(new CanMessage(m1)));        
+        Assert.assertTrue("equals copy", m1.equals(new CanMessage(m1)));
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }
-    
+
     public void testHeaderAccessors() {
         CanMessage m = new CanMessage(0x555);
-        
+
         Assert.assertTrue("Header 0x555", m.getHeader() == 0x555);
-        
+
     }
-    
+
     public void testRtrBit() {
         CanMessage m = new CanMessage(0x12);
         Assert.assertTrue("not rtr at start", !m.isRtr());
@@ -106,7 +101,7 @@ public class CanMessageTest extends CanMRCommonTest {
         m.setExtended(false);
         Assert.assertTrue("std at end", !m.isExtended());
     }
-    
+
     public void testDataElements() {
         CanMessage m = new CanMessage(0x12);
 
@@ -115,10 +110,10 @@ public class CanMessageTest extends CanMRCommonTest {
 
         m.setNumDataElements(1);
         Assert.assertTrue("1 Elements", m.getNumDataElements() == 1);
-        
+
         m.setNumDataElements(8);
         Assert.assertTrue("8 Elements", m.getNumDataElements() == 8);
-        
+
         m.setNumDataElements(3);
         m.setElement(0, 0x81);
         m.setElement(1, 0x02);
@@ -130,7 +125,6 @@ public class CanMessageTest extends CanMRCommonTest {
     }
 
     // from here down is testing infrastructure
-
     public CanMessageTest(String s) {
         super(s);
     }
@@ -150,9 +144,12 @@ public class CanMessageTest extends CanMRCommonTest {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { 
+    protected void setUp() {
         new TrafficControllerScaffold();
         apps.tests.Log4JFixture.setUp();
     }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

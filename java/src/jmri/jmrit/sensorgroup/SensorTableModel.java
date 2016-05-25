@@ -1,24 +1,26 @@
 // SensorTableModel.java
-
 package jmri.jmrit.sensorgroup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Manager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.beans.PropertyChangeListener;
 /**
  * Model for a simple Sensor JTable
  *
- * @author Bob Jacobsen Copyright (C) 2007 
+ * @author Bob Jacobsen Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision$
+ * @version $Revision$
  */
+public class SensorTableModel extends BeanTableModel implements PropertyChangeListener {
 
-public class SensorTableModel extends BeanTableModel implements PropertyChangeListener
-{
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3536564177611715912L;
     String[] _sysNameList;
     Boolean[] _includedSensors;
 
@@ -31,8 +33,9 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         _sysNameList = getManager().getSystemNameArray();
 
         _includedSensors = new Boolean[_sysNameList.length];
-        for (int i = 0; i<_sysNameList.length; i++)
+        for (int i = 0; i < _sysNameList.length; i++) {
             _includedSensors[i] = Boolean.FALSE;
+        }
     }
 
     public void dispose() {
@@ -40,15 +43,15 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
     }
 
     public Manager getManager() {
-         return InstanceManager.sensorManagerInstance();
+        return InstanceManager.sensorManagerInstance();
     }
 
-    public int getRowCount () {
+    public int getRowCount() {
         return _sysNameList.length;
     }
 
-    public Object getValueAt (int r,int c) {
-        if (r >=_sysNameList.length) {
+    public Object getValueAt(int r, int c) {
+        if (r >= _sysNameList.length) {
             return null;
         }
         switch (c) {
@@ -59,17 +62,17 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
             case UNAME_COLUMN:
                 return InstanceManager.sensorManagerInstance().provideSensor(_sysNameList[r]).getUserName();
             default:
-                return super.getValueAt(r,c);
+                return super.getValueAt(r, c);
         }
     }
 
-    public void setValueAt(Object type,int r,int c) {
-        if (r>_sysNameList.length) {
+    public void setValueAt(Object type, int r, int c) {
+        if (r > _sysNameList.length) {
             return;
         }
         switch (c) {
-            case INCLUDE_COLUMN:  
-                _includedSensors[r] = (Boolean)type;
+            case INCLUDE_COLUMN:
+                _includedSensors[r] = (Boolean) type;
                 return;
             default:
                 log.warn("default hit in setValueAt");
@@ -84,7 +87,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(SensorTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTableModel.class.getName());
 
 }
 /* @(#)SensorTableModel.java */

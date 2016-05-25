@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditTrackSegment.shtml,v 1.3 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-11--> 
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Edit Track Segment Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Layout Editor Track Segment">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -26,55 +26,55 @@
 
 <H1>Editer Segment de Voie</H1>
 
-<h2>Tronçons de Voie et de Points de Raccordement </H2>
+<h2>Tron&#231;ons de Voie et de Points de Raccordement </H2>
 
-Un <b>segment de voie</b> est un morceau de voie droite s'étendant entre deux
-points de connexion. Les points de raccordement sont dessinés comme des petits carrés rouges ou verts.
+Un <b>segment de voie</b> est un morceau de voie droite s'&#233;tendant entre deux
+points de connexion. Les points de raccordement sont dessin&#233;s comme des petits carr&#233;s rouges ou verts.
 Les points de connexion sont disponibles sur les aiguillages, les points d'ancrage, Heurtoirs, et
 croisement. Chaque aiguillage a trois ou quatre points de connexion,
 chacun acceptant une connexion. Chaque point d'ancrage a un point de connexion qui
 peut accepter deux connexions. Un Heurtoir de fin est semblable, mais accepte une seul
 connexion. Les croisements ont quatre points de connexion, chacun acceptant une
 connexion. Un point de connexion qui peut accepter un segment de voie de raccordement est
-tirés en rouge. Quand un point de connexion a sa capacité de connexions complète, sa couleur
-est passé au vert. Lorsque tous les points de connexion sont verts, un schéma de voie est
-complet, avec toutes les connexions définies.</p>
+tir&#233;s en rouge. Quand un point de connexion a sa capacit&#233; de connexions compl&#232;te, sa couleur
+est pass&#233; au vert. Lorsque tous les points de connexion sont verts, un sch&#233;ma de voie est
+complet, avec toutes les connexions d&#233;finies.</p>
 
 <h2>Styles de Lignes </H2>
 
-Les segments de voie sont normalement dessinés en traits pleins. Mais vous pouvez désigner un
-segment de voie en <i>pointillés</i> pour montrer les tunnels ou les voies traversant
-à différents angles. Vous pouvez demander une ligne pointillée pour un segment de voie en
-cherchant <b> pointillé</b> dans la barre d'outil avant que le segment de voie soit créé,
-ou vous pouvez changer un segment de voie en <b> Pointillés</b> dans le dialogue Éditer segment de voie 
-. (Des points d'ancrage peuvent être ajoutés pour obtenir que votre voie pointillée
- couvre la zone exacte souhaitée.) Vous pouvez aussi désigner un segment de voie
-<i>caché</i> donc il est affiché uniquement lorsque le mode édition est actif. 
-Les tronçons de voie <i>cachés</i>sont utiles pour suivre les diagrammes tirés de plusieurs plans où la
-fin d'une rangée se connecte au début de la même rangée ou d'une autre. Pour faire un
-segment de voie cachée, vérifiez <b>Masquer la Voie</b> dans la boîte de dialogue Modifier segment de voie.</p>
+Les segments de voie sont normalement dessin&#233;s en traits pleins. Mais vous pouvez d&#233;signer un
+segment de voie en <i>pointill&#233;s</i> pour montrer les tunnels ou les voies traversant
+&#224; diff&#233;rents angles. Vous pouvez demander une ligne pointill&#233;e pour un segment de voie en
+cherchant <b> pointill&#233;</b> dans la barre d'outil avant que le segment de voie soit cr&#233;&#233;,
+ou vous pouvez changer un segment de voie en <b> Pointill&#233;s</b> dans le dialogue &#233;diter segment de voie 
+. (Des points d'ancrage peuvent &#234;tre ajout&#233;s pour obtenir que votre voie pointill&#233;e
+ couvre la zone exacte souhait&#233;e.) Vous pouvez aussi d&#233;signer un segment de voie
+<i>cach&#233;</i> donc il est affich&#233; uniquement lorsque le mode &#233;dition est actif. 
+Les tron&#231;ons de voie <i>cach&#233;s</i>sont utiles pour suivre les diagrammes tir&#233;s de plusieurs plans o&#244; la
+fin d'une rang&#233;e se connecte au d&#233;but de la m&#234;me rang&#233;e ou d'une autre. Pour faire un
+segment de voie cach&#233;, cochez <b>Masquer la Voie</b> dans la bo&#238;te de dialogue Modifier segment de voie.</p>
 
-<h2>La voie principale et Voie d'Évitement </H2>
+<h2>Voie principale et Voie d'&#233;vitement </H2>
 
-En option, les segments de voie sont utilisés pour désigner <i>la voie principale</i> ou <i>la voie d'évitement</i>. Les segments des aiguillages et des croisements sont reliés à la <i> voie principale 
-</i> ou la <i>voie d'évitement</i> selon les désignations des itinéraires continus dans le
+En option, les segments de voie sont utilis&#233;s pour d&#233;signer <i>la voie principale</i> ou <i>la voie d'&#233;vitement</i>. Les segments des aiguillages et des croisements sont reli&#233;s &#224; la <i> voie principale 
+</i> ou &#224; la <i>voie d'&#233;vitement</i> selon les d&#233;signations des itin&#233;raires continus dans la
 section aiguillages ci-dessus pour des informations sur une ligne principale suivi d'un aiguillage
 .</p>
 <p>
-Si <b> la Voie Principale</b> est cochée dans la barre d'outils quand un
-segment de voie est créé, ce segment de voie est désigné comme <i>voie principale</i>,
-sinon il est considéré comme <i>voie d'évitement</i>. Vous pouvez changer de ligne principale à
- voie d'évitement, ou vice versa, dans le dialogue Éditer Voie. La voie principale et la
-voie d'évitement peuvent être établies avec des lignes de différentes largeurs. Les Largeurs de voie pour chacune sont définies
-en utilisant l'option <b>Régler Largeur de Voie...</b> dans le menu Options.</p>
+Si <b> la Voie Principale</b> est coch&#233;e dans la barre d'outils quand un
+segment de voie est cr&#233;&#233;, ce segment de voie est d&#233;sign&#233; comme <i>voie principale</i>,
+sinon il est consid&#233;r&#233; comme <i>voie d'&#233;vitement</i>. Vous pouvez changer de ligne principale &#224;
+ voie d'&#233;vitement, ou vice versa, dans le dialogue &#233;diter Voie. La voie principale et la
+voie d'&#233;vitement peuvent &#234;tre &#233;tablies avec des lignes de diff&#233;rentes largeurs. Les Largeurs de voie pour chacune sont d&#233;finies
+en utilisant l'option <b>R&#233;gler Largeur de Voie...</b> dans le menu Options.</p>
 
 <h2>Cantons de Voie </H2>
 
-En option, vous pouvez désigner dans quel <b>Canton</b> se trouve un segment de voie -soit en entrant
+En option, vous pouvez d&#233;signer dans quel <b>Canton</b> se trouve un segment de voie -soit en entrant
  un nom de canton dans le <b>Canton>: Nom</b> de la barre d'outil avant
-la création de chaque segment de voie, ou en entrant un nom de canton dans la boite de dialogue Éditer segment de voie
- à un moment ultérieur. La boîte de dialogue Modifier Segment de Voie permet également d'appeler une boite de dialogue Modifier Canton, afin que l'information pour le segment de voie du canton puisse peut être
-entrée ou modifiée. Les cantons sont discutés plus en détail dans la page d'aide de Créer/Modifier Cantons.</p>
+la cr&#233;ation de chaque segment de voie, ou en entrant un nom de canton dans la boite de dialogue &#233;diter segment de voie
+ &#224; un moment ult&#233;rieur. La bo&#238;te de dialogue Modifier Segment de Voie permet &#233;galement d'appeler une boite de dialogue Modifier Canton, afin que l'information pour le segment de voie du canton puisse peut &#234;tre
+entr&#233;e ou modifi&#233;e. Les cantons sont discut&#233;s plus en d&#233;tail dans la page d'aide de Cr&#233;er/Modifier Cantons.</p>
 
 <!--#include virtual="/Footer" -->
 </body>

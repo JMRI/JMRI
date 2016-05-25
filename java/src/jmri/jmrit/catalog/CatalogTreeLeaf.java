@@ -1,22 +1,18 @@
-
-// CatalogTreeLeaf.java
-
 package jmri.jmrit.catalog;
 
 /**
  * Leaf of a CatalogTree.
  * <P>
- * Name for the leaf
- * Path to lead.
+ * Name for the leaf Path to lead.
  *
- * @author			Pete Cressman  Copyright 2009
+ * @author	Pete Cressman Copyright 2009
  *
  */
 public class CatalogTreeLeaf {
 
     private String _name;
     private String _path;
-    private int    _size;
+    private int _size;
 
     public CatalogTreeLeaf(String name, String path, int size) {
         _name = name;

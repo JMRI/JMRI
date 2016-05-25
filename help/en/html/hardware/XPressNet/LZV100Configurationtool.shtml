@@ -1,75 +1,76 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
-<title>The JMRI LZV100 Configuration Utility</title>
+<title>JMRI Hardware Support - XPressNet LZV100 Configuration Tool</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-
-<H2>The JMRI LZV100 Configuration Utility</H2>
+<h1>XPressNet LZV100 Configuration Tool</h1>
 <img src="images/LZV100ConfigurationUtility.jpg" alt="LZV100 Configuration 
 Tool Image">
-<P>
+<p>
 The LZV100 Configuration tool is used to configure the LZV100 through an 
 LI100 or LI101 Computer interface.
-<P>
+<p>
 Starting at the top, we have configuration information for the Power 
-Station portion of the LZV100.
-<P>
+Station portion of the LZV100.<br>
 The drop down box selects the track voltage.
-<P>
-The Second drop down box indicates if the "E-Line" should be active or 
-inactive.  When active, Power stations use this interface to shut the 
+<p>
+The second drop down box indicates if the "E-Line" should be Active or 
+Inactive.  When active, Power Stations use this interface to shut the 
 layout down when there is a short circuit, or as an emergency stop 
-mechanisim.
-<P>
+mechanism.
+
+	<h4>Buttons</h4>
+<p>
 Starting on the left side of the screen in the first row of buttons, the 
 button labeled "Write to LZV100", will write the settings above this line 
 to the LZV100.  
-<P>
+<p>
 The button labeled "Reset to Factory Defaults" will reset the <b>screen</b> 
 to factory defaults.  This does not send a reset instruction to the LZV100
 at this point in time.
-<P>
+<p>
 The last button, labeled "Close" will close the screen, without sending 
-any information to the LI101F.
-<P>
-The second row of buttons is options for the command station.  These 
-options will work with the LV100 as well.  
-<P>
+any (more) information to the LI101F.
+<p>
+The second row of buttons is options for the Command Station.<br>
+<strong>These options will work with the LV100 as well.</strong>  
+<p>
 The button labeled "Reset Command Station" sends the locomotive address 
 0 function instructions indicated in the LZV100 Manual for a command  
 station reset.  This will reset the command station to factory 
 defaults.  See the LZV100 manual for more information as to exactly what 
 this does.
-<P>
+<p>
 The button labeled "Auto/Manual mode toggle" sends the 
 locomotive address 0 function instructions indicated in the LZV100 
 Manual to toggle between manual and automatic startup mode.  In Manual 
 mode, the LZV100 will turn on all Locomotive functions that were on the 
 last time the LZV100 was powered on.  In Automatic Mode, the Locomotives 
 will also resume the previous speed and direction settings.
+
+<p>Back to the <a href="index.shtml">XPressNet Help</a> page
+
 <hr>
-Paul Bender<BR>
+Paul Bender<br>
 paul.bender@acm.org
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

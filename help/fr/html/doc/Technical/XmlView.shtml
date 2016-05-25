@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlView.shtml,v 1.3 2010/02/15 07:52:47 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-09-06-->
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
 <html lang="fr">
 <head>
     <TITLE>
@@ -10,7 +10,7 @@
     <meta name="keywords" content="JMRI technical code xml usage">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -27,60 +27,60 @@
 
 JMRI enregistre diverses informations dans des fichiers XML.
 Bien qu'ils soient en format texte qui est fondamentalement lisible par l'homme,
-c'est un format compliqué.
+c'est un format compliqu&#233;.
 
 <P>
-Pour les rendre plus faciles à lire, à imprimer et à comprendre, les fichiers XML de JMRI
- peuvent être affichés dans un navigateur Web. Une technique appelée
+Pour les rendre plus faciles &#224; lire, &#224; imprimer et &#224; comprendre, les fichiers XML de JMRI
+ peuvent &#234;tre affich&#233;s dans un navigateur Web. Une technique appel&#233;e
 «feuilles de style XSLT"
-est utilisé pour les formater dans le navigateur web.
-Pour un exemple de la façon dont cela ressemble, s'il vous plaît voir le
-panneau échantillon <a href="http://jmri.sourceforge.net/xml/samples/NicksClinic.xml"> fichier XML </a> sur les principaux JMRI
-Web site JMRI. (Peut prendre quelques secondes à charger)
+est utilis&#233; pour les formater dans le navigateur web.
+Pour un exemple de la fa&#231;on dont cela ressemble, s'il vous pla&#238;t voir le
+panneau &#233;chantillon <a href="http://jmri.org/xml/samples/NicksClinic.xml"> fichier XML </a> sur les principaux
+Web site JMRI. (Peut prendre quelques secondes &#224; charger)
 
 <p>
-Pour afficher un fichier XML que JMRI a créé, il suffit d'ouvrir le fichier avec votre
-navigateur web favori. Dans de nombreux cas, vous devriez être en mesure de simplement double-cliquez sur
-sur elle, ou faites le glisser sur l'icône du navigateur Web. Sur certains types d'ordinateurs, vous aurez
-besoin de l'ouvrir à partir du menu "Fichier".
+Pour afficher un fichier XML que JMRI a cr&#233;&#233;, il suffit d'ouvrir le fichier avec votre
+navigateur web favori. Dans de nombreux cas, vous devriez &#234;tre en mesure de simplement double-cliquez sur
+sur lui, ou faites le glisser sur l'ic&#244;ne du navigateur Web. Sur certains types d'ordinateurs, vous aurez
+besoin de l'ouvrir &#224; partir du menu "Fichier".
 
 <p>
 Malheureusement, cette approche simple ne fonctionne pas toujours, parce que tous les navigateurs
-ne mettent pas correctement en œuvre les algorithmes pour trouver les fichiers de mise en forme
-nécessaires à cet affichage.
+ne mettent pas correctement en oeuvre les algorithmes pour trouver les fichiers de mise en forme
+n&#233;cessaires &#224; cet affichage.
 Si le premier navigateur que vous essayez n'affiche pas le fichier XML (habituellement
 montrant une page blanche, bien que parfois ils vont afficher un message d'erreur),
-S'il vous plaît essayez les autres que vous avez installés. Internet Explorer est particulièrement
-problématique. Mozilla, Safari et Opera semblent pour obtenir ce droit, tandis que Firefox
-semble fonctionner correctement sur certaines plateformes et pas sur d'autres. (Il peut aussi y avoir des
+S'il vous pla&#238;t essayez les autres que vous avez install&#233;s. Internet Explorer est particuli&#232;rement
+probl&#233;matique. Mozilla, Safari et Opera semblent pour obtenir ce droit, tandis que Firefox
+semble fonctionner correctement sur certaines plateformes, Linux entre autres, et pas sur d'autres. (Il peut aussi y avoir des
 options qui l'affectent s'il fonctionne)
 <p>
-Si aucun des navigateurs qui s'offrent à vous ne peut afficher le fichier,
-vous pouvez contourner ce problème en utilisant le
+Si aucun des navigateurs qui s'offrent &#224; vous ne peut afficher le fichier,
+vous pouvez contourner ce probl&#232;me en utilisant le
 <a href="../../web/index.shtml"> mini serveur Web JMRI  </a>
-dans la version 2.9.4 et JMRI plus tard.
+dans la version JMRI 2.9.4 et plus tard.
 <p>
 Pour ce faire:
 <UL>
-<li> d'abord, démarrer JMRI. 
+<li> d'abord, d&#233;marrer JMRI. 
     <ul>
     <li><ul>
     <li>  Soit DecoderPro ou PanelPro peut
-         être utilisés, et aucune connexion réseau n'est nécessaire.
-     <li> Vous ne devez utiliser JMRI 2.9.4 ou version ultérieure.
-     <li> Le fichier que vous souhaitez afficher doit avoir été entreposé
-         dans JMRI 2.9.4 ou version ultérieure. S'il est plus vieux que cela,
-         il suffit de charger dans JMIR 2.9.4 ou version ultérieure et de le stocker à nouveau.
+         &#234;tre utilis&#233;, et aucune connexion r&#233;seau n'est n&#233;cessaire.
+     <li> Vous devez utiliser JMRI 2.9.4 ou version ult&#233;rieure.
+     <li> Le fichier que vous souhaitez afficher doit avoir &#233;t&#233; entrepos&#233;
+         dans JMRI 2.9.4 ou version ult&#233;rieure. S'il est plus vieux que cela,
+         il suffit de charger dans JMIR 2.9.4 ou version ult&#233;rieure et de le stocker &#224; nouveau.
      </ ul>
-<li> Démarrez le serveur web JMRI mini. Dans le cadre du menu débogage
-     , sélectionnez "Démarrer Mini Web Server".
+<li> D&#233;marrez le serveur web JMRI. Dans le cadre du menu d&#233;bogage
+     , s&#233;lectionnez "D&#233;marrer Mini Web Server".
 <li> Ouvrez votre navigateur Web et saisissez l'URL
      "<a href="http://localhost:12080/index.html"> http://localhost:12080/index.html </a>"
-<li> Vous devriez maintenant voir le logo sur JMRI une page d'index.
-     Si votre fichier XML se trouve dans le répertoire de distribution JMRI,
+<li> Vous devriez maintenant voir le logo de JMRI sur une page d'index.
+     Si votre fichier XML se trouve dans le r&#233;pertoire de distribution JMRI,
      cliquez sur le lien "dist" . Si c'est dans le
-     répertoire des préférences, cliquez sur le lien "prefs" .
-<li> Enfin, cliquez sur un des noms de répertoires nécessaires pour accéder à votre
+     r&#233;pertoire des pr&#233;f&#233;rences, cliquez sur le lien "prefs" .
+<li> Enfin, cliquez sur un des noms de r&#233;pertoires n&#233;cessaires pour acc&#233;der &#224; votre
      fichier, puis cliquez sur votre fichier.
 </ ul>
 

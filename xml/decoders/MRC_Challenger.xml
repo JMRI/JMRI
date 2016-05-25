@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: MRC_Challenger.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,112 +15,74 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="1" lastUpdated="20071221"/>
   <!-- made from the MRC_1645 file -->
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150103"/>
+  <!-- redundant file with MRC_Athearn_Challenger.xml -->
+  <!-- hide this one and upgrade to the other definition -->
+  <!-- No CV21 in this model. Removed MRC pane with "Functions Respond To Address" -->
   <decoder>
     <family name="Athearn Genesis Challenger" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="Athearn Genesis Challenger" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
-                </model>
+      <model show="no" model="Athearn Genesis Challenger" replacementModel="Athearn Genesis Challenger" replacementFamily="Athearn" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes" comment="deprecated decoder definition">
+      </model>
+      <!-- Dummy model to workaround show="no" not working if only one model in the family -->
+      <model show="no" model="Athearn Genesis Challenger Dummy" replacementModel="Athearn Genesis Challenger" replacementFamily="Athearn" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Note Mfg. recognizes CV read back is not 100% correct -->
     <variables>
-      <variable label="Short address" CV="1" comment="Range 1-127" item="Short Address" default="3">
-        <shortAddressVal/>
-        <label>Short address</label>
-        <comment>Range 1-127</comment>
-      </variable>
-      <variable label="Start voltage" CV="2" item="Vstart" default="0" comment="Range 0-32">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Start voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Acceleration" CV="3" item="Accel" default="0" comment="Range 0-32">
+      <variable CV="3" item="Accel" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-32)</label>
+        <label xml:lang="fr">Accelération (0-32)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-32)</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Deceleration" CV="4" item="Decel" default="0" comment="Range 0-32">
+      <variable CV="4" item="Decel" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (0-32)</label>
+        <label xml:lang="fr">Décélération (0-32)</label>
+        <label xml:lang="de">Bremszeit (0-32)</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Top voltage" CV="5" item="Vhigh" default="32" comment="Range 0-32">
+      <variable CV="5" item="Vhigh" default="32" comment="Range 0-32">
         <decVal max="32"/>
         <label>Top voltage</label>
+        <label xml:lang="it">Volt Massimi (0-32):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Manufacturer version number" CV="7" readOnly="yes" item="Decoder Version" default="32">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="32">
         <decVal/>
         <label>Manufacturer version number</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="143">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Long address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-        <longAddressVal/>
-        <label>Long address</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
-      </variable>
-      <variable label="Advanced consist address" CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Advanced consist address</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
-      <variable label="Sound volume min/max" CV="52" item="Sound Option 1" default="0" comment="Range 0 or 1">
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="52" item="Sound Option 1" default="0" comment="Range 0 or 1">
         <enumVal>
           <enumChoice choice="Min">
             <choice>Min</choice>
@@ -132,30 +94,26 @@
         <label>Sound volume min/max</label>
         <comment>Range 0 or 1</comment>
       </variable>
-      <variable label="Chuff Rate" CV="64" item="Sound Setting 1" default="5" comment="Range 0-10">
+      <variable CV="64" item="Sound Setting 1" default="5" comment="Range 0-10">
         <decVal max="10"/>
         <label>Chuff Rate</label>
         <comment>Range 0-10</comment>
       </variable>
-      <variable label="User ID #1" CV="105" item="User Id #1" default="0" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>User ID #1</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="User ID #2" CV="106" item="User Id #2" default="0" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>User ID #2</label>
-        <comment>Range 0-255</comment>
-      </variable>
+      <!-- CV 105-106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="125" default="1"/>
+      <factReset label="Reset All CVs" CV="125" default="1">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-  <pane name="MRC">
+  <!-- no function CV in this decoder
+  <pane>
     <column>
       <display item="Functions Respond To Address"/>
     </column>
     <name>MRC</name>
   </pane>
+  -->
 </decoder-config>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for WatchMan files -->
+<!-- Panes to show BOD Sensitivity -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <column>
+        <display item="S1" layout="above" label="  BOD 1">
+        </display>
+        <display item="S1" layout="above" format="vslider" label=" "/>
+        <display item="AS1" format="checkbox" tooltip="AutoSet sensitivity" label="AutoSet"/>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="S2" layout="above" label="   BOD 2">
+        </display>
+        <display item="S2" layout="above" format="vslider" label=" "/>
+        <display item="AS2" format="checkbox" tooltip="AutoSet sensitivity" label="   AutoSet"/>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="S3" layout="above" label="   BOD 3">
+        </display>
+        <display item="S3" layout="above" format="vslider" label=" "/>
+        <display item="AS3" format="checkbox" tooltip="AutoSet sensitivity" label="   AutoSet"/>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="S4" layout="above" label="   BOD 4">
+        </display>
+        <display item="S4" layout="above" format="vslider" label=" "/>
+        <display item="AS4" format="checkbox" tooltip="AutoSet sensitivity" label="   AutoSet"/>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row/>
+    <row>
+      <column>
+        <display item="AS8" format="checkbox" tooltip="AutoSet sensitivity" label="AutoSet"/>
+        <display item="S8" layout="below" format="vslider" label=" "/>
+        <display item="S8" layout="below" label="  BOD 8">
+        </display>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="AS7" format="checkbox" tooltip="AutoSet sensitivity" label="   AutoSet"/>
+        <display item="S7" layout="below" format="vslider" label=" "/>
+        <display item="S7" layout="below" label="   BOD 7">
+        </display>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="AS6" format="checkbox" tooltip="AutoSet sensitivity" label="   AutoSet"/>
+        <display item="S6" layout="below" format="vslider" label=" "/>
+        <display item="S6" layout="below" label="   BOD 6">
+        </display>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <display item="AS5" format="checkbox" tooltip="AutoSet sensitivity" label="   AutoSet"/>
+        <display item="S5" layout="below" format="vslider" label=" "/>
+        <display item="S5" layout="below" label="   BOD 5">
+        </display>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <label>
+        <text> </text>
+      </label>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="margin" layout="left" label="AutoSet Margin"/>
+      </column>
+      <column>
+        <display item="margin" layout="left" format="hslider" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>                    </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <label>
+        <text>Detectors are shown above in the order that they appear on the WatchMan's connectors. Sensitivity Values range from 1-255</text>
+      </label>
+    </row>
+    <row>
+      <label>
+        <text>To AutoSet a detector channel, clip a single wheelset to the track, then check the 'AutoSet' box, and 'Write changes on sheet'. </text>
+      </label>
+    </row>
+    <row>
+      <label>
+        <text>To read back the sensitivity, 'Read full sheet'. Note: The 'AutoSet' process may take some time to complete for each channel.</text>
+      </label>
+    </row>
+    <row>
+      <label>
+        <text>When the 'AutoSet' box has been automatically un-checked, then the slider shows the new found AutoSet value.</text>
+      </label>
+    </row>
+  </column>
+  <name>Sensitivity</name>
+</pane>

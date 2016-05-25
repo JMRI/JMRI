@@ -1,10 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalMastLogicTable.shtml,v 1.3 2011/06/15 17:53:18 kevin-dickerson Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/09-->
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-12-->
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: SignalMast Logic Table Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Kevin Dickerson" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Signal Mast Logic Table">
 
@@ -24,67 +24,66 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> La Table Logique Mât de Signalisation</H1>
+<H1> Le Tableau Logique M&#226;tSignal</H1>
 
-<P>Une logique  Mât de Signalisation, se compose d'un Mât de destination, un ou plusieurs aiguillages,
-canton, de capteurs ou d'autres Mâts de Signalisations qui doivent être dans un état précis avant la
-Mât de Signalisation source, peut être réglé à partir d'un aspect «danger».
-<P> Si vous avez dessiné correctement  votre réseau sur le TCO avec toutes les
-informations de cantons , il est possible pour le système de construire automatiquement toutes les paires de Mât de Signalisation source et destination, avec les cantons, les aiguillages et leurs
-paramètres.
-<H2> Colonnes de La Table Logique Mât de Signalisation</H2>
+<P>Une logique M&#226;tSignal, se compose d'un M&#226;t de destination, un ou plusieurs aiguillages,
+canton, de capteurs ou d'autres M&#226;tsSignal qui doivent &#234;tre dans un &#233;tat pr&#233;cis avant le
+M&#226;tSignal source, peut &#234;tre r&#233;gl&#233; &#224; partir d'un aspect "Danger".
+<P> Si vous avez dessin&#233; correctement  votre r&#233;seau sur l'&#233;diteur de r&#233;seau avec toutes les
+informations de cantons, il est possible pour le syst&#232;me de construire automatiquement toutes les paires de M&#226;tSignal source et destination, avec les cantons, les aiguillages et leurs
+param&#232;tres.
+<H2> Colonnes du Tableau Logique M&#226;tSignal</H2>
 
 <DL>
 <DT> Source</DT>
-<DD> C'est le mât de signal que vous souhaitez mettre en place à début de la logique. Il
-peut y avoir plusieurs instances du mât source dans la table, selon
-le nombre de mâts de destination différents qui sont accessibles depuis ce mât.
+<DD> C'est le m&#226;t de signal que vous souhaitez mettre en place au d&#233;but de la logique. Il
+peut y avoir plusieurs instances du m&#226;t source dans la table, selon
+le nombre de m&#226;ts de destination diff&#233;rents qui sont accessibles depuis ce m&#226;t.
  <br>
-Considérez cela comme le mât de signal auquel le conducteur est actuellement confronté.</Dd>
+Consid&#233;rez cela comme le m&#226;t de signal auquel le conducteur est actuellement confront&#233;.</Dd>
 
 <DT> Apparence</DT>
- <DD> L'aspect actuel du mât source</dd>
+ <DD> L'aspect actuel du m&#226;t source</dd>
 
 <DT> Destination</DT>
-<DD> C'est le mât de signalisation de destination qui est le prochain sur la ligne du
-mât source. Il peut y avoir plusieurs instances du mât de destination, tous les
- avec des mâts source différente.
+<DD> C'est le m&#226;t de signalisation de destination qui est le prochain sur la ligne du
+m&#226;t source. Il peut y avoir plusieurs instances du m&#226;t de destination, tous
+ avec des m&#226;ts source diff&#233;rente.
 </Dd>
 
  <DT> Apparence</DT>
- <DD> L'aspect actuel du mât de destination</dd>
+ <DD> L'aspect actuel du m&#226;t de destination</dd>
 
  <DT> Commentaire</DT>
-<DD> Un champ libre pour l'utilisateur sous forme modifiable par l'utilisateur pour 'attribuer des commentaires sur la
-     la logique</DT>
+<DD> Un champ libre pour l'utilisateur sous forme modifiable par l'utilisateur pour attribuer des commentaires sur la la logique</DT>
 
 <DT> Supprimer</DT>
-<DD>Appuyer le bouton «Supprimer» supprimera la logique du mât de signalisationde la
-table.
+<DD>Appuyer le bouton "Supprimer" supprimera la logique du m&#226;t de signalisation du
+tableau.
 <p>
-Notez que cela ne supprime pas la logique mât de signalisationde tous les fichiers que vous avez
-sauvegardé qui la contiennent. Si vous chargez un de ces fichiers, peut-être
-lorsque vous redémarrez le programme, l'itinéraire va réapparaître.
-Vous devez utiliser l'une des options «Stocker dans Fichier dr" dans les menu "Fichier"
+Notez que cela ne supprime pas la logique m&#226;t de signalisation de tous les fichiers que vous avez
+sauvegard&#233;s qui la contiennent. Si vous chargez un de ces fichiers, peut-&#234;tre
+lorsque vous red&#233;marrez le programme, l'itin&#233;raire va r&#233;appara&#238;tre.
+Vous devez utiliser l'une des options "Stocker dans Fichier" dans les menu "Fichier"
  pour enregistrer de nouvelles versions de tous les fichiers qui contiennent cette voie.
 </Dd>
 
 
-<DT> Activé</DT>
-<DD> Pour désactiver une Logique de Mât de Signalisation depuis un déclenchement, décochez la case "Activé"
-pour l'itinéraire.</dd>
+<DT> Activ&#233;</DT>
+<DD> Pour d&#233;sactiver une Logique de M&#226;t de Signalisation depuis un d&#233;clenchement, d&#233;cochez la case "Activ&#233;"
+pour l'itin&#233;raire.</dd>
 
 
 	<DT> Modifier </DT>
-<DD> Appuyez sur ce bouton pour modifier la Logique duMât de Signalisation. Pour plus d'informations, voir: <a
-HREF= "SignalMastLogicAddEdit.shtml"> Ajout/Édition Logique Mât de Signalisation</A>. </Dd>
+<DD> Appuyez sur ce bouton pour modifier la Logique du M&#226;t de Signalisation. Pour plus d'informations, voir: <a
+HREF= "SignalMastLogicAddEdit.shtml"> Ajout/&#233;dition Logique M&#226;t de Signalisation</A>. </Dd>
 </DL>
 
-<H3> Ajouter Logique Mât de Signalisation </H3>
+<H3> Ajouter Logique M&#226;t de Signalisation </H3>
 
-<DD> Cela se fait via le bouton Ajouter au bas de l'écran, pour plus d'informations
-sur le montage et l'ajout de  Logique Mât de Signalisation voir
-	<A HREF="../signalling/AddEditSignallingLogic.shtml">Ajout/Édition Logique Mât de Signalisation</A>.</DD>
+<DD> Cela se fait via le bouton Ajouter au bas de l'&#233;cran, pour plus d'informations
+sur le montage et l'ajout de  Logique M&#226;t de Signalisation voir
+	<A HREF="../signalling/AddEditSignallingLogic.shtml">Ajout/&#233;dition Logique M&#226;t de Signalisation</A>.</DD>
 </DL>
 <!--#include virtual="/Footer" -->
 </BODY>

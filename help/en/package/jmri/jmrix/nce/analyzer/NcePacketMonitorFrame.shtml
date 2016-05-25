@@ -24,17 +24,29 @@
     <div id="mainContent">
 
 <H1>NCE DCC Packet Analyzer</H1>
-<img src="http://www.ncedcc.com/components/com_virtuemart/shop_image/product/resized/Packet_Analyzer_4a028e2ca69b5_90x90.jpg" height="69" width="90" alt="Packet Analyzer" border="0" align="right"/>
-The NCE DCC Packet Analyzer tool works with the
-<a href="http://www.ncedcc.com/component/virtuemart/?page=shop.product_details&flypage=flypage.tpl&product_id=67&category_id=8">NCE Packet Analyzer<a/>
-product to read and present the DCC packets on your track.
-It connects via a separate serial port from your 
-command station connection.
-
+<table>
+	<tr>
+		<td>
+			<P>The NCE DCC Packet Analyzer tool works with the
+			<a href="https://ncedcc.zendesk.com/hc/en-us/articles/200979515-Packet-Analyzer" target= "_blank">NCE Packet Analyzer<a/>
+			product to read and present the DCC packets on your track.
+			It connects via a separate serial port from your 
+			command station connection.</P>
+			<P>If you do not have an NCE system, configure a new second connection in <a href="/help/en/manual/DecoderPro/Start_Preferences.shtml#Connections" target="_blank">Preferences->Connections</a> to "NCE Simulator" so you can access the NCE "DCC Packet Analyzer" menu item. If you do this, you will need to restart JMRI and then open <a href="/help/en/manual/DecoderPro/Start_Preferences.shtml#Defaults" target="_blank">Preferences->Defaults</a> to check that the NCE Simulator has not "stolen" any of your real connections.</P>
+		</td>
+			<td><img src="https://ncedcc.zendesk.com/hc/en-us/article_attachments/200950605/Packet_Analyzer.jpg" height="80" width="91" alt="Packet Analyzer" border="0"/>
+		</td>
+	</tr>
+</table>
 <h2>Using the Analyzer</h2>
-Select the "Serial port:" and push the "Open" button before using any of
-the radio buttons. The baud rate is fixed at 38.4Kbps. Press the "Init"
-button to initialize the analyzer.
+Select the "Serial port:" and push the "Open" button before using any of the
+radio buttons. The baud rate is fixed at 38.4Kbps. If nothing appears on the
+screen immediately, select a new display mode (e.g. "Verbose") and some packet types
+to display (e.g. "Idle Packets").
+
+<P>Use the radio buttons to configure the analyzer to your liking.
+Note that the NCE analyzer will remember the configuration when it is
+powered down.</P>
 
 <P>The "+ on" checkbox allows you to suppress identical packets.
 Each time the JMRI program detects a packet that it identical to the
@@ -45,13 +57,12 @@ there's little activity it is recommended that you not use the suppress
 feature. This way you will immediately see all packets being captured by
 the analyzer.</P>
 
-<P>Use the radio buttons to configure the analyzer to your liking.
-Note that the NCE analyzer will remember the configuration when it is
-powered down.</P>
+<P>The "Info" button will cause the analyzer to display its inbuilt help screen and the Analyzer version number. Press the "Res." button to resume normal operation.</P>
 
 
 <P>The following help was copied from NCE Corporation with their
-permission.</P>
+permission.
+<a href="https://ncedcc.zendesk.com/hc/en-us/article_attachments/200259175/Analyzer1_1.pdf" target="_blank">Click here</a> to download the full Analyzer manual.</P>
 <P><B>Commands:</B></P>
 <P>V Display packets in 'verbose' mode (able to be intrepreted by
 humans) <BR>

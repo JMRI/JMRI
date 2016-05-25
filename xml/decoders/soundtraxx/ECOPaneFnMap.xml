@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new pane file for SoundTraxx Tsunami -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Function Map</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>&lt;html&gt;
+            &lt;h1&gt;Econami Extended Function Map&lt;/h1&gt;
+            &lt;br/&gt;
+            &lt;br/&gt;
+            &lt;h2&gt;&lt;em&gt;
+              Any check marks on the Legacy Function Map pane will override these settings!
+            &lt;/em&gt;&lt;/h2&gt;
+          &lt;/html&gt;</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Use this sheet to determine which functions will control which outputs</text>
+          <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
+          <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+		<grid ipadx="10" ipady="2">
+			<!-- default padding for all grid items -->
+			<griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
+				<label>
+					<text>Extended   </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="1" anchor="LINE_END">
+				<label>
+					<text>Function   </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="2" anchor="LINE_END">
+				<label>
+					<text>Mapping   </text>
+				</label>
+			</griditem>
+			<griditem gridx="1" gridy="1" anchor="CENTER">
+				<label>
+					<text>Forward</text>
+				</label>
+			</griditem>
+			<griditem gridx="1" gridy="2" anchor="CENTER">
+				<label>
+					<text>Driving</text>
+				</label>
+			</griditem>
+			<griditem gridx="2" gridy="1" anchor="CENTER">
+				<label>
+					<text>Reverse</text>
+				</label>
+			</griditem>
+			<griditem gridx="2" gridy="2" anchor="CENTER">
+				<label>
+					<text>Driving</text>
+				</label>
+			</griditem>
+			<griditem gridx="3" gridy="1" anchor="CENTER">
+				<label>
+					<text>Forward</text>
+				</label>
+			</griditem>
+			<griditem gridx="3" gridy="2" anchor="CENTER">
+				<label>
+					<text>Standing</text>
+				</label>
+			</griditem>
+			<griditem gridx="4" gridy="1" anchor="CENTER">
+				<label>
+					<text>Reverse</text>
+				</label>
+			</griditem>
+			<griditem gridx="4" gridy="2" anchor="CENTER">
+				<label>
+					<text>Standing</text>
+				</label>
+			</griditem>
+			<griditem gridx="5" gridy="0" anchor="CENTER">
+				<label>
+					<text>Emergency</text>
+				</label>
+			</griditem>
+			<griditem gridx="5" gridy="1" anchor="CENTER">
+				<label>
+					<text>Stop</text>
+				</label>
+			</griditem>
+			<griditem gridx="5" gridy="2" anchor="CENTER">
+				<label>
+					<text>Button</text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="3" anchor="LINE_END">
+				<display item="Extended Function Map Headlight" label="Headlight"/>
+			</griditem>
+			<griditem gridx="1" gridy="3" anchor="CENTER">
+				<display item="Headlight Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="3" anchor="CENTER">
+				<display item="Headlight Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="3" anchor="CENTER">
+				<display item="Headlight Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="3" anchor="CENTER">
+				<display item="Headlight Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="3" anchor="CENTER">
+				<display item="Headlight Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="4" anchor="LINE_END">
+				<display item="Extended Function Map Backup Light" label="Backup Light"/>
+			</griditem>
+			<griditem gridx="1" gridy="4" anchor="CENTER">
+				<display item="Backup Light Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="4" anchor="CENTER">
+				<display item="Backup Light Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="4" anchor="CENTER">
+				<display item="Backup Light Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="4" anchor="CENTER">
+				<display item="Backup Light Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="4" anchor="CENTER">
+				<display item="Backup Light Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="5" anchor="LINE_END">
+				<display item="Extended Function Map FX3 Effect" label="FX3 Effect"/>
+			</griditem>
+			<griditem gridx="1" gridy="5" anchor="CENTER">
+				<display item="FX3 Effect Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="5" anchor="CENTER">
+				<display item="FX3 Effect Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="5" anchor="CENTER">
+				<display item="FX3 Effect Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="5" anchor="CENTER">
+				<display item="FX3 Effect Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="5" anchor="CENTER">
+				<display item="FX3 Effect Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="6" anchor="LINE_END">
+				<display item="Extended Function Map FX4 Effect" label="FX4 Effect"/>
+			</griditem>
+			<griditem gridx="1" gridy="6" anchor="CENTER">
+				<display item="FX4 Effect Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="6" anchor="CENTER">
+				<display item="FX4 Effect Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="6" anchor="CENTER">
+				<display item="FX4 Effect Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="6" anchor="CENTER">
+				<display item="FX4 Effect Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="6" anchor="CENTER">
+				<display item="FX4 Effect Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="7" anchor="LINE_END">
+				<display item="Extended Function Map FX5 Effect" label="FX5 Effect"/>
+			</griditem>
+			<griditem gridx="1" gridy="7" anchor="CENTER">
+				<display item="FX5 Effect Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="7" anchor="CENTER">
+				<display item="FX5 Effect Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="7" anchor="CENTER">
+				<display item="FX5 Effect Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="7" anchor="CENTER">
+				<display item="FX5 Effect Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="7" anchor="CENTER">
+				<display item="FX5 Effect Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="8" anchor="LINE_END">
+				<display item="Extended Function Map FX6 Effect" label="FX6 Effect"/>
+			</griditem>
+			<griditem gridx="1" gridy="8" anchor="CENTER">
+				<display item="FX6 Effect Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="8" anchor="CENTER">
+				<display item="FX6 Effect Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="8" anchor="CENTER">
+				<display item="FX6 Effect Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="8" anchor="CENTER">
+				<display item="FX6 Effect Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="8" anchor="CENTER">
+				<display item="FX6 Effect Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="9" gridwidth="REMAINDER" anchor="LINE_END">
+				<label>
+				  <text> </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="10" anchor="LINE_END">
+				<display item="Extended Function Map Dimmer" label="Dimmer"/>
+			</griditem>
+			<griditem gridx="1" gridy="10" anchor="CENTER">
+				<display item="Dimmer Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="10" anchor="CENTER">
+				<display item="Dimmer Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="10" anchor="CENTER">
+				<display item="Dimmer Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="10" anchor="CENTER">
+				<display item="Dimmer Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="10" anchor="CENTER">
+				<display item="Dimmer Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="11" anchor="LINE_END">
+				<display item="Extended Function Map Mute" label="Mute"/>
+			</griditem>
+			<griditem gridx="1" gridy="11" anchor="CENTER">
+				<display item="Mute Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="11" anchor="CENTER">
+				<display item="Mute Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="11" anchor="CENTER">
+				<display item="Mute Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="11" anchor="CENTER">
+				<display item="Mute Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="11" anchor="CENTER">
+				<display item="Mute Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="12" anchor="LINE_END">
+				<display item="Extended Function Map Brake" label="Brake"/>
+			</griditem>
+			<griditem gridx="1" gridy="12" anchor="CENTER">
+				<display item="Brake Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="12" anchor="CENTER">
+				<display item="Brake Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="12" anchor="CENTER">
+				<display item="Brake Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="12" anchor="CENTER">
+				<display item="Brake Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="12" anchor="CENTER">
+				<display item="Brake Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="13" anchor="LINE_END">
+				<display item="Extended Function Map Half Speed" label="Half Speed"/>
+			</griditem>
+			<griditem gridx="1" gridy="13" anchor="CENTER">
+				<display item="Half Speed Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="13" anchor="CENTER">
+				<display item="Half Speed Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="13" anchor="CENTER">
+				<display item="Half Speed Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="13" anchor="CENTER">
+				<display item="Half Speed Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="13" anchor="CENTER">
+				<display item="Half Speed Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="14" anchor="LINE_END">
+				<display item="Extended Function Map Momentum Override" label="Momentum Override"/>
+			</griditem>
+			<griditem gridx="1" gridy="14" anchor="CENTER">
+				<display item="Momentum Override Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="14" anchor="CENTER">
+				<display item="Momentum Override Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="14" anchor="CENTER">
+				<display item="Momentum Override Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="14" anchor="CENTER">
+				<display item="Momentum Override Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="14" anchor="CENTER">
+				<display item="Momentum Override Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="15" anchor="LINE_END">
+				<display item="Extended Function Map Grade Crossing Signal" label="Grade Crossing Signal"/>
+			</griditem>
+			<griditem gridx="1" gridy="15" anchor="CENTER">
+				<display item="Grade Crossing Signal Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="15" anchor="CENTER">
+				<display item="Grade Crossing Signal Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="15" anchor="CENTER">
+				<display item="Grade Crossing Signal Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="15" anchor="CENTER">
+				<display item="Grade Crossing Signal Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="15" anchor="CENTER">
+				<display item="Grade Crossing Signal Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="16" anchor="LINE_END">
+				<display item="Extended Function Map Forward Signal" label="Forward Signal"/>
+			</griditem>
+			<griditem gridx="1" gridy="16" anchor="CENTER">
+				<display item="Forward Signal Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="16" anchor="CENTER">
+				<display item="Forward Signal Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="16" anchor="CENTER">
+				<display item="Forward Signal Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="16" anchor="CENTER">
+				<display item="Forward Signal Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="16" anchor="CENTER">
+				<display item="Forward Signal Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="17" anchor="LINE_END">
+				<display item="Extended Function Map Reverse Signal" label="Reverse Signal"/>
+			</griditem>
+			<griditem gridx="1" gridy="17" anchor="CENTER">
+				<display item="Reverse Signal Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="17" anchor="CENTER">
+				<display item="Reverse Signal Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="17" anchor="CENTER">
+				<display item="Reverse Signal Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="17" anchor="CENTER">
+				<display item="Reverse Signal Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="17" anchor="CENTER">
+				<display item="Reverse Signal Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="18" anchor="LINE_END">
+				<display item="Extended Function Map Stop Signal" label="Stop Signal"/>
+			</griditem>
+			<griditem gridx="1" gridy="18" anchor="CENTER">
+				<display item="Stop Signal Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="18" anchor="CENTER">
+				<display item="Stop Signal Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="18" anchor="CENTER">
+				<display item="Stop Signal Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="18" anchor="CENTER">
+				<display item="Stop Signal Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="18" anchor="CENTER">
+				<display item="Stop Signal Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="19" anchor="LINE_END">
+				<display item="Extended Function Map RPM+" label="RPM+"/>
+				<display item="Extended Function Map Drift Mode On" label="Drift Mode On"/>
+				<display item="Extended Function Map Forward Trolley Bell" label="Forward Trolley Bell"/>
+			</griditem>
+			<griditem gridx="1" gridy="19" anchor="CENTER">
+				<display item="RPM+ Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Drift Mode On Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Forward Trolley Bell Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="19" anchor="CENTER">
+				<display item="RPM+ Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Drift Mode On Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Forward Trolley Bell Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="19" anchor="CENTER">
+				<display item="RPM+ Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Drift Mode On Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Forward Trolley Bell Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="19" anchor="CENTER">
+				<display item="RPM+ Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Drift Mode On Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Forward Trolley Bell Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="19" anchor="CENTER">
+				<display item="RPM+ Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Drift Mode On Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Forward Trolley Bell Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="20" anchor="LINE_END">
+				<display item="Extended Function Map RPM-" label="RPM-"/>
+				<display item="Extended Function Map Drift Mode Off" label="Drift Mode Off"/>
+				<display item="Extended Function Map Reverse Trolley Bell" label="Reverse Trolley Bell"/>
+			</griditem>
+			<griditem gridx="1" gridy="20" anchor="CENTER">
+				<display item="RPM- Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Drift Mode Off Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Reverse Trolley Bell Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="20" anchor="CENTER">
+				<display item="RPM- Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Drift Mode Off Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Reverse Trolley Bell Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="20" anchor="CENTER">
+				<display item="RPM- Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Drift Mode Off Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Reverse Trolley Bell Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="20" anchor="CENTER">
+				<display item="RPM- Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Drift Mode Off Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Reverse Trolley Bell Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="20" anchor="CENTER">
+				<display item="RPM- Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Drift Mode Off Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Reverse Trolley Bell Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="21" gridwidth="REMAINDER" anchor="LINE_END">
+				<label>
+				  <text> </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="22" anchor="LINE_END">
+				<display item="Extended Function Map Airhorn" label="Airhorn"/>
+				<display item="Extended Function Map Whistle" label="Whistle"/>
+			</griditem>
+			<griditem gridx="1" gridy="22" anchor="CENTER">
+				<display item="Airhorn Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Whistle Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="22" anchor="CENTER">
+				<display item="Airhorn Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Whistle Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="22" anchor="CENTER">
+				<display item="Airhorn Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Whistle Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="22" anchor="CENTER">
+				<display item="Airhorn Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Whistle Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="22" anchor="CENTER">
+				<display item="Airhorn Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Whistle Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="23" anchor="LINE_END">
+				<display item="Extended Function Map Bell" label="Bell"/>
+			</griditem>
+			<griditem gridx="1" gridy="23" anchor="CENTER">
+				<display item="Bell Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="23" anchor="CENTER">
+				<display item="Bell Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="23" anchor="CENTER">
+				<display item="Bell Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="23" anchor="CENTER">
+				<display item="Bell Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="23" anchor="CENTER">
+				<display item="Bell Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="24" anchor="LINE_END">
+				<display item="Extended Function Map Dynamic Brake" label="Dynamic Brake"/>
+				<display item="Extended Function Map Dynamo" label="Dynamo"/>
+				<display item="Extended Function Map Pneumatic Doors" label="Pneumatic Doors"/>
+			</griditem>
+			<griditem gridx="1" gridy="24" anchor="CENTER">
+				<display item="Dynamic Brake Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Dynamo Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Pneumatic Doors Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="24" anchor="CENTER">
+				<display item="Dynamic Brake Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Dynamo Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Pneumatic Doors Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="24" anchor="CENTER">
+				<display item="Dynamic Brake Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Dynamo Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Pneumatic Doors Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="24" anchor="CENTER">
+				<display item="Dynamic Brake Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Dynamo Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Pneumatic Doors Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="24" anchor="CENTER">
+				<display item="Dynamic Brake Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Dynamo Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Pneumatic Doors Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="25" anchor="LINE_END">
+				<display item="Extended Function Map Short Airhorn" label="Short Airhorn"/>
+				<display item="Extended Function Map Short Whistle" label="Short Whistle"/>
+			</griditem>
+			<griditem gridx="1" gridy="25" anchor="CENTER">
+				<display item="Short Airhorn Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Short Whistle Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="25" anchor="CENTER">
+				<display item="Short Airhorn Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Short Whistle Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="25" anchor="CENTER">
+				<display item="Short Airhorn Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Short Whistle Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="25" anchor="CENTER">
+				<display item="Short Airhorn Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Short Whistle Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="25" anchor="CENTER">
+				<display item="Short Airhorn Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Short Whistle Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="26" anchor="LINE_END">
+				<display item="Extended Function Map Cylinder Cocks" label="Cylinder Cocks"/>
+				<display item="Extended Function Map Pantograph" label="Pantograph"/>
+			</griditem>
+			<griditem gridx="1" gridy="26" anchor="CENTER">
+				<display item="Cylinder Cocks Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Pantograph Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="26" anchor="CENTER">
+				<display item="Cylinder Cocks Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Pantograph Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="26" anchor="CENTER">
+				<display item="Cylinder Cocks Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Pantograph Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="26" anchor="CENTER">
+				<display item="Cylinder Cocks Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Pantograph Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="26" anchor="CENTER">
+				<display item="Cylinder Cocks Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Pantograph Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="27" anchor="LINE_END">
+				<display item="Extended Function Map Water Stop" label="Water Stop"/>
+				<display item="Extended Function Map Stop Request Bell" label="Stop Request Bell"/>
+			</griditem>
+			<griditem gridx="1" gridy="27" anchor="CENTER">
+				<display item="Water Stop Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Stop Request Bell Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="27" anchor="CENTER">
+				<display item="Water Stop Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Stop Request Bell Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="27" anchor="CENTER">
+				<display item="Water Stop Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Stop Request Bell Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="27" anchor="CENTER">
+				<display item="Water Stop Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Stop Request Bell Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="27" anchor="CENTER">
+				<display item="Water Stop Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Stop Request Bell Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="28" anchor="LINE_END">
+				<display item="Extended Function Map Coupler" label="Coupler"/>
+			</griditem>
+			<griditem gridx="1" gridy="28" anchor="CENTER">
+				<display item="Coupler Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="28" anchor="CENTER">
+				<display item="Coupler Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="28" anchor="CENTER">
+				<display item="Coupler Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="28" anchor="CENTER">
+				<display item="Coupler Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="28" anchor="CENTER">
+				<display item="Coupler Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="29" anchor="LINE_END">
+				<display item="Extended Function Map Coupler Release" label="Coupler Release"/>
+			</griditem>
+			<griditem gridx="1" gridy="29" anchor="CENTER">
+				<display item="Coupler Release Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="29" anchor="CENTER">
+				<display item="Coupler Release Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="29" anchor="CENTER">
+				<display item="Coupler Release Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="29" anchor="CENTER">
+				<display item="Coupler Release Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="29" anchor="CENTER">
+				<display item="Coupler Release Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="30" anchor="LINE_END">
+				<display item="Extended Function Map All Aboard/Coach Doors" label="All Aboard/Coach Doors"/>
+			</griditem>
+			<griditem gridx="1" gridy="30" anchor="CENTER">
+				<display item="Coach Doors Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="30" anchor="CENTER">
+				<display item="Coach Doors Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="30" anchor="CENTER">
+				<display item="Coach Doors Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="30" anchor="CENTER">
+				<display item="Coach Doors Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="30" anchor="CENTER">
+				<display item="Coach Doors Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="31" anchor="LINE_END">
+				<display item="Extended Function Map Blowdown" label="Blowdown"/>
+				<display item="Extended Function Map Trolley Bell" label="Trolley Bell"/>
+			</griditem>
+			<griditem gridx="1" gridy="31" anchor="CENTER">
+				<display item="Blowdown Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Trolley Bell Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="31" anchor="CENTER">
+				<display item="Blowdown Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Trolley Bell Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="31" anchor="CENTER">
+				<display item="Blowdown Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Trolley Bell Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="31" anchor="CENTER">
+				<display item="Blowdown Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Trolley Bell Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="31" anchor="CENTER">
+				<display item="Blowdown Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Trolley Bell Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="32" anchor="LINE_END">
+				<display item="Extended Function Map Johnson Bar" label="Johnson Bar"/>
+			</griditem>
+			<griditem gridx="1" gridy="32" anchor="CENTER">
+				<display item="Johnson Bar Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="32" anchor="CENTER">
+				<display item="Johnson Bar Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="32" anchor="CENTER">
+				<display item="Johnson Bar Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="32" anchor="CENTER">
+				<display item="Johnson Bar Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="32" anchor="CENTER">
+				<display item="Johnson Bar Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="0" gridy="33" anchor="LINE_END">
+				<display item="Extended Function Map E-Brake App." label="E-Brake App."/>
+			</griditem>
+			<griditem gridx="1" gridy="33" anchor="CENTER">
+				<display item="E-Brake App Automatic Effects - FWDD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="2" gridy="33" anchor="CENTER">
+				<display item="E-Brake App Automatic Effects - REVD" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="3" gridy="33" anchor="CENTER">
+				<display item="E-Brake App Automatic Effects - FWDS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="4" gridy="33" anchor="CENTER">
+				<display item="E-Brake App Automatic Effects - REVS" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="5" gridy="33" anchor="CENTER">
+				<display item="E-Brake App Automatic Effects - ESTP" label="" format="checkbox"/>
+			</griditem>
+		</grid>
+    </row>
+    <row>
+        <column>
+          <label>
+            <text>&lt;html&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;h2&gt;&lt;em&gt;
+                Any check marks on the Legacy Function Map pane will override these settings!
+              &lt;/em&gt;&lt;/h2&gt;
+            &lt;/html&gt;</text>
+          </label>
+        </column>
+    </row>
+   </column>
+</pane>

@@ -1,17 +1,17 @@
 <!doctype html public "-//w3c//dtd html 4.01//en" "http://www.w3.org/tr/html4/strict.dtd">
-<!-- $Id: CMRI.shtml,v 1.11 2011/06/19 19:57:13 ken_c Exp $ -->
-<!-- translated  by blorec hervé le 2011-11-06-->
+<!--  $Id$ -->
+<!--  UpDated  by Blorec Herv&#233; le 2013-09-10-->
 <html lang="fr">
 <head>
  <title>
       jmri hardware guide: chubb c/mri
- </title>
-    <meta http-equiv=content-type content="text/html; charset=utf-8">
+</title>
+    <meta http-equiv=content-type content="text/html; charset=iso-8859-1">
     <meta content="bob jacobsen" name=author>
     <meta name="keywords" content="bruce chubb c/mri computer interface java model railroad jmri install windows">
 
 <!-- style -->
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css"
 	media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -29,654 +29,654 @@
    <div id="mainContent">
 
 <H1> 
-JMRI Guide Matériel: Chubb C/MRI
+JMRI Guide Mat&#233;riel: Chubb C/MRI
 </H1>
   
-<H2> Matériel Supporté</H2>
+<H2> Mat&#233;riel Support&#233;</H2>
 
 <UL>
 <li>Chubb C/MRI USIC
 <li>Chubb C/MRI SMINI
 <li>Chubb C/MRI SUSIC
 </UL>
-<P>A ce jour, les interfaces directement connectées IBEC et UBEC ne sont pas pris en charge.
+<P>A ce jour, les interfaces directement connect&#233;es IBEC et UBEC ne sont pas pris en charge.
 
-<a name=contents> <H2>Table des Matières </H2> </a>
+<a name=contents><H2>Table des Mati&#232;res</H2></a>
 
-La documentation ci-dessous explique comment JMRI peut être utilisé avec C/MRI, et
-comment démarrer avec la connexion d'un système C/MRI à JMRI. Il suppose une base de
-connaissance de JMRI (tel que documenté sur ce site web JMRI), et une certaine familiarité
-avec C/MRI. Il est fortement recommandé que les utilisateurs aient accès au <B>  Manuel de l'utilisateur C/MRI, la version 3.0 de Bruce
-Chubb </B> car il contient une documentation détaillée sur le matériel, qui n'est pas  disponible ailleurs. Puisque vous n'avez pas
-besoin de programmer votre ordinateur si vous utilisez JMRI avec votre système C/MRI,
-vous pouvez sauter sur les détails de la programmation informatique lors de la consultation du Manuel de l'utilisateur C/MRI
-. La documentation ci-dessous est divisée en sections; cliquer pour
-un accès facile à une section ci-dessous:
+La documentation ci-dessous explique comment JMRI peut &#234;tre utilis&#233; avec C/MRI, et
+comment d&#233;marrer avec la connexion d'un syst&#232;me C/MRI &#224; JMRI. Il suppose une base de
+connaissance de JMRI (tel que document&#233; sur ce site web JMRI), et une certaine familiarit&#233;
+avec C/MRI. Il est fortement recommand&#233; que les utilisateurs aient acc&#232;s au <B>  Manuel de l'utilisateur C/MRI, la version 3.0</B> de Bruce
+Chubb car il contient une documentation d&#233;taill&#233;e sur le mat&#233;riel, qui n'est pas  disponible ailleurs. Puisque vous n'avez pas
+besoin de programmer votre ordinateur si vous utilisez JMRI avec votre syst&#232;me C/MRI,
+vous pouvez sauter sur les d&#233;tails de la programmation informatique lors de la consultation du Manuel de l'utilisateur C/MRI
+. La documentation ci-dessous est divis&#233;e en sections; cliquer pour
+un acc&#232;s facile &#224; une section ci-dessous:
 <ul>
-<li> <a href="#intro"> Introduction à C/MRI sur JMRI </a>
-<li> <a href="#iobits"> C/MRI Bit d'entrée et de sortie de C/MRI 
-<li> <a href="#smini">Démarrer avec un nœud SMINI</a>
-<li> <a href="#susic">Démarrer avec une USIC ou SUSIC </a>
-<li> <a href="#nodes"> Gérer les nœuds </a>
-<li> <a  href="#numbers"> Numérotation utilisée dans les noms Système C/MRI  </a>
-<li> <a href="#alternate">Complément de numérotation pour les noms Système </a>
-<li> <a href="#options"> Options C/MRI de contrôle des aiguillages </a>
-<li> <a href="#signals"> Câblage des signaux  </a>
-<li> <a href="#diagnostics">Diagnostique C/MRI </a>
-<li> <a href="#sim"> <li> Exécuter JMRI lorsqu'il est déconnecté de votre système C/MRI</a>
+<li><a href="#intro"> Introduction &#224; C/MRI sur JMRI</a>
+<li><a href="#iobits"> Bit d'entr&#233;e et de sortie de C/MRI</a> 
+<li><a href="#smini">D&#233;marrer avec un noeud SMINI</a>
+<li><a href="#susic">D&#233;marrer avec une USIC ou SUSIC</a>
+<li><a href="#nodes"> G&#233;rer les noeuds</a>
+<li><a  href="#numbers"> Num&#233;rotation utilis&#233;e dans les Noms Syst&#232;mes C/MRI</a>
+<li><a href="#alternate">Num&#233;rotation Alternative pour les Noms Syst&#232;mes</a>
+<li><a href="#options"> Options de Contr&#238;le des Aiguillages C/MRI</a>
+<li><a href="#signals"> C&#226;blage des signaux</a>
+<li><a href="#diagnostics">Diagnostique C/MRI</a>
+<li><a href="#sim"> Ex&#233;cuter JMRI lorsqu'il est d&#233;connect&#233; de votre syst&#232;me C/MRI</a>
 </Ul>
-<a name=intro> <H2> Introduction à C/MRI sur JMRI </H2> </ a>
+<a name=intro><H2> Introduction &#224; C/MRI sur JMRI</H2></ a>
 
-C/MRI est un système d'entrées/sorties numériques  qui peuvent être
-utilisées pour connecter un ordinateur à un système C/MRI pour réseau de modélisme ferroviaire, permettant à l'ordinateur
-de surveiller et de contrôler les différents éléments du réseau. Le SUSIC (Super
-Universal Serial Interface Card) est la carte contrôleur pour un grand Système numérique
- E/S supportant, par l'intermédiaire d'une carte mère, jusqu'à 64 cartes d'entrées ou de sorties numériques , soit avec 24 ou 32 lignes d'entrée ou de sortie par carte. L'USIC est une ancienne version de la SUSIC. 
-La carte Smini (Super Mini-noeud) est un noeud série  autonome offrant un nombre fixe  de 24 lignes d'entrée et 48 lignes de sortie. Un nombre d'autres cartes d'interface  sont disponibles dans le cadre de la C/MRI, mais elles doivent être connectées
- à votre ordinateur via une Smini, une SUSIC, ou une USIC. Par exemple, une carte
-C/MRI  DCCOD détecteur d'occupation se connecte à la ligne d'entrée d'une Smini (ou SUSIC ou
-USIC). Les réseaux qui utilisent C/MRI ont généralement plusieurs Smini
-situées à différents endroits sur le réseau , et peut-être une ou deux  SUSIC
-situées sur le panneaux CTC.
- </p>
+C/MRI est un syst&#232;me d'entr&#233;es/sorties num&#233;riques  qui peuvent &#234;tre
+utilis&#233;es pour connecter un ordinateur &#224; un syst&#232;me C/MRI pour r&#233;seau ferroviaire, permettant &#224; l'ordinateur
+de surveiller et de contr&#238;ler les diff&#233;rents &#233;l&#233;ments du r&#233;seau. Le SUSIC (Super
+Universal Serial Interface Card) est la carte contr&#238;leur pour un grand syst&#232;me num&#233;rique
+ E/S supportant, par l'interm&#233;diaire d'une carte m&#232;re, jusqu'&#224; 64 cartes d'entr&#233;es ou de sorties num&#233;riques , soit avec 24 ou 32 lignes d'entr&#233;e ou de sortie par carte. L'USIC est une ancienne version de la SUSIC. 
+La carte Smini (Super Mini-noeud) est un noeud s&#233;rie autonome offrant un nombre fixe  de 24 lignes d'entr&#233;e et 48 lignes de sortie. Un nombre d'autres cartes d'interface  sont disponibles dans le cadre de la C/MRI, mais elles doivent &#234;tre connect&#233;es
+ &#224; votre ordinateur via une Smini, une SUSIC, ou une USIC. Par exemple, une carte
+d&#233;tecteur d'occupation DCCOD de C/MRI se connecte &#224; la ligne d'entr&#233;e d'une Smini (ou SUSIC ou
+USIC). Les r&#233;seaux qui utilisent C/MRI ont g&#233;n&#233;ralement plusieurs Smini
+situ&#233;es &#224; diff&#233;rents endroits sur le r&#233;seau , et peut-&#234;tre une ou deux  SUSIC
+situ&#233;es sur le panneaux CTC.
+</p>
 
-<p>C/MRI n'est pas un système de contrôle des trains. Vous pouvez exécuter C/MRI avec un 
-système de contrôle de train DCC (tels que, Digitrax, Lenz, ou NCE) ou avec un système DC de contrôle des trains
- Et vous pouvez utiliser avec votre JMRI avec le système C/MRI si vous utilisez
-DCC ou DC pour contrôler les trains. Si vous contrôlez vos trains avec un
-système qui prend en charge JMRI, vous pouvez connecter votre système C/MRI et votre
-système de contrôle de train à JMRI simultanément, chacun avec sa propre ligne série d'entrée
-dans votre ordinateur. La plupart des utilisateurs qui utilisent C/MRI exécutent JMRI ayant des liens avec
-à la fois leur C/MRI et leur système de contrôle des trains. Il y a de nombreux avantages
-à le faire. JMRI vous permet de "mélanger et faire correspondre" comment vous contrôler et surveiller les
-choses sur votre réseau. Par exemple, vous pouvez basculer votre aiguillage en utilisant des décodeurs statique sur votre système de contrôle des trains,
-et utiliser simultanément les entrées de C/MRI pour fournir une rétro signalisation de l'aiguillage vers JMRI.
-JMRI est conçu pour rendre les deux systèmes connectés compatibles. 
+<p>C/MRI n'est pas un syst&#232;me de contr&#238;le des trains. Vous pouvez ex&#233;cuter C/MRI avec un 
+syst&#232;me de contr&#238;le de train DCC (tels que, Digitrax, Lenz, ou NCE) ou avec un syst&#232;me DC de contr&#238;le des trains
+ Et vous pouvez utiliser avec votre JMRI avec le syst&#232;me C/MRI si vous utilisez
+DCC ou DC pour contr&#238;ler les trains. Si vous contr&#238;lez vos trains avec un
+syst&#232;me qui prend en charge JMRI, vous pouvez connecter votre syst&#232;me C/MRI et votre
+syst&#232;me de contr&#238;le de train &#224; JMRI simultan&#233;ment, chacun avec sa propre ligne s&#233;rie d'entr&#233;e
+dans votre ordinateur. La plupart des utilisateurs qui utilisent C/MRI ex&#233;cutent JMRI ayant des liens avec
+&#224; la fois leur C/MRI et leur syst&#232;me de contr&#238;le des trains. Il y a de nombreux avantages
+&#224; le faire. JMRI vous permet de "m&#233;langer et faire correspondre" comment vous contr&#238;ler et surveiller les
+choses sur votre r&#233;seau. Par exemple, vous pouvez basculer votre aiguillage en utilisant des d&#233;codeurs statique sur votre syst&#232;me de contr&#238;le des trains,
+et utiliser simultan&#233;ment les entr&#233;es de C/MRI pour fournir une r&#233;tro signalisation de l'aiguillage vers JMRI.
+JMRI est con&#231;u pour rendre les deux syst&#232;mes connect&#233;s compatibles. 
 
-<P>Le Logiciel JMRI se compose d'une grande bibliothèque, divisé en 1) une
-partie spécifique, avec des sous-parties nombreuses, dont chacune communique avec un
-système matériel supporté, comme le système C/MRI, d'une manière spécifique , et 2) une
-partie indépendante du système où la plupart des caractéristiques de JMRI sont
-mises en œuvre. Ainsi, par exemple, si l'utilisateur fait quelque chose (peut-être déterminer un
-itinéraire) pour pousser JMRI à basculer un aiguillage, l'action de l'utilisateur
-aura lieu dans la partie indépendante du système du logiciel, puis ce sera à JMRI
-d'envoyer la commande effective par la partie dépendante du système approprié pour le
-système de matériel de commande de l'aiguillage particulier à basculer. JMRI est conçu
-afin que les fonctionnalités soient mises en œuvre dans la partie indépendante du système autant que
-possible, avec l'aide de sous-parties JMRI dépendantes du système que lorsque c'est vraiment nécessaire.
-L'accès aux fonctionnalités du système indépendant se fait via les menus JMRI principaux, tels que
-dans le menu Outils. L'accès aux fonctionnalités dépendant du système se fait via un menu intitulé
-pour le système matériel pris en charge; les fonctionnalités spécifiques C/MRI sont accessibles via
-le menu CMRI. </P>
+<P>Le Logiciel JMRI se compose d'une grande biblioth&#232;que, divis&#233; en 1) une
+partie sp&#233;cifique, avec des sous-parties nombreuses, dont chacune communique avec un
+syst&#232;me mat&#233;riel support&#233;, comme le syst&#232;me C/MRI, d'une mani&#232;re sp&#233;cifique , et 2) une
+partie ind&#233;pendante du syst&#232;me o&#249; la plupart des caract&#233;ristiques de JMRI sont
+mises en oeuvre. Ainsi, par exemple, si l'utilisateur fait quelque chose (peut-&#234;tre d&#233;terminer un
+itin&#233;raire) pour pousser JMRI &#224; basculer un aiguillage, l'action de l'utilisateur
+aura lieu dans la partie ind&#233;pendante du syst&#232;me du logiciel, puis ce sera &#224; JMRI
+d'envoyer la commande effective par la partie d&#233;pendante du syst&#232;me appropri&#233; pour le
+syst&#232;me de mat&#233;riel de commande de l'aiguillage particulier &#224; basculer. JMRI est con&#231;u
+afin que les fonctionnalit&#233;s soient mises en oeuvre dans la partie ind&#233;pendante du syst&#232;me autant que
+possible, avec l'aide de sous-parties JMRI d&#233;pendantes du syst&#232;me que lorsque c'est vraiment n&#233;cessaire.
+L'acc&#232;s aux fonctionnalit&#233;s du syst&#232;me ind&#233;pendant se fait via les menus JMRI principaux, tels que
+dans le menu Outils. L'acc&#232;s aux fonctionnalit&#233;s d&#233;pendant du syst&#232;me se fait via un menu intitul&#233;
+pour le syst&#232;me mat&#233;riel pris en charge; les fonctionnalit&#233;s sp&#233;cifiques C/MRI sont accessibles via
+le menu CMRI.</P>
 
-<p>JMRI se présente aux utilisateurs via une application ayant plusieurs extrémités, chacune
-se concentrant sur un type d'utilisation, mais toutes basées sur la même bibliothèque. 
+<p>JMRI se pr&#233;sente aux utilisateurs via une application ayant plusieurs extr&#233;mit&#233;s, chacune
+se concentrant sur un type d'utilisation, mais toutes bas&#233;es sur la m&#234;me biblioth&#232;que. 
 L'application populaire DecoderPro se concentre sur la programmation DCC des
-décodeurs, et n'est pas d'un grand d'intérêt pour C/MRI. D'autre part, PanelPro
-est l'application JMRI qui se concentre sur l'automatisation des réseaux, de la signalisation, et des panneaux CTC
-. PanelPro est l'application la plus souvent utilisée avec C/MRI, et est
-celle utilisée dans les <a  href="#smini"> exemples ci-dessous </a>. Comme toutes applications de JMRI
- utilisent la même bibliothèque, il est possible de faire fonctionner un panneau depuis
-DecoderPro, ou même programmer un décodeur DCC depuis PanelPro.
-Ce n'est pas aussi facile que d'utiliser l'application ciblée. </p> 
+d&#233;codeurs, et n'est pas d'un grand d'int&#233;r&#234;t pour C/MRI. D'autre part, PanelPro
+est l'application JMRI qui se concentre sur l'automatisation des r&#233;seaux, de la signalisation, et des panneaux CTC
+. PanelPro est l'application la plus souvent utilis&#233;e avec C/MRI, et est
+celle utilis&#233;e dans les <a  href="#smini"> exemples ci-dessous</a>. Comme toutes applications de JMRI
+ utilisent la m&#234;me biblioth&#232;que, il est possible de faire fonctionner un panneau depuis
+DecoderPro, ou m&#234;me programmer un d&#233;codeur DCC depuis PanelPro.
+Ce n'est pas aussi facile que d'utiliser l'application cibl&#233;e.</p> 
 
-<p>Les Bibliothèques JMRI ont une prise en charge intégrée pour la série de matériel C/MRI utilisant les
-USIC, SUSIC et Smini. Chaque Smini, USIC ou SUSIC est un nœud  série capable de
-communiquer de façon autonome avec un ordinateur via un port série I/O. Plusieurs nœuds C/MRI
- peuvent être reliés entre eux en utilisant le protocole de communication RS485 dans un
-configuration en cascade, de sorte qu'une seule ligne de série sur votre ordinateur est
-nécessaire. Pour que cela fonctionne, chaque nœud doit avoir une adresse différente, unique,
-réglée par les interrupteurs adresse sur la carte. Chaque nœud (USIC, SUSIC, ou
-Smini) a besoin de recevoir une chaîne d'initialisation avant de pouvoir communiquer
-avec un ordinateur. JMRI va automatiquement créer et transmettre la chaîne d'initialisation nécessaire
- lors de son démarrage, mais pour rendre cela possible, vous avez 
-besoin de donner à JMRI les détails de votre  matériel C/MRI mis en place. Nous faisons ce qui s'appelle la "configuration " de votre nœud C/MRI
-( <a href="#nodes">voir ci-dessous </a>). Si vous mettez plusieurs nœuds C/RIM  en guirlande, vous aurez
-probablement besoin d'une carte de conversion  C/RIM RS232/RS485 entre le bus RS485
- reliant les cartes et la ligne série RS232 pour se connecter à votre
-ordinateur. Si votre ordinateur ne dispose pas d'un port série RS232 (les ordinateurs les plus récents
- n'en sont pas munis), vous pouvez vous connecter à un port USB de l'ordinateur avec un câble adaptateur USB-série
-(<A HREF="../USBtoSerial.shtml"> cliquez ici pour l'aide </a>). </p>	
+<p>Les Biblioth&#232;ques JMRI ont une prise en charge int&#233;gr&#233;e pour le mat&#233;riel s&#233;rie C/MRI utilisant les
+USIC, SUSIC et Smini. Chaque Smini, USIC ou SUSIC est un noeud  s&#233;rie capable de
+communiquer de fa&#231;on autonome avec un ordinateur via un port s&#233;rie I/O. Plusieurs noeuds C/MRI
+ peuvent &#234;tre reli&#233;s entre eux en utilisant le protocole de communication RS485 dans un
+configuration en cascade, de sorte qu'une seule ligne s&#233;rie sur votre ordinateur est
+n&#233;cessaire. Pour que cela fonctionne, chaque noeud doit avoir une adresse diff&#233;rente, unique,
+r&#233;gl&#233;e par les interrupteurs adresse sur la carte. Chaque noeud (USIC, SUSIC, ou
+Smini) a besoin de recevoir une cha&#238;ne d'initialisation avant de pouvoir communiquer
+avec un ordinateur. JMRI va automatiquement cr&#233;er et transmettre la cha&#238;ne d'initialisation n&#233;cessaire
+lors de son d&#233;marrage, mais pour rendre cela possible, vous avez 
+besoin de donner &#224; JMRI les d&#233;tails de votre  mat&#233;riel C/MRI mis en place. Nous faisons ce qui s'appelle la "configuration " de votre noeud C/MRI
+( <a href="#nodes"> voir ci-dessous</a>). Si vous mettez plusieurs noeuds C/MRI  en guirlande, vous aurez
+probablement besoin d'une carte de conversion C/MRI RS232/RS485 entre le bus RS485
+ reliant les cartes et la ligne s&#233;rie RS232 pour se connecter &#224; votre
+ordinateur. Si votre ordinateur ne dispose pas d'un port s&#233;rie RS232 (les ordinateurs les plus r&#233;cents
+ n'en sont pas munis), vous pouvez vous connecter &#224; un port USB de l'ordinateur avec un c&#226;ble adaptateur USB-s&#233;rie
+(<A HREF="../USBtoSerial.shtml"> cliquez ici pour l'aide</a>).</p>	
 
-<P>L'entrée C/MRI peut être utilisée comme «capteurs» JMRI, et la sortie C/MRI peut être pilotée
-comme des «aiguillages» ou des «lumières» JMRI ( <a href="#iobits"> voir ci-dessous </a>). Notez
-que les entrées et sorties C/MRI sont parfois appelés «pins», parfois appelé
-«bits», et qu'on appelle parfois «lignes», tous sont des moyens équivalents de se référer à la 
-même chose. C/MRI est un système de scrutation, ce qui signifie que la communication avec les nœuds
-C/MRI requièrent que l'ordinateur envoie périodiquement un message à chaque nœuds
-lui demandant de transmettre l'état de ses bits d'entrée. JMRI commence un
-sondage d'un nœud lorsque au moins un capteur a été mis en place pour se référer à un bit entrée
-de ce nœud. C'est cette action de scrutation qui maintient la LED sur votre adaptateur
-Smini clignotante (à un rythme élevé). </p>
+<P>L'entr&#233;e C/MRI peut &#234;tre utilis&#233;e comme "capteurs" JMRI, et la sortie C/MRI peut &#234;tre pilot&#233;e
+comme des "aiguillages" ou des "lumi&#232;res" JMRI ( <a href="#iobits"> voir ci-dessous</a>). Notez
+que les entr&#233;es et sorties C/MRI sont parfois appel&#233;s "pins", parfois appel&#233;
+"bits", et qu'on appelle parfois "lignes", tous sont des moyens &#233;quivalents de se r&#233;f&#233;rer &#224; la 
+m&#234;me chose. C/MRI est un syst&#232;me de scrutation, ce qui signifie que la communication avec les noeuds
+C/MRI requi&#232;rent que l'ordinateur envoie p&#233;riodiquement un message &#224; chaque noeuds
+lui demandant de transmettre l'&#233;tat de ses bits d'entr&#233;e. JMRI commence un
+sondage d'un noeud lorsque au moins un capteur a &#233;t&#233; mis en place pour se r&#233;f&#233;rer &#224; un bit entr&#233;e
+de ce noeud. C'est cette action de scrutation qui maintient la LED sur votre adaptateur
+Smini clignotante (&#224; un rythme &#233;lev&#233;).</p>
 
 
-<a name=iobits><H2>C/MRI Bits d'Entrée et de Sortie</H2></a>                                                                                          
+<a name=iobits><H2>Bits d'Entr&#233;e et de Sortie C/MRI </H2></a>                                                                                          
 
-JMRI considère les  bits d'entrée de C/MRI comme des capteurs. Capteurs qui contribuent à JMRI
-pour les conditions du circuit  - un bouton est enfoncé, un bloc est occupé,
-etc. Dans JMRI, vous vous référez à un bit d'entrée C/MRI (capteur) par son «
-nom système", CSnxxx, où nxxx est l'adresse du bit
-( <a href="#numbers"> voir ci-dessous </a>). Avant de  pouvoir vous référer à un capteur dans JMRI,
-il doit être «créé». Un capteur peut être créé de diverses façons, y compris
-automatiquement. Tous les capteurs de JMRI qui ont été créés peuvent être consultés dans les
-Tableaux Capteurs JMRI, accessibles en sélectionnant <b>Tableau Capteur</b> dans les options du
-menu Outils. Un nouveau capteur peut être créé grâce au tableau capteur comme illustré
-<a href="#smini">  ci-dessous </a>. La création d'un capteur se référant à un bit d'entrée particulier de C/MRI
-, est appelée «affectation» du bit d'entrée. Chaque bit d'entrée ne peut être
-attribué qu'une seule fois, deux capteurs différents ne peuvent pas se référer au même  bit d'entrée
-C/MRI. Un capteur est «actif» lorsque son bit d'entrée est à la masse
-et «inactifs» lorsque son bit d'entrée est hors tension. <b> Donc quand vous voyez
-"Capteur", penser "bit d'entrée» ou «ligne d'entrée". </b> </P>
+JMRI consid&#232;re les  bits d'entr&#233;e de C/MRI comme des capteurs. Capteurs qui contribuent &#224; JMRI
+pour les conditions du circuit  - un bouton est enfonc&#233;, un bloc est occup&#233;,
+etc. Dans JMRI, vous vous r&#233;f&#233;rez &#224; un bit d'entr&#233;e C/MRI (capteur) par son "
+nom syst&#232;me", CSnxxx, o&#249; nxxx est l'adresse du bit
+( <a href="#numbers"> voir ci-dessous</a>). Avant de  pouvoir vous r&#233;f&#233;rer &#224; un capteur dans JMRI,
+il doit &#234;tre "cr&#233;&#233;". Un capteur peut &#234;tre cr&#233;&#233; de diverses fa&#231;ons, y compris
+automatiquement. Tous les capteurs de JMRI qui ont &#233;t&#233; cr&#233;&#233;s peuvent &#234;tre consult&#233;s dans les
+Tableaux Capteurs JMRI, accessibles en s&#233;lectionnant <b>Tableau Capteur</b> dans les options du
+menu Outils. Un nouveau capteur peut &#234;tre cr&#233;&#233; gr&#226;ce au tableau capteur comme illustr&#233;
+<a href="#smini">  ci-dessous</a>. La cr&#233;ation d'un capteur se r&#233;f&#233;rant &#224; un bit d'entr&#233;e particulier de C/MRI
+, est appel&#233;e "affectation" du bit d'entr&#233;e. Chaque bit d'entr&#233;e ne peut &#234;tre
+attribu&#233; qu'une seule fois, deux capteurs diff&#233;rents ne peuvent pas se r&#233;f&#233;rer au m&#234;me  bit d'entr&#233;e
+C/MRI. Un capteur est "actif" lorsque son bit d'entr&#233;e est &#224; la masse
+et "inactifs" lorsque son bit d'entr&#233;e est hors tension.<b> Donc quand vous voyez
+"Capteur", penser "bit d'entr&#233;e" ou "ligne d'entr&#233;e".</b></P>
 
-<P> JMRI se réfère aux bits de sortie C/MRI  comme des aiguillages ou des lumières. Les aiguillages et
-les lumières sont allumés/éteints par des interrupteurs que JMRI peut changer pour contrôler les choses sur
-votre réseau. Pour faire référence à un bit de sortie C/MRI comme un aiguillage, utilisez le nom système
-CTN, où Nxxx est l'adresse du bit de sortie
-( <a href="#numbers"> voir ci-dessous </a>). Pour faire référence à un bit de sortie C/MRI comme
-la lumière, l'utilisation CLnxxx, où Nxxx est l'adresse du bit de sortie
-( <a href="#numbers"> voir ci-dessous </a>). Les aiguillages et les lumières ont différentes méthodes
-de se référer aux sorties C/MRI au sein de JMRI. Chaque méthode a ses
-différentes options de contrôle. Toujours utiliser «Aiguillages» pour les sorties C/MRI
- utilisées pour la commande des aiguillages et pour les sorties C/MRI  utilisées pour faire fonctionner
+<P> JMRI se r&#233;f&#232;re aux bits de sortie C/MRI  comme les aiguillages ou les lumi&#232;res. Les aiguillages et
+les lumi&#232;res sont allum&#233;s/&#233;teints par des interrupteurs que JMRI peut changer pour contr&#238;ler les choses sur
+votre r&#233;seau. Pour faire r&#233;f&#233;rence &#224; un bit de sortie C/MRI comme un aiguillage, utilisez le nom syst&#232;me
+CTN, o&#249; Nxxx est l'adresse du bit de sortie
+( <a href="#numbers"> voir ci-dessous</a>). Pour faire r&#233;f&#233;rence &#224; un bit de sortie C/MRI comme
+la lumi&#232;re, l'utilisation CLnxxx, o&#249; Nxxx est l'adresse du bit de sortie
+( <a href="#numbers"> voir ci-dessous</a>). Les aiguillages et les lumi&#232;res ont diff&#233;rentes m&#233;thodes
+de se r&#233;f&#233;rer aux sorties C/MRI au sein de JMRI. Chaque m&#233;thode a ses
+diff&#233;rentes options de contr&#238;le. Toujours utiliser "Aiguillages" pour les sorties C/MRI
+ utilis&#233;es pour la commande des aiguillages et pour les sorties C/MRI  utilis&#233;es pour faire fonctionner
 les signaux. 
-	Pour des raisons historiques, les bits de sortie C/MRI utilisés pour commander l'aspect des signaux sont dénommés «aiguillages»,
- même si les bits de sortie sont utilisés pour la commande de signaux éclairés
-Utilisé «lumières» pour faire référence aux bits de sortie C/MRI utilisés
-pour les feux du TCO , des feux dans un décor (éclairage de la structure, des lumières de la rue
-, etc), et à des fins spéciales où les options de contrôle pour les feux doivent
-répondre à vos besoins. <b> Ainsi, lorsque vous consultez la section «aiguillage» ou «lumière» dans le cadre de
-C/MRI, pense que "bit de sortie» ou «ligne de sortie". </b></P>
+	Pour des raisons historiques, les bits de sortie C/MRI utilis&#233;s pour commander l'aspect des signaux sont d&#233;nomm&#233;s "aiguillages",
+ m&#234;me si les bits de sortie sont utilis&#233;s pour la commande de signaux lumineux
+Utilis&#233; "lumi&#232;res" pour faire r&#233;f&#233;rence aux bits de sortie C/MRI utilis&#233;s
+pour les feux du TCO , des feux dans un d&#233;cor (&#233;clairage de la structure, des lumi&#232;res de la rue
+, etc), et &#224; des fins sp&#233;ciales o&#249; les options de contr&#238;le pour les feux doivent
+r&#233;pondre &#224; vos besoins. <b> Ainsi, lorsque vous consultez la section "aiguillage" ou "lumi&#232;re" dans le cadre de
+C/MRI, pense que "bit de sortie" ou "ligne de sortie".</b></P>
 
-<P> Avant de pouvoir se référer à un aiguillage ou une lumière à l'intérieur de JMRI, l'aiguillage ou
-la lumière doit être «créé». Un aiguillage peut être créé dans avec un certain nombre de moyens,
-y compris automatiquement. Tous les aiguillages JMRI qui ont été créés peuvent être
-vu dans le tableau aiguillage JMRI, accessible en sélectionnant <b> Tableau Aiguillage </b>
-dans le menu Outils. Un aiguillage peut être créé via le tableau aiguillage 
-en cliquant sur "Ajouter" au bas de le tableau. Pareillement , une nouvelle lumière peut être
-créé par le tableau lumière de JMRI en cliquant sur "Ajouter" au bas de cette
-table. le tableau lumière JMRI est accessible en sélectionnant <b> Table Lumière </b>
-dans le menu Outils. Tous les voyants JMRI qui ont été créés sont répertoriés dans le
-table lumière JMRI . La création d'un aiguillage  ou d'un feu se réfère à un bit de sortie particulier de C/MRI
-,qui est appelée «affectation» . Chaque lumière ou aiguillage est
-lié à une ligne de sortie spécifique via la partie adresse du nom système. 
+<P> Avant de pouvoir se r&#233;f&#233;rer &#224; un aiguillage ou une lumi&#232;re &#224; l'int&#233;rieur de JMRI, l'aiguillage ou
+la lumi&#232;re doit &#234;tre "cr&#233;&#233;". Un aiguillage peut &#234;tre cr&#233;&#233; avec un certain nombre de moyens,
+y compris automatiquement. Tous les aiguillages JMRI qui ont &#233;t&#233; cr&#233;&#233;s peuvent &#234;tre
+vu dans le tableau aiguillage JMRI, accessible en s&#233;lectionnant <b> Tableau Aiguillage</b>
+dans le menu Outils. Un aiguillage peut &#234;tre cr&#233;&#233; via le tableau aiguillage 
+en cliquant sur "Ajouter" au bas de le tableau. Pareillement , une nouvelle lumi&#232;re peut &#234;tre
+cr&#233;&#233; par le tableau lumi&#232;re de JMRI en cliquant sur "Ajouter" au bas de ce
+tableau. Le tableau lumi&#232;re JMRI est accessible en s&#233;lectionnant <b> Tableau Lumi&#232;re</b>
+dans le menu Outils. Tous les voyants JMRI qui ont &#233;t&#233; cr&#233;&#233;s sont r&#233;pertori&#233;s dans le
+tableau lumi&#232;re JMRI . La cr&#233;ation d'un aiguillage ou d'un feu se r&#233;f&#232;re &#224; un bit de sortie particulier de C/MRI
+,qui est appel&#233;e "affectation" . Chaque lumi&#232;re ou aiguillage est
+li&#233; &#224; une ligne de sortie sp&#233;cifique via la partie adresse du nom syst&#232;me. 
 </P>
 
-<P>Un bit de sortie spécifique peut être considéré comme un aiguillage ou un feu, mais pas les deux
-à la fois. Chaque bit de sortie ne peut être attribué qu'une seule fois. Quand un nouvel aiguillage
- ou une nouvelle lumière C/MRI est créé, JMRI contrôle que le bit de sortie spécifié est disponible pour l'affectation.
- Si la demande du bit de sortie C/MRI est en cours d'utilisation par un aiguillage ou une  lumière, JMRI refusera de
-créer le nouvel aiguillage ou le nouvel éclairage. Notez que certains aiguillage C/MRI ont la possibilité
- d'utiliser deux bits de sortie, l'un adressée et le suivant
-( <a href="#options">voir ci-dessous </a>), et que les deux bits de sortie doivent être
-non affectés à la création réussie d'un nouvel aiguillage contrôlé par deux 
-bits de sortie. La liste des affectations courantes C/MRI peut être obtenue en sélectionnant
-<B> Liste affectations </B> dans le menu C/MRI. </P> 
+<P>Un bit de sortie sp&#233;cifique peut &#234;tre consid&#233;r&#233; comme un aiguillage ou une lumi&#232;re, mais pas les deux
+&#224; la fois. Chaque bit de sortie ne peut &#234;tre attribu&#233; qu'une seule fois. Quand un nouvel aiguillage
+ ou une nouvelle lumi&#232;re C/MRI est cr&#233;&#233;, JMRI contr&#238;le que le bit de sortie sp&#233;cifi&#233; est disponible pour l'affectation.
+ Si la demande du bit de sortie C/MRI est en cours d'utilisation par un aiguillage ou une  lumi&#232;re, JMRI refusera de
+cr&#233;er le nouvel aiguillage ou le nouvel &#233;clairage. Notez que certains aiguillage C/MRI ont la possibilit&#233;
+ d'utiliser deux bits de sortie, l'un adress&#233;e et le suivant
+( <a href="#options">voir ci-dessous</a>), et que les deux bits de sortie doivent &#234;tre
+non affect&#233;s pour la cr&#233;ation r&#233;ussie d'un nouvel aiguillage contr&#238;l&#233; par deux 
+bits de sortie. La liste des affectations courantes C/MRI peut &#234;tre obtenue en s&#233;lectionnant
+<B> Liste affectations</B> dans le menu C/MRI.</P> 
 
-<a name=smini><H2>Mise en route avec un nœud Smini </H2> </ a>
+<a name=smini><H2>Mise en route avec un noeud Smini</H2></a>
 
 Il est plus facile d'essayer JMRI avec une carte Smini, car il y a peu
-d'options à configurer pour le matériel C/MRI. Après avoir
-physiquement connecté Smini à votre ordinateur, suivez la procédure
-ci-dessous pour configurer votre Smini comme un nœude C/MRI, et de tester une entrée et
-un bit de sortie. (Cette procédure suppose que rien n'est raccordé à la
-broches d'entrée et de sortie de votre Smini, et que vous n'avez pas fait 
+d'options &#224; configurer pour le mat&#233;riel C/MRI. Apr&#232;s avoir
+physiquement connect&#233; Smini &#224; votre ordinateur, suivez la proc&#233;dure
+ci-dessous pour configurer votre Smini comme un noeude C/MRI, et de tester une entr&#233;e et
+un bit de sortie. (Cette proc&#233;dure suppose que rien n'est raccord&#233; &#224; la
+broches d'entr&#233;e et de sortie de votre Smini, et que vous n'avez pas fait 
 d'affectation pour ses bits.)
 <ol>
-<li><li> Démarrez le programme PanelPro.
-<li> Depuis le menu, sélectionnez <b>Préférences ...</b> et configurer:
+<li><li> D&#233;marrez le programme PanelPro.
+<li> Depuis le menu Modifier, s&#233;lectionnez <b>Pr&#233;f&#233;rences ...</b> et configurer:
     <ul>
-    <li> Pour la connexion réseau sélectionnez "C/MRI".
-    <li> pour le port série, sélectionnez le port  matériel où votre matériel C/RMI est raccordé
-    <li> Sélectionnez la vitesse de transmission que votre système C/MRI utilise.
-    <li> Cliquez sur le bouton "Configurer le nœud C/MRI". Sur le
+    <li> Pour la connexion r&#233;seau s&#233;lectionnez "C/MRI".
+    <li> pour le port s&#233;rie, s&#233;lectionnez le port  mat&#233;riel o&#249; votre mat&#233;riel C/RMI est raccord&#233;
+    <li> S&#233;lectionnez la vitesse de transmission que votre syst&#232;me C/MRI utilise.
+    <li> Cliquez sur le bouton "Configurer le noeud C/MRI". Sur le
             nouveau panneau qui s'ouvre:
         <UL>
-        <LI> Entrez votre adresse de nœud de SMINI. (0 est généralement utilisé pour
-            la première carte Smini, mais ce nombre est réglé par les 
+        <LI> Entrez votre adresse de noeud de SMINI. (0 est g&#233;n&#233;ralement utilis&#233; pour
+            la premi&#232;re carte Smini, mais ce nombre est r&#233;gl&#233; par les 
             commutateurs d'adresse sur votre carte SMINI.)
-        <li> Sélectionnez "SMINI" pour le type de Nœud.
-        <LI> Laissez DL à zéro.
-        <li> Cliquez sur "Ajouter Nœud".
-        Cliquez <LI> "Terminé".
-        </Ul>
-    <li> Retour sur les "Préférences ..." panneau, cliquez sur "Enregistrer", et de dire oui
+        <li> S&#233;lectionnez "SMINI" pour le type de noeud.
+        <LI> Laissez DL &#224; z&#233;ro.
+        <li> Cliquez sur "Ajouter Noeud".
+        Cliquez <LI> "Termin&#233;".
+      </Ul>
+    <li> Retour sur le panneau "Pr&#233;f&#233;rences ...", cliquez sur "Enregistrer", et dire oui
         quand il vous demande si vous voulez quitter.
     
-<li> Redémarrez le programme. Vous devez affecter un bit d'entrée pour commencer
-    la scrutation. Sélectionnez <b>Tableau Capteur</b> dans le menu Outils, et procéder:
+<li> Red&#233;marrez le programme. Vous devez affecter un bit d'entr&#233;e pour commencer
+    la scrutation. S&#233;lectionnez <b>Tableau Capteur</b> dans le menu Outils, et proc&#233;der:
     <UL>
-    Cliquez <LI> "Ajouter ..." au bas de le tableau.
-    <LI> Dans la boîte de dialogue Ajouter un Nouveau Capteur:
+    Cliquez <LI> "Ajouter ..." au bas du tableau.
+    <LI> Dans la bo&#238;te de dialogue Ajouter un Nouveau Capteur:
         <UL>
-        <LI> Pour le nom système, entrez votre adresse CS1 si le Nœud SMIMI a été
-            0, ou encore entrer CSn001, où n est votre adresse du Nœud SMINI
-<LI> Le nom système et le nom utilisateur apparaissent dans le tableau capteurs.
+        <LI> Pour le nom syst&#232;me, entrez votre adresse CS1 si le Noeud SMIMI a &#233;t&#233;
+            0, ou encore entrer CSn001, o&#249; n est votre adresse du Noeud SMINI
+<LI> Le nom syst&#232;me et le nom utilisateur apparaissent dans le tableau capteur.
         <LI> Pour le nom utilisateur entrer "Test".
         <LI> Cliquer "OK".
-        </UL>
- <LI> L'état de votre capteur dans le tableau capteur sera initialement
-        «Inconnu», mais passera rapidement à «Inactif»  lorsque la scrutation
-        commence (en supposant que rien n'est raccordé à la broche d'entrée 1).
-    </ UL>
-    La LED d'émission et de réception sur votre carte SMINI devrait maintenant
+      </UL>
+ <LI> L'&#233;tat de votre capteur dans le tableau capteur sera initialement
+        "Inconnu", mais passera rapidement &#224; "Inactif"  lorsque la scrutation
+        commence (en supposant que rien n'est raccord&#233; &#224; la broche d'entr&#233;e 1).
+  </ UL>
+    La LED d'&#233;mission et de r&#233;ception sur votre carte SMINI devrait maintenant
     clignoter, indiquant que l'ordinateur et lA SMINI dialoguent.
-<li> Pour vérifier que le bit d'entrée (capteur) que vous avez attribué est au travail,
-   relier la broche d'entrée 1  à la borne de masse sur votre carte
-    SMINI. Le capteur doit basculer à "Actif". L'état du capteur
-    alterne entre «actif" et «inactif», selon que
-    broche 1 est mise à la terre ou non.
-<li> Pour vérifier que tout fonctionne sur le côté sortie, sélectionnez
-     <b>Commande Aiguillage </b> dans le menu Outils. Lorsque les petites
-    fenêtres de configuration de l'aiguillage s'ouvrent, procéder:
+<li> Pour v&#233;rifier que le bit d'entr&#233;e (capteur) que vous avez attribu&#233; est au travail,
+   relier la broche d'entr&#233;e 1  &#224; la borne de masse sur votre carte
+    SMINI. Le capteur doit basculer &#224; "Actif". L'&#233;tat du capteur
+    alterne entre "actif" et "inactif", selon que
+    broche 1 est mise &#224; la terre ou non.
+<li> Pour v&#233;rifier que tout fonctionne sur le c&#238;t&#233; sortie, s&#233;lectionnez
+     <b>Commande Aiguillage</b> dans le menu Outils. Lorsque les petites
+    fen&#234;tres de configuration de l'aiguillage s'ouvrent, proc&#233;der:
     <UL>
-    <LI> Pour l'aiguillage, entrez CT1 si votre adresse noeud était de 0, ou encore
-        entrer CTn001, où n est votre adresse de noeud. (Ceci affecte 1 à votre bit de sortie
+    <LI> Pour l'aiguillage, entrez CT1 si votre adresse noeud &#233;tait de 0, ou encore
+        entrer CTn001, o&#249; n est votre adresse de noeud. (Ceci affecte 1 &#224; votre bit de sortie
  de votre SMINI comme un un aiguillage.)
-       <LI> Cliquez sur "direct" ou "dévié" pour activer une ligne de sortie on et off.
+       <LI> Cliquez sur "droit" ou "d&#233;vi&#233;" pour activer une ligne de sortie on et off.
         <UL>
- Si vous connectez un LED en série avec une résistance (la valeur en ohms dépend
-     de la tension continue appliquée) à 1 bit de sortie, vous
-     être en mesure de commuter la LED on et off en cliquant simplement sur «Direct »ou
-     «Dévié » dans la fenêtre de commande de l'aiguillage. Notez que les bits de sortie SMINI
-     peuvent être mis en place pour être soit "absorbeurs de courant» ou « générateurs de courants".
-     (cela dépend de la façon dont votre SMINI est construite.) JMRI
-     fonctionne de même, indépendamment du type de bits de sortie, mais le type
-     de bits détermine la façon dont vous raccordez votre LED. Si vos sorties
-     bits sont "récepteurs de courant" actuellement (le type le plus commun), relier le
-     fil négatif de votre LED à la broche 1 de sortie, et la résistance 
-     entre le fil positif de la LED et une source de courant continu (généralement
-     3 à 12 volts). Si votre bit de sortie est en "générateur de courant", relier
+ Si vous connectez un LED en s&#233;rie avec une r&#233;sistance (la valeur en ohms d&#233;pend
+     de la tension continue appliqu&#233;e) &#224; 1 bit de sortie, vous
+     &#234;tre en mesure de commuter la LED on et off en cliquant simplement sur "Droit "ou
+     "D&#233;vi&#233; " dans la fen&#234;tre de commande de l'aiguillage. Notez que les bits de sortie SMINI
+     peuvent &#234;tre mis en place pour &#234;tre soit "absorbeurs de courant" ou " g&#233;n&#233;rateurs de courants".
+     (cela d&#233;pend de la fa&#231;on dont votre SMINI est construite.) JMRI
+     fonctionne de m&#234;me, ind&#233;pendamment du type de bits de sortie, mais le type
+     de bits d&#233;termine la fa&#231;on dont vous raccordez votre LED. Si vos sorties
+     bits sont "r&#233;cepteurs de courant" actuellement (le type le plus commun), relier le
+     fil n&#233;gatif de votre LED &#224; la broche 1 de sortie, et la r&#233;sistance 
+     entre le fil positif de la LED et une source de courant continu (g&#233;n&#233;ralement
+     3 &#224; 12 volts). Si votre bit de sortie est en "g&#233;n&#233;rateur de courant", relier
      le fil positif de votre LED sur la broche 1, et relier la
-     résistance entre le fil négatif de la LED  et la masse actuelle.         
+     r&#233;sistance entre le fil n&#233;gatif de la LED  et la masse actuelle.         
 </ol>
-<P>Vous avez maintenant un nœud  C/MRI configuré et fonctionnel. Vous pouvez ajouter
-plusieurs nœuds, en revenant au dialogue Configurer le nœud C/MRI
-( <a href="#nodes">voir ci-dessous </a>).      
+<P>Vous avez maintenant un noeud  C/MRI configur&#233; et fonctionnel. Vous pouvez ajouter
+plusieurs noeuds, en revenant au dialogue Configurer le noeud C/MRI
+( <a href="#nodes">voir ci-dessous</a>).      
 .
 
 
-<H2>Débuter avec une USIC ou SUSIC </H2> </a>
+<a name=susic><H2>D&#233;buter avec une USIC ou SUSIC</H2></a>
 
-Après avoir connecté physiquement votre SUSIC (ou USIC) à votre ordinateur,
-suivez la procédure ci-dessous pour configurer votre SUSIC (ou USIC) en tant que nœud C/MRI
-, et de tester un bit d'entrée et un bit de sortie. La procédure suppose
-1) que cette SUSIC est le premier nœud C/MRI étant connecté à votre
-ordinateur, 2) que rien n'est raccordé aux broches d'entrée de votre première carte d'entrée numérique, SUSIC, ou les broches de sortie de votre premiere SUSIC,  3) que vous n'avez pas donné d'affectations aux bits de votre SUSIC. </ p>
+Apr&#232;s avoir connect&#233; physiquement votre SUSIC (ou USIC) &#224; votre ordinateur,
+suivez la proc&#233;dure ci-dessous pour configurer votre SUSIC (ou USIC) en tant que noeud C/MRI
+, et de tester un bit d'entr&#233;e et un bit de sortie. La proc&#233;dure suppose
+1) que cette SUSIC est le premier noeud C/MRI  connect&#233; &#224; votre
+ordinateur, 2) que rien n'est raccord&#233; aux broches d'entr&#233;e de votre premi&#232;re carte d'entr&#233;e num&#233;rique, SUSIC, ou les broches de sortie de votre premiere SUSIC,  3) que vous n'avez pas donn&#233; d'affectations aux bits de votre SUSIC.</p>
 <ol>
-<li> Démarrez le programme PanelPro.
-<li> Dans le menu Edition, sélectionnez  <b>Préférences ...</b> et configurer:
+<li> D&#233;marrez le programme PanelPro.
+<li> Dans le menu Modification, s&#233;lectionnez <b>Pr&#233;f&#233;rences ...</b> et configurer:
     <ul>
-    <li> Pour la connexion mise en page sélectionnez "C/MRI".
-    <li> pour le port série, sélectionnez le port que votre matériel C/MRI utilise.
+    <li> Pour la connexion mise en page s&#233;lectionnez "C/MRI".
+    <li> pour le port s&#233;rie, s&#233;lectionnez le port que votre mat&#233;riel C/MRI utilise.
     <li> Cliquez sur le bouton "Configurer C/MRI". Sur le
         nouveau panneau qui s'ouvre:
         <UL>
-        <LI> Entrez votre adresse de noeud de SUSIC. (0 est généralement utilisé pour
-            le premier module SUSIC, mais  ce nombre est réglé par les
-            commutateurs d'adresse sur votre carte contrôleur SUSIC.)
-        <LI> Sélectionnez "USIC_SUSIC" pour le type de nœud
-        <LI> Laissez DL à zéro.
-        <LI> Sélectionnez "24-bit" ou "32-bit" pour la taille de carte, suivant 
-            si vous avez la carte 'originale DIN et DOUT 24-bit ou la plus récente 32-bit
+        <LI> Entrez votre adresse de noeud SUSIC. (0 est g&#233;n&#233;ralement utilis&#233; pour
+            le premier module SUSIC, mais  ce nombre est r&#233;gl&#233; par les
+            commutateurs d'adresse sur votre carte contr&#238;leur SUSIC.)
+        <LI> S&#233;lectionnez "USIC_SUSIC" pour le type de noeud
+        <LI> Laissez DL &#224; z&#233;ro.
+        <LI> S&#233;lectionnez "24-bit" ou "32-bit" pour la taille de carte, suivant 
+            si vous avez la carte 'originale DIN et DOUT 24-bit ou la plus r&#233;cente 32-bit
             
-        <LI> Utilisez le tableau ci-dessous pour configurer vos cartes et  dire à JMRI
-            quelle carte a des cartes d'entrées et celle qui a des cartes de sorties.
-	 Pour chaque carte que vous avez installé, cliquez où il est
-            dit "Sans carte" et sélectionnez "Carte d'Entrée" ou " carte de Sortie".
-            Notez que les cartes d'entrée et de sortie peuvent être dans n'importe quel ordre,
-            mais il ne faut pas d'espaces vides avant celle qui suit la dernière carte installée .
- (Il s'agit d'une exigence matériel de C/MRI
+        <LI> Utilisez le tableau ci-dessous pour configurer vos cartes et  dire &#224; JMRI
+            quelle carte a des cartes d'entr&#233;es et celle qui a des cartes de sorties.
+	 Pour chaque carte que vous avez install&#233;, cliquez o&#249; il est
+            dit "Sans carte" et s&#233;lectionnez "Carte d'Entr&#233;e" ou " carte de Sortie".
+            Notez que les cartes d'entr&#233;e et de sortie peuvent &#234;tre dans n'importe quel ordre,
+            mais il ne faut pas d'espaces vides avant celle qui suit la derni&#232;re carte install&#233;e .
+ (Il s'agit d'une exigence mat&#233;riel de C/MRI
            .)
-         <li> Cliquez sur " Ajouter nœud"
-       <li>  Cliquez  "terminé"
+         <li> Cliquez sur "Ajouter Noeud"
+       <li>  Cliquez  "Termin&#233;"
        
-               </UL>     
-<li> Retour sur le panneau,  "Préférences ... ", cliquez sur "Enregistrer", et dire oui quand
+             </UL>     
+<li> Retour sur le panneau,  "Pr&#233;f&#233;rences ... ", cliquez sur "Enregistrer", et dire oui quand
 il vous demande si vous voulez quitter.
 </ul>
-<li> Redémarrez le programme. Vous devez affecter un bit d'entrée pour commencer
-la scrutation. Sélectionnez <b>Tableau Capteur</b> dans le menu Outils, et procéder:
+<li> Red&#233;marrez le programme. Vous devez affecter un bit d'entr&#233;e pour commencer
+la scrutation. S&#233;lectionnez <b>Tableau Capteur</b> dans le menu Outils, et proc&#233;der:
 <UL>
 <LI> Cliquez "Ajouter ..." au bas de le tableau.
-<LI> Dans la boîte de dialogue Ajouter un Nouveau Capteur:
+<LI> Dans la bo&#238;te de dialogue Ajouter un Nouveau Capteur:
 <UL>
-<LI> Pour le nom du système, entrez votre adresse CS1 si le nœud SUSIC a été
-0, ou encore entrer CSn001, où n est votre adresse du nœud de SUSIC.
+<LI> Pour le nom du syst&#232;me, entrez votre adresse CS1 si le noeud SUSIC a &#233;t&#233;
+0, ou encore entrer CSn001, o&#249; n est votre adresse du noeud de SUSIC.
 <LI> Pour entrer le nom utilisateur "Test".
 <LI>Cliquez "OK".
 </UL>
-<LI> Le nom du système et le nom d'utilisateur apparaîtront dans le tableau de capteur.
-L'état de votre capteur dans le tableau capteur sera initialement
-«Inconnu», mais passera rapidement à «inactif»  lorsque la scrutation
-commence (en supposant que rien n'est raccordé à la broche d'entrée 1).
+<LI> Le nom du syst&#232;me et le nom d'utilisateur appara&#238;tront dans le tableau de capteur.
+L'&#233;tat de votre capteur dans le tableau capteur sera initialement
+"Inconnu", mais passera rapidement &#224; "inactif"  lorsque la scrutation
+commence (en supposant que rien n'est raccord&#233; &#224; la broche d'entr&#233;e 1).
 </ UL>
-La LED d'émission et de réception sur votre carte contrôleur SUSIC devrait 
+La LED d'&#233;mission et de r&#233;ception sur votre carte contr&#238;leur SUSIC devrait 
 maintenant clignoter, indiquant que l'ordinateur et la SUSIC dialoguent.
-<li> Pour vérifier que le bit d'entrée (capteur) que vous avez attribué est au travail,
-relier la broche 1 d'entrée (la première broche d'entrée  sur la première
-carte d'entrée de votre SUSIC) pour diriger le courant à la masse.SUSIC
-La sonde doit passer à "Actif". L'état du capteur
-alterne entre «actif» et «Inactif», selon que
-broche 1 est mise à la masse ou non.
-        </UL>
+<li> Pour v&#233;rifier que le bit d'entr&#233;e (capteur) que vous avez attribu&#233; est au travail,
+relier la broche 1 d'entr&#233;e (la premi&#232;re broche d'entr&#233;e  sur la premi&#232;re
+carte d'entr&#233;e de votre SUSIC) pour diriger le courant &#224; la masse.SUSIC
+La sonde doit passer &#224; "Actif". L'&#233;tat du capteur
+alterne entre "actif" et "Inactif", selon que
+broche 1 est mise &#224; la masse ou non.
+      </UL>
     
 
-<li>Pour vérifier que tout fonctionne du côté de la sortie, sélectionnez
-      <b>Commande Aiguillage </b> dans le menu Outils. Lorsque les petites
-     Fenêtre de configuration de l'aiguillage s'ouvrent, procéder:
+<li>Pour v&#233;rifier que tout fonctionne du c&#238;t&#233; de la sortie, s&#233;lectionnez
+      <b>Commande Aiguillage</b> dans le menu Outils. Lorsque les petites
+     Fen&#234;tre de configuration de l'aiguillage s'ouvrent, proc&#233;der:
      <UL>
-     <LI> Pour l'aiguillage, entrez CT1 si l'adresse de votre nœud SUSIC était 0, ou
-     Sinon, indiquez CTn001, où n est votre adresse de nœud de SUSIC. Celle ci
-     attribue 1 bit de sortie (la première ligne de sortie carte sur votre SUSIC) à l'aiguillage .
-     <LI> Cliquez sur "Direct"ou "Dévié" pour activer une ligne de sortie on et off.
-     </UL>
-     Si vous connectez une LED en série avec une résistance (la valeur en ohms dépend
-     de la tension continue appliquée) à 1 bit de sortie, vous
-     êtes en mesure de commuter la LED on et off en cliquant simplement sur «Direct »ou
-     «Dévié» dans la fenêtre de contrôle de l'aiguillage. Sinon, vous pouvez utiliser
-     un multimètre pour mesurer le courant sur un changement d'état du bit 1  comme il est on et off.
+     <LI> Pour l'aiguillage, entrez CT1 si l'adresse de votre noeud SUSIC &#233;tait 0, ou
+     Sinon, indiquez CTn001, o&#249; n est votre adresse de noeud de SUSIC. Celle ci
+     attribue 1 bit de sortie (la premi&#232;re ligne de sortie carte sur votre SUSIC) &#224; l'aiguillage .
+     <LI> Cliquez sur "Direct"ou "D&#233;vi&#233;" pour activer une ligne de sortie on et off.
+   </UL>
+     Si vous connectez une LED en s&#233;rie avec une r&#233;sistance (la valeur en ohms d&#233;pend
+     de la tension continue appliqu&#233;e) &#224; 1 bit de sortie, vous
+     &#234;tes en mesure de commuter la LED on et off en cliquant simplement sur "Direct "ou
+     "D&#233;vi&#233;" dans la fen&#234;tre de contr&#238;le de l'aiguillage. Sinon, vous pouvez utiliser
+     un multim&#232;tre pour mesurer le courant sur un changement d'&#233;tat du bit 1  comme il est on et off.
 
 </ol>
-<P>Vous avez maintenant un nœud C/MRI configuré et fonctionnel. Vous pouvez ajouter
-plusieurs noeuds, ou modifier la configuration de la carte DIN/ DOUT de ce nœud SUSIC,
-en revenant au dialogue de  Configuration du nœuds C/MRI
-( <a href="#nodes">voir ci-dessous </a>.  
+<P>Vous avez maintenant un noeud C/MRI configur&#233; et fonctionnel. Vous pouvez ajouter
+plusieurs noeuds, ou modifier la configuration de la carte DIN/ DOUT de ce noeud SUSIC,
+en revenant au dialogue de  Configuration du noeuds C/MRI
+( <a href="#nodes">voir ci-dessous</a>.  
 
-<a name=nodes><H2>Gestions des Nœuds</H2></a>
+<a name=nodes><H2>Gestions des Noeuds</H2></a>
 
-Chaque SMINI, USIC ou SUSIC est appelé un «nœud». Avant d'utiliser C/MRI avec
-JMRI, vous devez dire à JMRI les nœuds que vous avez sur votre système et la
-configuration de chaque nœud. Lorsque vous sélectionnez C/MRI dans les Préférences
-de dialogue, un bouton "Configurer nœuds C/MRI" est affiché. Cliquez sur ce bouton
-pour faire apparaître une boîte de dialogue pour entrer des informations de configuration de nœud. Vous pouvez
-ajouter de nouveaux nœuds ou mettre à jour la configuration d'un nœud existant en revenant à la
-Préférence de dialogue (<b> Edition>Préférences ...</b>) ou en sélectionnant  <b>Configurer nœuds
-C/MRI </b> dans le menu CMRI. Assurez-vous de sauver vos préférences après avoir modifié la configuration de votre nœud.
- Utilisez la bouton fonction "Enregistrer" dans la fenêtre Préférences. </P>
-<P> L'adresse d'un nœud est définie en utilisant l'adresse des commutateurs sur votre carte C/MRI.
-(adresses de nœud sont appelés UA dans les manuels C/MRI.) Les adresses de nœud doivent être
-unique pour chaque carte, mais ne doivent pas être séquentiels. L'adresse de nœud est utilisée
-dans le nom système JMRI pour référencer les bits d'entrée et de sortie appartenant à ce
-nœud (<a href="#numbers">voir ci-dessous  </a>)</P>. 
-<P> La configuration des nœuds C/MRI utilisant la boîte de dialogue de configuration est simple. Pour une
-SMINI, il suffit d'entrer l'adresse de la carte définie dans les commutateurs d'adresse sur le
-carte SMINI, sélectionnez SMINI pour le type de Nœud, et cliquez sur le bouton "Ajouter Nœud"
-. Pour une USIC ou SUSIC, entrez l'adresse du Nœud, sélectionnez USIC_SUSIC,
-cartes sélectionnez les cartes 24-bit ou 32-bit, puis dites à JMRI quelle type de carte occupe tel emplacement
-. </P>
-<P> Pour chaque nœud, vous pouvez afficher une liste sommaire des bits C/MRI qui sont en
-utilisation et ceux qui sont disponibles. Sélectionnez Liste <b>Liste d'Affectations </b> dans le menu
-CMRI pour faire apparaître un dialogue Liste des Affectations C/MRI. Ensuite, sélectionnez le
-nœud intéressant dans la liste des nœuds configurés, et si vous voulez
-afficher les affectations des bits d'entrée ou de sortie. Les affectations  peuvent être imprimées en cliquant sur le bouton Imprimer au bas de la fenêtre
-de dialogue. </ P>
-<P>la<B> Liste Affectations </B><a name=numbers> est utile pour vérifier que vous avez
-configuré le nombre exact de bits d'entrée et de sortie et l'adresse correcte du nœud
-pour chaque nœud. Le logiciel Liste d'Affectation  travaille à partir de l'actuel configuration 
-C/MRI, si un nœud a été configuré, il sera sélectionnable
+Chaque SMINI, USIC ou SUSIC est appel&#233; un "noeud". Avant d'utiliser C/MRI avec
+JMRI, vous devez dire &#224; JMRI les noeuds que vous avez sur votre syst&#232;me et la
+configuration de chaque noeud. Lorsque vous s&#233;lectionnez C/MRI dans les Pr&#233;f&#233;rences
+de dialogue, un bouton "Configurer noeuds C/MRI" est affich&#233;. Cliquez sur ce bouton
+pour faire appara&#238;tre une bo&#238;te de dialogue pour entrer des informations de configuration de noeud. Vous pouvez
+ajouter de nouveaux noeuds ou mettre &#224; jour la configuration d'un noeud existant en revenant &#224; la
+Pr&#233;f&#233;rence de dialogue (<b> Edition>Pr&#233;f&#233;rences ...</b>) ou en s&#233;lectionnant  <b>Configurer noeuds
+C/MRI</b> dans le menu CMRI. Assurez-vous de sauver vos pr&#233;f&#233;rences apr&#232;s avoir modifi&#233; la configuration de votre noeud.
+ Utilisez la bouton fonction "Enregistrer" dans la fen&#234;tre Pr&#233;f&#233;rences.</P>
+<P> L'adresse d'un noeud est d&#233;finie en utilisant l'adresse des commutateurs sur votre carte C/MRI.
+(adresses de noeud sont appel&#233;s UA dans les manuels C/MRI.) Les adresses de noeud doivent &#234;tre
+unique pour chaque carte, mais ne doivent pas &#234;tre s&#233;quentiels. L'adresse de noeud est utilis&#233;e
+dans le nom syst&#232;me JMRI pour r&#233;f&#233;rencer les bits d'entr&#233;e et de sortie appartenant &#224; ce
+noeud (<a href="#numbers">voir ci-dessous</a>)</P>. 
+<P> La configuration des noeuds C/MRI utilisant la bo&#238;te de dialogue de configuration est simple. Pour une
+SMINI, il suffit d'entrer l'adresse de la carte d&#233;finie dans les commutateurs d'adresse sur le
+carte SMINI, s&#233;lectionnez SMINI pour le type de Noeud, et cliquez sur le bouton "Ajouter Noeud"
+. Pour une USIC ou SUSIC, entrez l'adresse du Noeud, s&#233;lectionnez USIC_SUSIC,
+cartes s&#233;lectionnez les cartes 24-bit ou 32-bit, puis dites &#224; JMRI quelle type de carte occupe tel emplacement
+.</P>
+<P> Pour chaque noeud, vous pouvez afficher une liste sommaire des bits C/MRI qui sont en
+utilisation et ceux qui sont disponibles. S&#233;lectionnez Liste <b>Liste d'Affectations</b> dans le menu
+CMRI pour faire appara&#238;tre un dialogue Liste des Affectations C/MRI. Ensuite, s&#233;lectionnez le
+noeud int&#233;ressant dans la liste des noeuds configur&#233;s, et si vous voulez
+afficher les affectations des bits d'entr&#233;e ou de sortie. Les affectations  peuvent &#234;tre imprim&#233;es en cliquant sur le bouton Imprimer au bas de la fen&#234;tre
+de dialogue.</ P>
+<P>la<B> Liste Affectations</B><a name=numbers> est utile pour v&#233;rifier que vous avez
+configur&#233; le nombre exact de bits d'entr&#233;e et de sortie et l'adresse correcte du noeud
+pour chaque noeud. Le logiciel Liste d'Affectation  travaille &#224; partir de l'actuel configuration 
+C/MRI, si un noeud a &#233;t&#233; configur&#233;, il sera s&#233;lectionnable
 dans le dialogue de la liste des affectations de C/MRI. Le tableau d'affectation contient une ligne
-pour chaque bit configuré d'entrée ou sortie. Chaque ligne contient aussi une adresse
-dans la colonne <a name=numbers>montrant quelle adresse utiliser pour chaque nom système C/MRI de JMRI . 
-L'impression vide de la liste d'affectation pour chaque nœud fournit un
- document pratique à utiliser dans la détermination des affectations des bits d'entrée/sortie.</P>
+pour chaque bit configur&#233; d'entr&#233;e ou sortie. Chaque ligne contient aussi une adresse
+dans la colonne <a name=numbers>montrant quelle adresse utiliser pour chaque nom syst&#232;me C/MRI de JMRI . 
+L'impression vide de la liste d'affectation pour chaque noeud fournit un
+ document pratique &#224; utiliser dans la d&#233;termination des affectations des bits d'entr&#233;e/sortie.</P>
 
 
 
-<a name=numbers><H2>Numérotation utilisée dans les Noms Systèmes C/MRI</H2></a>
+<a name=numbers><H2>Num&#233;rotation utilis&#233;e dans les Noms Syst&#232;mes C/MRI</H2></a>
 
-Les noms système C/MRI commencent par "C". Par exemple, "CS24" se réfère à la 24eme ligne d'entrée, c'est un 
-"S" pour Sensor (Capteur), "CL35" se réfère à la 35ieme  ligne de sortie ,
- "L" pour Light ( lumière), et "CT38" se réfère à la 38ème ligne de sortie, un "T" pour Turnout (aiguillage)(tous 
-pour un nœud avec l'adresse de 0). </p>
+Les noms syst&#232;me C/MRI commencent par "C". Par exemple, "CS24" se r&#233;f&#232;re &#224; la 24eme ligne d'entr&#233;e, c'est un 
+"S" pour Sensor (Capteur), "CL35" se r&#233;f&#232;re &#224; la 35ieme  ligne de sortie ,
+ "L" pour Light ( lumi&#232;re), et "CT38" se r&#233;f&#232;re &#224; la 38&#232;me ligne de sortie, un "T" pour Turnout (aiguillage)(tous 
+pour un noeud avec l'adresse de 0).</p>
 
-<p> Chaque nœud, entrées et sorties est numéroté séquentiellement à partir de 1, sans
+<p> Chaque noeud, entr&#233;es et sorties est num&#233;rot&#233; s&#233;quentiellement &#224; partir de 1, sans
 se soucier des types de cartes, ou du type de carte  qui est dans ce connecteur de carte.
-Par exemple, si vous avez deux cartes d'entrée 24-bit, CS25 se réfère à l'entrée de première
-ligne sur la carte seconde entrée. Si vous avez deux cartes d'entrée 32-bit, CS25
-se réfère à la ligne d'entrée 25e sur la carte première entrée. </p>
+Par exemple, si vous avez deux cartes d'entr&#233;e 24-bit, CS25 se r&#233;f&#232;re &#224; l'entr&#233;e de premi&#232;re
+ligne sur la carte seconde entr&#233;e. Si vous avez deux cartes d'entr&#233;e 32-bit, CS25
+se r&#233;f&#232;re &#224; la ligne d'entr&#233;e 25e sur la carte premi&#232;re entr&#233;e.</p>
 
-<p> Chaque SMINI, USIC ou SUSIC (nœud) a une adresse unique fixée par ses commutateurs d'adresses et est entrée lorsque vous avez configuré chaque nœud C/MRI
-(<a href="#nodes"> voir ci-dessus </a>).
-Les Capteurs et les aiguillages sur le premier nœud (adresse 0) sont numérotées de 1 à
-999; Les capteurs et les branchements sur le deuxième nœud (adresse 1) sont numérotés 1001
-à 1999 etc ; Notez que les adresses de nœud peuvent être séquentielles, mais ne sont pas
-requises pour être ainsi. </p>
+<p> Chaque SMINI, USIC ou SUSIC (noeud) a une adresse unique fix&#233;e par ses commutateurs d'adresses et est entr&#233;e lorsque vous avez configur&#233; chaque noeud C/MRI
+(<a href="#nodes"> voir ci-dessus</a>).
+Les Capteurs et les aiguillages sur le premier noeud (adresse 0) sont num&#233;rot&#233;es de 1 &#224;
+999; Les capteurs et les branchements sur le deuxi&#232;me noeud (adresse 1) sont num&#233;rot&#233;s 1001
+&#224; 1999 etc ; Notez que les adresses de noeud peuvent &#234;tre s&#233;quentielles, mais ne sont pas
+requises pour &#234;tre ainsi.</p>
 <P>Par exemple:
 <UL>
-<LI>Disons que vous avez une SMINI avec ses commutateurs adresse  réglé sur "2". Toutes les
-entrées et les sorties sur ce nœud seront numérotées à partir de 2001.
+<LI>Disons que vous avez une SMINI avec ses commutateurs adresse  r&#233;gl&#233; sur "2". Toutes les
+entr&#233;es et les sorties sur ce noeud seront num&#233;rot&#233;es &#224; partir de 2001.
      <UL>
-     <LI> CT2001 est la première broche de sortie
-     <LI> CT2048 est la dernière broche de sortie
-     <LI> CS2001 est la première broche d'entrée
-     <LI> CS2024 est la dernière broche d'entréee 
-     </ UL>
-<LI> Si vous avez une USIC avec ses commutateurs adresse  réglé sur "1", elle aurra
- toutes les entrées et les sorties numérotés à partir de 1001. Si elle a
-trois cartes d'entrée 24-bit, et deux cartes de sortie 24-bit, leur adresse sera:
+     <LI> CT2001 est la premi&#232;re broche de sortie
+     <LI> CT2048 est la derni&#232;re broche de sortie
+     <LI> CS2001 est la premi&#232;re broche d'entr&#233;e
+     <LI> CS2024 est la derni&#232;re broche d'entr&#233;ee 
+   </ UL>
+<LI> Si vous avez une USIC avec ses commutateurs adresse  r&#233;gl&#233; sur "1", elle aurra
+ toutes les entr&#233;es et les sorties num&#233;rot&#233;s &#224; partir de 1001. Si elle a
+trois cartes d'entr&#233;e 24-bit, et deux cartes de sortie 24-bit, leur adresse sera:
      <UL>
-     <LI> CT1001 est la première  broche sur la première carte de sortie 
-     <LI> CT1024 est la dernière  broche sur la première carte de sortie
-     <LI> CT1025 est la première  broche sur la 2ème carte de sortie
-     <LI> CT1048 est la dernière  broche sur la 2ème carte sortie
-     <LI> CS1001 est la première  broche sur la première carte d'entrée e
-     <LI> CS1024 est la dernière  broche sur la première carte d'entrée 
-     <LI> CS1025 est la première  broche sur la 2ème carte entrée
-     <LI> CS1049 est la premiere  broche sur la troisième carte d'entrée
-     <LI> CS1072 est la dernière  broche sur la 3ème carte d'entré
-    </UL>
-Notez que ce n'est pas dans n'importe quel ordre que les cartes sont installées. Ça a été
-configuré lorsque vous avez mis en place le matériel. JMRI s'est dit quel type de
-carte est installé dans ce connecteur USIC lorsque vous définissez le nœud dans le dialogue de configuration
-C/MRI (<a href="#nodes">voir ci-dessus  </a>).
-<li> vous avez un SUSIC avec son adresse commutateurs réglé sur "4", les entrées
-et les sorties seront numérotées à partir de 4001. Si elle a deux cartes entrées 32-bit
-et de sortie à deux 32-bit
+     <LI> CT1001 est la premi&#232;re  broche sur la premi&#232;re carte de sortie 
+     <LI> CT1024 est la derni&#232;re  broche sur la premi&#232;re carte de sortie
+     <LI> CT1025 est la premi&#232;re  broche sur la 2&#232;me carte de sortie
+     <LI> CT1048 est la derni&#232;re  broche sur la 2&#232;me carte sortie
+     <LI> CS1001 est la premi&#232;re  broche sur la premi&#232;re carte d'entr&#233;e e
+     <LI> CS1024 est la derni&#232;re  broche sur la premi&#232;re carte d'entr&#233;e 
+     <LI> CS1025 est la premi&#232;re  broche sur la 2&#232;me carte entr&#233;e
+     <LI> CS1049 est la premiere  broche sur la troisi&#232;me carte d'entr&#233;e
+     <LI> CS1072 est la derni&#232;re  broche sur la 3&#232;me carte d'entr&#233;
+  </UL>
+Notez que ce n'est pas dans n'importe quel ordre que les cartes sont install&#233;es. &#231;a a &#233;t&#233;
+configur&#233; lorsque vous avez mis en place le mat&#233;riel. JMRI s'est dit quel type de
+carte est install&#233; dans ce connecteur USIC lorsque vous d&#233;finissez le noeud dans le dialogue de configuration
+C/MRI (<a href="#nodes">voir ci-dessus</a>).
+<li> vous avez un SUSIC avec son adresse commutateurs r&#233;gl&#233; sur "4", les entr&#233;es
+et les sorties seront num&#233;rot&#233;es &#224; partir de 4001. Si elle a deux cartes entr&#233;es 32-bit
+et de sortie &#224; deux 32-bit
 , leur adresse sera:
      <UL>
-     <LI> CT4001 est la première broche sur la première carte de sortie 
-     <LI> CT4032 est la dernière broche sur la première carte de sortie
-     <LI> CT4033 est la première broche sur la 2ème carte de sortie
-     <LI> CT4064 est la dernière broche sur la 2ème carte de sortie
-     <LI> CS4001 est la première broche sur la première carte d'entrée 
-     <LI> CS4032 est la dernière broche sur la première carte d'entrée 
-     <LI> CS4033 est la première broche sur la 2ème carte d'entrée
-     <LI> CS4064 est la dernière broche sur la 2ème carte d'entrée
-        </UL>
+     <LI> CT4001 est la premi&#232;re broche sur la premi&#232;re carte de sortie 
+     <LI> CT4032 est la derni&#232;re broche sur la premi&#232;re carte de sortie
+     <LI> CT4033 est la premi&#232;re broche sur la 2&#232;me carte de sortie
+     <LI> CT4064 est la derni&#232;re broche sur la 2&#232;me carte de sortie
+     <LI> CS4001 est la premi&#232;re broche sur la premi&#232;re carte d'entr&#233;e 
+     <LI> CS4032 est la derni&#232;re broche sur la premi&#232;re carte d'entr&#233;e 
+     <LI> CS4033 est la premi&#232;re broche sur la 2&#232;me carte d'entr&#233;e
+     <LI> CS4064 est la derni&#232;re broche sur la 2&#232;me carte d'entr&#233;e
+      </UL>
 
 </UL>
-<p> Quand vous une information Matérielle dans la fenêtre Ajouter capteur, vous pouvez Saisir l'ID du Nœud, suivi par un":". Cette méthode peut aussi être utilisée pour l'adressage alternatif/étendu.<br>Donc pour un capteur sur le nœud 2, broche 3 vous pouvez entrer la ligne suivante dans le champ d'adresse matérie: <b>2:3</b></p>
+<p> Quand vous une information Mat&#233;rielle dans la fen&#234;tre Ajouter capteur, vous pouvez Saisir l'ID du Noeud, suivi par un":". Cette m&#233;thode peut aussi &#234;tre utilis&#233;e pour l'adressage alternatif/&#233;tendu.<br>Donc pour un capteur sur le noeud 2, broche 3 vous pouvez entrer la ligne suivante dans le champ d'adresse mat&#233;rie: <b>2:3</b></p>
 
-<P> Pour résumer, les broches d'entrée et de sortie sont étiquetées de manière séquentielle
-au sein de chaque nœud C/MRI. Pour compléter l'adresse de bit, ajouter 1000 fois à
-l'adresse de station au  numéro de la broche numéro. Les adresses de nœuds peuvent aller aussi haut que le matériel C/MRI
-le permet. </P>
-<P> Pour un guide facile des adresses de broches d'entrée et de sortie, sélectionnez <b>
-Liste Affectations </b> dans le menu pour accéder aux tables C/MRI des entrées et sorties affectées et libres pour chaque 
-entrées et sorties disponibles pour chaque nœud. Chaque table a une ligne pour chaque  broche incluant une colonne d'adresse montrant quelle est l'adresse à utiliser pour cette broche dans les noms système.
+<P> Pour r&#233;sumer, les broches d'entr&#233;e et de sortie sont &#233;tiquet&#233;es de mani&#232;re s&#233;quentielle
+au sein de chaque noeud C/MRI. Pour compl&#233;ter l'adresse de bit, ajouter 1000 fois &#224;
+l'adresse de station au  num&#233;ro de la broche num&#233;ro. Les adresses de noeuds peuvent aller aussi haut que le mat&#233;riel C/MRI
+le permet.</P>
+<P> Pour un guide facile des adresses de broches d'entr&#233;e et de sortie, s&#233;lectionnez <b>
+Liste Affectations</b> dans le menu pour acc&#233;der aux tables C/MRI des entr&#233;es et sorties affect&#233;es et libres pour chaque 
+entr&#233;es et sorties disponibles pour chaque noeud. Chaque table a une ligne pour chaque  broche incluant une colonne d'adresse montrant quelle est l'adresse &#224; utiliser pour cette broche dans les noms syst&#232;me.
 </P>   	
 
-<a name=alternate> <H2> Numérotation Complémentaire pour les Noms Système </H2> </a>
+<a name=alternate><H2> Num&#233;rotation Compl&#233;mentaire pour les Noms Syst&#232;me</H2></a>
 
-Un schéma de rechange pour la numérotation dans les noms système de C/MRI a été développé pour
- donner accès aux utilisateurs au nombre total de lignes autorisées à la conception de matériel C/MRI.
-Le système principal de numérotation (<a href="#numbers"> décrites ci-dessus </a>) permet
-l'accès à 999 lignes d'entrée et de sortie sur chaque nœuds. La conception de matériel C/MRI,
-toutefois, supporte beaucoup plus de bits pour les nœuds USIC et SUSIC. La plupart des utilisateurs JMRI
-n'auront jamais besoin de ce régime complémentaire, et doivent utiliser le système de numérotation principal.
+Un sch&#233;ma de rechange pour la num&#233;rotation dans les noms syst&#232;me de C/MRI a &#233;t&#233; d&#233;velopp&#233; pour
+ donner acc&#232;s aux utilisateurs au nombre total de lignes autoris&#233;es &#224; la conception de mat&#233;riel C/MRI.
+Le syst&#232;me principal de num&#233;rotation (<a href="#numbers"> d&#233;crites ci-dessus</a>) permet
+l'acc&#232;s &#224; 999 lignes d'entr&#233;e et de sortie sur chaque noeuds. La conception de mat&#233;riel C/MRI,
+toutefois, supporte beaucoup plus de bits pour les noeuds USIC et SUSIC. La plupart des utilisateurs JMRI
+n'auront jamais besoin de ce r&#233;gime compl&#233;mentaire, et doivent utiliser le syst&#232;me de num&#233;rotation principal.
 
 <P>
-Le régime complémentaire de numérotation est similaire au régime principal de numérotation,
-sauf l'adresse du nœuds et les numéro de bits sont séparés par un "B",
-et les deux adresse de nœud et le numéro de bits peuvent aller à n'importe quelle valeur prise en charge par C/MRI.
-Par exemple, CS1B13 se réfère à la ligne d'entrée 13 d'un nœud avec l'adresse 1, et est
-équivalent à CS1013 du mécanisme principal de numérotation. Aussi CT2B1109 se réfère à la ligne de sortie
-1109  d'un nœud avec l'adresse 2, et il n'y a pas d'équivalent dans le
- système principal de numérotation. Les utilisateurs peuvent utiliser indifféremment le schéma de numérotation
-pour les numéros de ligne jusqu'à 999, mais il doit utiliser le système de numérotation pour les numéros complémentaires pour les
- numéros de ligne supérieur à 999. Pour plus de facilité pour communiquer avec d'autres utilisateurs,
-l'utilisation du schéma de numérotation principale est recommandée, à moins que des bits supérieur à 999
-doivent être adressés.
+Le r&#233;gime compl&#233;mentaire de num&#233;rotation est similaire au r&#233;gime principal de num&#233;rotation,
+sauf l'adresse du noeuds et les num&#233;ro de bits sont s&#233;par&#233;s par un "B",
+et les deux adresse de noeud et le num&#233;ro de bits peuvent aller &#224; n'importe quelle valeur prise en charge par C/MRI.
+Par exemple, CS1B13 se r&#233;f&#232;re &#224; la ligne d'entr&#233;e 13 d'un noeud avec l'adresse 1, et est
+&#233;quivalent &#224; CS1013 du m&#233;canisme principal de num&#233;rotation. Aussi CT2B1109 se r&#233;f&#232;re &#224; la ligne de sortie
+1109  d'un noeud avec l'adresse 2, et il n'y a pas d'&#233;quivalent dans le
+ syst&#232;me principal de num&#233;rotation. Les utilisateurs peuvent utiliser indiff&#233;remment le sch&#233;ma de num&#233;rotation
+pour les num&#233;ros de ligne jusqu'&#224; 999, mais il doit utiliser le syst&#232;me de num&#233;rotation pour les num&#233;ros compl&#233;mentaires pour les
+ num&#233;ros de ligne sup&#233;rieur &#224; 999. Pour plus de facilit&#233; pour communiquer avec d'autres utilisateurs,
+l'utilisation du sch&#233;ma de num&#233;rotation principale est recommand&#233;e, &#224; moins que des bits sup&#233;rieur &#224; 999
+doivent &#234;tre adress&#233;s.
 
 
 <a name=options><H2> Options de Commande d'un Aiguillage par C/MRI</H2></a>
 
-Les aiguillages peuvent être commandés en utilisant un ou deux bits de sortie.
-Lorsque l'aiguillage est créé en utilisant l'option Ajouter dans le tableau aiguillage,
-il est demandé à l'utilisateur si l'aiguillage doit être piloté par un
+Les aiguillages peuvent &#234;tre command&#233;s en utilisant un ou deux bits de sortie.
+Lorsque l'aiguillage est cr&#233;&#233; en utilisant l'option Ajouter dans le tableau aiguillage,
+il est demand&#233; &#224; l'utilisateur si l'aiguillage doit &#234;tre pilot&#233; par un
 ou deux bits de sortie.
 <P>
-Si la sortie de commande 1 bit est sélectionnée, l'utilisateur doit sélectionner la commande d'état "stable"
-ou «pulsé». Si l'«état stable» est sélectionné, alors le bit de sortie est réglé
-«Off»pour DIRECT («normal» dans les manuels C/MRI) ou «On »pour DÉVIÉ («inverse» dans les  manuels
-C/MRI). Lorsque le bit de sortie est déterminé, JMRI compare l'état requis
-à l'état indiqué par la valeur actuelle du bit de sortie. Si ces états
-différent, alors le bit de sortie est fixé comme indiqué ci-dessus. Si ces états
-sont les mêmes, cet état est comparé à l'état indiqué par les rétro-signalisations de l'aiguillage.
-Si les états sont les mêmes, aucune mesure n'est prise, puisque l'aiguillage est déjà dans
-l'état requis. Si les états sont différents, l'aiguillage a été sans doute
-changé par quelque moyen distinct de JMRI. Afin de s'assurer que l'aiguillage est effectivement
-mis à l'état requis, le bit de sortie est d'abord modifié pour correspondre à l'état
-indiqué par les informations de l'aiguillage, puis une seconde plus tard il est changé à nouveau pour
-correspondre à l'état demandé. Ceci garantit un changement d'état pour les dispositifs de commande des aiguillages qui
- nécessitent un changement d'état pour déplacer actuellement l'aiguillage.  
+Si la sortie de commande 1 bit est s&#233;lectionn&#233;e, l'utilisateur doit s&#233;lectionner la commande d'&#233;tat "stable"
+ou "puls&#233;". Si l'"&#233;tat stable" est s&#233;lectionn&#233;, alors le bit de sortie est r&#233;gl&#233;
+"Off"pour DIRECT ("normal" dans les manuels C/MRI) ou "On "pour D&#233;VI&#233; ("inverse" dans les  manuels
+C/MRI). Lorsque le bit de sortie est d&#233;termin&#233;, JMRI compare l'&#233;tat requis
+&#224; l'&#233;tat indiqu&#233; par la valeur actuelle du bit de sortie. Si ces &#233;tats
+diff&#233;rent, alors le bit de sortie est fix&#233; comme indiqu&#233; ci-dessus. Si ces &#233;tats
+sont les m&#234;mes, cet &#233;tat est compar&#233; &#224; l'&#233;tat indiqu&#233; par les r&#233;tro-signalisations de l'aiguillage.
+Si les &#233;tats sont les m&#234;mes, aucune mesure n'est prise, puisque l'aiguillage est d&#233;j&#224; dans
+l'&#233;tat requis. Si les &#233;tats sont diff&#233;rents, l'aiguillage a &#233;t&#233; sans doute
+chang&#233; par quelque moyen distinct de JMRI. Afin de s'assurer que l'aiguillage est effectivement
+mis &#224; l'&#233;tat requis, le bit de sortie est d'abord modifi&#233; pour correspondre &#224; l'&#233;tat
+indiqu&#233; par les informations de l'aiguillage, puis une seconde plus tard il est chang&#233; &#224; nouveau pour
+correspondre &#224; l'&#233;tat demand&#233;. Ceci garantit un changement d'&#233;tat pour les dispositifs de commande des aiguillages qui
+ n&#233;cessitent un changement d'&#233;tat pour d&#233;placer actuellement l'aiguillage.  
 <P>
-Si une sortie avec 1 bit de commande pulsée est sélectionnée, le bit de sortie est "Off" lorsque
-rien ne se passe. Lorsque l'état DÉVIÉ est demandée, cette demande est
-comparée à l'état connu de l'aiguillage (qui suit les rétro-signalisations de l'aiguillage).
-Si l'état connu indique que l'aiguillage est déjà dans l'état requis,
-rien n'est fait. Si l'état connu est différent de l'état requis, alors
-le bit est «pulsée». Une «pulse» se compose de bits étant mis à «On» pour une
-seconde, puis revient à  "Off  . 
+Si une sortie avec 1 bit de commande puls&#233;e est s&#233;lectionn&#233;e, le bit de sortie est "Off" lorsque
+rien ne se passe. Lorsque l'&#233;tat D&#233;VI&#233; est demand&#233;e, cette demande est
+compar&#233;e &#224; l'&#233;tat connu de l'aiguillage (qui suit les r&#233;tro-signalisations de l'aiguillage).
+Si l'&#233;tat connu indique que l'aiguillage est d&#233;j&#224; dans l'&#233;tat requis,
+rien n'est fait. Si l'&#233;tat connu est diff&#233;rent de l'&#233;tat requis, alors
+le bit est "puls&#233;e". Une "pulse" se compose de bits &#233;tant mis &#224; "On" pour une
+seconde, puis revient &#224;  "Off  . 
 <P>
-Si la commande par deux bits de sortie est sélectionnée, le bit référencé dans le nom système d'aiguillage
-(voir ci-dessus) et le bit suivant dans la séquence sont utilisés pour contrôler l'aiguillage.
+Si la commande par deux bits de sortie est s&#233;lectionn&#233;e, le bit r&#233;f&#233;renc&#233; dans le nom syst&#232;me d'aiguillage
+(voir ci-dessus) et le bit suivant dans la s&#233;quence sont utilis&#233;s pour contr&#238;ler l'aiguillage.
 Par exemple, si CT33 a deux bits de sorties de commande, les bits 33e et 34e
- sont utilisés pour commander l'aiguillage. Si la commande  des deux bits de sorties est sélectionnée, l'utilisateur
-doit sélectionner la commande par état "stable» ou «pulsé». La Commande de l'état stable
-devrait être sélectionné pour les moteur d'aiguillage à décrochage, comme les Tortoises, si il est
-commandé selon la recommandation dans le manuel utilisateur version 3.0, page 3-12  de Chubb .
- Avec le contrôle de l'état d'équilibre, pour DIRECT, le premier bit est
-réglée sur "OFF" et le second bit est réglé sur "ON", pour DÉVIÉ, l'États des bits sont
-inversé, c'est à dire, le premier bit est réglé sur "ON" et le second bit est réglé sur "OFF". 
+ sont utilis&#233;s pour commander l'aiguillage. Si la commande  des deux bits de sorties est s&#233;lectionn&#233;e, l'utilisateur
+doit s&#233;lectionner la commande par &#233;tat "stable" ou "puls&#233;". La Commande de l'&#233;tat stable
+devrait &#234;tre s&#233;lectionn&#233; pour les moteur d'aiguillage &#224; d&#233;crochage, comme les Tortoises, si il est
+command&#233; selon la recommandation dans le manuel utilisateur version 3.0, page 3-12  de Chubb .
+ Avec le contr&#238;le de l'&#233;tat d'&#233;quilibre, pour DIRECT, le premier bit est
+r&#233;gl&#233;e sur "OFF" et le second bit est r&#233;gl&#233; sur "ON", pour D&#233;VI&#233;, l'&#233;tats des bits sont
+invers&#233;, c'est &#224; dire, le premier bit est r&#233;gl&#233; sur "ON" et le second bit est r&#233;gl&#233; sur "OFF". 
   
 <P>
-Si la commande avec deux bits de sortie avec commande impulsionelle est demandée, les deux bits sont "Off"
-quand rien ne se passe. Lorsque DIRECT  ou DÉVIÉ est demandée, cette demande est comparée
- à l'état connu de l'aiguillage (qui suit les rétro-signalisations de l'aiguillage). Si
-l'état connu indique que l'aiguillage est déjà dans l'état requis,
-rien n'est fait. Si l'état connu est différent de l'état requis, alors
-le premier bit est pulsé si DIRECT est demandé, ou le second bit est pulsé si
-DÉVIÉ est demandé. Dans les deux cas, une «impulsion» consiste en un créneau porté
- à "On" pendant une seconde, puis revient à la position «Off».
-<p> <I> Notez que d'avoir une commande deux bits de sortie, impose la création d'un
- aiguillage en utilisant le bouton "Ajouter" dans le tableau de participation. </I>
+Si la commande avec deux bits de sortie avec commande impulsionelle est demand&#233;e, les deux bits sont "Off"
+quand rien ne se passe. Lorsque DIRECT  ou D&#233;VI&#233; est demand&#233;e, cette demande est compar&#233;e
+ &#224; l'&#233;tat connu de l'aiguillage (qui suit les r&#233;tro-signalisations de l'aiguillage). Si
+l'&#233;tat connu indique que l'aiguillage est d&#233;j&#224; dans l'&#233;tat requis,
+rien n'est fait. Si l'&#233;tat connu est diff&#233;rent de l'&#233;tat requis, alors
+le premier bit est puls&#233; si DIRECT est demand&#233;, ou le second bit est puls&#233; si
+D&#233;VI&#233; est demand&#233;. Dans les deux cas, une "impulsion" consiste en un cr&#233;neau port&#233;
+ &#224; "On" pendant une seconde, puis revient &#224; la position "Off".
+<p><I> Notez que d'avoir une commande deux bits de sortie, impose la cr&#233;ation d'un
+ aiguillage en utilisant le bouton "Ajouter" dans le Tableau Aiguillage.</I>
 
 <p>
-Enfin, l'option "inversé" peut être sélectionnée. Ce contrôle de
-la façon dont le matériel le CMRI met en œuvre le "On " et "Off" utilisé dans le
-description ci-dessus. Normalement (l'option inverser n'est pas pas sélectionnée),
-"ON" se réfère à un «1» pour le matériel; pour la norme matériel C/MRI,
+Enfin, l'option "invers&#233;" peut &#234;tre s&#233;lectionn&#233;e. Ce contr&#238;le de
+la fa&#231;on dont le mat&#233;riel le CMRI met en oeuvre le "On " et "Off" utilis&#233; dans le
+description ci-dessus. Normalement (l'option inverser n'est pas pas s&#233;lectionn&#233;e),
+"ON" se r&#233;f&#232;re &#224; un "1" pour le mat&#233;riel; pour la norme mat&#233;riel C/MRI,
 tire la broche de sortie vers la masse et lui permet de recevoir du courant. "Off"
-correspond à un «0 »pour le matériel, en mettant la broche de sortie hors tension,
-et de le faire arrêter par manque de courant
+correspond &#224; un "0 "pour le mat&#233;riel, en mettant la broche de sortie hors tension,
+et de le faire arr&#234;ter par manque de courant
 <p>
-Lorsque "inverser" est sélectionné, "On " se traduit par un "0" envoyé au matériel, et
-"Off" se traduit par un "1" . Cela provoque la réaction du matériel avec
-la polarité opposée.
+Lorsque "inverser" est s&#233;lectionn&#233;, "On " se traduit par un "0" envoy&#233; au mat&#233;riel, et
+"Off" se traduit par un "1" . Cela provoque la r&#233;action du mat&#233;riel avec
+la polarit&#233; oppos&#233;e.
 </dd>.
 
 
-<a name=signals><H2>Câblage Signaux</H2></a>
+<a name=signals><H2>C&#226;blage Signaux</H2></a>
 
-JMRI peut travailler avec tous les moyens populaires de câblage
- des signaux au matériel C/MRI (et il y en a beaucoup !)
-Pour plus d'informations sur la façon de configurer vos signaux pour le programme
- s'il vous plaît voir la page
-<A HREF="Signals.shtml">  signaux C/MRI </a>J.   
+JMRI peut travailler avec tous les moyens populaires de c&#226;blage
+ des signaux au mat&#233;riel C/MRI (et il y en a beaucoup !)
+Pour plus d'informations sur la fa&#231;on de configurer vos signaux pour le programme
+ s'il vous pla&#238;t voir la page
+<A HREF="Signals.shtml">  signaux C/MRI</a>J.   
 
 <a name=diagnostics><H2>C/MRI Diagnostiques</H2></a>
 
-JMRI supporte les deux procédures automatisées de diagnostique mentionnées au
-chapitre 6 du <b> Manuel  Utilisateur Version 3.0 de Chubb Bruce </b>. Les diagnostiques
-sont utiles pour vérifier le bon fonctionnement de votre matériel C/MRI. Ces procédures automatisées
-sont contrôlées par une boîte de dialogue disponible en sélectionnant
-<b> <a href="../../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml"> Exécuter Diagnostique, </a> </b>
+JMRI supporte les deux proc&#233;dures automatis&#233;es de diagnostique mentionn&#233;es au
+chapitre 6 du <b> Manuel  Utilisateur Version 3.0 de Chubb Bruce</b>. Les diagnostiques
+sont utiles pour v&#233;rifier le bon fonctionnement de votre mat&#233;riel C/MRI. Ces proc&#233;dures automatis&#233;es
+sont contr&#238;l&#233;es par une bo&#238;te de dialogue disponible en s&#233;lectionnant
+<b><a href="../../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml"> Ex&#233;cuter Diagnostique,</a></b>
 dans le menu CMRI.
-Le test Wraparound requiert un essai des câbles de bouclage, et le test de sortie nécessite une carte spéciale d'essai de sortie.
-Les deux dispositifs sont décrits dans la référence ci-dessus. Toutes les autres connexions au bit d'entrée
-ou de sortie sur la carte (s) à l'essai doivent être débranchées lorsque ces tests
-sont exécutés. Les diagnostics sont faciles à utiliser. Il suffit de suivre les instructions présentées
-dans le dialogue Exécution du Diagnostique C/MRI. Toutes les erreurs trouvées sont signalées dans la
-boîte d'état du dialogue. .
+Le test Wraparound requiert un essai des c&#226;bles de bouclage, et le test de sortie n&#233;cessite une carte sp&#233;ciale d'essai de sortie.
+Les deux dispositifs sont d&#233;crits dans la r&#233;f&#233;rence ci-dessus. Toutes les autres connexions au bit d'entr&#233;e
+ou de sortie sur la carte (s) &#224; l'essai doivent &#234;tre d&#233;branch&#233;es lorsque ces tests
+sont ex&#233;cut&#233;s. Les diagnostics sont faciles &#224; utiliser. Il suffit de suivre les instructions pr&#233;sent&#233;es
+dans le dialogue Ex&#233;cution du Diagnostique C/MRI. Toutes les erreurs trouv&#233;es sont signal&#233;es dans la
+bo&#238;te d'&#233;tat du dialogue. .
 
-<a name=usb><H2>L'utilisation d'adaptateurs USB-série</H2></a>
+<a name=usb><H2>L'utilisation d'adaptateurs USB-s&#233;rie</H2></a>
 
-La plupart des systèmes C/MRI utilisent des signaux électriques RS485 pour communiquer entre
-les nœuds et l'ordinateur. Il existe plusieurs façons de les générer:
+La plupart des syst&#232;mes C/MRI utilisent des signaux &#233;lectriques RS485 pour communiquer entre
+les noeuds et l'ordinateur. Il existe plusieurs fa&#231;ons de les g&#233;n&#233;rer:
 <ol>
-<li> Si votre ordinateur est équipé d'un port série (RS232), vous pouvez utiliser
+<li> Si votre ordinateur est &#233;quip&#233; d'un port s&#233;rie (RS232), vous pouvez utiliser
 une interface convertisseur RS232-RS485. Il y en a une que vous pouvez construire
- comme partie du système C/MRI, ou vous pouvez acheter un produit commercial.
-<li> Si votre ordinateur possède un port USB, vous pouvez acheter un adaptateur commercial
+ comme partie du syst&#232;me C/MRI, ou vous pouvez acheter un produit commercial.
+<li> Si votre ordinateur poss&#232;de un port USB, vous pouvez acheter un adaptateur commercial
 USB-vers RS485 et l'utiliser.
-<li> Si votre ordinateur possède un port USB et vous avez un convertisseur RS232 à RS485
-, vous pouvez installer un adaptateur USB-RS232 (parfois appelé
-un «convertisseur USB-série"), puis connectez la sortie RS232 de cet adaptateur à l'
-entrée RS232 du convertisseur RS232 à RS485.
+<li> Si votre ordinateur poss&#232;de un port USB et vous avez un convertisseur RS232 &#224; RS485
+, vous pouvez installer un adaptateur USB-RS232 (parfois appel&#233;
+un "convertisseur USB-s&#233;rie"), puis connectez la sortie RS232 de cet adaptateur &#224; l'
+entr&#233;e RS232 du convertisseur RS232 &#224; RS485.
 Notez que si vous utilisez le convertisseur Chubb RS232-RS485-, pour certains
 adaptateurs USB-RS232, il faudra que vous vous connectiez certains
-fils de commande RS232 qui ne sont pas traités par le convertisseur Chubb:
+fils de commande RS232 qui ne sont pas trait&#233;s par le convertisseur Chubb:
     <ul>
     <li>DSR - DTR (pins 4&6 sur le connecteur DB9)
     <li>RTS - CTS (pins 7&8 sur le connecteur DB9)
-    </ul>
+  </ul>
 </ol>
 
-Dans tous les cas, la ligne de communication finira par apparaître
-comme un port série sur votre ordinateur. Dans Windows, il s'agit d'un port COMn,
-dans d'autres ordinateurs que c'est un appareil de série nommée. Vous aurez à choisir
+Dans tous les cas, la ligne de communication finira par appara&#238;tre
+comme un port s&#233;rie sur votre ordinateur. Dans Windows, il s'agit d'un port COMn,
+dans d'autres ordinateurs que c'est un appareil de s&#233;rie nomm&#233;e. Vous aurez &#224; choisir
 celui qui convient lors de la configuration JMRI.
 .
-<a name=sim><H2>Exécution de JMRI lorsqu'il est déconnecté de votre système C/MRI</H2></a>
+<a name=sim><H2>Ex&#233;cution de JMRI lorsqu'il est d&#233;connect&#233; de votre syst&#232;me C/MRI</H2></a>
 
-JMRI scrute continuellement, le matériel C/MRI pour les changements d'état.
-Si un ou plusieurs nœuds C/MRI ne répondent pas, éventuellement leurs entrées (capteurs)
-sont mis à l'état INCONNU pour indiquer que JMRI a perdu le contact avec
-ces dispositifs sur le réseau.
+JMRI scrute continuellement, le mat&#233;riel C/MRI pour les changements d'&#233;tat.
+Si un ou plusieurs noeuds C/MRI ne r&#233;pondent pas, &#233;ventuellement leurs entr&#233;es (capteurs)
+sont mis &#224; l'&#233;tat INCONNU pour indiquer que JMRI a perdu le contact avec
+ces dispositifs sur le r&#233;seau.
 <p>
-Bien que ce soit la bonne chose à faire quand vous êtes vraiment connecté au
-matériel et tenter de faire fonctionner le réseau, il peut l'obtenir de la manière où vous êtes
-en cours d'exécution JMRI sans vos connexions réseau.
-Par exemple,Vous pouvez le faire, travailler sur vos panneaux tout en étant
-loin du réseau, ou alors que le réseau doit être mis hors tension pour une raison quelconque.
+Bien que ce soit la bonne chose &#224; faire quand vous &#234;tes vraiment connect&#233; au
+mat&#233;riel et tenter de faire fonctionner le r&#233;seau, il peut l'obtenir de la mani&#232;re o&#249; vous &#234;tes
+en cours d'ex&#233;cution JMRI sans vos connexions r&#233;seau.
+Par exemple,Vous pouvez le faire, travailler sur vos panneaux tout en &#233;tant
+loin du r&#233;seau, ou alors que le r&#233;seau doit &#234;tre mis hors tension pour une raison quelconque.
 <p>
-Pour répondre en utilisant JMRI sans une connexion active au réseau,
-dans le JMRI 2.3.2 une version connexion "C/MRI Simulateur" connexion a été mis à disposition
-dans les préférences.
+Pour r&#233;pondre en utilisant JMRI sans une connexion active au r&#233;seau,
+dans le JMRI 2.3.2 une version connexion "C/MRI Simulateur" connexion a &#233;t&#233; mis &#224; disposition
+dans les pr&#233;f&#233;rences.
 
 <p>
-<i>S'il vous plaît noter que ce n'est valable que pour les utilisateurs qui ont déjà un connexion de travail
-C/MRI déjà configurée. S'il vous plaît ne pas essayer d'
-utiliser le simulateur CMRI avant de configurer une connexion valide de matériel C/MRI,
+<i>S'il vous pla&#238;t noter que ce n'est valable que pour les utilisateurs qui ont d&#233;j&#224; un connexion de travail
+C/MRI d&#233;j&#224; configur&#233;e. S'il vous pla&#238;t ne pas essayer d'
+utiliser le simulateur CMRI avant de configurer une connexion valide de mat&#233;riel C/MRI,
 cela ne fonctionnera pas.</i>
 <p>
-Une fois que vous avez votre connexion C/MRI configurée, si votre matériel n'est
-pas disponible, vous pouvez simplement aller dans les préférences JMRI, sélectionnez "C/MRI Simulator",
-Enregistrer les préférences, quitter et redémarrer. Ne pas modifier d'autres paramètres !
+Une fois que vous avez votre connexion C/MRI configur&#233;e, si votre mat&#233;riel n'est
+pas disponible, vous pouvez simplement aller dans les pr&#233;f&#233;rences JMRI, s&#233;lectionnez "C/MRI Simulator",
+Enregistrer les pr&#233;f&#233;rences, quitter et red&#233;marrer. Ne pas modifier d'autres param&#232;tres !
 <p>
-Lorsque le matériel de la C/MRI est à nouveau disponible, rendez-vous dans les préférences JMRI,
-sélectionnez "C/MRI de série", enregistrer les préférences, quitter et redémarrer.
+Lorsque le mat&#233;riel de la C/MRI est &#224; nouveau disponible, rendez-vous dans les pr&#233;f&#233;rences JMRI,
+s&#233;lectionnez "C/MRI de s&#233;rie", enregistrer les pr&#233;f&#233;rences, quitter et red&#233;marrer.
 
 
-<H2> Plus d'infos </H2>
+<H2> Plus d'infos</H2>
 Pour plus d'informations sur les C/MRI (y compris le Manuel de l'utilisateur C/MRI),
-s'il vous plaît voir les </ p>
-<p>  <a HREF="http://www.jlcenterprises.net/"> JLC entreprises site web </a>,
+s'il vous pla&#238;t voir les</ p>
+<p>  <a HREF="http://www.jlcenterprises.net/"> JLC entreprises site web</a>,
 l'
-<a HREF="http://groups.yahoo.com/group/CMRI_Users/"> utilisateur C/MRI yahoo groupe </a>,
+<a HREF="http://groups.yahoo.com/group/CMRI_Users/"> utilisateur C/MRI yahoo groupe</a>,
 et le
-<A HREF="http://www.easeeinterfaces.com">  site Web Interfaces Easee  </a>.
+<A HREF="http://www.easeeinterfaces.com">  site Web Interfaces Easee</a>.
 </p>
 <!--#include virtual="/Footer" -->
 </body>

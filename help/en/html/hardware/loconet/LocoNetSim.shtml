@@ -1,20 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: LocoNet&reg; Simulator
- </TITLE>
+ <title>JMRI Hardware Support - LocoNet&reg; Simulator</title>
+ 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax LocoNet simulator java model railroad JMRI install windows">
-
 </head>
 
 <body>
@@ -25,27 +20,26 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1> 
-      JMRI Hardware Guide: LocoNet&reg; Simulator
-      </h1>
-
+    <h1>Hardware Support: LocoNet&reg; Simulator</h1>
+      
+<p>
 If JMRI is configured to use a Digitrax LocoNet&reg; connection, but
 the connection isn't available, several aspects of the program will
 not function.  This is because the program needs to interact with
 the LocoNet during normal operation, and without the expected responses
 from the LocoNet it will appear basically dead.
-<P>
+<p>
 The "LocoNet Simulator" was created to make it possible to use JMRI
 in a disconnected mode.  This is useful e.g. if you want to develop
 a panel while away from your layout.
-<P>
+<p>
 To use the LocoNet Simulator, select it as your layout connection in the
 preferences, save the preferences, quit and restart the program.  You should
 then be able to access LocoNet items such as Turnouts, Sensors, Signals, etc.
 Some of the more advanced features, such as the BDL168 programmer, will 
 not fully function, but you should be able to do all the steps to build
 and edit panels.
-<P>
+<p>
 When your computer is connected to the LocoNet again, you can change the
 preferences to the proper connection, e.g. a LocoBuffer-USB, and use the panel
 you've created.
@@ -57,34 +51,32 @@ single LocoNet packet in hexadecimal characters.  You can create one of these
 by for example turning on the "show raw data" option in a LocoNet Monitor window, and
 having the monitor write to a log file. You'll have to edit the 
 resulting file to remove the human readable lines, leaving just the
-hex raw data.
-
+hex raw data.<br>
 An example hex file is shown here:
-
-    
-    <p><span style="font-family: monospace">A1&nbsp;0B&nbsp;00&nbsp;55&nbsp;&crarr;</span></p>
-<p><span style="font-family: monospace">B0&nbsp;2D&nbsp;10&nbsp;72&nbsp;&crarr;</span></p>
-<p><span style="font-family: monospace">BB&nbsp;10&nbsp;00&nbsp;54&nbsp;&crarr;</span></p>
+<p><code>A1&nbsp;0B&nbsp;00&nbsp;55&nbsp;&crarr;</code></p>
+<p><pre>B0&nbsp;2D&nbsp;10&nbsp;72&nbsp;&crarr;</pre></p>
+<p><pre>BB&nbsp;10&nbsp;00&nbsp;54&nbsp;&crarr;</pre></p>
 <p>Note that each hex value must be two valid hexadecimal characters plus a space.  Each
 message (line) must be terminated by a carriage return.  Note that there is a 
 space immediately before the carriage return!</p>
 <p>The sequence above would result in the following LocoNet traffic, shown as decoded 
     by the LocoNet Monitor tool (with Raw Data displayed):</p>
-<p><span style="font-family: monospace">[A1 0B 00 55]  Set loco in slot 11 direction to FWD, F0=Off, F1=Off, F2=Off, F3=Off, F4=Off.</span></p>
-<p><span style="font-family: monospace">[B0 2D 10 72]  Requesting Switch at LT46 () to Thrown (output On).</span></p>
-<p><span style="font-family: monospace">[BB 10 00 54]  Request data/status for slot 16.</span></p>
-<p>Because there is no Command Station, the last message would not receive a response.
-<!--#include virtual="/Footer" -->
-<h1><a name="SeeAlso">See also</a></h1>
+<p><pre>[A1 0B 00 55]  Set loco in slot 11 direction to FWD, F0=Off, F1=Off, F2=Off, F3=Off, F4=Off.</pre></p>
+<p><pre>[B0 2D 10 72]  Requesting Switch at LT46 () to Thrown (output On).</pre></p>
+<p><pre>[BB 10 00 54]  Request data/status for slot 16.</pre></p>
+<p>Because there is no Command Station, the last message would not receive a response.</p>
+
+<h2><a name="SeeAlso">Documentation</a></h2>
+<h3>JMRI Help</h3>
 <p>The <a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Monitor LocoNet</a> 
     tool captures and interprets messages on LocoNet.</p>
+<h3>Third Party info</h3>
 <p>The LocoNet&reg; Personal Use Edition 1.0 Specification is available from the 
     <a href="http://www.digitrax.com">Digitrax web site</a>.</p>
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-    </div>
-  </div>
-</div>
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

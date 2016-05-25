@@ -1,6 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,14 +16,19 @@
   <version author="Michael Mosher" version="1" lastUpdated="20100430"/>
   <version author="Michael Mosher" version="2" lastUpdated="20100717"/>
   <version author="John Crellin" version="2.2" lastUpdated="20130212"/>
+  <version author="Alain Le Marchand" version="3" lastUpdated="20150523"/>
   <!-- V1: - Created from TCS_bemf -->
   <!-- V2: - Added EU621 & LL8 decoders -->
   <!-- Version 2.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <!-- Version 2.2- 20130212 Added Forward and reverse Trim. Updated version option -->
+  <!-- Version 3 - DEPRECATED FILE !                                    -->
+  <!--             DO NOT MODIFY ANY LONGER                             -->
+  <!--             Use TCS_V51-Jun2007.xml instead for M1P-MH and MC6   -->
+  <!--             Use TCS_FW41.xml instead for others                  -->
+  <!--             File kept for compatibility purpose                  -->
   <decoder>
     <family name="TCS V51+" mfg="Train Control Systems" comment="TCS Ver 51 on" lowVersionID="51" highVersionID="52">
-      <model show="no" model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
-          replacementModel="A4X" replacementFamily="June 2007">
+      <model show="no" model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A4X" replacementFamily="June 2007">
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -34,8 +40,7 @@
         <output name="Brake"/>
         <size length="2.860" width="0.680" height="0.145" units="inches"/>
       </model>
-      <model show="no" model="A6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
-          replacementModel="A6X" replacementFamily="June 2007">
+      <model show="no" model="A6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A6X" replacementFamily="June 2007">
         <output name="1" label="White" connection="solder" maxcurrent="200 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="200 mA"/>
@@ -60,8 +65,7 @@
         <output name="Brake"/>
         <size length="2.83" width="0.351" height="0.13" units="inches"/>
       </model>
-      <model show="no" model="AMD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B"
-          replacementModel="AMD4" replacementFamily="June 2007">
+      <model show="no" model="AMD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" replacementModel="AMD4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -72,8 +76,7 @@
         <output name="Brake"/>
         <size length="2.83" width="0.351" height="0.13" units="inches"/>
       </model>
-      <model show="no" model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B"
-          replacementModel="ASD4" replacementFamily="June 2007">
+      <model show="no" model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" replacementModel="ASD4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -84,8 +87,7 @@
         <output name="Brake"/>
         <size length="2.73" width="0.349" height="0.13" units="inches"/>
       </model>
-      <model show="no" model="CN" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions"
-          replacementModel="CN" replacementFamily="June 2007">
+      <model show="no" model="CN" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions" replacementModel="CN" replacementFamily="June 2007">
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -95,8 +97,7 @@
         <output name="Brake"/>
         <size length="0.834" width="0.361" height="0.101" units="inches"/>
       </model>
-      <model show="no" model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions"
-          replacementModel="CN-GP" replacementFamily="June 2007">
+      <model show="no" model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions" replacementModel="CN-GP" replacementFamily="June 2007">
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -108,8 +109,7 @@
         <output name="Brake"/>
         <size length="0.73" width="0.36" height="0.15" units="inches"/>
       </model>
-      <model show="no" model="DP2X" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
-          replacementModel="DP2X" replacementFamily="June 2007">
+      <model show="no" model="DP2X" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="DP2X" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -119,8 +119,7 @@
         <output name="Brake"/>
         <size length="0845" width="0.680" height="0.165" units="inches"/>
       </model>
-      <model show="no" model="DP2X-UK" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="UK  version of DP2X different pin orientation - fits Atlas vacuumcar"
-          replacementModel="DP2X-UK" replacementFamily="June 2007">
+      <model show="no" model="DP2X-UK" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="UK  version of DP2X different pin orientation - fits Atlas vacuumcar" replacementModel="DP2X-UK" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -130,8 +129,7 @@
         <output name="Brake"/>
         <size length="0845" width="0.680" height="0.165" units="inches"/>
       </model>
-      <model show="no" model="DP5" numOuts="5" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
-          replacementModel="DP5" replacementFamily="June 2007">
+      <model show="no" model="DP5" numOuts="5" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="DP5" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -143,8 +141,7 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model show="no" model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP"
-          replacementModel="EU621" replacementFamily="June 2007">
+      <model show="no" model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" replacementModel="EU621" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -168,8 +165,7 @@
         <output name="Brake"/>
         <size length="0845" width="0.680" height="0.165" units="inches"/>
       </model>
-      <model show="no" model="G8" numOuts="8" numFns="14" maxMotorCurrent="?" formFactor="O"
-          replacementModel="G8" replacementFamily="June 2007">
+      <model show="no" model="G8" numOuts="8" numFns="14" maxMotorCurrent="?" formFactor="O" replacementModel="G8" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -185,8 +181,7 @@
         <output name="Brake"/>
         <size length="3.0" width="1.45" height="0.0" units="inches"/>
       </model>
-      <model show="no" model="IMD4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="IMD4" replacementFamily="June 2007">
+      <model show="no" model="IMD4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="IMD4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -198,8 +193,7 @@
         <output name="Brake"/>
         <size length="2.83" width="0.351" height="0.13" units="inches"/>
       </model>
-      <model show="no" model="IMF4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="IMF4" replacementFamily="June 2007">
+      <model show="no" model="IMF4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="IMF4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -210,8 +204,7 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model show="no" model="IMFP4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="IMFP4" replacementFamily="June 2007">
+      <model show="no" model="IMFP4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="IMFP4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -222,8 +215,7 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model show="no" model="IMFTA4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="IMFTA4" replacementFamily="June 2007">
+      <model show="no" model="IMFTA4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="IMFTA4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -234,8 +226,7 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model show="no" model="IMFTB4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="IMFTB4" replacementFamily="June 2007">
+      <model show="no" model="IMFTB4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="IMFTB4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -246,8 +237,7 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model show="no" model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="K0D8-A" replacementFamily="June 2007">
+      <model show="no" model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="K0D8-A" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -263,8 +253,7 @@
         <output name="Brake"/>
         <size length="2.53" width="0.542" height="0.155" units="inches"/>
       </model>
-      <model show="no" model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="K0D8-B" replacementFamily="June 2007">
+      <model show="no" model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="K0D8-B" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -280,8 +269,7 @@
         <output name="Brake"/>
         <size length="2.53" width="0.542" height="0.155" units="inches"/>
       </model>
-      <model show="no" model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="K0D8-C" replacementFamily="June 2007">
+      <model show="no" model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="K0D8-C" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -297,8 +285,7 @@
         <output name="Brake"/>
         <size length="2.53" width="0.542" height="0.155" units="inches"/>
       </model>
-      <model show="no" model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="K0D8-D" replacementFamily="June 2007">
+      <model show="no" model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="K0D8-D" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -314,8 +301,7 @@
         <output name="Brake"/>
         <size length="2.53" width="0.542" height="0.155" units="inches"/>
       </model>
-      <model show="no" model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="K1D4" replacementFamily="June 2007">
+      <model show="no" model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="K1D4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -339,8 +325,7 @@
         <output name="Brake"/>
         <size length="2.7" width="0.4" height="0.0" units="inches"/>
       </model>
-      <model show="no" model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="K2D4" replacementFamily="June 2007">
+      <model show="no" model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="K2D4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -352,8 +337,7 @@
         <output name="Brake"/>
         <size length="2.7" width="0.4" height="0.0" units="inches"/>
       </model>
-      <model show="no" model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="K3D3" replacementFamily="June 2007">
+      <model show="no" model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="K3D3" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -364,8 +348,7 @@
         <output name="Brake"/>
         <size length="2.860" width="0.680" height="0.145" units="inches"/>
       </model>
-      <model show="no" model="LL8" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-          replacementModel="LL8" replacementFamily="June 2007">
+      <model show="no" model="LL8" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" replacementModel="LL8" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -381,8 +364,7 @@
         <output name="Brake"/>
         <size length="1.96" width="0.70" height="0.04" units="inches"/>
       </model>
-      <model show="no" model="M1" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
-          replacementModel="M1" replacementFamily="June 2007">
+      <model show="no" model="M1" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M1" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -392,8 +374,7 @@
         <output name="Brake"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model show="no" model="M1P-15" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO"
-          replacementModel="M1P-15" replacementFamily="June 2007">
+      <model show="no" model="M1P-15" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" replacementModel="M1P-15" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -403,8 +384,7 @@
         <output name="Brake"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model show="no" model="M1P-MH" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO"
-          replacementModel="M1P-MH" replacementFamily="June 2007">
+      <model show="no" model="M1P-MH" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" replacementModel="M1P-MH" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -414,8 +394,7 @@
         <output name="Brake"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model show="no" model="M1P-UK" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO"
-          replacementModel="M1P-UK" replacementFamily="June 2007">
+      <model show="no" model="M1P-UK" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" replacementModel="M1P-UK" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -425,8 +404,7 @@
         <output name="Brake"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model show="no" model="M3" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
-          replacementModel="M3" replacementFamily="June 2007">
+      <model show="no" model="M3" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M3" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -437,8 +415,7 @@
         <output name="Brake"/>
         <size length="0.570" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model show="no" model="M4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
-          replacementModel="M4" replacementFamily="June 2007">
+      <model show="no" model="M4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M4" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -450,8 +427,7 @@
         <output name="Brake"/>
         <size length="0.570" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model show="no" model="M4T" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
-          replacementModel="M4T" replacementFamily="June 2007">
+      <model show="no" model="M4T" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M4T" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="80 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="80 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="80 mA"/>
@@ -462,8 +438,7 @@
         <output name="BEMF"/>
         <size length="0.567" width="0.359" height="0.135" units="inches"/>
       </model>
-      <model show="no" model="MC2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
-          replacementModel="MC2" replacementFamily="June 2007">
+      <model show="no" model="MC2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC2" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -473,8 +448,7 @@
         <output name="Brake"/>
         <size length="0.71" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model show="no" model="MC4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
-          replacementModel="MC4" replacementFamily="June 2007">
+      <model show="no" model="MC4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC4" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -486,8 +460,7 @@
         <output name="Brake"/>
         <size length="0.71" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model show="no" model="MC6" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
-          replacementModel="MC6" replacementFamily="June 2007">
+      <model show="no" model="MC6" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC6" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -533,8 +506,7 @@
         <output name="Brake"/>
         <size length="0.956" width="0.665" height="0.207" units="inches"/>
       </model>
-      <model show="no" model="T4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO"
-          replacementModel="T4X" replacementFamily="June 2007">
+      <model show="no" model="T4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T4X" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -546,8 +518,7 @@
         <output name="Brake"/>
         <size length="1.010" width="0.665" height="0.250" units="inches"/>
       </model>
-      <model show="no" model="T6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO"
-          replacementModel="T6X" replacementFamily="June 2007">
+      <model show="no" model="T6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T6X" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -584,1065 +555,715 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, range 1-127" item="Short Address" default="03">
-        <shortAddressVal/>
-      </variable>
-      <variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV1-6.xml"/>
+
+      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
         <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Accel 1 Rate" CV="3" item="Accel" default="1" tooltip="Sets the acceleration rate (delay or momentum), range 0(default)-255" comment="Range 0-255">
-        <decVal max="255"/>
-      </variable>
-      <variable label="Decel 1 Rate" CV="4" item="Decel" default="1" tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-255" comment="Range 0-255">
-        <decVal max="255"/>
-      </variable>
-      <variable label="Maximum Voltage" CV="5" item="Vhigh" default="0" tooltip="sets the motor voltage at top throttle Speed Setting, range 0(default)-255" comment="Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="153" tooltip="=153 for TCS, Read Only">
         <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Midpoint Voltage" CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+      <variable CV="10" default="0" item="EMF Control Reference" tooltip="turn off BEMF above this speed step, range 0(default-128)">
         <decVal/>
+        <label>BEMF Cut Out</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
+      <variable CV="13" mask="XXXXXXXV" default="1" minOut="2" item="Analog Mode Function Status - FL(f)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode White/Yellow</label>
+      </variable>
+      <variable CV="13" mask="XXXXXXVX" default="1" minOut="3" item="Analog Mode Function Status - FL(r)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Green</label>
+      </variable>
+      <variable CV="13" mask="XXXXXVXX" default="1" minOut="4" item="Analog Mode Function Status - F1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Purple</label>
+      </variable>
+      <variable CV="13" mask="XXXXVXXX" default="1" minOut="5" item="Analog Mode Function Status - F2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Brown</label>
+      </variable>
+      <variable CV="13" mask="XXXVXXXX" default="1" minOut="6" item="Analog Mode Function Status - F3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Pink</label>
+      </variable>
+      <variable CV="13" mask="XXVXXXXX" default="1" minOut="7" item="Analog Mode Function Status - F4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Pink/Purple</label>
+      </variable>
+      <variable CV="13" mask="XVXXXXXX" default="1" minOut="8" item="Analog Mode Function Status - F5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Green/Brown</label>
+      </variable>
+      <variable item="Decoder Lock control number" CV="15" mask="XXXXXVVV" default="0" tooltip="To unlock a decoder make CV15=0 or CV15=CV16">
         <decVal/>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="153" tooltip="=153 for TCS, Read Only">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Cut Out" CV="10" default="0" item="EMF Control Reference" tooltip="turn off BEMF above this speed step, range 0(default-128)">
-        <decVal/>
-      </variable>
-      <variable label="Analog Mode White/Yellow" CV="13" mask="XXXXXXXV" default="1" minOut="2" item="Analog Mode Function Status - FL(f)">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
-      </variable>
-      <variable label="Analog Mode Green" CV="13" mask="XXXXXXVX" default="1" minOut="3" item="Analog Mode Function Status - FL(r)">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
-      </variable>
-      <variable label="Analog Mode Purple" CV="13" mask="XXXXXVXX" default="1" minOut="4" item="Analog Mode Function Status - F1">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
-      </variable>
-      <variable label="Analog Mode Brown" CV="13" mask="XXXXVXXX" default="1" minOut="5" item="Analog Mode Function Status - F2">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
-      </variable>
-      <variable label="Analog Mode Pink" CV="13" mask="XXXVXXXX" default="1" minOut="6" item="Analog Mode Function Status - F3">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
-      </variable>
-      <variable label="Analog Mode Pink/Purple" CV="13" mask="XXVXXXXX" default="1" minOut="7" item="Analog Mode Function Status - F4">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
-      </variable>
-      <variable label="Analog Mode Green/Brown" CV="13" mask="XVXXXXXX" default="1" minOut="8" item="Analog Mode Function Status - F5">
-        <enumVal>
-          <enumChoice choice="off"/>
-          <enumChoice choice="on"/>
-        </enumVal>
-      </variable>
-      <variable label="Decoder Lock control number" CV="15" mask="XXXXXVVV" default="0" tooltip="To unlock a decoder make CV15=0 or CV15=CV16">
-        <decVal/>
+        <label>Decoder Lock control number</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999">
-        <longAddressVal/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable CV="21" mask="XXXXXXXV" minOut="3" default="1" item="Consist Address Active For F1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For Green</label>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
+      <variable CV="21" mask="XXXXXXVX" minOut="4" default="1" item="Consist Address Active For F2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For Purple</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
-        <enumVal>
-          <enumChoice choice="Normal"/>
-          <enumChoice choice="Reversed"/>
-        </enumVal>
+      <variable CV="21" mask="XXXXXVXX" minOut="5" default="1" item="Consist Address Active For F3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For Brown</label>
       </variable>
-      <variable label="Consist Address Active For Green" CV="21" mask="XXXXXXXV" minOut="3" default="1" item="Consist Address Active For F1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
+      <variable CV="21" mask="XXXXVXXX" minOut="6" default="1" item="Consist Address Active For F4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For Pink</label>
       </variable>
-      <variable label="Consist Address Active For Purple" CV="21" mask="XXXXXXVX" minOut="4" default="1" item="Consist Address Active For F2">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
+      <variable CV="21" mask="XXXVXXXX" minOut="7" default="1" item="Consist Address Active For F5">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For Pink/Purple</label>
       </variable>
-      <variable label="Consist Address Active For Brown" CV="21" mask="XXXXXVXX" minOut="5" default="1" item="Consist Address Active For F3">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
+      <variable CV="21" mask="XXVXXXXX" minOut="8" default="1" item="Consist Address Active For F6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For Green/Brown</label>
       </variable>
-      <variable label="Consist Address Active For Pink" CV="21" mask="XXXXVXXX" minOut="6" default="1" item="Consist Address Active For F4">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
+      <variable CV="22" mask="XXXXXXXV" minOut="1" item="Consist Address Active For FL in Forward">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For White</label>
       </variable>
-      <variable label="Consist Address Active For Pink/Purple" CV="21" mask="XXXVXXXX" minOut="7" default="1" item="Consist Address Active For F5">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
+      <variable CV="22" mask="XXXXXXVX" minOut="2" item="Consist Address Active For FL in Reverse">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For Yellow</label>
       </variable>
-      <variable label="Consist Address Active For Green/Brown" CV="21" mask="XXVXXXXX" minOut="8" default="1" item="Consist Address Active For F6">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-      </variable>
-      <variable label="Consist Address Active For White" CV="22" mask="XXXXXXXV" minOut="1" item="Consist Address Active For FL in Forward">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-      </variable>
-      <variable label="Consist Address Active For Yellow" CV="22" mask="XXXXXXVX" minOut="2" item="Consist Address Active For FL in Reverse">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-      </variable>
-      <variable label="Consist Acceleration Adjustment" CV="23" tooltip="Values above 128 increase adjustment, below 128 decrease adjustment">
+      <variable item="Consist Acceleration Adjustment" CV="23" tooltip="Values above 128 increase adjustment, below 128 decrease adjustment">
         <decVal max="255"/>
+        <label>Consist Acceleration Adjustment</label>
       </variable>
-      <variable label="Consist Deceleration Adjustment" CV="24" tooltip="Values above 128 increase adjustment, below 128 decrease adjustment">
+      <variable item="Consist Deceleration Adjustment" CV="24" tooltip="Values above 128 increase adjustment, below 128 decrease adjustment">
         <decVal max="255"/>
+        <label>Consist Deceleration Adjustment</label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(f) controls output 1</label>
+      </variable>
+      <variable item="FL(r) controls output 1" CV="33" mask="XXXXXXVX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(r) controls output 1</label>
+      </variable>
+      <variable item="F1 controls output 1" CV="33" mask="XXXXXVXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls output 1</label>
+      </variable>
+      <variable item="F2 controls output 1" CV="33" mask="XXXXVXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls output 1</label>
+      </variable>
+      <variable item="F3 controls output 1" CV="33" mask="XXXVXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls output 1</label>
+      </variable>
+      <variable item="F4 controls output 1" CV="33" mask="XXVXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls output 1</label>
+      </variable>
+      <variable item="F5 controls output 1" CV="33" mask="XVXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls output 1</label>
+      </variable>
+      <variable item="F6 controls output 1" CV="33" mask="VXXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls output 1</label>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="34" mask="XXXXXXXV" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(f) controls output 2</label>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(r) controls output 2</label>
+      </variable>
+      <variable item="F1 controls output 2" CV="34" mask="XXXXXVXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls output 2</label>
+      </variable>
+      <variable item="F2 controls output 2" CV="34" mask="XXXXVXXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls output 2</label>
+      </variable>
+      <variable item="F3 controls output 2" CV="34" mask="XXXVXXXX" minOut="2">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls output 2</label>
+      </variable>
+      <variable item="F4 controls output 2" CV="34" mask="XXVXXXXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls output 2</label>
+      </variable>
+      <variable item="F5 controls output 2" CV="34" mask="XVXXXXXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls output 2</label>
+      </variable>
+      <variable item="F6 controls output 2" CV="34" mask="VXXXXXXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls output 2</label>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="35" mask="XXXXXXXV" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(f) controls output 3</label>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="35" mask="XXXXXXVX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(r) controls output 3</label>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls output 3</label>
+      </variable>
+      <variable item="F2 controls output 3" CV="35" mask="XXXXVXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls output 3</label>
+      </variable>
+      <variable item="F3 controls output 3" CV="35" mask="XXXVXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls output 3</label>
+      </variable>
+      <variable item="F4 controls output 3" CV="35" mask="XXVXXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls output 3</label>
+      </variable>
+      <variable item="F5 controls output 3" CV="35" mask="XVXXXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls output 3</label>
+      </variable>
+      <variable item="F6 controls output 3" CV="35" mask="VXXXXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls output 3</label>
+      </variable>
+      <variable item="FL(f) controls output 4" CV="36" mask="XXXXXXXV" minOut="4">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(f) controls output 4</label>
+      </variable>
+      <variable item="FL(r) controls output 4" CV="36" mask="XXXXXXVX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(r) controls output 4</label>
+      </variable>
+      <variable item="F1 controls output 4" CV="36" mask="XXXXXVXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls output 4</label>
+      </variable>
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls output 4</label>
+      </variable>
+      <variable item="F3 controls output 4" CV="36" mask="XXXVXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls output 4</label>
+      </variable>
+      <variable item="F4 controls output 4" CV="36" mask="XXVXXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls output 4</label>
+      </variable>
+      <variable item="F5 controls output 4" CV="36" mask="XVXXXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls output 4</label>
+      </variable>
+      <variable item="F6 controls output 4" CV="36" mask="VXXXXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls output 4</label>
+      </variable>
+      <variable item="F7 controls output 3" CV="37" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls output 3</label>
+      </variable>
+      <variable item="F8 controls output 3" CV="37" mask="XXXXVXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls output 3</label>
+      </variable>
+      <variable item="F9 controls output 3" CV="37" mask="XXXVXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls output 3</label>
+      </variable>
+      <variable item="F10 controls output 3" CV="37" mask="XXVXXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls output 3</label>
+      </variable>
+      <variable item="F11 controls output 3" CV="37" mask="XVXXXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls output 3</label>
+      </variable>
+      <variable item="F12 controls output 3" CV="37" mask="VXXXXXXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls output 3</label>
+      </variable>
+      <variable item="F7 controls output 4" CV="38" mask="XXXXXVXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls output 4</label>
+      </variable>
+      <variable item="F8 controls output 4" CV="38" mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls output 4</label>
+      </variable>
+      <variable item="F9 controls output 4" CV="38" mask="XXXVXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls output 4</label>
+      </variable>
+      <variable item="F10 controls output 4" CV="38" mask="XXVXXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls output 4</label>
+      </variable>
+      <variable item="F11 controls output 4" CV="38" mask="XVXXXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls output 4</label>
+      </variable>
+      <variable item="F12 controls output 4" CV="38" mask="VXXXXXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls output 4</label>
+      </variable>
+      <variable item="FL(f) controls output 5" CV="39" mask="XXXXXXXV" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(f) controls output 5</label>
+      </variable>
+      <variable item="FL(r) controls output 5" CV="39" mask="XXXXXXVX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(r) controls output 5</label>
+      </variable>
+      <variable item="F1 controls output 5" CV="39" mask="XXXXXVXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls output 5</label>
+      </variable>
+      <variable item="F2 controls output 5" CV="39" mask="XXXXVXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls output 5</label>
+      </variable>
+      <variable item="F3 controls output 5" CV="39" mask="XXXVXXXX" minOut="5" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls output 5</label>
+      </variable>
+      <variable item="F4 controls output 5" CV="39" mask="XXVXXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls output 5</label>
+      </variable>
+      <variable item="F5 controls output 5" CV="39" mask="XVXXXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls output 5</label>
+      </variable>
+      <variable item="F6 controls output 5" CV="39" mask="VXXXXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls output 5</label>
+      </variable>
+      <variable item="FL(f) controls output 6" CV="40" mask="XXXXXXXV" minOut="6">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(f) controls output 6</label>
+      </variable>
+      <variable item="FL(r) controls output 6" CV="40" mask="XXXXXXVX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(r) controls output 6</label>
+      </variable>
+      <variable item="F1 controls output 6" CV="40" mask="XXXXXVXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls output 6</label>
+      </variable>
+      <variable item="F2 controls output 6" CV="40" mask="XXXXVXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls output 6</label>
+      </variable>
+      <variable item="F3 controls output 6" CV="40" mask="XXXVXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls output 6</label>
+      </variable>
+      <variable item="F4 controls output 6" CV="40" mask="XXVXXXXX" minOut="6" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls output 6</label>
+      </variable>
+      <variable item="F5 controls output 6" CV="40" mask="XVXXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls output 6</label>
+      </variable>
+      <variable item="F6 controls output 6" CV="40" mask="VXXXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls output 6</label>
+      </variable>
+      <variable item="F7 controls output 5" CV="41" mask="XXXXXVXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls output 5</label>
+      </variable>
+      <variable item="F8 controls output 5" CV="41" mask="XXXXVXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls output 5</label>
+      </variable>
+      <variable item="F9 controls output 5" CV="41" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls output 5</label>
+      </variable>
+      <variable item="F10 controls output 5" CV="41" mask="XXVXXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls output 5</label>
+      </variable>
+      <variable item="F11 controls output 5" CV="41" mask="XVXXXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls output 5</label>
+      </variable>
+      <variable item="F12 controls output 5" CV="41" mask="VXXXXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls output 5</label>
+      </variable>
+      <variable item="F7 controls output 6" CV="42" mask="XXXXXVXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls output 6</label>
+      </variable>
+      <variable item="F8 controls output 6" CV="42" mask="XXXXVXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls output 6</label>
+      </variable>
+      <variable item="F9 controls output 6" CV="42" mask="XXXVXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls output 6</label>
+      </variable>
+      <variable item="F10 controls output 6" CV="42" mask="XXVXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls output 6</label>
+      </variable>
+      <variable item="F11 controls output 6" CV="42" mask="XVXXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls output 6</label>
+      </variable>
+      <variable item="F12 controls output 6" CV="42" mask="VXXXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls output 6</label>
+      </variable>
+      <variable item="FL(f) controls output 7" CV="43" mask="XXXXXXXV" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(f) controls output 7</label>
+      </variable>
+      <variable item="FL(r) controls output 7" CV="43" mask="XXXXXXVX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(r) controls output 7</label>
+      </variable>
+      <variable item="F1 controls output 7" CV="43" mask="XXXXXVXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls output 7</label>
+      </variable>
+      <variable item="F2 controls output 7" CV="43" mask="XXXXVXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls output 7</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="forward"/>
-          <enumChoice choice="reverse"/>
-        </enumVal>
-      </variable>
-      <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14"/>
-          <enumChoice choice="28/128"/>
-        </enumVal>
-      </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" tooltip="'4' bit. Allows the loco to run on DC, default is Off" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off"/>
-          <enumChoice choice="On"/>
-        </enumVal>
-      </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh"/>
-          <enumChoice choice="Use Table"/>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing"/>
-          <enumChoice choice="4 digit addressing"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(r) controls output 1" CV="33" mask="XXXXXXVX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F1 controls output 1" CV="33" mask="XXXXXVXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F2 controls output 1" CV="33" mask="XXXXVXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F3 controls output 1" CV="33" mask="XXXVXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F4 controls output 1" CV="33" mask="XXVXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F5 controls output 1" CV="33" mask="XVXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F6 controls output 1" CV="33" mask="VXXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(f) controls output 2" CV="34" mask="XXXXXXXV" minOut="2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F1 controls output 2" CV="34" mask="XXXXXVXX" minOut="2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F2 controls output 2" CV="34" mask="XXXXVXXX" minOut="2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F3 controls output 2" CV="34" mask="XXXVXXXX" minOut="2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F4 controls output 2" CV="34" mask="XXVXXXXX" minOut="2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F5 controls output 2" CV="34" mask="XVXXXXXX" minOut="2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F6 controls output 2" CV="34" mask="VXXXXXXX" minOut="2">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(f) controls output 3" CV="35" mask="XXXXXXXV" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(r) controls output 3" CV="35" mask="XXXXXXVX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F2 controls output 3" CV="35" mask="XXXXVXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F3 controls output 3" CV="35" mask="XXXVXXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F4 controls output 3" CV="35" mask="XXVXXXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F5 controls output 3" CV="35" mask="XVXXXXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F6 controls output 3" CV="35" mask="VXXXXXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(f) controls output 4" CV="36" mask="XXXXXXXV" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(r) controls output 4" CV="36" mask="XXXXXXVX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F1 controls output 4" CV="36" mask="XXXXXVXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F3 controls output 4" CV="36" mask="XXXVXXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F4 controls output 4" CV="36" mask="XXVXXXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F5 controls output 4" CV="36" mask="XVXXXXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F6 controls output 4" CV="36" mask="VXXXXXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F7 controls output 3" CV="37" mask="XXXXXVXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F8 controls output 3" CV="37" mask="XXXXVXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F9 controls output 3" CV="37" mask="XXXVXXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F10 controls output 3" CV="37" mask="XXVXXXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F11 controls output 3" CV="37" mask="XVXXXXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F12 controls output 3" CV="37" mask="VXXXXXXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F7 controls output 4" CV="38" mask="XXXXXVXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F8 controls output 4" CV="38" mask="XXXXVXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F9 controls output 4" CV="38" mask="XXXVXXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F10 controls output 4" CV="38" mask="XXVXXXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F11 controls output 4" CV="38" mask="XVXXXXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F12 controls output 4" CV="38" mask="VXXXXXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(f) controls output 5" CV="39" mask="XXXXXXXV" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(r) controls output 5" CV="39" mask="XXXXXXVX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F1 controls output 5" CV="39" mask="XXXXXVXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F2 controls output 5" CV="39" mask="XXXXVXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F3 controls output 5" CV="39" mask="XXXVXXXX" minOut="5" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F4 controls output 5" CV="39" mask="XXVXXXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F5 controls output 5" CV="39" mask="XVXXXXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F6 controls output 5" CV="39" mask="VXXXXXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(f) controls output 6" CV="40" mask="XXXXXXXV" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(r) controls output 6" CV="40" mask="XXXXXXVX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F1 controls output 6" CV="40" mask="XXXXXVXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F2 controls output 6" CV="40" mask="XXXXVXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F3 controls output 6" CV="40" mask="XXXVXXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F4 controls output 6" CV="40" mask="XXVXXXXX" minOut="6" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F5 controls output 6" CV="40" mask="XVXXXXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F6 controls output 6" CV="40" mask="VXXXXXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F7 controls output 5" CV="41" mask="XXXXXVXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F8 controls output 5" CV="41" mask="XXXXVXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F9 controls output 5" CV="41" mask="XXXVXXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F10 controls output 5" CV="41" mask="XXVXXXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F11 controls output 5" CV="41" mask="XVXXXXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F12 controls output 5" CV="41" mask="VXXXXXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F7 controls output 6" CV="42" mask="XXXXXVXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F8 controls output 6" CV="42" mask="XXXXVXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F9 controls output 6" CV="42" mask="XXXVXXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F10 controls output 6" CV="42" mask="XXVXXXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F11 controls output 6" CV="42" mask="XVXXXXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F12 controls output 6" CV="42" mask="VXXXXXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(f) controls output 7" CV="43" mask="XXXXXXXV" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(r) controls output 7" CV="43" mask="XXXXXXVX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F1 controls output 7" CV="43" mask="XXXXXVXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F2 controls output 7" CV="43" mask="XXXXVXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F3 controls output 7" CV="43" mask="XXXVXXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F4 controls output 7" CV="43" mask="XXVXXXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F5 controls output 7" CV="43" mask="XVXXXXXX" minOut="7" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F6 controls output 7" CV="43" mask="VXXXXXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(f) controls output 8" CV="44" mask="XXXXXXXV" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="FL(r) controls output 8" CV="44" mask="XXXXXXVX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F1 controls output 8" CV="44" mask="XXXXXVXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F2 controls output 8" CV="44" mask="XXXXVXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F3 controls output 8" CV="44" mask="XXXVXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F4 controls output 8" CV="44" mask="XXVXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F5 controls output 8" CV="44" mask="XVXXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F6 controls output 8" CV="44" mask="VXXXXXXX" minOut="8" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F7 controls output 7" CV="45" mask="XXXXXVXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F8 controls output 7" CV="45" mask="XXXXVXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F9 controls output 7" CV="45" mask="XXXVXXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F10 controls output 7" CV="45" mask="XXVXXXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F11 controls output 7" CV="45" mask="XVXXXXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F12 controls output 7" CV="45" mask="VXXXXXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F7 controls output 8" CV="46" mask="XXXXXVXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F8 controls output 8" CV="46" mask="XXXXVXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F9 controls output 8" CV="46" mask="XXXVXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F10 controls output 8" CV="46" mask="XXVXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F11 controls output 8" CV="46" mask="XVXXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="F12 controls output 8" CV="46" mask="VXXXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
-      </variable>
-      <variable label="White Wire Effect" CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
-        <enumVal>
-          <enumChoice choice="Constant bright light"/>
-          <enumChoice choice="Random flicker (fire box)"/>
-          <enumChoice choice="Mars light"/>
-          <enumChoice choice="Flashing light"/>
-          <enumChoice choice="Single pulse strobe"/>
-          <enumChoice choice="Double pulse strobe"/>
-          <enumChoice choice="Rotary beacon"/>
-          <enumChoice choice="Gyra light"/>
-          <enumChoice choice="Rule 17 (dimmable)"/>
-          <enumChoice choice="Momentary pulse"/>
-          <enumChoice choice="Ditch light A"/>
-          <enumChoice choice="Ditch light B"/>
-          <enumChoice choice="Constant dim"/>
-          <enumChoice choice="Auto Mars"/>
-          <enumChoice choice="Brake lights"/>
-        </enumVal>
-      </variable>
-      <variable label="White Wire Timing" CV="49" mask="XXVVXXXX" item="Output 1 behavior">
-        <enumVal>
-          <enumChoice choice="Function on running forward"/>
-          <enumChoice choice="Function on running reverse"/>
-          <enumChoice choice="Function on both directions"/>
-        </enumVal>
-      </variable>
-      <variable label="Yellow Wire Effect" CV="50" mask="XXXXVVVV" item="Output 2 effect generated">
-        <enumVal>
-          <enumChoice choice="Constant bright light"/>
-          <enumChoice choice="Random flicker (fire box)"/>
-          <enumChoice choice="Mars light"/>
-          <enumChoice choice="Flashing light"/>
-          <enumChoice choice="Single pulse strobe"/>
-          <enumChoice choice="Double pulse strobe"/>
-          <enumChoice choice="Rotary beacon"/>
-          <enumChoice choice="Gyra light"/>
-          <enumChoice choice="Rule 17 (dimmable)"/>
-          <enumChoice choice="Momentary pulse"/>
-          <enumChoice choice="Ditch light A"/>
-          <enumChoice choice="Ditch light B"/>
-          <enumChoice choice="Constant dim"/>
-          <enumChoice choice="Auto Mars"/>
-          <enumChoice choice="Brake lights"/>
-        </enumVal>
-      </variable>
-      <variable label="Yellow Wire Timing" CV="50" mask="XXVVXXXX" item="Output 2 behavior" default="1">
-        <enumVal>
-          <enumChoice choice="Function on running forward"/>
-          <enumChoice choice="Function on running reverse"/>
-          <enumChoice choice="Function on both directions"/>
-        </enumVal>
-      </variable>
-      <variable label="Green Wire Effect" CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 effect generated">
-        <enumVal>
-          <enumChoice choice="Constant bright light"/>
-          <enumChoice choice="Random flicker (fire box)"/>
-          <enumChoice choice="Mars light"/>
-          <enumChoice choice="Flashing light"/>
-          <enumChoice choice="Single pulse strobe"/>
-          <enumChoice choice="Double pulse strobe"/>
-          <enumChoice choice="Rotary beacon"/>
-          <enumChoice choice="Gyra light"/>
-          <enumChoice choice="Rule 17 (dimmable)"/>
-          <enumChoice choice="Momentary pulse"/>
-          <enumChoice choice="Ditch light A"/>
-          <enumChoice choice="Ditch light B"/>
-          <enumChoice choice="Constant dim"/>
-          <enumChoice choice="Auto Mars"/>
-          <enumChoice choice="Brake lights"/>
-        </enumVal>
-      </variable>
-      <variable label="Green Wire Timing" CV="51" mask="XXVVXXXX" minOut="3" item="Output 3 behavior" default="2">
-        <enumVal>
-          <enumChoice choice="Function on running forward"/>
-          <enumChoice choice="Function on running reverse"/>
-          <enumChoice choice="Function on both directions"/>
-        </enumVal>
-      </variable>
-      <variable label="Purple Wire Effect" CV="52" mask="XXXXVVVV" minOut="4" item="Output 4 effect generated">
-        <enumVal>
-          <enumChoice choice="Constant bright light"/>
-          <enumChoice choice="Random flicker (fire box)"/>
-          <enumChoice choice="Mars light"/>
-          <enumChoice choice="Flashing light"/>
-          <enumChoice choice="Single pulse strobe"/>
-          <enumChoice choice="Double pulse strobe"/>
-          <enumChoice choice="Rotary beacon"/>
-          <enumChoice choice="Gyra light"/>
-          <enumChoice choice="Rule 17 (dimmable)"/>
-          <enumChoice choice="Momentary pulse"/>
-          <enumChoice choice="Ditch light A"/>
-          <enumChoice choice="Ditch light B"/>
-          <enumChoice choice="Constant dim"/>
-          <enumChoice choice="Auto Mars"/>
-          <enumChoice choice="Brake lights"/>
-        </enumVal>
-      </variable>
-      <variable label="Purple Wire Timing" CV="52" mask="XXVVXXXX" minOut="4" item="Output 4 behavior" default="2">
-        <enumVal>
-          <enumChoice choice="Function on running forward"/>
-          <enumChoice choice="Function on running reverse"/>
-          <enumChoice choice="Function on both directions"/>
-        </enumVal>
-      </variable>
-      <variable label="Brown Wire Effect" CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 effect generated">
-        <enumVal>
-          <enumChoice choice="Constant bright light"/>
-          <enumChoice choice="Random flicker (fire box)"/>
-          <enumChoice choice="Mars light"/>
-          <enumChoice choice="Flashing light"/>
-          <enumChoice choice="Single pulse strobe"/>
-          <enumChoice choice="Double pulse strobe"/>
-          <enumChoice choice="Rotary beacon"/>
-          <enumChoice choice="Gyra light"/>
-          <enumChoice choice="Rule 17 (dimmable)"/>
-          <enumChoice choice="Momentary pulse"/>
-          <enumChoice choice="Ditch light A"/>
-          <enumChoice choice="Ditch light B"/>
-          <enumChoice choice="Constant dim"/>
-          <enumChoice choice="Auto Mars"/>
-          <enumChoice choice="Brake lights"/>
-        </enumVal>
-      </variable>
-      <variable label="Brown Wire Timing" CV="53" mask="XXVVXXXX" minOut="5" item="Output 5 behavior" default="2">
-        <enumVal>
-          <enumChoice choice="Function on running forward"/>
-          <enumChoice choice="Function on running reverse"/>
-          <enumChoice choice="Function on both directions"/>
-        </enumVal>
-      </variable>
-      <variable label="Pink Wire Effect" CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 effect generated">
-        <enumVal>
-          <enumChoice choice="Constant bright light"/>
-          <enumChoice choice="Random flicker (fire box)"/>
-          <enumChoice choice="Mars light"/>
-          <enumChoice choice="Flashing light"/>
-          <enumChoice choice="Single pulse strobe"/>
-          <enumChoice choice="Double pulse strobe"/>
-          <enumChoice choice="Rotary beacon"/>
-          <enumChoice choice="Gyra light"/>
-          <enumChoice choice="Rule 17 (dimmable)"/>
-          <enumChoice choice="Momentary pulse"/>
-          <enumChoice choice="Ditch light A"/>
-          <enumChoice choice="Ditch light B"/>
-          <enumChoice choice="Constant dim"/>
-          <enumChoice choice="Auto Mars"/>
-          <enumChoice choice="Brake lights"/>
-        </enumVal>
-      </variable>
-      <variable label="Pink Wire Timing" CV="54" mask="XXVVXXXX" minOut="6" item="Output 6 behavior" default="2">
-        <enumVal>
-          <enumChoice choice="Function on running forward"/>
-          <enumChoice choice="Function on running reverse"/>
-          <enumChoice choice="Function on both directions"/>
-        </enumVal>
-      </variable>
-      <variable label="Pink/Purple Wire Effect" CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
-        <enumVal>
-          <enumChoice choice="Constant bright light"/>
-          <enumChoice choice="Random flicker (fire box)"/>
-          <enumChoice choice="Mars light"/>
-          <enumChoice choice="Flashing light"/>
-          <enumChoice choice="Single pulse strobe"/>
-          <enumChoice choice="Double pulse strobe"/>
-          <enumChoice choice="Rotary beacon"/>
-          <enumChoice choice="Gyra light"/>
-          <enumChoice choice="Rule 17 (dimmable)"/>
-          <enumChoice choice="Momentary pulse"/>
-          <enumChoice choice="Ditch light A"/>
-          <enumChoice choice="Ditch light B"/>
-          <enumChoice choice="Constant dim"/>
-          <enumChoice choice="Auto Mars"/>
-          <enumChoice choice="Brake lights"/>
-        </enumVal>
-      </variable>
-      <variable label="Pink/Purple Wire Timing" CV="55" mask="XXVVXXXX" minOut="7" item="Output 7 behavior" default="2">
-        <enumVal>
-          <enumChoice choice="Function on running forward"/>
-          <enumChoice choice="Function on running reverse"/>
-          <enumChoice choice="Function on both directions"/>
-        </enumVal>
-      </variable>
-      <variable label="Dither Frequency" CV="56" default="3" item="Dither frequency" tooltip="Range 1 (high) to 10 (low)">
+      <variable item="F3 controls output 7" CV="43" mask="XXXVXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls output 7</label>
+      </variable>
+      <variable item="F4 controls output 7" CV="43" mask="XXVXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls output 7</label>
+      </variable>
+      <variable item="F5 controls output 7" CV="43" mask="XVXXXXXX" minOut="7" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls output 7</label>
+      </variable>
+      <variable item="F6 controls output 7" CV="43" mask="VXXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls output 7</label>
+      </variable>
+      <variable item="FL(f) controls output 8" CV="44" mask="XXXXXXXV" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(f) controls output 8</label>
+      </variable>
+      <variable item="FL(r) controls output 8" CV="44" mask="XXXXXXVX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FL(r) controls output 8</label>
+      </variable>
+      <variable item="F1 controls output 8" CV="44" mask="XXXXXVXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F1 controls output 8</label>
+      </variable>
+      <variable item="F2 controls output 8" CV="44" mask="XXXXVXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F2 controls output 8</label>
+      </variable>
+      <variable item="F3 controls output 8" CV="44" mask="XXXVXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F3 controls output 8</label>
+      </variable>
+      <variable item="F4 controls output 8" CV="44" mask="XXVXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F4 controls output 8</label>
+      </variable>
+      <variable item="F5 controls output 8" CV="44" mask="XVXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F5 controls output 8</label>
+      </variable>
+      <variable item="F6 controls output 8" CV="44" mask="VXXXXXXX" minOut="8" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F6 controls output 8</label>
+      </variable>
+      <variable item="F7 controls output 7" CV="45" mask="XXXXXVXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls output 7</label>
+      </variable>
+      <variable item="F8 controls output 7" CV="45" mask="XXXXVXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls output 7</label>
+      </variable>
+      <variable item="F9 controls output 7" CV="45" mask="XXXVXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls output 7</label>
+      </variable>
+      <variable item="F10 controls output 7" CV="45" mask="XXVXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls output 7</label>
+      </variable>
+      <variable item="F11 controls output 7" CV="45" mask="XVXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls output 7</label>
+      </variable>
+      <variable item="F12 controls output 7" CV="45" mask="VXXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls output 7</label>
+      </variable>
+      <variable item="F7 controls output 8" CV="46" mask="XXXXXVXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F7 controls output 8</label>
+      </variable>
+      <variable item="F8 controls output 8" CV="46" mask="XXXXVXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F8 controls output 8</label>
+      </variable>
+      <variable item="F9 controls output 8" CV="46" mask="XXXVXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F9 controls output 8</label>
+      </variable>
+      <variable item="F10 controls output 8" CV="46" mask="XXVXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F10 controls output 8</label>
+      </variable>
+      <variable item="F11 controls output 8" CV="46" mask="XVXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F11 controls output 8</label>
+      </variable>
+      <variable item="F12 controls output 8" CV="46" mask="VXXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>F12 controls output 8</label>
+      </variable>
+      <variable CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
+      <label>White Wire Effect</label>
+      </variable>
+      <variable CV="49" mask="XXVVXXXX" item="Output 1 behavior">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+        <label>White Wire Timing</label>
+      </variable>
+      <variable CV="50" mask="XXXXVVVV" item="Output 2 effect generated">
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
+        <label>Yellow Wire Effect</label>
+      </variable>
+      <variable CV="50" mask="XXVVXXXX" item="Output 2 behavior" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+        <label>Yellow Wire Timing</label>
+      </variable>
+      <variable CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 effect generated">
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
+        <label>Green Wire Effect</label>
+      </variable>
+      <variable CV="51" mask="XXVVXXXX" minOut="3" item="Output 3 behavior" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+        <label>Green Wire Timing</label>
+      </variable>
+      <variable CV="52" mask="XXXXVVVV" minOut="4" item="Output 4 effect generated">
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
+        <label>Purple Wire Effect</label>
+      </variable>
+      <variable CV="52" mask="XXVVXXXX" minOut="4" item="Output 4 behavior" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+        <label>Purple Wire Timing</label>
+      </variable>
+      <variable CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 effect generated">
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
+        <label>Brown Wire Effect</label>
+      </variable>
+      <variable CV="53" mask="XXVVXXXX" minOut="5" item="Output 5 behavior" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+        <label>Brown Wire Timing</label>
+      </variable>
+      <variable CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 effect generated">
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
+        <label>Pink Wire Effect</label>
+      </variable>
+      <variable CV="54" mask="XXVVXXXX" minOut="6" item="Output 6 behavior" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+        <label>Pink Wire Timing</label>
+      </variable>
+      <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
+        <label>Pink/Purple Wire Effect</label>
+      </variable>
+      <variable CV="55" mask="XXVVXXXX" minOut="7" item="Output 7 behavior" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+        <label>Pink/Purple Wire Timing</label>
+      </variable>
+      <variable CV="56" default="3" item="Dither frequency" tooltip="Range 1 (high) to 10 (low)">
         <decVal/>
+        <label>Dither Frequency</label>
       </variable>
-      <variable label="Dither Amplitude" CV="57" default="10" item="Dither option" tooltip="Practical range is 5 (low) to 50 (high)">
+      <variable CV="57" default="10" item="Dither option" tooltip="Practical range is 5 (low) to 50 (high)">
         <decVal/>
+        <label>Dither Amplitude</label>
       </variable>
-      <variable label="Green/Brown Wire Effect" CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated">
+      <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated">
         <enumVal>
-          <enumChoice choice="Constant bright light"/>
-          <enumChoice choice="Random flicker (fire box)"/>
-          <enumChoice choice="Mars light"/>
-          <enumChoice choice="Flashing light"/>
-          <enumChoice choice="Single pulse strobe"/>
-          <enumChoice choice="Double pulse strobe"/>
-          <enumChoice choice="Rotary beacon"/>
-          <enumChoice choice="Gyra light"/>
-          <enumChoice choice="Rule 17 (dimmable)"/>
-          <enumChoice choice="Momentary pulse"/>
-          <enumChoice choice="Ditch light A"/>
-          <enumChoice choice="Ditch light B"/>
-          <enumChoice choice="Constant dim"/>
-          <enumChoice choice="Auto Mars"/>
-          <enumChoice choice="Brake lights"/>
-        </enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
+       </enumVal>
+        <label>Green/Brown Wire Effect</label>
       </variable>
-      <variable label="Green/Brown Wire Timing" CV="58" mask="XXVVXXXX" minOut="8" item="Output 8 behavior" default="2">
-        <enumVal>
-          <enumChoice choice="Function on running forward"/>
-          <enumChoice choice="Function on running reverse"/>
-          <enumChoice choice="Function on both directions"/>
-        </enumVal>
+      <variable CV="58" mask="XXVVXXXX" minOut="8" item="Output 8 behavior" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+        <label>Green/Brown Wire Timing</label>
       </variable>
-      <variable label="BEMF Enable" CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, enabling BEMF disables Dither">
-        <enumVal>
-          <enumChoice choice="Disabled"/>
-          <enumChoice choice="Enabled"/>
-        </enumVal>
+      <variable CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, enabling BEMF disables Dither">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>BEMF Enable</label>
       </variable>
-      <variable label="Enable BEMF Button Control" CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1" tooltip="Disable(default)/Enable button control of BEMF">
-        <enumVal>
-          <enumChoice choice="Disabled"/>
-          <enumChoice choice="Enabled"/>
-        </enumVal>
+      <variable CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1" tooltip="Disable(default)/Enable button control of BEMF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Enable BEMF Button Control</label>
       </variable>
-      <variable label="Enable Brake Button Control" CV="61" mask="XXXXVXXX" item="Function 5 effect generated" tooltip="Disable(default)/Enable button control of Brake">
-        <enumVal>
-          <enumChoice choice="Disabled"/>
-          <enumChoice choice="Enabled"/>
-        </enumVal>
+      <variable CV="61" mask="XXXXVXXX" item="Function 5 effect generated" tooltip="Disable(default)/Enable button control of Brake">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Enable Brake Button Control</label>
       </variable>
-      <variable label="Headlight Dim When Stopped" CV="61" mask="XXXVXXXX" item="Directional Headlights">
-        <enumVal>
-          <enumChoice choice="Disabled"/>
-          <enumChoice choice="Enabled"/>
-        </enumVal>
+      <variable CV="61" mask="XXXVXXXX" item="Directional Headlights">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Headlight Dim When Stopped</label>
       </variable>
-      <variable label="Opposite Headlight Dim" CV="61" mask="XXVXXXXX" item="Global lighting option 1">
-        <enumVal>
-          <enumChoice choice="Disabled"/>
-          <enumChoice choice="Enabled"/>
-        </enumVal>
+      <variable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Opposite Headlight Dim</label>
       </variable>
-      <variable label="Motor Button Control" CV="61" mask="XVXXXXXX" item="EMF Static Config" tooltip="Motor controlled by Function button">
+      <variable CV="61" mask="XVXXXXXX" item="EMF Static Config" tooltip="Motor controlled by Function button">
         <enumVal>
-          <enumChoice choice="Disabled"/>
+          <enumChoice choice="Disabled">
+            <choice xml:lang="fr">Désactivé</choice>
+            <choice xml:lang="it">Disabilitato</choice>
+            <choice xml:lang="de">Deaktiviert</choice>
+         </enumChoice>
           <enumChoice choice="Button control of motor"/>
         </enumVal>
+        <label>Motor Button Control</label>
       </variable>
-      <variable label="Button Control Direction" CV="61" mask="XXXXXVXX" item="EMF Dynamic Config" tooltip="If motor button control is active">
+      <variable CV="61" mask="XXXXXVXX" item="EMF Dynamic Config" tooltip="If motor button control is active">
         <enumVal>
           <enumChoice choice="Manual F2 for, F3 rev"/>
           <enumChoice choice="Auto F2 for/rev"/>
         </enumVal>
+        <label>Button Control Direction</label>
       </variable>
-      <variable label="Momentary Pulse" CV="62" default="60" item="Function 3 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
+      <variable CV="62" default="60" item="Function 3 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
         <decVal/>
+        <label>Momentary Pulse</label>
       </variable>
-      <variable label="Ditch Light Blink Holdover Time" CV="63" default="10" item="Function 2 effect generated" tooltip="1 second = about 12">
+      <variable CV="63" default="10" item="Function 2 effect generated" tooltip="1 second = about 12">
         <decVal/>
+        <label>Ditch Light Blink Holdover Time</label>
+        <label xml:lang="it">Tempo Lampeggio Luci Ditch</label>
       </variable>
-      <variable label="Dimming Brightness" CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+      <variable CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
         <decVal/>
+        <label>Dimming Brightness</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
+        <label>Speed Table</label>
       </variable>
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
-        <decVal/>
-      </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
-        <decVal/>
-      </variable>
-      <variable label="Mars/Gyra Min Brightness" CV="112" default="1" item="Function F0F effect generated">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <variable CV="112" default="1" item="Function F0F effect generated">
         <decVal min="1" max="5"/>
+        <label>Mars/Gyra Min Brightness</label>
       </variable>
-      <variable label="Mars/Gyra Max Bright Time" CV="113" default="9" item="Function F0F option 2">
+      <variable CV="113" default="9" item="Function F0F option 2">
         <decVal/>
+        <label>Mars/Gyra Max Bright Time</label>
+        <label xml:lang="it">Durata Max luce Mars/Gyra</label>
       </variable>
-      <variable label="Mars/Gyra Total Cycle Time" CV="114" default="1" item="Function F0F option 3">
+      <variable CV="114" default="1" item="Function F0F option 3">
         <decVal/>
+        <label>Mars/Gyra Total Cycle Time</label>
+        <label xml:lang="it">Tempo ciclo Totale Mars/Gyra</label>
       </variable>
-      <variable label="Mars/Gyra Mid Brightness" CV="115" default="6" item="Function F0F behavior">
+      <variable CV="115" default="6" item="Function F0F behavior">
         <decVal min="2" max="26"/>
+        <label>Mars/Gyra Mid Brightness</label>
+        <label xml:lang="it">Luminosità Media Mars/Gyra</label>
       </variable>
-      <variable label="Mars/Gyra Max Brightness" CV="116" default="22" item="Function F0F options">
+      <variable CV="116" default="22" item="Function F0F options">
         <decVal min="4" max="28"/>
+        <label>Mars/Gyra Max Brightness</label>
+        <label xml:lang="it">Luminosità Max Mars/Gyra</label>
       </variable>
-      <variable label="Ditch Light Blink Rate" CV="117" default="3" mask="XXXXVVVV" item="Function 2 behavior">
+      <variable CV="117" default="3" mask="XXXXVVVV" item="Function 2 behavior">
         <enumVal>
           <enumChoice choice="1 slowest" value="1"/>
           <enumChoice choice="2"/>
@@ -1657,394 +1278,393 @@
           <enumChoice choice="11"/>
           <enumChoice choice="12 fastest"/>
         </enumVal>
+        <label>Ditch Light Blink Rate</label>
       </variable>
-      <variable label="Beacon Min Brightness" CV="118" default="1" item="Function F0R effect generated">
+      <variable CV="118" default="1" item="Function F0R effect generated">
         <decVal min="1" max="5"/>
+        <label>Beacon Min Brightness</label>
+        <label xml:lang="it">Luminosità Min Faro</label>
       </variable>
-      <variable label="Beacon Max Bright Time" CV="119" default="5" item="Function F0R option 2">
+      <variable CV="119" default="5" item="Function F0R option 2">
         <decVal/>
+        <label>Beacon Max Bright Time</label>
+        <label xml:lang="it">Durata Max Luce Faro</label>
       </variable>
-      <variable label="Beacon Total Cycle Time" CV="120" default="1" item="Function F0R option 3">
+      <variable CV="120" default="1" item="Function F0R option 3">
         <decVal/>
+        <label>Beacon Total Cycle Time</label>
+        <label xml:lang="it">Tempo Ciclo Totale Faro</label>
       </variable>
-      <variable label="Beacon Mid Brightness" CV="121" default="15" item="Function F0R behavior">
+      <variable CV="121" default="15" item="Function F0R behavior">
         <decVal min="2" max="26"/>
+        <label>Beacon Mid Brightness</label>
+        <label xml:lang="it">Luminosità Media Faro</label>
       </variable>
-      <variable label="Beacon Max Brightness" CV="122" default="25" item="Function F0R options">
+      <variable CV="122" default="25" item="Function F0R options">
         <decVal min="4" max="28"/>
+        <label>Beacon Max Brightness</label>
+        <label xml:lang="it">Luminosità Max.Faro</label>
       </variable>
-      <variable label="FL(f) controls output Dim" CV="123" mask="XXXXXXXV" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="FL(f) controls output Dim" CV="123" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output Dim</label>
       </variable>
-      <variable label="FL(r) controls output Dim" CV="123" mask="XXXXXXVX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="FL(r) controls output Dim" CV="123" mask="XXXXXXVX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output Dim</label>
       </variable>
-      <variable label="F1 controls output Dim" CV="123" mask="XXXXXVXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F1 controls output Dim" CV="123" mask="XXXXXVXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output Dim</label>
       </variable>
-      <variable label="F2 controls output Dim" CV="123" mask="XXXXVXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F2 controls output Dim" CV="123" mask="XXXXVXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output Dim</label>
       </variable>
-      <variable label="F3 controls output Dim" CV="123" mask="XXXVXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F3 controls output Dim" CV="123" mask="XXXVXXXX" minOut="1">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Dim</label>
       </variable>
-      <variable label="F4 controls output Dim" CV="123" mask="XXVXXXXX" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F4 controls output Dim" CV="123" mask="XXVXXXXX" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Dim</label>
       </variable>
-      <variable label="F5 controls output Dim" CV="123" mask="XVXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F5 controls output Dim" CV="123" mask="XVXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output Dim</label>
       </variable>
-      <variable label="F6 controls output Dim" CV="123" mask="VXXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F6 controls output Dim" CV="123" mask="VXXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output Dim</label>
       </variable>
-      <variable label="FL(f) controls output Ditch" CV="124" mask="XXXXXXXV" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="FL(f) controls output Ditch" CV="124" mask="XXXXXXXV" minOut="1">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output Ditch</label>
       </variable>
-      <variable label="FL(r) controls output Ditch" CV="124" mask="XXXXXXVX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="FL(r) controls output Ditch" CV="124" mask="XXXXXXVX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output Ditch</label>
       </variable>
-      <variable label="F1 controls output Ditch" CV="124" mask="XXXXXVXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F1 controls output Ditch" CV="124" mask="XXXXXVXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output Ditch</label>
       </variable>
-      <variable label="F2 controls output Ditch" CV="124" mask="XXXXVXXX" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F2 controls output Ditch" CV="124" mask="XXXXVXXX" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output Ditch</label>
       </variable>
-      <variable label="F3 controls output Ditch" CV="124" mask="XXXVXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F3 controls output Ditch" CV="124" mask="XXXVXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Ditch</label>
       </variable>
-      <variable label="F4 controls output Ditch" CV="124" mask="XXVXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F4 controls output Ditch" CV="124" mask="XXVXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Ditch</label>
       </variable>
-      <variable label="F5 controls output Ditch" CV="124" mask="XVXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F5 controls output Ditch" CV="124" mask="XVXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output Ditch</label>
       </variable>
-      <variable label="F6 controls output Ditch" CV="124" mask="VXXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F6 controls output Ditch" CV="124" mask="VXXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output Ditch</label>
       </variable>
-      <variable label="Decel 2 Ending Point" CV="125" default="0" tooltip="Sets the Decel 3 end point, range 0(default)-255" comment="Range 0-255">
+      <variable item="Decel 2 Ending Point" CV="125" default="0" tooltip="Sets the Decel 3 end point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
+        <label>Decel 2 Ending Point</label>
       </variable>
-      <variable label="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255" comment="Range 0-255">
+      <variable item="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
+        <label>Decel 2 Rate</label>
       </variable>
-      <variable label="Decel 3 Ending Point" CV="127" default="0" tooltip="Sets the Decel 2 End point, range 0(default)-255" comment="Range 0-255">
+      <variable item="Decel 3 Ending Point" CV="127" default="0" tooltip="Sets the Decel 2 End point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
+        <label>Decel 3 Ending Point</label>
       </variable>
-      <variable label="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255" comment="Range 0-255">
+      <variable item="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
+        <label>Decel 3 Rate</label>
       </variable>
-      <variable label="Accel 2 Starting Point" CV="129" default="0" tooltip="Sets the Accel 2 start point, range 0(default)-255" comment="Range 0-255">
+      <variable item="Accel 2 Starting Point" CV="129" default="0" tooltip="Sets the Accel 2 start point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
+        <label>Accel 2 Starting Point</label>
       </variable>
-      <variable label="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255" comment="Range 0-255">
+      <variable item="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
+        <label>Accel 2 Rate</label>
       </variable>
-      <variable label="Accel 3 Starting Point" CV="131" default="0" tooltip="Sets the Accel 3 start point, range 0(default)-255" comment="Range 0-255">
+      <variable item="Accel 3 Starting Point" CV="131" default="0" tooltip="Sets the Accel 3 start point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
+        <label>Accel 3 Starting Point</label>
       </variable>
-      <variable label="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 rate, range 0(default)-255" comment="Range 0-255">
+      <variable item="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
+        <label>Accel 3 Rate</label>
       </variable>
-      <variable label="Power to button controlled motor" CV="133" default="255" item="EMF Droop Config" tooltip="If button control of motor is active, range 0-255">
+      <variable CV="133" default="255" item="EMF Droop Config" tooltip="If button control of motor is active, range 0-255">
         <decVal/>
+        <label>Power to button controlled motor</label>
       </variable>
-      <variable label="FL(f) controls output Motor" CV="134" mask="XXXXXXXV" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="FL(f) controls output Motor" CV="134" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output Motor</label>
       </variable>
-      <variable label="FL(r) controls output Motor" CV="134" mask="XXXXXXVX" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="FL(r) controls output Motor" CV="134" mask="XXXXXXVX" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output Motor</label>
       </variable>
-      <variable label="F1 controls output Motor" CV="134" mask="XXXXXVXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F1 controls output Motor" CV="134" mask="XXXXXVXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output Motor</label>
       </variable>
-      <variable label="F2 controls output Motor" CV="134" mask="XXXXVXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F2 controls output Motor" CV="134" mask="XXXXVXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output Motor</label>
       </variable>
-      <variable label="F3 controls output Motor" CV="134" mask="XXXVXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F3 controls output Motor" CV="134" mask="XXXVXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Motor</label>
       </variable>
-      <variable label="F4 controls output Motor" CV="134" mask="XXVXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F4 controls output Motor" CV="134" mask="XXVXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Motor</label>
       </variable>
-      <variable label="F5 controls output Motor" CV="134" mask="XVXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F5 controls output Motor" CV="134" mask="XVXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output Motor</label>
       </variable>
-      <variable label="F6 controls output Motor" CV="134" mask="VXXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F6 controls output Motor" CV="134" mask="VXXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output Motor</label>
       </variable>
-      <variable label="Random Flicker Control" CV="135" default="16" item="Function 4 effect generated" tooltip="Random Flicker for fireboxes">
+      <variable CV="135" default="16" item="Function 4 effect generated" tooltip="Random Flicker for fireboxes">
         <decVal/>
+        <label>Random Flicker Control</label>
       </variable>
-      <variable label="F5 controls output BEMF" CV="136" mask="XXXXXXXV" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F5 controls output BEMF" CV="136" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output BEMF</label>
       </variable>
-      <variable label="F6 controls output BEMF" CV="136" mask="XXXXXXVX" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F6 controls output BEMF" CV="136" mask="XXXXXXVX" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output BEMF</label>
       </variable>
-      <variable label="F7 controls output BEMF" CV="136" mask="XXXXXVXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F7 controls output BEMF" CV="136" mask="XXXXXVXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output BEMF</label>
       </variable>
-      <variable label="F8 controls output BEMF" CV="136" mask="XXXXVXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F8 controls output BEMF" CV="136" mask="XXXXVXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output BEMF</label>
       </variable>
-      <variable label="F9 controls output BEMF" CV="136" mask="XXXVXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F9 controls output BEMF" CV="136" mask="XXXVXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output BEMF</label>
       </variable>
-      <variable label="F10 controls output BEMF" CV="136" mask="XXVXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F10 controls output BEMF" CV="136" mask="XXVXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output BEMF</label>
       </variable>
-      <variable label="F11 controls output BEMF" CV="136" mask="XVXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F11 controls output BEMF" CV="136" mask="XVXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output BEMF</label>
       </variable>
-      <variable label="F12 controls output BEMF" CV="136" mask="VXXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F12 controls output BEMF" CV="136" mask="VXXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output BEMF</label>
       </variable>
-      <variable label="Brake Light On Time" CV="137" default="4351" item="Function 5 behavior">
+      <variable CV="137" default="4351" item="Function 5 behavior">
         <splitVal highCV="138"/>
+        <label>Brake Light On Time</label>
       </variable>
-      <variable label="FL(f) controls output Brake" CV="139" mask="XXXXXXXV" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="FL(f) controls output Brake" CV="139" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output Brake</label>
       </variable>
-      <variable label="FL(r) controls output Brake" CV="139" mask="XXXXXXVX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="FL(r) controls output Brake" CV="139" mask="XXXXXXVX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output Brake</label>
       </variable>
-      <variable label="F1 controls output Brake" CV="139" mask="XXXXXVXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F1 controls output Brake" CV="139" mask="XXXXXVXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output Brake</label>
       </variable>
-      <variable label="F2 controls output Brake" CV="139" mask="XXXXVXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F2 controls output Brake" CV="139" mask="XXXXVXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output Brake</label>
       </variable>
-      <variable label="F3 controls output Brake" CV="139" mask="XXXVXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F3 controls output Brake" CV="139" mask="XXXVXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Brake</label>
       </variable>
-      <variable label="F4 controls output Brake" CV="139" mask="XXVXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F4 controls output Brake" CV="139" mask="XXVXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Brake</label>
       </variable>
-      <variable label="F5 controls output Brake" CV="139" mask="XVXXXXXX" minOut="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F5 controls output Brake" CV="139" mask="XVXXXXXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output Brake</label>
       </variable>
-      <variable label="F6 controls output Brake" CV="139" mask="VXXXXXXX" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+      <variable item="F6 controls output Brake" CV="139" mask="VXXXXXXX" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output Brake</label>
       </variable>
-      <variable label="Month of Decoder Manufacture" CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
+      <variable CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
         <decVal/>
+        <label>Month of Decoder Manufacture</label>
       </variable>
-      <variable label="Day of Decoder Manufacture" CV="251" readOnly="yes" item="mfgDay" tooltip="Date TCS made this decoder">
+      <variable CV="251" readOnly="yes" item="mfgDay" tooltip="Date TCS made this decoder">
         <decVal/>
+        <label>Day of Decoder Manufacture</label>
       </variable>
-      <variable label="Year of Decoder Manufacture" CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
+      <variable CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
         <decVal/>
+        <label>Year of Decoder Manufacture</label>
       </variable>
-      <variable label="Forward Trim" CV="66" item="Forward Motor Trim" default="128" comment="Range 0-256">
+      <variable CV="66" item="Forward Motor Trim" default="128" comment="Range 0-256">
         <decVal max="256"/>
         <label>Forward Motor Trim</label>
         <comment>Range 0-256</comment>
       </variable>
-      <variable label="Reverse Trim" CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
+      <variable CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
         <decVal max="256"/>
         <label>Reverse Motor Trim</label>
         <comment>Range 0-256</comment>
-      </variable>  
+      </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="2"/>
+      <factReset label="Reset All CVs" CV="8" default="2">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-  <pane name="Momentum">
+  <pane>
+    <name>Momentum</name>
     <column>
       <row>
         <column>
-          <label label="If Accel 2 and 3 Rate and Starting Points are set to zero, then Accel Rate 1 applies to whole speed range"/>
-          <label label="If Decel 2 and 3 Rate and Ending Points are set to zero, then Decel Rate 1 applies to whole speed range"/>
-          <label label="If Brake Button Control active, Decel 2 Rate applies when button active and Decel 1 Rate applies to throttle reduction"/>
-          <label label=" "/>
+          <label>
+            <text>If Accel 2 and 3 Rate and Starting Points are set to zero, then Accel Rate 1 applies to whole speed range</text>
+          </label>
+          <label>
+            <text>If Decel 2 and 3 Rate and Ending Points are set to zero, then Decel Rate 1 applies to whole speed range</text>
+          </label>
+          <label>
+            <text>If Brake Button Control active, Decel 2 Rate applies when button active and Decel 1 Rate applies to throttle reduction</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
         </column>
       </row>
       <row>
         <column>
           <display item="Accel 2 Starting Point" format="hslider" label=""/>
           <display item="Accel 2 Starting Point"/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Accel 3 Starting Point" format="hslider" label=""/>
           <display item="Accel 3 Starting Point"/>
         </column>
         <column>
           <display item="Accel 1 Rate" format="hslider" label=""/>
           <display item="Accel 1 Rate"/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Accel 2 Rate" format="hslider" label=""/>
           <display item="Accel 2 Rate"/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Accel 3 Rate" format="hslider" label=""/>
           <display item="Accel 3 Rate"/>
         </column>
       </row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Decel 3 Ending Point" format="hslider" label=""/>
           <display item="Decel 3 Ending Point"/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Decel 2 Ending Point" format="hslider" label=""/>
           <display item="Decel 2 Ending Point"/>
         </column>
         <column>
           <display item="Decel 3 Rate" format="hslider" label=""/>
           <display item="Decel 3 Rate"/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Decel 2 Rate" format="hslider" label=""/>
           <display item="Decel 2 Rate"/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Decel 1 Rate" format="hslider" label=""/>
           <display item="Decel 1 Rate"/>
         </column>
       </row>
     </column>
   </pane>
-  <pane name="TCS">
+  <pane>
+    <name>TCS</name>
     <column>
       <display item="Forward Motor Trim"/>
       <display item="Reverse Motor Trim"/>
-      <label label="Values above 128 increase speed.  Values below 128 decrease speed"/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label="TCS decoders support a decoder locking feature"/>
-      <label label="useful when several decoders are used in one loco"/>
-      <label label="on the same address, e.g. for adding sound"/>
-      <label label="TCS suggests values of 1=mobile, 2=sound, 3=light/function only"/>
-      <label label=" "/>
+      <label>
+        <text>Values above 128 increase speed.  Values below 128 decrease speed</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>TCS decoders support a decoder locking feature</text>
+      </label>
+      <label>
+        <text>useful when several decoders are used in one loco</text>
+      </label>
+      <label>
+        <text>on the same address, e.g. for adding sound</text>
+      </label>
+      <label>
+        <text>TCS suggests values of 1=mobile, 2=sound, 3=light/function only</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Decoder Lock ID number"/>
-      <label label="Set CV15 equal to this number to unlock the decoder for programming"/>
-      <label label=" "/>
+      <label>
+        <text>Set CV15 equal to this number to unlock the decoder for programming</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Decoder Lock control number" label="Decoder Lock control, CV15"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="mfgMonth"/>
       <display item="mfgDay"/>
       <display item="mfgYear"/>
-      <label label=" "/>
-      <label label="TCS_V51.xml for TCS 'X' with BEMF, v51-52. July 17 2010"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>TCS_V51.xml for TCS 'X' with BEMF, v51-52. July 17 2010</text>
+      </label>
     </column>
   </pane>
 </decoder-config>

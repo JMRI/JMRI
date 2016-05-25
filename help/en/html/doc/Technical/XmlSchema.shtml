@@ -15,13 +15,7 @@
     <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
     <!-- or change them to reflect your alternative logo -->
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style" -->
 </head>
 
 <!--#include virtual="/Header" -->
@@ -70,8 +64,256 @@ support for locating those files when the XML parser
 needs them.  
 <p/>
 
-<h2>Developing JMRI Schema</h2>
+<h2 id="modschema">Modifying JMRI Schema</h2>
 
+This section talks about how to handle small changes to existing schema, 
+for example added or removing an attribute or element.  For more 
+extensive changes, including creating entirely new types or new file formats,
+see the next section on "<a href="#devschema">Developing JMRI Schema</a>".
+<p>
+Every time you change what JMRI writes (and therefore reads) in an XML file, 
+there are things you must do.
+<ol>
+<li>You need to change the code that does the reading and writing.
+<li>You need to change the schema file(s) so that the XML format can
+be properly checked.
+<li>You have to provide new test XML files to make sure nothing has been broken, 
+and in some cases have to adjust old ones.
+</ol>
+<p>
+Please don't skip the latter steps. They matter a lot to the long-term 
+stability of JMRI code.
+
+<p>
+If possible, it's best to make changes by addition, so that 
+existing files can continue to be read unchanged.
+JMRI strongly values backward compatibility, where any newer version
+of JMRI can still load and use a file written by an older version.
+
+<p>
+If you can make a change that's just an addition, then the process is:
+<ol>
+<li>Change your code
+<li>Add the new elements and attributes to 
+    the most recent version of the schema file(s).
+<li>Run "ant headlesstest" to make sure that the older files
+    already present in the tests can still be processed.  Fix
+    anything that breaks.  (You may discover at this
+    point that you didn't actually make a backward compatible
+    change, in which case either improve that or see 
+    the section on "<a href="#versioning">Schema Versioning</a>" below).
+<li>Create a test file with the new content.  Ideally, this 
+    won't require using the screen, so it can actually
+    be loaded and stored as part of headlesstest.
+    In that case, put your file in a "load" test subdirectory
+    (see below).  At a minimum, though, put your 
+    file in a "verify" test subdirectory so that your 
+    schema changes will be tested.
+    For more on this, see <a href="#junitschematest">below</a>.
+</ol>
+
+
+<h3 id="versioning">Schema Versioning</h3>
+
+"Versioning" schema allows us to have different schema 
+for older and newer files.  This lets newer versions of JMRI to
+continue to check and read files 
+that were written by older versions of JMRI.
+This backward compatibility is an important JMRI feature
+which we don't want to lose.
+<p>
+In practical terms, versioning consists of having multiple-but-related
+versions of the schema definition files which are label by the
+first JMRI version that can read them.
+<p>
+When do you need to create a new version?
+<ul>
+<li>
+You <em>do not</em> need
+to create a new version the schema if you add or change things such that
+existing files will continue to validate.
+<p>
+In that case, just make your schema changes in the current
+schema document, and commit them back to the JMRI code repository.
+<li>You <em>do</em> need to
+version a schema you make a change to 
+the schema such that previous files will no longer validate
+with the current schema.  
+<p>
+In this case, the steps to version the schema are:
+    <ol>
+    <li>Copy the current schema file to a new one with 
+        the number of the <em>next</em> JMRI release.  E.g. 
+        copy types/turnouts-2-9-6.xsd to types/turnouts-3.7.3.xsd
+        if you're doing this before JMRI 3.7.3 is released.
+        Make your changes and commit that new version.
+    <li>If this is a subfile, such as the types/turnouts-2-9-6.xsd,
+        that is included in a main schema such as layout-2-9-6.xsd,
+        that main file also needs to be copied, have the include
+        changed, and commited. 
+        Now you've got 
+        a new layout-3-7-3.xsd schema for output files to reference.
+    <li>Then, change the Java code that writes the 
+        schema reference to the top of output files 
+        to use the new filename. For example, layout (panel)
+        files are written by 
+        <code>src/jmri/configurexml/ConfigXmlManager.java</code>.
+        Look for the 
+        <br/><code>static final public String schemaVersion = "-3-7-3"</code><br/>
+        line and change it to your new version number suffix.
+    <li>If there's an associated
+        XML stylesheet(s), its name has to be changed in a coordinated way.
+        (You should also update the stylesheet to show your new XML
+        content, of course).
+    </ol>
+</ul>
+
+In either case, it's important to include sufficient
+test files that the unit tests catch any problems with the new
+and old schema.  See the 
+<a href="#test">test section below</a>.
+
+<p>Note that the unlabeled schema is the primordial, oldest, now-obsolete
+schema. For example layout.xsd is <em>older</em> than layout-2-9-6.xsd, and 
+therefore not to be used for new files anymore.  Don't assume that
+layout.xsd is the default for new files!
+
+<h2>Checking JMRI Schema</h2>
+
+It's important that the JMRI schema definitions be kept semantically
+correct.  
+If we let too many problems build up, 
+we'll eventually have a lot of back-fitting to do.
+The W3C online 
+<a href="http://www.w3.org/2001/03/webdata/xsv">schema validation tool</a>
+is a very good tool for checking that changes to the JMRI schema are still technically 
+correct.  You should check your changes with it before commiting them to the repository.
+Unfortunately, it doesn't seem to to check compliance with nested schema elements,
+e.g. from DocBook (see below) or JMRI schema,
+but it's still a very useful check.
+
+<p>
+Using the JMRI "Validate XML File" tool in the "Debug" menu to
+validate a .xml file ("instance file") that uses your new or 
+updated schema is an important check of both. Use it often during
+development. You can also use it from the command line via e.g.:
+<code><pre>
+./runtest.csh jmri/jmrit/XmlFileValidateAction xml/decoders/0NMRA.xml 
+</pre></code>
+
+<p>
+For a quick file check, Linux and Mac OS X users can validate from the
+command line with e.g. 
+<code><pre>
+ cd xml
+ xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
+</pre></code>
+<code>xmllint</code> can't check schema files themselves, unfortunately, because
+their schema isn't something it can handle.
+
+<p>
+Your schema docs should point to our standard stylesheet in 
+their head matter:
+<code><pre>
+&lt;?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?&gt;
+</pre></code>
+Stylesheets turn XML code, like this schema, into a human-readable form
+when the XML is parsed and displayed by a browser.
+For an example of that, click on this link to the 
+<a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a> schema file.
+Our standard stylesheet is pretty basic.
+It just shows basic structure.  If anybody knows of a better stylesheet, we
+can certainly switch to it.
+
+<a id="test">
+<a id="junitschematest">
+<h3>JUnit testing</h3>
+You should also add a 
+<a href="JUnit.shtml">JUnit test</a>
+that checks a typical file.
+There are three kinds of checks that can be done:
+<ol>
+<li>You should always have a class that validates 
+a typical file against the schema.
+<p>
+That's done by having a SchemaTest class in your test-tree package (see e.g.
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/SchemaTest.java" target="_blank">test/jmri/configurexml/SchemaTest.java</a>
+for an example) that checks all the XML files kept there.
+If that's in place, just put a copy of a (new) 
+typical XML file in the existing "verify" subdirectory.
+<p>To more extensively check your schema, you can check that 
+it fails XML files that you think are not valid.
+There are lots of ways to be not valid, and you don't need to
+check them all, but if there something specific 
+you want to be sure of, put an example of that
+in the "invalid" subdirectory. Those files are expected to fail
+for some specific reason. You should document that reason via comments in the file
+itself so your colleagues can figure it out later.
+<p>If there's no "verify" subdirectory, create one and add it
+to the end of the SchemaTest class in that package. If there's
+no SchemaTest class, create one by replicating an existing one,
+see link above.  Don't forget to add it to PackageTest so it gets invoked!
+
+<li>If you're working on configurexml files (panel files),
+and your new code isn't involved in the actual display of panels
+(e.g. can run as part of headlesstest), you should add a test that
+a sample file can be loaded and stored back successfully.  Beyond
+just checking the schema, this also checks that all the load and
+store plumbing is working.
+(We run these tests headless as part of Jenkins, so please don't 
+add tests that pop screen windows; they'll just cause errors).
+<p>
+That's done by having a LoadAndStoreTest class in your test-tree package (see e.g.
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/LoadAndStoreTest.java" target="_blank">test/jmri/configurexml/LoadAndStoreTest.java</a>
+for an example) that checks all the XML files kept there.
+If that's in place, just put a copy of a (new) 
+typical XML file in the existing "load" subdirectory.
+<p>If there's no "load" subdirectory, create one and add it
+to the end of the LoadAndStoreTest class in that package. If there's
+no LoadAndStoreTest class, create one by replicating an existing one,
+see link above.  Don't forget to add it to PackageTest so it gets invoked!
+<p>When LoadAndStoreTest runs, it loads the files in the load directory
+one-by-one, storing each back out to the "temp" directory within
+the local preferences directory, and then compares the input and output
+files.  Sometimes this load-and-store process results in something that's 
+in a different order, or contains more info (e.g. attributes missing from
+the input file are written with default values in the output file). If
+the comparison fails, but the output file is still OK when you manually
+inspect it, copy that output file to the "loadref" directory (create it
+if needed) within your test package.  See
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/loadref" target="_blank">test/jmri/configurexml/loadref</a>
+for an example.  LoadAndStoreTest will compare to files it finds here,
+instead of to the original file in the "load" subdirectory.
+<p>If your changes to the code cause this testing to fail
+with older versions of the file, <em>do not change the older file version.</em>
+Instead, either put an updated output reference in the "loadref"
+directory, version the schema to allow the older file to continue to load,
+or improve your code.  Backward compatibility is important!
+
+<li>You can also add a custom JUnit test that reads your sample
+file and makes sure that the proper objects have been created, that
+they have the correct data and state, etc.  This could be 
+anything from a "load and check that new beans exist in the new manager"
+to something quite more extensive.
+</ol>
+At a minimum, please do the schema checks. They're easy, and 
+will save lots of trouble in the future.  If your new features don't 
+involve displaying on the screen, adding load-and-store checks is also
+valuable, and isn't so hard.
+<p><em>Note: Do not remove or modify any existing XML file checks.
+Those keep old versions of the files working!</em>
+If your new code and/or schema breaks the processing of the existing files, 
+you need to either fix your code or 
+<a href="#versioning">version the schema</a> to allow multiple 
+formats to coexist.  
+
+
+<h2 id="devschema">Developing JMRI Schema</h2>
+
+For some examples of the XML schema structures 
+described here, see the separate
+<a href="XmlSchemaExamples.shtml">XML Schema Examples page</a>/
+<p>
 Our preferred organization for XML schema
 is based on the structure of the underlying code:
 A particular *Xml class is the unit of reuse.
@@ -94,9 +336,10 @@ the class name that reads/writes the element:
     &lt;/xs:annotation&gt;
 </code></pre>
 
-<h3>The Venetian Blind Pattern</h3>
+<h3>The Venetian Blinds Pattern</h3>
 
-We are moving toward structuring our XML using the "Venetian Blind pattern".
+We are moving toward structuring our XML using the 
+"<a href="http://www.xfront.com/GlobalVersusLocal.html#ThirdDesignCharacteristics">Venetian Blinds pattern</a>".
 In this style, the top level elements that are written by classes have types defined for them.
 Any elements that are within those are defined anonymously, within those elements.
 For an example of this, see the 
@@ -117,12 +360,34 @@ They are defined in the
 
 <p>
 More information on XML schema design patterns is available at
-<a href="http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a>.
-<a href="http://developers.sun.com/jsenterprise/archive/nb_enterprise_pack/reference/techart/design_patterns.html">developers.sun</a>, and
-<a href="http://www.javapassion.com/webservices/XMLSchemaDesignPatterns.pdf">javapassion</a>.
+<a href="http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a> and the 
+<a href="http://www.oracle.com/technetwork/java/design-patterns-142138.html">Oracle Java site</a>.
+
+<h3>On Elements vs Attributes</h3>
+When defining how to store new classes or updates to classes, the basic 
+questions are:
+<ul>
+<li>Are we storing data? In that case, it should be stored in an element of its
+    own.  Comments, speed values, user and system names are all examples of data
+    that should be separately stored.
+<li>Is this a modifier that provides information about the data in the element?
+    In that case, it's OK to store the modifier information in an attribute.
+    Color of a label, whether a turnout is inverted, which icon of the following list 
+    to load are examples of modifiers.
+</ul>
+
+JMRI XML originally leaned heavily to attributes due to limitations in the 
+JDOM library.  These limitations are long gone, and we're now moving toward
+using elements in the proper way.
 
 <h3>Available Defined Types</h3>
 
+The JMRI schema provides a large number of pre-defined data types.  These
+(generally) check their content, and will be maintained in the future as valid 
+content changes, so it's best to use these where possible instead of 
+defining your own.
+<p>
+A partial list of the pre-defined types:
 <dl>
 <dt>systemNameType<dd>System names, to eventually be tightened up to a real test of validity
 <dt>userNameType<dd>User names, not including the empty name
@@ -130,145 +395,13 @@ More information on XML schema design patterns is available at
 <dt>beanNameType<dd>Either user or system name
 <dt>turnoutStateType<dd>closed, thrown
 <dt>signalColorType<dd>red, yellow, etc
-<dt>yesNoType<dd>yes, no
 <dt>trueFalseType<dd>true, false
+<dt>yesNoType<dd>yes, no
+<dt>yesNoMaybeType<dd>yes, no, maybe
 </dl>
 
-<h3>Schema Versioning</h3>
-
-The requirements for versioning of XML Schema are much
-simpler than those for DTDs, mostly because individual
-items have much clearer scope.  
-
-<ul>
-<li>You <em>do</em> need to
-version a schema you make a change to 
-the schema such that previous files will no longer validate
-with the current schema.  
-<p>
-In that case, just make your schema changes in the current
-schema document, and commit them back to CVS.
-<li>
-You <em>do not</em> need
-to version the schema if you add or change things such that
-existing files continue to validate.
-<p>
-In this case, the steps to version the schema are:
-    <ol>
-    <li>Copy the current schema file to a new one with 
-        the <em>next</em> version number.  E.g. 
-        copy types/turnouts-2-9-6.xsd to types/turnouts-2-9-8.xsd.
-        Make your changes and commit that new version.
-    <li>If this is a subfile, such as the types/turnouts-2-9-6.xsd,
-        that is included in a main schema such as layout-2-9-6.xsd,
-        that main file also needs to be copied, have the include
-        changed, and commited to CVS.
-    <li>Then, change the Java code that writes the 
-        schema reference to the top of output files 
-        to use the new filename. For example, layout (panel)
-        files are written by 
-        <code>src/jmri/configurexml/ConfigXmlManager.java</code>.
-    <li>If the XML stylesheet(s) in xml/XSLT have to be changed,
-        they are versioned in a similar way, including the 
-        code change where the stylesheet reference is included.
-    </ol>
-</ul>
-
-In either case, it's important to include sufficient
-test files that the unit tests catch any problems with the new
-and old schema.  See the 
-<a href="#test">test section below</a>.
-
-<h2>Checking JMRI Schema</h2>
-
-XML Schema are more verbose than the DTDs we're used to.
-With that complexity, we get more expressing power, but
-at the same time more ways to mess up.
-<p>
-It's important that the JMRI schema definitions be kept semantically
-correct.  There are some subtle aspects to XML schema that it will take
-us some time to get comfortable with, and if we let too many problems
-build up in the meantime, we'll eventually have a lot of back-fitting to do.
-The W3C online 
-<a href="http://www.w3.org/2001/03/webdata/xsv">schema validation tool</a>
-is a very good tool for checking that JMRI schema changes are still technically 
-correct.  You should check your changes with it before commiting them to CVS.
-Unfortunately, it doesn't seem to to check compliance with nested schema elements,
-e.g. from DocBook (see below) or JMRIschema,
-but it's still a very useful check.
-
-<p>
-Using the JMRI "Validate XML File" tool in the "Debug" menu to
-validate a .xml file ("instance file") that uses your new or 
-updated schema is an important check of both. 
-
-<p>
-You should also add a 
-<a href="JUnit.shtml">JUnit test</a>
-that checks the schema and a typical file.
-The easiest way to do that (see e.g.
-test/jmri/configurexml/SchemaTest.java
-for an example) is to inherit your test class
-from jmri.configurexml.LoadFileTestBase, and 
-then call <code>validate(File f)</code>
-on a test file.  The test XML file can put put with
-the test Java file in the "test/" file tree.
-<code><pre>
-    public void testValidateRoster() {
-        validate(new java.io.File("java/test/jmri/configurexml/RosterSchemaTest.xml"));
-    }
-</pre></code>
-
-<p>
-For a quick file check, Linux and Mac OS X users can validate from the
-command line with e.g. 
-<code><pre>
- cd xml
- xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
-</pre></code>
-<code>xmllint</code> can't check schema files themselves, unfortunately, because
-their schema isn't something it can handle.
-
-<p>
-Your schema docs should point to our standard stylesheet in 
-their head matter:
-<code><pre>
-&lt;?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?&gt;
-</pre></code>
-This is a pretty basic stylesheet, only really sufficient to
-show basic structure.  For an example of the output it
-produces, click on this link to the 
-<a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a> schema file.
-If anybody knows of a better stylesheet, we
-can certainly switch to it.
-
-<a id="test">
-<h3>JUnit testing</h3>
-
-We test XML schema and files two ways: 
-Do they properly validate, and can certain files be properly read in and then written
-back.  The second test is more complicated, of course, but also more valuable.
-
-<p>
-To test for validation, drop an XML file into the 
-<code>test/jmri/configurexml/files</code> directory.
-This will automatically be tested to make sure it validates.
-If you version a schema, you should 
-run a few of these files through PanelPro (e.g. read them
-and then rewrite them with the new format) and include new
-copies to test the new format.
-<p>
-Small fragments that demonstrate specific schema features
-can be put in the 
-<code>test/jmri/configurexml/pass</code>
-and
-<code>test/jmri/configurexml/fail</code>
-directories (the "fail" directory files are expected to fail
-for some specific reason documented via comments in the file).
-
-<p>
-To read and write, see the example in
-<code>test/jmri/configurexml/LoadFileTest.java</code>
+For others, browse the 
+<a href="http://jmri.org/xml/schema/types/general.xsd">general types schema</a>.
 
 <h2>External Standards and Future Work</h2>
 
@@ -299,7 +432,7 @@ and isn't fully consistent with versions of other software that we use.
 We use the normal DocBook 5.0 namespace, so we can later easily convert to 
 a more complete schema transparently.
 Our smaller schema is located at
-<a href="http://jmri.org/xml/schema/docbook/DocBook.xsd">http://jmri.org/xml/schema/docbook/DocBook.xsd</a>
+<a href="http://jmri.org/xml/schema/docbook/docbook.xsd">http://jmri.org/xml/schema/docbook/docbook.xsd</a>
 (our usual schema location). It is <em>only</em>
 referenced from JMRI schema files, not instance files,
 so that we can later convert with finite work.

@@ -1,5 +1,3 @@
-// SerialNodeTest.java
-
 package jmri.jmrix.powerline;
 
 import junit.framework.Test;
@@ -8,11 +6,12 @@ import junit.framework.TestSuite;
 
 /**
  * JUnit tests for the SerialNode class
- * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
- * @author		Dave Duchamp  multi-node extensions 2003
- * Converted to multiple connection
+ *
+ * @author	Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author	Dave Duchamp multi-node extensions 2003 Converted to multiple
+ * connection
  * @author kcameron Copyright (C) 2011
- * @version		$Revision$
+ * @version	$Revision$
  */
 public class SerialNodeTest extends TestCase {
 
@@ -21,8 +20,8 @@ public class SerialNodeTest extends TestCase {
         //SerialSensor s2 = new SerialSensor("PSA2","ab");
         //SerialSensor s3 = new SerialSensor("PSA3","abc");
 
-    	SerialSystemConnectionMemo memo = new jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo();
-    	SerialTrafficController t = new jmri.jmrix.powerline.simulator.SpecificTrafficController(memo);
+        SerialSystemConnectionMemo memo = new jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo();
+        SerialTrafficController t = new jmri.jmrix.powerline.simulator.SpecificTrafficController(memo);
         SerialReply r = new jmri.jmrix.powerline.simulator.SpecificReply(t);
         r.setElement(0, 0x02);
         r.setElement(1, 0x00);
@@ -53,7 +52,12 @@ public class SerialNodeTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-    
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
 }

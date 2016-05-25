@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Brake</name>
+  <column>
+    <row>
+      <column>
+		<row>
+			<display item="Brake Rate 1" layout="above" label=""/>
+			<display item="Brake Rate 1" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Brake Rate 2" layout="above" label=""/>
+			<display item="Brake Rate 2" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Brake Rate 3" layout="above" label=""/>
+			<display item="Brake Rate 3" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Brake Rate 4" layout="above" label=""/>
+			<display item="Brake Rate 4" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Brake Rate 5" layout="above" label=""/>
+			<display item="Brake Rate 5" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Brake grinding noise start speed" layout="above" label=""/>
+			<display item="Brake grinding noise start speed" layout="above" format="hslider"/>
+		</row>
+      </column>
+      <label>
+		<text>     </text>
+      </label>
+      <column>
+		<display item="Dynamic brake notch setting" layout="above"/>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Dynamic Lowest Speed Step" layout="above" label=""/>
+			<display item="Dynamic Lowest Speed Step" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Dynamic Decel Rate" layout="above" label=""/>
+			<display item="Dynamic Decel Rate" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Dynamic Speed Step Decrease" layout="above" label=""/>
+			<display item="Dynamic Speed Step Decrease" layout="above" format="hslider"/>
+		</row>
+      </column>
+      <label>
+		<text>     </text>
+      </label>
+      <column>
+			<display item="Auto notch down prime mover when brakes are on" format="checkbox"/>
+			<display item="Increase in Dynamic Brake power increases throttle notch" format="checkbox"/>
+			<display item="Sound Group 2 Control" format="checkbox"/>
+			<display item="Sound Group 2 Control" format="checkbox"/>
+			<display item="Sound Group 2 Control" format="checkbox"/>
+			<display item="Sound Group 2 Control" format="checkbox"/>
+      </column>
+    </row>
+  </column>
+</pane>

@@ -1,40 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
-<title>JMRI: Powerline Controllers</title>
+<title>JMRI Hardware Support - Powerline - Adapter Compatibility</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-
-
-
-<h2> 
-JMRI:  Supported Powerline Controllers
-</h2>
-
+<h1>Hardware Support: Powerline - Compatible Adapters</h1>
+<p>
 This page helps you identify the type of
-controller you have, and gives you information 
-needed to configure JMRI.
+Adapter you have, and - if it is supported - gives you information 
+how to configure JMRI to connect it.
 
 <p>
 See also the main page on 
-<a href="index.shtml">configuring JMRI for powerline controllers</a>.
+<a href="index.shtml">configuring JMRI for Powerline controllers</a>.
 
 <h3>X10 Adapters</h3>
 
@@ -57,7 +49,7 @@ See also the main page on
     <br />
     RCA HC60CRX
   </td> <!-- Model -->
-  <td><img src="http://graphics.x10.com/images/cm11asa.gif" width="125" height="150"/></td> <!-- Image -->
+  <td><img src="hc60crx.jpg" width="88" height="118"></td> <!-- Image -->
   <td>
     This adapter can be identified by the 4 pin RJ-11 connection on the bottom.
     <br />
@@ -73,7 +65,7 @@ See also the main page on
   <td nowrap>
     CP290
   </td> <!-- Model -->
-  <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif" width="114" height="71"/></td> <!-- Image -->
+  <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif" width="114" height="71"></td> <!-- Image -->
   <td>
     This is a console-like adapter.  It can also provides buttons
     for operating X10 devices.
@@ -81,7 +73,7 @@ See also the main page on
     To use this with JMRI, select "Powerline Controller" in the JMRI preferences,
     the proper serial port, and "CP290" for the adapter.
     <br />
-    This adapter is no longer in production. Consider the Insteon 2412S as an alternitive.
+    This adapter is no longer in production. Consider the Insteon 2412S as an alternative.
   </td>  <!-- Comment -->
   <td>Support is available starting in JMRI 2.1.5</td> <!-- Type -->
 </tr>
@@ -89,13 +81,13 @@ See also the main page on
 <tr>
   <td><a href="http://www.x10.com">X10.com</a></td> <!-- Manufacturer -->
   <td>CM15A</td> <!-- Model -->
-  <td><img src="http://graphics.x10.com/images_ahp//cm15a_c.gif" width="125" height="150"/></td> <!-- Image -->
+  <td><img src="cm15a.jpg" width="108" height="149"></td> <!-- Image -->
   <td>
     This is the adapter that comes with the ActiveHome Professional.
-    Best identified by the USB connection on the bottom and an attenna on the side.
+    Best identified by the USB connection on the bottom and an antenna on the side.
   </td>  <!-- Comment -->
   <td>Not Supported (<i>yet</i>).
-  We hope to support it next, pending USB support and somebody willing to test.
+  We hope to support it, pending USB support updates and somebody willing to test.
     <br />
     Last Edited: 17 Jan 2008
   </td> <!-- Type -->
@@ -104,18 +96,18 @@ See also the main page on
 <tr>
   <td><a href="http://www.x10.com">X10.com</a></td> <!-- Manufacturer -->
   <td>CM17A</td> <!-- Model -->
-  <td><img src="http://graphics.x10.com/images2/ck17a_detail.jpg" width="125" height="150"/>
-    <img src="http://graphics.x10.com/images6/fc_inter.jpg" width="125" height="150" />
+  <td><img src="cm17a.jpg" width="128" height="99">
+    <img src="tm751.jpg" width="112" height="145">
 </td> <!-- Image -->
   <td>
-    This device depends on another X10 device that is the true controller,
-    typically the TM751 device.
+    This device (top) depends on another X10 device that is the true controller,
+    typically the TM751 device (bottom).
     While it is a serial device, it uses the RTS/DTS lines instead of the data lines.
     That lets the device work while having most other serial devices work through it.
   </td>  <!-- Comment -->
-  <td>Not Supported.
-  We may be able to support it eventually, 
-  but are working on the simpler, character-based versions first.
+  <td>Not Supported. <br />
+  Because of the tight timing and detailed hardware access these units
+  require, it's unlikely we're going to support this device.
     <br />
     Last Edited: 17 Jan 2008</td> <!-- Type -->
 </tr>
@@ -162,15 +154,32 @@ See also the main page on
     <br />
   </td>  <!-- Comment -->
   <td>Not Supported (<i>yet</i>)
-      We hope to support it next, pending USB support and somebody willing to test.
+      We hope to support it, pending USB support and somebody willing to test.
     <br />
     Last Edited: 4 Feb 2008
     </td> <!-- Type -->
 </tr>
 
+<tr>
+  <td><a href="http://www.insteon.com">Insteon.com</a></td> <!-- Manufacturer -->
+  <td nowrap>
+    Insteon Hub, Hub Pro
+  </td> <!-- Model -->
+  <td><img src="http://static1.squarespace.com/static/53fce470e4b0374adfdd30bc/t/5489fdf4e4b02da9d6a5b81c/1418329589819/tech-specs-front-and-back.png?format=500w" width="115" height="115"/></td> <!-- Image -->
+  <td>
+    These connect via an Ethernet port
+    <br />
+  </td>  <!-- Comment -->
+  <td>Not Supported (<i>yet</i>)
+      We hope to support it next, pending USB support and somebody willing to test.
+    <br />
+    Last Edited: 11 Nov 2015
+    </td> <!-- Type -->
+</tr>
 </table>
-    </div>
-  </div>
+
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

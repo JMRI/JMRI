@@ -1,48 +1,45 @@
 // CornwallRR.java
-
 package apps.cornwall;
 
+import apps.Apps;
+import java.text.MessageFormat;
+import javax.swing.JFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import apps.Apps;
-
-import java.text.MessageFormat;
-
-import javax.swing.JFrame;
 
 /**
  * Nick Kulp's Cornwall Railroad.
  * <P>
- * If an argument is provided at startup, it will be used as the name of
- * the configuration file.  Note that this is just the name, not the path;
- * the file is searched for in the usual way, first in the preferences tree and then in
+ * If an argument is provided at startup, it will be used as the name of the
+ * configuration file. Note that this is just the name, not the path; the file
+ * is searched for in the usual way, first in the preferences tree and then in
  * xml/
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2003
+ * @version $Revision$
  */
 public class CornwallRR extends Apps {
 
     protected String line1() {
         return MessageFormat.format("Cornwall RR, based on JMRI {0}",
-                                new Object[]{jmri.Version.name()});
+                new Object[]{jmri.Version.name()});
     }
+
     protected String line2() {
         return "http://jmri.org/Panels/Cornwall.html";
     }
+
     protected String logo() {
         return "resources/icons/cornwall/cornwall_logo.gif";
     }
@@ -52,14 +49,13 @@ public class CornwallRR extends Apps {
         log.debug("CTOR done");
     }
 
-
     // Main entry point
     public static void main(String args[]) {
 
         // show splash screen early
         splash(true);
 
-        log.info(apps.Apps.startupInfo("CornwallRR"));
+        Apps.setStartupInfo("CornwallRR");
 
         setConfigFilename("CornwallConfig2.xml", args);
         JFrame f = new JFrame("Cornwall Railroad");
@@ -69,7 +65,6 @@ public class CornwallRR extends Apps {
         splash(false);
 
         // start automation
-        
         // load definitions
         loadFile("CornwallDefinitions.xml");
 
@@ -80,7 +75,5 @@ public class CornwallRR extends Apps {
         loadFile("CornwallMain.xml");
     }
 
-    static Logger log = LoggerFactory.getLogger(CornwallRR.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CornwallRR.class.getName());
 }
-
-

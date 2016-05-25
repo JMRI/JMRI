@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Ident.shtml,v 1.1 2008/02/16 19:06:09 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!--  $Id$ -->
+<!-- Updated by Blorec Herv&#233; le 2013-08-31-->
 
 <title>JMRI: DecoderPro User Guide - How DecoderPro Identifies Decoders</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -23,62 +23,62 @@
 <div id="mainContent">
 
 
-<H2>JMRI: Guide Utilisateur DecoderPro- Comment DecoderPro Identifie Les Décodeurs</h2>
+<H2>JMRI: Guide Utilisateur DecoderPro- Comment DecoderPro Identifie Les D&#233;codeurs</h2>
 
 
 <P>
-Afin de bien programmer un décodeur, DecoderPro doit être en mesure de trouver une «définition» pour le décodeur. Ces définition précises des CV sont comprises par le décodeur, ce qu'elles signifient, quelles valeurs sont valables, etc.
+Afin de bien programmer un d&#233;codeur, DecoderPro doit &#234;tre en mesure de trouver une "d&#233;finition" pour le d&#233;codeur. Ces d&#233;finition pr&#233;cises des CV sont comprises par le d&#233;codeur, ce qu'elles signifient, quelles valeurs sont valides, etc.
 
 <P>
-DecoderPro permet à un utilisateur de choisir quel décodeur modèle il a installé,
-Dans ce cas, il peut automatiquement trouver la bonne définition. Mais il peut
-également fournir une fonction "Ident", qui tente de localiser la bonne définition
-sur la base des informations qu'il lit sur le décodeur.
+DecoderPro permet &#224; un utilisateur de choisir quel d&#233;codeur mod&#232;le il a install&#233;,
+Dans ce cas, il peut automatiquement trouver la bonne d&#233;finition. Mais il peut
+&#233;galement fournir une fonction "Ident", qui tente de localiser la bonne d&#233;finition
+sur la base des informations qu'il lit sur le d&#233;codeur.
 
 <P>
-Ident commence par lire le code du fabricant depuis le CV8. La NMRA a défini un ensemble de valeurs uniques pour ce CV. Depuis (presque) tous les décodeurs fournissent bien cette information, vous pouvez  utiliser DecoderPro pour affiner le bas de la liste des définitions possibles pour seulement ceux d'un fabricant particulier.
+Ident commence par lire le code du fabricant depuis le CV8. La NMRA a d&#233;fini un ensemble de valeurs uniques pour ce CV. Depuis (presque) tous les d&#233;codeurs fournissent bien cette information, vous pouvez  utiliser DecoderPro pour affiner le bas de la liste des d&#233;finitions possibles pour seulement ceux d'un fabricant particulier.
 
 <P>
-Ensuite, DecoderPro lit la valeur du CV 7. La NMRA l'a défini comme le numéro de «version» . Malheureusement, tous les fabricants n'utilisent pas ce numéro
-d'une manière qu'il puisse fournir les informations nécessaires. Il y a deux cas où cela peut mal fonctionner:
+Ensuite, DecoderPro lit la valeur du CV 7. La NMRA l'a d&#233;fini comme le num&#233;ro de "version" . Malheureusement, tous les fabricants n'utilisent pas ce num&#233;ro
+d'une mani&#232;re qu'il puisse fournir les informations n&#233;cessaires. Il y a deux cas o&#249; cela peut mal fonctionner:
 <OL>
-<LI>Trop de décodeurs avec le même numéro de version.
+<LI>Trop de d&#233;codeurs avec le m&#234;me num&#233;ro de version.
 <P>
-Si de nombreux types de décodeurs ont le même numéro de version, et si
-les versions diffèrent assez peu, le numéro de version ne fournit pas assez
-d'informations pour choisir une définition spécifique:
+Si de nombreux types de d&#233;codeurs ont le m&#234;me num&#233;ro de version, et si
+les versions diff&#232;rent assez peu, le num&#233;ro de version ne fournit pas assez
+d'informations pour choisir une d&#233;finition sp&#233;cifique:
 .
 <P>
-Par exemple, si le numéro de version 3 peut être trouvés dans deux décodeur, un à faible coût avec un
-CV année, et un décodeur haut de gamme avec beaucoup de CV, rechercher un 3 en CV 7 ne
+Par exemple, si le num&#233;ro de version 3 peut &#234;tre trouv&#233;s dans deux d&#233;codeur, un &#224; faible co&#251;t avec un
+CV ann&#233;e, et un d&#233;codeur haut de gamme avec beaucoup de CV, rechercher un 3 en CV 7 ne
 fourni pas suffisamment d'informations.
 <P>
-Ce problème se produit plus souvent quand un modèle particulier peut avoir une gamme de version
-en CV 7, et ceux d'une plage qui se chevauchent d'un modèle à l'autre.
+Ce probl&#232;me se produit plus souvent quand un mod&#232;le particulier peut avoir une gamme de version
+en CV 7, et ceux d'une plage qui se chevauchent d'un mod&#232;le &#224; l'autre.
 
-<LI> Pas assez d'informations disponibles sur ce qu'un numéro de version signifie.
+<LI> Pas assez d'informations disponibles sur ce qu'un num&#233;ro de version signifie.
 
 <P>
-Ceci est particulièrement un problème lorsque le numéro de version change, car de nouvelles fonctionnalités ont été ajoutées, mais le numéro de modèle du décodeur reste le même.
-Par exemple, considérez la confusion qui est causée par un fabricant qui ajoute la BEMF* à leur XYZ123 sans l'appeler comme un nouveau modèle. Maintenant, nous constatons que certains décodeurs XYZ123 ont la BEMF, et d'autres pas. En outre, nous constatons qu'il y a deux numéros de version: 23 et 51, et n'avons aucune information officielle sur ce que sont les différences. Il est très difficile de démêler tout cela, et les clients sont très frustrés.
+Ceci est particuli&#232;rement un probl&#232;me lorsque le num&#233;ro de version change, car de nouvelles fonctionnalit&#233;s ont &#233;t&#233; ajout&#233;es, mais le num&#233;ro de mod&#232;le du d&#233;codeur reste le m&#234;me.
+Par exemple, consid&#233;rez la confusion qui est caus&#233;e par un fabricant qui ajoute la BEMF* &#224; leur XYZ123 sans l'appeler comme un nouveau mod&#232;le. Maintenant, nous constatons que certains d&#233;codeurs XYZ123 ont la BEMF, et d'autres pas. En outre, nous constatons qu'il y a deux num&#233;ros de version: 23 et 51, et n'avons aucune information officielle sur ce que sont les diff&#233;rences. Il est tr&#232;s difficile de d&#233;m&#234;ler tout cela, et les clients sont tr&#232;s frustr&#233;s.
 </OL>
 
 <P>
-En plus d'utiliser le numéro de version dans CV 7, DecoderPro peut comparer des valeurs dans d'autres CV spécifiques au fabricant pour identifier le décodeur. Cela peut être très puissant, car les fabricants peuvent utiliser leur CV pour donner autant d'informations disponibles au choix.
+En plus d'utiliser le num&#233;ro de version dans CV 7, DecoderPro peut comparer des valeurs dans d'autres CV sp&#233;cifiques au fabricant pour identifier le d&#233;codeur. Cela peut &#234;tre tr&#232;s puissant, car les fabricants peuvent utiliser leur CV pour donner autant d'informations disponibles au choix.
 <P>
-Malheureusement, les même fabricants qui utilisent des CV supplémentaires pour les informations d'identification donnent rarement le sens des valeurs dans les CV accessibles au public.
-Nous devons ensuite déduire ce que signifie 103 dans un CV particulier, et nous pouvons souvent nous tromper.
+Malheureusement, les m&#234;me fabricants qui utilisent des CV suppl&#233;mentaires pour les informations d'identification donnent rarement le sens des valeurs dans les CV accessibles au public.
+Nous devons ensuite d&#233;duire ce que signifie 103 dans un CV particulier, et nous pouvons souvent nous tromper.
 
 <P>
-Il est important de noter qu'il y a des bonnes raisons commerciales pour que les fabricants aient fait cela avec les informations d'identification à ce jour. Par exemple:
+Il est important de noter qu'il y a des bonnes raisons commerciales pour que les fabricants aient fait cela avec les informations d'identification &#224; ce jour. Par exemple:
 <UL>
-<LI>Les fabricants utilisent souvent la même puce  processeur et le même logiciel dans les modèles de décodeur multiples, il serait trop coûteux de changer la puce pour avoir un code d'identification unique pour chaque modèle spécifique.  
+<LI>Les fabricants utilisent souvent la m&#234;me puce  processeur et le m&#234;me logiciel dans les mod&#232;les de d&#233;codeur multiples, il serait trop co&#251;teux de changer la puce pour avoir un code d'identification unique pour chaque mod&#232;le sp&#233;cifique.  
 <P>
-Mais nous n'avons pas besoin d'une étiquette unique pour chaque modèle. Nous avons seulement besoin d'identifier les CV qui sont présents et ce qu'ils veulent dire; deux décodeurs qui exécutent le même logiciel auront les mêmes CV présents. (Nous considérons comme un cas particulier le nombre de sorties qui sont physiquement disponibles, etc).
+Mais nous n'avons pas besoin d'une &#233;tiquette unique pour chaque mod&#232;le. Nous avons seulement besoin d'identifier les CV qui sont pr&#233;sents et ce qu'ils veulent dire; deux d&#233;codeurs qui ex&#233;cutent le m&#234;me logiciel auront les m&#234;mes CV pr&#233;sents. (Nous consid&#233;rons comme un cas particulier le nombre de sorties qui sont physiquement disponibles, etc).
 
-<LI>Les fabricants sont concernés afin que les utilisateurs et les revendeurs puissent utiliser les informations d'identification afin d'identifier la version " périmée", et d'insister sur les mises à jour gratuite pour la version la plus récente. Ce serait un énorme fardeau économique pour le fabricant, en particulier étant donné que la plupart des demandes peuvent être motivées par un désir d'avoir une «plus récentes et les plus" plutôt que de la nécessité de bug spécifique à fixer.
+<LI>Les fabricants sont concern&#233;s afin que les utilisateurs et les revendeurs puissent utiliser les informations d'identification afin d'identifier la version " p&#233;rim&#233;e", et d'insister sur les mises &#224; jour gratuites pour la version la plus r&#233;cente. Ce serait un &#233;norme fardeau &#233;conomique pour le fabricant, en particulier &#233;tant donn&#233; que la plupart des demandes peuvent &#234;tre motiv&#233;es par un d&#233;sir d'avoir une "plus r&#233;centes et les plus" plut&#244;t que de la n&#233;cessit&#233; de bug sp&#233;cifique &#224; fixer.
 <P>
-Il est important de noter, cependant, que nous n'avons pas besoin d'être en mesure d'identifier la version spécifique du firmware en soi, nous voulons seulement d'identifier les CV programmés nécessaires. Des changements internes ne doivent pas avoir pour effet de modifier l'information d'identification.
+Il est important de noter, cependant, que nous n'avons pas besoin d'&#234;tre en mesure d'identifier la version sp&#233;cifique du firmware en soi, nous voulons seulement d'identifier les CV programm&#233;s n&#233;cessaires. Des changements internes ne doivent pas avoir pour effet de modifier l'information d'identification.
 
 
 </UL>
@@ -86,27 +86,27 @@ Il est important de noter, cependant, que nous n'avons pas besoin d'être en mes
 Que doit faire un fabricant responsable?
 
 <P>
-En règle générale:
+En r&#232;gle g&#233;n&#233;rale:
 <UL>
-<LI> Avoir un plan sur la façon d'identifier l'ensemble des fonctionnalités et des CV d'un décodeur, et de communiquer ce plan aux utilisateurs. Il serait peut-être quelque chose de la forme "vous pouvez regarder dans CV 7 et CV 150 pour identifier les caractéristiques d'un décodeur". Pour faire face à l'histoire des décodeurs passé, etc, il faudra peut-être plus être plus compliqué: " CV 7, CV 150 et CV 188 correspondent à des valeurs possibles sur cette page web". Nous allons trouver un moyen de faire face à tout ce qui peut être décrit en termes de valeurs de CV.
+<LI> Avoir un plan sur la fa&#231;on d'identifier l'ensemble des fonctionnalit&#233;s et des CV d'un d&#233;codeur, et de communiquer ce plan aux utilisateurs. Il serait peut-&#234;tre quelque chose de la forme "vous pouvez regarder dans CV 7 et CV 150 pour identifier les caract&#233;ristiques d'un d&#233;codeur". Pour faire face &#224; l'histoire des d&#233;codeurs pass&#233;, etc, il faudra peut-&#234;tre plus &#234;tre plus compliqu&#233;: " CV 7, CV 150 et CV 188 correspondent &#224; des valeurs possibles sur cette page web". Nous allons trouver un moyen de faire face &#224; tout ce qui peut &#234;tre d&#233;crit en termes de valeurs de CV.
 
-<LI>Comme de nouveaux types de décodeurs sont produits, assurez - vous de publier les informations spécifiques nécessaires pour identifier le décodeur. Cela pourrait être aussi simple que de mettre les valeurs d'identification sur une page web pour le décodeur. (Puisque les valeurs peuvent changer, les mettre dans un manuel d'utilisation est limitée)
+<LI>Comme de nouveaux types de d&#233;codeurs sont produits, assurez - vous de publier les informations sp&#233;cifiques n&#233;cessaires pour identifier le d&#233;codeur. Cela pourrait &#234;tre aussi simple que de mettre les valeurs d'identification sur une page web pour le d&#233;codeur. (Puisque les valeurs peuvent changer, les mettre dans un manuel d'utilisation est limit&#233;e)
 </ UL>
 
-Au-delà de ce qui suit:
+Au-del&#224; de ce qui suit:
 
 <UL>
-<LI> le plus pour le client viendrait si un modèle <em> spécifique </em>
-peut être identifié. Un CV supplémentaire pour ce faire serait idéal, mais toute autre méthode consistant à réduire un décodeur à un modèle 2XYZ123AB serait idéal.
+<LI> le plus pour le client viendrait si un mod&#232;le <em> sp&#233;cifique </em>
+peut &#234;tre identifi&#233;. Un CV suppl&#233;mentaire pour ce faire serait id&#233;al, mais toute autre m&#233;thode consistant &#224; r&#233;duire un d&#233;codeur &#224; un mod&#232;le 2XYZ123AB serait id&#233;al.
 
 <LI>
-Si vous envisagez de séparer la "mise à jour logiciel" des "fonctionnalités", pensez à utiliser des CV distinct pour cela, et peut-être même de ne pas rendre l'information  de la «mise à jour logiciel" disponible aux utilisateurs.
+Si vous envisagez de s&#233;parer la "mise &#224; jour logiciel" des "fonctionnalit&#233;s", pensez &#224; utiliser des CV distinct pour cela, et peut-&#234;tre m&#234;me de ne pas rendre l'information  de la "mise &#224; jour logiciel" disponible aux utilisateurs.
 
 <LI>
-Un moyen facile de gérer les vieux décodeurs lors du passage à une nouvelle version est d'identifier une valeur spécifique de CV 7 qui n'a pas été utilisée, et la définir comme un drapeau indiquant que d'autres CV devraient être consultés pour plus d'informations.
+Un moyen facile de g&#233;rer les vieux d&#233;codeurs lors du passage &#224; une nouvelle version est d'identifier une valeur sp&#233;cifique de CV 7 qui n'a pas &#233;t&#233; utilis&#233;e, et la d&#233;finir comme un drapeau indiquant que d'autres CV devraient &#234;tre consult&#233;s pour plus d'informations.
 
 <LI>
-Lorsque de nouvelles fonctions sont ajoutées à un décodeur, envisager de l'appeler par nouveau modèle. Ayant de nombreuses versions différentes du décodeur XYZ123, certaines avec la BEMF, avec ou sans certaines options d'éclairage spéciaux, parfois sans, etc, ou avec perd le client et les gens qui essaient d'aider les clients avec un logiciel comme DecoderPro. Et pourquoi ne pas accorder de crédit pour les nouvelles fonctionnalités aux personnes qui vous les aurons demander pour le nouveau modèle?
+Lorsque de nouvelles fonctions sont ajout&#233;es &#224; un d&#233;codeur, envisager de l'appeler comme un nouveau mod&#232;le. Ayant de nombreuses versions diff&#233;rentes du d&#233;codeur XYZ123, certaines avec la BEMF, avec ou sans certaines options d'&#233;clairage sp&#233;ciaux, parfois sans, etc, ou avec perd le client et les gens qui essaient d'aider les clients avec un logiciel comme DecoderPro. Et pourquoi ne pas accorder de cr&#233;dit pour les nouvelles fonctionnalit&#233;s aux personnes qui vous les aurons demander pour le nouveau mod&#232;le?
 <p> 
 *BEMF: compensation de charge
 </UL>

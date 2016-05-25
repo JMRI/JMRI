@@ -1,51 +1,48 @@
 // TamsMessage.java
-
 package jmri.jmrix.tams;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Encodes a message to an Tams command station.
  * <P>
- * The {@link TamsReply}
- * class handles the response from the command station.
+ * The {@link TamsReply} class handles the response from the command station.
  * <P>
  *
  * Based on work by Bob Jacobsen
- * @author	Kevin Dickerson  Copyright (C) 2012
- * @version     $Revision: 17977 $
+ *
+ * @author	Kevin Dickerson Copyright (C) 2012
+ * @version $Revision: 17977 $
  */
 public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
-	
+
     static private final int TamsProgrammingTimeout = 10000;
-    
+
     public TamsMessage() {
         super();
     }
-    
+
     // create a new one
-    public  TamsMessage(int i) {
+    public TamsMessage(int i) {
         super(i);
     }
 
     // copy one
-    public  TamsMessage(TamsMessage m) {
+    public TamsMessage(TamsMessage m) {
         super(m);
     }
 
     // from String
-    public  TamsMessage(String m) {
+    public TamsMessage(String m) {
         super(m);
     }
-    
-    public TamsMessage(byte [] packet ) {
-    	this((packet.length));
+
+    public TamsMessage(byte[] packet) {
+        this((packet.length));
         int i = 0; // counter of byte in output message
         int j = 0; // counter of byte in input packet
         setBinary(true);
         // add each byte of the input message
-        for (j=0; j<packet.length; j++) {
+        for (j = 0; j < packet.length; j++) {
             this.setElement(i, packet[i]);
             i++;
         }
@@ -95,42 +92,34 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
-    
+
     static public TamsMessage getReadDirectBitCV(int cv) { //Rxxx
         TamsMessage m = new TamsMessage("xPTRB " + cv);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
-    
+
     static public TamsMessage getWriteDirectBitCV(int cv, int bit, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPTWB " + cv + ", " + bit + ", " + val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
-    
+
     static public TamsMessage getWriteOpsModeCVMsg(int adr, int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPD " + adr + ", " + cv + ", " + val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
-    
+
     static public TamsMessage getWriteOpsModeAccCVMsg(int adr, int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPA " + adr + ", " + cv + ", " + val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
-    
-    static Logger log = LoggerFactory.getLogger(TamsMessage.class.getName());
 }
 
 /* @(#)TamsMessage.java */
-
-
-
-
-
-

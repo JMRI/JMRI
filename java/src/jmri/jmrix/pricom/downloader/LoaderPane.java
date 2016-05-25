@@ -1,58 +1,61 @@
-// LoaderPane.java
-
 package jmri.jmrix.pricom.downloader;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.FlowLayout;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
-
-import javax.swing.*;
-import java.util.ResourceBundle;
-import java.io.*;
-
-import java.util.Enumeration;
-import java.util.Vector;
-import java.io.OutputStream;
+import java.awt.FlowLayout;
 import java.io.DataInputStream;
-
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Enumeration;
+import java.util.ResourceBundle;
+import java.util.Vector;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Pane for downloading software updates to PRICOM products
- * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2005
  */
 public class LoaderPane extends javax.swing.JPanel {
 
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");
 
     Vector<String> portNameVector = null;
-    SerialPort  activeSerialPort = null;
+    SerialPort activeSerialPort = null;
 
-    Thread      readerThread;
+    Thread readerThread;
     //private     boolean opened = false;
     DataInputStream serialStream = null;
-    
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
-        justification="Class is no longer active, no hardware with which to test fix")
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
+            justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
-    JComboBox   portBox = new JComboBox();
-    JButton     openPortButton = new JButton();
-    JTextArea   traffic = new JTextArea();
+    JComboBox<String> portBox = new JComboBox<String>();
+    JButton openPortButton = new JButton();
+    JTextArea traffic = new JTextArea();
 
     JFileChooser chooser = jmri.jmrit.XmlFile.userFileChooser();
-    JButton     fileButton;
-    JLabel      inputFileName = new JLabel("");
-    JTextArea   comment = new JTextArea();
+    JButton fileButton;
+    JLabel inputFileName = new JLabel("");
+    JTextArea comment = new JTextArea();
 
-    JButton         loadButton;
-    JProgressBar    bar;
-    JLabel          status = new JLabel("");
-    
+    JButton loadButton;
+    JProgressBar bar;
+    JLabel status = new JLabel("");
+
     PdiFile pdiFile;
 
     // populate the comm port part of GUI, invoked as part of startup
@@ -61,25 +64,25 @@ public class LoaderPane extends javax.swing.JPanel {
         portBox.setToolTipText(res.getString("TipSelectPort"));
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         Vector<String> v = getPortNames();
-        
-        for (int i=0; i<v.size(); i++)
+
+        for (int i = 0; i < v.size(); i++) {
             portBox.addItem(v.elementAt(i));
-        
+        }
+
         openPortButton.setText(res.getString("ButtonOpen"));
         openPortButton.setToolTipText(res.getString("TipOpenPort"));
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
-                //} catch (jmri.jmrix.SerialConfigException ex) {
-                //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
+                    //} catch (jmri.jmrix.SerialConfigException ex) {
+                    //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
+                } catch (java.lang.UnsatisfiedLinkError ex) {
+                    log.error("Error while opening port.  Did you select the right one?\n" + ex);
                 }
-                catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n"+ex);
-                    }
-                }
-            });
-            
+            }
+        });
+
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
         p1.add(new JLabel(res.getString("LabelSerialPort")));
@@ -95,7 +98,7 @@ public class LoaderPane extends javax.swing.JPanel {
             p.add(l);
             add(p);
         }
-        
+
         traffic.setEditable(false);
         traffic.setEnabled(true);
         traffic.setText("\n\n\n\n"); // just to save some space
@@ -105,13 +108,13 @@ public class LoaderPane extends javax.swing.JPanel {
     /**
      * Open button has been pushed, create the actual display connection
      */
-    void openPortButtonActionPerformed(java.awt.event.ActionEvent e){
+    void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
         // can't change this anymore
         openPortButton.setEnabled(false);
         portBox.setEnabled(false);
         // Open the port
-        openPort((String)portBox.getSelectedItem(), "JMRI");
+        openPort((String) portBox.getSelectedItem(), "JMRI");
         //
         status.setText(res.getString("StatusSelectFile"));
         fileButton.setEnabled(true);
@@ -121,34 +124,36 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     synchronized void sendBytes(byte[] bytes) {
-        if (log.isDebugEnabled()) log.debug("Send "+bytes.length+": "+jmri.util.StringUtil.hexStringFromBytes(bytes));
+        if (log.isDebugEnabled()) {
+            log.debug("Send " + bytes.length + ": " + jmri.util.StringUtil.hexStringFromBytes(bytes));
+        }
         try {
             // send the STX at the start
             byte startbyte = 0x02;
             ostream.write(startbyte);
 
             // send the rest of the bytes
-            for (int i=0; i<bytes.length; i++) {
+            for (int i = 0; i < bytes.length; i++) {
                 // expand as needed
                 switch (bytes[i]) {
-                case 0x01:
-                case 0x02:
-                case 0x03:
-                case 0x06:
-                case 0x15:
-                    ostream.write(0x01);
-                    ostream.write(bytes[i]+64);
-                    break;
-                default:
-                    ostream.write(bytes[i]);
-                    break;
+                    case 0x01:
+                    case 0x02:
+                    case 0x03:
+                    case 0x06:
+                    case 0x15:
+                        ostream.write(0x01);
+                        ostream.write(bytes[i] + 64);
+                        break;
+                    default:
+                        ostream.write(bytes[i]);
+                        break;
                 }
             }
 
             byte endbyte = 0x03;
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: "+e);
+            log.error("Exception on output: " + e);
         }
     }
 
@@ -156,28 +161,27 @@ public class LoaderPane extends javax.swing.JPanel {
      * Internal class to handle the separate character-receive thread
      *
      */
-     class LocalReader extends Thread {
+    class LocalReader extends Thread {
+
         /**
-         * Handle incoming characters.  This is a permanent loop,
-         * looking for input messages in character form on the
-         * stream connected to the PortController via <code>connectPort</code>.
-         * Terminates with the input stream breaking out of the try block.
+         * Handle incoming characters. This is a permanent loop, looking for
+         * input messages in character form on the stream connected to the
+         * PortController via <code>connectPort</code>. Terminates with the
+         * input stream breaking out of the try block.
          */
         public void run() {
             // have to limit verbosity!
 
             try {
-              nibbleIncomingData();            // remove any pending chars in queue
-            }
-            catch (java.io.IOException e) {
-              log.warn("nibble: Exception: "+e.toString());
+                nibbleIncomingData();            // remove any pending chars in queue
+            } catch (java.io.IOException e) {
+                log.warn("nibble: Exception: " + e.toString());
             }
             while (true) {   // loop permanently, stream close will exit via exception
                 try {
                     handleIncomingData();
-                }
-                catch (java.io.IOException e) {
-                    log.warn("run: Exception: "+e.toString());
+                } catch (java.io.IOException e) {
+                    log.warn("run: Exception: " + e.toString());
                 }
             }
         }
@@ -185,20 +189,22 @@ public class LoaderPane extends javax.swing.JPanel {
         static final int maxMsg = 80;
         byte inBuffer[];
 
-        void nibbleIncomingData() throws java.io.IOException{
+        void nibbleIncomingData() throws java.io.IOException {
             long nibbled = 0;                         // total chars chucked
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
             ostream = activeSerialPort.getOutputStream();
 
             // purge contents, if any
             int count = serialStream.available();     // check for pending chars
-            while ( count > 0) {                      // go until gone
+            while (count > 0) {                      // go until gone
                 serialStream.skip(count);             // skip the pending chars
                 nibbled += count;                     // add on this pass count
                 count = serialStream.available();     // any more left?
             }
 
-            if (log.isDebugEnabled()) log.debug("nibbled "+nibbled+" from input stream");
+            if (log.isDebugEnabled()) {
+                log.debug("nibbled " + nibbled + " from input stream");
+            }
         }
 
         void handleIncomingData() throws java.io.IOException {
@@ -207,10 +213,12 @@ public class LoaderPane extends javax.swing.JPanel {
 
             StringBuffer mbuff = new StringBuffer();
             // wait for start of message
-            int dataChar; 
-            while ( (dataChar = serialStream.readByte()) != 0x02) {
+            int dataChar;
+            while ((dataChar = serialStream.readByte()) != 0x02) {
                 mbuff.append(dataChar);
-                if (log.isDebugEnabled()) log.debug(" rcv char "+dataChar);
+                if (log.isDebugEnabled()) {
+                    log.debug(" rcv char " + dataChar);
+                }
                 if (dataChar == 0x0d) {
                     // Queue the string for display
                     javax.swing.SwingUtilities.invokeLater(new Notify(mbuff));
@@ -229,8 +237,10 @@ public class LoaderPane extends javax.swing.JPanel {
                 }
                 inBuffer[i] = char1;
             }
-            if (log.isDebugEnabled()) log.debug("received "+(i+1)+" bytes "+jmri.util.StringUtil.hexStringFromBytes(inBuffer));
-            
+            if (log.isDebugEnabled()) {
+                log.debug("received " + (i + 1) + " bytes " + jmri.util.StringUtil.hexStringFromBytes(inBuffer));
+            }
+
             // and process the message for possible replies, etc
             nextMessage(inBuffer, i);
         }
@@ -243,7 +253,7 @@ public class LoaderPane extends javax.swing.JPanel {
          * Send the next message of the download.
          */
         void nextMessage(byte[] buffer, int length) {
-            
+
             // if first message, get size & start
             if (isUploadReady(buffer)) {
                 msgSize = getDataSize(buffer);
@@ -251,11 +261,15 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             // if not initialized yet, just ignore message
-            if (!init) return;
+            if (!init) {
+                return;
+            }
 
             // see if its a request for more data
-            if (! (isSendNext(buffer) || isUploadReady(buffer)) ) {
-                if (log.isDebugEnabled()) log.debug("extra message, ignore");
+            if (!(isSendNext(buffer) || isUploadReady(buffer))) {
+                if (log.isDebugEnabled()) {
+                    log.debug("extra message, ignore");
+                }
                 return;
             }
 
@@ -301,13 +315,17 @@ public class LoaderPane extends javax.swing.JPanel {
          * Should be invoked on the Swing thread
          */
         void updateGUI() {
-            if (log.isDebugEnabled()) log.debug("updateGUI with "+msgCount+" / "+(pdiFile.length()/msgSize));
-            if (!init) return;
+            if (log.isDebugEnabled()) {
+                log.debug("updateGUI with " + msgCount + " / " + (pdiFile.length() / msgSize));
+            }
+            if (!init) {
+                return;
+            }
 
             status.setText(res.getString("StatusDownloading"));
             // update progress bar
             msgCount++;
-            bar.setValue(100*msgCount*msgSize/pdiFile.length());
+            bar.setValue(100 * msgCount * msgSize / pdiFile.length());
 
         }
 
@@ -317,8 +335,12 @@ public class LoaderPane extends javax.swing.JPanel {
          * Should be invoked on the Swing thread
          */
         void enableGUI() {
-            if (log.isDebugEnabled()) log.debug("enableGUI");
-            if (!init) log.error("enableGUI with init false");
+            if (log.isDebugEnabled()) {
+                log.debug("enableGUI");
+            }
+            if (!init) {
+                log.error("enableGUI with init false");
+            }
 
             // enable GUI
             loadButton.setEnabled(true);
@@ -327,23 +349,25 @@ public class LoaderPane extends javax.swing.JPanel {
         }
 
         class Notify implements Runnable {
+
             Notify(StringBuffer b) {
                 message = b.toString();
             }
-        
+
             Notify(byte[] b) {
                 message = jmri.util.StringUtil.hexStringFromBytes(b);
             }
-            
+
             Notify(byte[] b, int length) {
-                byte [] temp = new byte[length];
-                for (int i = 0; i< length ; i++)
+                byte[] temp = new byte[length];
+                for (int i = 0; i < length; i++) {
                     temp[i] = b[i];
+                }
                 message = jmri.util.StringUtil.hexStringFromBytes(temp);
             }
-            
+
             String message;
-        
+
             /**
              * when invoked, format and display the message
              */
@@ -351,7 +375,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 traffic.setText(message);
             }
         } // end class Notify
-     } // end class LocalReader
+    } // end class LocalReader
 
     // use deprecated stop method to stop thread,
     // which will be sitting waiting for input
@@ -359,13 +383,17 @@ public class LoaderPane extends javax.swing.JPanel {
     void stopThread(Thread t) {
         t.stop();
     }
-        
+
     public void dispose() {
         // stop operations if in process
-        if (readerThread!=null) stopThread(readerThread);
+        if (readerThread != null) {
+            stopThread(readerThread);
+        }
 
         // release port
-        if (activeSerialPort != null) activeSerialPort.close();
+        if (activeSerialPort != null) {
+            activeSerialPort.close();
+        }
         serialStream = null;
         ostream = null;
         activeSerialPort = null;
@@ -374,7 +402,7 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     @SuppressWarnings("unchecked")
-	public Vector<String> getPortNames() {
+    public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
@@ -382,24 +410,24 @@ public class LoaderPane extends javax.swing.JPanel {
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
-            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL )
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
+            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
+            {
+                portNameVector.addElement(id.getName());
+            }
         }
         return portNameVector;
     }
 
-    public String openPort(String portName, String appName)  {
+    public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
                 activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            }
-            catch (PortInUseException p) {
+            } catch (PortInUseException p) {
                 handlePortBusy(p, portName);
-                return "Port "+p+" in use already";
+                return "Port " + p + " in use already";
             }
 
             // try to set it for communication via SerialDriver
@@ -409,8 +437,8 @@ public class LoaderPane extends javax.swing.JPanel {
                 // Doc says 7 bits, but 8 seems needed
                 activeSerialPort.setSerialPortParams(speed, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
-                return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
+                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set RTS high, DTR high
@@ -421,8 +449,8 @@ public class LoaderPane extends javax.swing.JPanel {
             activeSerialPort.setFlowControlMode(0);
 
             // set timeout
-            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
@@ -430,37 +458,35 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // purge contents, if any
             int count = serialStream.available();
-            log.debug("input stream shows "+count+" bytes available");
-            while ( count > 0) {
+            log.debug("input stream shows " + count + " bytes available");
+            while (count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
             }
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName+" port opened at "
-                         +activeSerialPort.getBaudRate()+" baud, sees "
-                         +" DTR: "+activeSerialPort.isDTR()
-                         +" RTS: "+activeSerialPort.isRTS()
-                         +" DSR: "+activeSerialPort.isDSR()
-                         +" CTS: "+activeSerialPort.isCTS()
-                         +"  CD: "+activeSerialPort.isCD()
-                         );
+                log.info(portName + " port opened at "
+                        + activeSerialPort.getBaudRate() + " baud, sees "
+                        + " DTR: " + activeSerialPort.isDTR()
+                        + " RTS: " + activeSerialPort.isRTS()
+                        + " DSR: " + activeSerialPort.isDSR()
+                        + " CTS: " + activeSerialPort.isCTS()
+                        + "  CD: " + activeSerialPort.isCD()
+                );
             }
 
             //opened = true;
-
-        }
-        catch (Exception ex) {
-            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
+        } catch (Exception ex) {
+            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
-            return "Unexpected error while opening port "+portName+": "+ex;
+            return "Unexpected error while opening port " + portName + ": " + ex;
         }
         return null; // indicates OK return
     }
 
-    void handlePortBusy(gnu.io.PortInUseException p, String port ) {
-        log.error("Port "+p+" in use, cannot open");
+    void handlePortBusy(gnu.io.PortInUseException p, String port) {
+        log.error("Port " + p + " in use, cannot open");
     }
 
     public LoaderPane() {
@@ -497,7 +523,7 @@ public class LoaderPane extends javax.swing.JPanel {
             p.add(l);
             add(p);
         }
-        
+
         comment.setEditable(false);
         comment.setEnabled(true);
         comment.setText("\n\n\n\n"); // just to save some space
@@ -521,11 +547,10 @@ public class LoaderPane extends javax.swing.JPanel {
 
             add(p);
         }
-        
 
         bar = new JProgressBar();
         add(bar);
-        
+
         add(new JSeparator());
 
         {
@@ -542,14 +567,18 @@ public class LoaderPane extends javax.swing.JPanel {
     void selectInputFile() {
         chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(this);
-        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
+        if (retVal != JFileChooser.APPROVE_OPTION) {
+            return;  // give up if no file selected
+        }
         inputFileName.setText(chooser.getSelectedFile().getPath());
 
         // now read the file
         pdiFile = new PdiFile(chooser.getSelectedFile());
         try {
             pdiFile.open();
-        } catch (IOException e) { log.error("Error opening file: "+e); }
+        } catch (IOException e) {
+            log.error("Error opening file: " + e);
+        }
 
         comment.setText(pdiFile.getComment());
         status.setText(res.getString("StatusDoDownload"));
@@ -568,56 +597,65 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     long CRC_char(long crcin, byte ch) {
-	    long crc;
+        long crc;
 
-	    crc = crcin;                    // copy incoming for local use
+        crc = crcin;                    // copy incoming for local use
 
-	    crc = swap(crc);                // swap crc bytes
-            crc ^= ((long)ch & 0xff);       // XOR on the byte, no sign extension
-	    crc ^= ((crc&0xFF) >> 4);
+        crc = swap(crc);                // swap crc bytes
+        crc ^= ((long) ch & 0xff);       // XOR on the byte, no sign extension
+        crc ^= ((crc & 0xFF) >> 4);
 
-	    /*  crc:=crc xor (swap(lo(crc)) shl 4) xor (lo(crc) shl 5);     */
-	    crc = (crc ^ (swap((crc&0xFF)) << 4)) ^ ((crc&0xFF) << 5);
-            crc &= 0xffff;                  // make sure to mask off anything above 16 bits
-	    return crc;
+        /*  crc:=crc xor (swap(lo(crc)) shl 4) xor (lo(crc) shl 5);     */
+        crc = (crc ^ (swap((crc & 0xFF)) << 4)) ^ ((crc & 0xFF) << 5);
+        crc &= 0xffff;                  // make sure to mask off anything above 16 bits
+        return crc;
     }
 
     long swap(long val) {
-        long low = val &0xFF;
-        long high = (val>>8)&0xFF;
-        return low*256+high;
+        long low = val & 0xFF;
+        long high = (val >> 8) & 0xFF;
+        return low * 256 + high;
     }
-
 
     /**
      * Insert the CRC for a block of characters in a buffer
      * <P>
-     * The last two bytes of the buffer hold the checksum, and are
-     * not included in the checksum.
+     * The last two bytes of the buffer hold the checksum, and are not included
+     * in the checksum.
      */
     void CRC_block(byte[] buffer) {
-	    long crc = 0;
+        long crc = 0;
 
-	    for (int r=0;r<buffer.length-2;r++) {
-		    crc = CRC_char(crc, buffer[r]);	// do this character
-	    }
+        for (int r = 0; r < buffer.length - 2; r++) {
+            crc = CRC_char(crc, buffer[r]);	// do this character
+        }
 
-	    // store into buffer
-	    byte high = (byte) ((crc>>8)&0xFF);
-	    byte low  = (byte) (crc&0xFF);
-	    buffer[buffer.length-2] = low;
-	    buffer[buffer.length-1] = high;
+        // store into buffer
+        byte high = (byte) ((crc >> 8) & 0xFF);
+        byte low = (byte) (crc & 0xFF);
+        buffer[buffer.length - 2] = low;
+        buffer[buffer.length - 1] = high;
     }
 
     /**
      * Check to see if message starts transmission
      */
     boolean isUploadReady(byte[] buffer) {
-        if (buffer[0] != 31) return false;
-        if (buffer[1] != 32) return false;
-        if (buffer[2] != 99) return false;
-        if (buffer[3] != 00) return false;
-        if ( ! ( (buffer[4] == 44) || (buffer[4] == 45) ) ) return false;
+        if (buffer[0] != 31) {
+            return false;
+        }
+        if (buffer[1] != 32) {
+            return false;
+        }
+        if (buffer[2] != 99) {
+            return false;
+        }
+        if (buffer[3] != 00) {
+            return false;
+        }
+        if (!((buffer[4] == 44) || (buffer[4] == 45))) {
+            return false;
+        }
         return true;
     }
 
@@ -625,12 +663,24 @@ public class LoaderPane extends javax.swing.JPanel {
      * Check to see if this is a request for the next block
      */
     boolean isSendNext(byte[] buffer) {
-        if (buffer[0] != 31) return false;
-        if (buffer[1] != 32) return false;
-        if (buffer[2] != 99) return false;
-        if (buffer[3] != 00) return false;
-        if (buffer[4] != 22) return false;
-        if (log.isDebugEnabled()) log.debug("OK isSendNext");
+        if (buffer[0] != 31) {
+            return false;
+        }
+        if (buffer[1] != 32) {
+            return false;
+        }
+        if (buffer[2] != 99) {
+            return false;
+        }
+        if (buffer[3] != 00) {
+            return false;
+        }
+        if (buffer[4] != 22) {
+            return false;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("OK isSendNext");
+        }
         return true;
     }
 
@@ -638,9 +688,13 @@ public class LoaderPane extends javax.swing.JPanel {
      * Get output data length from 1st message
      */
     int getDataSize(byte[] buffer) {
-        if (buffer[4] == 44) return 64;
-        if (buffer[4] == 45) return 128;
-        log.error("Bad length byte: "+buffer[3]);
+        if (buffer[4] == 44) {
+            return 64;
+        }
+        if (buffer[4] == 45) {
+            return 128;
+        }
+        log.error("Bad length byte: " + buffer[3]);
         return 64;
     }
 
@@ -648,11 +702,11 @@ public class LoaderPane extends javax.swing.JPanel {
      * Return a properly formatted boot message, complete with CRC
      */
     byte[] bootMessage() {
-        byte[] buffer = new byte[] {99,0,0,0,0};
+        byte[] buffer = new byte[]{99, 0, 0, 0, 0};
         CRC_block(buffer);
         return buffer;
     }
 
-    static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
 
 }

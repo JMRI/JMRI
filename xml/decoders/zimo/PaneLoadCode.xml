@@ -1,28 +1,30 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Load Code">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Load Code</name>
   <column>
     <display item="Decoder ID 1"/>
     <display item="Decoder ID 2"/>
     <display item="Decoder ID 3"/>
     <display item="Decoder ID 4"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Load Code 1"/>
     <display item="Load Code 2"/>
     <display item="Load Code 3"/>
     <display item="Load Code 4"/>
   </column>
+  <name xml:lang="it">Carico Codici</name>
 </pane>

@@ -1,68 +1,101 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><!-- Sidebar --><!-- This is the common sidebar definition for Manual pages --></head>
-<body><hr class="hide">
+<!-- Sidebar -->
+	  <hr class="hide">
+	  <div id="mBody">
+	  <div id="side"> <!-- Block of text on left side of page for /help/en/manual Index page -->
 
-<div id="mBody">
+<div id="manual" style="text-align: center;">JMRI Manuals</div>
 
-<div id="side"> <!-- Block of text at top -->
-    <div style="text-align: center;"><strong>The JMRI Manual</strong></div>
+<dl>
 
-  <div style="text-align: right;">
+<dt><h3>PDF</h3></dt>
       <dd>
       <ul>
-      <li> <a href="pdf/jmri_Man_2_12.pdf">Download JMRI Guide 2.12</a></li>
-      <li><a href="pdf/DP3_Man_2_14.pdf">Download DP3 2.14</a></li>
-      <li><a href="pdf/DP_man_3-0.pdf">Download  DP Guide 3.0</a></li>
-      <li><a href="pdf/DP3_Man_3-0.pdf">Download DP3 Guide</a></li>
-      <li><a href="pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Download JMRI Ops Guide 3.0</a></li>
-      <li><a href="pdf/DP3_Man_3-2.pdf">Download DP3 Guide 3.2</a></li>
-      <li><a href="pdf/DP_man_3-2.pdf">Download DP Guide 3.2</a></li><li><a href="pdf/DP3_Man_3-4.pdf">Download DP3 Guide &nbsp;3.4</a></li>
+        <li><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf">DP3 Guide v3.4</a></li>
+        <li><a href="http://jmri.org/manual/pdf/DP_man_3-4.pdf">DP Guide v3.4</a></li>
+        <!-- hide old manuals <li><a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">DP3 Guide v3.2</a></li>
+        <li><a href="http://jmri.org/manual/pdf/DP_man_3-2.pdf">DP Guide v3.2</a></li>
+        <li><a href="http://jmri.org/manual/pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">OP Guide v3.0</a></li>
+        <li><a href="http://jmri.org/manual/pdf/DP3_Man_3-0.pdf">DP3 Guide v3.0</a></li>
+        <li><a href="http://jmri.org/manual/pdf/DP_man_3-0.pdf">DP Guide v3.0</a></li> -->
+        <li><a href="http://jmri.org/manual/pdf/DP3_Man_2_14.pdf">DP3 Guide v2.14</a></li>
       </ul>
       </dd>
-    </div>
 
-<dl><!-- main table of contents -->
+<h3>Online</h3>
 
- <div style="text-align: center;"><strong>JMRI® User's Guides</strong></div>
-
-<dt>JMRI® Version 2.12</dt>
-    <dd style="font-weight: bold;">
+<dt>JMRI&reg; v4.x</dt>
+  <dd>
     <ul>
-    <li><a href="JMRI_2-12_Manual/index.shtml">JMRI® Guide 2.12</a></li>
+    <li style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg; v4</a></li>
+    <li style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro v4</a></li>
+    </ul>
+  </dd>
 
+<dt>JMRI&reg; v3.10</dt>
+  <dd>
+    <ul>
+    <li style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
+    <li style="font-weight: bold;"><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+    <li style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro</li>
+    </ul>
+  </dd>
+
+<!-- 2015/12: hide old intermediate version manuals, too confusing to new users, unnecessary for veterans
+<dt>JMRI&reg; v3.4</dt>
+    <dd>
+    <ul>
+    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
+    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_JMRI_OPS_UsersGuide/index.shtml">Operations</a></li>
     </ul>
     </dd>
-    
-<dt>JMRI® Version 2.14</dt>
-    <dd style="font-weight: bold;">
-    <ul>
-    <li><a href="JMRI_2-14_manual/index.shtml">JMRI® Guide 2.14.1</a></li>
-    <li><a href="DP3_2-14_manual/index.shtml">DecoderPro3® 2.14</a></li>
-    </ul>
-    </dd>
-    
-<dt>JMRI® Version 3.0</dt>
-    <dd style="font-weight: bold;">
-      <ul>
-        <li><a href="3-0_DecoderPro/index.shtml">DecoderPro® 3.0</a></li>
-        <li><a href="3-0_DecoderPro3/index.shtml">DecoderPro3® 3.0</a></li>
-        <li><a href="3-0_JMRI_OPS_UsersGuide/index.shtml">JMRI® Operations 3.0</a></li>
-      </ul>
-    </dd>
 
-<dt>JMRI® Version 3.2 </dt>
+<dt>JMRI&reg; v3.2</dt>
 	<dd style="font-weight: bold;">
     <ul>
-    	<li><a href="3-2_DecoderPro3/index.shtml">DecoderPro3®  3.2</a></li>
-        <li><a href="3-2_DecoderPro/index.shtml">DecoderPro®  3.2</a></li><li><a href="3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI Operations Users Guide 3.2</a></li>
-     </ul></dd><dt>JMRI® Version 3.4 </dt><dd>
-    <ul><li style="font-weight: bold;"><a href="3-4_DecoderPro3/index.shtml">DecoderPro3®  3.4</a></li><li style="font-weight: bold;"><a href="3-4_DecoderPro/index.shtml">DecoderPro®  3.4</a></li><li style="font-weight: bold;"><a href="3-4_JMRI_OPS_UsersGuide/index.shtml" target="_blank">JMRI Operations Users Guide 3.4</a></li></ul>
-     </dd><dd>
+    	<li><a href="http://jmri.org/manual/3-2_DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
+      <li><a href="http://jmri.org/manual/3-2_DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+      <li><a href="3-2_JMRI_OPS_UsersGuide/index.shtml">Operations</a></li>
+     </ul>
      </dd>
-    
-  </dl>
-<dl>
+
+<dt>JMRI&reg; v3.0</dt>
+    <dd style="font-weight: bold;">
+      <ul>
+        <li><a href="http://jmri.org/manual/3-0_DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
+        <li><a href="http://jmri.org/manual/3-0_DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+        <li><a href="http://jmri.org/manual/3-0_JMRI_OPS_UsersGuide/index.shtml">Operations</a></li>
+      </ul>
+    </dd>
+ end of hidden list -->
+
+<dt>JMRI&reg; v2.14</dt>
+    <dd style="font-weight: bold;">
+    <ul>
+    <li><a href="http://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg; Guide</a></li>
+    <li><a href="http://jmri.org/manual/DP3_2-14_manual/index.shtml">DecoderPro3&reg;</a></li>
+    </ul>
+    </dd>
+
+<!-- <dt>JMRI&reg; v2.12</dt>
+    <dd style="font-weight: bold;">
+    <ul>
+    <li><a href="http://jmri.org/manual/JMRI_2-12_Manual/index.shtml">JMRI&reg; Guide</a></li>
+    </ul>
+    </dd> -->
+
+<dt><h3>Supported Computers</h3></dt>
+    <dd> 
+    <ul>
+		<li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+		<li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+		<li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
+		<li><a href="../html/setup/index.shtml">Setup JMRI</a>
+    </ul>
+    </dd>  
+  
 </dl>
-</div>
+
+</div> <!-- close #manual -->
+</div> <!-- close #side -->
 <!-- /Sidebar -->
-</div></body></html>

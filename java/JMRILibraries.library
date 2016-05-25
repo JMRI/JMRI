@@ -5,6 +5,7 @@
   <class>
     <path>[lib/javacsv.jar]</path>
     <path>[lib/xercesImpl.jar]</path>
+    <path>[lib/jdom-2.0.5.jar]</path>
     <path>[lib/jdom.jar]</path>
     <path>[lib/log4j.jar]</path>
     <path>[lib/jhall.jar]</path>
@@ -14,7 +15,6 @@
     <path>[lib/jython.jar]</path>
     <path>[lib/jinput.jar]</path>
     <path>[lib/vecmath.jar]</path>
-    <path>[lib/activation.jar]</path>
     <path>[lib/mailapi.jar]</path>
     <path>[lib/smtp.jar]</path>
     <path>[lib/jfcunit.jar]</path>

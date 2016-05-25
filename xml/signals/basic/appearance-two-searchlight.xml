@@ -76,15 +76,26 @@
       <show>yellow</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-290.gif</imagelink>
     </appearance>
+    
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/two-high-dark.gif</imagelink>
+    </appearance>
+
   </appearances>
   
   <specificappearances><!-- Start of Specific Appearances list -->
      <danger>
         <aspect>Stop</aspect>
      </danger>
-     <held>
-        <aspect>Stop</aspect>
-     </held>
+    <held>
+      <aspect>Stop</aspect>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/two-high-held.gif</imagelink>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
   </specificappearances><!-- End of Specific Appearances list -->
   
     <aspectMappings><!-- Start of Aspect Mapping -->
@@ -92,12 +103,13 @@
     <aspectMapping>
      <advancedAspect>Stop</advancedAspect>
      <ourAspect>Approach</ourAspect>
-     <ourAspect>Diverge Approach</ourAspect>
+     <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
      <advancedAspect>Approach</advancedAspect>
      <ourAspect>Clear</ourAspect>
+     <ourAspect>Diverging Clear</ourAspect> 
     </aspectMapping>
 
 

@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OpenLcbCanSendFrame.shtml,v 1.2 2010/09/19 21:00:08 jacobsen Exp $ -->
+<!--  $Id$ --> -->
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- Translated  by Blorec Hervé le 2011-10-28--> 
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14--> 
 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Send CAN Frame
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help send loconet packets">
 
@@ -39,76 +39,76 @@ L'outil "Envoyer trame OpenLCB"  vous permet d'envoyer directement
 et certains types de messages OpenLCB.
 
 <p> Il fonctionne mieux en combinaison avec l'option
-"Afficher des données brutes" dans la fenêtre du moniteur,
-parce que les paquets sont entrés ici en format hexadécimal .
+"Afficher des donn&#233;es brutes" dans la fen&#234;tre du moniteur,
+parce que les paquets sont entr&#233;s ici en format hexad&#233;cimal .
 
 <p>
-La section supérieure de la fenêtre vous permet d'envoyer une trame unique.
-Il suffit de taper le contenu du paquet de données en tant que
-nombres hexadécimaux, par exemple "83 7C". Si vous voulez spécifier
-le contenu d'en-tête, faites précéder le paquet de données avec la tête dans
-"()" Caractères ou «[]» caractères pour un en-tête standard ou étendu,
-respectivement. (OpenLCB utilise uniquement l'en-tête étendu, mais nous
-permet d'envoyer les deux de sorte que vous pouvez les expérimenter).
-Une fois que vous avez entré le paquet, cliquez sur "envoyer".
+La section sup&#233;rieure de la fen&#234;tre vous permet d'envoyer une trame unique.
+Il suffit de taper le contenu du paquet de donn&#233;es en tant que
+nombres hexad&#233;cimaux, par exemple "83 7C". Si vous voulez sp&#233;cifier
+le contenu d'en-t&#234;te, faites pr&#233;c&#233;der le paquet de donn&#233;es avec la t&#234;te dans
+"()" Caract&#232;res ou «[]» caract&#232;res pour un en-t&#234;te standard ou &#233;tendu,
+respectivement. (OpenLCB utilise uniquement l'en-t&#234;te &#233;tendu, mais nous
+permet d'envoyer les deux de sorte que vous pouvez les exp&#233;rimenter).
+Une fois que vous avez entr&#233; le paquet, cliquez sur "envoyer".
 <p>
-La deuxième section vous permet d'entrer d'une à quatre trames
-qui seront envoyées à plusieurs reprises dans l'ordre, avec des retards définis par l'utilisateur entre les deux envois.
-Appuyez sur le bouton "Go" pour démarrer la séquence de transmission, et appuyez de nouveau
-pour arrêter la séquence.
+La deuxi&#232;me section vous permet d'entrer d'une &#224; quatre trames
+qui seront envoy&#233;es &#224; plusieurs reprises dans l'ordre, avec des retards d&#233;finis par l'utilisateur entre les deux envois.
+Appuyez sur le bouton "Go" pour d&#233;marrer la s&#233;quence de transmission, et appuyez de nouveau
+pour arr&#234;ter la s&#233;quence.
 
 <p>
-Ci-dessous qui sont des sections pour  envoyer des messages OpenLCB divers.
+Ci-dessoussont des sections pour  envoyer des messages OpenLCB divers.
 
 <p>
-Dans "Envoyer cadre spécial",le bouton "Envoyer CIM" formates en place une trame
-"CIM" de l'alias source de nœud que vous fournissez et l'envoie ensuite.
-Cela fait partie de la technique d'allocation OpenLCB alias nœud
+Dans "Envoyer cadre sp&#233;cial",le bouton "Envoyer CIM" formates en place une trame
+"CIM" de l'alias source de noeud que vous fournissez et l'envoie ensuite.
+Cela fait partie de la technique d'allocation OpenLCB alias noeud
 
 <p>
 
 Dans le champ "Envoyer un message OpenLCB";, vous pouvez
-formater et envoyer des trames qui contiennent des messages spécifiques OpenLCB:
+formater et envoyer des trames qui contiennent des messages sp&#233;cifiques OpenLCB:
 <ul>
-<li> "Envoyer Vérifiez Nœud";: en utilisant l'alias de source
-que vous avez fournie dans la section supérieure
-et un ID de nœud spécifié ici, cela envoie une demande de vérification de la réponse du noeud.
+<li> "Envoyer V&#233;rifiez Noeud";: en utilisant l'alias de source
+que vous avez fournie dans la section sup&#233;rieure
+et un ID de noeud sp&#233;cifi&#233; ici, cela envoie une demande de v&#233;rification de la r&#233;ponse du noeud.
 
-<li> "Envoyer Demande Événements": en utilisant l'alias de source que vous avez fournie dans la section supérieure
-et un ID de nœud spécifié ici, cela envoie une demande pour obtenir des renseignements sur les nœuds produits et consommé par le nœud.
+<li> "Envoyer Demande &#233;v&#233;nements": en utilisant l'alias de source que vous avez fournie dans la section sup&#233;rieure
+et un ID de nœud sp&#233;cifi&#233; ici, cela envoie une demande pour obtenir des renseignements sur les noeuds produits et consomm&#233; par le noeud.
 
-<li> "Envoyer Demande Utilisateurs": En utilisant l'alias de source que vous avez fournie dans la section supérieure
-et un ID d'événement spécifié ici, cela envoie une demande d'une réponse de tout nœud qui utilise cette ID d'événement.
+<li> "Envoyer Demande Utilisateurs": En utilisant l'alias de source que vous avez fournie dans la section sup&#233;rieure
+et un ID d'&#233;v&#233;nement sp&#233;cifi&#233; ici, cela envoie une demande d'une r&#233;ponse de tout noeud qui utilise cette ID d'&#233;v&#233;nement.
 
-<li> "Envoyer Demande Producteurs": en utilisant l'alias de source que vous avez fournie dans la section supérieure
-et un ID d'événement spécifié ici, cela envoie une demande d'une réponse de toute noeud qui produit cette ID d'événement.
+<li> "Envoyer Demande Producteurs": en utilisant l'alias de source que vous avez fournie dans la section sup&#233;rieure
+et un ID d'&#233;v&#233;nement sp&#233;cifi&#233; ici, cela envoie une demande d'une r&#233;ponse de tout noeud qui produit cette ID d'&#233;v&#233;nement.
 
-<li> "Envoyer Événement Produit": en utilisant l'alias de source que vous avez fournie dans la section supérieure
-et un ID d'événement spécifié ici, cela envoie un communiqué que l'événement donné a été produit.
+<li> "Envoyer &#233;v&#233;nement Produit": en utilisant l'alias de source que vous avez fournie dans la section sup&#233;rieure
+et un ID d'&#233;v&#233;nement sp&#233;cifi&#233; ici, cela envoie un communiqu&#233; que l'&#233;v&#233;nement donn&#233; a &#233;t&#233; produit.
 
-<li> "Envoyer Datagram": En utilisant l'alias source et l'alias destination  que vous avez fournis dans la section supérieure
-et les octets de données que vous fournissez ici
-Cela envoie un datagramme au nœud de destination.
-Le bouton "Envoyer Confirmation" envoie une réponse de confirmation à tout datagramme reçu.
+<li> "Envoyer Datagram": En utilisant l'alias source et l'alias destination  que vous avez fournis dans la section sup&#233;rieure
+et les octets de donn&#233;es que vous fournissez ici
+Cela envoie un datagramme au noeud de destination.
+Le bouton "Envoyer Confirmation" envoie une r&#233;ponse de confirmation &#224; tout datagramme re&#231;u.
 
 </ul>
 
 <p>
 Dans le champ "Envoyer la commande de configuration OpenLCB", vous pouvez
-utiliser le protocole de configuration OpenLCB pour lire et écrire depuis le
-nœud Mémoire. Réglez votre alias nœud source et l'alias nœud de destination
- dans le "Cadre spécial Envoyer"ci-dessus.
+utiliser le protocole de configuration OpenLCB pour lire et &#233;crire depuis le
+noeud M&#233;moire. R&#233;glez votre alias noeud source et l'alias noeud de destination
+ dans le "Cadre sp&#233;cial Envoyer"ci-dessus.
 <p>
-Ensuite, sélectionnez l'adresse de mémoire pour commencer à lire ou à écrire, et à partir de quel espace d'adressage vous souhaitez lire ou d'écrire .
-(Informations définition de configuration, etc.)
+Ensuite, s&#233;lectionnez l'adresse de m&#233;moire pour commencer &#224; lire ou &#224; &#233;crire, et &#224; partir de quel espace d'adressage vous souhaitez lire ou d'&#233;crire .
+(Informations d&#233;finition de configuration, etc.)
 
 <p>
-Ensuite, soit entrer le nombre désiré d'octets et cliquez sur Lire,
+Ensuite, soit entrer le nombre d&#233;sir&#233; d'octets et cliquez sur Lire,
 ou
-les données à écrire (deux octets dans cette mise en œuvre) et appuyer sur "Écrire".
+les donn&#233;es &#224; &#233;crire (deux octets dans cette mise en œuvre) et appuyer sur "&#233;crire".
 
 <p>
-"Envoyer Confirmation" envoie la confirmation de tous les datagrammes que vous recevez en réponse.
+"Envoyer Confirmation" envoie la confirmation de tous les datagrammes que vous recevez en r&#233;ponse.
 
 
 </ul>

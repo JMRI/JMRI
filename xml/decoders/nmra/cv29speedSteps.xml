@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: cv29direction.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -27,29 +27,39 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>3</revnumber>
+      <date>2014-04-24</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Added Italian</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2013-07-25</date>
       <authorinitials>PB</authorinitials>
       <revremark>Added French and German translations</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2013-01-22</date>
       <authorinitials>MM</authorinitials>
       <revremark>Initial release</revremark>
     </revision>
   </revhistory>
-  <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+  <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" tooltip="'2' bit. Sets the Speed Step for motor, also may affect some light settings" default="1">
     <enumVal>
-      <enumChoice choice="14">
-        <choice>14</choice>
-      </enumChoice>
-      <enumChoice choice="28/128">
-        <choice>28/128</choice>
-      </enumChoice>
-    </enumVal>
+          <enumChoice choice="14 speed step format">
+            <choice xml:lang="it">Formato 14 step</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 speed step format">
+          <choice>28/128 speed step format(recommended)</choice>
+          <choice xml:lang="it">Formato 28 o 128 step (raccomandato)</choice>
+          </enumChoice>
+        </enumVal>
     <label>Speed Steps</label>
-	<label xml:lang="fr">Pas de vitesse</label>
-	<label xml:lang="de">Fahrstufen</label>
+    <label xml:lang="fr">Pas de vitesse</label>
+    <label xml:lang="de">Fahrstufen</label>
+    <label xml:lang="it">Step Velocità</label>
+    <tooltip>Sets the Speed Step for motor, also may affect some light settings</tooltip>
+       <tooltip xml:lang="it">Seleziona Step Velocità motore, potrebbe avere effetti sulle luci</tooltip>
   </variable>
 </variables>

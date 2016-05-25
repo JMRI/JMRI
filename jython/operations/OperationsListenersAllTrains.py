@@ -8,12 +8,13 @@
 # The next line is maintained by CVS, please don't change it
 # $Revision$
 
+import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri
 
 # First, define the listener.  This one just prints some
 # information on the change, but more complicated code is
 # of course possible.
-class MyListener(java.beans.PropertyChangeListener):    
+class MyListener(PropertyChangeListener):    
   def propertyChange(self, event):
     print " "   # add a line between updates to make it easier to read
     print "Train name:",event.source.getName()
@@ -51,12 +52,11 @@ class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :
   def handle(self):
     print "Number of trains", self.tm.numEntries()
     # get a list of trains from the manager
-    tList = self.tm.getTrainsByIdList()
+    trainList = self.tm.getTrainsByIdList()
     count = 1
 
     # show a list of trains and connect property change
-    for trainId in tList :
-      train = self.tm.getTrainById(trainId)
+    for train in trainList :
       print "Train", count, train.getName(), train.getDescription()
       train.addPropertyChangeListener(MyListener())
       count = count + 1

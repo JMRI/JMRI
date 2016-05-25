@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: DccSpecialties.shtml,v 1.1 2008/03/30 21:27:55 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-09-17-->
 <title>JMRI: Programming DCC Specialties Products</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,23 +26,23 @@
 
 
 <h2> 
-JMRI: Programmation Spécialités Produits DCC </h2> 
+JMRI: Programmation Poduits DCC Specialties </h2> 
 <a href="http://www.dccspecialties.com/products/hare-ng.htm"><img src="http://www.dccspecialties.com/products/img/hareng_2420-600.jpg" height="126" width="150" align="right"></a>
 <a href="http://www.dccspecialties.com/products/wabbit_review.htm"><img src="http://www.dccspecialties.com/products/img/wabbit_1077_600.jpg" height="165" width="150" align="right"></a>
 <a href="http://www.dccspecialties.com/products/wabbit_review.htm"><img src="http://www.dccspecialties.com/products/img/wabbit_rev_3.gif" height="85" width="150" align="right"></a>
 
 <a href="http://www.dccspecialties.com/">DCC Specialities</a>
-fait plusieurs contrôleurs puissants pour les chemins de fer modèle.
+fait plusieurs contr&#244;leurs puissants pour les chemins de fer mod&#232;le.
 
-Leurs deux contrôleurs de moteur switch sont appelés les
+Leurs deux contr&#244;leurs de moteur switch sont appel&#233;s les
 <a href="http://www.dccspecialties.com/products/hare-ng.htm">Hare</a> et
 <a href="http://www.dccspecialties.com/products/wabbit_review.htm">Wabbit</a>.
-Ils font aussi un détecteur intelligent appelé le bloc de
+Ils font aussi un d&#233;tecteur de canton intelligent appel&#233; 
 <a href="http://www.dccspecialties.com/products/bwatcher.htm">Block Watcher</a>,
-et les puissants 
+et les puissants contr&#244;leurs d'Alimentation
 <a href="http://www.dccspecialties.com/products/powershield_x.htm">PSX</a>
 et<a href="http://www.dccspecialties.com/products/powershield_x.htm">PSX-AR</a>
-contrôleurs de puissance.
+.
 <p>
 
 Ceux-ci peuvent faire beaucoup de choses, mais ils peuventt exiger du travail pour
@@ -50,17 +50,17 @@ les configurer.
 
 <p>
 Brett Scott et Denny Whitaker
-ont écrit des scripts JMRI pour aider à les programmater, et
-ontfourni une belle
-<a href="http://www.mgbrr.org/Tips/Lessons%20Learned%20on%20Hares-Wabbits%20v1.pdf"> writeup </a>, (lien cassé le 17/01/2012)
-sur la façon de les utiliser. Le writeup couvre également comment elles documentent leurs réseaux, et
-discute les avantages et inconvénients de plusieurs manières de connecter le Hare et la Wabbit.
+ont &#233;crit des scripts JMRI pour aider &#224; les programmer, et
+ont fourni un beau
+<a href="http://www.mgbrr.org/Tips/Lessons%20Learned%20on%20Hares-Wabbits%20v1.pdf"> document </a>, (lien cass&#233; le 17/01/2012)
+sur la fa&#231;on de les utiliser. Le documentp couvre &#233;galement comment il documente leurs r&#233;seaux, et
+discute les avantages et inconv&#233;nients de plusieurs mani&#232;res de connecter le Hare et le Wabbit.
 <p>
-vous pouvez télécharger 
-<a href="http://jmri.sourceforge.net/jython/dccspecialties/">leurs scripts</a> depuis le site web JMRI,
+vous pouvez t&#233;l&#233;charger 
+<a href="http://jmri.org/jython/dccspecialties/">leurs scripts</a> depuis le site web JMRI,
 et il est aussi disponible dans 
-<a href="http://jmri.sf.net/jython">des exemples de répertoires de scripts</a> dans le
-<a href="http://jmri.sourceforge.net/download"> Téléchargements JMRI </a>.
+<a href="http://jmri.org/jython">des exemples de r&#233;pertoires de scripts</a> dans le
+<a href="http://jmri.org/download"> T&#233;l&#233;chargements JMRI </a>.
     
 <!--#include virtual="/Footer" -->
 </body>

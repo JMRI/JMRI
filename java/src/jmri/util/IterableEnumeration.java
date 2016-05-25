@@ -7,8 +7,10 @@ import java.util.Iterator;
 /**
  * Provide an {@link Iterable} interface for an Enumeration
  * <p>
- * From <a href="http://www.javaspecialists.eu/archive/Issue107.html">JavaSpecialists issue 107</a>
- * 
+ * From
+ * <a href="http://www.javaspecialists.eu/archive/Issue107.html">JavaSpecialists
+ * issue 107</a>
+ *
  * @author rhwood
  */
 public class IterableEnumeration<T> implements Iterable<T> {

@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Displaying Colored Trackwork</title>
 
 <!-- Style -->
@@ -28,131 +27,130 @@ that shows a "schematic" view of the railroad, with individual
 segments changing color to show where trains are occupying the track.
 PanelPro can do this for your panels.  There are two basic approaches:
 
-<UL>
-<LI>Use the new
-"<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>" 
-to create your panel. It allows you
-to 
-<a href="../../../package/jmri/jmrit/display/EditTrackSegment.shtml">draw track segments</a>
-and 
-<a href="../../../package/jmri/jmrit/display/EditLayoutTurnout.shtml">place turnouts</a>
-on the screen, then configure them so they 
-<a href="../../../package/jmri/jmrit/display/EditLayoutBlock.shtml">change color with occupancy</a>.
+	<ul>
+	<li>Use the new
+	"<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>" 
+	to create your panel. It allows you
+	to 
+	<a href="../../../package/jmri/jmrit/display/EditTrackSegment.shtml">draw track segments</a>
+	and 
+	<a href="../../../package/jmri/jmrit/display/EditLayoutTurnout.shtml">place turnouts</a>
+	on the screen, then configure them so they 
+	<a href="../../../package/jmri/jmrit/display/EditLayoutBlock.shtml">change color with occupancy</a>.
+	
+	<li>If using the original "Panel Editor", you can also configure sensor icons
+	to change the color of your track.  This technique is described on this page.
+	</ul>
 
-<LI>If using the original "Panel Editor", you can also configure sensor icons
-to change the color of your track.  This technique is described on this page.
-</UL>
-
-<H3>Background</h3>
+<h3>Background</h3>
 
 PanelPro detects the status of things on the layout, including whether
 a track is occupied, using "Sensors".  Depending on what hardware (DCC system, etc)
 you have on your layout, these might be different devices, but as far
 as the program cares they all basically work the same:  The tell the program
 that the block detector is in one of four states:
-<UL>
-<LI>INACTIVE - The segment of track is empty
-<LI>ACTIVE - The segment of track contains all or part of a train
-<LI>UNKNOWN - The program does not currently know the status of this Sensor, typically
+<ul>
+<li>INACTIVE - The segment of track is empty
+<li>ACTIVE - The segment of track contains all or part of a train
+<li>UNKNOWN - The program does not currently know the status of this Sensor, typically
 because the program has just started up and hasn't seen a message from it yet
-<LI>INCONSISTENT - Some error has happened, and rather than giving you a value that might 
+<li>INCONSISTENT - Some error has happened, and rather than giving you a value that might 
 be wrong, we're just saying that we're confused
-</UL>
+</ul>
 
 For a particular "SensorIcon" at some spot on the screen, PanelPro associates
 a different picture with each of these states.  When the state changes, the
 correct picture is placed on the screen.
-<P>
+<p>
 So the basic problem is getting the correct pictures to put on the screen.
 
 <H3>Step-by-Step Instructions</h3>
 
-<OL>
-<LI>
-Draw the basic bacground for your panel, including the trackwork.  Get the
-colors, positions, etc right, because going back to it later will require redoing
-a couple of steps.
-<br>
-<IMG src="../../../images/tracksegments/WhiteTrack.gif">
-<LI>
-
-Take your favorite paint program and cut out the little pieces of the image that
-correspond to blocks.  If you've got mutiple blocks of the exact same
-shape and size, you don't have to make separate copies of them.
-<br>
-<IMG src="../../../images/tracksegments/WhiteArc.gif">
-<IMG src="../../../images/tracksegments/WhiteLine.gif">
-<IMG src="../../../images/tracksegments/WhiteTO.gif">
-
-<LI>
-You'll use those to make colored images to show occupancy.  For example, if
-you want to have yellow indicate occupied track, white indicate unoccupied
-track, and red indicate errors, you need to copy those new images and create versions
-with the appropriate colors. (Note: Make sure to keep a copy of the original
-little image for any track segments that contains a turnout)
-<BR>
-<IMG src="../../../images/tracksegments/YellowArc.gif">
-<IMG src="../../../images/tracksegments/RedArc.gif">
-<IMG src="../../../images/tracksegments/WhiteArc.gif">
-<lI>
-Now create the panel using these images, as described in the 
-<A HREF="PanelPro.shtml">tutorials</a>.
-
-</OL>
+	<ol>
+	<li>
+	Draw the basic background for your panel, including the trackwork.  Get the
+	colors, positions, etc right, because going back to it later will require redoing
+	a couple of steps.
+	<br>
+	<img src="../../../images/tracksegments/WhiteTrack.gif">
+	
+	<li>
+	Take your favorite paint program and cut out the little pieces of the image that
+	correspond to blocks.  If you've got multiple blocks of the exact same
+	shape and size, you don't have to make separate copies of them.
+	<br>
+	<img src="../../../images/tracksegments/WhiteArc.gif">
+	<img src="../../../images/tracksegments/WhiteLine.gif">
+	<img src="../../../images/tracksegments/WhiteTO.gif">
+	
+	<li>
+	You'll use those to make colored images to show occupancy.  For example, if
+	you want to have yellow indicate occupied track, white indicate unoccupied
+	track, and red indicate errors, you need to copy those new images and create versions
+	with the appropriate colors. (Note: Make sure to keep a copy of the original
+	little image for any track segments that contains a turnout)
+	<br>
+	<img src="../../../images/tracksegments/YellowArc.gif">
+	<img src="../../../images/tracksegments/RedArc.gif">
+	<img src="../../../images/tracksegments/WhiteArc.gif">
+	<li>
+	Now create the panel using these images, as described in the 
+	<a href="PanelPro.shtml">tutorials</a>.
+	
+	</ol>
 
 For turnouts, the situation is a little more complicated. Most people
 want to represent <i>both</i> the occupancy <i>and</i> the position of the turnout.
 We need a couple more steps to do that.
 
-<OL>
-
-<LI>
-Create sensor images for the trackwork as described above.
-<BR>
-<IMG src="../../../images/tracksegments/YellowTO.gif">
-<IMG src="../../../images/tracksegments/RedTO.gif">
-<IMG src="../../../images/tracksegments/WhiteTO.gif">
-<LI>
-Now, we create images that will modify those to show the turnout
-position.  We want to create images that are transparent where
-the trackwork is, except for a little more background color to 
-represent the position of the turnout.
-<BR>
-<IMG src="../../../images/tracksegments/TranTOc.gif">
-<IMG src="../../../images/tracksegments/TranTOt.gif">
-<BR>
-Here the gray color represents transparent parts of the image; if we put
-it over one of the sensor images, the sensor's track color will shine 
-through.
-
-<lI>
-Now create the panel using these images, as described in the 
-<A HREF="PanelPro.shtml">tutorials</a>. The normal operation
-(which we'll change below) is to have sensors in front of turnouts
-on the screen.  That means it'll be easier if you add and position
-the turnout icons first, then the sensor icons.
-
-<LI>
-To move the sensor icons behind the turnout icons, you have
-to edit the panel file and change their "level".  Open your file
-in a text editor (Not Microsoft Word, which will try to interpret
-the XML and do amazingly stupid things).
-
-<LI>
-Find the lines for your sensor and turnout by looking for the name of the
-sensor and turnout, e.g. LS33 and LT120.  You find two lines (which may be
-separated, depending on how you created the panel) that look like this:
-
-<PRE>
-    &lt;turnouticon turnout="LT120" x="20" y="30" level="7" closed="resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" thrown="resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" unknown="resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" inconsistent="resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" /&gt;
-    &lt;sensoricon sensor="LS33" x="20" y="30" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" /&gt;
-</PRE>
-
-Note the "level" attribures that are set to 7 aand 10 respectively.  
-(Higher numbers are more toward the "front", and hide things with "lower" values.)
-Just swap those values, and save the file.
-</OL>
-
+	<ol>
+	
+	<li>
+	Create sensor images for the trackwork as described above.
+	<br>
+	<img src="../../../images/tracksegments/YellowTO.gif">
+	<img src="../../../images/tracksegments/RedTO.gif">
+	<img src="../../../images/tracksegments/WhiteTO.gif">
+	<li>
+	Now, we create images that will modify those to show the turnout
+	position.  We want to create images that are transparent where
+	the trackwork is, except for a little more background color to 
+	represent the position of the turnout.
+	<br>
+	<img src="../../../images/tracksegments/TranTOc.gif">
+	<img src="../../../images/tracksegments/TranTOt.gif">
+	<br>
+	Here the gray color represents transparent parts of the image; if we put
+	it over one of the sensor images, the sensor's track color will shine 
+	through.
+	
+	<li>
+	Now create the panel using these images, as described in the 
+	<a href="PanelPro.shtml">tutorials</a>. The normal operation
+	(which we'll change below) is to have sensors in front of turnouts
+	on the screen.  That means it'll be easier if you add and position
+	the turnout icons first, then the sensor icons.
+	
+	<li>
+	To move the sensor icons behind the turnout icons, you have
+	to edit the panel file and change their "level".  Open your file
+	in a text editor (Not Microsoft Word, which will try to interpret
+	the XML and do amazingly stupid things).
+	
+	<li>
+	Find the lines for your sensor and turnout by looking for the name of the
+	sensor and turnout, e.g. LS33 and LT120.  You find two lines (which may be
+	separated, depending on how you created the panel) that look like this:
+	
+	<PRE>
+	    &lt;turnouticon turnout="LT120" x="20" y="30" level="7" closed="resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" thrown="resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" unknown="resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" inconsistent="resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" /&gt;
+	    &lt;sensoricon sensor="LS33" x="20" y="30" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" /&gt;
+	</PRE>
+	
+	Note the "level" attributes that are set to 7 and 10 respectively.  
+	(Higher numbers are more toward the "front", and hide things with "lower" values.)
+	Just swap those values, and save the file.
+	</ol>
 
 Since you cut
 the little images from your track diagram, it should all go back together
@@ -162,8 +160,9 @@ Now that panel should show icons for the occupancy sensor and turnout
 that work independently to show both the position (by following the line)
 and the occupancy (through the color) of that turnout.  
 
-    
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
 

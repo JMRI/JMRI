@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<!-- translated by Herv&#233; Blorec 2013-09-19 -->
+<title>JMRI: TAMs Master Control Support</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+ <div class="nomenu" id="mBody">
+   <div id="mainContent">
+
+<h1> 
+JMRI: Support TAMs 
+</h1>
+JMRI peut se connecter &#224; une centrale MasterControl TAMS en utilisant l'interface USB int&#233;gr&#233;e et/ou l'interface s&#233;rie.<br>
+L'interface USB est livr&#233; avec les pilotes pour &#233;muler un port s&#233;rie.<br>
+Le port USB fonctionne sous Linux et Windows - les deux ont &#233;t&#233; test&#233;s<br>.
+Les connecteurs USB et interface s&#233;rie peuvent &#234;tre utilis&#233;s en m&#234;me temps.<br>
+<p>
+Le TAMS MC utilise le protocole P50X (Uhlenbrock/M&#228;rklin).
+<p>
+<b> Cette interface est encore en d&#233;veloppement, si vous rencontrez des probl&#232;mes alors s'il vous pla&#238;t interroger le groupe d'utilisateurs Yahoo</b>
+<p>
+Pour configurer la connexion:
+<ul>
+<li> Ouvrez les "Pr&#233;f&#233;rences" JMRI dans le menu "Edition"
+<li> S&#233;lectionnez "TAMS" comme fabricant, puis le type de connexion,
+<li> S&#233;lectionnez l'interface s&#233;rie appropri&#233;.
+<li> La vitesse de transmission configur&#233;e dans la MC sur le port USB est fix&#233; &#224; 57600 bps (8n1: 8 bits, sans parit&#233;, 1 bit d'arr&#234;t).
+<li> Sur le port s&#233;rie de la vitesse par d&#233;faut est fix&#233;e &#224; 2400 bps. Ceci peut &#234;tre chang&#233; sur le MC dans les &#233;tapes habituelles entre 1200 et 57600 bps
+<li> cliquez sur "Enregistrer".
+</ul>
+
+<p>
+Le support pour les Aiguillages, R&#233;gulateurs et alimentation est disponible pour
+une unit&#233; de TAM connect&#233;e JMRI.
+<p>
+
+Consistant, capteurs et RailCom ne sont pas encore en charge.
+<p>
+Turnout, Programming, Throttle and power support is available for 
+a JMRI-connected TAMs unit.
+<p>
+
+Couplage, Capteurs et RailCom ne sont pas support&#233;s.
+<p>
+Le Support pour TAMS MC &#233;tait d'abord disponible sur la version 
+<a href="http://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI 2.99.7</a>.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

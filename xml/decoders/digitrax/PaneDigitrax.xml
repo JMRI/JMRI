@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- version 1 - Created as a separate file from Digitrax_01x3.xml  v32     -->
+<!-- 					Alain Le Marchand (2014-04-27)						-->
+<!-- 																		-->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Digitrax</name>
+  <column>
+    <display item="Advanced consist droop compensation for speed stabilization"/>
+    <display item="Speed Compensation Control"/>
+    <display item="Split field motor"/>
+    <display item="Vstart/Vmid/Vfull in 128 step mode"/>
+    <display item="Short-circuit protection"/>
+    <display item="Switching speed enabled by F6"/>
+    <display item="Torque compensation"/>
+    <display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature">
+      <tooltip>Activates Decoder Locking feature</tooltip>
+      <tooltip xml:lang="it">Attiva funzione Blocco Decoder</tooltip>
+    </display>
+    <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number">
+      <tooltip>Set this decoder's unique locking ID number</tooltip>
+      <tooltip xml:lang="it">Imposta il codice di blocco di questo Decoder</tooltip>
+    </display>
+  </column>
+</pane>

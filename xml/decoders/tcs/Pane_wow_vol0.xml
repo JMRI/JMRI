@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
-<!-- $Id:  $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,30 +12,293 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - for Unified Software -->
-
-
-<pane name="Volume Level 0">
-	<column>
-		<row>
-			<column>
-				<label label="   "/>
-				<label label="Must have JMRI 3.3.6 or later."/>
-				<label label="   "/>
-				<label label="To set individual sound volume to level 0"/>
-				<label label="Pick sound group (high byte) first then from list of sounds of just that group"/>
-				<label label="Then press Write full sheet"/>
-				<label label="Repeat for other sounds"/>
-				<label label="To change to different volume level, choose different Volume Level tab"/>
-				<label label="   "/>
-				<display item="Volume Level 0" />
-				<display item="Volume Level 0 0" label=""/>
-				<display item="Volume Level 0 1" label="" />
-				<display item="Volume Level 0 255" label="" />
-			</column>
-		</row>
-	</column>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Individual Volume 0</name>
+  <name xml:lang="it">Volume Livello 0</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Must have JMRI 3.9.5 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
+        </label>
+        <label>
+          <text>Recommend to change volume groups, if available, rather than these</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+		</column>
+    </row>
+    <row>
+      <column>
+        <display item="Volume 0-0"/>
+        <display item="Volume 0-1"/>
+        <display item="Volume 0-2"/>
+        <display item="Volume 0-3"/>
+        <display item="Volume 0-4"/>
+        <display item="Volume 0-5"/>
+        <display item="Volume 0-6"/>
+        <display item="Volume 0-7"/>
+        <display item="Volume 0-8"/>
+        <display item="Volume 0-9"/>
+        <display item="Volume 0-10"/>
+        <display item="Volume 0-11"/>
+        <display item="Volume 0-12"/>
+        <display item="Volume 0-13"/>
+        <display item="Volume 0-14"/>
+        <display item="Volume 0-15"/>
+        <display item="Volume 0-16"/>
+        <display item="Volume 0-17"/>
+        <display item="Volume 0-18"/>
+        <display item="Volume 0-19"/>
+        <display item="Volume 0-20"/>
+        <display item="Volume 0-21"/>
+        <display item="Volume 0-22"/>
+        <display item="Volume 0-23"/>
+        <display item="Volume 0-24"/>
+        <display item="Volume 0-25"/>
+        <display item="Volume 0-26"/>
+        <display item="Volume 0-27"/>
+        <display item="Volume 0-28"/>
+        <display item="Volume 0-29"/>
+        <display item="Volume 0-30"/>
+        <display item="Volume 0-31"/>
+        <display item="Volume 0-32"/>
+        <display item="Volume 0-33"/>
+        <display item="Volume 0-34"/>
+        <display item="Volume 0-35"/>
+        <display item="Volume 0-36"/>
+        <display item="Volume 0-37"/>
+        <display item="Volume 0-38"/>
+        <display item="Volume 0-39"/>
+        <display item="Volume 0-40"/>
+        <display item="Volume 0-41"/>
+        <display item="Volume 0-42"/>
+        <display item="Volume 0-43"/>
+        <display item="Volume 0-44"/>
+        <display item="Volume 0-45"/>
+        <display item="Volume 0-46"/>
+        <display item="Volume 0-47"/>
+        <display item="Volume 0-48"/>
+        <display item="Volume 0-49"/>
+        <display item="Volume 0-50"/>
+        <display item="Volume 0-51"/>
+        <display item="Volume 0-52"/>
+        <display item="Volume 0-53"/>
+        <display item="Volume 0-54"/>
+        <display item="Volume 0-55"/>
+        <display item="Volume 0-56"/>
+        <display item="Volume 0-57"/>
+        <display item="Volume 0-58"/>
+        <display item="Volume 0-59"/>
+        <display item="Volume 0-60"/>
+        <display item="Volume 0-61"/>
+        <display item="Volume 0-62"/>
+        <display item="Volume 0-63"/>
+      </column>               
+      <column>                
+        <display item="Volume 0-64"/>
+        <display item="Volume 0-65"/>
+        <display item="Volume 0-66"/>
+        <display item="Volume 0-67"/>
+        <display item="Volume 0-68"/>
+        <display item="Volume 0-69"/>
+        <display item="Volume 0-70"/>
+        <display item="Volume 0-71"/>
+        <display item="Volume 0-72"/>
+        <display item="Volume 0-73"/>
+        <display item="Volume 0-74"/>
+        <display item="Volume 0-75"/>
+        <display item="Volume 0-76"/>
+        <display item="Volume 0-77"/>
+        <display item="Volume 0-78"/>
+        <display item="Volume 0-79"/>
+        <display item="Volume 0-80"/>
+        <display item="Volume 0-81"/>
+        <display item="Volume 0-82"/>
+        <display item="Volume 0-83"/>
+        <display item="Volume 0-84"/>
+        <display item="Volume 0-85"/>
+        <display item="Volume 0-86"/>
+        <display item="Volume 0-87"/>
+        <display item="Volume 0-88"/>
+        <display item="Volume 0-89"/>
+        <display item="Volume 0-90"/>
+        <display item="Volume 0-91"/>
+        <display item="Volume 0-92"/>
+        <display item="Volume 0-93"/>
+        <display item="Volume 0-94"/>
+        <display item="Volume 0-95"/>
+        <display item="Volume 0-96"/>
+        <display item="Volume 0-97"/>
+        <display item="Volume 0-98"/>
+        <display item="Volume 0-99"/>
+        <display item="Volume 0-100"/>
+        <display item="Volume 0-101"/>
+        <display item="Volume 0-102"/>
+        <display item="Volume 0-103"/>
+        <display item="Volume 0-104"/>
+        <display item="Volume 0-105"/>
+        <display item="Volume 0-106"/>
+        <display item="Volume 0-107"/>
+        <display item="Volume 0-108"/>
+        <display item="Volume 0-109"/>
+        <display item="Volume 0-110"/>
+        <display item="Volume 0-111"/>
+        <display item="Volume 0-112"/>
+        <display item="Volume 0-113"/>
+        <display item="Volume 0-114"/>
+        <display item="Volume 0-115"/>
+        <display item="Volume 0-116"/>
+        <display item="Volume 0-117"/>
+        <display item="Volume 0-118"/>
+        <display item="Volume 0-119"/>
+        <display item="Volume 0-120"/>
+        <display item="Volume 0-121"/>
+        <display item="Volume 0-122"/>
+        <display item="Volume 0-123"/>
+        <display item="Volume 0-124"/>
+        <display item="Volume 0-125"/>
+        <display item="Volume 0-126"/>
+        <display item="Volume 0-127"/>
+      </column>               
+      <column>                
+        <display item="Volume 0-128"/>
+        <display item="Volume 0-129"/>
+        <display item="Volume 0-130"/>
+        <display item="Volume 0-131"/>
+        <display item="Volume 0-132"/>
+        <display item="Volume 0-133"/>
+        <display item="Volume 0-134"/>
+        <display item="Volume 0-135"/>
+        <display item="Volume 0-136"/>
+        <display item="Volume 0-137"/>
+        <display item="Volume 0-138"/>
+        <display item="Volume 0-139"/>
+        <display item="Volume 0-140"/>
+        <display item="Volume 0-141"/>
+        <display item="Volume 0-142"/>
+        <display item="Volume 0-143"/>
+        <display item="Volume 0-144"/>
+        <display item="Volume 0-145"/>
+        <display item="Volume 0-146"/>
+        <display item="Volume 0-147"/>
+        <display item="Volume 0-148"/>
+        <display item="Volume 0-149"/>
+        <display item="Volume 0-150"/>
+        <display item="Volume 0-151"/>
+        <display item="Volume 0-152"/>
+        <display item="Volume 0-153"/>
+        <display item="Volume 0-154"/>
+        <display item="Volume 0-155"/>
+        <display item="Volume 0-156"/>
+        <display item="Volume 0-157"/>
+        <display item="Volume 0-158"/>
+        <display item="Volume 0-159"/>
+        <display item="Volume 0-160"/>
+        <display item="Volume 0-161"/>
+        <display item="Volume 0-162"/>
+        <display item="Volume 0-163"/>
+        <display item="Volume 0-164"/>
+        <display item="Volume 0-165"/>
+        <display item="Volume 0-166"/>
+        <display item="Volume 0-167"/>
+        <display item="Volume 0-168"/>
+        <display item="Volume 0-169"/>
+        <display item="Volume 0-170"/>
+        <display item="Volume 0-171"/>
+        <display item="Volume 0-172"/>
+        <display item="Volume 0-173"/>
+        <display item="Volume 0-174"/>
+        <display item="Volume 0-175"/>
+        <display item="Volume 0-176"/>
+        <display item="Volume 0-177"/>
+        <display item="Volume 0-178"/>
+        <display item="Volume 0-179"/>
+        <display item="Volume 0-180"/>
+        <display item="Volume 0-181"/>
+        <display item="Volume 0-182"/>
+        <display item="Volume 0-183"/>
+        <display item="Volume 0-184"/>
+        <display item="Volume 0-185"/>
+        <display item="Volume 0-186"/>
+        <display item="Volume 0-187"/>
+        <display item="Volume 0-188"/>
+        <display item="Volume 0-189"/>
+        <display item="Volume 0-190"/>
+        <display item="Volume 0-191"/>
+      </column>               
+      <column>                
+        <display item="Volume 0-192"/>
+        <display item="Volume 0-193"/>
+        <display item="Volume 0-194"/>
+        <display item="Volume 0-195"/>
+        <display item="Volume 0-196"/>
+        <display item="Volume 0-197"/>
+        <display item="Volume 0-198"/>
+        <display item="Volume 0-199"/>
+        <display item="Volume 0-200"/>
+        <display item="Volume 0-201"/>
+        <display item="Volume 0-202"/>
+        <display item="Volume 0-203"/>
+        <display item="Volume 0-204"/>
+        <display item="Volume 0-205"/>
+        <display item="Volume 0-206"/>
+        <display item="Volume 0-207"/>
+        <display item="Volume 0-208"/>
+        <display item="Volume 0-209"/>
+        <display item="Volume 0-210"/>
+        <display item="Volume 0-211"/>
+        <display item="Volume 0-212"/>
+        <display item="Volume 0-213"/>
+        <display item="Volume 0-214"/>
+        <display item="Volume 0-215"/>
+        <display item="Volume 0-216"/>
+        <display item="Volume 0-217"/>
+        <display item="Volume 0-218"/>
+        <display item="Volume 0-219"/>
+        <display item="Volume 0-220"/>
+        <display item="Volume 0-221"/>
+        <display item="Volume 0-222"/>
+        <display item="Volume 0-223"/>
+        <display item="Volume 0-224"/>
+        <display item="Volume 0-225"/>
+        <display item="Volume 0-226"/>
+        <display item="Volume 0-227"/>
+        <display item="Volume 0-228"/>
+        <display item="Volume 0-229"/>
+        <display item="Volume 0-230"/>
+        <display item="Volume 0-231"/>
+        <display item="Volume 0-232"/>
+        <display item="Volume 0-233"/>
+        <display item="Volume 0-234"/>
+        <display item="Volume 0-235"/>
+        <display item="Volume 0-236"/>
+        <display item="Volume 0-237"/>
+        <display item="Volume 0-238"/>
+        <display item="Volume 0-239"/>
+        <display item="Volume 0-240"/>
+        <display item="Volume 0-241"/>
+        <display item="Volume 0-242"/>
+        <display item="Volume 0-243"/>
+        <display item="Volume 0-244"/>
+        <display item="Volume 0-245"/>
+        <display item="Volume 0-246"/>
+        <display item="Volume 0-247"/>
+        <display item="Volume 0-248"/>
+        <display item="Volume 0-249"/>
+        <display item="Volume 0-250"/>
+        <display item="Volume 0-251"/>
+        <display item="Volume 0-252"/>
+        <display item="Volume 0-253"/>
+        <display item="Volume 0-254"/>
+        <display item="Volume 0-255"/>
+      </column>
+    </row>
+  </column>
 </pane>
-

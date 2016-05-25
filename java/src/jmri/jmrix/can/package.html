@@ -1,58 +1,58 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        Defines classes for interfacing to a CAN-based model railway
+        control bus.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <p>
+            It is expected that there will be multiple CAN implementations (e.g. MERG
+            CBUS, ATBUS, etc) each accessible through a variety of CAN adapters (e.g. 
+            CAN232 or MERG CAN-RS), but that each implementation will be based uppon
+            basic CANbus concepts such as header (standard or extended), Normal and RTR
+            frames and a data field.
 
-  Copyright 2003
+        <p>
+            This package is therefore organized in several subtrees:
+        <dl>
+            <dt>adapters
+            <dd>Specific implementations for CAN adapter hardware, e.g. 
+                <a href="http://www.merg.org.uk/resources/lcb.html">MERG</a>'s <a href="http://www.merg.org.uk/resources/lcb.html#CAN_RS">CAN_RS</a>; 
+                <a href="http://canusb.com/">LAWICEL AB</a>'s <a href="http://canusb.com/">CANUSB and CAN232</a>; etc.
+            <dt>protocols
+            <dd>Specific implementations for e.g. CBUS, NmraNet, etc:
+                <ul>
+                    <li>cbus - MERG CBUS
+                    <li>atbus - ATBUS
+                    <li>nmranet - NMRA NMRAnet (not yet present)
+                </ul>
+            <dt>swing
+            <dd>Swing-based GUI tools. 
+        </dl>
+        <!-- Put @see and @since tags down here. -->
+        <!-- @see jmri.InstanceManager -->
 
--->
-</head>
-<body bgcolor="white">
+        <h3>A note on terminology</h3>
 
-Defines classes for interfacing to a CAN-based model railway
-control bus.
+        CBUS refers to a 7-bit field in the standard CAN header 
+        as the "ID", "Node ID", and "CAN ID", 
+        but occasionally refers to the entire 11-bit CAN header by the same names.
+        <p>
+            The JMRI classes use "cbusId" to refer to the 7-bit field.
 
-<p>
-It is expected that there will be multiple CAN implementations (e.g. MERG
-CBUS, ATBUS, etc) each accessible through a variety of CAN adapters (e.g. 
-CAN232 or MERG CAN-RS), but that each implementation will be based uppon
-basic CANbus concepts such as header (standard or extended), Normal and RTR
-frames and a data field.
+            @since 2.1.7
 
-<p>
-This package is therefore organized in several subtrees:
-<dl>
-<dt>adapters
-<dd>Specific implementations for CAN adapter hardware, e.g. 
-<a href="http://www.merg.org.uk/resources/lcb.html">MERG</a>'s <a href="http://www.merg.org.uk/resources/lcb.html#CAN_RS">CAN_RS</a>; 
-<a href="http://canusb.com/">LAWICEL AB</a>'s <a href="http://canusb.com/">CANUSB and CAN232</a>; etc.
-<dt>protocols
-<dd>Specific implementations for e.g. CBUS, NmraNet, etc:
-<ul>
-<li>cbus - MERG CBUS
-<li>atbus - ATBUS
-<li>nmranet - NMRA NMRAnet (not yet present)
-</ul>
-<dt>swing
-<dd>Swing-based GUI tools. 
-</dl>
-<!-- Put @see and @since tags down here. -->
-<!-- @see jmri.InstanceManager -->
-
-<h3>A note on terminology</h3>
-
-CBUS refers to a 7-bit field in the standard CAN header 
-as the "ID", "Node ID", and "CAN ID", 
-but occasionally refers to the entire 11-bit CAN header by the same names.
-<p>
-The JMRI classes use "cbusId" to refer to the 7-bit field.
-
-@since 2.1.7
-
-</body>
+    </body>
 </html>

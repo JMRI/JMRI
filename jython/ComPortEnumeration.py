@@ -3,9 +3,8 @@
 #
 # Author: Matthew Harris, copyright (C) 2010.
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 import gnu.io
 #import ch.ntb.usb

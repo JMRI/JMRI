@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,21 +12,21 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file for QSi V8 files -->
 <!-- Steam bell selections -->
-<ienumVal>
-  <ienumChoice choice="Steam Bell, Air, Slow 1" value="1"/>
-  <ienumChoice choice="Steam Bell, Air, Mid 1"/>
-  <ienumChoice choice="Steam Bell, hand pull, slow 1"/>
-  <ienumChoice choice="Steam Bell, air, mid 2"/>
-  <ienumChoice choice="Steam Bell, air, mid 3"/>
-  <ienumChoice choice="Steam Bell, hand pull, slow 2"/>
-  <ienumChoice choice="Steam Bell, air, fast 1"/>
-  <ienumChoice choice="Steam Bell, air, mid 4"/>
-  <ienumChoice choice="Steam bell, air, fast 2"/>
-  <ienumChoice choice="steam bell, air, fast 3"/>
-  <ienumChoice choice="steam bell, air, very fast 1"/>
-  <ienumChoice choice="steam bell, air, slow 4"/>
-  <ienumChoice choice="Steam Bell, hand pull, slow 4"/>
-  <ienumChoice choice="Steam bell, hand pull, very slow 1"/>
-  <ienumChoice choice="steam bell, air, slow 2"/>
-  <ienumChoice choice="steam bell, hand pull, slow 3"/>
-</ienumVal>
+<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Steam Bell, Air, Slow 1" value="1"/>
+  <enumChoice choice="Steam Bell, Air, Mid 1"/>
+  <enumChoice choice="Steam Bell, hand pull, slow 1"/>
+  <enumChoice choice="Steam Bell, air, mid 2"/>
+  <enumChoice choice="Steam Bell, air, mid 3"/>
+  <enumChoice choice="Steam Bell, hand pull, slow 2"/>
+  <enumChoice choice="Steam Bell, air, fast 1"/>
+  <enumChoice choice="Steam Bell, air, mid 4"/>
+  <enumChoice choice="Steam bell, air, fast 2"/>
+  <enumChoice choice="steam bell, air, fast 3"/>
+  <enumChoice choice="steam bell, air, very fast 1"/>
+  <enumChoice choice="steam bell, air, slow 4"/>
+  <enumChoice choice="Steam Bell, hand pull, slow 4"/>
+  <enumChoice choice="Steam bell, hand pull, very slow 1"/>
+  <enumChoice choice="steam bell, air, slow 2"/>
+  <enumChoice choice="steam bell, hand pull, slow 3"/>
+</enumVal>

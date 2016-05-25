@@ -2,8 +2,8 @@
 # http://www.dccspecialties.com
 #
 # Script by Brett Scott
-# Version 1.10 08/11/2007
-# info@mgbrr.org www.mgbrr.org
+# Version 1.50 07/27/2014
+# mgbrrclub@gmail.com or info@mgbrr.org and www.mgbrr.org
 #
 # Many Thanks to Bob Jacobsen and Everyone who Contributes to JMRI.
 # 
@@ -73,7 +73,7 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
     # self.waitMsec(750)
 
 
-    # CV49 – Sets the Current Trip Value. If CV49=0, then the Trip Current jumpers on J6 are enabled. 
+    # CV49 ï¿½ Sets the Current Trip Value. If CV49=0, then the Trip Current jumpers on J6 are enabled. 
     # REMEMBER TO USE EITHER JUMPERS (J6) OR CV SETTINGS, !!! NOT BOTH !!! 
 
     # Next Two Lines - CV49 - Current Trip Value (Values 00-15)
@@ -94,6 +94,15 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
 
     # Next Two Lines - CV54 - Current Level Detector Turns On (Values 0-212)
     # programmers.getAddressedProgrammer(True, 9983).writeCV(54, 0, None)	
+    # self.waitMsec(750)
+
+    # Next Two Lines - CV55 - Double Reverse Mode(Values 0, 1) (Value 0 = Primary Reverser, 1 = Secondary Reverser) 
+    # programmers.getAddressedProgrammer(True, 9983).writeCV(55, 0, None)	
+    # self.waitMsec(750)
+
+    # Notes regarding CV65 -  A value of 16 to 40 (2 to 5 ms) Should Solve Most Issues. Goal is the CV65 value should be as small as possible consistent with reliable operation.
+    # Next Two Lines - CV65 - Double Reverse Mode Timing(Values 1-240) ( 8 is Default - 8 = 1 Millisecond, 16 = 2 Millisecond, Etc))
+    # programmers.getAddressedProgrammer(True, 9983).writeCV(65, 8, None)	
     # self.waitMsec(750)
 
     # Some PSX-AR Documention indicates a CV64 for Current Level Detection. 

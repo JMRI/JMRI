@@ -7,12 +7,24 @@
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
+<style type="text/css">
+    table.data {
+        margin: initial;
+        margin-left: 2em;
+    }
+    .delimiter1 {
+        color: red;
+        font-weight: bold;
+    }
+    .delimiter2 {
+        color: rgb(145, 188, 122);
+        font-weight: bold;
+    }
+</style>
 <!-- /Style -->
 </HEAD>
 
@@ -21,78 +33,444 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: WiFi Throttle Communications Protocol
-</h1>
+<h1>JMRI: WiFi Throttle Communications Protocol</h1>
+<p>
+    This page describes the protocol provided by the
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">jmri.jmrit.withrottle</a>
+    package for controlling trains, turnouts, and more through JMRI via a TCP/IP socket.
+</p>
+<p>
+    JMRI uses a fairly simple text-based client-server protocol over TCP/IP sockets. Throttles (or other applications)
+    can locate JMRI by sending a multi-cast DNS request, using ZeroConf/Bonjour, for the address "_withrottle._tcp.local".
+    JMRI won't always reply (it depends on your operating system, firewall settings, and network environment), so your
+    application should also allow entering an IP address and port.
+</p>
+<p>
+    When you first open the connection, JMRI responds with a number of lines of text that provide information about the
+    JMRI instance to which you've connected. Your application then sends comands to JMRI. Each of these commands is
+    plain text, with a newline character at the end (0A hex). Likewise, lines sent back from JMRI are newline terminated.
+</p>
+<p class="note">
+    Because the Java code calls the println method, you will actually get two newline characters at the end of each
+    line returned.
+</p>
+        
+<h2>String Parsing</h2>
+<p>
+    JMRI commands and results are very often arrays of values, and sometimes arrays of arrays. The array elements are
+    separated by three-character delimiters. For example, the following roster entry contains two engines, and each
+    engine has three values:
+</p>
+<pre class="code">
+RL2<span class="delimiter1">]\[</span>RGS 41<span class="delimiter2">}|{</span>41<span class="delimiter2">}|{</span>L<span class="delimiter1">]\[</span>Test Loco<span class="delimiter2">}|{</span>1234<span class="delimiter2">}|{</span>L
+</pre>
+<p>
+    Here the delimiters are color-coded to make it easier to see the two different delimiters. The <code class="delimiter1"><b>]\[</b></code> delimiter is used to
+    divide the different roster entries (there are two), while the <code class="delimiter2">}|{</code> delimiter is used to divide the parts
+    of each roster entry. The details are described in sections below for each command and response.
+</p>
 
-This page describes the protocol provided by the
-<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">jmri.jmrit.withrottle</a>
-package for controlling trains through JMRI via 
-a TCP/IP link.
+<h2>Initial Connection</h2>
+<p>
+    When you first open a socket to JMRI, you'll get a response that will look something like the following:
+</p>
+<pre class="code">
+VN2.0
+RL1]\[SP 2101}|{2102}|{L
+PPA2
+PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
+PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
+RCC0
+PW12080
+*10</pre>
+<p class="note">
+    Each line is actually followed by two newline characters. For brevity, the extra blank line is not shown.
+</p>
+<p>
+    Each line contains information for part of JMRI, as described below, so your application can show things like engines,
+    turnouts, etc.
+</p>
+<h3>WiThrottle Version</h3>
+<p>The first string, <code>VN2.0</code>, provides the version number of the WiThrottle protocol. In this case the version number is 2.0.</p>
 
+<h3>Roster List</h3>
+<p>
+    The roster string always begins with <code>RL</code> (Roster List) followed by the number of entries in the roster. Here
+    are three different examples of roster strings that might be returned by JMRI:
+</p>
+<pre class="code">
+RL0
+RL2]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
+RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
+</pre>
+<p>
+    with zero, two, and three roster entries, repsectively. Each roster entry contains three pieces of information, always in the same order:
+</p>
+<table class="data">
+    <tr><th>Segment</th>    <th>Example</th>    <th>Description</th></tr>
+    <tr><td>Name</td>       <td>RGS 41</td>     <td>The name to show in your application</td></tr>
+    <tr><td>Address</td>    <td>41</td>         <td>The DCC address of the locomotive</td></tr>
+    <tr><td>Length</td>     <td>L</td>          <td>S or L to indicate if this is a Short or Long DCC address</td></tr>
+</table>
+        
+<h3>Track Power</h3>
+<p>
+    Returns information about the curent state of track power. This can be one of the following:
+</p>
+<table class="data">
+    <tr><td>PPA0</td>   <td>Off</td></tr>
+    <tr><td>PPA1</td>   <td>On</td></tr>
+    <tr><td>PPA2</td>   <td>Unknown</td></tr>
+</table>
+        
+<h3>Turnout List</h3>
+<p>
+    JMRI returns either zero, one, or two strings for this section. The first string provides the labels for the different
+    turnout states. For example:
+</p>
+<pre class="code">
+PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
+</pre>
+<p>
+    This string contains an array with two elements, which provide the labels to use for each turnout state (except for Unknown):
+</p>
+<table class="data">
+    <tr><th>Segment</th>    <th>Example</th>    <th>Description</th></tr>
+    <tr><td>Caption</td>    <td>Closed</td>     <td>The string to show for the state of turnout</td></tr>
+    <tr><td>Value</td>      <td>2</td>          <td>The corresponding value for the turnout state</td></tr>
+</table>
+<p class="note">
+    There is also a third value, Unknown, represented with the value 1, that is not explicitly given a caption in the reply.
+</p>
+<p>
+    The second string appears when you have turnouts defined in JMRI, and contains an array of turnouts, and will look something
+    like this:
+</p>
+<pre class="code">
+PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
+</pre>
+<p>
+    Each turnout contains the following segments:
+</p>
+<table class="data">
+    <tr><th>Segment</th>        <th>Example</th>        <th>Description</th></tr>
+    <tr><td>System Name</td>    <td>LT12</td>           <td>The internal name used for this turnout</td></tr>
+    <tr><td>User Name</td>      <td>Rico Station N</td> <td>The name entered into JMRI for this turnout</td></tr>
+    <tr><td>State</td>          <td>1</td>              <td>The current state of the turnout (see above)</td></tr>
+</table>
 
+<h3>Route List</h3>
+<p>
+    Like for turnouts, JMRI will reply with zero, one or two strings. The first string is likewise a list of labels for the route
+    values. Again, Unknown (1) is not explicitly listed. For example:
+</p>
+<pre class="code">
+PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
+</pre>
+<p>
+    The second string contains an array of routes. For example:
+</p>
+<pre class="code">
+PRL]\[IR:AUTO:0001}|{Rico Main}|{
+</pre>
+<table class="data">
+    <tr><th>Segment</th>        <th>Example</th>        <th>Description</th></tr>
+    <tr><td>System Name</td>    <td>IR:AUTO:0001</td>   <td>The internal name used for this route. The name in this example was auto-generated</td></tr>
+    <tr><td>User Name</td>      <td>Rico Main</td>      <td>The name entered into JMRI for this turnout</td></tr>
+</table>
+
+<h3>JMRI Web Port</h3>
+<p>
+    The final string from the initial reply provides the port set for the JMRI web server. For example:
+</p>
+<pre class="code">
+PW12080
+</pre>
+<p>
+    indicates that the web server port is set to 12080.
+</p>
+
+<h2>Commands</h2>
+<p>
+    Once you've established a connection as outlined above, you can start sending commands to JMRI.
+    The first letter of each command is interpreted by the
+    <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/withrottle/DeviceServer.java">DeviceServer</a>
+    class to determine where to send the rest of the command. Here are the letters currently supported:
+</p>
+<ul>
+    <li>'T' sends a throttle command</li>
+    <li>'S' sends a throttle command to a second throttle</li>
+    <li>'M' sends a command to a "multi" throttle</li>
+    <li>'D' sends a hex packet to the command station</li>
+    <li>'*' sends a heartbeat, or sets heartbeat on or off</li>
+    <li>'C' is not used anymore and forwards to the throttle controller.</li>
+    <li>'N' sets the device name</li>
+    <li>'H' sets the device ID.</li>
+    <li>'P' sends a panel command</li>
+    <li>'R' sends a roster command</li>
+    <li>'Q' indicates the device has quit, close its window.</li>
+</ul>
+
+<h3>'N' Device Name</h3>
+<p>
+    Sets the name that will appear in the WiThrottle window. In Engine Driver, this is the throttle name that you can set.
+    The syntax is <code>N<i>name</i></code>, where <i>name</i> can be any text, except for a newline, as the newline terminates
+    the command. For example:
+</p>
+<pre class="code">
+NJohn's Throttle
+</pre>
+<p>
+    Reply: <code>*</code><i>StopSeconds</i>
+</p>
+<pre class="code">
+*10
+</pre>
+<p>
+    The number after '*' indicates how often your throttle will need to send a command or heartbeat (0 means a heartbeat is
+    not required). JMRI will send an EStop to the locomotive if it hasn't received a command or heartbeat within the
+    number of seconds provided.
+</p>
+
+<h3>'*' Heartbeat</h3>
+<p>
+    There are three versions of this command:
+</p>
+<table class="data">
+    <tr><td>Command</td>    <td>Description</td></tr>
+    <tr><td>*</td>          <td>Send heartbeat</td></tr>
+    <tr><td>*+</td>         <td>Turn heartbeat monitoring on</td></tr>
+    <tr><td>*-</td>         <td>Turn heartbeat monitoring off</td></tr>
+</table>
+<p>
+    The idea of the heartbeat is that JMRI will issue an emergency stop if it has not received any commands from your throttle
+    within the heartbeat period. When you set your throttle name, using the N command, JMRI returns the emergency stop delay,
+    in seconds, but it doesn't turn heartbeat monitoring on until you explicitly tell it to do so. Once you've turned it on,
+    your throttle will need to ensure it sends periodic heartbeat commands (or any other command) to keep your engine(s) alive.
+</p>
+
+<h3>T, S, M - Throttle Controller</h3>
+<p>
+    The three throttle commands are somewhat similiar. The 'T' and 'S' commands support a primary and secondary throttle, which
+    allows controlling two locomotives independently. The 'M' command is for a "multi" throttle (more details below). All 'T'
+    and 'S', and most 'M' commands are handled by the
+    <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/withrottle/ThrottleController.java">ThrottleController</a>
+    class.
+</p>
+<p>
+    Unlike the 'T' and 'S' throttles, the 'M' multi throttle can handle more than one locomotive. Engine Driver uses this feature,
+    for example, to make it super easy to create a consist on the fly with any set of engines (without using DCC consisting).
+    You can have one or more multi throttle, and each multi throttle can have more than one locomotive attached to it. The first
+    character after the 'M' is used as a key for the instance of MultiThrottle to use. Engine Driver always uses 'MT' and
+    therefore the key 'T' for it's multi throttle instance. However, you can use other characters for the key.
+</p>
+
+<h4>MultiThrottle Elements</h4>
+<p>
+    The command string after the first two characters is passed to the MultiThrottle for further
+    processing. As in other cases, the commands are arrays, where the "&lt;;&gt;" string is used as the delimiter.
+    For example:
+</p>
+<pre class="code">
+MT+L341&lt;;&gt;ED&amp;RGW 341
+</pre>
+<p>
+    Contains the array elements "+L341" and "ED&amp;RGW 341" (after removing the first two letters of the command).
+</p>
+<p>
+    The first character of the first element describes the MultiThrottle command, and is one of the following:
+</p>
+<table class="data">
+    <tr><th>3rd Char</th>   <th>Description</th></tr>
+    <tr><td>A</td>          <td>Action. The following characters provide more details</td></tr>
+    <tr><td>+</td>          <td>Add a locomotive to the throttle</td></tr>
+    <tr><td>-</td>          <td>Remove a locomotive from the throttle</td></tr>
+</table>
+<p>
+    Each of these operations is described in sections below.
+</p>
+<p>
+    The second element will be passed onto the ThrottleController instance for further processing, and the details are described below
+    in the Throttle Controller section.
+</p>
+
+<h5>'+' -- Add Locomotive</h5>
+The following command is a request to add a new locomotive to the multi throttle:
+<pre class="code">
+MT+S3&lt;;&gt;ED&amp;RGW 341
+</pre>
+<p>
+    The first element is "+S3" has the '+' to indicate that this is a request to add a locomotive to the multi throttle.
+    The rest of the string looks like an address, but it's actually a key used to identify the engine within the
+    multi throttle. Engine Driver uses the DCC address as the key.
+</p>
+<p>
+    The reply from this command is quite verbose, and contains details about this locomotive as known by JMRI.
+    If the engine number is in JMRI's roster, it will return information like the following:
+</p>
+<pre class="code">
+MT+L41&lt;;&gt;
+MTLL41&lt;;&gt;]\[Headlight]\[Bell]\[Whistle]\[Short Whistle]\[Steam Release]\[FX5 Light]\[FX6 Light]\[Dimmer]\[Mute]\[Water Stop]\[Injectors]\[Brake Squeal]\[Coupler]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[
+MTAL41&lt;;&gt;F00
+MTAL41&lt;;&gt;F01
+MTAL41&lt;;&gt;F02
+...
+MTAL41&lt;;&gt;F027
+MTAL41&lt;;&gt;F028
+MTAL41&lt;;&gt;V0
+MTAL41&lt;;&gt;R1
+MTAL41&lt;;&gt;s1
+</pre>
 
 <p>
-Open a TCP/IP link to the port advertised via ZeroConf/Bonjour
-as the servicve "_withrottle._tcp.local.".
+    If, on the other hand, JMRI does not have the engine number in it's roster, it returns information like the following:
+</p>
+<pre class="code">
+MT+L341&lt;;&gt;
+MTAL341&lt;;&gt;F00
+MTAL341&lt;;&gt;F01
+...
+MTAL341&lt;;&gt;F027
+MTAL341&lt;;&gt;F028
+MTAL341&lt;;&gt;V0
+MTAL341&lt;;&gt;R1
+MTAL341&lt;;&gt;s1
+</pre>
+<p class="note">
+    the examples above are all replies from the multi throttle.
+</p>
+<p>
+    The reply consists of the following sections:
+</p>
+<ul>
+    <li>Function labels</li>
+    <li>Function states (pressed or released)</li>
+    <li>Current speed</li>
+    <li>Current direction</li>
+    <li>Current speed step mode</li>
+</ul>
+<p>
+    For all except the function lables, see the appropriate throttle commands, such as 'V' below, for details.
+</p>
+<p>
+    The function labels are an array of strings, with ]\[ used as the array delimiter. So in the example above,
+    F0 is called Headlight, F1 Bell, etc. Note that, unlike with other arrays, the array delimiter appears at
+    the start and end of the array, as well as between elements.
+</p>
 
+<h5>'-' -- Remove Locomotive</h5>
 <p>
-The first letter is interpreted by the DeviceServer class to determine
-where to send the rest of the package.
-<ol>
-    <li>
-        'T' sends to the throttle controller class.
-    </li>
-    <li>
-        'N' is the device name.
-    </li>
-    <li>
-        'Q' indicates the device has quit, close its window.
-    </li>
-    <li>
-        'C' is not used anymore and forwards to the throttle controller.
-    </li>
-</ol>
+    The '-' command removes an engine from a multi throttle. Engine Driver, for example, sends the following command
+    when you release a locomotive:
+</p>
+<pre class="code">
+MT-*&lt;;&gt;r
+</pre>
+<p>
+    The first element after the '-' character is the key of the locomotive to remove, or '*' to remove <i>all</i>
+    locomotives from the multi throttle instance. The multi throttle instance will loop through all of it's
+    throttle instances and send the 'r' command to each one. The 'r' command is a release command.
+</p>
 
+<h5>'A' -- Locomotive Action</h5>
 <p>
-<h3>
-    Throttle Controller:
-</h3>
+    This command passes the second element in the array to either a specific throttle (if you specify a key), or to
+    all of the throttles in the multi-throttle instance if you provide '*' as the key. For example:
+</p>
+<pre class="code">
+MTA*&lt;;&gt;qR
+</pre>
 <p>
-These would follow the 'T'
-<p>
-Send Laddr, or Saddr to allocate
-a throttle.  "L" means Long DCC address, "S" means Short DCC
-address. e.g. TL345 will tell the throttle controller to
-request long address 345. When the address is set, the Device Server
-will send out the acquired address to the mobile device.
+    The characters after the 'A' in the first elemnet are the key to a locomotive in the multi throttle, or '*' to send
+    the command to all of the locomotives. In the example above, Engine Driver is sending a "qR" command to all of the
+    locomotives in the multi throttle.
+</p>
 
+<h2>Throttle Controller Commands</h2>
 <p>
-R0 is reverse, R1 is forward. e.g. TR1 tells throttle controller
-to set direction forward.
+    This section describes throttle commands, which are commands that start with 'T' or 'S', or the second element of 'MT'
+    commands (as described above). After the command prefix, the next letter is one of the following:
+</p>
+<ul>
+    <li>'V' sets the speed (velocity). Format V<i>speed. Example: "TV23"</i></li>
+    <li>'X' emergency stop. Example: "TX"</li>
+    <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>. Example, "TF112"</li>
+    <li>'f' force function</li>
+    <li>'R' set direction. Format R<i>{0|1}</i>. Example "TR1"</li>
+    <li>'r' release. Example: "Tr"</li>
+    <li>'d' dispatch. Example: "Td"</li>
+    <li>'L' sets a long DCC address. Example: "TL1234"</li>
+    <li>'S' sets a short DCC address. Example: "TS32"</li>
+    <li>'E' sets an address from a roster entry. Format E<i>ID</i>. Example, "TERGS 41"</li>
+    <li>'C' consist</li>
+    <li>'c' consist lead from roster entry</li>
+    <li>'I' idle, which sets the speed to 0</li>
+    <li>'s' set speed step mode</li>
+    <li>'m' momentary</li>
+    <li>'q' ask for current settings, such as speed or direction</li>
+    <li>'Q' quit</li>
+</ul>
+<p class="note">
+    All of the examples above use the simpler 'T' command. If you're using the multi throttle, you'll need to send an array
+    with the text after the "T" in the second part of the array. The descriptions below all use examples based on the 
+    multi throttle. Here is an example of the difference in the full command format for a multi throttle vs a normal
+    throttle ('T' or 'S'). Here is an example of one command in both formats:
+</p>
+<pre class="code">
+MTA*&lt;;&gt;V30
+TV30
+</pre>
+<p>
+    Each of the commands is described in a section below when it takes additional information. Some commands, such as 'X' require
+    no additional information.
+</p>
 
+<h3>'d' Dispatch and 'r' Release</h3>
 <p>
-Viii sets speed, where iii is an integer value between 0 and 126.
-e.g. TV63 will have the throttle controller set the speed value
-to 50%
+    For most DCC systems, these are the same thing; if in doubt, use release.
+    Device server will then send "Not Set" to the mobile device.
+</p>
 
+<h3>'F' Function</h3>
 <p>
-'r' and 'd' "release" and "dispatch" the throttle.  For most
-DCC systems, these are the same thing; if in doubt, use release.
-Device server will then send "Not Set" to the mobile device.
+    Function keys have two states. Either they're pushed down (when you're pushing with your finger), or they're up
+    (when you release them). Therefore, when you send function commands, you'll send a pair--first when the button
+    is pushed down and second when the button is released. Here is an example of a pair of messages (usually with
+    some time in between them):
+</p>
+<pre class="code">
+MTA*&lt;;&gt;F112
+MTA*&lt;;&gt;F012
+</pre>
+<p>
+    The first command is when you push F12, and the second is when you release the F12 button. Although this example
+    sends to all of the 'T' throttles, you can send a function to just one by providing the key you used when you
+    added an engine.
+</p>
+<p class="note">
+    Some functions, such as whistle, remain active only while you have the button down, while others, like lights, are
+    toggle. In both cases, your code should send both the push (1) and release (0) and JMRI will map that into the
+    correct DCC command or commands, as appropriate.
+</p>
 
+<h3>'R' Set Direction</h3>
 <p>
-Function buttons are not latched by the connected mobile device.
-Instead the packages sent from the device to JMRI indicate when
-a button is pressed, and when it is released. The format is 'F'
-followed by 0 or 1 for released and pressed, followed by the
-function number. e.g. TF13 says the button for function 3 is pressed,
-and TF03 is sent when the button for function 3 is released. The
-throttle controller then checks to see if that function is momentary,
-and handles it accordingly.
+    Used to change between forward and reverse:
+</p>
+<table class="data">
+    <tr><td>R0</td><td>Reverse</td></tr>
+    <tr><td>R1</td><td>Forward. Actually, any value other than 0 after the R is considered forward</td></tr>
+</table>
 
+<h3>'V' Set Speed</h3>
 <p>
-This is the package/jmri/jmrit/withrottle/Protocol help page
+    Set the speed to a value between 0 and 126. The format looks something like this:
+</p>
+<pre class="code">
+MTA*&lt;;&gt;V30
+</pre>
+
+<p>This is the package/jmri/jmrit/withrottle/Protocol help page</p>
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2007, 2011 All rights reserved -->
 <!-- $Id: CreateDecoder.shtml 17977 2011-10-26$ -->
@@ -21,58 +21,66 @@
     </family>
     <programming direct="yes" paged="no" register="no" ops="yes"/>
     <variables>
-      <variable label="Decoder Address" CV="1" mask="XXVVVVVV" comment="Decoder address outputs A - F" default="01">
+      <variable item="Decoder Address" CV="1" mask="XXVVVVVV" comment="Decoder address outputs A - F" default="01">
         <splitVal highCV="9" upperMask="XXXXXVVV"/>
+        <label>Decoder Address</label>
       </variable>
-      <variable label="Low Address" CV="1" readOnly="no" mask="VVVVVVVVV" comment="Decoder address low 8 bits">
+      <variable item="Low Address" CV="1" readOnly="no" comment="Decoder address low 8 bits">
         <decVal min="1" max="255"/>
         <label>Low Address</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="no" item="Manufacturer" tooltip="Manufacturer ID READ ONLY, except writing 8 will do a factory reset to clean, new in the box conditions" default="80">
+      <variable CV="8" readOnly="no" item="Manufacturer" tooltip="Manufacturer ID READ ONLY, except writing 8 will do a factory reset to clean, new in the box conditions" default="80">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="High Address" CV="9" readOnly="no" mask="XXXXXXXV" comment="Decoder address high 2 bits" tooltip="Decoder address high part, use this if the address is greater than 127">
+      <variable item="High Address" CV="9" readOnly="no" mask="XXXXXXXV" comment="Decoder address high 2 bits" tooltip="Decoder address high part, use this if the address is greater than 127">
         <decVal/>
         <label>High Address</label>
       </variable>
       <!--provide support to allow LOCO decoder acces in extended address mode-->
-      <variable label="Extended Address" CV="17" item="Long Address">
+      <variable CV="17" item="Long Address">
         <longAddressVal/>
         <label>Extended Address</label>
       </variable>
-      <variable label="Extended Address" CV="18" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-      </variable>
-      <variable label="Accessroy Decoder config" CV="29" default="128">
+      <variable item="Accessory Decoder config" CV="29" default="128">
         <decVal/>
+        <label>Accessory Decoder config</label>
       </variable>
-      <variable label="Index page address high byte" CV="31" readOnly="no" comment="high byte of indexed address 10H for standard NMRA or 0 for special 128 pages">
+      <variable item="Index page address high byte" CV="31" readOnly="no" comment="high byte of indexed address 10H for standard NMRA or 0 for special 128 pages">
         <hexVal/>
         <label>Index page address high byte</label>
       </variable>
-      <variable label="Index page address low byte" CV="32" readOnly="no" comment="low byte of indexed address page, this forms address bits 8 to 15 for NMRA index or bits 7 to 14 for special 128 byte index pages">
+      <variable item="Index page address low byte" CV="32" readOnly="no" comment="low byte of indexed address page, this forms address bits 8 to 15 for NMRA index or bits 7 to 14 for special 128 byte index pages">
         <hexVal/>
         <label>Index page address low byte</label>
       </variable>
-      <variable label="Page256index low" CV="32" default="0">
+      <variable item="Page256index low" CV="32" default="0">
         <hexVal/>
+        <label>Page256index low</label>
       </variable>
-      <variable label="Page256index high" CV="31" default="16">
+      <variable item="Page256index high" CV="31" default="16">
         <hexVal/>
+        <label>Page256index high</label>
       </variable>
-      <variable label="Page128index low" CV="32" mask="VVVVVVVX" default="0">
+      <variable item="Page128index low" CV="32" mask="VVVVVVVX" default="0">
         <hexVal/>
+        <label>Page128index low</label>
       </variable>
-      <variable label="Page128index high" CV="31" default="0">
+      <variable item="Page128index high" CV="31" default="0">
         <hexVal/>
+        <label>Page128index high</label>
       </variable>
-      <variable label="Page128high half" CV="32" mask="XXXXXXXV">
+      <variable item="Page128high half" CV="32" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="LOW">
             <choice>LOW</choice>
@@ -81,21 +89,26 @@
             <choice>HIGH</choice>
           </enumChoice>
         </enumVal>
+        <label>Page128high half</label>
       </variable>
       <!--************** Servo default variables ********************-->
-      <variable label="S0MINpos" CV="33" default="63">
+      <variable item="S0MINpos" CV="33" default="63">
         <decVal/>
+        <label>S0MINpos</label>
       </variable>
-      <variable label="S0MAXpos" CV="34" default="187">
+      <variable item="S0MAXpos" CV="34" default="187">
         <decVal/>
+        <label>S0MAXpos</label>
       </variable>
-      <variable label="switch time S0" CV="35" default="20">
+      <variable item="switch time S0" CV="35" default="20">
         <decVal/>
+        <label>switch time S0</label>
       </variable>
-      <variable label="motion table S0" CV="36" mask="XXXXXVVV" default="1">
+      <variable item="motion table S0" CV="36" mask="XXXXXVVV" default="1">
         <decVal/>
+        <label>motion table S0</label>
       </variable>
-      <variable label="Direction Reverse S0" CV="36" mask="XXXVXXXX" default="0">
+      <variable item="Direction Reverse S0" CV="36" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -104,8 +117,9 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
+        <label>Direction Reverse S0</label>
       </variable>
-      <variable label="Light reverse  S0" CV="36" mask="XXVXXXXX" default="0">
+      <variable item="Light reverse  S0" CV="36" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -114,8 +128,9 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
+        <label>Light reverse  S0</label>
       </variable>
-      <variable label="Tri color LED S0" CV="36" mask="XVXXXXXX" default="0">
+      <variable item="Tri color LED S0" CV="36" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="2 LEDs">
             <choice> 2 LEDs </choice>
@@ -124,8 +139,9 @@
             <choice> TyicolorLED </choice>
           </enumChoice>
         </enumVal>
+        <label>Tri color LED S0</label>
       </variable>
-      <variable label="startup TURNOUT position S0" CV="36" mask="VXXXXXXX" default="1">
+      <variable item="startup TURNOUT position S0" CV="36" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Throw">
             <choice>Throw</choice>
@@ -134,40 +150,29 @@
             <choice>Close</choice>
           </enumChoice>
         </enumVal>
+        <label>startup TURNOUT position S0</label>
       </variable>
-      <variable label="Panelsw S0" CV="36" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Panelsw S0" CV="36" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Panelsw S0</label>
       </variable>
-      <variable label="S1MINpos" CV="38" default="63">
+      <variable item="S1MINpos" CV="38" default="63">
         <decVal/>
+        <label>S1MINpos</label>
       </variable>
-      <variable label="S1MAXpos" CV="39" default="187">
+      <variable item="S1MAXpos" CV="39" default="187">
         <decVal/>
+        <label>S1MAXpos</label>
       </variable>
-      <variable label="switch time S1" CV="40" default="20">
+      <variable item="switch time S1" CV="40" default="20">
         <decVal/>
+        <label>switch time S1</label>
       </variable>
-      <variable label="motion table S1" CV="41" mask="XXXXXVVV" default="1">
+      <variable item="motion table S1" CV="41" mask="XXXXXVVV" default="1">
         <decVal/>
+        <label>motion table S1</label>
       </variable>
-      <variable label="Direction Reverse S1" CV="41" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Light reverse  S1" CV="41" mask="XXVXXXXX" default="0">
+      <variable item="Direction Reverse S1" CV="41" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -176,8 +181,20 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
+        <label>Direction Reverse S1</label>
       </variable>
-      <variable label="Tri color LED S1" CV="41" mask="XVXXXXXX" default="0">
+      <variable item="Light reverse  S1" CV="41" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light reverse  S1</label>
+      </variable>
+      <variable item="Tri color LED S1" CV="41" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="2 LEDs">
             <choice> 2 LEDs </choice>
@@ -186,8 +203,9 @@
             <choice> TyicolorLED </choice>
           </enumChoice>
         </enumVal>
+        <label>Tri color LED S1</label>
       </variable>
-      <variable label="startup TURNOUT position S1" CV="41" mask="VXXXXXXX" default="1">
+      <variable item="startup TURNOUT position S1" CV="41" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Throw">
             <choice>Throw</choice>
@@ -196,40 +214,29 @@
             <choice>Close</choice>
           </enumChoice>
         </enumVal>
+        <label>startup TURNOUT position S1</label>
       </variable>
-      <variable label="Panelsw S1" CV="41" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Panelsw S1" CV="41" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Panelsw S1</label>
       </variable>
-      <variable label="S2MINpos" CV="43" default="63">
+      <variable item="S2MINpos" CV="43" default="63">
         <decVal/>
+        <label>S2MINpos</label>
       </variable>
-      <variable label="S2MAXpos" CV="44" default="187">
+      <variable item="S2MAXpos" CV="44" default="187">
         <decVal/>
+        <label>S2MAXpos</label>
       </variable>
-      <variable label="switch time S2" CV="45" default="20">
+      <variable item="switch time S2" CV="45" default="20">
         <decVal/>
+        <label>switch time S2</label>
       </variable>
-      <variable label="motion table S2" CV="46" mask="XXXXXVVV" default="1">
+      <variable item="motion table S2" CV="46" mask="XXXXXVVV" default="1">
         <decVal/>
+        <label>motion table S2</label>
       </variable>
-      <variable label="Direction Reverse S2" CV="46" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Light reverse  S2" CV="46" mask="XXVXXXXX" default="0">
+      <variable item="Direction Reverse S2" CV="46" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -238,8 +245,20 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
+        <label>Direction Reverse S2</label>
       </variable>
-      <variable label="Tri color LED S2" CV="46" mask="XVXXXXXX" default="0">
+      <variable item="Light reverse  S2" CV="46" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light reverse  S2</label>
+      </variable>
+      <variable item="Tri color LED S2" CV="46" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="2 LEDs">
             <choice> 2 LEDs </choice>
@@ -248,8 +267,9 @@
             <choice> TyicolorLED </choice>
           </enumChoice>
         </enumVal>
+        <label>Tri color LED S2</label>
       </variable>
-      <variable label="startup TURNOUT position S2" CV="46" mask="VXXXXXXX" default="1">
+      <variable item="startup TURNOUT position S2" CV="46" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Throw">
             <choice>Throw</choice>
@@ -258,40 +278,29 @@
             <choice>Close</choice>
           </enumChoice>
         </enumVal>
+        <label>startup TURNOUT position S2</label>
       </variable>
-      <variable label="Panelsw S2" CV="46" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Panelsw S2" CV="46" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Panelsw S2</label>
       </variable>
-      <variable label="S3MINpos" CV="48" default="63">
+      <variable item="S3MINpos" CV="48" default="63">
         <decVal/>
+        <label>S3MINpos</label>
       </variable>
-      <variable label="S3MAXpos" CV="49" default="187">
+      <variable item="S3MAXpos" CV="49" default="187">
         <decVal/>
+        <label>S3MAXpos</label>
       </variable>
-      <variable label="switch time S3" CV="50" default="20">
+      <variable item="switch time S3" CV="50" default="20">
         <decVal/>
+        <label>switch time S3</label>
       </variable>
-      <variable label="motion table S3" CV="51" mask="XXXXXVVV" default="1">
+      <variable item="motion table S3" CV="51" mask="XXXXXVVV" default="1">
         <decVal/>
+        <label>motion table S3</label>
       </variable>
-      <variable label="Direction Reverse S3" CV="51" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Light reverse  S3" CV="51" mask="XXVXXXXX" default="0">
+      <variable item="Direction Reverse S3" CV="51" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -300,8 +309,20 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
+        <label>Direction Reverse S3</label>
       </variable>
-      <variable label="Tri color LED S3" CV="51" mask="XVXXXXXX" default="0">
+      <variable item="Light reverse  S3" CV="51" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light reverse  S3</label>
+      </variable>
+      <variable item="Tri color LED S3" CV="51" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="2 LEDs">
             <choice> 2 LEDs </choice>
@@ -310,8 +331,9 @@
             <choice> TyicolorLED </choice>
           </enumChoice>
         </enumVal>
+        <label>Tri color LED S3</label>
       </variable>
-      <variable label="startup TURNOUT position S3" CV="51" mask="VXXXXXXX" default="1">
+      <variable item="startup TURNOUT position S3" CV="51" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Throw">
             <choice>Throw</choice>
@@ -320,40 +342,29 @@
             <choice>Close</choice>
           </enumChoice>
         </enumVal>
+        <label>startup TURNOUT position S3</label>
       </variable>
-      <variable label="Panelsw S3" CV="51" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Panelsw S3" CV="51" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Panelsw S3</label>
       </variable>
-      <variable label="S4MINpos" CV="53" default="63">
+      <variable item="S4MINpos" CV="53" default="63">
         <decVal/>
+        <label>S4MINpos</label>
       </variable>
-      <variable label="S4MAXpos" CV="54" default="187">
+      <variable item="S4MAXpos" CV="54" default="187">
         <decVal/>
+        <label>S4MAXpos</label>
       </variable>
-      <variable label="switch time S4" CV="55" default="20">
+      <variable item="switch time S4" CV="55" default="20">
         <decVal/>
+        <label>switch time S4</label>
       </variable>
-      <variable label="motion table S4" CV="56" mask="XXXXXVVV" default="1">
+      <variable item="motion table S4" CV="56" mask="XXXXXVVV" default="1">
         <decVal/>
+        <label>motion table S4</label>
       </variable>
-      <variable label="Direction Reverse S4" CV="56" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Light reverse  S4" CV="56" mask="XXVXXXXX" default="0">
+      <variable item="Direction Reverse S4" CV="56" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -362,8 +373,20 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
+        <label>Direction Reverse S4</label>
       </variable>
-      <variable label="Tri color LED S4" CV="56" mask="XVXXXXXX" default="0">
+      <variable item="Light reverse  S4" CV="56" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light reverse  S4</label>
+      </variable>
+      <variable item="Tri color LED S4" CV="56" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="2 LEDs">
             <choice> 2 LEDs </choice>
@@ -372,8 +395,9 @@
             <choice> TyicolorLED </choice>
           </enumChoice>
         </enumVal>
+        <label>Tri color LED S4</label>
       </variable>
-      <variable label="startup TURNOUT position S4" CV="56" mask="VXXXXXXX" default="1">
+      <variable item="startup TURNOUT position S4" CV="56" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Throw">
             <choice>Throw</choice>
@@ -382,40 +406,29 @@
             <choice>Close</choice>
           </enumChoice>
         </enumVal>
+        <label>startup TURNOUT position S4</label>
       </variable>
-      <variable label="Panelsw S4" CV="56" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Panelsw S4" CV="56" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Panelsw S4</label>
       </variable>
-      <variable label="S5MINpos" CV="58" default="63">
+      <variable item="S5MINpos" CV="58" default="63">
         <decVal/>
+        <label>S5MINpos</label>
       </variable>
-      <variable label="S5MAXpos" CV="59" default="187">
+      <variable item="S5MAXpos" CV="59" default="187">
         <decVal/>
+        <label>S5MAXpos</label>
       </variable>
-      <variable label="switch time S5" CV="60" default="20">
+      <variable item="switch time S5" CV="60" default="20">
         <decVal/>
+        <label>switch time S5</label>
       </variable>
-      <variable label="motion table S5" CV="61" mask="XXXXXVVV" default="1">
+      <variable item="motion table S5" CV="61" mask="XXXXXVVV" default="1">
         <decVal/>
+        <label>motion table S5</label>
       </variable>
-      <variable label="Direction Reverse S5" CV="61" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Light reverse  S5" CV="61" mask="XXVXXXXX" default="0">
+      <variable item="Direction Reverse S5" CV="61" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -424,8 +437,20 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
+        <label>Direction Reverse S5</label>
       </variable>
-      <variable label="Tri color LED S5" CV="61" mask="XVXXXXXX" default="0">
+      <variable item="Light reverse  S5" CV="61" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light reverse  S5</label>
+      </variable>
+      <variable item="Tri color LED S5" CV="61" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="2 LEDs">
             <choice> 2 LEDs </choice>
@@ -434,8 +459,9 @@
             <choice> TyicolorLED </choice>
           </enumChoice>
         </enumVal>
+        <label>Tri color LED S5</label>
       </variable>
-      <variable label="startup TURNOUT position S5" CV="61" mask="VXXXXXXX" default="1">
+      <variable item="startup TURNOUT position S5" CV="61" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Throw">
             <choice>Throw</choice>
@@ -444,40 +470,29 @@
             <choice>Close</choice>
           </enumChoice>
         </enumVal>
+        <label>startup TURNOUT position S5</label>
       </variable>
-      <variable label="Panelsw S5" CV="61" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Panelsw S5" CV="61" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Panelsw S5</label>
       </variable>
-      <variable label="S6MINpos" CV="63" default="63">
+      <variable item="S6MINpos" CV="63" default="63">
         <decVal/>
+        <label>S6MINpos</label>
       </variable>
-      <variable label="S6MAXpos" CV="64" default="187">
+      <variable item="S6MAXpos" CV="64" default="187">
         <decVal/>
+        <label>S6MAXpos</label>
       </variable>
-      <variable label="switch time S6" CV="65" default="20">
+      <variable item="switch time S6" CV="65" default="20">
         <decVal/>
+        <label>switch time S6</label>
       </variable>
-      <variable label="motion table S6" CV="66" mask="XXXXXVVV" default="1">
+      <variable item="motion table S6" CV="66" mask="XXXXXVVV" default="1">
         <decVal/>
+        <label>motion table S6</label>
       </variable>
-      <variable label="Direction Reverse S6" CV="66" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Light reverse  S6" CV="66" mask="XXVXXXXX" default="0">
+      <variable item="Direction Reverse S6" CV="66" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -486,8 +501,20 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
+        <label>Direction Reverse S6</label>
       </variable>
-      <variable label="Tri color LED S6" CV="66" mask="XVXXXXXX" default="0">
+      <variable item="Light reverse  S6" CV="66" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light reverse  S6</label>
+      </variable>
+      <variable item="Tri color LED S6" CV="66" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="2 LEDs">
             <choice> 2 LEDs </choice>
@@ -496,8 +523,9 @@
             <choice> TyicolorLED </choice>
           </enumChoice>
         </enumVal>
+        <label>Tri color LED S6</label>
       </variable>
-      <variable label="startup TURNOUT position S6" CV="66" mask="VXXXXXXX" default="1">
+      <variable item="startup TURNOUT position S6" CV="66" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Throw">
             <choice>Throw</choice>
@@ -506,40 +534,29 @@
             <choice>Close</choice>
           </enumChoice>
         </enumVal>
+        <label>startup TURNOUT position S6</label>
       </variable>
-      <variable label="Panelsw S6" CV="66" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Panelsw S6" CV="66" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Panelsw S6</label>
       </variable>
-      <variable label="S7MINpos" CV="68" default="63">
+      <variable item="S7MINpos" CV="68" default="63">
         <decVal/>
+        <label>S7MINpos</label>
       </variable>
-      <variable label="S7MAXpos" CV="69" default="187">
+      <variable item="S7MAXpos" CV="69" default="187">
         <decVal/>
+        <label>S7MAXpos</label>
       </variable>
-      <variable label="switch time S7" CV="70" default="20">
+      <variable item="switch time S7" CV="70" default="20">
         <decVal/>
+        <label>switch time S7</label>
       </variable>
-      <variable label="motion table S7" CV="71" mask="XXXXXVVV" default="1">
+      <variable item="motion table S7" CV="71" mask="XXXXXVVV" default="1">
         <decVal/>
+        <label>motion table S7</label>
       </variable>
-      <variable label="Direction Reverse S7" CV="71" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Light reverse  S7" CV="71" mask="XXVXXXXX" default="0">
+      <variable item="Direction Reverse S7" CV="71" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -548,8 +565,20 @@
             <choice>Reversed</choice>
           </enumChoice>
         </enumVal>
+        <label>Direction Reverse S7</label>
       </variable>
-      <variable label="Tri color LED S7" CV="71" mask="XVXXXXXX" default="0">
+      <variable item="Light reverse  S7" CV="71" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light reverse  S7</label>
+      </variable>
+      <variable item="Tri color LED S7" CV="71" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="2 LEDs">
             <choice> 2 LEDs </choice>
@@ -558,8 +587,9 @@
             <choice> TyicolorLED </choice>
           </enumChoice>
         </enumVal>
+        <label>Tri color LED S7</label>
       </variable>
-      <variable label="startup TURNOUT position S7" CV="71" mask="VXXXXXXX" default="1">
+      <variable item="startup TURNOUT position S7" CV="71" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Throw">
             <choice>Throw</choice>
@@ -568,2895 +598,3838 @@
             <choice>Close</choice>
           </enumChoice>
         </enumVal>
+        <label>startup TURNOUT position S7</label>
       </variable>
-      <variable label="Panelsw S7" CV="71" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Panelsw S7" CV="71" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Panelsw S7</label>
       </variable>
       <!--*****END OF SERVO DEFAULTS*****-->
-      <variable label="running servo Limit" CV="73" default="4">
+      <variable item="running servo Limit" CV="73" default="4">
         <decVal min="1" max="8"/>
+        <label>running servo Limit</label>
       </variable>
-      <variable label="OPS ack LED" CV="74" default="1">
+      <variable item="OPS ack LED" CV="74" default="1">
         <decVal/>
+        <label>OPS ack LED</label>
       </variable>
-      <variable label="OPS ack time" CV="75" default="105">
+      <variable item="OPS ack time" CV="75" default="105">
         <decVal/>
+        <label>OPS ack time</label>
       </variable>
-      <variable label="LOCO Decoder Address" CV="76" mask="VVVVVVVV" default="121">
+      <variable item="LOCO Decoder Address" CV="76" mask="VVVVVVVV" default="121">
         <splitVal highCV="77" upperMask="XXVVVVVV"/>
+        <label>LOCO Decoder Address</label>
       </variable>
-      <variable label="LOCO address low" CV="76" default="121">
+      <variable item="LOCO address low" CV="76" default="121">
         <decVal/>
+        <label>LOCO address low</label>
       </variable>
-      <variable label="LOCO address high" CV="77" mask="XXVVVVVV" default="0">
+      <variable item="LOCO address high" CV="77" mask="XXVVVVVV" default="0">
         <decVal/>
+        <label>LOCO address high</label>
       </variable>
-      <variable label="LOCO address lock" CV="77" mask="VXXXXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="LOCO address lock" CV="77" mask="VXXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>LOCO address lock</label>
       </variable>
       <!--************** animation program EEPROM bytes ********************-->
-      <variable label="EEPROM78" CV="78">
+      <variable item="EEPROM78" CV="78">
         <decVal/>
+        <label>EEPROM78</label>
       </variable>
-      <variable label="EEPROM79" CV="79">
+      <variable item="EEPROM79" CV="79">
         <decVal/>
+        <label>EEPROM79</label>
       </variable>
-      <variable label="EEPROM80" CV="80">
+      <variable item="EEPROM80" CV="80">
         <decVal/>
+        <label>EEPROM80</label>
       </variable>
-      <variable label="EEPROM81" CV="81">
+      <variable item="EEPROM81" CV="81">
         <decVal/>
+        <label>EEPROM81</label>
       </variable>
-      <variable label="EEPROM82" CV="82">
+      <variable item="EEPROM82" CV="82">
         <decVal/>
+        <label>EEPROM82</label>
       </variable>
-      <variable label="EEPROM83" CV="83">
+      <variable item="EEPROM83" CV="83">
         <decVal/>
+        <label>EEPROM83</label>
       </variable>
-      <variable label="EEPROM84" CV="84">
+      <variable item="EEPROM84" CV="84">
         <decVal/>
+        <label>EEPROM84</label>
       </variable>
-      <variable label="EEPROM85" CV="85">
+      <variable item="EEPROM85" CV="85">
         <decVal/>
+        <label>EEPROM85</label>
       </variable>
-      <variable label="EEPROM86" CV="86">
+      <variable item="EEPROM86" CV="86">
         <decVal/>
+        <label>EEPROM86</label>
       </variable>
-      <variable label="EEPROM87" CV="87">
+      <variable item="EEPROM87" CV="87">
         <decVal/>
+        <label>EEPROM87</label>
       </variable>
-      <variable label="EEPROM88" CV="88">
+      <variable item="EEPROM88" CV="88">
         <decVal/>
+        <label>EEPROM88</label>
       </variable>
-      <variable label="EEPROM89" CV="89">
+      <variable item="EEPROM89" CV="89">
         <decVal/>
+        <label>EEPROM89</label>
       </variable>
-      <variable label="EEPROM90" CV="90">
+      <variable item="EEPROM90" CV="90">
         <decVal/>
+        <label>EEPROM90</label>
       </variable>
-      <variable label="EEPROM91" CV="91">
+      <variable item="EEPROM91" CV="91">
         <decVal/>
+        <label>EEPROM91</label>
       </variable>
-      <variable label="EEPROM92" CV="92">
+      <variable item="EEPROM92" CV="92">
         <decVal/>
+        <label>EEPROM92</label>
       </variable>
-      <variable label="EEPROM93" CV="93">
+      <variable item="EEPROM93" CV="93">
         <decVal/>
+        <label>EEPROM93</label>
       </variable>
-      <variable label="EEPROM94" CV="94">
+      <variable item="EEPROM94" CV="94">
         <decVal/>
+        <label>EEPROM94</label>
       </variable>
-      <variable label="EEPROM95" CV="95">
+      <variable item="EEPROM95" CV="95">
         <decVal/>
+        <label>EEPROM95</label>
       </variable>
-      <variable label="EEPROM96" CV="96">
+      <variable item="EEPROM96" CV="96">
         <decVal/>
+        <label>EEPROM96</label>
       </variable>
-      <variable label="EEPROM97" CV="97">
+      <variable item="EEPROM97" CV="97">
         <decVal/>
+        <label>EEPROM97</label>
       </variable>
-      <variable label="EEPROM98" CV="98">
+      <variable item="EEPROM98" CV="98">
         <decVal/>
+        <label>EEPROM98</label>
       </variable>
-      <variable label="EEPROM99" CV="99">
+      <variable item="EEPROM99" CV="99">
         <decVal/>
+        <label>EEPROM99</label>
       </variable>
-      <variable label="EEPROM100" CV="100">
+      <variable item="EEPROM100" CV="100">
         <decVal/>
+        <label>EEPROM100</label>
       </variable>
-      <variable label="EEPROM101" CV="101">
+      <variable item="EEPROM101" CV="101">
         <decVal/>
+        <label>EEPROM101</label>
       </variable>
-      <variable label="EEPROM102" CV="102">
+      <variable item="EEPROM102" CV="102">
         <decVal/>
+        <label>EEPROM102</label>
       </variable>
-      <variable label="EEPROM103" CV="103">
+      <variable item="EEPROM103" CV="103">
         <decVal/>
+        <label>EEPROM103</label>
       </variable>
-      <variable label="EEPROM104" CV="104">
+      <variable item="EEPROM104" CV="104">
         <decVal/>
+        <label>EEPROM104</label>
       </variable>
-      <variable label="EEPROM105" CV="105">
+      <variable item="EEPROM105" CV="105">
         <decVal/>
+        <label>EEPROM105</label>
       </variable>
-      <variable label="EEPROM106" CV="106">
+      <variable item="EEPROM106" CV="106">
         <decVal/>
+        <label>EEPROM106</label>
       </variable>
-      <variable label="EEPROM107" CV="107">
+      <variable item="EEPROM107" CV="107">
         <decVal/>
+        <label>EEPROM107</label>
       </variable>
-      <variable label="EEPROM108" CV="108">
+      <variable item="EEPROM108" CV="108">
         <decVal/>
+        <label>EEPROM108</label>
       </variable>
-      <variable label="EEPROM109" CV="109">
+      <variable item="EEPROM109" CV="109">
         <decVal/>
+        <label>EEPROM109</label>
       </variable>
-      <variable label="EEPROM110" CV="110">
+      <variable item="EEPROM110" CV="110">
         <decVal/>
+        <label>EEPROM110</label>
       </variable>
-      <variable label="EEPROM111" CV="111">
+      <variable item="EEPROM111" CV="111">
         <decVal/>
+        <label>EEPROM111</label>
       </variable>
-      <variable label="EEPROM112" CV="112">
+      <variable item="EEPROM112" CV="112">
         <decVal/>
+        <label>EEPROM112</label>
       </variable>
-      <variable label="EEPROM113" CV="113">
+      <variable item="EEPROM113" CV="113">
         <decVal/>
+        <label>EEPROM113</label>
       </variable>
-      <variable label="EEPROM114" CV="114">
+      <variable item="EEPROM114" CV="114">
         <decVal/>
+        <label>EEPROM114</label>
       </variable>
-      <variable label="EEPROM115" CV="115">
+      <variable item="EEPROM115" CV="115">
         <decVal/>
+        <label>EEPROM115</label>
       </variable>
-      <variable label="EEPROM116" CV="116">
+      <variable item="EEPROM116" CV="116">
         <decVal/>
+        <label>EEPROM116</label>
       </variable>
-      <variable label="EEPROM117" CV="117">
+      <variable item="EEPROM117" CV="117">
         <decVal/>
+        <label>EEPROM117</label>
       </variable>
-      <variable label="EEPROM118" CV="118">
+      <variable item="EEPROM118" CV="118">
         <decVal/>
+        <label>EEPROM118</label>
       </variable>
-      <variable label="EEPROM119" CV="119">
+      <variable item="EEPROM119" CV="119">
         <decVal/>
+        <label>EEPROM119</label>
       </variable>
-      <variable label="EEPROM120" CV="120">
+      <variable item="EEPROM120" CV="120">
         <decVal/>
+        <label>EEPROM120</label>
       </variable>
-      <variable label="EEPROM121" CV="121">
+      <variable item="EEPROM121" CV="121">
         <decVal/>
+        <label>EEPROM121</label>
       </variable>
-      <variable label="EEPROM122" CV="122">
+      <variable item="EEPROM122" CV="122">
         <decVal/>
+        <label>EEPROM122</label>
       </variable>
-      <variable label="EEPROM123" CV="123">
+      <variable item="EEPROM123" CV="123">
         <decVal/>
+        <label>EEPROM123</label>
       </variable>
-      <variable label="EEPROM124" CV="124">
+      <variable item="EEPROM124" CV="124">
         <decVal/>
+        <label>EEPROM124</label>
       </variable>
-      <variable label="EEPROM125" CV="125">
+      <variable item="EEPROM125" CV="125">
         <decVal/>
+        <label>EEPROM125</label>
       </variable>
-      <variable label="EEPROM126" CV="126">
+      <variable item="EEPROM126" CV="126">
         <decVal/>
+        <label>EEPROM126</label>
       </variable>
-      <variable label="EEPROM127" CV="127">
+      <variable item="EEPROM127" CV="127">
         <decVal/>
+        <label>EEPROM127</label>
       </variable>
-      <variable label="EEPROM128" CV="128">
+      <variable item="EEPROM128" CV="128">
         <decVal/>
+        <label>EEPROM128</label>
       </variable>
-      <variable label="TCV129" CV="129">
+      <variable item="TCV129" CV="129">
         <hexVal/>
+        <label>TCV129</label>
       </variable>
-      <variable label="TCV130" CV="130">
+      <variable item="TCV130" CV="130">
         <hexVal/>
+        <label>TCV130</label>
       </variable>
-      <variable label="TCV131" CV="131">
+      <variable item="TCV131" CV="131">
         <hexVal/>
+        <label>TCV131</label>
       </variable>
-      <variable label="TCV132" CV="132">
+      <variable item="TCV132" CV="132">
         <hexVal/>
+        <label>TCV132</label>
       </variable>
-      <variable label="TCV133" CV="133">
+      <variable item="TCV133" CV="133">
         <hexVal/>
+        <label>TCV133</label>
       </variable>
-      <variable label="TCV134" CV="134">
+      <variable item="TCV134" CV="134">
         <hexVal/>
+        <label>TCV134</label>
       </variable>
-      <variable label="TCV135" CV="135">
+      <variable item="TCV135" CV="135">
         <hexVal/>
+        <label>TCV135</label>
       </variable>
-      <variable label="TCV136" CV="136">
+      <variable item="TCV136" CV="136">
         <hexVal/>
+        <label>TCV136</label>
       </variable>
-      <variable label="TCV137" CV="137">
+      <variable item="TCV137" CV="137">
         <hexVal/>
+        <label>TCV137</label>
       </variable>
-      <variable label="TCV138" CV="138">
+      <variable item="TCV138" CV="138">
         <hexVal/>
+        <label>TCV138</label>
       </variable>
-      <variable label="TCV139" CV="139">
+      <variable item="TCV139" CV="139">
         <hexVal/>
+        <label>TCV139</label>
       </variable>
-      <variable label="TCV140" CV="140">
+      <variable item="TCV140" CV="140">
         <hexVal/>
+        <label>TCV140</label>
       </variable>
-      <variable label="TCV141" CV="141">
+      <variable item="TCV141" CV="141">
         <hexVal/>
+        <label>TCV141</label>
       </variable>
-      <variable label="TCV142" CV="142">
+      <variable item="TCV142" CV="142">
         <hexVal/>
+        <label>TCV142</label>
       </variable>
-      <variable label="TCV143" CV="143">
+      <variable item="TCV143" CV="143">
         <hexVal/>
+        <label>TCV143</label>
       </variable>
-      <variable label="TCV144" CV="144">
+      <variable item="TCV144" CV="144">
         <hexVal/>
+        <label>TCV144</label>
       </variable>
-      <variable label="TCV145" CV="145">
+      <variable item="TCV145" CV="145">
         <hexVal/>
+        <label>TCV145</label>
       </variable>
-      <variable label="TCV146" CV="146">
+      <variable item="TCV146" CV="146">
         <hexVal/>
+        <label>TCV146</label>
       </variable>
-      <variable label="TCV147" CV="147">
+      <variable item="TCV147" CV="147">
         <hexVal/>
+        <label>TCV147</label>
       </variable>
-      <variable label="TCV148" CV="148">
+      <variable item="TCV148" CV="148">
         <hexVal/>
+        <label>TCV148</label>
       </variable>
-      <variable label="TCV149" CV="149">
+      <variable item="TCV149" CV="149">
         <hexVal/>
+        <label>TCV149</label>
       </variable>
-      <variable label="TCV150" CV="150">
+      <variable item="TCV150" CV="150">
         <hexVal/>
+        <label>TCV150</label>
       </variable>
-      <variable label="TCV151" CV="151">
+      <variable item="TCV151" CV="151">
         <hexVal/>
+        <label>TCV151</label>
       </variable>
-      <variable label="TCV152" CV="152">
+      <variable item="TCV152" CV="152">
         <hexVal/>
+        <label>TCV152</label>
       </variable>
-      <variable label="TCV153" CV="153">
+      <variable item="TCV153" CV="153">
         <hexVal/>
+        <label>TCV153</label>
       </variable>
-      <variable label="TCV154" CV="154">
+      <variable item="TCV154" CV="154">
         <hexVal/>
+        <label>TCV154</label>
       </variable>
-      <variable label="TCV155" CV="155">
+      <variable item="TCV155" CV="155">
         <hexVal/>
+        <label>TCV155</label>
       </variable>
-      <variable label="TCV156" CV="156">
+      <variable item="TCV156" CV="156">
         <hexVal/>
+        <label>TCV156</label>
       </variable>
-      <variable label="TCV157" CV="157">
+      <variable item="TCV157" CV="157">
         <hexVal/>
+        <label>TCV157</label>
       </variable>
-      <variable label="TCV158" CV="158">
+      <variable item="TCV158" CV="158">
         <hexVal/>
+        <label>TCV158</label>
       </variable>
-      <variable label="TCV159" CV="159">
+      <variable item="TCV159" CV="159">
         <hexVal/>
+        <label>TCV159</label>
       </variable>
-      <variable label="TCV160" CV="160">
+      <variable item="TCV160" CV="160">
         <hexVal/>
+        <label>TCV160</label>
       </variable>
-      <variable label="TCV161" CV="161">
+      <variable item="TCV161" CV="161">
         <hexVal/>
+        <label>TCV161</label>
       </variable>
-      <variable label="TCV162" CV="162">
+      <variable item="TCV162" CV="162">
         <hexVal/>
+        <label>TCV162</label>
       </variable>
-      <variable label="TCV163" CV="163">
+      <variable item="TCV163" CV="163">
         <hexVal/>
+        <label>TCV163</label>
       </variable>
-      <variable label="TCV164" CV="164">
+      <variable item="TCV164" CV="164">
         <hexVal/>
+        <label>TCV164</label>
       </variable>
-      <variable label="TCV165" CV="165">
+      <variable item="TCV165" CV="165">
         <hexVal/>
+        <label>TCV165</label>
       </variable>
-      <variable label="TCV166" CV="166">
+      <variable item="TCV166" CV="166">
         <hexVal/>
+        <label>TCV166</label>
       </variable>
-      <variable label="TCV167" CV="167">
+      <variable item="TCV167" CV="167">
         <hexVal/>
+        <label>TCV167</label>
       </variable>
-      <variable label="TCV168" CV="168">
+      <variable item="TCV168" CV="168">
         <hexVal/>
+        <label>TCV168</label>
       </variable>
-      <variable label="TCV169" CV="169">
+      <variable item="TCV169" CV="169">
         <hexVal/>
+        <label>TCV169</label>
       </variable>
-      <variable label="TCV170" CV="170">
+      <variable item="TCV170" CV="170">
         <hexVal/>
+        <label>TCV170</label>
       </variable>
-      <variable label="TCV171" CV="171">
+      <variable item="TCV171" CV="171">
         <hexVal/>
+        <label>TCV171</label>
       </variable>
-      <variable label="TCV172" CV="172">
+      <variable item="TCV172" CV="172">
         <hexVal/>
+        <label>TCV172</label>
       </variable>
-      <variable label="TCV173" CV="173">
+      <variable item="TCV173" CV="173">
         <hexVal/>
+        <label>TCV173</label>
       </variable>
-      <variable label="TCV174" CV="174">
+      <variable item="TCV174" CV="174">
         <hexVal/>
+        <label>TCV174</label>
       </variable>
-      <variable label="TCV175" CV="175">
+      <variable item="TCV175" CV="175">
         <hexVal/>
+        <label>TCV175</label>
       </variable>
-      <variable label="TCV176" CV="176">
+      <variable item="TCV176" CV="176">
         <hexVal/>
+        <label>TCV176</label>
       </variable>
-      <variable label="TCV177" CV="177">
+      <variable item="TCV177" CV="177">
         <hexVal/>
+        <label>TCV177</label>
       </variable>
-      <variable label="TCV178" CV="178">
+      <variable item="TCV178" CV="178">
         <hexVal/>
+        <label>TCV178</label>
       </variable>
-      <variable label="TCV179" CV="179">
+      <variable item="TCV179" CV="179">
         <hexVal/>
+        <label>TCV179</label>
       </variable>
-      <variable label="TCV180" CV="180">
+      <variable item="TCV180" CV="180">
         <hexVal/>
+        <label>TCV180</label>
       </variable>
-      <variable label="TCV181" CV="181">
+      <variable item="TCV181" CV="181">
         <hexVal/>
+        <label>TCV181</label>
       </variable>
-      <variable label="TCV182" CV="182">
+      <variable item="TCV182" CV="182">
         <hexVal/>
+        <label>TCV182</label>
       </variable>
-      <variable label="TCV183" CV="183">
+      <variable item="TCV183" CV="183">
         <hexVal/>
+        <label>TCV183</label>
       </variable>
-      <variable label="TCV184" CV="184">
+      <variable item="TCV184" CV="184">
         <hexVal/>
+        <label>TCV184</label>
       </variable>
-      <variable label="TCV185" CV="185">
+      <variable item="TCV185" CV="185">
         <hexVal/>
+        <label>TCV185</label>
       </variable>
-      <variable label="TCV186" CV="186">
+      <variable item="TCV186" CV="186">
         <hexVal/>
+        <label>TCV186</label>
       </variable>
-      <variable label="TCV187" CV="187">
+      <variable item="TCV187" CV="187">
         <hexVal/>
+        <label>TCV187</label>
       </variable>
-      <variable label="TCV188" CV="188">
+      <variable item="TCV188" CV="188">
         <hexVal/>
+        <label>TCV188</label>
       </variable>
-      <variable label="TCV189" CV="189">
+      <variable item="TCV189" CV="189">
         <hexVal/>
+        <label>TCV189</label>
       </variable>
-      <variable label="TCV190" CV="190">
+      <variable item="TCV190" CV="190">
         <hexVal/>
+        <label>TCV190</label>
       </variable>
-      <variable label="TCV191" CV="191">
+      <variable item="TCV191" CV="191">
         <hexVal/>
+        <label>TCV191</label>
       </variable>
-      <variable label="TCV192" CV="192">
+      <variable item="TCV192" CV="192">
         <hexVal/>
+        <label>TCV192</label>
       </variable>
-      <variable label="TCV193" CV="193">
+      <variable item="TCV193" CV="193">
         <hexVal/>
+        <label>TCV193</label>
       </variable>
-      <variable label="TCV194" CV="194">
+      <variable item="TCV194" CV="194">
         <hexVal/>
+        <label>TCV194</label>
       </variable>
-      <variable label="TCV195" CV="195">
+      <variable item="TCV195" CV="195">
         <hexVal/>
+        <label>TCV195</label>
       </variable>
-      <variable label="TCV196" CV="196">
+      <variable item="TCV196" CV="196">
         <hexVal/>
+        <label>TCV196</label>
       </variable>
-      <variable label="TCV197" CV="197">
+      <variable item="TCV197" CV="197">
         <hexVal/>
+        <label>TCV197</label>
       </variable>
-      <variable label="TCV198" CV="198">
+      <variable item="TCV198" CV="198">
         <hexVal/>
+        <label>TCV198</label>
       </variable>
-      <variable label="TCV199" CV="199">
+      <variable item="TCV199" CV="199">
         <hexVal/>
+        <label>TCV199</label>
       </variable>
-      <variable label="TCV200" CV="200">
+      <variable item="TCV200" CV="200">
         <hexVal/>
+        <label>TCV200</label>
       </variable>
-      <variable label="TCV201" CV="201">
+      <variable item="TCV201" CV="201">
         <hexVal/>
+        <label>TCV201</label>
       </variable>
-      <variable label="TCV202" CV="202">
+      <variable item="TCV202" CV="202">
         <hexVal/>
+        <label>TCV202</label>
       </variable>
-      <variable label="TCV203" CV="203">
+      <variable item="TCV203" CV="203">
         <hexVal/>
+        <label>TCV203</label>
       </variable>
-      <variable label="TCV204" CV="204">
+      <variable item="TCV204" CV="204">
         <hexVal/>
+        <label>TCV204</label>
       </variable>
-      <variable label="TCV205" CV="205">
+      <variable item="TCV205" CV="205">
         <hexVal/>
+        <label>TCV205</label>
       </variable>
-      <variable label="TCV206" CV="206">
+      <variable item="TCV206" CV="206">
         <hexVal/>
+        <label>TCV206</label>
       </variable>
-      <variable label="TCV207" CV="207">
+      <variable item="TCV207" CV="207">
         <hexVal/>
+        <label>TCV207</label>
       </variable>
-      <variable label="TCV208" CV="208">
+      <variable item="TCV208" CV="208">
         <hexVal/>
+        <label>TCV208</label>
       </variable>
-      <variable label="TCV209" CV="209">
+      <variable item="TCV209" CV="209">
         <hexVal/>
+        <label>TCV209</label>
       </variable>
-      <variable label="TCV210" CV="210">
+      <variable item="TCV210" CV="210">
         <hexVal/>
+        <label>TCV210</label>
       </variable>
-      <variable label="TCV211" CV="211">
+      <variable item="TCV211" CV="211">
         <hexVal/>
+        <label>TCV211</label>
       </variable>
-      <variable label="TCV212" CV="212">
+      <variable item="TCV212" CV="212">
         <hexVal/>
+        <label>TCV212</label>
       </variable>
-      <variable label="TCV213" CV="213">
+      <variable item="TCV213" CV="213">
         <hexVal/>
+        <label>TCV213</label>
       </variable>
-      <variable label="TCV214" CV="214">
+      <variable item="TCV214" CV="214">
         <hexVal/>
+        <label>TCV214</label>
       </variable>
-      <variable label="TCV215" CV="215">
+      <variable item="TCV215" CV="215">
         <hexVal/>
+        <label>TCV215</label>
       </variable>
-      <variable label="TCV216" CV="216">
+      <variable item="TCV216" CV="216">
         <hexVal/>
+        <label>TCV216</label>
       </variable>
-      <variable label="TCV217" CV="217">
+      <variable item="TCV217" CV="217">
         <hexVal/>
+        <label>TCV217</label>
       </variable>
-      <variable label="TCV218" CV="218">
+      <variable item="TCV218" CV="218">
         <hexVal/>
+        <label>TCV218</label>
       </variable>
-      <variable label="TCV219" CV="219">
+      <variable item="TCV219" CV="219">
         <hexVal/>
+        <label>TCV219</label>
       </variable>
-      <variable label="TCV220" CV="220">
+      <variable item="TCV220" CV="220">
         <hexVal/>
+        <label>TCV220</label>
       </variable>
-      <variable label="TCV221" CV="221">
+      <variable item="TCV221" CV="221">
         <hexVal/>
+        <label>TCV221</label>
       </variable>
-      <variable label="TCV222" CV="222">
+      <variable item="TCV222" CV="222">
         <hexVal/>
+        <label>TCV222</label>
       </variable>
-      <variable label="TCV223" CV="223">
+      <variable item="TCV223" CV="223">
         <hexVal/>
+        <label>TCV223</label>
       </variable>
-      <variable label="TCV224" CV="224">
+      <variable item="TCV224" CV="224">
         <hexVal/>
+        <label>TCV224</label>
       </variable>
-      <variable label="TCV225" CV="225">
+      <variable item="TCV225" CV="225">
         <hexVal/>
+        <label>TCV225</label>
       </variable>
-      <variable label="TCV226" CV="226">
+      <variable item="TCV226" CV="226">
         <hexVal/>
+        <label>TCV226</label>
       </variable>
-      <variable label="TCV227" CV="227">
+      <variable item="TCV227" CV="227">
         <hexVal/>
+        <label>TCV227</label>
       </variable>
-      <variable label="TCV228" CV="228">
+      <variable item="TCV228" CV="228">
         <hexVal/>
+        <label>TCV228</label>
       </variable>
-      <variable label="TCV229" CV="229">
+      <variable item="TCV229" CV="229">
         <hexVal/>
+        <label>TCV229</label>
       </variable>
-      <variable label="TCV230" CV="230">
+      <variable item="TCV230" CV="230">
         <hexVal/>
+        <label>TCV230</label>
       </variable>
-      <variable label="TCV231" CV="231">
+      <variable item="TCV231" CV="231">
         <hexVal/>
+        <label>TCV231</label>
       </variable>
-      <variable label="TCV232" CV="232">
+      <variable item="TCV232" CV="232">
         <hexVal/>
+        <label>TCV232</label>
       </variable>
-      <variable label="TCV233" CV="233">
+      <variable item="TCV233" CV="233">
         <hexVal/>
+        <label>TCV233</label>
       </variable>
-      <variable label="TCV234" CV="234">
+      <variable item="TCV234" CV="234">
         <hexVal/>
+        <label>TCV234</label>
       </variable>
-      <variable label="TCV235" CV="235">
+      <variable item="TCV235" CV="235">
         <hexVal/>
+        <label>TCV235</label>
       </variable>
-      <variable label="TCV236" CV="236">
+      <variable item="TCV236" CV="236">
         <hexVal/>
+        <label>TCV236</label>
       </variable>
-      <variable label="TCV237" CV="237">
+      <variable item="TCV237" CV="237">
         <hexVal/>
+        <label>TCV237</label>
       </variable>
-      <variable label="TCV238" CV="238">
+      <variable item="TCV238" CV="238">
         <hexVal/>
+        <label>TCV238</label>
       </variable>
-      <variable label="TCV239" CV="239">
+      <variable item="TCV239" CV="239">
         <hexVal/>
+        <label>TCV239</label>
       </variable>
-      <variable label="TCV240" CV="240">
+      <variable item="TCV240" CV="240">
         <hexVal/>
+        <label>TCV240</label>
       </variable>
-      <variable label="TCV241" CV="241">
+      <variable item="TCV241" CV="241">
         <hexVal/>
+        <label>TCV241</label>
       </variable>
-      <variable label="TCV242" CV="242">
+      <variable item="TCV242" CV="242">
         <hexVal/>
+        <label>TCV242</label>
       </variable>
-      <variable label="TCV243" CV="243">
+      <variable item="TCV243" CV="243">
         <hexVal/>
+        <label>TCV243</label>
       </variable>
-      <variable label="TCV244" CV="244">
+      <variable item="TCV244" CV="244">
         <hexVal/>
+        <label>TCV244</label>
       </variable>
-      <variable label="TCV245" CV="245">
+      <variable item="TCV245" CV="245">
         <hexVal/>
+        <label>TCV245</label>
       </variable>
-      <variable label="TCV246" CV="246">
+      <variable item="TCV246" CV="246">
         <hexVal/>
+        <label>TCV246</label>
       </variable>
-      <variable label="TCV247" CV="247">
+      <variable item="TCV247" CV="247">
         <hexVal/>
+        <label>TCV247</label>
       </variable>
-      <variable label="TCV248" CV="248">
+      <variable item="TCV248" CV="248">
         <hexVal/>
+        <label>TCV248</label>
       </variable>
-      <variable label="TCV249" CV="249">
+      <variable item="TCV249" CV="249">
         <hexVal/>
+        <label>TCV249</label>
       </variable>
-      <variable label="TCV250" CV="250">
+      <variable item="TCV250" CV="250">
         <hexVal/>
+        <label>TCV250</label>
       </variable>
-      <variable label="TCV251" CV="251">
+      <variable item="TCV251" CV="251">
         <hexVal/>
+        <label>TCV251</label>
       </variable>
-      <variable label="TCV252" CV="252">
+      <variable item="TCV252" CV="252">
         <hexVal/>
+        <label>TCV252</label>
       </variable>
-      <variable label="TCV253" CV="253">
+      <variable item="TCV253" CV="253">
         <hexVal/>
+        <label>TCV253</label>
       </variable>
-      <variable label="TCV254" CV="254">
+      <variable item="TCV254" CV="254">
         <hexVal/>
+        <label>TCV254</label>
       </variable>
-      <variable label="TCV255" CV="255">
+      <variable item="TCV255" CV="255">
         <hexVal/>
+        <label>TCV255</label>
       </variable>
-      <variable label="TCV256" CV="256">
+      <variable item="TCV256" CV="256">
         <hexVal/>
+        <label>TCV256</label>
       </variable>
-      <variable label="TCV257" CV="257">
+      <variable item="TCV257" CV="257">
         <hexVal/>
+        <label>TCV257</label>
       </variable>
-      <variable label="TCV258" CV="258">
+      <variable item="TCV258" CV="258">
         <hexVal/>
+        <label>TCV258</label>
       </variable>
-      <variable label="TCV259" CV="259">
+      <variable item="TCV259" CV="259">
         <hexVal/>
+        <label>TCV259</label>
       </variable>
-      <variable label="TCV260" CV="260">
+      <variable item="TCV260" CV="260">
         <hexVal/>
+        <label>TCV260</label>
       </variable>
-      <variable label="TCV261" CV="261">
+      <variable item="TCV261" CV="261">
         <hexVal/>
+        <label>TCV261</label>
       </variable>
-      <variable label="TCV262" CV="262">
+      <variable item="TCV262" CV="262">
         <hexVal/>
+        <label>TCV262</label>
       </variable>
-      <variable label="TCV263" CV="263">
+      <variable item="TCV263" CV="263">
         <hexVal/>
+        <label>TCV263</label>
       </variable>
-      <variable label="TCV264" CV="264">
+      <variable item="TCV264" CV="264">
         <hexVal/>
+        <label>TCV264</label>
       </variable>
-      <variable label="TCV265" CV="265">
+      <variable item="TCV265" CV="265">
         <hexVal/>
+        <label>TCV265</label>
       </variable>
-      <variable label="TCV266" CV="266">
+      <variable item="TCV266" CV="266">
         <hexVal/>
+        <label>TCV266</label>
       </variable>
-      <variable label="TCV267" CV="267">
+      <variable item="TCV267" CV="267">
         <hexVal/>
+        <label>TCV267</label>
       </variable>
-      <variable label="TCV268" CV="268">
+      <variable item="TCV268" CV="268">
         <hexVal/>
+        <label>TCV268</label>
       </variable>
-      <variable label="TCV269" CV="269">
+      <variable item="TCV269" CV="269">
         <hexVal/>
+        <label>TCV269</label>
       </variable>
-      <variable label="TCV270" CV="270">
+      <variable item="TCV270" CV="270">
         <hexVal/>
+        <label>TCV270</label>
       </variable>
-      <variable label="TCV271" CV="271">
+      <variable item="TCV271" CV="271">
         <hexVal/>
+        <label>TCV271</label>
       </variable>
-      <variable label="TCV272" CV="272">
+      <variable item="TCV272" CV="272">
         <hexVal/>
+        <label>TCV272</label>
       </variable>
-      <variable label="TCV273" CV="273">
+      <variable item="TCV273" CV="273">
         <hexVal/>
+        <label>TCV273</label>
       </variable>
-      <variable label="TCV274" CV="274">
+      <variable item="TCV274" CV="274">
         <hexVal/>
+        <label>TCV274</label>
       </variable>
-      <variable label="TCV275" CV="275">
+      <variable item="TCV275" CV="275">
         <hexVal/>
+        <label>TCV275</label>
       </variable>
-      <variable label="TCV276" CV="276">
+      <variable item="TCV276" CV="276">
         <hexVal/>
+        <label>TCV276</label>
       </variable>
-      <variable label="TCV277" CV="277">
+      <variable item="TCV277" CV="277">
         <hexVal/>
+        <label>TCV277</label>
       </variable>
-      <variable label="TCV278" CV="278">
+      <variable item="TCV278" CV="278">
         <hexVal/>
+        <label>TCV278</label>
       </variable>
-      <variable label="TCV279" CV="279">
+      <variable item="TCV279" CV="279">
         <hexVal/>
+        <label>TCV279</label>
       </variable>
-      <variable label="TCV280" CV="280">
+      <variable item="TCV280" CV="280">
         <hexVal/>
+        <label>TCV280</label>
       </variable>
-      <variable label="TCV281" CV="281">
+      <variable item="TCV281" CV="281">
         <hexVal/>
+        <label>TCV281</label>
       </variable>
-      <variable label="TCV282" CV="282">
+      <variable item="TCV282" CV="282">
         <hexVal/>
+        <label>TCV282</label>
       </variable>
-      <variable label="TCV283" CV="283">
+      <variable item="TCV283" CV="283">
         <hexVal/>
+        <label>TCV283</label>
       </variable>
-      <variable label="TCV284" CV="284">
+      <variable item="TCV284" CV="284">
         <hexVal/>
+        <label>TCV284</label>
       </variable>
-      <variable label="TCV285" CV="285">
+      <variable item="TCV285" CV="285">
         <hexVal/>
+        <label>TCV285</label>
       </variable>
-      <variable label="TCV286" CV="286">
+      <variable item="TCV286" CV="286">
         <hexVal/>
+        <label>TCV286</label>
       </variable>
-      <variable label="TCV287" CV="287">
+      <variable item="TCV287" CV="287">
         <hexVal/>
+        <label>TCV287</label>
       </variable>
-      <variable label="TCV288" CV="288">
+      <variable item="TCV288" CV="288">
         <hexVal/>
+        <label>TCV288</label>
       </variable>
-      <variable label="TCV289" CV="289">
+      <variable item="TCV289" CV="289">
         <hexVal/>
+        <label>TCV289</label>
       </variable>
-      <variable label="TCV290" CV="290">
+      <variable item="TCV290" CV="290">
         <hexVal/>
+        <label>TCV290</label>
       </variable>
-      <variable label="TCV291" CV="291">
+      <variable item="TCV291" CV="291">
         <hexVal/>
+        <label>TCV291</label>
       </variable>
-      <variable label="TCV292" CV="292">
+      <variable item="TCV292" CV="292">
         <hexVal/>
+        <label>TCV292</label>
       </variable>
-      <variable label="TCV293" CV="293">
+      <variable item="TCV293" CV="293">
         <hexVal/>
+        <label>TCV293</label>
       </variable>
-      <variable label="TCV294" CV="294">
+      <variable item="TCV294" CV="294">
         <hexVal/>
+        <label>TCV294</label>
       </variable>
-      <variable label="TCV295" CV="295">
+      <variable item="TCV295" CV="295">
         <hexVal/>
+        <label>TCV295</label>
       </variable>
-      <variable label="TCV296" CV="296">
+      <variable item="TCV296" CV="296">
         <hexVal/>
+        <label>TCV296</label>
       </variable>
-      <variable label="TCV297" CV="297">
+      <variable item="TCV297" CV="297">
         <hexVal/>
+        <label>TCV297</label>
       </variable>
-      <variable label="TCV298" CV="298">
+      <variable item="TCV298" CV="298">
         <hexVal/>
+        <label>TCV298</label>
       </variable>
-      <variable label="TCV299" CV="299">
+      <variable item="TCV299" CV="299">
         <hexVal/>
+        <label>TCV299</label>
       </variable>
-      <variable label="TCV300" CV="300">
+      <variable item="TCV300" CV="300">
         <hexVal/>
+        <label>TCV300</label>
       </variable>
-      <variable label="TCV301" CV="301">
+      <variable item="TCV301" CV="301">
         <hexVal/>
+        <label>TCV301</label>
       </variable>
-      <variable label="TCV302" CV="302">
+      <variable item="TCV302" CV="302">
         <hexVal/>
+        <label>TCV302</label>
       </variable>
-      <variable label="TCV303" CV="303">
+      <variable item="TCV303" CV="303">
         <hexVal/>
+        <label>TCV303</label>
       </variable>
-      <variable label="TCV304" CV="304">
+      <variable item="TCV304" CV="304">
         <hexVal/>
+        <label>TCV304</label>
       </variable>
-      <variable label="TCV305" CV="305">
+      <variable item="TCV305" CV="305">
         <hexVal/>
+        <label>TCV305</label>
       </variable>
-      <variable label="TCV306" CV="306">
+      <variable item="TCV306" CV="306">
         <hexVal/>
+        <label>TCV306</label>
       </variable>
-      <variable label="TCV307" CV="307">
+      <variable item="TCV307" CV="307">
         <hexVal/>
+        <label>TCV307</label>
       </variable>
-      <variable label="TCV308" CV="308">
+      <variable item="TCV308" CV="308">
         <hexVal/>
+        <label>TCV308</label>
       </variable>
-      <variable label="TCV309" CV="309">
+      <variable item="TCV309" CV="309">
         <hexVal/>
+        <label>TCV309</label>
       </variable>
-      <variable label="TCV310" CV="310">
+      <variable item="TCV310" CV="310">
         <hexVal/>
+        <label>TCV310</label>
       </variable>
-      <variable label="TCV311" CV="311">
+      <variable item="TCV311" CV="311">
         <hexVal/>
+        <label>TCV311</label>
       </variable>
-      <variable label="TCV312" CV="312">
+      <variable item="TCV312" CV="312">
         <hexVal/>
+        <label>TCV312</label>
       </variable>
-      <variable label="TCV313" CV="313">
+      <variable item="TCV313" CV="313">
         <hexVal/>
+        <label>TCV313</label>
       </variable>
-      <variable label="TCV314" CV="314">
+      <variable item="TCV314" CV="314">
         <hexVal/>
+        <label>TCV314</label>
       </variable>
-      <variable label="TCV315" CV="315">
+      <variable item="TCV315" CV="315">
         <hexVal/>
+        <label>TCV315</label>
       </variable>
-      <variable label="TCV316" CV="316">
+      <variable item="TCV316" CV="316">
         <hexVal/>
+        <label>TCV316</label>
       </variable>
-      <variable label="TCV317" CV="317">
+      <variable item="TCV317" CV="317">
         <hexVal/>
+        <label>TCV317</label>
       </variable>
-      <variable label="TCV318" CV="318">
+      <variable item="TCV318" CV="318">
         <hexVal/>
+        <label>TCV318</label>
       </variable>
-      <variable label="TCV319" CV="319">
+      <variable item="TCV319" CV="319">
         <hexVal/>
+        <label>TCV319</label>
       </variable>
-      <variable label="TCV320" CV="320">
+      <variable item="TCV320" CV="320">
         <hexVal/>
+        <label>TCV320</label>
       </variable>
-      <variable label="TCV321" CV="321">
+      <variable item="TCV321" CV="321">
         <hexVal/>
+        <label>TCV321</label>
       </variable>
-      <variable label="TCV322" CV="322">
+      <variable item="TCV322" CV="322">
         <hexVal/>
+        <label>TCV322</label>
       </variable>
-      <variable label="TCV323" CV="323">
+      <variable item="TCV323" CV="323">
         <hexVal/>
+        <label>TCV323</label>
       </variable>
-      <variable label="TCV324" CV="324">
+      <variable item="TCV324" CV="324">
         <hexVal/>
+        <label>TCV324</label>
       </variable>
-      <variable label="TCV325" CV="325">
+      <variable item="TCV325" CV="325">
         <hexVal/>
+        <label>TCV325</label>
       </variable>
-      <variable label="TCV326" CV="326">
+      <variable item="TCV326" CV="326">
         <hexVal/>
+        <label>TCV326</label>
       </variable>
-      <variable label="TCV327" CV="327">
+      <variable item="TCV327" CV="327">
         <hexVal/>
+        <label>TCV327</label>
       </variable>
-      <variable label="TCV328" CV="328">
+      <variable item="TCV328" CV="328">
         <hexVal/>
+        <label>TCV328</label>
       </variable>
-      <variable label="TCV329" CV="329">
+      <variable item="TCV329" CV="329">
         <hexVal/>
+        <label>TCV329</label>
       </variable>
-      <variable label="TCV330" CV="330">
+      <variable item="TCV330" CV="330">
         <hexVal/>
+        <label>TCV330</label>
       </variable>
-      <variable label="TCV331" CV="331">
+      <variable item="TCV331" CV="331">
         <hexVal/>
+        <label>TCV331</label>
       </variable>
-      <variable label="TCV332" CV="332">
+      <variable item="TCV332" CV="332">
         <hexVal/>
+        <label>TCV332</label>
       </variable>
-      <variable label="TCV333" CV="333">
+      <variable item="TCV333" CV="333">
         <hexVal/>
+        <label>TCV333</label>
       </variable>
-      <variable label="TCV334" CV="334">
+      <variable item="TCV334" CV="334">
         <hexVal/>
+        <label>TCV334</label>
       </variable>
-      <variable label="TCV335" CV="335">
+      <variable item="TCV335" CV="335">
         <hexVal/>
+        <label>TCV335</label>
       </variable>
-      <variable label="TCV336" CV="336">
+      <variable item="TCV336" CV="336">
         <hexVal/>
+        <label>TCV336</label>
       </variable>
-      <variable label="TCV337" CV="337">
+      <variable item="TCV337" CV="337">
         <hexVal/>
+        <label>TCV337</label>
       </variable>
-      <variable label="TCV338" CV="338">
+      <variable item="TCV338" CV="338">
         <hexVal/>
+        <label>TCV338</label>
       </variable>
-      <variable label="TCV339" CV="339">
+      <variable item="TCV339" CV="339">
         <hexVal/>
+        <label>TCV339</label>
       </variable>
-      <variable label="TCV340" CV="340">
+      <variable item="TCV340" CV="340">
         <hexVal/>
+        <label>TCV340</label>
       </variable>
-      <variable label="TCV341" CV="341">
+      <variable item="TCV341" CV="341">
         <hexVal/>
+        <label>TCV341</label>
       </variable>
-      <variable label="TCV342" CV="342">
+      <variable item="TCV342" CV="342">
         <hexVal/>
+        <label>TCV342</label>
       </variable>
-      <variable label="TCV343" CV="343">
+      <variable item="TCV343" CV="343">
         <hexVal/>
+        <label>TCV343</label>
       </variable>
-      <variable label="TCV344" CV="344">
+      <variable item="TCV344" CV="344">
         <hexVal/>
+        <label>TCV344</label>
       </variable>
-      <variable label="TCV345" CV="345">
+      <variable item="TCV345" CV="345">
         <hexVal/>
+        <label>TCV345</label>
       </variable>
-      <variable label="TCV346" CV="346">
+      <variable item="TCV346" CV="346">
         <hexVal/>
+        <label>TCV346</label>
       </variable>
-      <variable label="TCV347" CV="347">
+      <variable item="TCV347" CV="347">
         <hexVal/>
+        <label>TCV347</label>
       </variable>
-      <variable label="TCV348" CV="348">
+      <variable item="TCV348" CV="348">
         <hexVal/>
+        <label>TCV348</label>
       </variable>
-      <variable label="TCV349" CV="349">
+      <variable item="TCV349" CV="349">
         <hexVal/>
+        <label>TCV349</label>
       </variable>
-      <variable label="TCV350" CV="350">
+      <variable item="TCV350" CV="350">
         <hexVal/>
+        <label>TCV350</label>
       </variable>
-      <variable label="TCV351" CV="351">
+      <variable item="TCV351" CV="351">
         <hexVal/>
+        <label>TCV351</label>
       </variable>
-      <variable label="TCV352" CV="352">
+      <variable item="TCV352" CV="352">
         <hexVal/>
+        <label>TCV352</label>
       </variable>
-      <variable label="TCV353" CV="353">
+      <variable item="TCV353" CV="353">
         <hexVal/>
+        <label>TCV353</label>
       </variable>
-      <variable label="TCV354" CV="354">
+      <variable item="TCV354" CV="354">
         <hexVal/>
+        <label>TCV354</label>
       </variable>
-      <variable label="TCV355" CV="355">
+      <variable item="TCV355" CV="355">
         <hexVal/>
+        <label>TCV355</label>
       </variable>
-      <variable label="TCV356" CV="356">
+      <variable item="TCV356" CV="356">
         <hexVal/>
+        <label>TCV356</label>
       </variable>
-      <variable label="TCV357" CV="357">
+      <variable item="TCV357" CV="357">
         <hexVal/>
+        <label>TCV357</label>
       </variable>
-      <variable label="TCV358" CV="358">
+      <variable item="TCV358" CV="358">
         <hexVal/>
+        <label>TCV358</label>
       </variable>
-      <variable label="TCV359" CV="359">
+      <variable item="TCV359" CV="359">
         <hexVal/>
+        <label>TCV359</label>
       </variable>
-      <variable label="TCV360" CV="360">
+      <variable item="TCV360" CV="360">
         <hexVal/>
+        <label>TCV360</label>
       </variable>
-      <variable label="TCV361" CV="361">
+      <variable item="TCV361" CV="361">
         <hexVal/>
+        <label>TCV361</label>
       </variable>
-      <variable label="TCV362" CV="362">
+      <variable item="TCV362" CV="362">
         <hexVal/>
+        <label>TCV362</label>
       </variable>
-      <variable label="TCV363" CV="363">
+      <variable item="TCV363" CV="363">
         <hexVal/>
+        <label>TCV363</label>
       </variable>
-      <variable label="TCV364" CV="364">
+      <variable item="TCV364" CV="364">
         <hexVal/>
+        <label>TCV364</label>
       </variable>
-      <variable label="TCV365" CV="365">
+      <variable item="TCV365" CV="365">
         <hexVal/>
+        <label>TCV365</label>
       </variable>
-      <variable label="TCV366" CV="366">
+      <variable item="TCV366" CV="366">
         <hexVal/>
+        <label>TCV366</label>
       </variable>
-      <variable label="TCV367" CV="367">
+      <variable item="TCV367" CV="367">
         <hexVal/>
+        <label>TCV367</label>
       </variable>
-      <variable label="TCV368" CV="368">
+      <variable item="TCV368" CV="368">
         <hexVal/>
+        <label>TCV368</label>
       </variable>
-      <variable label="TCV369" CV="369">
+      <variable item="TCV369" CV="369">
         <hexVal/>
+        <label>TCV369</label>
       </variable>
-      <variable label="TCV370" CV="370">
+      <variable item="TCV370" CV="370">
         <hexVal/>
+        <label>TCV370</label>
       </variable>
-      <variable label="TCV371" CV="371">
+      <variable item="TCV371" CV="371">
         <hexVal/>
+        <label>TCV371</label>
       </variable>
-      <variable label="TCV372" CV="372">
+      <variable item="TCV372" CV="372">
         <hexVal/>
+        <label>TCV372</label>
       </variable>
-      <variable label="TCV373" CV="373">
+      <variable item="TCV373" CV="373">
         <hexVal/>
+        <label>TCV373</label>
       </variable>
-      <variable label="TCV374" CV="374">
+      <variable item="TCV374" CV="374">
         <hexVal/>
+        <label>TCV374</label>
       </variable>
-      <variable label="TCV375" CV="375">
+      <variable item="TCV375" CV="375">
         <hexVal/>
+        <label>TCV375</label>
       </variable>
-      <variable label="TCV376" CV="376">
+      <variable item="TCV376" CV="376">
         <hexVal/>
+        <label>TCV376</label>
       </variable>
-      <variable label="TCV377" CV="377">
+      <variable item="TCV377" CV="377">
         <hexVal/>
+        <label>TCV377</label>
       </variable>
-      <variable label="TCV378" CV="378">
+      <variable item="TCV378" CV="378">
         <hexVal/>
+        <label>TCV378</label>
       </variable>
-      <variable label="TCV379" CV="379">
+      <variable item="TCV379" CV="379">
         <hexVal/>
+        <label>TCV379</label>
       </variable>
-      <variable label="TCV380" CV="380">
+      <variable item="TCV380" CV="380">
         <hexVal/>
+        <label>TCV380</label>
       </variable>
-      <variable label="TCV381" CV="381">
+      <variable item="TCV381" CV="381">
         <hexVal/>
+        <label>TCV381</label>
       </variable>
-      <variable label="TCV382" CV="382">
+      <variable item="TCV382" CV="382">
         <hexVal/>
+        <label>TCV382</label>
       </variable>
-      <variable label="TCV383" CV="383">
+      <variable item="TCV383" CV="383">
         <hexVal/>
+        <label>TCV383</label>
       </variable>
-      <variable label="TCV384" CV="384">
+      <variable item="TCV384" CV="384">
         <hexVal/>
+        <label>TCV384</label>
       </variable>
-      <variable label="TCV385" CV="385">
+      <variable item="TCV385" CV="385">
         <hexVal/>
+        <label>TCV385</label>
       </variable>
-      <variable label="TCV386" CV="386">
+      <variable item="TCV386" CV="386">
         <hexVal/>
+        <label>TCV386</label>
       </variable>
-      <variable label="TCV387" CV="387">
+      <variable item="TCV387" CV="387">
         <hexVal/>
+        <label>TCV387</label>
       </variable>
-      <variable label="TCV388" CV="388">
+      <variable item="TCV388" CV="388">
         <hexVal/>
+        <label>TCV388</label>
       </variable>
-      <variable label="TCV389" CV="389">
+      <variable item="TCV389" CV="389">
         <hexVal/>
+        <label>TCV389</label>
       </variable>
-      <variable label="TCV390" CV="390">
+      <variable item="TCV390" CV="390">
         <hexVal/>
+        <label>TCV390</label>
       </variable>
-      <variable label="TCV391" CV="391">
+      <variable item="TCV391" CV="391">
         <hexVal/>
+        <label>TCV391</label>
       </variable>
-      <variable label="TCV392" CV="392">
+      <variable item="TCV392" CV="392">
         <hexVal/>
+        <label>TCV392</label>
       </variable>
-      <variable label="TCV393" CV="393">
+      <variable item="TCV393" CV="393">
         <hexVal/>
+        <label>TCV393</label>
       </variable>
-      <variable label="TCV394" CV="394">
+      <variable item="TCV394" CV="394">
         <hexVal/>
+        <label>TCV394</label>
       </variable>
-      <variable label="TCV395" CV="395">
+      <variable item="TCV395" CV="395">
         <hexVal/>
+        <label>TCV395</label>
       </variable>
-      <variable label="TCV396" CV="396">
+      <variable item="TCV396" CV="396">
         <hexVal/>
+        <label>TCV396</label>
       </variable>
-      <variable label="TCV397" CV="397">
+      <variable item="TCV397" CV="397">
         <hexVal/>
+        <label>TCV397</label>
       </variable>
-      <variable label="TCV398" CV="398">
+      <variable item="TCV398" CV="398">
         <hexVal/>
+        <label>TCV398</label>
       </variable>
-      <variable label="TCV399" CV="399">
+      <variable item="TCV399" CV="399">
         <hexVal/>
+        <label>TCV399</label>
       </variable>
-      <variable label="TCV400" CV="400">
+      <variable item="TCV400" CV="400">
         <hexVal/>
+        <label>TCV400</label>
       </variable>
-      <variable label="TCV401" CV="401">
+      <variable item="TCV401" CV="401">
         <hexVal/>
+        <label>TCV401</label>
       </variable>
-      <variable label="TCV402" CV="402">
+      <variable item="TCV402" CV="402">
         <hexVal/>
+        <label>TCV402</label>
       </variable>
-      <variable label="TCV403" CV="403">
+      <variable item="TCV403" CV="403">
         <hexVal/>
+        <label>TCV403</label>
       </variable>
-      <variable label="TCV404" CV="404">
+      <variable item="TCV404" CV="404">
         <hexVal/>
+        <label>TCV404</label>
       </variable>
-      <variable label="TCV405" CV="405">
+      <variable item="TCV405" CV="405">
         <hexVal/>
+        <label>TCV405</label>
       </variable>
-      <variable label="TCV406" CV="406">
+      <variable item="TCV406" CV="406">
         <hexVal/>
+        <label>TCV406</label>
       </variable>
-      <variable label="TCV407" CV="407">
+      <variable item="TCV407" CV="407">
         <hexVal/>
+        <label>TCV407</label>
       </variable>
-      <variable label="TCV408" CV="408">
+      <variable item="TCV408" CV="408">
         <hexVal/>
+        <label>TCV408</label>
       </variable>
-      <variable label="TCV409" CV="409">
+      <variable item="TCV409" CV="409">
         <hexVal/>
+        <label>TCV409</label>
       </variable>
-      <variable label="TCV410" CV="410">
+      <variable item="TCV410" CV="410">
         <hexVal/>
+        <label>TCV410</label>
       </variable>
-      <variable label="TCV411" CV="411">
+      <variable item="TCV411" CV="411">
         <hexVal/>
+        <label>TCV411</label>
       </variable>
-      <variable label="TCV412" CV="412">
+      <variable item="TCV412" CV="412">
         <hexVal/>
+        <label>TCV412</label>
       </variable>
-      <variable label="TCV413" CV="413">
+      <variable item="TCV413" CV="413">
         <hexVal/>
+        <label>TCV413</label>
       </variable>
-      <variable label="TCV414" CV="414">
+      <variable item="TCV414" CV="414">
         <hexVal/>
+        <label>TCV414</label>
       </variable>
-      <variable label="TCV415" CV="415">
+      <variable item="TCV415" CV="415">
         <hexVal/>
+        <label>TCV415</label>
       </variable>
-      <variable label="TCV416" CV="416">
+      <variable item="TCV416" CV="416">
         <hexVal/>
+        <label>TCV416</label>
       </variable>
-      <variable label="TCV417" CV="417">
+      <variable item="TCV417" CV="417">
         <hexVal/>
+        <label>TCV417</label>
       </variable>
-      <variable label="TCV418" CV="418">
+      <variable item="TCV418" CV="418">
         <hexVal/>
+        <label>TCV418</label>
       </variable>
-      <variable label="TCV419" CV="419">
+      <variable item="TCV419" CV="419">
         <hexVal/>
+        <label>TCV419</label>
       </variable>
-      <variable label="TCV420" CV="420">
+      <variable item="TCV420" CV="420">
         <hexVal/>
+        <label>TCV420</label>
       </variable>
-      <variable label="TCV421" CV="421">
+      <variable item="TCV421" CV="421">
         <hexVal/>
+        <label>TCV421</label>
       </variable>
-      <variable label="TCV422" CV="422">
+      <variable item="TCV422" CV="422">
         <hexVal/>
+        <label>TCV422</label>
       </variable>
-      <variable label="TCV423" CV="423">
+      <variable item="TCV423" CV="423">
         <hexVal/>
+        <label>TCV423</label>
       </variable>
-      <variable label="TCV424" CV="424">
+      <variable item="TCV424" CV="424">
         <hexVal/>
+        <label>TCV424</label>
       </variable>
-      <variable label="TCV425" CV="425">
+      <variable item="TCV425" CV="425">
         <hexVal/>
+        <label>TCV425</label>
       </variable>
-      <variable label="TCV426" CV="426">
+      <variable item="TCV426" CV="426">
         <hexVal/>
+        <label>TCV426</label>
       </variable>
-      <variable label="TCV427" CV="427">
+      <variable item="TCV427" CV="427">
         <hexVal/>
+        <label>TCV427</label>
       </variable>
-      <variable label="TCV428" CV="428">
+      <variable item="TCV428" CV="428">
         <hexVal/>
+        <label>TCV428</label>
       </variable>
-      <variable label="TCV429" CV="429">
+      <variable item="TCV429" CV="429">
         <hexVal/>
+        <label>TCV429</label>
       </variable>
-      <variable label="TCV430" CV="430">
+      <variable item="TCV430" CV="430">
         <hexVal/>
+        <label>TCV430</label>
       </variable>
-      <variable label="TCV431" CV="431">
+      <variable item="TCV431" CV="431">
         <hexVal/>
+        <label>TCV431</label>
       </variable>
-      <variable label="TCV432" CV="432">
+      <variable item="TCV432" CV="432">
         <hexVal/>
+        <label>TCV432</label>
       </variable>
-      <variable label="TCV433" CV="433">
+      <variable item="TCV433" CV="433">
         <hexVal/>
+        <label>TCV433</label>
       </variable>
-      <variable label="TCV434" CV="434">
+      <variable item="TCV434" CV="434">
         <hexVal/>
+        <label>TCV434</label>
       </variable>
-      <variable label="TCV435" CV="435">
+      <variable item="TCV435" CV="435">
         <hexVal/>
+        <label>TCV435</label>
       </variable>
-      <variable label="TCV436" CV="436">
+      <variable item="TCV436" CV="436">
         <hexVal/>
+        <label>TCV436</label>
       </variable>
-      <variable label="TCV437" CV="437">
+      <variable item="TCV437" CV="437">
         <hexVal/>
+        <label>TCV437</label>
       </variable>
-      <variable label="TCV438" CV="438">
+      <variable item="TCV438" CV="438">
         <hexVal/>
+        <label>TCV438</label>
       </variable>
-      <variable label="TCV439" CV="439">
+      <variable item="TCV439" CV="439">
         <hexVal/>
+        <label>TCV439</label>
       </variable>
-      <variable label="TCV440" CV="440">
+      <variable item="TCV440" CV="440">
         <hexVal/>
+        <label>TCV440</label>
       </variable>
-      <variable label="TCV441" CV="441">
+      <variable item="TCV441" CV="441">
         <hexVal/>
+        <label>TCV441</label>
       </variable>
-      <variable label="TCV442" CV="442">
+      <variable item="TCV442" CV="442">
         <hexVal/>
+        <label>TCV442</label>
       </variable>
-      <variable label="TCV443" CV="443">
+      <variable item="TCV443" CV="443">
         <hexVal/>
+        <label>TCV443</label>
       </variable>
-      <variable label="TCV444" CV="444">
+      <variable item="TCV444" CV="444">
         <hexVal/>
+        <label>TCV444</label>
       </variable>
-      <variable label="TCV445" CV="445">
+      <variable item="TCV445" CV="445">
         <hexVal/>
+        <label>TCV445</label>
       </variable>
-      <variable label="TCV446" CV="446">
+      <variable item="TCV446" CV="446">
         <hexVal/>
+        <label>TCV446</label>
       </variable>
-      <variable label="TCV447" CV="447">
+      <variable item="TCV447" CV="447">
         <hexVal/>
+        <label>TCV447</label>
       </variable>
-      <variable label="TCV448" CV="448">
+      <variable item="TCV448" CV="448">
         <hexVal/>
+        <label>TCV448</label>
       </variable>
-      <variable label="TCV449" CV="449">
+      <variable item="TCV449" CV="449">
         <hexVal/>
+        <label>TCV449</label>
       </variable>
-      <variable label="TCV450" CV="450">
+      <variable item="TCV450" CV="450">
         <hexVal/>
+        <label>TCV450</label>
       </variable>
-      <variable label="TCV451" CV="451">
+      <variable item="TCV451" CV="451">
         <hexVal/>
+        <label>TCV451</label>
       </variable>
-      <variable label="TCV452" CV="452">
+      <variable item="TCV452" CV="452">
         <hexVal/>
+        <label>TCV452</label>
       </variable>
-      <variable label="TCV453" CV="453">
+      <variable item="TCV453" CV="453">
         <hexVal/>
+        <label>TCV453</label>
       </variable>
-      <variable label="TCV454" CV="454">
+      <variable item="TCV454" CV="454">
         <hexVal/>
+        <label>TCV454</label>
       </variable>
-      <variable label="TCV455" CV="455">
+      <variable item="TCV455" CV="455">
         <hexVal/>
+        <label>TCV455</label>
       </variable>
-      <variable label="TCV456" CV="456">
+      <variable item="TCV456" CV="456">
         <hexVal/>
+        <label>TCV456</label>
       </variable>
-      <variable label="TCV457" CV="457">
+      <variable item="TCV457" CV="457">
         <hexVal/>
+        <label>TCV457</label>
       </variable>
-      <variable label="TCV458" CV="458">
+      <variable item="TCV458" CV="458">
         <hexVal/>
+        <label>TCV458</label>
       </variable>
-      <variable label="TCV459" CV="459">
+      <variable item="TCV459" CV="459">
         <hexVal/>
+        <label>TCV459</label>
       </variable>
-      <variable label="TCV460" CV="460">
+      <variable item="TCV460" CV="460">
         <hexVal/>
+        <label>TCV460</label>
       </variable>
-      <variable label="TCV461" CV="461">
+      <variable item="TCV461" CV="461">
         <hexVal/>
+        <label>TCV461</label>
       </variable>
-      <variable label="TCV462" CV="462">
+      <variable item="TCV462" CV="462">
         <hexVal/>
+        <label>TCV462</label>
       </variable>
-      <variable label="TCV463" CV="463">
+      <variable item="TCV463" CV="463">
         <hexVal/>
+        <label>TCV463</label>
       </variable>
-      <variable label="TCV464" CV="464">
+      <variable item="TCV464" CV="464">
         <hexVal/>
+        <label>TCV464</label>
       </variable>
-      <variable label="TCV465" CV="465">
+      <variable item="TCV465" CV="465">
         <hexVal/>
+        <label>TCV465</label>
       </variable>
-      <variable label="TCV466" CV="466">
+      <variable item="TCV466" CV="466">
         <hexVal/>
+        <label>TCV466</label>
       </variable>
-      <variable label="TCV467" CV="467">
+      <variable item="TCV467" CV="467">
         <hexVal/>
+        <label>TCV467</label>
       </variable>
-      <variable label="TCV468" CV="468">
+      <variable item="TCV468" CV="468">
         <hexVal/>
+        <label>TCV468</label>
       </variable>
-      <variable label="TCV469" CV="469">
+      <variable item="TCV469" CV="469">
         <hexVal/>
+        <label>TCV469</label>
       </variable>
-      <variable label="TCV470" CV="470">
+      <variable item="TCV470" CV="470">
         <hexVal/>
+        <label>TCV470</label>
       </variable>
-      <variable label="TCV471" CV="471">
+      <variable item="TCV471" CV="471">
         <hexVal/>
+        <label>TCV471</label>
       </variable>
-      <variable label="TCV472" CV="472">
+      <variable item="TCV472" CV="472">
         <hexVal/>
+        <label>TCV472</label>
       </variable>
-      <variable label="TCV473" CV="473">
+      <variable item="TCV473" CV="473">
         <hexVal/>
+        <label>TCV473</label>
       </variable>
-      <variable label="TCV474" CV="474">
+      <variable item="TCV474" CV="474">
         <hexVal/>
+        <label>TCV474</label>
       </variable>
-      <variable label="TCV475" CV="475">
+      <variable item="TCV475" CV="475">
         <hexVal/>
+        <label>TCV475</label>
       </variable>
-      <variable label="TCV476" CV="476">
+      <variable item="TCV476" CV="476">
         <hexVal/>
+        <label>TCV476</label>
       </variable>
-      <variable label="TCV477" CV="477">
+      <variable item="TCV477" CV="477">
         <hexVal/>
+        <label>TCV477</label>
       </variable>
-      <variable label="TCV478" CV="478">
+      <variable item="TCV478" CV="478">
         <hexVal/>
+        <label>TCV478</label>
       </variable>
-      <variable label="TCV479" CV="479">
+      <variable item="TCV479" CV="479">
         <hexVal/>
+        <label>TCV479</label>
       </variable>
-      <variable label="TCV480" CV="480">
+      <variable item="TCV480" CV="480">
         <hexVal/>
+        <label>TCV480</label>
       </variable>
-      <variable label="TCV481" CV="481">
+      <variable item="TCV481" CV="481">
         <hexVal/>
+        <label>TCV481</label>
       </variable>
-      <variable label="TCV482" CV="482">
+      <variable item="TCV482" CV="482">
         <hexVal/>
+        <label>TCV482</label>
       </variable>
-      <variable label="TCV483" CV="483">
+      <variable item="TCV483" CV="483">
         <hexVal/>
+        <label>TCV483</label>
       </variable>
-      <variable label="TCV484" CV="484">
+      <variable item="TCV484" CV="484">
         <hexVal/>
+        <label>TCV484</label>
       </variable>
-      <variable label="TCV485" CV="485">
+      <variable item="TCV485" CV="485">
         <hexVal/>
+        <label>TCV485</label>
       </variable>
-      <variable label="TCV486" CV="486">
+      <variable item="TCV486" CV="486">
         <hexVal/>
+        <label>TCV486</label>
       </variable>
-      <variable label="TCV487" CV="487">
+      <variable item="TCV487" CV="487">
         <hexVal/>
+        <label>TCV487</label>
       </variable>
-      <variable label="TCV488" CV="488">
+      <variable item="TCV488" CV="488">
         <hexVal/>
+        <label>TCV488</label>
       </variable>
-      <variable label="TCV489" CV="489">
+      <variable item="TCV489" CV="489">
         <hexVal/>
+        <label>TCV489</label>
       </variable>
-      <variable label="TCV490" CV="490">
+      <variable item="TCV490" CV="490">
         <hexVal/>
+        <label>TCV490</label>
       </variable>
-      <variable label="TCV491" CV="491">
+      <variable item="TCV491" CV="491">
         <hexVal/>
+        <label>TCV491</label>
       </variable>
-      <variable label="TCV492" CV="492">
+      <variable item="TCV492" CV="492">
         <hexVal/>
+        <label>TCV492</label>
       </variable>
-      <variable label="TCV493" CV="493">
+      <variable item="TCV493" CV="493">
         <hexVal/>
+        <label>TCV493</label>
       </variable>
-      <variable label="TCV494" CV="494">
+      <variable item="TCV494" CV="494">
         <hexVal/>
+        <label>TCV494</label>
       </variable>
-      <variable label="TCV495" CV="495">
+      <variable item="TCV495" CV="495">
         <hexVal/>
+        <label>TCV495</label>
       </variable>
-      <variable label="TCV496" CV="496">
+      <variable item="TCV496" CV="496">
         <hexVal/>
+        <label>TCV496</label>
       </variable>
-      <variable label="TCV497" CV="497">
+      <variable item="TCV497" CV="497">
         <hexVal/>
+        <label>TCV497</label>
       </variable>
-      <variable label="TCV498" CV="498">
+      <variable item="TCV498" CV="498">
         <hexVal/>
+        <label>TCV498</label>
       </variable>
-      <variable label="TCV499" CV="499">
+      <variable item="TCV499" CV="499">
         <hexVal/>
+        <label>TCV499</label>
       </variable>
-      <variable label="TCV500" CV="500">
+      <variable item="TCV500" CV="500">
         <hexVal/>
+        <label>TCV500</label>
       </variable>
-      <variable label="TCV501" CV="501">
+      <variable item="TCV501" CV="501">
         <hexVal/>
+        <label>TCV501</label>
       </variable>
-      <variable label="TCV502" CV="502">
+      <variable item="TCV502" CV="502">
         <hexVal/>
+        <label>TCV502</label>
       </variable>
-      <variable label="TCV503" CV="503">
+      <variable item="TCV503" CV="503">
         <hexVal/>
+        <label>TCV503</label>
       </variable>
-      <variable label="TCV504" CV="504">
+      <variable item="TCV504" CV="504">
         <hexVal/>
+        <label>TCV504</label>
       </variable>
-      <variable label="TCV505" CV="505">
+      <variable item="TCV505" CV="505">
         <hexVal/>
+        <label>TCV505</label>
       </variable>
-      <variable label="TCV506" CV="506">
+      <variable item="TCV506" CV="506">
         <hexVal/>
+        <label>TCV506</label>
       </variable>
-      <variable label="TCV507" CV="507">
+      <variable item="TCV507" CV="507">
         <hexVal/>
+        <label>TCV507</label>
       </variable>
-      <variable label="TCV508" CV="508">
+      <variable item="TCV508" CV="508">
         <hexVal/>
+        <label>TCV508</label>
       </variable>
-      <variable label="TCV509" CV="509">
+      <variable item="TCV509" CV="509">
         <hexVal/>
+        <label>TCV509</label>
       </variable>
-      <variable label="TCV510" CV="510">
+      <variable item="TCV510" CV="510">
         <hexVal/>
+        <label>TCV510</label>
       </variable>
-      <variable label="TCV511" CV="511">
+      <variable item="TCV511" CV="511">
         <hexVal/>
+        <label>TCV511</label>
       </variable>
-      <variable label="TCV512" CV="512">
+      <variable item="TCV512" CV="512">
         <hexVal/>
+        <label>TCV512</label>
       </variable>
       <!--************** animation program RAM bytes ********************-->
-      <variable label="RAM513" CV="513">
+      <variable item="RAM513" CV="513">
         <decVal/>
+        <label>RAM513</label>
       </variable>
-      <variable label="RAM514" CV="514">
+      <variable item="RAM514" CV="514">
         <decVal/>
+        <label>RAM514</label>
       </variable>
-      <variable label="RAM515" CV="515">
+      <variable item="RAM515" CV="515">
         <decVal/>
+        <label>RAM515</label>
       </variable>
-      <variable label="RAM516" CV="516">
+      <variable item="RAM516" CV="516">
         <decVal/>
+        <label>RAM516</label>
       </variable>
-      <variable label="RAM517" CV="517">
+      <variable item="RAM517" CV="517">
         <decVal/>
+        <label>RAM517</label>
       </variable>
-      <variable label="RAM518" CV="518">
+      <variable item="RAM518" CV="518">
         <decVal/>
+        <label>RAM518</label>
       </variable>
-      <variable label="RAM519" CV="519">
+      <variable item="RAM519" CV="519">
         <decVal/>
+        <label>RAM519</label>
       </variable>
-      <variable label="RAM520" CV="520">
+      <variable item="RAM520" CV="520">
         <decVal/>
+        <label>RAM520</label>
       </variable>
-      <variable label="RAM521" CV="521">
+      <variable item="RAM521" CV="521">
         <decVal/>
+        <label>RAM521</label>
       </variable>
-      <variable label="RAM522" CV="522">
+      <variable item="RAM522" CV="522">
         <decVal/>
+        <label>RAM522</label>
       </variable>
-      <variable label="RAM523" CV="523">
+      <variable item="RAM523" CV="523">
         <decVal/>
+        <label>RAM523</label>
       </variable>
-      <variable label="RAM524" CV="524">
+      <variable item="RAM524" CV="524">
         <decVal/>
+        <label>RAM524</label>
       </variable>
-      <variable label="RAM525" CV="525">
+      <variable item="RAM525" CV="525">
         <decVal/>
+        <label>RAM525</label>
       </variable>
-      <variable label="RAM526" CV="526">
+      <variable item="RAM526" CV="526">
         <decVal/>
+        <label>RAM526</label>
       </variable>
-      <variable label="RAM527" CV="527">
+      <variable item="RAM527" CV="527">
         <decVal/>
+        <label>RAM527</label>
       </variable>
-      <variable label="RAM528" CV="528">
+      <variable item="RAM528" CV="528">
         <decVal/>
+        <label>RAM528</label>
       </variable>
-      <variable label="RAM529" CV="529">
+      <variable item="RAM529" CV="529">
         <decVal/>
+        <label>RAM529</label>
       </variable>
-      <variable label="RAM530" CV="530">
+      <variable item="RAM530" CV="530">
         <decVal/>
+        <label>RAM530</label>
       </variable>
-      <variable label="RAM531" CV="531">
+      <variable item="RAM531" CV="531">
         <decVal/>
+        <label>RAM531</label>
       </variable>
-      <variable label="RAM532" CV="532">
+      <variable item="RAM532" CV="532">
         <decVal/>
+        <label>RAM532</label>
       </variable>
-      <variable label="RAM533" CV="533">
+      <variable item="RAM533" CV="533">
         <decVal/>
+        <label>RAM533</label>
       </variable>
-      <variable label="RAM534" CV="534">
+      <variable item="RAM534" CV="534">
         <decVal/>
+        <label>RAM534</label>
       </variable>
-      <variable label="RAM535" CV="535">
+      <variable item="RAM535" CV="535">
         <decVal/>
+        <label>RAM535</label>
       </variable>
-      <variable label="RAM536" CV="536">
+      <variable item="RAM536" CV="536">
         <decVal/>
+        <label>RAM536</label>
       </variable>
-      <variable label="RAM537" CV="537">
+      <variable item="RAM537" CV="537">
         <decVal/>
+        <label>RAM537</label>
       </variable>
-      <variable label="RAM538" CV="538">
+      <variable item="RAM538" CV="538">
         <decVal/>
+        <label>RAM538</label>
       </variable>
-      <variable label="RAM539" CV="539">
+      <variable item="RAM539" CV="539">
         <decVal/>
+        <label>RAM539</label>
       </variable>
-      <variable label="RAM540" CV="540">
+      <variable item="RAM540" CV="540">
         <decVal/>
+        <label>RAM540</label>
       </variable>
-      <variable label="RAM541" CV="541">
+      <variable item="RAM541" CV="541">
         <decVal/>
+        <label>RAM541</label>
       </variable>
-      <variable label="RAM542" CV="542">
+      <variable item="RAM542" CV="542">
         <decVal/>
+        <label>RAM542</label>
       </variable>
-      <variable label="RAM543" CV="543">
+      <variable item="RAM543" CV="543">
         <decVal/>
+        <label>RAM543</label>
       </variable>
-      <variable label="RAM544" CV="544">
+      <variable item="RAM544" CV="544">
         <decVal/>
+        <label>RAM544</label>
       </variable>
-      <variable label="RAM545" CV="545">
+      <variable item="RAM545" CV="545">
         <decVal/>
+        <label>RAM545</label>
       </variable>
-      <variable label="RAM546" CV="546">
+      <variable item="RAM546" CV="546">
         <decVal/>
+        <label>RAM546</label>
       </variable>
-      <variable label="RAM547" CV="547">
+      <variable item="RAM547" CV="547">
         <decVal/>
+        <label>RAM547</label>
       </variable>
-      <variable label="RAM548" CV="548">
+      <variable item="RAM548" CV="548">
         <decVal/>
+        <label>RAM548</label>
       </variable>
-      <variable label="RAM549" CV="549">
+      <variable item="RAM549" CV="549">
         <decVal/>
+        <label>RAM549</label>
       </variable>
-      <variable label="RAM550" CV="550">
+      <variable item="RAM550" CV="550">
         <decVal/>
+        <label>RAM550</label>
       </variable>
-      <variable label="RAM551" CV="551">
+      <variable item="RAM551" CV="551">
         <decVal/>
+        <label>RAM551</label>
       </variable>
-      <variable label="RAM552" CV="552">
+      <variable item="RAM552" CV="552">
         <decVal/>
+        <label>RAM552</label>
       </variable>
-      <variable label="RAM553" CV="553">
+      <variable item="RAM553" CV="553">
         <decVal/>
+        <label>RAM553</label>
       </variable>
-      <variable label="RAM554" CV="554">
+      <variable item="RAM554" CV="554">
         <decVal/>
+        <label>RAM554</label>
       </variable>
-      <variable label="RAM555" CV="555">
+      <variable item="RAM555" CV="555">
         <decVal/>
+        <label>RAM555</label>
       </variable>
-      <variable label="RAM556" CV="556">
+      <variable item="RAM556" CV="556">
         <decVal/>
+        <label>RAM556</label>
       </variable>
-      <variable label="RAM557" CV="557">
+      <variable item="RAM557" CV="557">
         <decVal/>
+        <label>RAM557</label>
       </variable>
-      <variable label="RAM558" CV="558">
+      <variable item="RAM558" CV="558">
         <decVal/>
+        <label>RAM558</label>
       </variable>
-      <variable label="RAM559" CV="559">
+      <variable item="RAM559" CV="559">
         <decVal/>
+        <label>RAM559</label>
       </variable>
-      <variable label="RAM560" CV="560">
+      <variable item="RAM560" CV="560">
         <decVal/>
+        <label>RAM560</label>
       </variable>
-      <variable label="RAM561" CV="561">
+      <variable item="RAM561" CV="561">
         <decVal/>
+        <label>RAM561</label>
       </variable>
-      <variable label="RAM562" CV="562">
+      <variable item="RAM562" CV="562">
         <decVal/>
+        <label>RAM562</label>
       </variable>
-      <variable label="RAM563" CV="563">
+      <variable item="RAM563" CV="563">
         <decVal/>
+        <label>RAM563</label>
       </variable>
-      <variable label="RAM564" CV="564">
+      <variable item="RAM564" CV="564">
         <decVal/>
+        <label>RAM564</label>
       </variable>
-      <variable label="RAM565" CV="565">
+      <variable item="RAM565" CV="565">
         <decVal/>
+        <label>RAM565</label>
       </variable>
-      <variable label="RAM566" CV="566">
+      <variable item="RAM566" CV="566">
         <decVal/>
+        <label>RAM566</label>
       </variable>
-      <variable label="RAM567" CV="567">
+      <variable item="RAM567" CV="567">
         <decVal/>
+        <label>RAM567</label>
       </variable>
-      <variable label="RAM568" CV="568">
+      <variable item="RAM568" CV="568">
         <decVal/>
+        <label>RAM568</label>
       </variable>
-      <variable label="RAM569" CV="569">
+      <variable item="RAM569" CV="569">
         <decVal/>
+        <label>RAM569</label>
       </variable>
-      <variable label="RAM570" CV="570">
+      <variable item="RAM570" CV="570">
         <decVal/>
+        <label>RAM570</label>
       </variable>
-      <variable label="RAM571" CV="571">
+      <variable item="RAM571" CV="571">
         <decVal/>
+        <label>RAM571</label>
       </variable>
-      <variable label="RAM572" CV="572">
+      <variable item="RAM572" CV="572">
         <decVal/>
+        <label>RAM572</label>
       </variable>
-      <variable label="RAM573" CV="573">
+      <variable item="RAM573" CV="573">
         <decVal/>
+        <label>RAM573</label>
       </variable>
-      <variable label="RAM574" CV="574">
+      <variable item="RAM574" CV="574">
         <decVal/>
+        <label>RAM574</label>
       </variable>
-      <variable label="RAM575" CV="575">
+      <variable item="RAM575" CV="575">
         <decVal/>
+        <label>RAM575</label>
       </variable>
-      <variable label="RAM576" CV="576">
+      <variable item="RAM576" CV="576">
         <decVal/>
+        <label>RAM576</label>
       </variable>
-      <variable label="RAM577" CV="577">
+      <variable item="RAM577" CV="577">
         <decVal/>
+        <label>RAM577</label>
       </variable>
-      <variable label="RAM578" CV="578">
+      <variable item="RAM578" CV="578">
         <decVal/>
+        <label>RAM578</label>
       </variable>
-      <variable label="RAM579" CV="579">
+      <variable item="RAM579" CV="579">
         <decVal/>
+        <label>RAM579</label>
       </variable>
-      <variable label="RAM580" CV="580">
+      <variable item="RAM580" CV="580">
         <decVal/>
+        <label>RAM580</label>
       </variable>
-      <variable label="RAM581" CV="581">
+      <variable item="RAM581" CV="581">
         <decVal/>
+        <label>RAM581</label>
       </variable>
-      <variable label="RAM582" CV="582">
+      <variable item="RAM582" CV="582">
         <decVal/>
+        <label>RAM582</label>
       </variable>
-      <variable label="RAM583" CV="583">
+      <variable item="RAM583" CV="583">
         <decVal/>
+        <label>RAM583</label>
       </variable>
-      <variable label="RAM584" CV="584">
+      <variable item="RAM584" CV="584">
         <decVal/>
+        <label>RAM584</label>
       </variable>
-      <variable label="RAM585" CV="585">
+      <variable item="RAM585" CV="585">
         <decVal/>
+        <label>RAM585</label>
       </variable>
-      <variable label="RAM586" CV="586">
+      <variable item="RAM586" CV="586">
         <decVal/>
+        <label>RAM586</label>
       </variable>
-      <variable label="RAM587" CV="587">
+      <variable item="RAM587" CV="587">
         <decVal/>
+        <label>RAM587</label>
       </variable>
-      <variable label="RAM588" CV="588">
+      <variable item="RAM588" CV="588">
         <decVal/>
+        <label>RAM588</label>
       </variable>
-      <variable label="RAM589" CV="589">
+      <variable item="RAM589" CV="589">
         <decVal/>
+        <label>RAM589</label>
       </variable>
-      <variable label="RAM590" CV="590">
+      <variable item="RAM590" CV="590">
         <decVal/>
+        <label>RAM590</label>
       </variable>
-      <variable label="RAM591" CV="591">
+      <variable item="RAM591" CV="591">
         <decVal/>
+        <label>RAM591</label>
       </variable>
-      <variable label="RAM592" CV="592">
+      <variable item="RAM592" CV="592">
         <decVal/>
+        <label>RAM592</label>
       </variable>
-      <variable label="RAM593" CV="593">
+      <variable item="RAM593" CV="593">
         <decVal/>
+        <label>RAM593</label>
       </variable>
-      <variable label="RAM594" CV="594">
+      <variable item="RAM594" CV="594">
         <decVal/>
+        <label>RAM594</label>
       </variable>
-      <variable label="RAM595" CV="595">
+      <variable item="RAM595" CV="595">
         <decVal/>
+        <label>RAM595</label>
       </variable>
-      <variable label="RAM596" CV="596">
+      <variable item="RAM596" CV="596">
         <decVal/>
+        <label>RAM596</label>
       </variable>
-      <variable label="RAM597" CV="597">
+      <variable item="RAM597" CV="597">
         <decVal/>
+        <label>RAM597</label>
       </variable>
-      <variable label="RAM598" CV="598">
+      <variable item="RAM598" CV="598">
         <decVal/>
+        <label>RAM598</label>
       </variable>
-      <variable label="RAM599" CV="599">
+      <variable item="RAM599" CV="599">
         <decVal/>
+        <label>RAM599</label>
       </variable>
-      <variable label="RAM600" CV="600">
+      <variable item="RAM600" CV="600">
         <decVal/>
+        <label>RAM600</label>
       </variable>
-      <variable label="RAM601" CV="601">
+      <variable item="RAM601" CV="601">
         <decVal/>
+        <label>RAM601</label>
       </variable>
-      <variable label="RAM602" CV="602">
+      <variable item="RAM602" CV="602">
         <decVal/>
+        <label>RAM602</label>
       </variable>
-      <variable label="RAM603" CV="603">
+      <variable item="RAM603" CV="603">
         <decVal/>
+        <label>RAM603</label>
       </variable>
-      <variable label="RAM604" CV="604">
+      <variable item="RAM604" CV="604">
         <decVal/>
+        <label>RAM604</label>
       </variable>
-      <variable label="RAM605" CV="605">
+      <variable item="RAM605" CV="605">
         <decVal/>
+        <label>RAM605</label>
       </variable>
-      <variable label="RAM606" CV="606">
+      <variable item="RAM606" CV="606">
         <decVal/>
+        <label>RAM606</label>
       </variable>
-      <variable label="RAM607" CV="607">
+      <variable item="RAM607" CV="607">
         <decVal/>
+        <label>RAM607</label>
       </variable>
-      <variable label="RAM608" CV="608">
+      <variable item="RAM608" CV="608">
         <decVal/>
+        <label>RAM608</label>
       </variable>
-      <variable label="RAM609" CV="609">
+      <variable item="RAM609" CV="609">
         <decVal/>
+        <label>RAM609</label>
       </variable>
-      <variable label="RAM610" CV="610">
+      <variable item="RAM610" CV="610">
         <decVal/>
+        <label>RAM610</label>
       </variable>
-      <variable label="RAM611" CV="611">
+      <variable item="RAM611" CV="611">
         <decVal/>
+        <label>RAM611</label>
       </variable>
-      <variable label="RAM612" CV="612">
+      <variable item="RAM612" CV="612">
         <decVal/>
+        <label>RAM612</label>
       </variable>
-      <variable label="RAM613" CV="613">
+      <variable item="RAM613" CV="613">
         <decVal/>
+        <label>RAM613</label>
       </variable>
-      <variable label="RAM614" CV="614">
+      <variable item="RAM614" CV="614">
         <decVal/>
+        <label>RAM614</label>
       </variable>
-      <variable label="RAM615" CV="615">
+      <variable item="RAM615" CV="615">
         <decVal/>
+        <label>RAM615</label>
       </variable>
-      <variable label="RAM616" CV="616">
+      <variable item="RAM616" CV="616">
         <decVal/>
+        <label>RAM616</label>
       </variable>
-      <variable label="RAM617" CV="617">
+      <variable item="RAM617" CV="617">
         <decVal/>
+        <label>RAM617</label>
       </variable>
-      <variable label="RAM618" CV="618">
+      <variable item="RAM618" CV="618">
         <decVal/>
+        <label>RAM618</label>
       </variable>
-      <variable label="RAM619" CV="619">
+      <variable item="RAM619" CV="619">
         <decVal/>
+        <label>RAM619</label>
       </variable>
-      <variable label="RAM620" CV="620">
+      <variable item="RAM620" CV="620">
         <decVal/>
+        <label>RAM620</label>
       </variable>
-      <variable label="RAM621" CV="621">
+      <variable item="RAM621" CV="621">
         <decVal/>
+        <label>RAM621</label>
       </variable>
-      <variable label="RAM622" CV="622">
+      <variable item="RAM622" CV="622">
         <decVal/>
+        <label>RAM622</label>
       </variable>
-      <variable label="RAM623" CV="623">
+      <variable item="RAM623" CV="623">
         <decVal/>
+        <label>RAM623</label>
       </variable>
-      <variable label="RAM624" CV="624">
+      <variable item="RAM624" CV="624">
         <decVal/>
+        <label>RAM624</label>
       </variable>
-      <variable label="RAM625" CV="625">
+      <variable item="RAM625" CV="625">
         <decVal/>
+        <label>RAM625</label>
       </variable>
-      <variable label="RAM626" CV="626">
+      <variable item="RAM626" CV="626">
         <decVal/>
+        <label>RAM626</label>
       </variable>
-      <variable label="RAM627" CV="627">
+      <variable item="RAM627" CV="627">
         <decVal/>
+        <label>RAM627</label>
       </variable>
-      <variable label="RAM628" CV="628">
+      <variable item="RAM628" CV="628">
         <decVal/>
+        <label>RAM628</label>
       </variable>
-      <variable label="RAM629" CV="629">
+      <variable item="RAM629" CV="629">
         <decVal/>
+        <label>RAM629</label>
       </variable>
-      <variable label="RAM630" CV="630">
+      <variable item="RAM630" CV="630">
         <decVal/>
+        <label>RAM630</label>
       </variable>
-      <variable label="RAM631" CV="631">
+      <variable item="RAM631" CV="631">
         <decVal/>
+        <label>RAM631</label>
       </variable>
-      <variable label="RAM632" CV="632">
+      <variable item="RAM632" CV="632">
         <decVal/>
+        <label>RAM632</label>
       </variable>
-      <variable label="RAM633" CV="633">
+      <variable item="RAM633" CV="633">
         <decVal/>
+        <label>RAM633</label>
       </variable>
-      <variable label="RAM634" CV="634">
+      <variable item="RAM634" CV="634">
         <decVal/>
+        <label>RAM634</label>
       </variable>
-      <variable label="RAM635" CV="635">
+      <variable item="RAM635" CV="635">
         <decVal/>
+        <label>RAM635</label>
       </variable>
-      <variable label="RAM636" CV="636">
+      <variable item="RAM636" CV="636">
         <decVal/>
+        <label>RAM636</label>
       </variable>
-      <variable label="RAM637" CV="637">
+      <variable item="RAM637" CV="637">
         <decVal/>
+        <label>RAM637</label>
       </variable>
-      <variable label="RAM638" CV="638">
+      <variable item="RAM638" CV="638">
         <decVal/>
+        <label>RAM638</label>
       </variable>
-      <variable label="RAM639" CV="639">
+      <variable item="RAM639" CV="639">
         <decVal/>
+        <label>RAM639</label>
       </variable>
-      <variable label="RAM640" CV="640">
+      <variable item="RAM640" CV="640">
         <decVal/>
+        <label>RAM640</label>
       </variable>
-      <variable label="RAM641" CV="641">
+      <variable item="RAM641" CV="641">
         <decVal/>
+        <label>RAM641</label>
       </variable>
-      <variable label="RAM642" CV="642">
+      <variable item="RAM642" CV="642">
         <decVal/>
+        <label>RAM642</label>
       </variable>
-      <variable label="RAM643" CV="643">
+      <variable item="RAM643" CV="643">
         <decVal/>
+        <label>RAM643</label>
       </variable>
-      <variable label="RAM644" CV="644">
+      <variable item="RAM644" CV="644">
         <decVal/>
+        <label>RAM644</label>
       </variable>
-      <variable label="RAM645" CV="645">
+      <variable item="RAM645" CV="645">
         <decVal/>
+        <label>RAM645</label>
       </variable>
-      <variable label="RAM646" CV="646">
+      <variable item="RAM646" CV="646">
         <decVal/>
+        <label>RAM646</label>
       </variable>
-      <variable label="RAM647" CV="647">
+      <variable item="RAM647" CV="647">
         <decVal/>
+        <label>RAM647</label>
       </variable>
-      <variable label="RAM648" CV="648">
+      <variable item="RAM648" CV="648">
         <decVal/>
+        <label>RAM648</label>
       </variable>
-      <variable label="RAM649" CV="649">
+      <variable item="RAM649" CV="649">
         <decVal/>
+        <label>RAM649</label>
       </variable>
-      <variable label="RAM650" CV="650">
+      <variable item="RAM650" CV="650">
         <decVal/>
+        <label>RAM650</label>
       </variable>
-      <variable label="RAM651" CV="651">
+      <variable item="RAM651" CV="651">
         <decVal/>
+        <label>RAM651</label>
       </variable>
-      <variable label="RAM652" CV="652">
+      <variable item="RAM652" CV="652">
         <decVal/>
+        <label>RAM652</label>
       </variable>
-      <variable label="RAM653" CV="653">
+      <variable item="RAM653" CV="653">
         <decVal/>
+        <label>RAM653</label>
       </variable>
-      <variable label="RAM654" CV="654">
+      <variable item="RAM654" CV="654">
         <decVal/>
+        <label>RAM654</label>
       </variable>
-      <variable label="RAM655" CV="655">
+      <variable item="RAM655" CV="655">
         <decVal/>
+        <label>RAM655</label>
       </variable>
-      <variable label="RAM656" CV="656">
+      <variable item="RAM656" CV="656">
         <decVal/>
+        <label>RAM656</label>
       </variable>
-      <variable label="RAM657" CV="657">
+      <variable item="RAM657" CV="657">
         <decVal/>
+        <label>RAM657</label>
       </variable>
-      <variable label="RAM658" CV="658">
+      <variable item="RAM658" CV="658">
         <decVal/>
+        <label>RAM658</label>
       </variable>
-      <variable label="RAM659" CV="659">
+      <variable item="RAM659" CV="659">
         <decVal/>
+        <label>RAM659</label>
       </variable>
-      <variable label="RAM660" CV="660">
+      <variable item="RAM660" CV="660">
         <decVal/>
+        <label>RAM660</label>
       </variable>
-      <variable label="RAM661" CV="661">
+      <variable item="RAM661" CV="661">
         <decVal/>
+        <label>RAM661</label>
       </variable>
-      <variable label="RAM662" CV="662">
+      <variable item="RAM662" CV="662">
         <decVal/>
+        <label>RAM662</label>
       </variable>
-      <variable label="RAM663" CV="663">
+      <variable item="RAM663" CV="663">
         <decVal/>
+        <label>RAM663</label>
       </variable>
-      <variable label="RAM664" CV="664">
+      <variable item="RAM664" CV="664">
         <decVal/>
+        <label>RAM664</label>
       </variable>
-      <variable label="RAM665" CV="665">
+      <variable item="RAM665" CV="665">
         <decVal/>
+        <label>RAM665</label>
       </variable>
-      <variable label="RAM666" CV="666">
+      <variable item="RAM666" CV="666">
         <decVal/>
+        <label>RAM666</label>
       </variable>
-      <variable label="RAM667" CV="667">
+      <variable item="RAM667" CV="667">
         <decVal/>
+        <label>RAM667</label>
       </variable>
-      <variable label="RAM668" CV="668">
+      <variable item="RAM668" CV="668">
         <decVal/>
+        <label>RAM668</label>
       </variable>
-      <variable label="RAM669" CV="669">
+      <variable item="RAM669" CV="669">
         <decVal/>
+        <label>RAM669</label>
       </variable>
-      <variable label="RAM670" CV="670">
+      <variable item="RAM670" CV="670">
         <decVal/>
+        <label>RAM670</label>
       </variable>
-      <variable label="RAM671" CV="671">
+      <variable item="RAM671" CV="671">
         <decVal/>
+        <label>RAM671</label>
       </variable>
-      <variable label="RAM672" CV="672">
+      <variable item="RAM672" CV="672">
         <decVal/>
+        <label>RAM672</label>
       </variable>
-      <variable label="RAM673" CV="673">
+      <variable item="RAM673" CV="673">
         <decVal/>
+        <label>RAM673</label>
       </variable>
-      <variable label="RAM674" CV="674">
+      <variable item="RAM674" CV="674">
         <decVal/>
+        <label>RAM674</label>
       </variable>
-      <variable label="RAM675" CV="675">
+      <variable item="RAM675" CV="675">
         <decVal/>
+        <label>RAM675</label>
       </variable>
-      <variable label="RAM676" CV="676">
+      <variable item="RAM676" CV="676">
         <decVal/>
+        <label>RAM676</label>
       </variable>
-      <variable label="RAM677" CV="677">
+      <variable item="RAM677" CV="677">
         <decVal/>
+        <label>RAM677</label>
       </variable>
-      <variable label="RAM678" CV="678">
+      <variable item="RAM678" CV="678">
         <decVal/>
+        <label>RAM678</label>
       </variable>
-      <variable label="RAM679" CV="679">
+      <variable item="RAM679" CV="679">
         <decVal/>
+        <label>RAM679</label>
       </variable>
-      <variable label="RAM680" CV="680">
+      <variable item="RAM680" CV="680">
         <decVal/>
+        <label>RAM680</label>
       </variable>
-      <variable label="RAM681" CV="681">
+      <variable item="RAM681" CV="681">
         <decVal/>
+        <label>RAM681</label>
       </variable>
-      <variable label="RAM682" CV="682">
+      <variable item="RAM682" CV="682">
         <decVal/>
+        <label>RAM682</label>
       </variable>
-      <variable label="RAM683" CV="683">
+      <variable item="RAM683" CV="683">
         <decVal/>
+        <label>RAM683</label>
       </variable>
-      <variable label="RAM684" CV="684">
+      <variable item="RAM684" CV="684">
         <decVal/>
+        <label>RAM684</label>
       </variable>
-      <variable label="RAM685" CV="685">
+      <variable item="RAM685" CV="685">
         <decVal/>
+        <label>RAM685</label>
       </variable>
-      <variable label="RAM686" CV="686">
+      <variable item="RAM686" CV="686">
         <decVal/>
+        <label>RAM686</label>
       </variable>
-      <variable label="RAM687" CV="687">
+      <variable item="RAM687" CV="687">
         <decVal/>
+        <label>RAM687</label>
       </variable>
-      <variable label="RAM688" CV="688">
+      <variable item="RAM688" CV="688">
         <decVal/>
+        <label>RAM688</label>
       </variable>
-      <variable label="RAM689" CV="689">
+      <variable item="RAM689" CV="689">
         <decVal/>
+        <label>RAM689</label>
       </variable>
-      <variable label="RAM690" CV="690">
+      <variable item="RAM690" CV="690">
         <decVal/>
+        <label>RAM690</label>
       </variable>
-      <variable label="RAM691" CV="691">
+      <variable item="RAM691" CV="691">
         <decVal/>
+        <label>RAM691</label>
       </variable>
-      <variable label="RAM692" CV="692">
+      <variable item="RAM692" CV="692">
         <decVal/>
+        <label>RAM692</label>
       </variable>
-      <variable label="RAM693" CV="693">
+      <variable item="RAM693" CV="693">
         <decVal/>
+        <label>RAM693</label>
       </variable>
-      <variable label="RAM694" CV="694">
+      <variable item="RAM694" CV="694">
         <decVal/>
+        <label>RAM694</label>
       </variable>
-      <variable label="RAM695" CV="695">
+      <variable item="RAM695" CV="695">
         <decVal/>
+        <label>RAM695</label>
       </variable>
-      <variable label="RAM696" CV="696">
+      <variable item="RAM696" CV="696">
         <decVal/>
+        <label>RAM696</label>
       </variable>
-      <variable label="RAM697" CV="697">
+      <variable item="RAM697" CV="697">
         <decVal/>
+        <label>RAM697</label>
       </variable>
-      <variable label="RAM698" CV="698">
+      <variable item="RAM698" CV="698">
         <decVal/>
+        <label>RAM698</label>
       </variable>
-      <variable label="RAM699" CV="699">
+      <variable item="RAM699" CV="699">
         <decVal/>
+        <label>RAM699</label>
       </variable>
-      <variable label="RAM700" CV="700">
+      <variable item="RAM700" CV="700">
         <decVal/>
+        <label>RAM700</label>
       </variable>
-      <variable label="RAM701" CV="701">
+      <variable item="RAM701" CV="701">
         <decVal/>
+        <label>RAM701</label>
       </variable>
-      <variable label="RAM702" CV="702">
+      <variable item="RAM702" CV="702">
         <decVal/>
+        <label>RAM702</label>
       </variable>
-      <variable label="RAM703" CV="703">
+      <variable item="RAM703" CV="703">
         <decVal/>
+        <label>RAM703</label>
       </variable>
-      <variable label="RAM704" CV="704">
+      <variable item="RAM704" CV="704">
         <decVal/>
+        <label>RAM704</label>
       </variable>
-      <variable label="RAM705" CV="705">
+      <variable item="RAM705" CV="705">
         <decVal/>
+        <label>RAM705</label>
       </variable>
-      <variable label="RAM706" CV="706">
+      <variable item="RAM706" CV="706">
         <decVal/>
+        <label>RAM706</label>
       </variable>
-      <variable label="RAM707" CV="707">
+      <variable item="RAM707" CV="707">
         <decVal/>
+        <label>RAM707</label>
       </variable>
-      <variable label="RAM708" CV="708">
+      <variable item="RAM708" CV="708">
         <decVal/>
+        <label>RAM708</label>
       </variable>
-      <variable label="RAM709" CV="709">
+      <variable item="RAM709" CV="709">
         <decVal/>
+        <label>RAM709</label>
       </variable>
-      <variable label="RAM710" CV="710">
+      <variable item="RAM710" CV="710">
         <decVal/>
+        <label>RAM710</label>
       </variable>
-      <variable label="RAM711" CV="711">
+      <variable item="RAM711" CV="711">
         <decVal/>
+        <label>RAM711</label>
       </variable>
-      <variable label="RAM712" CV="712">
+      <variable item="RAM712" CV="712">
         <decVal/>
+        <label>RAM712</label>
       </variable>
-      <variable label="RAM713" CV="713">
+      <variable item="RAM713" CV="713">
         <decVal/>
+        <label>RAM713</label>
       </variable>
-      <variable label="RAM714" CV="714">
+      <variable item="RAM714" CV="714">
         <decVal/>
+        <label>RAM714</label>
       </variable>
-      <variable label="RAM715" CV="715">
+      <variable item="RAM715" CV="715">
         <decVal/>
+        <label>RAM715</label>
       </variable>
-      <variable label="RAM716" CV="716">
+      <variable item="RAM716" CV="716">
         <decVal/>
+        <label>RAM716</label>
       </variable>
-      <variable label="RAM717" CV="717">
+      <variable item="RAM717" CV="717">
         <decVal/>
+        <label>RAM717</label>
       </variable>
-      <variable label="RAM718" CV="718">
+      <variable item="RAM718" CV="718">
         <decVal/>
+        <label>RAM718</label>
       </variable>
-      <variable label="RAM719" CV="719">
+      <variable item="RAM719" CV="719">
         <decVal/>
+        <label>RAM719</label>
       </variable>
-      <variable label="RAM720" CV="720">
+      <variable item="RAM720" CV="720">
         <decVal/>
+        <label>RAM720</label>
       </variable>
-      <variable label="RAM721" CV="721">
+      <variable item="RAM721" CV="721">
         <decVal/>
+        <label>RAM721</label>
       </variable>
-      <variable label="RAM722" CV="722">
+      <variable item="RAM722" CV="722">
         <decVal/>
+        <label>RAM722</label>
       </variable>
-      <variable label="RAM723" CV="723">
+      <variable item="RAM723" CV="723">
         <decVal/>
+        <label>RAM723</label>
       </variable>
-      <variable label="RAM724" CV="724">
+      <variable item="RAM724" CV="724">
         <decVal/>
+        <label>RAM724</label>
       </variable>
-      <variable label="RAM725" CV="725">
+      <variable item="RAM725" CV="725">
         <decVal/>
+        <label>RAM725</label>
       </variable>
-      <variable label="RAM726" CV="726">
+      <variable item="RAM726" CV="726">
         <decVal/>
+        <label>RAM726</label>
       </variable>
-      <variable label="RAM727" CV="727">
+      <variable item="RAM727" CV="727">
         <decVal/>
+        <label>RAM727</label>
       </variable>
-      <variable label="RAM728" CV="728">
+      <variable item="RAM728" CV="728">
         <decVal/>
+        <label>RAM728</label>
       </variable>
-      <variable label="RAM729" CV="729">
+      <variable item="RAM729" CV="729">
         <decVal/>
+        <label>RAM729</label>
       </variable>
-      <variable label="RAM730" CV="730">
+      <variable item="RAM730" CV="730">
         <decVal/>
+        <label>RAM730</label>
       </variable>
-      <variable label="RAM731" CV="731">
+      <variable item="RAM731" CV="731">
         <decVal/>
+        <label>RAM731</label>
       </variable>
-      <variable label="RAM732" CV="732">
+      <variable item="RAM732" CV="732">
         <decVal/>
+        <label>RAM732</label>
       </variable>
-      <variable label="RAM733" CV="733">
+      <variable item="RAM733" CV="733">
         <decVal/>
+        <label>RAM733</label>
       </variable>
-      <variable label="RAM734" CV="734">
+      <variable item="RAM734" CV="734">
         <decVal/>
+        <label>RAM734</label>
       </variable>
-      <variable label="RAM735" CV="735">
+      <variable item="RAM735" CV="735">
         <decVal/>
+        <label>RAM735</label>
       </variable>
-      <variable label="RAM736" CV="736">
+      <variable item="RAM736" CV="736">
         <decVal/>
+        <label>RAM736</label>
       </variable>
-      <variable label="RAM737" CV="737">
+      <variable item="RAM737" CV="737">
         <decVal/>
+        <label>RAM737</label>
       </variable>
-      <variable label="RAM738" CV="738">
+      <variable item="RAM738" CV="738">
         <decVal/>
+        <label>RAM738</label>
       </variable>
-      <variable label="RAM739" CV="739">
+      <variable item="RAM739" CV="739">
         <decVal/>
+        <label>RAM739</label>
       </variable>
-      <variable label="RAM740" CV="740">
+      <variable item="RAM740" CV="740">
         <decVal/>
+        <label>RAM740</label>
       </variable>
-      <variable label="RAM741" CV="741">
+      <variable item="RAM741" CV="741">
         <decVal/>
+        <label>RAM741</label>
       </variable>
-      <variable label="RAM742" CV="742">
+      <variable item="RAM742" CV="742">
         <decVal/>
+        <label>RAM742</label>
       </variable>
-      <variable label="RAM743" CV="743">
+      <variable item="RAM743" CV="743">
         <decVal/>
+        <label>RAM743</label>
       </variable>
-      <variable label="RAM744" CV="744">
+      <variable item="RAM744" CV="744">
         <decVal/>
+        <label>RAM744</label>
       </variable>
-      <variable label="RAM745" CV="745">
+      <variable item="RAM745" CV="745">
         <decVal/>
+        <label>RAM745</label>
       </variable>
-      <variable label="RAM746" CV="746">
+      <variable item="RAM746" CV="746">
         <decVal/>
+        <label>RAM746</label>
       </variable>
-      <variable label="RAM747" CV="747">
+      <variable item="RAM747" CV="747">
         <decVal/>
+        <label>RAM747</label>
       </variable>
-      <variable label="RAM748" CV="748">
+      <variable item="RAM748" CV="748">
         <decVal/>
+        <label>RAM748</label>
       </variable>
-      <variable label="RAM749" CV="749">
+      <variable item="RAM749" CV="749">
         <decVal/>
+        <label>RAM749</label>
       </variable>
-      <variable label="RAM750" CV="750">
+      <variable item="RAM750" CV="750">
         <decVal/>
+        <label>RAM750</label>
       </variable>
-      <variable label="RAM751" CV="751">
+      <variable item="RAM751" CV="751">
         <decVal/>
+        <label>RAM751</label>
       </variable>
-      <variable label="RAM752" CV="752">
+      <variable item="RAM752" CV="752">
         <decVal/>
+        <label>RAM752</label>
       </variable>
-      <variable label="RAM753" CV="753">
+      <variable item="RAM753" CV="753">
         <decVal/>
+        <label>RAM753</label>
       </variable>
-      <variable label="RAM754" CV="754">
+      <variable item="RAM754" CV="754">
         <decVal/>
+        <label>RAM754</label>
       </variable>
-      <variable label="RAM755" CV="755">
+      <variable item="RAM755" CV="755">
         <decVal/>
+        <label>RAM755</label>
       </variable>
-      <variable label="RAM756" CV="756">
+      <variable item="RAM756" CV="756">
         <decVal/>
+        <label>RAM756</label>
       </variable>
-      <variable label="RAM757" CV="757">
+      <variable item="RAM757" CV="757">
         <decVal/>
+        <label>RAM757</label>
       </variable>
-      <variable label="RAM758" CV="758">
+      <variable item="RAM758" CV="758">
         <decVal/>
+        <label>RAM758</label>
       </variable>
-      <variable label="RAM759" CV="759">
+      <variable item="RAM759" CV="759">
         <decVal/>
+        <label>RAM759</label>
       </variable>
-      <variable label="RAM760" CV="760">
+      <variable item="RAM760" CV="760">
         <decVal/>
+        <label>RAM760</label>
       </variable>
-      <variable label="RAM761" CV="761">
+      <variable item="RAM761" CV="761">
         <decVal/>
+        <label>RAM761</label>
       </variable>
-      <variable label="RAM762" CV="762">
+      <variable item="RAM762" CV="762">
         <decVal/>
+        <label>RAM762</label>
       </variable>
-      <variable label="RAM763" CV="763">
+      <variable item="RAM763" CV="763">
         <decVal/>
+        <label>RAM763</label>
       </variable>
-      <variable label="RAM764" CV="764">
+      <variable item="RAM764" CV="764">
         <decVal/>
+        <label>RAM764</label>
       </variable>
-      <variable label="RAM765" CV="765">
+      <variable item="RAM765" CV="765">
         <decVal/>
+        <label>RAM765</label>
       </variable>
-      <variable label="RAM766" CV="766">
+      <variable item="RAM766" CV="766">
         <decVal/>
+        <label>RAM766</label>
       </variable>
-      <variable label="RAM767" CV="767">
+      <variable item="RAM767" CV="767">
         <decVal/>
+        <label>RAM767</label>
       </variable>
-      <variable label="RAM768" CV="768">
+      <variable item="RAM768" CV="768">
         <decVal/>
+        <label>RAM768</label>
       </variable>
-      <variable label="RAM769" CV="769">
+      <variable item="RAM769" CV="769">
         <decVal/>
+        <label>RAM769</label>
       </variable>
-      <variable label="RAM770" CV="770">
+      <variable item="RAM770" CV="770">
         <decVal/>
+        <label>RAM770</label>
       </variable>
-      <variable label="RAM771" CV="771">
+      <variable item="RAM771" CV="771">
         <decVal/>
+        <label>RAM771</label>
       </variable>
-      <variable label="RAM772" CV="772">
+      <variable item="RAM772" CV="772">
         <decVal/>
+        <label>RAM772</label>
       </variable>
-      <variable label="RAM773" CV="773">
+      <variable item="RAM773" CV="773">
         <decVal/>
+        <label>RAM773</label>
       </variable>
-      <variable label="RAM774" CV="774">
+      <variable item="RAM774" CV="774">
         <decVal/>
+        <label>RAM774</label>
       </variable>
-      <variable label="RAM775" CV="775">
+      <variable item="RAM775" CV="775">
         <decVal/>
+        <label>RAM775</label>
       </variable>
-      <variable label="RAM776" CV="776">
+      <variable item="RAM776" CV="776">
         <decVal/>
+        <label>RAM776</label>
       </variable>
-      <variable label="RAM777" CV="777">
+      <variable item="RAM777" CV="777">
         <decVal/>
+        <label>RAM777</label>
       </variable>
-      <variable label="RAM778" CV="778">
+      <variable item="RAM778" CV="778">
         <decVal/>
+        <label>RAM778</label>
       </variable>
-      <variable label="RAM779" CV="779">
+      <variable item="RAM779" CV="779">
         <decVal/>
+        <label>RAM779</label>
       </variable>
-      <variable label="RAM780" CV="780">
+      <variable item="RAM780" CV="780">
         <decVal/>
+        <label>RAM780</label>
       </variable>
-      <variable label="RAM781" CV="781">
+      <variable item="RAM781" CV="781">
         <decVal/>
+        <label>RAM781</label>
       </variable>
-      <variable label="RAM782" CV="782">
+      <variable item="RAM782" CV="782">
         <decVal/>
+        <label>RAM782</label>
       </variable>
-      <variable label="RAM783" CV="783">
+      <variable item="RAM783" CV="783">
         <decVal/>
+        <label>RAM783</label>
       </variable>
-      <variable label="RAM784" CV="784">
+      <variable item="RAM784" CV="784">
         <decVal/>
+        <label>RAM784</label>
       </variable>
-      <variable label="RAM785" CV="785">
+      <variable item="RAM785" CV="785">
         <decVal/>
+        <label>RAM785</label>
       </variable>
-      <variable label="RAM786" CV="786">
+      <variable item="RAM786" CV="786">
         <decVal/>
+        <label>RAM786</label>
       </variable>
-      <variable label="RAM787" CV="787">
+      <variable item="RAM787" CV="787">
         <decVal/>
+        <label>RAM787</label>
       </variable>
-      <variable label="RAM788" CV="788">
+      <variable item="RAM788" CV="788">
         <decVal/>
+        <label>RAM788</label>
       </variable>
-      <variable label="RAM789" CV="789">
+      <variable item="RAM789" CV="789">
         <decVal/>
+        <label>RAM789</label>
       </variable>
-      <variable label="RAM790" CV="790">
+      <variable item="RAM790" CV="790">
         <decVal/>
+        <label>RAM790</label>
       </variable>
-      <variable label="RAM791" CV="791">
+      <variable item="RAM791" CV="791">
         <decVal/>
+        <label>RAM791</label>
       </variable>
-      <variable label="RAM792" CV="792">
+      <variable item="RAM792" CV="792">
         <decVal/>
+        <label>RAM792</label>
       </variable>
-      <variable label="RAM793" CV="793">
+      <variable item="RAM793" CV="793">
         <decVal/>
+        <label>RAM793</label>
       </variable>
-      <variable label="RAM794" CV="794">
+      <variable item="RAM794" CV="794">
         <decVal/>
+        <label>RAM794</label>
       </variable>
-      <variable label="RAM795" CV="795">
+      <variable item="RAM795" CV="795">
         <decVal/>
+        <label>RAM795</label>
       </variable>
-      <variable label="RAM796" CV="796">
+      <variable item="RAM796" CV="796">
         <decVal/>
+        <label>RAM796</label>
       </variable>
-      <variable label="RAM797" CV="797">
+      <variable item="RAM797" CV="797">
         <decVal/>
+        <label>RAM797</label>
       </variable>
-      <variable label="RAM798" CV="798">
+      <variable item="RAM798" CV="798">
         <decVal/>
+        <label>RAM798</label>
       </variable>
-      <variable label="RAM799" CV="799">
+      <variable item="RAM799" CV="799">
         <decVal/>
+        <label>RAM799</label>
       </variable>
-      <variable label="RAM800" CV="800">
+      <variable item="RAM800" CV="800">
         <decVal/>
+        <label>RAM800</label>
       </variable>
-      <variable label="RAM801" CV="801">
+      <variable item="RAM801" CV="801">
         <decVal/>
+        <label>RAM801</label>
       </variable>
-      <variable label="RAM802" CV="802">
+      <variable item="RAM802" CV="802">
         <decVal/>
+        <label>RAM802</label>
       </variable>
-      <variable label="RAM803" CV="803">
+      <variable item="RAM803" CV="803">
         <decVal/>
+        <label>RAM803</label>
       </variable>
-      <variable label="RAM804" CV="804">
+      <variable item="RAM804" CV="804">
         <decVal/>
+        <label>RAM804</label>
       </variable>
-      <variable label="RAM805" CV="805">
+      <variable item="RAM805" CV="805">
         <decVal/>
+        <label>RAM805</label>
       </variable>
-      <variable label="RAM806" CV="806">
+      <variable item="RAM806" CV="806">
         <decVal/>
+        <label>RAM806</label>
       </variable>
-      <variable label="RAM807" CV="807">
+      <variable item="RAM807" CV="807">
         <decVal/>
+        <label>RAM807</label>
       </variable>
-      <variable label="RAM808" CV="808">
+      <variable item="RAM808" CV="808">
         <decVal/>
+        <label>RAM808</label>
       </variable>
-      <variable label="RAM809" CV="809">
+      <variable item="RAM809" CV="809">
         <decVal/>
+        <label>RAM809</label>
       </variable>
-      <variable label="RAM810" CV="810">
+      <variable item="RAM810" CV="810">
         <decVal/>
+        <label>RAM810</label>
       </variable>
-      <variable label="RAM811" CV="811">
+      <variable item="RAM811" CV="811">
         <decVal/>
+        <label>RAM811</label>
       </variable>
-      <variable label="RAM812" CV="812">
+      <variable item="RAM812" CV="812">
         <decVal/>
+        <label>RAM812</label>
       </variable>
-      <variable label="RAM813" CV="813">
+      <variable item="RAM813" CV="813">
         <decVal/>
+        <label>RAM813</label>
       </variable>
-      <variable label="RAM814" CV="814">
+      <variable item="RAM814" CV="814">
         <decVal/>
+        <label>RAM814</label>
       </variable>
-      <variable label="RAM815" CV="815">
+      <variable item="RAM815" CV="815">
         <decVal/>
+        <label>RAM815</label>
       </variable>
-      <variable label="RAM816" CV="816">
+      <variable item="RAM816" CV="816">
         <decVal/>
+        <label>RAM816</label>
       </variable>
-      <variable label="RAM817" CV="817">
+      <variable item="RAM817" CV="817">
         <decVal/>
+        <label>RAM817</label>
       </variable>
-      <variable label="RAM818" CV="818">
+      <variable item="RAM818" CV="818">
         <decVal/>
+        <label>RAM818</label>
       </variable>
-      <variable label="RAM819" CV="819">
+      <variable item="RAM819" CV="819">
         <decVal/>
+        <label>RAM819</label>
       </variable>
-      <variable label="RAM820" CV="820">
+      <variable item="RAM820" CV="820">
         <decVal/>
+        <label>RAM820</label>
       </variable>
-      <variable label="RAM821" CV="821">
+      <variable item="RAM821" CV="821">
         <decVal/>
+        <label>RAM821</label>
       </variable>
-      <variable label="RAM822" CV="822">
+      <variable item="RAM822" CV="822">
         <decVal/>
+        <label>RAM822</label>
       </variable>
-      <variable label="RAM823" CV="823">
+      <variable item="RAM823" CV="823">
         <decVal/>
+        <label>RAM823</label>
       </variable>
-      <variable label="RAM824" CV="824">
+      <variable item="RAM824" CV="824">
         <decVal/>
+        <label>RAM824</label>
       </variable>
-      <variable label="RAM825" CV="825">
+      <variable item="RAM825" CV="825">
         <decVal/>
+        <label>RAM825</label>
       </variable>
-      <variable label="RAM826" CV="826">
+      <variable item="RAM826" CV="826">
         <decVal/>
+        <label>RAM826</label>
       </variable>
-      <variable label="RAM827" CV="827">
+      <variable item="RAM827" CV="827">
         <decVal/>
+        <label>RAM827</label>
       </variable>
-      <variable label="RAM828" CV="828">
+      <variable item="RAM828" CV="828">
         <decVal/>
+        <label>RAM828</label>
       </variable>
-      <variable label="RAM829" CV="829">
+      <variable item="RAM829" CV="829">
         <decVal/>
+        <label>RAM829</label>
       </variable>
-      <variable label="RAM830" CV="830">
+      <variable item="RAM830" CV="830">
         <decVal/>
+        <label>RAM830</label>
       </variable>
-      <variable label="RAM831" CV="831">
+      <variable item="RAM831" CV="831">
         <decVal/>
+        <label>RAM831</label>
       </variable>
-      <variable label="RAM832" CV="832">
+      <variable item="RAM832" CV="832">
         <decVal/>
+        <label>RAM832</label>
       </variable>
-      <variable label="RAM833" CV="833">
+      <variable item="RAM833" CV="833">
         <decVal/>
+        <label>RAM833</label>
       </variable>
-      <variable label="RAM834" CV="834">
+      <variable item="RAM834" CV="834">
         <decVal/>
+        <label>RAM834</label>
       </variable>
-      <variable label="RAM835" CV="835">
+      <variable item="RAM835" CV="835">
         <decVal/>
+        <label>RAM835</label>
       </variable>
-      <variable label="RAM836" CV="836">
+      <variable item="RAM836" CV="836">
         <decVal/>
+        <label>RAM836</label>
       </variable>
-      <variable label="RAM837" CV="837">
+      <variable item="RAM837" CV="837">
         <decVal/>
+        <label>RAM837</label>
       </variable>
-      <variable label="RAM838" CV="838">
+      <variable item="RAM838" CV="838">
         <decVal/>
+        <label>RAM838</label>
       </variable>
-      <variable label="RAM839" CV="839">
+      <variable item="RAM839" CV="839">
         <decVal/>
+        <label>RAM839</label>
       </variable>
-      <variable label="RAM840" CV="840">
+      <variable item="RAM840" CV="840">
         <decVal/>
+        <label>RAM840</label>
       </variable>
-      <variable label="RAM841" CV="841">
+      <variable item="RAM841" CV="841">
         <decVal/>
+        <label>RAM841</label>
       </variable>
-      <variable label="RAM842" CV="842">
+      <variable item="RAM842" CV="842">
         <decVal/>
+        <label>RAM842</label>
       </variable>
-      <variable label="RAM843" CV="843">
+      <variable item="RAM843" CV="843">
         <decVal/>
+        <label>RAM843</label>
       </variable>
-      <variable label="RAM844" CV="844">
+      <variable item="RAM844" CV="844">
         <decVal/>
+        <label>RAM844</label>
       </variable>
-      <variable label="RAM845" CV="845">
+      <variable item="RAM845" CV="845">
         <decVal/>
+        <label>RAM845</label>
       </variable>
-      <variable label="RAM846" CV="846">
+      <variable item="RAM846" CV="846">
         <decVal/>
+        <label>RAM846</label>
       </variable>
-      <variable label="RAM847" CV="847">
+      <variable item="RAM847" CV="847">
         <decVal/>
+        <label>RAM847</label>
       </variable>
-      <variable label="RAM848" CV="848">
+      <variable item="RAM848" CV="848">
         <decVal/>
+        <label>RAM848</label>
       </variable>
-      <variable label="RAM849" CV="849">
+      <variable item="RAM849" CV="849">
         <decVal/>
+        <label>RAM849</label>
       </variable>
-      <variable label="RAM850" CV="850">
+      <variable item="RAM850" CV="850">
         <decVal/>
+        <label>RAM850</label>
       </variable>
-      <variable label="RAM851" CV="851">
+      <variable item="RAM851" CV="851">
         <decVal/>
+        <label>RAM851</label>
       </variable>
-      <variable label="RAM852" CV="852">
+      <variable item="RAM852" CV="852">
         <decVal/>
+        <label>RAM852</label>
       </variable>
-      <variable label="RAM853" CV="853">
+      <variable item="RAM853" CV="853">
         <decVal/>
+        <label>RAM853</label>
       </variable>
-      <variable label="RAM854" CV="854">
+      <variable item="RAM854" CV="854">
         <decVal/>
+        <label>RAM854</label>
       </variable>
-      <variable label="RAM855" CV="855">
+      <variable item="RAM855" CV="855">
         <decVal/>
+        <label>RAM855</label>
       </variable>
-      <variable label="RAM856" CV="856">
+      <variable item="RAM856" CV="856">
         <decVal/>
+        <label>RAM856</label>
       </variable>
-      <variable label="RAM857" CV="857">
+      <variable item="RAM857" CV="857">
         <decVal/>
+        <label>RAM857</label>
       </variable>
-      <variable label="RAM858" CV="858">
+      <variable item="RAM858" CV="858">
         <decVal/>
+        <label>RAM858</label>
       </variable>
-      <variable label="RAM859" CV="859">
+      <variable item="RAM859" CV="859">
         <decVal/>
+        <label>RAM859</label>
       </variable>
-      <variable label="RAM860" CV="860">
+      <variable item="RAM860" CV="860">
         <decVal/>
+        <label>RAM860</label>
       </variable>
-      <variable label="RAM861" CV="861">
+      <variable item="RAM861" CV="861">
         <decVal/>
+        <label>RAM861</label>
       </variable>
-      <variable label="RAM862" CV="862">
+      <variable item="RAM862" CV="862">
         <decVal/>
+        <label>RAM862</label>
       </variable>
-      <variable label="RAM863" CV="863">
+      <variable item="RAM863" CV="863">
         <decVal/>
+        <label>RAM863</label>
       </variable>
-      <variable label="RAM864" CV="864">
+      <variable item="RAM864" CV="864">
         <decVal/>
+        <label>RAM864</label>
       </variable>
-      <variable label="RAM865" CV="865">
+      <variable item="RAM865" CV="865">
         <decVal/>
+        <label>RAM865</label>
       </variable>
-      <variable label="RAM866" CV="866">
+      <variable item="RAM866" CV="866">
         <decVal/>
+        <label>RAM866</label>
       </variable>
-      <variable label="RAM867" CV="867">
+      <variable item="RAM867" CV="867">
         <decVal/>
+        <label>RAM867</label>
       </variable>
-      <variable label="RAM868" CV="868">
+      <variable item="RAM868" CV="868">
         <decVal/>
+        <label>RAM868</label>
       </variable>
-      <variable label="RAM869" CV="869">
+      <variable item="RAM869" CV="869">
         <decVal/>
+        <label>RAM869</label>
       </variable>
-      <variable label="RAM870" CV="870">
+      <variable item="RAM870" CV="870">
         <decVal/>
+        <label>RAM870</label>
       </variable>
-      <variable label="RAM871" CV="871">
+      <variable item="RAM871" CV="871">
         <decVal/>
+        <label>RAM871</label>
       </variable>
-      <variable label="RAM872" CV="872">
+      <variable item="RAM872" CV="872">
         <decVal/>
+        <label>RAM872</label>
       </variable>
-      <variable label="RAM873" CV="873">
+      <variable item="RAM873" CV="873">
         <decVal/>
+        <label>RAM873</label>
       </variable>
-      <variable label="RAM874" CV="874">
+      <variable item="RAM874" CV="874">
         <decVal/>
+        <label>RAM874</label>
       </variable>
-      <variable label="RAM875" CV="875">
+      <variable item="RAM875" CV="875">
         <decVal/>
+        <label>RAM875</label>
       </variable>
-      <variable label="RAM876" CV="876">
+      <variable item="RAM876" CV="876">
         <decVal/>
+        <label>RAM876</label>
       </variable>
-      <variable label="RAM877" CV="877">
+      <variable item="RAM877" CV="877">
         <decVal/>
+        <label>RAM877</label>
       </variable>
-      <variable label="RAM878" CV="878">
+      <variable item="RAM878" CV="878">
         <decVal/>
+        <label>RAM878</label>
       </variable>
-      <variable label="RAM879" CV="879">
+      <variable item="RAM879" CV="879">
         <decVal/>
+        <label>RAM879</label>
       </variable>
-      <variable label="RAM880" CV="880">
+      <variable item="RAM880" CV="880">
         <decVal/>
+        <label>RAM880</label>
       </variable>
-      <variable label="RAM881" CV="881">
+      <variable item="RAM881" CV="881">
         <decVal/>
+        <label>RAM881</label>
       </variable>
-      <variable label="RAM882" CV="882">
+      <variable item="RAM882" CV="882">
         <decVal/>
+        <label>RAM882</label>
       </variable>
-      <variable label="RAM883" CV="883">
+      <variable item="RAM883" CV="883">
         <decVal/>
+        <label>RAM883</label>
       </variable>
-      <variable label="RAM884" CV="884">
+      <variable item="RAM884" CV="884">
         <decVal/>
+        <label>RAM884</label>
       </variable>
-      <variable label="RAM885" CV="885">
+      <variable item="RAM885" CV="885">
         <decVal/>
+        <label>RAM885</label>
       </variable>
-      <variable label="RAM886" CV="886">
+      <variable item="RAM886" CV="886">
         <decVal/>
+        <label>RAM886</label>
       </variable>
-      <variable label="RAM887" CV="887">
+      <variable item="RAM887" CV="887">
         <decVal/>
+        <label>RAM887</label>
       </variable>
-      <variable label="RAM888" CV="888">
+      <variable item="RAM888" CV="888">
         <decVal/>
+        <label>RAM888</label>
       </variable>
-      <variable label="RAM889" CV="889">
+      <variable item="RAM889" CV="889">
         <decVal/>
+        <label>RAM889</label>
       </variable>
-      <variable label="RAM890" CV="890">
+      <variable item="RAM890" CV="890">
         <decVal/>
+        <label>RAM890</label>
       </variable>
-      <variable label="RAM891" CV="891">
+      <variable item="RAM891" CV="891">
         <decVal/>
+        <label>RAM891</label>
       </variable>
-      <variable label="RAM892" CV="892">
+      <variable item="RAM892" CV="892">
         <decVal/>
+        <label>RAM892</label>
       </variable>
-      <variable label="RAM893" CV="893">
+      <variable item="RAM893" CV="893">
         <decVal/>
+        <label>RAM893</label>
       </variable>
-      <variable label="RAM894" CV="894">
+      <variable item="RAM894" CV="894">
         <decVal/>
+        <label>RAM894</label>
       </variable>
-      <variable label="RAM895" CV="895">
+      <variable item="RAM895" CV="895">
         <decVal/>
+        <label>RAM895</label>
       </variable>
-      <variable label="RAM896" CV="896">
+      <variable item="RAM896" CV="896">
         <decVal/>
+        <label>RAM896</label>
       </variable>
-      <variable label="RAM897" CV="897">
+      <variable item="RAM897" CV="897">
         <decVal/>
+        <label>RAM897</label>
       </variable>
-      <variable label="RAM898" CV="898">
+      <variable item="RAM898" CV="898">
         <decVal/>
+        <label>RAM898</label>
       </variable>
-      <variable label="RAM899" CV="899">
+      <variable item="RAM899" CV="899">
         <decVal/>
+        <label>RAM899</label>
       </variable>
-      <variable label="RAM900" CV="900">
+      <variable item="RAM900" CV="900">
         <decVal/>
+        <label>RAM900</label>
       </variable>
-      <variable label="RAM901" CV="901">
+      <variable item="RAM901" CV="901">
         <decVal/>
+        <label>RAM901</label>
       </variable>
-      <variable label="RAM902" CV="902">
+      <variable item="RAM902" CV="902">
         <decVal/>
+        <label>RAM902</label>
       </variable>
-      <variable label="RAM903" CV="903">
+      <variable item="RAM903" CV="903">
         <decVal/>
+        <label>RAM903</label>
       </variable>
-      <variable label="RAM904" CV="904">
+      <variable item="RAM904" CV="904">
         <decVal/>
+        <label>RAM904</label>
       </variable>
-      <variable label="RAM905" CV="905">
+      <variable item="RAM905" CV="905">
         <decVal/>
+        <label>RAM905</label>
       </variable>
-      <variable label="RAM906" CV="906">
+      <variable item="RAM906" CV="906">
         <decVal/>
+        <label>RAM906</label>
       </variable>
-      <variable label="RAM907" CV="907">
+      <variable item="RAM907" CV="907">
         <decVal/>
+        <label>RAM907</label>
       </variable>
-      <variable label="RAM908" CV="908">
+      <variable item="RAM908" CV="908">
         <decVal/>
+        <label>RAM908</label>
       </variable>
-      <variable label="RAM909" CV="909">
+      <variable item="RAM909" CV="909">
         <decVal/>
+        <label>RAM909</label>
       </variable>
-      <variable label="RAM910" CV="910">
+      <variable item="RAM910" CV="910">
         <decVal/>
+        <label>RAM910</label>
       </variable>
-      <variable label="RAM911" CV="911">
+      <variable item="RAM911" CV="911">
         <decVal/>
+        <label>RAM911</label>
       </variable>
-      <variable label="RAM912" CV="912">
+      <variable item="RAM912" CV="912">
         <decVal/>
+        <label>RAM912</label>
       </variable>
-      <variable label="RAM913" CV="913">
+      <variable item="RAM913" CV="913">
         <decVal/>
+        <label>RAM913</label>
       </variable>
-      <variable label="RAM914" CV="914">
+      <variable item="RAM914" CV="914">
         <decVal/>
+        <label>RAM914</label>
       </variable>
-      <variable label="RAM915" CV="915">
+      <variable item="RAM915" CV="915">
         <decVal/>
+        <label>RAM915</label>
       </variable>
-      <variable label="RAM916" CV="916">
+      <variable item="RAM916" CV="916">
         <decVal/>
+        <label>RAM916</label>
       </variable>
-      <variable label="RAM917" CV="917">
+      <variable item="RAM917" CV="917">
         <decVal/>
+        <label>RAM917</label>
       </variable>
-      <variable label="RAM918" CV="918">
+      <variable item="RAM918" CV="918">
         <decVal/>
+        <label>RAM918</label>
       </variable>
-      <variable label="RAM919" CV="919">
+      <variable item="RAM919" CV="919">
         <decVal/>
+        <label>RAM919</label>
       </variable>
-      <variable label="RAM920" CV="920">
+      <variable item="RAM920" CV="920">
         <decVal/>
+        <label>RAM920</label>
       </variable>
-      <variable label="RAM921" CV="921">
+      <variable item="RAM921" CV="921">
         <decVal/>
+        <label>RAM921</label>
       </variable>
-      <variable label="RAM922" CV="922">
+      <variable item="RAM922" CV="922">
         <decVal/>
+        <label>RAM922</label>
       </variable>
-      <variable label="RAM923" CV="923">
+      <variable item="RAM923" CV="923">
         <decVal/>
+        <label>RAM923</label>
       </variable>
-      <variable label="RAM924" CV="924">
+      <variable item="RAM924" CV="924">
         <decVal/>
+        <label>RAM924</label>
       </variable>
-      <variable label="RAM925" CV="925">
+      <variable item="RAM925" CV="925">
         <decVal/>
+        <label>RAM925</label>
       </variable>
-      <variable label="RAM926" CV="926">
+      <variable item="RAM926" CV="926">
         <decVal/>
+        <label>RAM926</label>
       </variable>
-      <variable label="RAM927" CV="927">
+      <variable item="RAM927" CV="927">
         <decVal/>
+        <label>RAM927</label>
       </variable>
-      <variable label="RAM928" CV="928">
+      <variable item="RAM928" CV="928">
         <decVal/>
+        <label>RAM928</label>
       </variable>
-      <variable label="RAM929" CV="929">
+      <variable item="RAM929" CV="929">
         <decVal/>
+        <label>RAM929</label>
       </variable>
-      <variable label="RAM930" CV="930">
+      <variable item="RAM930" CV="930">
         <decVal/>
+        <label>RAM930</label>
       </variable>
-      <variable label="RAM931" CV="931">
+      <variable item="RAM931" CV="931">
         <decVal/>
+        <label>RAM931</label>
       </variable>
-      <variable label="RAM932" CV="932">
+      <variable item="RAM932" CV="932">
         <decVal/>
+        <label>RAM932</label>
       </variable>
-      <variable label="RAM933" CV="933">
+      <variable item="RAM933" CV="933">
         <decVal/>
+        <label>RAM933</label>
       </variable>
-      <variable label="RAM934" CV="934">
+      <variable item="RAM934" CV="934">
         <decVal/>
+        <label>RAM934</label>
       </variable>
-      <variable label="RAM935" CV="935">
+      <variable item="RAM935" CV="935">
         <decVal/>
+        <label>RAM935</label>
       </variable>
-      <variable label="RAM936" CV="936">
+      <variable item="RAM936" CV="936">
         <decVal/>
+        <label>RAM936</label>
       </variable>
-      <variable label="RAM937" CV="937">
+      <variable item="RAM937" CV="937">
         <decVal/>
+        <label>RAM937</label>
       </variable>
-      <variable label="RAM938" CV="938">
+      <variable item="RAM938" CV="938">
         <decVal/>
+        <label>RAM938</label>
       </variable>
-      <variable label="RAM939" CV="939">
+      <variable item="RAM939" CV="939">
         <decVal/>
+        <label>RAM939</label>
       </variable>
-      <variable label="RAM940" CV="940">
+      <variable item="RAM940" CV="940">
         <decVal/>
+        <label>RAM940</label>
       </variable>
-      <variable label="RAM941" CV="941">
+      <variable item="RAM941" CV="941">
         <decVal/>
+        <label>RAM941</label>
       </variable>
-      <variable label="RAM942" CV="942">
+      <variable item="RAM942" CV="942">
         <decVal/>
+        <label>RAM942</label>
       </variable>
-      <variable label="RAM943" CV="943">
+      <variable item="RAM943" CV="943">
         <decVal/>
+        <label>RAM943</label>
       </variable>
-      <variable label="RAM944" CV="944">
+      <variable item="RAM944" CV="944">
         <decVal/>
+        <label>RAM944</label>
       </variable>
-      <variable label="RAM945" CV="945">
+      <variable item="RAM945" CV="945">
         <decVal/>
+        <label>RAM945</label>
       </variable>
-      <variable label="RAM946" CV="946">
+      <variable item="RAM946" CV="946">
         <decVal/>
+        <label>RAM946</label>
       </variable>
-      <variable label="RAM947" CV="947">
+      <variable item="RAM947" CV="947">
         <decVal/>
+        <label>RAM947</label>
       </variable>
-      <variable label="RAM948" CV="948">
+      <variable item="RAM948" CV="948">
         <decVal/>
+        <label>RAM948</label>
       </variable>
-      <variable label="RAM949" CV="949">
+      <variable item="RAM949" CV="949">
         <decVal/>
+        <label>RAM949</label>
       </variable>
-      <variable label="RAM950" CV="950">
+      <variable item="RAM950" CV="950">
         <decVal/>
+        <label>RAM950</label>
       </variable>
-      <variable label="RAM951" CV="951">
+      <variable item="RAM951" CV="951">
         <decVal/>
+        <label>RAM951</label>
       </variable>
-      <variable label="RAM952" CV="952">
+      <variable item="RAM952" CV="952">
         <decVal/>
+        <label>RAM952</label>
       </variable>
-      <variable label="RAM953" CV="953">
+      <variable item="RAM953" CV="953">
         <decVal/>
+        <label>RAM953</label>
       </variable>
-      <variable label="RAM954" CV="954">
+      <variable item="RAM954" CV="954">
         <decVal/>
+        <label>RAM954</label>
       </variable>
-      <variable label="RAM955" CV="955">
+      <variable item="RAM955" CV="955">
         <decVal/>
+        <label>RAM955</label>
       </variable>
-      <variable label="RAM956" CV="956">
+      <variable item="RAM956" CV="956">
         <decVal/>
+        <label>RAM956</label>
       </variable>
-      <variable label="RAM957" CV="957">
+      <variable item="RAM957" CV="957">
         <decVal/>
+        <label>RAM957</label>
       </variable>
-      <variable label="RAM958" CV="958">
+      <variable item="RAM958" CV="958">
         <decVal/>
+        <label>RAM958</label>
       </variable>
-      <variable label="RAM959" CV="959">
+      <variable item="RAM959" CV="959">
         <decVal/>
+        <label>RAM959</label>
       </variable>
-      <variable label="RAM960" CV="960">
+      <variable item="RAM960" CV="960">
         <decVal/>
+        <label>RAM960</label>
       </variable>
-      <variable label="RAM961" CV="961">
+      <variable item="RAM961" CV="961">
         <decVal/>
+        <label>RAM961</label>
       </variable>
-      <variable label="RAM962" CV="962">
+      <variable item="RAM962" CV="962">
         <decVal/>
+        <label>RAM962</label>
       </variable>
-      <variable label="RAM963" CV="963">
+      <variable item="RAM963" CV="963">
         <decVal/>
+        <label>RAM963</label>
       </variable>
-      <variable label="RAM964" CV="964">
+      <variable item="RAM964" CV="964">
         <decVal/>
+        <label>RAM964</label>
       </variable>
-      <variable label="RAM965" CV="965">
+      <variable item="RAM965" CV="965">
         <decVal/>
+        <label>RAM965</label>
       </variable>
-      <variable label="RAM966" CV="966">
+      <variable item="RAM966" CV="966">
         <decVal/>
+        <label>RAM966</label>
       </variable>
-      <variable label="RAM967" CV="967">
+      <variable item="RAM967" CV="967">
         <decVal/>
+        <label>RAM967</label>
       </variable>
-      <variable label="RAM968" CV="968">
+      <variable item="RAM968" CV="968">
         <decVal/>
+        <label>RAM968</label>
       </variable>
-      <variable label="RAM969" CV="969">
+      <variable item="RAM969" CV="969">
         <decVal/>
+        <label>RAM969</label>
       </variable>
-      <variable label="RAM970" CV="970">
+      <variable item="RAM970" CV="970">
         <decVal/>
+        <label>RAM970</label>
       </variable>
-      <variable label="RAM971" CV="971">
+      <variable item="RAM971" CV="971">
         <decVal/>
+        <label>RAM971</label>
       </variable>
-      <variable label="RAM972" CV="972">
+      <variable item="RAM972" CV="972">
         <decVal/>
+        <label>RAM972</label>
       </variable>
-      <variable label="RAM973" CV="973">
+      <variable item="RAM973" CV="973">
         <decVal/>
+        <label>RAM973</label>
       </variable>
-      <variable label="RAM974" CV="974">
+      <variable item="RAM974" CV="974">
         <decVal/>
+        <label>RAM974</label>
       </variable>
-      <variable label="RAM975" CV="975">
+      <variable item="RAM975" CV="975">
         <decVal/>
+        <label>RAM975</label>
       </variable>
-      <variable label="RAM976" CV="976">
+      <variable item="RAM976" CV="976">
         <decVal/>
+        <label>RAM976</label>
       </variable>
-      <variable label="RAM977" CV="977">
+      <variable item="RAM977" CV="977">
         <decVal/>
+        <label>RAM977</label>
       </variable>
-      <variable label="RAM978" CV="978">
+      <variable item="RAM978" CV="978">
         <decVal/>
+        <label>RAM978</label>
       </variable>
-      <variable label="RAM979" CV="979">
+      <variable item="RAM979" CV="979">
         <decVal/>
+        <label>RAM979</label>
       </variable>
-      <variable label="RAM980" CV="980">
+      <variable item="RAM980" CV="980">
         <decVal/>
+        <label>RAM980</label>
       </variable>
-      <variable label="RAM981" CV="981">
+      <variable item="RAM981" CV="981">
         <decVal/>
+        <label>RAM981</label>
       </variable>
-      <variable label="RAM982" CV="982">
+      <variable item="RAM982" CV="982">
         <decVal/>
+        <label>RAM982</label>
       </variable>
-      <variable label="RAM983" CV="983">
+      <variable item="RAM983" CV="983">
         <decVal/>
+        <label>RAM983</label>
       </variable>
-      <variable label="RAM984" CV="984">
+      <variable item="RAM984" CV="984">
         <decVal/>
+        <label>RAM984</label>
       </variable>
-      <variable label="RAM985" CV="985">
+      <variable item="RAM985" CV="985">
         <decVal/>
+        <label>RAM985</label>
       </variable>
-      <variable label="RAM986" CV="986">
+      <variable item="RAM986" CV="986">
         <decVal/>
+        <label>RAM986</label>
       </variable>
-      <variable label="RAM987" CV="987">
+      <variable item="RAM987" CV="987">
         <decVal/>
+        <label>RAM987</label>
       </variable>
-      <variable label="RAM988" CV="988">
+      <variable item="RAM988" CV="988">
         <decVal/>
+        <label>RAM988</label>
       </variable>
-      <variable label="RAM989" CV="989">
+      <variable item="RAM989" CV="989">
         <decVal/>
+        <label>RAM989</label>
       </variable>
-      <variable label="RAM990" CV="990">
+      <variable item="RAM990" CV="990">
         <decVal/>
+        <label>RAM990</label>
       </variable>
-      <variable label="RAM991" CV="991">
+      <variable item="RAM991" CV="991">
         <decVal/>
+        <label>RAM991</label>
       </variable>
-      <variable label="RAM992" CV="992">
+      <variable item="RAM992" CV="992">
         <decVal/>
+        <label>RAM992</label>
       </variable>
-      <variable label="RAM993" CV="993">
+      <variable item="RAM993" CV="993">
         <decVal/>
+        <label>RAM993</label>
       </variable>
-      <variable label="RAM994" CV="994">
+      <variable item="RAM994" CV="994">
         <decVal/>
+        <label>RAM994</label>
       </variable>
-      <variable label="RAM995" CV="995">
+      <variable item="RAM995" CV="995">
         <decVal/>
+        <label>RAM995</label>
       </variable>
-      <variable label="RAM996" CV="996">
+      <variable item="RAM996" CV="996">
         <decVal/>
+        <label>RAM996</label>
       </variable>
-      <variable label="RAM997" CV="997">
+      <variable item="RAM997" CV="997">
         <decVal/>
+        <label>RAM997</label>
       </variable>
-      <variable label="RAM998" CV="998">
+      <variable item="RAM998" CV="998">
         <decVal/>
+        <label>RAM998</label>
       </variable>
-      <variable label="RAM999" CV="999">
+      <variable item="RAM999" CV="999">
         <decVal/>
+        <label>RAM999</label>
       </variable>
-      <variable label="RAM1000" CV="1000">
+      <variable item="RAM1000" CV="1000">
         <decVal/>
+        <label>RAM1000</label>
       </variable>
-      <variable label="RAM1001" CV="1001">
+      <variable item="RAM1001" CV="1001">
         <decVal/>
+        <label>RAM1001</label>
       </variable>
-      <variable label="RAM1002" CV="1002">
+      <variable item="RAM1002" CV="1002">
         <decVal/>
+        <label>RAM1002</label>
       </variable>
-      <variable label="RAM1003" CV="1003">
+      <variable item="RAM1003" CV="1003">
         <decVal/>
+        <label>RAM1003</label>
       </variable>
-      <variable label="RAM1004" CV="1004">
+      <variable item="RAM1004" CV="1004">
         <decVal/>
+        <label>RAM1004</label>
       </variable>
-      <variable label="RAM1005" CV="1005">
+      <variable item="RAM1005" CV="1005">
         <decVal/>
+        <label>RAM1005</label>
       </variable>
-      <variable label="RAM1006" CV="1006">
+      <variable item="RAM1006" CV="1006">
         <decVal/>
+        <label>RAM1006</label>
       </variable>
-      <variable label="RAM1007" CV="1007">
+      <variable item="RAM1007" CV="1007">
         <decVal/>
+        <label>RAM1007</label>
       </variable>
-      <variable label="RAM1008" CV="1008">
+      <variable item="RAM1008" CV="1008">
         <decVal/>
+        <label>RAM1008</label>
       </variable>
-      <variable label="RAM1009" CV="1009">
+      <variable item="RAM1009" CV="1009">
         <decVal/>
+        <label>RAM1009</label>
       </variable>
-      <variable label="RAM1010" CV="1010">
+      <variable item="RAM1010" CV="1010">
         <decVal/>
+        <label>RAM1010</label>
       </variable>
-      <variable label="RAM1011" CV="1011">
+      <variable item="RAM1011" CV="1011">
         <decVal/>
+        <label>RAM1011</label>
       </variable>
-      <variable label="RAM1012" CV="1012">
+      <variable item="RAM1012" CV="1012">
         <decVal/>
+        <label>RAM1012</label>
       </variable>
-      <variable label="RAM1013" CV="1013">
+      <variable item="RAM1013" CV="1013">
         <decVal/>
+        <label>RAM1013</label>
       </variable>
-      <variable label="RAM1014" CV="1014">
+      <variable item="RAM1014" CV="1014">
         <decVal/>
+        <label>RAM1014</label>
       </variable>
-      <variable label="RAM1015" CV="1015">
+      <variable item="RAM1015" CV="1015">
         <decVal/>
+        <label>RAM1015</label>
       </variable>
-      <variable label="RAM1016" CV="1016">
+      <variable item="RAM1016" CV="1016">
         <decVal/>
+        <label>RAM1016</label>
       </variable>
-      <variable label="RAM1017" CV="1017">
+      <variable item="RAM1017" CV="1017">
         <decVal/>
+        <label>RAM1017</label>
       </variable>
-      <variable label="RAM1018" CV="1018">
+      <variable item="RAM1018" CV="1018">
         <decVal/>
+        <label>RAM1018</label>
       </variable>
-      <variable label="RAM1019" CV="1019">
+      <variable item="RAM1019" CV="1019">
         <decVal/>
+        <label>RAM1019</label>
       </variable>
-      <variable label="RAM1020" CV="1020">
+      <variable item="RAM1020" CV="1020">
         <decVal/>
+        <label>RAM1020</label>
       </variable>
-      <variable label="RAM1021" CV="1021">
+      <variable item="RAM1021" CV="1021">
         <decVal/>
+        <label>RAM1021</label>
       </variable>
-      <variable label="RAM1022" CV="1022">
+      <variable item="RAM1022" CV="1022">
         <decVal/>
+        <label>RAM1022</label>
       </variable>
-      <variable label="RAM1023" CV="1023">
+      <variable item="RAM1023" CV="1023">
         <decVal/>
+        <label>RAM1023</label>
       </variable>
-      <variable label="RAM1024" CV="1024">
+      <variable item="RAM1024" CV="1024">
         <decVal/>
+        <label>RAM1024</label>
       </variable>
     </variables>
     <resets>
       <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane name="AC1">
+  <pane>
+    <name>AC1</name>
     <column>
       <row>
         <column>
@@ -3467,38 +4440,43 @@
 				</display>
           <display item="High Address">
 				</display>
-          <display item="Accessroy Decoder config"/>
+          <display item="Accessory Decoder config"/>
           <separator/>
-          <label label="   To help you manage the current drawn by the servos"/>
-          <label label="      You can limit the number of servos running at once"/>
+          <label>
+            <text>   To help you manage the current drawn by the servos</text>
+          </label>
+          <label>
+            <text>      You can limit the number of servos running at once</text>
+          </label>
           <display item="running servo Limit" tooltip="min 1 max 8"/>
         </column>
       </row>
     </column>
   </pane>
-  <pane name="LOCO OPS mode">
+  <pane>
+    <name>LOCO OPS mode</name>
     <column>
-      <label label="   LOCO OPERATIONS mode programming access for command programmers that don't support accessory decoders">
-        <label/>
+      <label>
+        <text/>
       </label>
       <row>
         <column>
           <display item="LOCO Decoder Address"/>
         </column>
         <column>
-          <label label="  any long or short address of 1 to 16,383">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
       </row>
       <row>
         <column>
           <separator/>
-          <label label="check box to LOCK OUT this LOCO address from OPS mode">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="OR uncheck to allow LOCO address from OPS mode">
-            <label/>
+          <label>
+            <text/>
           </label>
           <display item="LOCO address lock" format="checkbox"/>
           <separator/>
@@ -3509,12 +4487,15 @@
     </column>
   </pane>
   <!--************** 128 byte pane ********************-->
-  <pane name="Index128">
+  <pane>
+    <name>Index128</name>
     <column>
-      <label label="   Indexed 128 byte Window page for animation FLASH program access on older command stations">
-        <label/>
+      <label>
+        <text/>
       </label>
-      <label label="  This was added to allow programmers that limit CVs to 1 to 256 to access the 24K of FLASH "/>
+      <label>
+        <text>  This was added to allow programmers that limit CVs to 1 to 256 to access the 24K of FLASH </text>
+      </label>
       <row>
         <column>
           <display item="Page128index high"/>
@@ -3526,21 +4507,23 @@
           <display item="Page128high half"/>
         </column>
       </row>
-      <label label=" Be sure to 'change' and write changes to the addresses before reading or changing the page"/>
+      <label>
+        <text> Be sure to 'change' and write changes to the addresses before reading or changing the page</text>
+      </label>
       <separator/>
-      <label label="   All numbers in HEX base 16">
-        <label/>
+      <label>
+        <text/>
       </label>
       <separator/>
       <!--************** 128 byte table ********************-->
-      <label label="           0          1          2          3          4          5          6          7          8          9          A          B          C          D          E          F">
-        <label/>
+      <label>
+        <text/>
       </label>
       <separator/>
       <row>
         <column>
-          <label label="00 80">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -3626,8 +4609,8 @@
       </row>
       <row>
         <column>
-          <label label="10 90">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -3713,8 +4696,8 @@
       </row>
       <row>
         <column>
-          <label label="20 A0">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -3800,8 +4783,8 @@
       </row>
       <row>
         <column>
-          <label label="30 B0">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -3887,8 +4870,8 @@
       </row>
       <row>
         <column>
-          <label label="40 C0">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -3974,8 +4957,8 @@
       </row>
       <row>
         <column>
-          <label label="50 D0">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4061,8 +5044,8 @@
       </row>
       <row>
         <column>
-          <label label="60 E0">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4148,8 +5131,8 @@
       </row>
       <row>
         <column>
-          <label label="70 F0">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4236,13 +5219,14 @@
     </column>
   </pane>
   <!--************** 256 byte pane ********************-->
-  <pane name="Index256">
+  <pane>
+    <name>Index256</name>
     <column>
-      <label label="   Indexed 256 byte Window page for animation FLASH program access using NMRA index CV31 and CV32">
-        <label/>
+      <label>
+        <text/>
       </label>
-      <label label="  This gives programmers using NMRA ''indexed pages'' access to the 24K of FLASH ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <row>
         <column>
@@ -4252,22 +5236,26 @@
           <display item="Page256index low"/>
         </column>
       </row>
-      <label label=" Be sure to 'change' and write changes to the addresses before reading or changing the page"/>
-      <label label=" Page256index high MUST always be 10 Hex"/>
-      <separator/>
-      <label label="   All numbers in HEX base 16">
-        <label/>
+      <label>
+        <text> Be sure to 'change' and write changes to the addresses before reading or changing the page</text>
+      </label>
+      <label>
+        <text> Page256index high MUST always be 10 Hex</text>
       </label>
       <separator/>
-      <label label="           0          1          2          3          4          5          6          7          8          9          A          B          C          D          E          F">
-        <label/>
+      <label>
+        <text/>
+      </label>
+      <separator/>
+      <label>
+        <text/>
       </label>
       <separator/>
       <!--************** 256 byte table ********************-->
       <row>
         <column>
-          <label label="00 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4353,8 +5341,8 @@
       </row>
       <row>
         <column>
-          <label label="10 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4440,8 +5428,8 @@
       </row>
       <row>
         <column>
-          <label label="20 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4527,8 +5515,8 @@
       </row>
       <row>
         <column>
-          <label label="30 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4614,8 +5602,8 @@
       </row>
       <row>
         <column>
-          <label label="40 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4701,8 +5689,8 @@
       </row>
       <row>
         <column>
-          <label label="50 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4788,8 +5776,8 @@
       </row>
       <row>
         <column>
-          <label label="60 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4875,8 +5863,8 @@
       </row>
       <row>
         <column>
-          <label label="70 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4962,8 +5950,8 @@
       </row>
       <row>
         <column>
-          <label label="80 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -5049,8 +6037,8 @@
       </row>
       <row>
         <column>
-          <label label="90 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -5136,8 +6124,8 @@
       </row>
       <row>
         <column>
-          <label label="A0 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -5223,8 +6211,8 @@
       </row>
       <row>
         <column>
-          <label label="B0 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -5310,8 +6298,8 @@
       </row>
       <row>
         <column>
-          <label label="C0 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -5397,8 +6385,8 @@
       </row>
       <row>
         <column>
-          <label label="D0 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -5484,8 +6472,8 @@
       </row>
       <row>
         <column>
-          <label label="E0 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -5571,8 +6559,8 @@
       </row>
       <row>
         <column>
-          <label label="F0 ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -5659,10 +6647,15 @@
     </column>
   </pane>
   <!--************** Servo 0 pane ********************-->
-  <pane name="servo 0">
+  <pane>
+    <name>servo 0</name>
     <column>
-      <label label="        Servo 0 setup"/>
-      <label label="       Setup CV33 to CV37"/>
+      <label>
+        <text>        Servo 0 setup</text>
+      </label>
+      <label>
+        <text>       Setup CV33 to CV37</text>
+      </label>
       <row>
         <column>
           <display item="S0MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
@@ -5678,7 +6671,9 @@
         </column>
       </row>
       <separator/>
-      <label label="        Power on defaults for servo"/>
+      <label>
+        <text>        Power on defaults for servo</text>
+      </label>
       <separator/>
       <display item="switch time S0" tooltip="move time in 0.1 seconds"/>
       <display item="motion table S0" tooltip="select one of 16 motion tables"/>
@@ -5691,10 +6686,15 @@
     </column>
   </pane>
   <!--************** Servo 1 pane ********************-->
-  <pane name="servo 1">
+  <pane>
+    <name>servo 1</name>
     <column>
-      <label label="        Servo 1 setup"/>
-      <label label="       Setup CV38 to CV42"/>
+      <label>
+        <text>        Servo 1 setup</text>
+      </label>
+      <label>
+        <text>       Setup CV38 to CV42</text>
+      </label>
       <row>
         <column>
           <display item="S1MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
@@ -5710,7 +6710,9 @@
         </column>
       </row>
       <separator/>
-      <label label="        Power on defaults for servo"/>
+      <label>
+        <text>        Power on defaults for servo</text>
+      </label>
       <separator/>
       <display item="switch time S1" tooltip="move time in 0.1 seconds"/>
       <display item="motion table S1" tooltip="select one of 16 motion tables"/>
@@ -5723,10 +6725,15 @@
     </column>
   </pane>
   <!--************** Servo 2 pane ********************-->
-  <pane name="servo 2">
+  <pane>
+    <name>servo 2</name>
     <column>
-      <label label="        Servo 2 setup"/>
-      <label label="       Setup CV43 to CV47"/>
+      <label>
+        <text>        Servo 2 setup</text>
+      </label>
+      <label>
+        <text>       Setup CV43 to CV47</text>
+      </label>
       <row>
         <column>
           <display item="S2MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
@@ -5742,7 +6749,9 @@
         </column>
       </row>
       <separator/>
-      <label label="        Power on defaults for servo"/>
+      <label>
+        <text>        Power on defaults for servo</text>
+      </label>
       <separator/>
       <display item="switch time S2" tooltip="move time in 0.1 seconds"/>
       <display item="motion table S2" tooltip="select one of 16 motion tables"/>
@@ -5755,10 +6764,15 @@
     </column>
   </pane>
   <!--************** Servo 3 pane ********************-->
-  <pane name="servo 3">
+  <pane>
+    <name>servo 3</name>
     <column>
-      <label label="        Servo 3 setup"/>
-      <label label="       Setup CV48 to CV52"/>
+      <label>
+        <text>        Servo 3 setup</text>
+      </label>
+      <label>
+        <text>       Setup CV48 to CV52</text>
+      </label>
       <row>
         <column>
           <display item="S3MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
@@ -5774,7 +6788,9 @@
         </column>
       </row>
       <separator/>
-      <label label="        Power on defaults for servo"/>
+      <label>
+        <text>        Power on defaults for servo</text>
+      </label>
       <separator/>
       <display item="switch time S3" tooltip="move time in 0.1 seconds"/>
       <display item="motion table S3" tooltip="select one of 16 motion tables"/>
@@ -5787,10 +6803,15 @@
     </column>
   </pane>
   <!--************** Servo 4 pane ********************-->
-  <pane name="servo 4">
+  <pane>
+    <name>servo 4</name>
     <column>
-      <label label="        Servo 4 setup"/>
-      <label label="       Setup CV53 to CV57"/>
+      <label>
+        <text>        Servo 4 setup</text>
+      </label>
+      <label>
+        <text>       Setup CV53 to CV57</text>
+      </label>
       <row>
         <column>
           <display item="S4MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
@@ -5806,7 +6827,9 @@
         </column>
       </row>
       <separator/>
-      <label label="        Power on defaults for servo"/>
+      <label>
+        <text>        Power on defaults for servo</text>
+      </label>
       <separator/>
       <display item="switch time S4" tooltip="move time in 0.1 seconds"/>
       <display item="motion table S4" tooltip="select one of 16 motion tables"/>
@@ -5819,10 +6842,15 @@
     </column>
   </pane>
   <!--************** Servo 5 pane ********************-->
-  <pane name="servo 5">
+  <pane>
+    <name>servo 5</name>
     <column>
-      <label label="        Servo 5 setup"/>
-      <label label="       Setup CV58 to CV62"/>
+      <label>
+        <text>        Servo 5 setup</text>
+      </label>
+      <label>
+        <text>       Setup CV58 to CV62</text>
+      </label>
       <row>
         <column>
           <display item="S5MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
@@ -5838,7 +6866,9 @@
         </column>
       </row>
       <separator/>
-      <label label="        Power on defaults for servo"/>
+      <label>
+        <text>        Power on defaults for servo</text>
+      </label>
       <separator/>
       <display item="switch time S5" tooltip="move time in 0.1 seconds"/>
       <display item="motion table S5" tooltip="select one of 16 motion tables"/>
@@ -5851,10 +6881,15 @@
     </column>
   </pane>
   <!--************** Servo 6 pane ********************-->
-  <pane name="servo 6">
+  <pane>
+    <name>servo 6</name>
     <column>
-      <label label="        Servo 6 setup"/>
-      <label label="       Setup CV63 to CV67"/>
+      <label>
+        <text>        Servo 6 setup</text>
+      </label>
+      <label>
+        <text>       Setup CV63 to CV67</text>
+      </label>
       <row>
         <column>
           <display item="S6MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
@@ -5870,7 +6905,9 @@
         </column>
       </row>
       <separator/>
-      <label label="        Power on defaults for servo"/>
+      <label>
+        <text>        Power on defaults for servo</text>
+      </label>
       <separator/>
       <display item="switch time S6" tooltip="move time in 0.1 seconds"/>
       <display item="motion table S6" tooltip="select one of 16 motion tables"/>
@@ -5883,10 +6920,15 @@
     </column>
   </pane>
   <!--************** Servo 7 pane ********************-->
-  <pane name="servo 7">
+  <pane>
+    <name>servo 7</name>
     <column>
-      <label label="        Servo 7 setup"/>
-      <label label="       Setup CV68 to CV72"/>
+      <label>
+        <text>        Servo 7 setup</text>
+      </label>
+      <label>
+        <text>       Setup CV68 to CV72</text>
+      </label>
       <row>
         <column>
           <display item="S7MINpos" label="Servo minimum position" tooltip="Set lower limit of servo, default 16">
@@ -5902,7 +6944,9 @@
         </column>
       </row>
       <separator/>
-      <label label="        Power on defaults for servo"/>
+      <label>
+        <text>        Power on defaults for servo</text>
+      </label>
       <separator/>
       <display item="switch time S7" tooltip="move time in 0.1 seconds"/>
       <display item="motion table S7" tooltip="select one of 16 motion tables"/>

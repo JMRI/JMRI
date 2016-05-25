@@ -1,6 +1,4 @@
-<?xml version="1.0"?>
-<!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
-
+<?xml version="1.0" encoding="utf-8"?>
 <!-- This file is part of JMRI.  Copyright 2007.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,317 +10,414 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-<programmer-config>
-<!-- $Id$ -->
-		<version author="sip@euronet.nl" 
-			version="1.4" lastUpdated="20031008"/>
-			<!-- Based on the contribution of many others -->
-
-         <!-- Version 1.4 - changed spelling of "behavior" (Jack Shall) -->
-
-					<!-- Notes -->
-
-<programmer decoderFilePanes="yes">
-
-	<pane name="Basic">
-		<column>
-
-			<dccaddress/>
-
-			<label label=" "/>
-			<label label=" "/>
-			<display item="Short Address"/>
-			<display item="Second Short Address"/>
-			<label label=" "/>
-			<display item="Long Address"/>
-			<display item="Second Extended Address #1"/>
-			<display item="Second Extended Address #2"/>
-			<label label=" "/>
-			<display item="Address Format"/>
-			<label label=" "/>
-			<display item="Locomotive Direction"/>
-			<display item="Speed Step Mode"/>
-			<display item="Analog (DC) Operation"/>
-		</column>
-		<column>
-<!--			<display item="Decoder Version"/> -->
-<!-- 			<display item="Manufacturer"/>    -->
-			<label label=" "/>
-			<display item="User Id #1"/>
-			<display item="User Id #2"/>
-			<label label=" "/>
-		</column>
-	</pane>
-	
-	<pane name="Motor">
-		<column>
-			<display item="Acceleration"/>
-			<display item="Deceleration"/>
-			<label label=" "/>
-			<display item="Forward Trim"/>
-			<display item="Reverse Trim"/>
-			<label label=" "/>
-			<display item="Total PWM Period" tooltip="read manual"/>
-			<separator/>
-			<display item="PWM period 16/32kHz" tooltip="read manual"/>
-		</column>
-		
-		<column>
-			<display item="Acceleration Adjustment" />
-			<display item="Acceleration Adjustment Sign"/>
-			<display item="Deceleration Adjustment" />
-			<display item="Deceleration Adjustment Sign" />
-			<label label=" "/>
-			<display item="Exponential Acceleration"/>
-			<display item="Exponential Deceleration"/>
-			<display item="Adaption Acceleration/Deceleration"/>
-		</column>
-
-		<column>
-			<display item="EMF Feedback Cutoff"/>
-			<display item="Volume EMF Feedback Cutoff"/>
-			<display item="BEMF Pull"/>
-			<label label=" "/>
-			<display item="P/I adjustment"/>
-			<display item="Adjust EMK Voltage"/>
-		</column>
-	</pane>
-	
-	<pane name="Speed Control">
-		<column>
-			<display item="Speed Table Definition" 
-					format="offradiobutton" layout="above" label=""/>
-			<row>
-				<column>
-					<display item="Vstart" layout="below" format="vslider" label=""/>
-					<display item="Vstart" layout="above"/>
-				</column>
-				<column>
-					<display item="Vmid" layout="below" format="vslider" label=""/>
-					<display item="Vmid" layout="above"/>
-				</column>
-				<column>
-					<display item="Vhigh" layout="below" format="vslider" label=""/>
-					<display item="Vhigh" layout="above"/>
-				</column>
-			</row>
-		</column>
-		<column>
-			<display item="Speed Table Definition" 
-					format="onradiobutton" layout="above" label=""/>
-			<display item="Speed Table" layout="above" label=""/>
-		</column>
-	</pane>
-
-	<pane name="Function/Output Map">
-		<column>
-			<fnmapping/>
-		</column>
-	</pane>
-
-	<pane name="Output Handling">
-		<column>
-			<display item="Output Reduction" layout="below" format="vslider" label="" />
-			<display item="Output Reduction" layout="below" tooltip="0 and 255 no output reduction" />
-		</column>
-		<column>
-			<label label="Dim Outputs" />
-			<separator/>
-			<display item="Dim Output 1" format="checkbox" label="Output 1" />
-			<display item="Dim Output 2" format="checkbox" label="Output 2" />
-			<display item="Dim Output 3" format="checkbox" label="Output 3" />
-			<display item="Dim Output 4" format="checkbox" label="Output 4" />
-			<display item="Dim Output 5" format="checkbox" label="Output 5" />
-			<display item="Dim Output 6" format="checkbox" label="Output 6" />
-			<display item="Dim Output 7" format="checkbox" label="Output 7" />
-			<display item="Dim Output 8" format="checkbox" label="Output 8" />
-		</column>
-		<column>
-			<label label="Individual Dim Values" />
-			<separator/>
-			<display item="Value Dim Output 1" label="Output 1"/>
-			<display item="Value Dim Output 2" label="Output 2"/>
-			<display item="Value Dim Output 3" label="Output 3"/>
-			<display item="Value Dim Output 4" label="Output 4"/>
-			<display item="Value Dim Output 5" label="Output 5"/>
-			<display item="Value Dim Output 6" label="Output 6"/>
-			<display item="Value Dim Output 7" label="Output 7"/>
-			<display item="Value Dim Output 8" label="Output 8"/>
-		</column>
-		<column>
-			<label label="F-6 Key Dims Outputs" />
-			<separator/>
-			<display item="F6 key dims Output 1" format="checkbox" label="Output 1" />
-			<display item="F6 key dims Output 2" format="checkbox" label="Output 2" />
-			<display item="F6 key dims Output 3" format="checkbox" label="Output 3" />
-			<display item="F6 key dims Output 4" format="checkbox" label="Output 4" />
-			<display item="F6 key dims Output 5" format="checkbox" label="Output 5" />
-			<display item="F6 key dims Output 6" format="checkbox" label="Output 6" />
-			<display item="F6 key inverted" format="checkbox" label="F-6 Key inverted" />
-			<label label=" "/>
-			<label label="F-7 Key Dims Outputs" />
-			<separator/>
-			<display item="F7 key dims Output 1" format="checkbox" label="Output 1" />
-			<display item="F7 key dims Output 2" format="checkbox" label="Output 2" />
-			<display item="F7 key dims Output 3" format="checkbox" label="Output 3" />
-			<display item="F7 key dims Output 4" format="checkbox" label="Output 4" />
-			<display item="F7 key dims Output 5" format="checkbox" label="Output 5" />
-			<display item="F7 key dims Output 6" format="checkbox" label="Output 6" />
-			<display item="F7 key inverted" format="checkbox" label="F-7 Key inverted" />
-		</column>
-	</pane>
-
-	<pane name="Lights">
-		<column>
-			<display item="Light Effects Output 1"/>
-			<display item="Output 1 behavior"/>
-			<label label=" "/>
-			<display item="Light Effects Output 2"/>
-			<display item="Output 2 behavior"/>
-			<label label=" "/>
-			<display item="Light Effects Output 3"/>
-			<display item="Output 3 behavior"/>
-			<label label=" "/>
-			<display item="Light Effects Output 4"/>
-			<display item="Output 4 behavior"/>
-			<label label=" "/>
-			<display item="Light Effects Output 5"/>
-			<display item="Output 5 behavior"/>
-			<label label=" "/>
-			<display item="Light Effects Output 6"/>
-			<display item="Output 6 behavior"/>
-			</column>
-			<column>
-			<label label="Light Effect Modifications"/>
-			<separator/> 
-			<label label=" " />
-			<display item="Minimum Dim Value"/>
-			<display item="Cycle Time"/>
-			<display item="Ditch Light Off Time"/>
-			</column>
-			<column>
-			<label label="          Blink Outputs" />
-			<separator/>
-			<label label=" " />
-			<display item="Blink Rate" />
-			<label label=" " />
-			<display item="Flash Light Output 1" format="checkbox" label="Output 1" />
-			<display item="Flash Light Output 2" format="checkbox" label="Output 2" />
-			<display item="Flash Light Output 3" format="checkbox" label="Output 3" />
-			<display item="Flash Light Output 4" format="checkbox" label="Output 4" />
-			<display item="Flash Light Output 5" format="checkbox" label="Output 5" />
-			<display item="Flash Light Output 6" format="checkbox" label="Output 6" />
-			<display item="Flash Light Inverted Output 3" format="checkbox" label="Inverted Output 3" />
-			<display item="Flash Light Inverted Output 4" format="checkbox" label="Inverted Output 4" />
-			<display item="Flash Light Inverted Output 6" format="checkbox" label="Inverted Output 6" />
-		</column>
-	</pane>
-
-	<pane name="Consist">
-		<column>
-			<display item="Consist Address" />
-			<label label=" "/>
-			<separator/>
-			<label label="Will decoder respond to function requests at consist address?"/>
-			<separator/>
-			<label label=" " />
-			<display item="Consist Address Active For FL in Forward" />
-			<display item="Consist Address Active For FL in Reverse" />
-			<display item="Consist Address Active For F1" />
-			<display item="Consist Address Active For F2" />
-			<display item="Consist Address Active For F3" />
-			<display item="Consist Address Active For F4" />
-			<display item="Consist Address Active For F5" />
-			<display item="Consist Address Active For F6" />
-			<display item="Consist Address Active For F7" />
-			<display item="Consist Address Active For F8" />
-		</column>
-	</pane>
-	
-	<pane name="Advanced">
-		<column>
-			<display item="Shunting Usage"/>
-			<display item="Shunt Function Key"/>
-			<display item="Half Speed (F-7)"/>
-			<display item="Half Speed (F-3)"/>
-
-			<label label=" "/>
-			<display item="Special Function Usage" tooltip="see manual"/>
-		</column>
-		<column>
-			<label label="      Coupler Data" />
-			<separator/>
-			<label label=" " />
-			<display item="Coupler Control" tooltip="tens (0-9):
- time for full voltage pulse, units (0-9): percentage (0-90 %) of track voltage
- for permanent operation. Read manual; timing depends on model and version"/>
-			<label label=" " />
-			<display item="Coupler Output 1" format="checkbox" label="Output 1" />
-			<display item="Coupler Output 2" format="checkbox" label="Output 2" />
-			<display item="Coupler Output 3" format="checkbox" label="Output 3" />
-			<display item="Coupler Output 4" format="checkbox" label="Output 4" />
-			<display item="Coupler Output 5" format="checkbox" label="Output 5" />
-			<display item="Coupler Output 6" format="checkbox" label="Output 6" />
-		</column>
-		<column>
-			<label label="Analog Mode Functions" />
-			<separator/>
-			<label label=" " />
-			<display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>			
-			<display item="Analog Mode Function Status - F2" format="checkbox" label="F-2"/>			
-			<display item="Analog Mode Function Status - F3" format="checkbox" label="F-3"/>			
-			<display item="Analog Mode Function Status - F4" format="checkbox" label="F-4"/>			
-			<display item="Analog Mode Function Status - F5" format="checkbox" label="F-5"/>			
-			<display item="Analog Mode Function Status - F6" format="checkbox" label="F-6"/>			
-			<row>
-			<display item="Analog Mode Function Status - F7" format="checkbox" label="F-7"/>			
-			<label label=" " />
-			<label label="         DC behavior" />
-			</row>
-			<row>
-			<display item="Analog Mode Function Status - F8" format="checkbox" label="F-8"/>			
-			<label label=" " />
-			<label label="         Headlights" />
-			</row>
-		</column>
-	</pane>
-	
-	<pane name="CVs">
-		<column>
-			<cvtable/>
-		</column>
-	</pane>
-
-	<pane name="Zimo Specific">
-		<column>
-			<display item="Signal Dependent Acceleration" />
-			<display item="Signal Dependent Deceleration" />
-			<display item="Signal Dependent Reaction Time" />
-		</column>
-	
-		<column>
-			<display item="Engine Braking" /> 
-			<display item="Address Pulse" />
-			<display item="NMRA" />
-			<display item="Short/Long Second Address" />
-			<display item="Pulse Chain LGB" />
-			<display item="Boolean Matrix" />
-			<display item="Measurement 1/4" />
-			<display item="Pulse Chain LGB sounds" />
-		</column>
-	
-		<column>
-			<label label="Signal Dependent Speed Limits" />
-			<separator />
-			<label label=" " /> 
-			<display item="-1-" label="             -1-" />
-			<display item="-U-" />
-			<display item="-2-" />
-			<display item="-L-" />
-			<display item="-3-" />
-		</column>
-	</pane>
-
-</programmer>
+<programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <!-- $Id$ -->
+  <version author="sip@euronet.nl" version="1.4" lastUpdated="20031008"/>
+  <!-- Based on the contribution of many others -->
+  <!-- Version 1.4 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Notes -->
+  <programmer decoderFilePanes="yes" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
+    <pane>
+      <name>Basic</name>
+      <column>
+        <dccaddress/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Short Address"/>
+        <display item="Second Short Address"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Long Address"/>
+        <display item="Second Extended Address #1"/>
+        <display item="Second Extended Address #2"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Address Format"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Locomotive Direction"/>
+        <display item="Speed Step Mode"/>
+        <display item="Analog (DC) Operation"/>
+      </column>
+      <column>
+        <!--			<display item="Decoder Version"/> -->
+        <!-- 			<display item="Manufacturer"/>    -->
+        <label>
+          <text> </text>
+        </label>
+        <display item="User Id #1"/>
+        <display item="User Id #2"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <name xml:lang="it">Basic</name>
+    </pane>
+    <pane>
+      <name>Motor</name>
+      <column>
+        <display item="Acceleration"/>
+        <display item="Deceleration"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Forward Trim"/>
+        <display item="Reverse Trim"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Total PWM Period" tooltip="read manual">
+          <tooltip xml:lang="it">Riferirsi al manuale</tooltip>
+        </display>
+        <separator/>
+        <display item="PWM period 16/32kHz" tooltip="read manual">
+          <tooltip xml:lang="it">Riferirsi al manuale</tooltip>
+        </display>
+      </column>
+      <column>
+        <display item="Acceleration Adjustment"/>
+        <display item="Acceleration Adjustment Sign"/>
+        <display item="Deceleration Adjustment"/>
+        <display item="Deceleration Adjustment Sign"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Exponential Acceleration"/>
+        <display item="Exponential Deceleration"/>
+        <display item="Adaption Acceleration/Deceleration"/>
+      </column>
+      <column>
+        <display item="EMF Feedback Cutoff"/>
+        <display item="Volume EMF Feedback Cutoff"/>
+        <display item="BEMF Pull"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="P/I adjustment"/>
+        <display item="Adjust EMK Voltage"/>
+      </column>
+      <name xml:lang="it">Motore</name>
+    </pane>
+    <pane>
+      <name>Speed Control</name>
+      <column>
+        <display item="Speed Table Definition" format="offradiobutton" layout="above" label=""/>
+        <row>
+          <column>
+            <display item="Vstart" layout="below" format="vslider" label=""/>
+            <display item="Vstart" layout="above"/>
+          </column>
+          <column>
+            <display item="Vmid" layout="below" format="vslider" label=""/>
+            <display item="Vmid" layout="above"/>
+          </column>
+          <column>
+            <display item="Vhigh" layout="below" format="vslider" label=""/>
+            <display item="Vhigh" layout="above"/>
+          </column>
+        </row>
+      </column>
+      <column>
+        <display item="Speed Table Definition" format="onradiobutton" layout="above" label=""/>
+        <display item="Speed Table" layout="above" label=""/>
+      </column>
+      <name xml:lang="it">Controllo Velocità</name>
+    </pane>
+    <pane>
+      <name>Function/Output Map</name>
+      <column>
+        <fnmapping/>
+      </column>
+      <name xml:lang="it">Mappa Funzioni/uscite</name>
+    </pane>
+    <pane>
+      <name>Output Handling</name>
+      <column>
+        <display item="Output Reduction" layout="below" format="vslider" label=""/>
+        <display item="Output Reduction" layout="below" tooltip="0 and 255 no output reduction">
+          <tooltip xml:lang="it">0 e 255 nessuna riduzione</tooltip>
+        </display>
+      </column>
+      <column>
+        <label>
+          <text>Dim Outputs</text>
+          <text xml:lang="it">Smorzamento Uscite</text>
+        </label>
+        <separator/>
+        <display item="Dim Output 1" format="checkbox" label="Output 1"/>
+        <display item="Dim Output 2" format="checkbox" label="Output 2"/>
+        <display item="Dim Output 3" format="checkbox" label="Output 3"/>
+        <display item="Dim Output 4" format="checkbox" label="Output 4"/>
+        <display item="Dim Output 5" format="checkbox" label="Output 5"/>
+        <display item="Dim Output 6" format="checkbox" label="Output 6"/>
+        <display item="Dim Output 7" format="checkbox" label="Output 7"/>
+        <display item="Dim Output 8" format="checkbox" label="Output 8"/>
+      </column>
+      <column>
+        <label>
+          <text>Individual Dim Values</text>
+          <text xml:lang="it">Valori Individuali di Smorzamento</text>
+        </label>
+        <separator/>
+        <display item="Value Dim Output 1" label="Output 1"/>
+        <display item="Value Dim Output 2" label="Output 2"/>
+        <display item="Value Dim Output 3" label="Output 3"/>
+        <display item="Value Dim Output 4" label="Output 4"/>
+        <display item="Value Dim Output 5" label="Output 5"/>
+        <display item="Value Dim Output 6" label="Output 6"/>
+        <display item="Value Dim Output 7" label="Output 7"/>
+        <display item="Value Dim Output 8" label="Output 8"/>
+      </column>
+      <column>
+        <label>
+          <text>F-6 Key Dims Outputs</text>
+          <text xml:lang="it">F6 Smorzamento Uscite</text>
+        </label>
+        <separator/>
+        <display item="F6 key dims Output 1" format="checkbox" label="Output 1"/>
+        <display item="F6 key dims Output 2" format="checkbox" label="Output 2"/>
+        <display item="F6 key dims Output 3" format="checkbox" label="Output 3"/>
+        <display item="F6 key dims Output 4" format="checkbox" label="Output 4"/>
+        <display item="F6 key dims Output 5" format="checkbox" label="Output 5"/>
+        <display item="F6 key dims Output 6" format="checkbox" label="Output 6"/>
+        <display item="F6 key inverted" format="checkbox" label="F-6 Key inverted"/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>F-7 Key Dims Outputs</text>
+          <text xml:lang="it">F7 Smorzamento Uscite</text>
+        </label>
+        <separator/>
+        <display item="F7 key dims Output 1" format="checkbox" label="Output 1"/>
+        <display item="F7 key dims Output 2" format="checkbox" label="Output 2"/>
+        <display item="F7 key dims Output 3" format="checkbox" label="Output 3"/>
+        <display item="F7 key dims Output 4" format="checkbox" label="Output 4"/>
+        <display item="F7 key dims Output 5" format="checkbox" label="Output 5"/>
+        <display item="F7 key dims Output 6" format="checkbox" label="Output 6"/>
+        <display item="F7 key inverted" format="checkbox" label="F-7 Key inverted"/>
+      </column>
+      <name xml:lang="it">Gestione Uscite</name>
+    </pane>
+    <pane>
+      <name>Lights</name>
+      <column>
+        <display item="Light Effects Output 1"/>
+        <display item="Output 1 behavior"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Light Effects Output 2"/>
+        <display item="Output 2 behavior"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Light Effects Output 3"/>
+        <display item="Output 3 behavior"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Light Effects Output 4"/>
+        <display item="Output 4 behavior"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Light Effects Output 5"/>
+        <display item="Output 5 behavior"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Light Effects Output 6"/>
+        <display item="Output 6 behavior"/>
+      </column>
+      <column>
+        <label>
+          <text>Light Effect Modifications</text>
+          <text xml:lang="it">Light Effect Modifications</text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Minimum Dim Value"/>
+        <display item="Cycle Time"/>
+        <display item="Ditch Light Off Time"/>
+      </column>
+      <column>
+        <label>
+          <text>          Blink Outputs</text>
+          <text xml:lang="it">          Uscite Lampeggianti</text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Blink Rate"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Flash Light Output 1" format="checkbox" label="Output 1"/>
+        <display item="Flash Light Output 2" format="checkbox" label="Output 2"/>
+        <display item="Flash Light Output 3" format="checkbox" label="Output 3"/>
+        <display item="Flash Light Output 4" format="checkbox" label="Output 4"/>
+        <display item="Flash Light Output 5" format="checkbox" label="Output 5"/>
+        <display item="Flash Light Output 6" format="checkbox" label="Output 6"/>
+        <display item="Flash Light Inverted Output 3" format="checkbox" label="Inverted Output 3"/>
+        <display item="Flash Light Inverted Output 4" format="checkbox" label="Inverted Output 4"/>
+        <display item="Flash Light Inverted Output 6" format="checkbox" label="Inverted Output 6"/>
+      </column>
+      <name xml:lang="it">Luci</name>
+    </pane>
+    <pane>
+      <name>Consist</name>
+      <column>
+        <display item="Consist Address"/>
+        <label>
+          <text> </text>
+        </label>
+        <separator/>
+        <label>
+          <text>Will decoder respond to function requests at consist address?</text>
+          <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Consist Address Active For FL in Forward"/>
+        <display item="Consist Address Active For FL in Reverse"/>
+        <display item="Consist Address Active For F1"/>
+        <display item="Consist Address Active For F2"/>
+        <display item="Consist Address Active For F3"/>
+        <display item="Consist Address Active For F4"/>
+        <display item="Consist Address Active For F5"/>
+        <display item="Consist Address Active For F6"/>
+        <display item="Consist Address Active For F7"/>
+        <display item="Consist Address Active For F8"/>
+      </column>
+      <name xml:lang="it">Consist</name>
+    </pane>
+    <pane>
+      <name>Advanced</name>
+      <column>
+        <display item="Shunting Usage"/>
+        <display item="Shunt Function Key"/>
+        <display item="Half Speed (F-7)"/>
+        <display item="Half Speed (F-3)"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Special Function Usage" tooltip="see manual">
+          <tooltip xml:lang="it">Riferirsi al manuale</tooltip>
+        </display>
+      </column>
+      <column>
+        <label>
+          <text>      Coupler Data</text>
+          <text xml:lang="it">      Dati Gangio</text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Coupler Control" tooltip="tens (0-9):  time for full voltage pulse, units (0-9): percentage (0-90 %) of track voltage  for permanent operation. Read manual; timing depends on model and version">
+          <tooltip xml:lang="it">decine (0-9):  tempo impulso voltaggio massimo, unità (0-9): percentuale (0-90 %) della tensione al binario per oprazioni permanenti. Riferirsi al manuale; I tempi dipendono da modello e versione</tooltip>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Coupler Output 1" format="checkbox" label="Output 1"/>
+        <display item="Coupler Output 2" format="checkbox" label="Output 2"/>
+        <display item="Coupler Output 3" format="checkbox" label="Output 3"/>
+        <display item="Coupler Output 4" format="checkbox" label="Output 4"/>
+        <display item="Coupler Output 5" format="checkbox" label="Output 5"/>
+        <display item="Coupler Output 6" format="checkbox" label="Output 6"/>
+      </column>
+      <column>
+        <label>
+          <text>Analog Mode Functions</text>
+          <text xml:lang="it">Funzioni in Analogico</text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>
+        <display item="Analog Mode Function Status - F2" format="checkbox" label="F-2"/>
+        <display item="Analog Mode Function Status - F3" format="checkbox" label="F-3"/>
+        <display item="Analog Mode Function Status - F4" format="checkbox" label="F-4"/>
+        <display item="Analog Mode Function Status - F5" format="checkbox" label="F-5"/>
+        <display item="Analog Mode Function Status - F6" format="checkbox" label="F-6"/>
+        <row>
+          <display item="Analog Mode Function Status - F7" format="checkbox" label="F-7"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>         DC behavior</text>
+            <text xml:lang="it">         Comportamento in DC</text>
+          </label>
+        </row>
+        <row>
+          <display item="Analog Mode Function Status - F8" format="checkbox" label="F-8"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>         Headlights</text>
+            <text xml:lang="it">         Luci</text>
+          </label>
+        </row>
+      </column>
+      <name xml:lang="it">Avanzato</name>
+    </pane>
+    <pane>
+      <name>CVs</name>
+      <column>
+        <cvtable/>
+      </column>
+      <name xml:lang="it">CV</name>
+    </pane>
+    <pane>
+      <name>Zimo Specific</name>
+      <column>
+        <display item="Signal Dependent Acceleration"/>
+        <display item="Signal Dependent Deceleration"/>
+        <display item="Signal Dependent Reaction Time"/>
+      </column>
+      <column>
+        <display item="Engine Braking"/>
+        <display item="Address Pulse"/>
+        <display item="NMRA"/>
+        <display item="Short/Long Second Address"/>
+        <display item="Pulse Chain LGB"/>
+        <display item="Boolean Matrix"/>
+        <display item="Measurement 1/4"/>
+        <display item="Pulse Chain LGB sounds"/>
+      </column>
+      <column>
+        <label>
+          <text>Signal Dependent Speed Limits</text>
+          <text xml:lang="it">Limiti velocità dipendenti da Seganle</text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="-1-" label="             -1-"/>
+        <display item="-U-"/>
+        <display item="-2-"/>
+        <display item="-L-"/>
+        <display item="-3-"/>
+      </column>
+      <name xml:lang="it">Specifiche Zimo</name>
+    </pane>
+  </programmer>
 </programmer-config>

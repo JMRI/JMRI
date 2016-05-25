@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
-<!-- $Id:  $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,30 +12,293 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - for Unified Software -->
-
-
-<pane name="Volume Level 2">
-	<column>
-		<row>
-			<column>
-				<label label="   "/>
-				<label label="Must have JMRI 3.3.6 or later."/>
-				<label label="   "/>
-				<label label="To set individual sound volume to level 2"/>
-				<label label="Pick sound group (high byte) first then from list of sounds of just that group"/>
-				<label label="Then press Write full sheet"/>
-				<label label="Repeat for other sounds"/>
-				<label label="To change to different volume level, choose different Volume Level tab"/>
-				<label label="   "/>
-				<display item="Volume Level 2" />
-				<display item="Volume Level 2 0" label=""/>
-				<display item="Volume Level 2 1" label="" />
-				<display item="Volume Level 2 255" label="" />
-			</column>
-		</row>
-	</column>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Individual Volume 2</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Must have JMRI 3.9.5 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
+        </label>
+        <label>
+          <text>Recommend to change volume groups, if available, rather than these</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+		</column>
+    </row>
+    <row>
+      <column>
+        <display item="Volume 2-0"/>
+        <display item="Volume 2-1"/>
+        <display item="Volume 2-2"/>
+        <display item="Volume 2-3"/>
+        <display item="Volume 2-4"/>
+        <display item="Volume 2-5"/>
+        <display item="Volume 2-6"/>
+        <display item="Volume 2-7"/>
+        <display item="Volume 2-8"/>
+        <display item="Volume 2-9"/>
+        <display item="Volume 2-10"/>
+        <display item="Volume 2-11"/>
+        <display item="Volume 2-12"/>
+        <display item="Volume 2-13"/>
+        <display item="Volume 2-14"/>
+        <display item="Volume 2-15"/>
+        <display item="Volume 2-16"/>
+        <display item="Volume 2-17"/>
+        <display item="Volume 2-18"/>
+        <display item="Volume 2-19"/>
+        <display item="Volume 2-20"/>
+        <display item="Volume 2-21"/>
+        <display item="Volume 2-22"/>
+        <display item="Volume 2-23"/>
+        <display item="Volume 2-24"/>
+        <display item="Volume 2-25"/>
+        <display item="Volume 2-26"/>
+        <display item="Volume 2-27"/>
+        <display item="Volume 2-28"/>
+        <display item="Volume 2-29"/>
+        <display item="Volume 2-30"/>
+        <display item="Volume 2-31"/>
+        <display item="Volume 2-32"/>
+        <display item="Volume 2-33"/>
+        <display item="Volume 2-34"/>
+        <display item="Volume 2-35"/>
+        <display item="Volume 2-36"/>
+        <display item="Volume 2-37"/>
+        <display item="Volume 2-38"/>
+        <display item="Volume 2-39"/>
+        <display item="Volume 2-40"/>
+        <display item="Volume 2-41"/>
+        <display item="Volume 2-42"/>
+        <display item="Volume 2-43"/>
+        <display item="Volume 2-44"/>
+        <display item="Volume 2-45"/>
+        <display item="Volume 2-46"/>
+        <display item="Volume 2-47"/>
+        <display item="Volume 2-48"/>
+        <display item="Volume 2-49"/>
+        <display item="Volume 2-50"/>
+        <display item="Volume 2-51"/>
+        <display item="Volume 2-52"/>
+        <display item="Volume 2-53"/>
+        <display item="Volume 2-54"/>
+        <display item="Volume 2-55"/>
+        <display item="Volume 2-56"/>
+        <display item="Volume 2-57"/>
+        <display item="Volume 2-58"/>
+        <display item="Volume 2-59"/>
+        <display item="Volume 2-60"/>
+        <display item="Volume 2-61"/>
+        <display item="Volume 2-62"/>
+        <display item="Volume 2-63"/>
+      </column>               
+      <column>                
+        <display item="Volume 2-64"/>
+        <display item="Volume 2-65"/>
+        <display item="Volume 2-66"/>
+        <display item="Volume 2-67"/>
+        <display item="Volume 2-68"/>
+        <display item="Volume 2-69"/>
+        <display item="Volume 2-70"/>
+        <display item="Volume 2-71"/>
+        <display item="Volume 2-72"/>
+        <display item="Volume 2-73"/>
+        <display item="Volume 2-74"/>
+        <display item="Volume 2-75"/>
+        <display item="Volume 2-76"/>
+        <display item="Volume 2-77"/>
+        <display item="Volume 2-78"/>
+        <display item="Volume 2-79"/>
+        <display item="Volume 2-80"/>
+        <display item="Volume 2-81"/>
+        <display item="Volume 2-82"/>
+        <display item="Volume 2-83"/>
+        <display item="Volume 2-84"/>
+        <display item="Volume 2-85"/>
+        <display item="Volume 2-86"/>
+        <display item="Volume 2-87"/>
+        <display item="Volume 2-88"/>
+        <display item="Volume 2-89"/>
+        <display item="Volume 2-90"/>
+        <display item="Volume 2-91"/>
+        <display item="Volume 2-92"/>
+        <display item="Volume 2-93"/>
+        <display item="Volume 2-94"/>
+        <display item="Volume 2-95"/>
+        <display item="Volume 2-96"/>
+        <display item="Volume 2-97"/>
+        <display item="Volume 2-98"/>
+        <display item="Volume 2-99"/>
+        <display item="Volume 2-100"/>
+        <display item="Volume 2-101"/>
+        <display item="Volume 2-102"/>
+        <display item="Volume 2-103"/>
+        <display item="Volume 2-104"/>
+        <display item="Volume 2-105"/>
+        <display item="Volume 2-106"/>
+        <display item="Volume 2-107"/>
+        <display item="Volume 2-108"/>
+        <display item="Volume 2-109"/>
+        <display item="Volume 2-110"/>
+        <display item="Volume 2-111"/>
+        <display item="Volume 2-112"/>
+        <display item="Volume 2-113"/>
+        <display item="Volume 2-114"/>
+        <display item="Volume 2-115"/>
+        <display item="Volume 2-116"/>
+        <display item="Volume 2-117"/>
+        <display item="Volume 2-118"/>
+        <display item="Volume 2-119"/>
+        <display item="Volume 2-120"/>
+        <display item="Volume 2-121"/>
+        <display item="Volume 2-122"/>
+        <display item="Volume 2-123"/>
+        <display item="Volume 2-124"/>
+        <display item="Volume 2-125"/>
+        <display item="Volume 2-126"/>
+        <display item="Volume 2-127"/>
+      </column>               
+      <column>                
+        <display item="Volume 2-128"/>
+        <display item="Volume 2-129"/>
+        <display item="Volume 2-130"/>
+        <display item="Volume 2-131"/>
+        <display item="Volume 2-132"/>
+        <display item="Volume 2-133"/>
+        <display item="Volume 2-134"/>
+        <display item="Volume 2-135"/>
+        <display item="Volume 2-136"/>
+        <display item="Volume 2-137"/>
+        <display item="Volume 2-138"/>
+        <display item="Volume 2-139"/>
+        <display item="Volume 2-140"/>
+        <display item="Volume 2-141"/>
+        <display item="Volume 2-142"/>
+        <display item="Volume 2-143"/>
+        <display item="Volume 2-144"/>
+        <display item="Volume 2-145"/>
+        <display item="Volume 2-146"/>
+        <display item="Volume 2-147"/>
+        <display item="Volume 2-148"/>
+        <display item="Volume 2-149"/>
+        <display item="Volume 2-150"/>
+        <display item="Volume 2-151"/>
+        <display item="Volume 2-152"/>
+        <display item="Volume 2-153"/>
+        <display item="Volume 2-154"/>
+        <display item="Volume 2-155"/>
+        <display item="Volume 2-156"/>
+        <display item="Volume 2-157"/>
+        <display item="Volume 2-158"/>
+        <display item="Volume 2-159"/>
+        <display item="Volume 2-160"/>
+        <display item="Volume 2-161"/>
+        <display item="Volume 2-162"/>
+        <display item="Volume 2-163"/>
+        <display item="Volume 2-164"/>
+        <display item="Volume 2-165"/>
+        <display item="Volume 2-166"/>
+        <display item="Volume 2-167"/>
+        <display item="Volume 2-168"/>
+        <display item="Volume 2-169"/>
+        <display item="Volume 2-170"/>
+        <display item="Volume 2-171"/>
+        <display item="Volume 2-172"/>
+        <display item="Volume 2-173"/>
+        <display item="Volume 2-174"/>
+        <display item="Volume 2-175"/>
+        <display item="Volume 2-176"/>
+        <display item="Volume 2-177"/>
+        <display item="Volume 2-178"/>
+        <display item="Volume 2-179"/>
+        <display item="Volume 2-180"/>
+        <display item="Volume 2-181"/>
+        <display item="Volume 2-182"/>
+        <display item="Volume 2-183"/>
+        <display item="Volume 2-184"/>
+        <display item="Volume 2-185"/>
+        <display item="Volume 2-186"/>
+        <display item="Volume 2-187"/>
+        <display item="Volume 2-188"/>
+        <display item="Volume 2-189"/>
+        <display item="Volume 2-190"/>
+        <display item="Volume 2-191"/>
+      </column>               
+      <column>                
+        <display item="Volume 2-192"/>
+        <display item="Volume 2-193"/>
+        <display item="Volume 2-194"/>
+        <display item="Volume 2-195"/>
+        <display item="Volume 2-196"/>
+        <display item="Volume 2-197"/>
+        <display item="Volume 2-198"/>
+        <display item="Volume 2-199"/>
+        <display item="Volume 2-200"/>
+        <display item="Volume 2-201"/>
+        <display item="Volume 2-202"/>
+        <display item="Volume 2-203"/>
+        <display item="Volume 2-204"/>
+        <display item="Volume 2-205"/>
+        <display item="Volume 2-206"/>
+        <display item="Volume 2-207"/>
+        <display item="Volume 2-208"/>
+        <display item="Volume 2-209"/>
+        <display item="Volume 2-210"/>
+        <display item="Volume 2-211"/>
+        <display item="Volume 2-212"/>
+        <display item="Volume 2-213"/>
+        <display item="Volume 2-214"/>
+        <display item="Volume 2-215"/>
+        <display item="Volume 2-216"/>
+        <display item="Volume 2-217"/>
+        <display item="Volume 2-218"/>
+        <display item="Volume 2-219"/>
+        <display item="Volume 2-220"/>
+        <display item="Volume 2-221"/>
+        <display item="Volume 2-222"/>
+        <display item="Volume 2-223"/>
+        <display item="Volume 2-224"/>
+        <display item="Volume 2-225"/>
+        <display item="Volume 2-226"/>
+        <display item="Volume 2-227"/>
+        <display item="Volume 2-228"/>
+        <display item="Volume 2-229"/>
+        <display item="Volume 2-230"/>
+        <display item="Volume 2-231"/>
+        <display item="Volume 2-232"/>
+        <display item="Volume 2-233"/>
+        <display item="Volume 2-234"/>
+        <display item="Volume 2-235"/>
+        <display item="Volume 2-236"/>
+        <display item="Volume 2-237"/>
+        <display item="Volume 2-238"/>
+        <display item="Volume 2-239"/>
+        <display item="Volume 2-240"/>
+        <display item="Volume 2-241"/>
+        <display item="Volume 2-242"/>
+        <display item="Volume 2-243"/>
+        <display item="Volume 2-244"/>
+        <display item="Volume 2-245"/>
+        <display item="Volume 2-246"/>
+        <display item="Volume 2-247"/>
+        <display item="Volume 2-248"/>
+        <display item="Volume 2-249"/>
+        <display item="Volume 2-250"/>
+        <display item="Volume 2-251"/>
+        <display item="Volume 2-252"/>
+        <display item="Volume 2-253"/>
+        <display item="Volume 2-254"/>
+        <display item="Volume 2-255"/>
+      </column>
+    </row>
+  </column>
+  <name xml:lang="it">Volume Livello 0</name>
 </pane>
-

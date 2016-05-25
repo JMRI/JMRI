@@ -1,16 +1,14 @@
 package jmri.jmrix.loconet.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrix.loconet.SE8cSignalHead;
-
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
-
-import java.util.List;
-import org.jdom.DataConversionException;
-import org.jdom.Element;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for loconet.SE8cSignalHead objects.
@@ -24,13 +22,13 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
     }
 
     /**
-     * Default implementation for storing the contents of a
-     * SE8cSignalHead
+     * Default implementation for storing the contents of a SE8cSignalHead
+     *
      * @param o Object to store, of type SE8cSignalHead
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        SE8cSignalHead p = (SE8cSignalHead)o;
+        SE8cSignalHead p = (SE8cSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
@@ -38,9 +36,9 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         // include contents
         element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
-        
+
         // store the turnout number, not a name, as that's needed when recreating
         element.addContent(addTurnoutElement(p.getNumber()));
 
@@ -49,49 +47,45 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     Element addTurnoutElement(int number) {
         Element el = new Element("turnout");
-        el.setAttribute("systemName", ""+number);
+        el.setAttribute("systemName", "" + number);
 
         return el;
     }
 
-    /**
-     * Create a SE8cSignalHead
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    @SuppressWarnings("unchecked")
-	public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnout");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("turnout");
         int turnout = loadTurnout(l.get(0));
         // put it together
-        String uname = getUserName(element);
+        String uname = getUserName(shared);
         SignalHead h;
-        if (uname == null)
+        if (uname == null) {
             h = new jmri.implementation.SE8cSignalHead(turnout);
-        else
+        } else {
             h = new jmri.implementation.SE8cSignalHead(turnout, uname);
+        }
 
-        loadCommon(h, element);
-        
+        loadCommon(h, shared);
+
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
     }
 
     int loadTurnout(Object o) {
-        Element e = (Element)o;
+        Element e = (Element) o;
 
         // in this case, the systemName attribute is a number
         try {
             return e.getAttribute("systemName").getIntValue();
         } catch (DataConversionException ex) {
-            log.warn("Can't read turnout number for SE8cSignalHead because of "+ex);
+            log.warn("Can't read turnout number for SE8cSignalHead because of " + ex);
             return 0;
         }
-     }
+    }
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class.getName());
 }

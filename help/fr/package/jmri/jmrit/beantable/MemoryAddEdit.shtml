@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MemoryAddEdit.shtml,v 1.4 2008/11/01 16:40:03 jacobsen Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/06-->
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec  2013-10-11-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Adding/Editing Memories
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Memory Add Edit">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,22 +24,22 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Ajout/Modification de Mémoires </H1>
+<h1>Ajout/Modification de M&#233;moires </H1>
     
-Pour créer une variable  mémoire, cliquez sur le bouton 
-"Ajouter ..." sur la
-<a href="MemoryTable.shtml"> Table mémoire</a>.
-Cela ouvrira une petite fenêtre avec un espace pour y entrer 
-un nom système et un nom 'utilisateur pour la nouvelle mémoire, plus
+Pour cr&#233;er une variable  m&#233;moire, cliquez sur le bouton 
+"Ajouter ..." sur le
+<a href="MemoryTable.shtml"> Tableau m&#233;moire</a>.
+Cela ouvrira une petite fen&#234;tre avec un espace pour y entrer 
+un nom syst&#232;me et un nom 'utilisateur pour la nouvelle m&#233;moire, plus
 et bouton "Ajouter".
 <p>
-Vous devez entrer un nom système unique. Les noms système de mémoires n'ont
-pas un jeu de modèle. Vous pouvez tous mettre tout ce que vous voulez. Il y a une faible
-convention pour les commencer  par "IM" pour "mémoire interne", mais ce n'est pas
-nécessaire.
+Vous devez entrer un nom syst&#232;me unique. Les noms syst&#232;me de m&#233;moires n'ont
+pas de mod&#232;le. Vous pouvez tous mettre tout ce que vous voulez. Il y a une faible
+convention pour les commencer  par "IM" pour "m&#233;moire interne", mais ce n'est pas
+n&#233;cessaire.
 
 <p>
-Le nom utilisateur est facultatif, mais si on le donne, il doit être unique.
+Le nom utilisateur est facultatif, mais si on le donne, il doit &#234;tre unique.
 
 
 <!--#include virtual="/Footer" -->

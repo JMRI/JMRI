@@ -23,11 +23,11 @@
            xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
            xsi:schemaLocation="
                 http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
-                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
             "
            >
 
-<xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
+<xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
 
 <xs:element name="speedtable">
 
@@ -95,45 +95,44 @@
         
         <xs:element name="aspectSpeeds" minOccurs="1" maxOccurs="1">
            <xs:annotation><xs:documentation>
-                ******** Required Speed Aspect Table  **********
-                Maps speed name to percentage number
+                ******** Required Speed Aspect Table  **********<br/>
+                Maps speed name to percentage number.
           </xs:documentation></xs:annotation>
           <xs:complexType>
             <xs:sequence>
-                <xs:element name="Maximum" minOccurs="0" maxOccurs="1"></xs:element>
-                <xs:element name="Normal" minOccurs="1" maxOccurs="1"></xs:element>
-                <xs:element name="Limited" minOccurs="1" maxOccurs="1"></xs:element>
-                <xs:element name="Medium" minOccurs="1" maxOccurs="1"></xs:element>
-                <xs:element name="Slow" minOccurs="1" maxOccurs="1"></xs:element>
-                <xs:element name="Restricted" minOccurs="1" maxOccurs="1"></xs:element>
-                <xs:element name="Stop" minOccurs="1" maxOccurs="1"></xs:element>
+                <xs:element name="Cab" minOccurs="0" maxOccurs="1" type="xs:integer"/> <!-- introduced in 3.11.5, optional for preferences -->
+                <xs:element name="Maximum" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Normal" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Sixty" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Fifty" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Limited" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Medium" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Slow" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Restricted" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="RestrictedSlow" minOccurs="0" maxOccurs="1" type="xs:integer"/> <!-- introduced in 3.11.5, optional for preferences -->
+                <xs:element name="Stop" minOccurs="1" maxOccurs="1" type="xs:integer"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
         
         <xs:element name="appearanceSpeeds" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
             <xs:annotation><xs:documentation>
-                 ******** Required Speed Appearance Table  **********
-                 Maps appearance to speed name.
+                 ******** Required Speed Appearance Table  **********<br/>
+                 Maps appearance to speed name. Value of these elements must match
+                 one of the element names in the aspectSpeeds element.
              </xs:documentation></xs:annotation>
             <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                <xs:element name="SignalHeadStateRed" minOccurs="0" maxOccurs="1">
-                </xs:element>
-                <xs:element name="SignalHeadStateFlashingRed" minOccurs="0" maxOccurs="1">
-                </xs:element>
-                <xs:element name="SignalHeadStateGreen" minOccurs="0" maxOccurs="1">
-                </xs:element>
-                <xs:element name="SignalHeadStateFlashingGreen" minOccurs="0" maxOccurs="1">
-                </xs:element>
-                <xs:element name="SignalHeadStateYellow" minOccurs="0" maxOccurs="1">
-                </xs:element>
-                <xs:element name="SignalHeadStateFlashingYellow" minOccurs="0" maxOccurs="1">
-                </xs:element>
-                <xs:element name="SignalHeadStateLunar" minOccurs="0" maxOccurs="1">
-                </xs:element>
-                <xs:element name="SignalHeadStateFlashingLunar" minOccurs="0" maxOccurs="1">
-                </xs:element>
+                <xs:element name="SignalHeadStateRed" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateFlashingRed" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateGreen" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateFlashingGreen" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateYellow" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateFlashingYellow" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateLunar" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateFlashingLunar" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
+          </xs:complexType>
         </xs:element>
 
       <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>

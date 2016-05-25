@@ -1,47 +1,46 @@
 package apps.gui3;
 
-import jmri.util.swing.JmriPanel;
-import jmri.util.swing.WindowInterface;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
-import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.Rectangle;
- 
+import javax.swing.SwingUtilities;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
+
 public class FirstTimeStartUpWizardAction extends jmri.util.swing.JmriAbstractAction {
- 
+
     public FirstTimeStartUpWizardAction(String s, WindowInterface wi) {
-    	super(s, wi);
+        super(s, wi);
     }
-     
- 	public FirstTimeStartUpWizardAction(String s, Icon i, WindowInterface wi) {
-    	super(s, i, wi);
+
+    public FirstTimeStartUpWizardAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
     }
-    
-    
+
     public FirstTimeStartUpWizardAction(String s) {
         super(s);
     }
-    
-        // never invoked, because we overrode actionPerformed above
+
+    // never invoked, because we overrode actionPerformed above
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    
+
     static jmri.util.JmriJFrame f;
-    
+
     apps.gui3.Apps3 app;
-    
-    public void setApp(apps.gui3.Apps3 app){
+
+    public void setApp(apps.gui3.Apps3 app) {
         this.app = app;
     }
-    
+
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
         // create the frame
-        if (f==null){
+        if (f == null) {
             f = new jmri.util.JmriJFrame("Decoder Pro Wizard", false, false);
             // Update the GUI Look and Feel
             // This is needed as certain controls are instantiated
@@ -49,26 +48,26 @@ public class FirstTimeStartUpWizardAction extends jmri.util.swing.JmriAbstractAc
             SwingUtilities.updateComponentTreeUI(f);
         }
         FirstTimeStartUpWizard wiz = new FirstTimeStartUpWizard(f, app);
-        f.setPreferredSize(new java.awt.Dimension(700,400));
+        f.setPreferredSize(new java.awt.Dimension(700, 400));
         f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         f.add(wiz.getPanel());
         f.pack();
-        
-        Dimension screenDim =
-             Toolkit.getDefaultToolkit().getScreenSize();
+
+        Dimension screenDim
+                = Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle winDim = f.getBounds();
         winDim.height = winDim.height + 10;
         winDim.width = winDim.width + 10;
         f.setLocation((screenDim.width - winDim.width) / 2,
                 (screenDim.height - winDim.height) / 2);
         f.setSize(winDim.width, winDim.height);
-        
+
         f.setVisible(true);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
     }
- 
+
 }

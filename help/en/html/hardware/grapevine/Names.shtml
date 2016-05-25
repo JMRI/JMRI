@@ -1,28 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
-<title>JMRI: Grapevine System Names</title>
+<title>JMRI Hardware Support - Grapevine System - Naming</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: Grapevine System Names
-</h1>
+<h1>Hardware Support: Grapevine System</h1>
+
+<a name="connecting"></a><h2>Naming</h2>
 
 Individual inputs (Sensors)  and outputs (Turnouts and Lights)
 in JMRI are accessed via names.  
@@ -45,34 +42,33 @@ sections on inputs and outputs below for the specific meanings
 of these various formats.
 
 <p>
-The node number preceeds the pin number. If it's helpful, you can think of the node number as being the "thousands"
+The Node number precedes the pin number. If it's helpful, you can think of the node number as being the "thousands"
 part of the combined number, and the pin number as the lower three digits.
 
 <p>
 For example, the 1st Grapevine Sensor input pin on node 23 would be
 named GS23001 or GS23p1.  The 5th Turnout on node 2 would be GT2005. 
 
-<h2>Node Numbering</h2>
-Each Grapevine node has a number, from 1 to 127.
+<h3>Node Numbering</h3>
+Each Grapevine Node has a number, from 1 to 127.
 
 <p>
-Before you can access the node in JMRI, you have to define it to 
+Before you can access the Node in JMRI, you have to define it to 
 the program.  You can do this either from the 
 <a href="../../../package/apps/TabbedPreferences.shtml">Preferences window</a>
 (under Edit in the main menu)
 or using the 
 <a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
-tool in the Grapevine menu.
+tool in the <strong>Grapevine</strong> menu.
 
+<h3>Inputs</h3>
 
-<h2>Inputs</h2>
-
-Grapevine nodes have a number of possible inputs:
+Grapevine Nodes have a number of possible inputs:
 <dl>
  <dt>
     Parallel Inputs
  </dt><dd>
-    There are eight three-pin connectors on a Grapevine node
+    There are eight three-pin connectors on a Grapevine Node
     that can be used as general inputs.  These Sensors are 
     referenced as 001 to 008. The can also be referenced
     in a shorter format (where the three full digits are not required)
@@ -86,13 +82,13 @@ Grapevine nodes have a number of possible inputs:
     Serial Occupancy Sensor Cards
  </dt><dd>
     Advanced serial occupancy sensor cards (ASCs) can be attached
-    to each node.  Each one senses occupancy on up to eight track
+    to each Node.  Each one senses occupancy on up to eight track
     segments, and up to three can be attached to a node.
     In addition, "occupancy" and "motion" are
     separately detected.
     <p>
     The occupancy on these cards are numbered sequentially, starting
-    with 101.  The motion sensors are also numbered sequentially,
+    with 101.  The motion Sensors are also numbered sequentially,
     starting with 201.  This means that 101 and 201 sense "occupancy"
     and "motion" on the 1st connector of the 1st card, respectively, 
     109 and 209 are the occupancy and motion sensors on the first 
@@ -119,14 +115,14 @@ Grapevine nodes have a number of possible inputs:
     Older Occupancy Sensors
  </dt><dd>
     Nodes may also have older serial occupancy detectors
-    attached.  If you have one of these, the sensors will appear
+    attached.  If you have one of these, the Sensors will appear
     as 021 through 036. These can also be referenced as "s1" through
     "s16".
  </dd>
 </dl>
 
-<h2>Outputs</h2>
-
+<h3>Outputs</h3>
+<p>
 Each Grapevine node can have up to four output cards attached to it.
 (Some of the Grapevine and ProTrak documentation refers to these as
 four "banks".)
@@ -142,29 +138,30 @@ Each of these can be used as a JMRI
 <a href="../../tools/Turnouts.shtml">Turnout</a>, 
 <a href="../../tools/Lights.shtml">Light</a> 
 or 
-<a href="../../tools/Signals.shtml">Signalhead</a>.
+<a href="../../tools/Signals.shtml">Signal Head</a>.
 
-<h3>Turnouts</h3>
-
+<h4>Turnouts</h4>
+<p>
 Grapevine outputs can be use to control turnout switch motors.
 In that case, they should be referenced as JMRI 
 <a href="../../tools/Turnouts.shtml">Turnouts</a>, with
 names like GT98201 for the 1st output from the 2nd driver card on 
 node 98.
 
-<h3>Lights</h3>
-
+<h4>Lights</h4>
+<p>
 Grapevine outputs can be used to control lights on the layout, in
 which case they should be references as JMRI 
 <a href="../../tools/Lights.shtml">Lights</a>.
 System names for lights start with GL, for example GL54102 for the 
 2nd output on the 1st driver card on node 54.
 
-<h3>Signals</h3>
+<h4>Signals</h4>
+<p>
 To use a Grapevine output as a JMRI 
-<a href="../../tools/Signals.shtml">signal</a>, 
+<a href="../../tools/Signaling/index.shtml">Signal</a>, 
 capable of displaying
-red/yellow/green and associated flashing aspects, 
+red/yellow/green and associated flashing Aspects, 
 you must define it as a "Grapevine Signal Head" using the
 <a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a> button in the 
 <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table</a>.
@@ -173,13 +170,14 @@ output numbers.
 
 <p>
 For example, to use the 3rd connector on the 2nd driver card on node 1, 
-define a Grapevine signal head using system name GH1203.  
+define a Grapevine Signal Head using system name GH1203.  
 
-<h2>More Information</h2>
-
+<a name="documentation"></a><h2>Documentation</h2>
 More information on the Grapevine hardware can be found on the
 <a href="http://www.protrak.cc">ProTrak web site</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

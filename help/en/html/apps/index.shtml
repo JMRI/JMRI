@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Applications</title>
 
 <!-- Style -->
@@ -20,48 +18,57 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-      <!-- Page Body -->
-        <H2>
-		JMRI: Applications
-        </H2>
+<!-- Page Body -->
+<h1>JMRI: Applications</h1>
 
-	<P>
+	<p>
 	JMRI provides several applications that are optimized for 
-	specific purposes. You can of course also write your own.
-	    <dl>
-		<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
+	specific purposes. You can of course also <a href="../doc/Technical/index.shtml#writecode">write your own</a>.
+  <dl>
+		<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro&reg;</a></h3></dt>
 		<dd>
 		    A better tool for programming decoders.
 		    DecoderPro simplifies the job of configuring complicated DCC decoders
 		    by providing screens on which you can select the various options and
-		    values you want.
+		    values you want.<br>
+		    Open DecoderPro by double clicking its icon in the JMRI installation folder.
 		</dd>
 
-		<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro</a></h3></dt>
+		<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro&trade;</a></h3></dt>
 		<dd>
-		    Operating CRT based CTC control panels that reflects the real-time
+		    Operating CRT based CTC control panels that reflect the real-time
 		    state of your railroad <em>and</em> let you control it - almost like
-		    a Prototype dispatcher!
+		    a Prototype dispatcher!<br>
+		    Open PanelPro by double clicking its icon in the JMRI installation folder.
 		</dd>
 
-		<dt><h3><a href="LocoTools/index.shtml">LocoNet Tools</a></h3></dt>
-		<dd> A set of Digitrax LocoNet-specific tools:
-		    <UL>
-		    <LI><dfn>LocoNet monitor</dfn>
-		    <LI><dfn>Slot monitor</dfn>
-		    <LI><dfn>Packet source</dfn>
-		    <LI><dfn>PM4 programmer</dfn>
-		    <LI><dfn>BDL16 programmer</dfn>
-		    <LI><dfn>SE8C programmer</dfn>
-		    <LI><dfn>DS64 programmer</dfn>
-		    <LI><dfn>LocoIO programmer</dfn>
-		    </UL>
-		These are also available in DecoderPro and PanelPro when those are configured
-		for a LocoNet connection, but LocoTools provides them in a easier-to-use way.
+		<dt><h3><a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a></h3></dt>
+		<dd>
+		    A system for Dispatching, grouping your Roster and Throttles.
 		</dd>
 
-	    </dl>
+    <dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3></dt>
+    <dd>
+    Create Train Manifests that detail the work your train crews will 
+    perform during an operations session. 
+    The Manifest lists of car pick up and set outs,  
+    shows where the cars are located, and provides the cars' destinations.
+    </dd>
 
+		<dt><h3><a href="./SoundPro/SoundPro.shtml">SoundPro</a></h3></dt>
+		<dd>
+		    A set of tools for using Audio with JMRI.<br>
+		    Open SoundPro by double clicking its icon in the JMRI installation folder.
+		</dd>
+ </dl>
+ 
+  <h2>More Tools</h2>
+  <ul>
+  <li>Common <a href="../tools/index.shtml">Tools and features</a> to set up and operate your layout shared by most JMRI applications.</li>
+	<li><a href="../tools/index.shtml#systemSpecificTools">System-specific Tools</a> are available in most of the JMRI applications from their own menu when you have JMRI configured for that System Connection.</li>
+	</ul>
 <!--#include virtual="/Footer" -->
+</div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->
 </body>
 </html>

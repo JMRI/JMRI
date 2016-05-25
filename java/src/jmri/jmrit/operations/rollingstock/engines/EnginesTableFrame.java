@@ -1,10 +1,6 @@
 // EnginesTableFrame.java
-
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -24,299 +20,318 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.com.sun.TableSorter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing the engine roster for operations.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2013
  * @version $Revision$
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-	EnginesTableModel enginesModel;
-	TableSorter sorter;
-	javax.swing.JTable enginesTable;
-	JScrollPane enginesPane;
-	EngineManager engineManager = EngineManager.instance();
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3672037911597893323L;
+    EnginesTableModel enginesModel;
+    TableSorter sorter;
+    javax.swing.JTable enginesTable;
+    JScrollPane enginesPane;
+    EngineManager engineManager = EngineManager.instance();
 
-	// labels
-	JLabel numEngines = new JLabel();
-	JLabel textEngines = new JLabel();
-	JLabel textSep1 = new JLabel("          ");
+    // labels
+    JLabel numEngines = new JLabel();
+    JLabel textEngines = new JLabel();
+    JLabel textSep1 = new JLabel("          ");
 
-	// radio buttons
-	JRadioButton sortByNumber = new JRadioButton(Bundle.getMessage("Number"));
-	JRadioButton sortByRoad = new JRadioButton(Bundle.getMessage("Road"));
-	JRadioButton sortByModel = new JRadioButton(Bundle.getMessage("Model"));
-	JRadioButton sortByConsist = new JRadioButton(Bundle.getMessage("Consist"));
-	JRadioButton sortByLocation = new JRadioButton(Bundle.getMessage("Location"));
-	JRadioButton sortByDestination = new JRadioButton(Bundle.getMessage("Destination"));
-	JRadioButton sortByTrain = new JRadioButton(Bundle.getMessage("Train"));
-	JRadioButton sortByMoves = new JRadioButton(Bundle.getMessage("Moves"));
-	JRadioButton sortByBuilt = new JRadioButton(Bundle.getMessage("Built"));
-	JRadioButton sortByOwner = new JRadioButton(Bundle.getMessage("Owner"));
-	JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
-	JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
-	JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
-	ButtonGroup group = new ButtonGroup();
+    // radio buttons
+    JRadioButton sortByNumber = new JRadioButton(Bundle.getMessage("Number"));
+    JRadioButton sortByRoad = new JRadioButton(Bundle.getMessage("Road"));
+    JRadioButton sortByModel = new JRadioButton(Bundle.getMessage("Model"));
+    JRadioButton sortByConsist = new JRadioButton(Bundle.getMessage("Consist"));
+    JRadioButton sortByLocation = new JRadioButton(Bundle.getMessage("Location"));
+    JRadioButton sortByDestination = new JRadioButton(Bundle.getMessage("Destination"));
+    JRadioButton sortByTrain = new JRadioButton(Bundle.getMessage("Train"));
+    JRadioButton sortByMoves = new JRadioButton(Bundle.getMessage("Moves"));
+    JRadioButton sortByBuilt = new JRadioButton(Bundle.getMessage("Built"));
+    JRadioButton sortByOwner = new JRadioButton(Bundle.getMessage("Owner"));
+    JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
+    JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
+    JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
+    ButtonGroup group = new ButtonGroup();
 
-	// major buttons
-	JButton addButton = new JButton(Bundle.getMessage("Add"));
-	JButton findButton = new JButton(Bundle.getMessage("Find"));
-	JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    // major buttons
+    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton findButton = new JButton(Bundle.getMessage("Find"));
+    JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
-	JTextField findEngineTextBox = new JTextField(6);
+    JTextField findEngineTextBox = new JTextField(6);
 
-	public EnginesTableFrame() {
-		super(Bundle.getMessage("TitleEnginesTable"));
-		// general GUI config
+    public EnginesTableFrame() {
+        super(Bundle.getMessage("TitleEnginesTable"));
+        // general GUI config
 
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-		// Set up the jtable in a Scroll Pane..
-		enginesModel = new EnginesTableModel();
-		sorter = new TableSorter(enginesModel);
-		enginesTable = new JTable(sorter);
-		sorter.setTableHeader(enginesTable.getTableHeader());
-		enginesPane = new JScrollPane(enginesTable);
-		enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		enginesModel.initTable(enginesTable, this);
+        // Set up the jtable in a Scroll Pane..
+        enginesModel = new EnginesTableModel();
+        sorter = new TableSorter(enginesModel);
+        enginesTable = new JTable(sorter);
+        sorter.setTableHeader(enginesTable.getTableHeader());
+        enginesPane = new JScrollPane(enginesTable);
+        enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        enginesModel.initTable(enginesTable, this);
 
-		// load the number of engines and listen for changes
-		numEngines.setText(Integer.toString(engineManager.getNumEntries()));
-		engineManager.addPropertyChangeListener(this);
-		textEngines.setText(Bundle.getMessage("engines"));
+        // load the number of engines and listen for changes
+        numEngines.setText(Integer.toString(engineManager.getNumEntries()));
+        engineManager.addPropertyChangeListener(this);
+        textEngines.setText(Bundle.getMessage("engines"));
 
-		// Set up the control panel
+        // Set up the control panel
+        // row 1
+        JPanel cp1 = new JPanel();
+        cp1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SortBy")));
 
-		// row 1
-		JPanel cp1 = new JPanel();
-		cp1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SortBy")));
+        cp1.add(sortByNumber);
+        cp1.add(sortByRoad);
+        cp1.add(sortByModel);
+        cp1.add(sortByConsist);
+        cp1.add(sortByLocation);
+        cp1.add(sortByDestination);
+        cp1.add(sortByTrain);
+        JPanel movep = new JPanel();
+        movep.setBorder(BorderFactory.createTitledBorder(""));
+        movep.add(sortByMoves);
+        movep.add(sortByBuilt);
+        movep.add(sortByOwner);
+        if (Setup.isValueEnabled()) {
+            movep.add(sortByValue);
+        }
+        if (Setup.isRfidEnabled()) {
+            movep.add(sortByRfid);
+        }
+        movep.add(sortByLast);
+        cp1.add(movep);
 
-		cp1.add(sortByNumber);
-		cp1.add(sortByRoad);
-		cp1.add(sortByModel);
-		cp1.add(sortByConsist);
-		cp1.add(sortByLocation);
-		cp1.add(sortByDestination);
-		cp1.add(sortByTrain);
-		JPanel movep = new JPanel();
-		movep.setBorder(BorderFactory.createTitledBorder(""));
-		movep.add(sortByMoves);
-		movep.add(sortByBuilt);
-		movep.add(sortByOwner);
-		if (Setup.isValueEnabled())
-			movep.add(sortByValue);
-		if (Setup.isRfidEnabled())
-			movep.add(sortByRfid);
-		movep.add(sortByLast);
-		cp1.add(movep);
+        // row 2
+        JPanel cp2 = new JPanel();
+        cp2.setLayout(new BoxLayout(cp2, BoxLayout.X_AXIS));
 
-		// row 2
-		JPanel cp2 = new JPanel();
-		cp2.setBorder(BorderFactory.createTitledBorder(""));
-		findButton.setToolTipText(Bundle.getMessage("findEngine"));
-		findEngineTextBox.setToolTipText(Bundle.getMessage("findEngine"));
+        JPanel cp2Add = new JPanel();
+        cp2Add.setBorder(BorderFactory.createTitledBorder(""));
+        cp2Add.add(numEngines);
+        cp2Add.add(textEngines);
+        cp2Add.add(textSep1);
+        cp2Add.add(addButton);
+        cp2.add(cp2Add);
 
-		cp2.add(numEngines);
-		cp2.add(textEngines);
-		cp2.add(textSep1);
-		cp2.add(addButton);
-		cp2.add(saveButton);
-		cp2.add(findButton);
-		cp2.add(findEngineTextBox);
+        JPanel cp2Find = new JPanel();
+        cp2Find.setBorder(BorderFactory.createTitledBorder(""));
+        findButton.setToolTipText(Bundle.getMessage("findEngine"));
+        findEngineTextBox.setToolTipText(Bundle.getMessage("findEngine"));
+        cp2Find.add(findButton);
+        cp2Find.add(findEngineTextBox);
+        cp2.add(cp2Find);
 
-		// place controls in scroll pane
-		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-		controlPanel.add(cp1);
-		controlPanel.add(cp2);
-		
-		// some tool tips
-		sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
+        JPanel cp2Save = new JPanel();
+        cp2Save.setBorder(BorderFactory.createTitledBorder(""));
+        cp2Save.add(saveButton);
+        cp2.add(cp2Save);
 
-		JScrollPane controlPane = new JScrollPane(controlPanel);
-		// make sure control panel is the right size
-		controlPane.setMinimumSize(new Dimension(500, 130));
-		controlPane.setMaximumSize(new Dimension(2000, 200));
-		controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        // place controls in scroll pane
+        JPanel controlPanel = new JPanel();
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+        controlPanel.add(cp1);
+        controlPanel.add(cp2);
 
-		getContentPane().add(enginesPane);
-		getContentPane().add(controlPane);
+        // some tool tips
+        sortByLast.setToolTipText(Bundle.getMessage("TipLastMoved"));
 
-		// setup buttons
-		addButtonAction(addButton);
-		addButtonAction(findButton);
-		addButtonAction(saveButton);
+        JScrollPane controlPane = new JScrollPane(controlPanel);
 
-		sortByNumber.setSelected(true);
-		addRadioButtonAction(sortByNumber);
-		addRadioButtonAction(sortByRoad);
-		addRadioButtonAction(sortByModel);
-		addRadioButtonAction(sortByConsist);
-		addRadioButtonAction(sortByLocation);
-		addRadioButtonAction(sortByDestination);
-		addRadioButtonAction(sortByTrain);
-		addRadioButtonAction(sortByMoves);
-		addRadioButtonAction(sortByBuilt);
-		addRadioButtonAction(sortByOwner);
-		addRadioButtonAction(sortByValue);
-		addRadioButtonAction(sortByRfid);
-		addRadioButtonAction(sortByLast);
+        getContentPane().add(enginesPane);
+        getContentPane().add(controlPane);
 
-		group.add(sortByNumber);
-		group.add(sortByRoad);
-		group.add(sortByModel);
-		group.add(sortByConsist);
-		group.add(sortByLocation);
-		group.add(sortByDestination);
-		group.add(sortByTrain);
-		group.add(sortByMoves);
-		group.add(sortByBuilt);
-		group.add(sortByOwner);
-		group.add(sortByValue);
-		group.add(sortByRfid);
-		group.add(sortByLast);
+        // setup buttons
+        addButtonAction(addButton);
+        addButtonAction(findButton);
+        addButtonAction(saveButton);
 
-		// build menu
-		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-		toolMenu.add(new EngineRosterMenu(Bundle.getMessage("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
-		toolMenu.add(new NceConsistEngineAction(Bundle.getMessage("MenuItemNceSync"), this));
-		menuBar.add(toolMenu);
-		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
-		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true); // NOI18N
+        sortByNumber.setSelected(true);
+        addRadioButtonAction(sortByNumber);
+        addRadioButtonAction(sortByRoad);
+        addRadioButtonAction(sortByModel);
+        addRadioButtonAction(sortByConsist);
+        addRadioButtonAction(sortByLocation);
+        addRadioButtonAction(sortByDestination);
+        addRadioButtonAction(sortByTrain);
+        addRadioButtonAction(sortByMoves);
+        addRadioButtonAction(sortByBuilt);
+        addRadioButtonAction(sortByOwner);
+        addRadioButtonAction(sortByValue);
+        addRadioButtonAction(sortByRfid);
+        addRadioButtonAction(sortByLast);
 
-		initMinimumSize();
+        group.add(sortByNumber);
+        group.add(sortByRoad);
+        group.add(sortByModel);
+        group.add(sortByConsist);
+        group.add(sortByLocation);
+        group.add(sortByDestination);
+        group.add(sortByTrain);
+        group.add(sortByMoves);
+        group.add(sortByBuilt);
+        group.add(sortByOwner);
+        group.add(sortByValue);
+        group.add(sortByRfid);
+        group.add(sortByLast);
 
-		// create ShutDownTasks
-		createShutDownTask();
-		// also load the cars
-		CarManagerXml.instance();
-	}
+        // build menu
+        JMenuBar menuBar = new JMenuBar();
+        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        toolMenu.add(new EngineRosterMenu(Bundle.getMessage("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
+        toolMenu.add(new NceConsistEngineAction(Bundle.getMessage("MenuItemNceSync"), this));
+        menuBar.add(toolMenu);
+        menuBar.add(new jmri.jmrit.operations.OperationsMenu());
+        setJMenuBar(menuBar);
+        addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true); // NOI18N
 
-	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("radio button activated");
-		if (ae.getSource() == sortByNumber) {
-			enginesModel.setSort(enginesModel.SORTBYNUMBER);
-		}
-		if (ae.getSource() == sortByRoad) {
-			enginesModel.setSort(enginesModel.SORTBYROAD);
-		}
-		if (ae.getSource() == sortByModel) {
-			enginesModel.setSort(enginesModel.SORTBYMODEL);
-		}
-		if (ae.getSource() == sortByConsist) {
-			enginesModel.setSort(enginesModel.SORTBYCONSIST);
-		}
-		if (ae.getSource() == sortByLocation) {
-			enginesModel.setSort(enginesModel.SORTBYLOCATION);
-		}
-		if (ae.getSource() == sortByDestination) {
-			enginesModel.setSort(enginesModel.SORTBYDESTINATION);
-		}
-		if (ae.getSource() == sortByTrain) {
-			enginesModel.setSort(enginesModel.SORTBYTRAIN);
-		}
-		if (ae.getSource() == sortByMoves) {
-			enginesModel.setSort(enginesModel.SORTBYMOVES);
-		}
-		if (ae.getSource() == sortByBuilt) {
-			enginesModel.setSort(enginesModel.SORTBYBUILT);
-		}
-		if (ae.getSource() == sortByOwner) {
-			enginesModel.setSort(enginesModel.SORTBYOWNER);
-		}
-		if (ae.getSource() == sortByValue) {
-			enginesModel.setSort(enginesModel.SORTBYVALUE);
-		}
-		if (ae.getSource() == sortByRfid) {
-			enginesModel.setSort(enginesModel.SORTBYRFID);
-		}
-		if (ae.getSource() == sortByLast) {
-			enginesModel.setSort(enginesModel.SORTBYLAST);
-		}
-		// clear any sorts by column
-		clearTableSort(enginesTable);
-	}
+        initMinimumSize();
 
-	public List<String> getSortByList() {
-		return enginesModel.getSelectedEngineList();
-	}
+        addHorizontalScrollBarKludgeFix(controlPane, controlPanel);
 
-	EngineEditFrame f = null;
+        // create ShutDownTasks
+        createShutDownTask();
+    }
 
-	// add, save or find button
-	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-		// log.debug("engine button activated");
-		if (ae.getSource() == findButton) {
-			int rowindex = enginesModel.findEngineByRoadNumber(findEngineTextBox.getText());
-			if (rowindex < 0) {
-				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getMessage("engineWithRoadNumNotFound"),
-						new Object[] { findEngineTextBox.getText() }), Bundle
-						.getMessage("engineCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
-				return;
+    @Override
+    public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
+        log.debug("radio button activated");
+        if (ae.getSource() == sortByNumber) {
+            enginesModel.setSort(enginesModel.SORTBYNUMBER);
+        }
+        if (ae.getSource() == sortByRoad) {
+            enginesModel.setSort(enginesModel.SORTBYROAD);
+        }
+        if (ae.getSource() == sortByModel) {
+            enginesModel.setSort(enginesModel.SORTBYMODEL);
+        }
+        if (ae.getSource() == sortByConsist) {
+            enginesModel.setSort(enginesModel.SORTBYCONSIST);
+        }
+        if (ae.getSource() == sortByLocation) {
+            enginesModel.setSort(enginesModel.SORTBYLOCATION);
+        }
+        if (ae.getSource() == sortByDestination) {
+            enginesModel.setSort(enginesModel.SORTBYDESTINATION);
+        }
+        if (ae.getSource() == sortByTrain) {
+            enginesModel.setSort(enginesModel.SORTBYTRAIN);
+        }
+        if (ae.getSource() == sortByMoves) {
+            enginesModel.setSort(enginesModel.SORTBYMOVES);
+        }
+        if (ae.getSource() == sortByBuilt) {
+            enginesModel.setSort(enginesModel.SORTBYBUILT);
+        }
+        if (ae.getSource() == sortByOwner) {
+            enginesModel.setSort(enginesModel.SORTBYOWNER);
+        }
+        if (ae.getSource() == sortByValue) {
+            enginesModel.setSort(enginesModel.SORTBYVALUE);
+        }
+        if (ae.getSource() == sortByRfid) {
+            enginesModel.setSort(enginesModel.SORTBYRFID);
+        }
+        if (ae.getSource() == sortByLast) {
+            enginesModel.setSort(enginesModel.SORTBYLAST);
+        }
+        // clear any sorts by column
+        clearTableSort(enginesTable);
+    }
 
-			}
-			// clear any sorts by column
-			clearTableSort(enginesTable);
-			enginesTable.changeSelection(rowindex, 0, false, false);
-			return;
-		}
-		if (ae.getSource() == addButton) {
-			if (f != null)
-				f.dispose();
-			f = new EngineEditFrame();
-			f.initComponents();
-			f.setTitle(Bundle.getMessage("TitleEngineAdd"));
-		}
-		if (ae.getSource() == saveButton) {
-			if (enginesTable.isEditing()) {
-				log.debug("locomotives table edit true");
-				enginesTable.getCellEditor().stopCellEditing();
-			}
-			OperationsXml.save();
-			saveTableDetails(enginesTable);
-			if (Setup.isCloseWindowOnSaveEnabled())
-				dispose();
-		}
-	}
+    public List<RollingStock> getSortByList() {
+        return enginesModel.getSelectedEngineList();
+    }
 
-	protected int[] getCurrentTableColumnWidths() {
-		TableColumnModel tcm = enginesTable.getColumnModel();
-		int[] widths = new int[tcm.getColumnCount()];
-		for (int i = 0; i < tcm.getColumnCount(); i++)
-			widths[i] = tcm.getColumn(i).getWidth();
-		return widths;
-	}
+    EngineEditFrame engineEditFrame = null;
 
-	public void dispose() {
-		engineManager.removePropertyChangeListener(this);
-		enginesModel.dispose();
-		if (f != null)
-			f.dispose();
-		super.dispose();
-	}
+    // add, save or find button
+    @Override
+    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+        // log.debug("engine button activated");
+        if (ae.getSource() == findButton) {
+            int rowindex = enginesModel.findEngineByRoadNumber(findEngineTextBox.getText());
+            if (rowindex < 0) {
+                JOptionPane.showMessageDialog(this, MessageFormat.format(
+                        Bundle.getMessage("engineWithRoadNumNotFound"), new Object[]{findEngineTextBox.getText()}),
+                        Bundle.getMessage("engineCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
+                return;
 
-	public void propertyChange(PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
-		if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY)) {
-			numEngines.setText(Integer.toString(engineManager.getNumEntries()));
-		}
-	}
+            }
+            // clear any sorts by column
+            clearTableSort(enginesTable);
+            enginesTable.changeSelection(rowindex, 0, false, false);
+            return;
+        }
+        if (ae.getSource() == addButton) {
+            if (engineEditFrame != null) {
+                engineEditFrame.dispose();
+            }
+            engineEditFrame = new EngineEditFrame();
+            engineEditFrame.initComponents();
+        }
+        if (ae.getSource() == saveButton) {
+            if (enginesTable.isEditing()) {
+                log.debug("locomotives table edit true");
+                enginesTable.getCellEditor().stopCellEditing();
+            }
+            OperationsXml.save();
+            saveTableDetails(enginesTable);
+            if (Setup.isCloseWindowOnSaveEnabled()) {
+                dispose();
+            }
+        }
+    }
 
-	static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class
-			.getName());
+    protected int[] getCurrentTableColumnWidths() {
+        TableColumnModel tcm = enginesTable.getColumnModel();
+        int[] widths = new int[tcm.getColumnCount()];
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            widths[i] = tcm.getColumn(i).getWidth();
+        }
+        return widths;
+    }
+
+    @Override
+    public void dispose() {
+        engineManager.removePropertyChangeListener(this);
+        enginesModel.dispose();
+        if (engineEditFrame != null) {
+            engineEditFrame.dispose();
+        }
+        super.dispose();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                    .getNewValue());
+        }
+        if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY)) {
+            numEngines.setText(Integer.toString(engineManager.getNumEntries()));
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class.getName());
 }

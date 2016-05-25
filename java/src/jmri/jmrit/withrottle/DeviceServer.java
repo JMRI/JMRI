@@ -1,98 +1,97 @@
-
 package jmri.jmrit.withrottle;
 
 /**
- *  DeviceServer.java
+ * DeviceServer.java
  *
- *  WiThrottle
+ * WiThrottle
  *
- *	@author Brett Hoffman   Copyright (C) 2009, 2010
- *	@author Created by Brett Hoffman on:
- *	@author 7/20/09.
- *	@version $Revision$
+ * @author Brett Hoffman Copyright (C) 2009, 2010
+ * @author Created by Brett Hoffman on:
+ * @author 7/20/09.
+ * @version $Revision$
  *
- *	Thread with input and output streams for each connected device.
- *	Creates an invisible throttle window for each.
+ * Thread with input and output streams for each connected device. Creates an
+ * invisible throttle window for each.
  *
- *      Sorting codes:
- *      'T'hrottle - sends to throttleController
- *      'S'econdThrottle - sends to secondThrottleController
- *      'C' - Not used anymore except to provide backward compliance, same as 'T'
- *      'N'ame of device
- *      'H' hardware info - followed by:
- *          'U' UDID - unique device identifier
- *      'P' panel - followed by:
- *          'P' track power
- *          'T' turnouts
- *          'R' routes
- *      'R' roster - followed by:
- *          'C' consists
- *      'Q'uit - device has quit, close its throttleWindow
- *      '*' - heartbeat from client device ('*+' starts, '*-' stops)
+ * Sorting codes: 
+ *  'T'hrottle - sends to throttleController 
+ *  'S'econdThrottle - sends to secondThrottleController
+ *  'C' - Not used anymore except to provide backward compliance, same as 'T' 
+ *  'N'ame of device 
+ *  'H' hardware info - followed by:
+ *      'U' UDID - unique device identifier 
+ *  'P' panel - followed by: 
+ *      'P' track power
+ *      'T' turnouts 
+ *      'R' routes
+ *  'R' roster - followed by: 
+ *      'C' consists
+ *  'Q'uit - device has quit, close its throttleWindow
+ *  '*' - heartbeat from client device ('*+' starts, '*-' stops)
  *
- * Added in v2.0:
- *      'M'ultiThrottle - forwards to MultiThrottle class, see notes there for use.
- *          Followed by id character to create or control appropriate DccThrottle.
- *          Stored as HashTable for access to 'T' and 'S' throttles.
+ * Added in v2.0: 'M'ultiThrottle - forwards to MultiThrottle class, see notes
+ * there for use. Followed by id character to create or control appropriate
+ * DccThrottle. Stored as HashTable for access to 'T' and 'S' throttles.
  *
- *      'D'irect byte packet to rails
- *          Followed by one digit for repeats,
- *          then followed by hex pairs, (single spaced) including pair for error byte.
- *          D200 90 90 - Send '00 90 90' twice, with error byte '90'
+ * 'D'irect byte packet to rails Followed by one digit for repeats, then
+ * followed by hex pairs, (single spaced) including pair for error byte. D200 90
+ * 90 - Send '00 90 90' twice, with error byte '90'
  *
  *
- *      Out to client, all newline terminated:
- *      
- *      Track power: 'PPA' + '0' (off), '1' (on), '2' (unknown)
- *      Minimum package length of 4 char.
+ * Out to client, all newline terminated:
  *
- *      Send Info on routes to devices, not specific to any one route.
- *      Format:  PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey
- *      Send list of routes
- *      Format:  PRL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
- *      States:  1 - UNKNOWN, 2 - ACTIVE, 4 - INACTIVE (based on turnoutsAligned sensor, if used)
+ * Track power: 'PPA' + '0' (off), '1' (on), '2' (unknown) Minimum package
+ * length of 4 char.
  *
- *      Send Info on turnouts to devices, not specific to any one turnout.
- *      Format:  PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey
- *      Send list of turnouts
- *      Format:  PTL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
- *      States:  1 - UNKNOWN, 2 - CLOSED, 4 - THROWN
+ * Send Info on routes to devices, not specific to any one route. Format:
+ * PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey Send list of
+ * routes Format:
+ * PRL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
+ * States: 1 - UNKNOWN, 2 - ACTIVE, 4 - INACTIVE (based on turnoutsAligned
+ * sensor, if used)
  *
- *      Web server port: 'PW' + {port#}
+ * Send Info on turnouts to devices, not specific to any one turnout. Format:
+ * PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey Send list of
+ * turnouts Format:
+ * PTL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
+ * States: 1 - UNKNOWN, 2 - CLOSED, 4 - THROWN
  *
- *      Roster is sent formatted: ]\[ separates roster entries, }|{ separates info in each entry
- *      e.g.  RL###]\[RVRR1201}|{1201}|{L]\[Limited}|{8165}|{L]\[
- * 
- *      Function labels: RF## first throttle, or RS## second throttle, each label separated by ]\[
- *      e.g.  RF29]\[Light]\[Bell]\[Horn]\[Short Horn]\[ &etc.
+ * Web server port: 'PW' + {port#}
  *
- *      RSF 'R'oster 'P'roperties 'F'unctions
+ * Roster is sent formatted: ]\[ separates roster entries, }|{ separates info in
+ * each entry e.g. RL###]\[RVRR1201}|{1201}|{L]\[Limited}|{8165}|{L]\[
+ *
+ * Function labels: RF## first throttle, or RS## second throttle, each label
+ * separated by ]\[ e.g. RF29]\[Light]\[Bell]\[Horn]\[Short Horn]\[ &etc.
+ *
+ * RSF 'R'oster 'P'roperties 'F'unctions
  *
  *
- *      Heartbeat send '*0' to tell device to stop heartbeat, '*#' # = number of seconds until eStop
- *      This class sends initial to device, but does not start monitoring until it gets a response of '*+'
- *      Device should send heartbeat to server in shorter time than eStop
+ * Heartbeat send '*0' to tell device to stop heartbeat, '*#' # = number of
+ * seconds until eStop. This class sends initial to device, but does not start
+ * monitoring until it gets a response of '*+' Device should send heartbeat to
+ * server in shorter time than eStop
  *
- *      Alert message: 'HM' + message to display.
- *      Cannot have newlines in body of text, only at end of message.
+ * Alert message: 'HM' + message to display. Cannot have newlines in body of
+ * text, only at end of message.
  *
  */
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.Socket;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
 
@@ -110,7 +109,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     ThrottleController throttleController;
     ThrottleController secondThrottleController;
-    Hashtable <Character, MultiThrottle> multiThrottles;
+    Hashtable<Character, MultiThrottle> multiThrottles;
     private boolean keepReading;
     private boolean isUsingHeartbeat = false;
     private boolean heartbeat = true;
@@ -126,36 +125,38 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     final boolean isRouteAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowRoute();
     private ConsistController consistC = null;
     private boolean isConsistAllowed;
-
-    List <RosterEntry> rosterList;
-
-    private DeviceManager manager;
     
-    DeviceServer(Socket socket, DeviceManager manager){
+    private DeviceManager manager;
+
+    DeviceServer(Socket socket, DeviceManager manager) {
         this.device = socket;
         this.manager = manager;
-        if (listeners == null){
+        if (listeners == null) {
             listeners = new ArrayList<DeviceListener>(2);
         }
-        
-        try{
-            if (log.isDebugEnabled()) log.debug("Creating input  stream reader for " + device.getRemoteSocketAddress() );
-            in = new BufferedReader(new InputStreamReader(device.getInputStream(),"UTF8"));
-            if (log.isDebugEnabled()) log.debug("Creating output stream writer for " + device.getRemoteSocketAddress() );
-            out = new PrintStream(device.getOutputStream(),true, "UTF8");
 
-        } catch (IOException e){
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("Creating input  stream reader for " + device.getRemoteSocketAddress());
+            }
+            in = new BufferedReader(new InputStreamReader(device.getInputStream(), "UTF8"));
+            if (log.isDebugEnabled()) {
+                log.debug("Creating output stream writer for " + device.getRemoteSocketAddress());
+            }
+            out = new PrintStream(device.getOutputStream(), true, "UTF8");
+
+        } catch (IOException e) {
             log.error("Stream creation failed (DeviceServer)");
             return;
         }
-        sendPacketToDevice("VN"+getWiTVersion());
+        sendPacketToDevice("VN" + getWiTVersion());
         sendPacketToDevice(sendRoster());
         addControllers();
-        sendPacketToDevice("PW"+getWebServerPort());
-        
+        sendPacketToDevice("PW" + getWebServerPort());
+
     }
 
-    public void run(){
+    public void run() {
         for (int i = 0; i < listeners.size(); i++) {
             DeviceListener l = listeners.get(i);
             log.debug("Notify Device Add");
@@ -166,22 +167,22 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
         keepReading = true;	//	Gets set to false when device sends 'Q'uit
         int consecutiveErrors = 0;
-                
-        do{
-            try{
+
+        do {
+            try {
                 inPackage = in.readLine();
 
-                if (inPackage != null){
+                if (inPackage != null) {
                     heartbeat = true;   //  Any contact will keep alive
                     consecutiveErrors = 0;  //reset error counter
                     if (log.isDebugEnabled()) {
-                    	String s = inPackage + "                    "; //pad output so messages form columns
-                    	s = s.substring(0, Math.max(inPackage.length(), 20));
-                    	log.debug("Rcvd: " + s + " from "+getName()+device.getRemoteSocketAddress());
+                        String s = inPackage + "                    "; //pad output so messages form columns
+                        s = s.substring(0, Math.max(inPackage.length(), 20));
+                        log.debug("Rcvd: " + s + " from " + getName() + device.getRemoteSocketAddress());
                     }
-                    
-                    switch (inPackage.charAt(0)){
-                        case 'T':{
+
+                    switch (inPackage.charAt(0)) {
+                        case 'T': {
                             if (throttleController == null) {
                                 throttleController = new ThrottleController('T', this, this);
                             }
@@ -189,94 +190,96 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             break;
                         }
 
-                        case 'S':{
-                            if (secondThrottleController == null){
+                        case 'S': {
+                            if (secondThrottleController == null) {
                                 secondThrottleController = new ThrottleController('S', this, this);
                             }
                             keepReading = secondThrottleController.sort(inPackage.substring(1));
                             break;
                         }
-                        
-                        case 'M':{  //  MultiThrottle M(id character)('A'ction '+' or '-')(message)
-                            if (multiThrottles == null){
+
+                        case 'M': {  //  MultiThrottle M(id character)('A'ction '+' or '-')(message)
+                            if (multiThrottles == null) {
                                 multiThrottles = new Hashtable<Character, MultiThrottle>(1);
                             }
                             char id = inPackage.charAt(1);
-                            if (!multiThrottles.containsKey(id)){   //  Create a MT if this is a new id
-                                multiThrottles.put(id, new MultiThrottle(inPackage.charAt(1), this, this));
+                            if (!multiThrottles.containsKey(id)) {   //  Create a MT if this is a new id
+                                multiThrottles.put(id, new MultiThrottle(id, this, this));
                             }
 
                             // Strips 'M' and id, forwards rest
-                            multiThrottles.get(id).handleMessage(inPackage.substring(2)); 
-                        
+                            multiThrottles.get(id).handleMessage(inPackage.substring(2));
+
                             break;
                         }
 
-                        case 'D':{
-                            if (log.isDebugEnabled()) log.debug("Sending hex packet: "+inPackage.substring(2)+" to command station.");
+                        case 'D': {
+                            if (log.isDebugEnabled()) {
+                                log.debug("Sending hex packet: " + inPackage.substring(2) + " to command station.");
+                            }
                             int repeats = Character.getNumericValue(inPackage.charAt(1));
                             byte[] packet = jmri.util.StringUtil.bytesFromHexString(inPackage.substring(2));
                             cmdStation.sendPacket(packet, repeats);
                             break;
                         }
 
-                        case '*':{  //  Heartbeat only
+                        case '*': {  //  Heartbeat only
 
-                            if (inPackage.length() > 1){
-                                switch (inPackage.charAt(1)){
-                                    
-                                    case '+':{  //  trigger, turns on timed monitoring
-                                        if (!isUsingHeartbeat){
+                            if (inPackage.length() > 1) {
+                                switch (inPackage.charAt(1)) {
+
+                                    case '+': {  //  trigger, turns on timed monitoring
+                                        if (!isUsingHeartbeat) {
                                             startEKG();
                                         }
                                         break;
                                     }
-                                    
-                                    case '-':{  //  turns off
-                                        if (isUsingHeartbeat){
+
+                                    case '-': {  //  turns off
+                                        if (isUsingHeartbeat) {
                                             stopEKG();
                                         }
                                         break;
                                     }
                                 }
-                                
+
                             }
-                            
+
                             break;
                         }   //  end heartbeat block
 
-                        case 'C':{  //  Prefix for confirmed package
-                            switch (inPackage.charAt(1)){
-                                case 'T':{
+                        case 'C': {  //  Prefix for confirmed package
+                            switch (inPackage.charAt(1)) {
+                                case 'T': {
                                     keepReading = throttleController.sort(inPackage.substring(2));
-                                    
+
                                     break;
                                 }
 
-                                default:{
-                                    log.warn("Received unknown network package: "+inPackage);
-                                    
+                                default: {
+                                    log.warn("Received unknown network package: " + inPackage);
+
                                     break;
                                 }
                             }
-                            
+
                             break;
                         }
 
-                        case 'N':{  //  Prefix for deviceName
+                        case 'N': {  //  Prefix for deviceName
                             deviceName = inPackage.substring(1);
-                            log.info("Received Name: "+deviceName);
-                            
-                            if (WiThrottleManager.withrottlePreferencesInstance().isUseEStop()){
+                            log.info("Received Name: " + deviceName);
+
+                            if (WiThrottleManager.withrottlePreferencesInstance().isUseEStop()) {
                                 pulseInterval = WiThrottleManager.withrottlePreferencesInstance().getEStopDelay();
-                                sendPacketToDevice("*"+pulseInterval); //  Turn on heartbeat, if used
+                                sendPacketToDevice("*" + pulseInterval); //  Turn on heartbeat, if used
                             }
                             break;
                         }
 
-                        case 'H':{  //  Hardware
-                            switch (inPackage.charAt(1)){
-                                case 'U':{
+                        case 'H': {  //  Hardware
+                            switch (inPackage.charAt(1)) {
+                                case 'U': {
                                     deviceUDID = inPackage.substring(2);
                                     for (int i = 0; i < listeners.size(); i++) {
                                         DeviceListener l = listeners.get(i);
@@ -285,29 +288,27 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                                     break;
                                 }
 
-
                             }
-                            
 
                             break;
                         }   //  end hardware block
-                        
-                        case 'P':{  //  Start 'P'anel case
-                            switch (inPackage.charAt(1)){
-                                case 'P':{
-                                    if (isTrackPowerAllowed){
+
+                        case 'P': {  //  Start 'P'anel case
+                            switch (inPackage.charAt(1)) {
+                                case 'P': {
+                                    if (isTrackPowerAllowed) {
                                         trackPower.handleMessage(inPackage.substring(2));
                                     }
                                     break;
                                 }
-                                case 'T':{
-                                    if (isTurnoutAllowed){
+                                case 'T': {
+                                    if (isTurnoutAllowed) {
                                         turnoutC.handleMessage(inPackage.substring(2));
                                     }
                                     break;
                                 }
-                                case 'R':{
-                                    if (isRouteAllowed){
+                                case 'R': {
+                                    if (isRouteAllowed) {
                                         routeC.handleMessage(inPackage.substring(2));
                                     }
                                     break;
@@ -316,10 +317,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             break;
                         }   //  end panel block
 
-                        case 'R':{  //  Start 'R'oster case
-                            switch (inPackage.charAt(1)){
-                                case 'C':{
-                                    if (isConsistAllowed){
+                        case 'R': {  //  Start 'R'oster case
+                            switch (inPackage.charAt(1)) {
+                                case 'C': {
+                                    if (isConsistAllowed) {
                                         consistC.handleMessage(inPackage.substring(2));
                                     }
                                     break;
@@ -329,42 +330,43 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             break;
                         }   //  end roster block
 
-                        case 'Q':{
+                        case 'Q': {
                             keepReading = false;
                             break;
                         }
 
-                        default:{   //  If an unknown makes it through, do nothing.
-                            log.warn("Received unknown network package: "+inPackage);
+                        default: {   //  If an unknown makes it through, do nothing.
+                            log.warn("Received unknown network package: " + inPackage);
                             break;
                         }
 
                     }   //End of charAt(0) switch block
 
                     inPackage = null;
+                } else { //in.readLine() IS null
+                    consecutiveErrors += 1;
+                    log.error("null readLine() from socket, consecutive error # {}", consecutiveErrors);
                 }
 
-            } catch (IOException exa){
-                if (keepReading) {
-                	consecutiveErrors += 1;
-                	log.error("readLine from device failed, consecutive error # " + consecutiveErrors);
-                	if (consecutiveErrors > 25) { //stop reading if number of errors exceeded
-                		keepReading = false;
-                	}
-                }
-            } catch (IndexOutOfBoundsException exb){
-                log.warn("Bad message \""+inPackage+"\" from device: "+getName());
+            } catch (IOException exa) {
+                consecutiveErrors += 1;
+                log.error("readLine from device failed, consecutive error # {}", consecutiveErrors);
+            } catch (IndexOutOfBoundsException exb) {
+                log.warn("Bad message \"" + inPackage + "\" from device: " + getName());
             }
 //            try{    //  Some layout connections cannot handle rapid inputs
 //                Thread.sleep(20);
 //            } catch (java.lang.InterruptedException ex){}
+            if (consecutiveErrors > 25) { //stop reading if number of errors exceeded
+                keepReading = false;
+            }
         } while (keepReading);	//	'til we tell it to stop
-        log.debug("Ending thread run loop for device: "+getName());
+        log.debug("Ending thread run loop for device: " + getName());
         closeThrottles();
 
     }
 
-    public void closeThrottles(){
+    public void closeThrottles() {
         stopEKG();
         if (throttleController != null) {
             throttleController.shutdownThrottle();
@@ -376,9 +378,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             secondThrottleController.removeThrottleControllerListener(this);
             secondThrottleController.removeControllerListener(this);
         }
-        if (multiThrottles != null){
-            for (char key : multiThrottles.keySet()){
-                if (log.isDebugEnabled()) log.debug("Closing throttles for key: "+key+" for device: "+getName());
+        if (multiThrottles != null) {
+            for (char key : multiThrottles.keySet()) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Closing throttles for key: " + key + " for device: " + getName());
+                }
                 multiThrottles.get(key).dispose();
             }
             multiThrottles.clear();
@@ -387,16 +391,16 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
         throttleController = null;
         secondThrottleController = null;
-        if (trackPower != null){
+        if (trackPower != null) {
             trackPower.removeControllerListener(this);
         }
-        if (turnoutC != null){
+        if (turnoutC != null) {
             turnoutC.removeControllerListener(this);
         }
-        if (routeC != null){
+        if (routeC != null) {
             routeC.removeControllerListener(this);
         }
-        if (consistC != null){
+        if (consistC != null) {
             consistC.removeControllerListener(this);
         }
 
@@ -407,37 +411,44 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
         }
     }
-    
 
-    public void closeSocket(){
+    public void closeSocket() {
 
         keepReading = false;
-        try{
+        try {
             if (device.isClosed()) {
-                if (log.isDebugEnabled()) log.debug("device socket " + getName()+device.getRemoteSocketAddress() + " already closed.");
+                if (log.isDebugEnabled()) {
+                    log.debug("device socket " + getName() + device.getRemoteSocketAddress() + " already closed.");
+                }
             } else {
-            	device.close();
-            	if (log.isDebugEnabled()) log.debug("device socket " + getName()+device.getRemoteSocketAddress() + " closed.");
+                device.close();
+                if (log.isDebugEnabled()) {
+                    log.debug("device socket " + getName() + device.getRemoteSocketAddress() + " closed.");
+                }
             }
-        }catch (IOException e){
-        	if (log.isDebugEnabled()) log.error("device socket " + getName()+device.getRemoteSocketAddress() + " close failed with IOException.");
+        } catch (IOException e) {
+            if (log.isDebugEnabled()) {
+                log.error("device socket " + getName() + device.getRemoteSocketAddress() + " close failed with IOException.");
+            }
         }
     }
-    
-    public void startEKG(){
+
+    public void startEKG() {
         isUsingHeartbeat = true;
         stopEKGCount = 0;
         ekg = new Timer();
-        TimerTask task = new TimerTask(){
-            public void run(){  //  Drops on second pass
-                if (!heartbeat){
+        TimerTask task = new TimerTask() {
+            public void run() {  //  Drops on second pass
+                if (!heartbeat) {
                     stopEKGCount++;
                     //  Send eStop to each throttle
-                    if (log.isDebugEnabled()) log.debug("Lost signal from: "+getName()+", sending eStop");
-                    if (throttleController != null){
+                    if (log.isDebugEnabled()) {
+                        log.debug("Lost signal from: " + getName() + ", sending eStop");
+                    }
+                    if (throttleController != null) {
                         throttleController.sort("X");
                     }
-                    if (secondThrottleController != null){
+                    if (secondThrottleController != null) {
                         secondThrottleController.sort("X");
                     }
                     if (multiThrottles != null) {
@@ -457,49 +468,57 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
 
         };
-        ekg.scheduleAtFixedRate(task, pulseInterval * 900, pulseInterval * 900);
-    }
-    
-    public void stopEKG(){
-        isUsingHeartbeat = false;
-        if (ekg != null){
-            ekg.cancel();
-        }
-        
+        ekg.scheduleAtFixedRate(task, pulseInterval * 900L, pulseInterval * 900L);
     }
 
-    private void addControllers(){
-        if (isTrackPowerAllowed){
+    public void stopEKG() {
+        isUsingHeartbeat = false;
+        if (ekg != null) {
+            ekg.cancel();
+        }
+
+    }
+
+    private void addControllers() {
+        if (isTrackPowerAllowed) {
             trackPower = WiThrottleManager.trackPowerControllerInstance();
-            if (trackPower.isValid){
-                if (log.isDebugEnabled()) log.debug("Track Power valid.");
+            if (trackPower.isValid) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Track Power valid.");
+                }
                 trackPower.addControllerListener(this);
                 trackPower.sendCurrentState();
             }
         }
-        if (isTurnoutAllowed){
+        if (isTurnoutAllowed) {
             turnoutC = WiThrottleManager.turnoutControllerInstance();
-            if (turnoutC.verifyCreation()){
-                if (log.isDebugEnabled()) log.debug("Turnout Controller valid.");
+            if (turnoutC.verifyCreation()) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Turnout Controller valid.");
+                }
                 turnoutC.addControllerListener(this);
                 turnoutC.sendTitles();
                 turnoutC.sendList();
             }
         }
-        if (isRouteAllowed){
+        if (isRouteAllowed) {
             routeC = WiThrottleManager.routeControllerInstance();
-            if (routeC.verifyCreation()){
-                if (log.isDebugEnabled()) log.debug("Route Controller valid.");
+            if (routeC.verifyCreation()) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Route Controller valid.");
+                }
                 routeC.addControllerListener(this);
                 routeC.sendTitles();
                 routeC.sendList();
             }
         }
-        
+
         //  Consists can be selected regardless of pref, as long as there is a ConsistManager.
         consistC = WiThrottleManager.consistControllerInstance();
-        if (consistC.verifyCreation()){
-            if (log.isDebugEnabled()) log.debug("Consist Controller valid.");
+        if (consistC.verifyCreation()) {
+            if (log.isDebugEnabled()) {
+                log.debug("Consist Controller valid.");
+            }
             isConsistAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowConsist();
             consistC.addControllerListener(this);
             consistC.setIsConsistAllowed(isConsistAllowed);
@@ -507,30 +526,30 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
             consistC.sendAllConsistData();
         }
-        
+
     }
 
-    public String getUDID(){
+    public String getUDID() {
         return deviceUDID;
     }
 
-    public String getName(){
+    public String getName() {
         return deviceName;
     }
 
-    public String getCurrentAddressString(){
+    public String getCurrentAddressString() {
         StringBuilder s = new StringBuilder("");
-        if(throttleController != null){
+        if (throttleController != null) {
             s.append(throttleController.getCurrentAddressString());
             s.append(" ");
         }
-        if (secondThrottleController != null){
+        if (secondThrottleController != null) {
             s.append(secondThrottleController.getCurrentAddressString());
             s.append(" ");
         }
-        if (multiThrottles != null){
-            for (MultiThrottle mt : multiThrottles.values()){
-                if (mt.throttles != null){
+        if (multiThrottles != null) {
+            for (MultiThrottle mt : multiThrottles.values()) {
+                if (mt.throttles != null) {
                     for (MultiThrottleController mtc : mt.throttles.values()) {
                         s.append(mtc.getCurrentAddressString());
                         s.append(" ");
@@ -541,88 +560,106 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         return s.toString();
     }
 
-    public static String getWiTVersion(){
+    public static String getWiTVersion() {
         return versionNumber;
     }
-    
-    public static String getWebServerPort(){
-        return Integer.toString(WebServerManager.getWebServerPreferences().getPort());
+
+    public static String getWebServerPort() {
+        return Integer.toString(WebServerPreferences.getDefault().getPort());
     }
-    
-/**
- * Called by various Controllers to send a string message
- * to a connected device.  Appends a newline to the end.
- * @param message   The string to send.
- */
-    public void sendPacketToDevice(String message){
-        if (message == null) return; //  Do not send a null.
+
+    /**
+     * Called by various Controllers to send a string message to a connected
+     * device. Appends a newline to the end.
+     *
+     * @param message The string to send.
+     */
+    public void sendPacketToDevice(String message) {
+        if (message == null) {
+            return; //  Do not send a null.
+        }
         out.println(message + newLine);
         if (log.isDebugEnabled()) {
-        	String s = message + "                    "; //pad output so messages form columns
-        	s = s.substring(0, Math.max(message.length(), 20));
-        	log.debug("Sent: " + s + "  to  "+getName()+device.getRemoteSocketAddress());
+            String s = message + "                    "; //pad output so messages form columns
+            s = s.substring(0, Math.max(message.length(), 20));
+            log.debug("Sent: " + s + "  to  " + getName() + device.getRemoteSocketAddress());
         }
     }
 
     /**
      * Add a DeviceListener
+     *
      * @param l
      */
     public void addDeviceListener(DeviceListener l) {
-        if (listeners == null)
-                listeners = new ArrayList<DeviceListener>(2);
-        if (!listeners.contains(l))
-                listeners.add(l);
+        if (listeners == null) {
+            listeners = new ArrayList<DeviceListener>(2);
+        }
+        if (!listeners.contains(l)) {
+            listeners.add(l);
+        }
     }
 
     /**
      * Remove a DeviceListener
+     *
      * @param l
      */
     public void removeDeviceListener(DeviceListener l) {
-        if (listeners == null)
-                return;
-        if (listeners.contains(l))
-                listeners.remove(l);
+        if (listeners == null) {
+            return;
+        }
+        if (listeners.contains(l)) {
+            listeners.remove(l);
+        }
     }
 
-    
-    public void notifyControllerAddressFound(ThrottleController TC){
+    public void notifyControllerAddressFound(ThrottleController TC) {
 
         for (int i = 0; i < listeners.size(); i++) {
             DeviceListener l = listeners.get(i);
             l.notifyDeviceAddressChanged(this);
-            if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " address: "+TC.getCurrentAddressString());
+            if (log.isDebugEnabled()) {
+                log.debug("Notify DeviceListener: " + l.getClass() + " address: " + TC.getCurrentAddressString());
+            }
         }
     }
-    
-    public void notifyControllerAddressReleased(ThrottleController TC){
+
+    public void notifyControllerAddressReleased(ThrottleController TC) {
 
         for (int i = 0; i < listeners.size(); i++) {
             DeviceListener l = listeners.get(i);
             l.notifyDeviceAddressChanged(this);
-            if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " address: "+TC.getCurrentAddressString());
+            if (log.isDebugEnabled()) {
+                log.debug("Notify DeviceListener: " + l.getClass() + " address: " + TC.getCurrentAddressString());
+            }
         }
-        
+
     }
-    
+
     /**
-     *  Format a package to be sent to the device for roster list selections.
-     * @return String containing a formatted list of some of each RosterEntry's info.
-     *          Include a header with the length of the string to be received.
+     * Format a package to be sent to the device for roster list selections.
+     *
+     * @return String containing a formatted list of some of each RosterEntry's
+     *         info. Include a header with the length of the string to be
+     *         received.
      */
-    public String sendRoster(){
-        if (rosterList == null) rosterList = Roster.instance().getEntriesInGroup(manager.getSelectedRosterGroup());
-        StringBuilder rosterString = new StringBuilder(rosterList.size()*25);
-        for (int i=0;i<rosterList.size();i++){
-            RosterEntry entry = rosterList.get(i);
+    public String sendRoster() {
+        List<RosterEntry> rosterList;
+        rosterList = Roster.instance().getEntriesInGroup(manager.getSelectedRosterGroup());
+        StringBuilder rosterString = new StringBuilder(rosterList.size() * 25);
+        for (RosterEntry entry : rosterList) {
             StringBuilder entryInfo = new StringBuilder(entry.getId()); //  Start with name
-            entryInfo.append("}|{" + entry.getDccAddress());    //  Append address #
-            if (entry.isLongAddress()){ //  Append length value
+            entryInfo.append("}|{");
+            entryInfo.append(entry.getDccAddress());
+            if (entry.isLongAddress()) { //  Append length value
                 entryInfo.append("}|{L");
-            }else entryInfo.append("}|{S");
-            
-            rosterString.append("]\\["+entryInfo);  //  Put this info in as an item
+            } else {
+                entryInfo.append("}|{S");
+            }
+
+            rosterString.append("]\\[");  //  Put this info in as an item
+            rosterString.append(entryInfo);
 
         }
         rosterString.trimToSize();
@@ -630,7 +667,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         return ("RL" + rosterList.size() + rosterString);
     }
 
-
-    static Logger log = LoggerFactory.getLogger(DeviceServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeviceServer.class.getName());
 
 }

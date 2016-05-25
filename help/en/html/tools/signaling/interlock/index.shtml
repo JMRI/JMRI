@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Kevin Dickerson 2011 -->
-<!-- $Id: Interlocking.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- $Id$ -->
 <title>JMRI: Interlocking</title>
 
 <!-- Style -->
@@ -16,39 +16,40 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="/help/en/html/tools/signaling/Sidebar" -->
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 <h1>Entry Exit and Interlocking </h1>
-This brief tutorial is designed to explain how the Entry Exit and Interlocking is set up and works within JMRI. It is based upon the signal mast logic  <a href="http://www.jmri.org/community/clinics/UK2011/">clinic</a> held in the UK and follows on from that.
+This brief tutorial is designed to explain how the Entry Exit and Interlocking is set up and works within JMRI. It is based upon the Signal Mast Logic  <a href="http://www.jmri.org/community/clinics/UK2011/">clinic</a> held in the UK and follows on from that.
 <p>
-The panel file for this tutorial was taken from the "Logix and Feathers" section of the signal mast tutorial, the only difference, is that the signal mast logic has been removed from all the signal masts apart from the "up outer mast" and the "down platform mast" as these are used to represent signals in automatically controlled areas.
+The panel file for this tutorial was taken from the "Logix and Feathers" section of the Signal Mast tutorial. The only difference is that the Signal Mast Logic has been removed from all the Signal Masts apart from the "up outer mast" and the "down platform mast" as these are used to represent signals in automatically controlled areas.
 <p>
 In addition the file has been modified to use Internal Sensors and Turnouts only, thus allowing it to be opened with any system configured in the preferences.
 <p>
-As a prerequisite the <a href="http://www.jmri.org/community/clinics/UK2011/">clinic</a> on Signal Mast Logic should be followed before attempting this one as it provides the foundation on how to build your panel ready for use with the signal mast logic and also Interlocking.
+As a prerequisite the <a href="http://www.jmri.org/community/clinics/UK2011/">clinic</a> on Signal Mast Logic should be followed before attempting this one as it provides the foundation on how to build your panel ready for use with the Signal Mast Logic and also Interlocking.
 <p>
-The track plan for this is the same as in the Signal Mast Logic and could be considered a typical scenario where the Down Approach, Up Platform and Bay Signals would be under the control of the SignalMan, while the Up Outer and Down Platform would be automatically controlled.
+The track plan for this is the same as in the Signal Mast Logic clinic and could be considered a typical scenario where the Down Approach, Up Platform and Bay Signals would be under the control of the SignalMan, while the Up Outer and Down Platform would be automatically controlled.
 <p><img src="images/interlocklayoutoverview.png" width="830" height="278"> </p>
 <p>
 The panel file for this tutorial can be found <a href="Interlock Demo 1.xml">here</a>
 <p>
-The NX buttons all work in pairs and must be selected in the correct order, also it is not possible to leap-frog a NX button to set a route between two non-adjacent buttons. Ie if you have buttons A—B—C it is not possible to set a route from A to C, the order of selection must be A-B B-C.
+The NX buttons all work in pairs and must be selected in the correct order, also it is not possible to leap-frog a NX button to set a Route between two non-adjacent buttons. I.e. if you have buttons A-B-C it is not possible to set a route from A to C, the order of selection must be A-B B-C.
 
 <h2>Setting up the layout editor</h2>
-In the Signal Mast Logic tutorial each block was configured with a different colour to show occupied and unoccupied (<a href="http://www.jmri.org/community/clinics/UK2011/layout_editor.shtml">Building a Layout</a>).  In addition it is possible to assign an alternative colour to each block.  When using Full Interlocking, this alternative colour is used to highlight routes that have been set, when a block is using the alternative colour it also prevents another route from being set using that block.
+<p>In the Signal Mast Logic tutorial each block was configured with a different colour to show occupied and unoccupied (<a href="http://www.jmri.org/community/clinics/UK2011/layout_editor.shtml">Building a Layout</a>).  In addition it is possible to assign an alternative colour to each block.  When using Full Interlocking, this alternative colour is used to highlight Routes that have been set, when a Block is using the alternative colour it also prevents another route from being set using that block.
 <p>
-The eNtry eXit (NX) utilises sensors for each NX location, typically associated with a signal or an End Bumper/Buffer stop, these sensors would act in the same way as a button on a physical panel, setting the button active to start the selection with the setting active of a second sensor completing the route or path selection.  If a matching sensor is not activated within 10 seconds then the initial sensor will be reset back to inactive.
+The eNtry eXit (NX) utilises sensors for each NX location, typically associated with a signal or an End Bumper/Buffer stop, these sensors would act in the same way as a button on a physical panel, setting the button active to start the selection with the setting Active of a second sensor completing the route or path selection.  If a matching Sensor is not activated within 10 seconds then the initial Sensor will be reset back to Inactive.
 <p>
-A sensor needs to be configured for each NX location.  As a suggestion to help keep track of things prefix the user name with “NX” followed by the associated signal.  So for example if the NX sensor will be associated with the “Down Appr” signal, then make the sensor username “NX Down Appr”.
+A sensor needs to be configured for each NX location.  As a suggestion to help keep track of things prefix the user name with "NX" followed by the associated signal. So for example if the NX Sensor will be associated with the "Down Appr" signal, then make the Sensor User Name "NX Down Appr".
 <p>
-Once the sensors have been created they can associate and positioned with locations on the layout editor, in the same way that the signal masts were done in part 6 of the signal mast logic clinic.  Bring up the context menu (right click) on the block boundary and select “Set Sensors”, from the next window,
+Once the Sensors have been created they can associate and positioned with locations on the Layout Editor, in the same way that the signal masts were done in part 6 of the Signal Mast Logic clinic.  Bring up the context menu (right click) on the Block boundary and select "Set Sensors" from the list.
 <p>
 <img src="images/assignsensors.png" width="331" height="539">
 <p>
-Remember that the block which the sensor is assigned to will determine the direction of travel, if the sensor is assigned to the incorrect block then it will not get picked up and the interlocks will not work.<br>
-The panel file with the sensors already assigned can be found <a href="Interlock Demo 2.xml">here</a>
-<h2>Creating the NX Rules.</h2>
-Open up the Entry Exit window, which can be found in the tools option of the layout editor.  This will bring up a window like the following..
+Remember that the Block which the Sensor is assigned to will determine the direction of travel; if the Sensor is assigned to the incorrect Block then it will not get picked up and the interlocks will not work.<br>
+The panel file with the Sensors already assigned can be found <a href="Interlock Demo 2.xml">here</a>
+	
+<h2>Creating the NX Rules</h2>
+Open up the Entry Exit window, which can be found in the tools option of the layout editor.  This will bring up a window like the following.
 <p>
 <img src="images/emptyentryexitwindow.png" width="790" height="244">
 <p>
@@ -57,8 +58,8 @@ This window allows you to see which NX pairs have been created and the state of 
 <li>If you are going to create the pair manually then select the Entry and Exit Points from the respective drop down lists, or leave them as is.</li>
 <li>Select the type of interlocking that we are going to use.</li>
     <ul><li><b>Set Turnout Only</b> - This will only set the turnouts to the correct state between the NX sensors.</li>
-    <li><b>Set Turnouts and SignalMast</b> - This will do as above, but also generate the SignalMast Logic at the same time</li>
-    <li><b>Full Interlock</b> - This will do all of the above and also lock the path and prevent another clashing one from being selected</li></ul>
+    <li><b>Set Turnouts and Signal Masts</b> - This will do as above, but also generate the Signal Mast Logic at the same time.</li>
+    <li><b>Full Interlock</b> - This will do all of the above and also lock the path and prevent another clashing one from being selected.</li></ul>
 </ol>
 
 <h2>Set Turnout Only</h2>
@@ -66,32 +67,35 @@ If to start with you select "Set Turnout Only" and press "Auto generate Entry Ex
 <p>
 <img src="images/populatedentryexitwindow.png" width="790" height="315">
 <p>
-The four paths generated are all valid NX pairs based upon the direction of travel.  For the NX to be set you must first select the Entry sensor, followed by the Exit sensor.  If they are selected in the reverse order the path will not be set.
+The four paths generated are all valid NX pairs based upon the direction of travel. For the NX to be set you must first select the Entry sensor, followed by the Exit sensor.  If they are selected in the reverse order the path will not be set.
 <p>
-You can see that if you were to set a route from the down appr to the bay buffer stop, the turnouts get automatically set.  The sensors will also flash while the route is being set up.
+You can see that if you were to set a Route from the "down appr" to the bay buffer stop, the Turnouts get automatically set. The Sensors will also flash while the Route is being set up.
 <p>
-If you then set a route from the "bay mast" to the “up appr”, again the turnouts will automatically be set.
+If you then set a Route from the "bay mast" to the "up appr", again the Turnouts will automatically be set.
 <p>
 <img src="images/interlockturnout.png" width="498" height="229">
 <p>
 With the Turnout Only interlock type, as no further logic or interlocking is done, it is possible to allow the interlock to be set-up no matter which way round the NX buttons are selected.
-This can be done by selecting the "Both Way" flag in the table against an entry.  You can then set the path in reverse, eg "NX Up Outer" to "NX Bay Mast".
+This can be done by selecting the "Both Way" flag in the table against an entry. You can then set the path in reverse, eg "NX Up Outer" to "NX Bay Mast".
 <p>
 In addition to this with a "Turnout Only"  set you can also create NX pairs that go against the normal direction of travel, for example from "Bay Mast" to "Down Appr"
-<h2>Turnouts and SignalMasts</h2>
-If "Set Turnouts and SignalMasts" is selected and then the "Auto Generate" button is pressed, the same four interlocks will be generate, with the NX type set to "Signal Mast".<p>
-This time when you set the route between two NX sensors, it will set the turnouts and if SignalMasts are placed at the same location it also configures the logic from the signal mast at the source.
+	
+<h2>Turnouts and Signal Masts</h2>
+If "Set Turnouts and Signal Masts" is selected and then the "Auto Generate" button is pressed, the same four interlocks will be generate, with the NX type set to "Signal Mast".<p>
+This time when you set the Route between two NX sensors, it will set the Turnouts and if Signal Masts are placed at the same location it also configures the logic from the Signal Mast at the source.
 <p>
 <img src="images/interlocksigmast.png" width="498" height="229">
 <p>
-The SignalMast Logic, will appear in the signalmast logic table, this logic is not saved when the panel file is saved.
+The Signal Mast Logic will appear in the Signal Mast Logic Table. This logic is not saved when the panel file is saved.
 <p>
-If you set a route from down appr into the bay buffer stop, you will see that the turnouts get set and the signal changes to the correct state.  If you then change the state of the turnout or block on the path, you will see that the source signalmast will change state appropriately.
-<p>
+If you set a Route from "Down appr" into the bay buffer stop, you will see that the Turnouts get set and the Signal changes to the correct state.  If you then change the state of the Turnout or Block on the path, you will see that the source Signal Mast will change state appropriately.
+
+	
 <h2>Full Interlock</h2>
-If "Full Interlock" is selected and then the "Auto Generate" button is pressed, again you would end up with the four interlocks as before.
+<p>If "Full Interlock" is selected and then the "Auto Generate" button is pressed, again you would end up with the four interlocks as before.
+	
 <h3>With Signalmasts</h3>
-When a full interlock is configured and there are Signal masts placed at the NX locations, it will place the signal mast at the source location into a held state until a path has been set, which will in turn releases the signal.  This is working on the basis that these signals are now under the control of a SignalMan who has to set the appropriate route before releasing the signal.
+When a full interlock is configured and there are Signal masts placed at the NX locations, it will place the Signal Mast at the source location into a Held state until a path has been set, which will in turn releases the signal. This is working on the basis that these signals are now under the control of a SignalMan who has to set the appropriate Route before releasing the signal.
 <p>
 <img src="images/interlockmasttable.png" width="650" height="347">
 <p>
@@ -101,30 +105,32 @@ The full interlock will also set the state of the blocks to use the alternative 
 <p>
 If you try and set a conflicting path, then an error message will be displayed and the path will not be set.
 <p>
-As the route gets cleared down by a train occupying the blocks, so does the interlock.
+As the Route gets cleared down by a train occupying the Blocks, so does the interlock.
 <p>
 <img src="images/interlockfull2.png" width="498" height="229">
 <p>
-If you re-select an active interlock, the NX sensors will start to flash, and you get the option to either "Cancel" the route, "Clear Down" or "Exit".  
+If you re-select an active interlock, the NX sensors will start to flash, and you get the option to either "Cancel" the Route, "Clear Down" or "Exit".  
 <p>
 <img src="images/interlockcancelclear.png" width="318" height="116">
 <p>
 <p>
-<ul><li>Cancel will de-activate the route</li>
-<li> Exit will just the message on the screen and do nothing else. </li>
+<ul><li>"Cancel" will de-activate the Route</li>
 <li>"Clear Down" will manually simulate a train traveling over the blocks and move any values assigned against the block to the end block.</li>
+<li> "Exit" will just put the message on the screen and do nothing else. </li>
 </ul>
-	<h3>Without Signalmasts.</h3>
-If no signalmasts are configured between the two points the interlock will work in very much the same way as it would with SignalMasts, it just doesn’t setup or release any signals.
-<h2>Further Details.</h2>
+
+	<h3>Without Signal Masts</h3>
+If no Signal Masts are configured between the two points the interlock will work in very much the same way as it would with Signal Masts, it just doesn't set up or release any signals.
+	
+<h2>Further Details</h2>
 <p>
-With all the Entry Exit methods the system will try to set the route with the lowest cost.  Each layout block has a cost assigned it is the sum of all the block costs in a route that determine the overall route cost.  By default a Main Track is assigned a value of 50, while a side track has a value of 200.  These values can be changed by the user, by editing the layout block.  If the route with the lowest cost has either another entry/exit point in the same direction, or a block that is already set Occupied or reserved, then it will try and find an alternative route if one is available.
+With all the Entry Exit methods the system will try to set the route with the lowest cost.  Each layout block has a cost assigned it is the sum of all the block costs in a route that determine the overall route cost.  By default a Main Track is assigned a value of 50, while a side track has a value of 200.  These values can be changed by the user, by editing the layout block. If the route with the lowest cost has either another entry/exit point in the same direction, or a block that is already set Occupied or Reserved, then it will try and find an alternative route if one is available.
 <p>
 <img src="images/editblock.png" width="368" height="579">
 <p>
-Uni-directional Blocks - It is possible to set the relationship between adjacent blocks, to prevent routes from being setup from one block to another or vice-versa.  This is set when editing the layout block, you have the option for both way, to only send or only receive.
+Uni-directional Blocks - It is possible to set the relationship between adjacent blocks, to prevent routes from being set up from one block to another or vice-versa.  This is set when editing the layout block, you have the option for both way, to only send or only receive.
 <p>
-To view how a particular block connects to other blocks, with costs and valid paths, right click on a track segment or turnout roundel and select "View Block Routing"
+To view how a particular block connects to other blocks, with costs and valid paths, right click on a track segment or turnout roundel and select "View Block Routing".
 <p>
 <img src="images/blockrouting.png" width="542" height="460">
 <p>

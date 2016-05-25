@@ -2,9 +2,8 @@
 #
 # Author: Bob Jacobsen, copyright 2004
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 # start the program
 import apps

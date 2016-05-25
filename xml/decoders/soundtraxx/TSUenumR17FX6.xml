@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
 <!--                                                                        -->
@@ -12,11 +12,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new include file for SoundTraxx Tsunami -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Disabled (FX6 mapping)">
     <choice>Disabled (FX6 mapping)</choice>
+    <choice xml:lang="it">Disabilitata (Mamma FX6)</choice>
   </enumChoice>
   <enumChoice choice="Enabled (Backup Light mapping)">
     <choice>Enabled (Backup Light mapping)</choice>
+    <choice xml:lang="it">Abilitata (Mamma Luci retro)</choice>
   </enumChoice>
 </enumVal>

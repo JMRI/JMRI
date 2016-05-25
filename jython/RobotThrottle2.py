@@ -97,6 +97,7 @@
 # allow for the removal of the PropertyChangeListener.
 #
 
+import jmri
 import java
 import javax.swing
 
@@ -401,9 +402,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.priorBlocks = self.currentBlocks
         # find signals from currentBlock
         if (self.currentBlock != None and self.nextBlock != None) :
-            nearSignal = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(self.currentBlock, self.nextBlock)
+            nearSignal = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(self.currentBlock, self.nextBlock)
         if (self.nextBlock != None and self.beyondBlock != None) :
-            farSignal = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(self.nextBlock, self.beyondBlock)
+            farSignal = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(self.nextBlock, self.beyondBlock)
         if (self.blockAhead2.isSelected() == False) :
             #self.msgText("3 block test: " + self.giveBlockName(self.currentBlock) + ":" + self.giveBlockName(self.nextBlock) + ":" + self.giveBlockName(oldCurrent) + " signals:" + self.giveSignalName(oldSignal) + ":" + self.giveSignalName(nearSignal) + "\n")
             watchSignal = nearSignal
@@ -625,7 +626,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 else :
                     if (self.debugLevel >= MediumDebug) :
                         self.msgText("looking for signal between " + self.giveBlockName(cBlock) + " and " + self.giveBlockName(nBlock) + "\n")
-                    s = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(cBlock, nBlock)
+                    s = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(cBlock, nBlock)
                     if (s != None) :
                         if (self.debugLevel >= MediumDebug) :
                             self.msgText("Found currentSignal: " + self.giveSignalName(s) + " displaying: " + self.cvtAppearanceText(s) + "\n")

@@ -1,29 +1,22 @@
 package jmri.jmrix.cmri.serial.serialdriver.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import java.util.List;
+import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
-import jmri.jmrix.cmri.serial.*;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
-import java.util.List;
-import java.util.StringTokenizer;
-import jmri.JmriException;
-import org.jdom.*;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import org.jdom2.Element;
 
 /**
- * Handle XML persistance of layout connections by persisting
- * the SerialDriverAdapter (and connections). Note this is
- * named as the XML version of a ConnectionConfig object,
- * but it's actually persisting the SerialDriverAdapter.
+ * Handle XML persistance of layout connections by persisting the
+ * SerialDriverAdapter (and connections). Note this is named as the XML version
+ * of a ConnectionConfig object, but it's actually persisting the
+ * SerialDriverAdapter.
  * <P>
- * This class is invoked from jmrix.JmrixConfigPaneXml on write,
- * as that class is the one actually registered. Reads are brought
- * here directly via the class attribute in the XML.
- * 
- * Chuck Catania (c2) tags for CMRInet/cpNode changes
+ * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
+ * is the one actually registered. Reads are brought here directly via the class
+ * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Chuck Catania Copyright: Copyright (c) 2014, 2015, 2016
@@ -37,9 +30,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     /**
      * Write out the SerialNode objects too
+     *
      * @param e Element being extended
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void extendElement(Element e) {
@@ -68,19 +62,19 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             n.setAttribute("name",""+node.getNodeAddress());
             e.addContent(n);
             // add parameters to the node as needed
-            n.addContent(makeParameter("nodetype", ""+node.getNodeType()));
-            n.addContent(makeParameter("bitspercard", ""+node.getNumBitsPerCard()));
-            n.addContent(makeParameter("transmissiondelay", ""+node.getTransmissionDelay()));
-            n.addContent(makeParameter("num2lsearchlights", ""+node.getNum2LSearchLights()));
-            n.addContent(makeParameter("pulsewidth", ""+node.getPulseWidth()));
+            n.addContent(makeParameter("nodetype", "" + node.getNodeType()));
+            n.addContent(makeParameter("bitspercard", "" + node.getNumBitsPerCard()));
+            n.addContent(makeParameter("transmissiondelay", "" + node.getTransmissionDelay()));
+            n.addContent(makeParameter("num2lsearchlights", "" + node.getNum2LSearchLights()));
+            n.addContent(makeParameter("pulsewidth", "" + node.getPulseWidth()));
             String value = "";
-            for (int i=0; i<node.getLocSearchLightBits().length; i++) {
-            	value = value + Integer.toHexString(node.getLocSearchLightBits()[i]&0xF);
+            for (int i = 0; i < node.getLocSearchLightBits().length; i++) {
+                value = value + Integer.toHexString(node.getLocSearchLightBits()[i] & 0xF);
             }
-            n.addContent(makeParameter("locsearchlightbits", ""+value));
+            n.addContent(makeParameter("locsearchlightbits", "" + value));
             value = "";
-            for (int i=0; i<node.getCardTypeLocation().length; i++) {
-            	value = value + Integer.toHexString(node.getCardTypeLocation()[i]&0xF);
+            for (int i = 0; i < node.getCardTypeLocation().length; i++) {
+                value = value + Integer.toHexString(node.getCardTypeLocation()[i] & 0xF);
             }
             n.addContent(makeParameter("cardtypelocation", ""+value));
             
@@ -109,19 +103,20 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
            
              // look for the next node
             node = (SerialNode) SerialTrafficController.instance().getNode(index);
-            index ++;
+            index++;
         }
  //       log.info("Saved Configured Nodes "+(index-1));
         
         
     }
-	protected Element makeParameter(String name, String value) {
-    	Element p = new Element("parameter");
-       	p.setAttribute("name",name);
+
+    protected Element makeParameter(String name, String value) {
+        Element p = new Element("parameter");
+        p.setAttribute("name", name);
         p.addContent(value);
         return p;
-	}
-	
+    }
+
     protected void getInstance() {
         adapter = SerialDriverAdapter.instance();
     }
@@ -167,10 +162,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         {
             Element n = l.get(i);
             int addr = Integer.parseInt(n.getAttributeValue("name"));
-            int type = Integer.parseInt(findParmValue(n,"nodetype"));
-            int bpc = Integer.parseInt(findParmValue(n,"bitspercard"));
-            int delay = Integer.parseInt(findParmValue(n,"transmissiondelay"));
-            int num2l = Integer.parseInt(findParmValue(n,"num2lsearchlights"));
+            int type = Integer.parseInt(findParmValue(n, "nodetype"));
+            int bpc = Integer.parseInt(findParmValue(n, "bitspercard"));
+            int delay = Integer.parseInt(findParmValue(n, "transmissiondelay"));
+            int num2l = Integer.parseInt(findParmValue(n, "num2lsearchlights"));
             int pulseWidth = 500;
             if ((findParmValue(n,"pulsewidth")) != null)
              {
@@ -261,29 +256,27 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     /**
-     * Service routine to look through "parameter" child elements
-     * to find a particular parameter value
-     * @param e Element containing parameters
+     * Service routine to look through "parameter" child elements to find a
+     * particular parameter value
+     *
+     * @param e    Element containing parameters
      * @param name name of desired parameter
      * @return String value
      */
-    @SuppressWarnings("unchecked")
-	String findParmValue(Element e, String name) {
+    String findParmValue(Element e, String name) {
         List<Element> l = e.getChildren("parameter");
-        for (int i = 0; i<l.size(); i++) {
+        for (int i = 0; i < l.size(); i++) {
             Element n = l.get(i);
-            if (n.getAttributeValue("name").equals(name))
+            if (n.getAttributeValue("name").equals(name)) {
                 return n.getTextTrim();
+            }
         }
         return null;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
-     
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

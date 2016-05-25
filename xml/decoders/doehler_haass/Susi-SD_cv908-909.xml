@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2015</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2015-12-29</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+  </revhistory>
+  <variable label="AUX1 Mapping" CV="908" tooltip="CV908" default="0"  exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05,SH10A_1.06">
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map-aux.xml"/>
+	<label xml:lang="fr">Mapping AUX 1</label>
+	<label xml:lang="de">Funktionszuordnung AUX 1</label>
+  </variable>
+  <variable label="AUX2 Mapping" CV="909" tooltip="CV909" default="0"  exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05,SH10A_1.06">
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map-aux.xml"/>
+	<label xml:lang="fr">Mapping AUX 2</label>
+	<label xml:lang="de">Funktionszuordnung AUX 2</label>
+  </variable>
+</variables>

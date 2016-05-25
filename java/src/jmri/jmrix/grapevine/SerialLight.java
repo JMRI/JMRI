@@ -1,23 +1,26 @@
 // SerialLight.java
-
 package jmri.jmrix.grapevine;
 
+import jmri.implementation.AbstractLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.implementation.AbstractLight;
 
 /**
- * Implementation of the Light interface using Grapevine
- * signal ports.  
+ * Implementation of the Light interface using Grapevine signal ports.
  * <P>
- * The "On" state results in sending a "green" setting to the hardware
- * port; the "Off" state results in sending a "dark" setting to the hardware.
+ * The "On" state results in sending a "green" setting to the hardware port; the
+ * "Off" state results in sending a "dark" setting to the hardware.
  *
- * @author      Dave Duchamp Copyright (C) 2004
- * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision$
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
+ * @version $Revision$
  */
 public class SerialLight extends AbstractLight {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -1633282673542762421L;
 
     /**
      * Create a Light object, with only system name.
@@ -29,6 +32,7 @@ public class SerialLight extends AbstractLight {
         // Initialize the Light
         initializeLight(systemName);
     }
+
     /**
      * Create a Light object, with both system and user names.
      * <P>
@@ -38,47 +42,44 @@ public class SerialLight extends AbstractLight {
         super(systemName, userName);
         initializeLight(systemName);
     }
-        
+
     /**
-     * Sets up system dependent instance variables and sets system
-     *    independent instance variables to default values
-     * Note: most instance variables are in AbstractLight.java
+     * Sets up system dependent instance variables and sets system independent
+     * instance variables to default values Note: most instance variables are in
+     * AbstractLight.java
      */
     private void initializeLight(String systemName) {
         // Extract the Bit from the name
         int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
         // num is 101-124, 201-224, 301-324, 401-424
-        output = (num%100)-1; // 0-23
-        bank = (num/100)-1;  // 0 - 3
+        output = (num % 100) - 1; // 0-23
+        bank = (num / 100) - 1;  // 0 - 3
 
         // Set initial state to OFF internally and on layout
-        setState( OFF );
+        setState(OFF);
     }
 
     /**
-     *  System dependent instance variables
+     * System dependent instance variables
      */
     int output;         // output connector number, 0-23
     int bank;           // bank number, 0-3
 
     /**
-     *  Set the current state of this Light
-     *     This routine requests the hardware to change.
-     *     If this is really a change in state of this 
-     *         bit (tested in SerialNode), a Transmit packet
-     *         will be sent before this Node is next polled.
+     * Set the current state of this Light This routine requests the hardware to
+     * change. If this is really a change in state of this bit (tested in
+     * SerialNode), a Transmit packet will be sent before this Node is next
+     * polled.
      */
-	protected void doNewState(int oldState, int newState) {
+    protected void doNewState(int oldState, int newState) {
         SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
-        if (mNode!=null) {
-            if (newState==ON) {
+        if (mNode != null) {
+            if (newState == ON) {
                 sendMessage(true);
-            }
-            else if (newState==OFF) {
+            } else if (newState == OFF) {
                 sendMessage(false);
-            }
-            else {
-                log.warn("illegal state requested for Light: "+getSystemName());
+            } else {
+                log.warn("illegal state requested for Light: " + getSystemName());
             }
         }
     }
@@ -87,34 +88,36 @@ public class SerialLight extends AbstractLight {
         SerialNode tNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (tNode == null) {
             // node does not exist, ignore call
-            log.error("Can't find node for "+getSystemName()+", command ignored");
+            log.error("Can't find node for " + getSystemName() + ", command ignored");
             return;
         }
-        boolean high = (output>=12);
+        boolean high = (output >= 12);
         int tOut = output;
-        if (high) tOut = output-12;
-        if ( (bank<0)||(bank>4) ) {
-            log.error("invalid bank "+bank+" for Light "+getSystemName());
+        if (high) {
+            tOut = output - 12;
+        }
+        if ((bank < 0) || (bank > 4)) {
+            log.error("invalid bank " + bank + " for Light " + getSystemName());
             bank = 0;
         }
-        SerialMessage m = new SerialMessage(high?8:4);
+        SerialMessage m = new SerialMessage(high ? 8 : 4);
         int i = 0;
         if (high) {
-            m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
-            m.setElement(i++,122);   // shift command
-            m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
-            m.setElement(i++,0x10);  // bank 1
-            m.setParity(i-4);
+            m.setElement(i++, tNode.getNodeAddress() | 0x80);  // address 1
+            m.setElement(i++, 122);   // shift command
+            m.setElement(i++, tNode.getNodeAddress() | 0x80);  // address 2
+            m.setElement(i++, 0x10);  // bank 1
+            m.setParity(i - 4);
         }
-        m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
-        m.setElement(i++, (tOut<<3)|(on ? 0 : 4));  // on is green, off is dark
-        m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
-        m.setElement(i++, bank<<4); // bank is most significant bits
-        m.setParity(i-4);
+        m.setElement(i++, tNode.getNodeAddress() | 0x80);  // address 1
+        m.setElement(i++, (tOut << 3) | (on ? 0 : 4));  // on is green, off is dark
+        m.setElement(i++, tNode.getNodeAddress() | 0x80);  // address 2
+        m.setElement(i++, bank << 4); // bank is most significant bits
+        m.setParity(i - 4);
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
 
 /* @(#)SerialLight.java */

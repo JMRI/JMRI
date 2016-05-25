@@ -1,127 +1,123 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Panel Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Panel">
+<html lang="en">
+<head>
+<title>JMRI: Panel Help</title>
+<meta name="author" content="Bob Jacobsen">
+<meta name="keywords" content="JMRI help Panel">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel	="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Panel</H1>
-
-A panel is a set of icons representing various components of a layout.
-Some of the icons available in JMRI include turnouts, signals, and
-sensors. You can also include a background icon for your panel.
+<h1>The Panel</h1>
+<p>
+A Panel is a set of icons representing various components of a layout.
+Some of the icons available in JMRI&reg; include Turnouts, Sensors and Signals Masts. You can also include a background icon to represent your layout on your Panel.
 
 <p>
-The panel editor which you use to create a panel is 
-described on a 
-<a href="PanelEditor.shtml">separate help page</a>.
+The Panel Editor which you use to create a Panel is 
+described on the 
+<a href="PanelEditor.shtml">Panel Editor Help page</a>.
 
-<H2>Panel operation</H2>
-Clicking on a turnout symbol flips it from closed to thrown and
-vice-versa. A turnout also has "unknown" and "inconsistent" states,
+<h2>Panel operation</h2>
+<p>Clicking on a Turnout symbol flips it from Closed to Thrown and
+vice-versa. A Turnout also has "Unknown" and "Inconsistent" states,
 represented by an icon with a question mark and X respectively. These
 represent a state where no information has been received, and where the
-information is internally inconsistent (e.g. both closed and thrown at
+information is internally inconsistent (e.g. both Closed and Thrown at
 the same time).
-<P>This control can be used in various ways. For example, you could
-have a turnout icon covering a turnout on a schematic diagram. When you
-click on it, the turnout on the layout would be commanded to change, and
-the track diagram would show which way a train would be routed. Or you
+<p>This control can be used in various ways. For example, you could
+have a Turnout Icon covering a Turnout on a schematic diagram. When you
+click on it, the Turnout on the layout would be commanded to change, and
+the track diagram would show which way a Train would be routed. Or you
 could use icons that show a lever to the right or left, and create a
-panel that looks like a traditional US&S panel.</P>
-<P>"Sensors" can be used to represent occupancy indicators or other
+Panel that looks like a traditional US&amp;S Panel.</p>
+<p>"Sensors" can be used to represent occupancy indicators or other
 inputs. The default icon is a small circle, with color used to represent
-the state of the sensor. These respond to changes on the layout
-automatically. Clicking on a sensor causes the sensor to alternate
-between "active" and "inactive" states. With the default icons, active
-is a green circle and inactive is an empty circle. These are meant to
-represent a lit/dark panel indicator. A red circle represents the
-"unknown" state, used when no information has yet been received from the
-layout.</P>
+the state of the Sensor. These respond to changes on the layout
+automatically. Clicking on a Sensor Icon causes the Sensor to alternate
+between "Active" and "Inactive" states. With the default icons, Active
+is a green circle and Inactive is an empty circle. These are meant to
+represent a lit/dark Panel indicator. A red circle represents the
+"Unknown" state, used when no information has yet been received from the
+layout.</p>
 
-<H2>Creating a Panel</H2>
-Panels are created with a
-<A HREF="PanelEditor.shtml">Panel Editor</A>, 
-which allows you to place images to represent turnouts, sensors (on
+<h2>Creating a Panel</h2>
+Panels are created with the
+<a href="PanelEditor.shtml">Panel Editor</a>, 
+which allows you to place images to represent Turnouts, Sensors (on
 some systems) and trackwork.
 
-<H2>Popup menus</H2>
-
+<h2>Popup menus</h2>
+<p>
 If the "Panel items popup menu active" box is checked in the Panel
 Editor, a small popup menu will appear when you right click an icon.
-Most icons allow you to rotate and remove the icon. There are other
+Most icons allow you to Rotate and Remove the icon. There are other
 options depending on the type of icon, for example, you can disable a
-turnout so it doesn't actually control anything.
+Turnout Icon so it doesn't actually control anything.
 
 <p>
 If enabled via the checkboxes on the 
 <a href="PanelEditor.shtml">Panel Editor</a>,
-you can move an icon by dragging it around the panel.  For more
+you can move an icon by dragging it around the Panel.  For more
 precise positioning, many icons can access the
 <a href="CoordinateEdit.shtml">Coordinate Editor</a> 
 to move the icon by a specific number of pixels or set it to an 
 absolute location.</p>
 
-<P>When the checkboxes in the Panel Editor permit it, the popup menu
-may include items to recall the icon editor to change the icons or the
-entity it represents.  Other items likely to be available are; rotations,
+<p>When the checkboxes in the Panel Editor permit it, the popup menu
+may include items to recall the Icon Editor to change the icons or the
+entity it represents.  Other items likely to be available are: rotations,
 scaling, font sizes, colors etc.
 
-<P>The popup menu may also change if the configuration of an item is
-changed. For example, if you add feedback to a turnout, the popup menu
+<p>The popup menu may also change if the configuration of an item is
+changed. For example, if you add Feedback to a Turnout, the popup menu
 includes a new item choice called "Tristate". Tristate allows you to use
-the inconsistent icon, which is one of the four possible icons available
-for a turnout. Normally when you first click on a turnout icon it
-commands the layout to change the state of the turnout. If you use
-feedback for a particular turnout, the icon display will wait to hear
-from the layout before modifying the turnout icon to the closed or
-thrown icon. By using Tristate, the icon will change immediately to the
-inconsistent icon when the turnout is clicked. Inconsistent in this case
-means that I've commanded the turnout to change and now we're waiting to
+the "Inconsistent" icon, which is one of the four possible icons available
+for a Turnout. Normally when you first click on a Turnout Icon it
+commands the layout to change the state of the physical turnout. If you use
+Feedback for a particular Turnout, the icon display will wait to hear
+from the layout before modifying the Turnout Icon to the Closed or
+Thrown icon. By using "Tristate", the icon will change immediately to the
+"Inconsistent" icon when the Turnout Icon is clicked. Inconsistent in this case
+means that I've commanded the Turnout to change and now we're waiting to
 hear if it actually happened. If and when the layout returns the actual
-or "known state" of the turnout, the icon will change to that state. If
-you don't use Tristate, when you click on the icon, it may take some
-time (milliseconds to seconds depending on the system) before the icon
-responds with the known state of the turnout.</P>
+or "known state" of the Turnout, the icon will change to that state. If
+you don't use "Tristate", when you click on the icon, it may take some
+time (milliseconds to seconds depending on the hardware system) before the Turnout Icon
+responds with the known state of the physical turnout.</p>
 
-<H2>Marker</H2>
-
-The panel menu includes an item called "Marker". You can use a marker to
-represent a locomotive or other device on your panel. You can move the
-marker around the panel to show the locomotive's current position.
+<h2>Marker</h2>
+<p>
+The Panel pane menu includes an item called "Marker". You can use a Marker to
+represent a Locomotive or other device on your Panel. You can move the
+Marker around the Panel to show the Locomotive's current position.
 Markers are always moveable, and their popup menus are always active. To
-create a marker, select "Add loco" or "Add loco from roster" from the
-"Marker" menu. The "Add loco from roster" will use the road number from
-your roster file as the label; if the road number wasn't entered when
-you created your roster, the program will display the DCC address of the
-loco. To remove markers from your panel, use the "Remove markers" menu
-item.
-<P>The marker's popup menu allows you to change the marker's color,
-font size, style, and color. The menu also allows you to remove the
-marker from the panel.
+create a Marker, select "Add loco" or "Add loco from roster" from the
+"Marker" menu. The "Add loco from roster" option will use the Road Number from
+your Roster file as the label; if the Road Number wasn't entered when
+you created your Roster, PanelPro will display the DCC address of the Locomotive. 
+To remove Markers from your Panel, use the "Remove markers" menu item.
+<p>The Marker's popup menu allows you to change the Marker's color,
+font size and style. The menu also allows you to remove the
+Marker from the Panel.
 
-<P>If you want to keep your markers between operating sesssions, you
-can save the panel and the markers will be saved to your panel file. 
+<p>If you want to keep your Markers between operating sessions, you
+can save the Panel and the Markers will be saved to your Panel xml file. 
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>
 

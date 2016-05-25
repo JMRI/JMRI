@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!--                                                                        -->
@@ -45,24 +45,26 @@
   <version author="Dave Heap" version="7" lastUpdated="20130926"/>
   <!-- ver8 add new capability section to define high CV alternate write method -->
   <version author="Dave Heap" version="8" lastUpdated="20131028"/>
+  <!-- ver9 new Function Map pane and supporting JMRI code, expanded Function Output pane -->
+  <version author="Dave Heap" version="9" lastUpdated="20140107"/>
+  <!-- ver10 changed all indexed CVs to new form -->
+  <version author="Dave Heap" version="10" lastUpdated="20140114"/>
+  <!-- ver11 refactor to use "|" instead of "/" for line break in custom output labels -->
+  <version author="Dave Heap" version="11" lastUpdated="20140324"/>
+  <!-- ver12 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
+  <version author="Dave Heap" version="12" lastUpdated="20150427"/>
   <decoder>
-    <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH">
-      <model model="LokPilot V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LPV4">
-        <output name="1" label="Headlight" maxcurrent="250mA"/>
-        <output name="2" label="Rear light" maxcurrent="250mA"/>
-        <output name="3" label="AUX 1" maxcurrent="250mA"/>
-        <output name="4" label="AUX 2" maxcurrent="250mA"/>
-        <output name="5" label="AUX 3" maxcurrent="250mA"/>
-        <output name="6" label="AUX 4" maxcurrent="250mA"/>
-        <output name="7" label="AUX 5" maxcurrent="5mA"/>
-        <output name="8" label="AUX 6" maxcurrent="5mA"/>
-        <output name="9" label="ABV"/>
-        <output name="10" label="Shunt"/>
-        <output name="11" label="DB"/>
-        <output name="12" label="Fire"/>
-        <output name="13" label="Dim"/>
-        <output name="14" label="Cross"/>
-        <output name="15" label="Shift"/>
+    <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+      <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554495">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
         <size length="21.3" width="15.5" height="5.5" units="mm"/>
         <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
         <protocols>
@@ -71,41 +73,29 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LPV4DCC">
-        <output name="1" label="Headlight" maxcurrent="250mA"/>
-        <output name="2" label="Rear light" maxcurrent="250mA"/>
-        <output name="3" label="AUX 1" maxcurrent="250mA"/>
-        <output name="4" label="AUX 2" maxcurrent="250mA"/>
-        <output name="5" label="AUX 3" maxcurrent="250mA"/>
-        <output name="6" label="AUX 4" maxcurrent="250mA"/>
-        <output name="7" label="AUX 5" maxcurrent="5mA"/>
-        <output name="8" label="AUX 6" maxcurrent="5mA"/>
-        <output name="9" label="ABV"/>
-        <output name="10" label="Shunt"/>
-        <output name="11" label="DB"/>
-        <output name="12" label="Fire"/>
-        <output name="13" label="Dim"/>
-        <output name="14" label="Cross"/>
-        <output name="15" label="Shift"/>
+      <model model="LokPilot V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554498">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
         <size length="21.3" width="15.5" height="5.5" units="mm"/>
         <!-- connector="NEM651, NEM 652, 21MTC" -->
       </model>
-      <model model="LokPilot Micro V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="LPmV4">
-        <output name="1" label="Headlight" maxcurrent="150mA"/>
-        <output name="2" label="Rear light" maxcurrent="150mA"/>
-        <output name="3" label="AUX 1" maxcurrent="150mA"/>
-        <output name="4" label="AUX 2" maxcurrent="150mA"/>
-        <output name="5" label="AUX 3" maxcurrent="5mA"/>
-        <output name="6" label="AUX 4" maxcurrent="5mA"/>
-        <output name="7" label="AUX 5"/>
-        <output name="8" label="AUX 6"/>
-        <output name="9" label="ABV"/>
-        <output name="10" label="Shunt"/>
-        <output name="11" label="DB"/>
-        <output name="12" label="Fire"/>
-        <output name="13" label="Dim"/>
-        <output name="14" label="Cross"/>
-        <output name="15" label="Shift"/>
+      <model model="LokPilot Micro V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554496">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
         <size length="10.5" width="5.8" height="2.8" units="mm"/>
         <!-- connector="NEM651, NEM 652, Next18" -->
         <protocols>
@@ -114,612 +104,121 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="LPmV4DCC">
-        <output name="1" label="Headlight" maxcurrent="150mA"/>
-        <output name="2" label="Rear light" maxcurrent="150mA"/>
-        <output name="3" label="AUX 1" maxcurrent="150mA"/>
-        <output name="4" label="AUX 2" maxcurrent="150mA"/>
-        <output name="5" label="AUX 3" maxcurrent="5mA"/>
-        <output name="6" label="AUX 4" maxcurrent="5mA"/>
-        <output name="7" label="AUX 5"/>
-        <output name="8" label="AUX 6"/>
-        <output name="9" label="ABV"/>
-        <output name="10" label="Shunt"/>
-        <output name="11" label="DB"/>
-        <output name="12" label="Fire"/>
-        <output name="13" label="Dim"/>
-        <output name="14" label="Cross"/>
-        <output name="15" label="Shift"/>
+      <model model="LokPilot Micro V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554502">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
+        <size length="10.5" width="5.8" height="2.8" units="mm"/>
+        <!-- connector="NEM651, Next18" -->
+      </model>
+      <model model="LokPilot Fx V4.0" numOuts="69" numFns="32" extFnsESU="yes" productID="33554518">
+        <output name="29" label="|"/>
+        <output name="30" label="|"/>
+        <output name="31" label="|"/>
+        <output name="32" label="|"/>
+        <output name="33" label="|"/>
+        <output name="34" label="|"/>
+        <output name="35" label="|"/>
+        <output name="36" label="|"/>
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
+        <size length="17.5" width="15.5" height="5.5" units="mm"/>
+        <!-- connector="NEM651, 21MTC" -->
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="LokPilot XL V4.0" numOuts="69" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="33554517">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
+        <size length="55" width="25" height="10" units="mm"/>
+        <!-- connector="screw terminals" -->
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model show="no" model="LokPilot DCC V4.0" replacementModel="LokPilot V4.0 DCC" replacementFamily="ESU LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LokPilot V4.0 DCC">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
+        <size length="21.3" width="15.5" height="5.5" units="mm"/>
+        <!-- connector="NEM651, NEM 652, 21MTC" -->
+      </model>
+      <model show="no" model="LokPilot Micro DCC V4.0" replacementModel="LokPilot Micro V4.0 DCC" replacementFamily="ESU LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokPilot Micro V4.0 DCC">
+        <output name="61" label="|"/>
+        <output name="62" label="|"/>
+        <output name="63" label="|"/>
+        <output name="64" label="|"/>
+        <output name="65" label="|"/>
+        <output name="66" label="|"/>
+        <output name="67" label="|"/>
+        <output name="68" label="|"/>
+        <output name="69" label="Virtual drive sound"/>
         <size length="10.5" width="5.8" height="2.8" units="mm"/>
         <!-- connector="NEM651, Next18" -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
-        <capability>
-            <name>High Access via Double Index</name>
-            <parameter name="Max Regular CV address">256</parameter>
-            <parameter name="High Address CV">96</parameter>
-            <parameter name="Low Address CV">97</parameter>
-            <parameter name="Access Register CV">99</parameter>
-            <parameter name="Modulo">100</parameter>
-        </capability>
+      <capability>
+        <name>High Access via Double Index</name>
+        <parameter name="Max Regular CV address">256</parameter>
+        <parameter name="High Address CV">96</parameter>
+        <parameter name="Low Address CV">97</parameter>
+        <parameter name="Access Register CV">99</parameter>
+        <parameter name="Modulo">100</parameter>
+      </capability>
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">31</parameter>
+        <parameter name="SI">32</parameter>
+        <parameter name="cvFirst">false</parameter>
+      </capability>
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/esu/v4functionMap.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
-  <pane name="Indexed CVs">
-    <column>
-      <row>
-        <column>
-          <label label="JMRI 2.8 or later is required to use this definition">
-            <label>JMRI 2.8 or later is required to use this definition</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
-          <indxcvtable/>
-        </column>
-      </row>
-    </column>
-    <name>Indexed CVs</name>
-  </pane>
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>
-  <pane name="Output Map">
-    <column>
-      <row>
-        <column>
-          <label label="                              Headlight"/>
-          <display item="FS(f) controls output 1" format="checkbox" label="FS(f) stand forward"/>
-          <display item="FS(r) controls output 1" format="checkbox" label="FS(r) stand reverse"/>
-          <display item="FF(f) controls output 1" format="checkbox" label="FF(f) drive forward"/>
-          <display item="FF(r) controls output 1" format="checkbox" label="FF(r) drive reverse"/>
-          <display item="F0(f) controls output 1" format="checkbox" label="Light forward"/>
-          <display item="F0(r) controls output 1" format="checkbox" label="Light reverse"/>
-          <display item="F1(f) controls output 1" format="checkbox" label="F1 forward"/>
-          <display item="F1(r) controls output 1" format="checkbox" label="F1 reverse"/>
-          <display item="F2(f) controls output 1" format="checkbox" label="F2 forward"/>
-          <display item="F2(r) controls output 1" format="checkbox" label="F2 reverse"/>
-          <display item="F3(f) controls output 1" format="checkbox" label="F3 forward"/>
-          <display item="F3(r) controls output 1" format="checkbox" label="F3 reverse"/>
-          <display item="F4(f) controls output 1" format="checkbox" label="F4 forward"/>
-          <display item="F4(r) controls output 1" format="checkbox" label="F4 reverse"/>
-          <display item="F5(f) controls output 1" format="checkbox" label="F5 forward"/>
-          <display item="F5(r) controls output 1" format="checkbox" label="F5 reverse"/>
-          <display item="F6(f) controls output 1" format="checkbox" label="F6 forward"/>
-          <display item="F6(r) controls output 1" format="checkbox" label="F6 reverse"/>
-          <display item="F7(f) controls output 1" format="checkbox" label="F7 forward"/>
-          <display item="F7(r) controls output 1" format="checkbox" label="F7 reverse"/>
-          <display item="F8(f) controls output 1" format="checkbox" label="F8 forward"/>
-          <display item="F8(r) controls output 1" format="checkbox" label="F8 reverse"/>
-          <display item="F9(f) controls output 1" format="checkbox" label="F9 forward"/>
-          <display item="F9(r) controls output 1" format="checkbox" label="F9 reverse"/>
-          <display item="F10(f) controls output 1" format="checkbox" label="F10 forward"/>
-          <display item="F10(r) controls output 1" format="checkbox" label="F10 reverse"/>
-          <display item="F11(f) controls output 1" format="checkbox" label="F11 forward"/>
-          <display item="F11(r) controls output 1" format="checkbox" label="F11 reverse"/>
-          <display item="F12(f) controls output 1" format="checkbox" label="F12 forward"/>
-          <display item="F12(r) controls output 1" format="checkbox" label="F12 reverse"/>
-          <display item="F13(f) controls output 1" format="checkbox" label="F13 forward"/>
-          <display item="F13(r) controls output 1" format="checkbox" label="F13 reverse"/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="Rear light"/>
-          <display item="FS(f) controls output 2" format="checkbox" label=""/>
-          <display item="FS(r) controls output 2" format="checkbox" label=""/>
-          <display item="FF(f) controls output 2" format="checkbox" label=""/>
-          <display item="FF(r) controls output 2" format="checkbox" label=""/>
-          <display item="F0(f) controls output 2" format="checkbox" label=""/>
-          <display item="F0(r) controls output 2" format="checkbox" label=""/>
-          <display item="F1(f) controls output 2" format="checkbox" label=""/>
-          <display item="F1(r) controls output 2" format="checkbox" label=""/>
-          <display item="F2(f) controls output 2" format="checkbox" label=""/>
-          <display item="F2(r) controls output 2" format="checkbox" label=""/>
-          <display item="F3(f) controls output 2" format="checkbox" label=""/>
-          <display item="F3(r) controls output 2" format="checkbox" label=""/>
-          <display item="F4(f) controls output 2" format="checkbox" label=""/>
-          <display item="F4(r) controls output 2" format="checkbox" label=""/>
-          <display item="F5(f) controls output 2" format="checkbox" label=""/>
-          <display item="F5(r) controls output 2" format="checkbox" label=""/>
-          <display item="F6(f) controls output 2" format="checkbox" label=""/>
-          <display item="F6(r) controls output 2" format="checkbox" label=""/>
-          <display item="F7(f) controls output 2" format="checkbox" label=""/>
-          <display item="F7(r) controls output 2" format="checkbox" label=""/>
-          <display item="F8(f) controls output 2" format="checkbox" label=""/>
-          <display item="F8(r) controls output 2" format="checkbox" label=""/>
-          <display item="F9(f) controls output 2" format="checkbox" label=""/>
-          <display item="F9(r) controls output 2" format="checkbox" label=""/>
-          <display item="F10(f) controls output 2" format="checkbox" label=""/>
-          <display item="F10(r) controls output 2" format="checkbox" label=""/>
-          <display item="F11(f) controls output 2" format="checkbox" label=""/>
-          <display item="F11(r) controls output 2" format="checkbox" label=""/>
-          <display item="F12(f) controls output 2" format="checkbox" label=""/>
-          <display item="F12(r) controls output 2" format="checkbox" label=""/>
-          <display item="F13(f) controls output 2" format="checkbox" label=""/>
-          <display item="F13(r) controls output 2" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="AUX 1"/>
-          <display item="FS(f) controls output 3" format="checkbox" label=""/>
-          <display item="FS(r) controls output 3" format="checkbox" label=""/>
-          <display item="FF(f) controls output 3" format="checkbox" label=""/>
-          <display item="FF(r) controls output 3" format="checkbox" label=""/>
-          <display item="F0(f) controls output 3" format="checkbox" label=""/>
-          <display item="F0(r) controls output 3" format="checkbox" label=""/>
-          <display item="F1(f) controls output 3" format="checkbox" label=""/>
-          <display item="F1(r) controls output 3" format="checkbox" label=""/>
-          <display item="F2(f) controls output 3" format="checkbox" label=""/>
-          <display item="F2(r) controls output 3" format="checkbox" label=""/>
-          <display item="F3(f) controls output 3" format="checkbox" label=""/>
-          <display item="F3(r) controls output 3" format="checkbox" label=""/>
-          <display item="F4(f) controls output 3" format="checkbox" label=""/>
-          <display item="F4(r) controls output 3" format="checkbox" label=""/>
-          <display item="F5(f) controls output 3" format="checkbox" label=""/>
-          <display item="F5(r) controls output 3" format="checkbox" label=""/>
-          <display item="F6(f) controls output 3" format="checkbox" label=""/>
-          <display item="F6(r) controls output 3" format="checkbox" label=""/>
-          <display item="F7(f) controls output 3" format="checkbox" label=""/>
-          <display item="F7(r) controls output 3" format="checkbox" label=""/>
-          <display item="F8(f) controls output 3" format="checkbox" label=""/>
-          <display item="F8(r) controls output 3" format="checkbox" label=""/>
-          <display item="F9(f) controls output 3" format="checkbox" label=""/>
-          <display item="F9(r) controls output 3" format="checkbox" label=""/>
-          <display item="F10(f) controls output 3" format="checkbox" label=""/>
-          <display item="F10(r) controls output 3" format="checkbox" label=""/>
-          <display item="F11(f) controls output 3" format="checkbox" label=""/>
-          <display item="F11(r) controls output 3" format="checkbox" label=""/>
-          <display item="F12(f) controls output 3" format="checkbox" label=""/>
-          <display item="F12(r) controls output 3" format="checkbox" label=""/>
-          <display item="F13(f) controls output 3" format="checkbox" label=""/>
-          <display item="F13(r) controls output 3" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="AUX 2"/>
-          <display item="FS(f) controls output 4" format="checkbox" label=""/>
-          <display item="FS(r) controls output 4" format="checkbox" label=""/>
-          <display item="FF(f) controls output 4" format="checkbox" label=""/>
-          <display item="FF(r) controls output 4" format="checkbox" label=""/>
-          <display item="F0(f) controls output 4" format="checkbox" label=""/>
-          <display item="F0(r) controls output 4" format="checkbox" label=""/>
-          <display item="F1(f) controls output 4" format="checkbox" label=""/>
-          <display item="F1(r) controls output 4" format="checkbox" label=""/>
-          <display item="F2(f) controls output 4" format="checkbox" label=""/>
-          <display item="F2(r) controls output 4" format="checkbox" label=""/>
-          <display item="F3(f) controls output 4" format="checkbox" label=""/>
-          <display item="F3(r) controls output 4" format="checkbox" label=""/>
-          <display item="F4(f) controls output 4" format="checkbox" label=""/>
-          <display item="F4(r) controls output 4" format="checkbox" label=""/>
-          <display item="F5(f) controls output 4" format="checkbox" label=""/>
-          <display item="F5(r) controls output 4" format="checkbox" label=""/>
-          <display item="F6(f) controls output 4" format="checkbox" label=""/>
-          <display item="F6(r) controls output 4" format="checkbox" label=""/>
-          <display item="F7(f) controls output 4" format="checkbox" label=""/>
-          <display item="F7(r) controls output 4" format="checkbox" label=""/>
-          <display item="F8(f) controls output 4" format="checkbox" label=""/>
-          <display item="F8(r) controls output 4" format="checkbox" label=""/>
-          <display item="F9(f) controls output 4" format="checkbox" label=""/>
-          <display item="F9(r) controls output 4" format="checkbox" label=""/>
-          <display item="F10(f) controls output 4" format="checkbox" label=""/>
-          <display item="F10(r) controls output 4" format="checkbox" label=""/>
-          <display item="F11(f) controls output 4" format="checkbox" label=""/>
-          <display item="F11(r) controls output 4" format="checkbox" label=""/>
-          <display item="F12(f) controls output 4" format="checkbox" label=""/>
-          <display item="F12(r) controls output 4" format="checkbox" label=""/>
-          <display item="F13(f) controls output 4" format="checkbox" label=""/>
-          <display item="F13(r) controls output 4" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="AUX 3"/>
-          <display item="FS(f) controls output 5" format="checkbox" label=""/>
-          <display item="FS(r) controls output 5" format="checkbox" label=""/>
-          <display item="FF(f) controls output 5" format="checkbox" label=""/>
-          <display item="FF(r) controls output 5" format="checkbox" label=""/>
-          <display item="F0(f) controls output 5" format="checkbox" label=""/>
-          <display item="F0(r) controls output 5" format="checkbox" label=""/>
-          <display item="F1(f) controls output 5" format="checkbox" label=""/>
-          <display item="F1(r) controls output 5" format="checkbox" label=""/>
-          <display item="F2(f) controls output 5" format="checkbox" label=""/>
-          <display item="F2(r) controls output 5" format="checkbox" label=""/>
-          <display item="F3(f) controls output 5" format="checkbox" label=""/>
-          <display item="F3(r) controls output 5" format="checkbox" label=""/>
-          <display item="F4(f) controls output 5" format="checkbox" label=""/>
-          <display item="F4(r) controls output 5" format="checkbox" label=""/>
-          <display item="F5(f) controls output 5" format="checkbox" label=""/>
-          <display item="F5(r) controls output 5" format="checkbox" label=""/>
-          <display item="F6(f) controls output 5" format="checkbox" label=""/>
-          <display item="F6(r) controls output 5" format="checkbox" label=""/>
-          <display item="F7(f) controls output 5" format="checkbox" label=""/>
-          <display item="F7(r) controls output 5" format="checkbox" label=""/>
-          <display item="F8(f) controls output 5" format="checkbox" label=""/>
-          <display item="F8(r) controls output 5" format="checkbox" label=""/>
-          <display item="F9(f) controls output 5" format="checkbox" label=""/>
-          <display item="F9(r) controls output 5" format="checkbox" label=""/>
-          <display item="F10(f) controls output 5" format="checkbox" label=""/>
-          <display item="F10(r) controls output 5" format="checkbox" label=""/>
-          <display item="F11(f) controls output 5" format="checkbox" label=""/>
-          <display item="F11(r) controls output 5" format="checkbox" label=""/>
-          <display item="F12(f) controls output 5" format="checkbox" label=""/>
-          <display item="F12(r) controls output 5" format="checkbox" label=""/>
-          <display item="F13(f) controls output 5" format="checkbox" label=""/>
-          <display item="F13(r) controls output 5" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="AUX 4"/>
-          <display item="FS(f) controls output 6" format="checkbox" label=""/>
-          <display item="FS(r) controls output 6" format="checkbox" label=""/>
-          <display item="FF(f) controls output 6" format="checkbox" label=""/>
-          <display item="FF(r) controls output 6" format="checkbox" label=""/>
-          <display item="F0(f) controls output 6" format="checkbox" label=""/>
-          <display item="F0(r) controls output 6" format="checkbox" label=""/>
-          <display item="F1(f) controls output 6" format="checkbox" label=""/>
-          <display item="F1(r) controls output 6" format="checkbox" label=""/>
-          <display item="F2(f) controls output 6" format="checkbox" label=""/>
-          <display item="F2(r) controls output 6" format="checkbox" label=""/>
-          <display item="F3(f) controls output 6" format="checkbox" label=""/>
-          <display item="F3(r) controls output 6" format="checkbox" label=""/>
-          <display item="F4(f) controls output 6" format="checkbox" label=""/>
-          <display item="F4(r) controls output 6" format="checkbox" label=""/>
-          <display item="F5(f) controls output 6" format="checkbox" label=""/>
-          <display item="F5(r) controls output 6" format="checkbox" label=""/>
-          <display item="F6(f) controls output 6" format="checkbox" label=""/>
-          <display item="F6(r) controls output 6" format="checkbox" label=""/>
-          <display item="F7(f) controls output 6" format="checkbox" label=""/>
-          <display item="F7(r) controls output 6" format="checkbox" label=""/>
-          <display item="F8(f) controls output 6" format="checkbox" label=""/>
-          <display item="F8(r) controls output 6" format="checkbox" label=""/>
-          <display item="F9(f) controls output 6" format="checkbox" label=""/>
-          <display item="F9(r) controls output 6" format="checkbox" label=""/>
-          <display item="F10(f) controls output 6" format="checkbox" label=""/>
-          <display item="F10(r) controls output 6" format="checkbox" label=""/>
-          <display item="F11(f) controls output 6" format="checkbox" label=""/>
-          <display item="F11(r) controls output 6" format="checkbox" label=""/>
-          <display item="F12(f) controls output 6" format="checkbox" label=""/>
-          <display item="F12(r) controls output 6" format="checkbox" label=""/>
-          <display item="F13(f) controls output 6" format="checkbox" label=""/>
-          <display item="F13(r) controls output 6" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="AUX 5"/>
-          <display item="FS(f) controls output 7" format="checkbox" label=""/>
-          <display item="FS(r) controls output 7" format="checkbox" label=""/>
-          <display item="FF(f) controls output 7" format="checkbox" label=""/>
-          <display item="FF(r) controls output 7" format="checkbox" label=""/>
-          <display item="F0(f) controls output 7" format="checkbox" label=""/>
-          <display item="F0(r) controls output 7" format="checkbox" label=""/>
-          <display item="F1(f) controls output 7" format="checkbox" label=""/>
-          <display item="F1(r) controls output 7" format="checkbox" label=""/>
-          <display item="F2(f) controls output 7" format="checkbox" label=""/>
-          <display item="F2(r) controls output 7" format="checkbox" label=""/>
-          <display item="F3(f) controls output 7" format="checkbox" label=""/>
-          <display item="F3(r) controls output 7" format="checkbox" label=""/>
-          <display item="F4(f) controls output 7" format="checkbox" label=""/>
-          <display item="F4(r) controls output 7" format="checkbox" label=""/>
-          <display item="F5(f) controls output 7" format="checkbox" label=""/>
-          <display item="F5(r) controls output 7" format="checkbox" label=""/>
-          <display item="F6(f) controls output 7" format="checkbox" label=""/>
-          <display item="F6(r) controls output 7" format="checkbox" label=""/>
-          <display item="F7(f) controls output 7" format="checkbox" label=""/>
-          <display item="F7(r) controls output 7" format="checkbox" label=""/>
-          <display item="F8(f) controls output 7" format="checkbox" label=""/>
-          <display item="F8(r) controls output 7" format="checkbox" label=""/>
-          <display item="F9(f) controls output 7" format="checkbox" label=""/>
-          <display item="F9(r) controls output 7" format="checkbox" label=""/>
-          <display item="F10(f) controls output 7" format="checkbox" label=""/>
-          <display item="F10(r) controls output 7" format="checkbox" label=""/>
-          <display item="F11(f) controls output 7" format="checkbox" label=""/>
-          <display item="F11(r) controls output 7" format="checkbox" label=""/>
-          <display item="F12(f) controls output 7" format="checkbox" label=""/>
-          <display item="F12(r) controls output 7" format="checkbox" label=""/>
-          <display item="F13(f) controls output 7" format="checkbox" label=""/>
-          <display item="F13(r) controls output 7" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="AUX 6"/>
-          <display item="FS(f) controls output 8" format="checkbox" label=""/>
-          <display item="FS(r) controls output 8" format="checkbox" label=""/>
-          <display item="FF(f) controls output 8" format="checkbox" label=""/>
-          <display item="FF(r) controls output 8" format="checkbox" label=""/>
-          <display item="F0(f) controls output 8" format="checkbox" label=""/>
-          <display item="F0(r) controls output 8" format="checkbox" label=""/>
-          <display item="F1(f) controls output 8" format="checkbox" label=""/>
-          <display item="F1(r) controls output 8" format="checkbox" label=""/>
-          <display item="F2(f) controls output 8" format="checkbox" label=""/>
-          <display item="F2(r) controls output 8" format="checkbox" label=""/>
-          <display item="F3(f) controls output 8" format="checkbox" label=""/>
-          <display item="F3(r) controls output 8" format="checkbox" label=""/>
-          <display item="F4(f) controls output 8" format="checkbox" label=""/>
-          <display item="F4(r) controls output 8" format="checkbox" label=""/>
-          <display item="F5(f) controls output 8" format="checkbox" label=""/>
-          <display item="F5(r) controls output 8" format="checkbox" label=""/>
-          <display item="F6(f) controls output 8" format="checkbox" label=""/>
-          <display item="F6(r) controls output 8" format="checkbox" label=""/>
-          <display item="F7(f) controls output 8" format="checkbox" label=""/>
-          <display item="F7(r) controls output 8" format="checkbox" label=""/>
-          <display item="F8(f) controls output 8" format="checkbox" label=""/>
-          <display item="F8(r) controls output 8" format="checkbox" label=""/>
-          <display item="F9(f) controls output 8" format="checkbox" label=""/>
-          <display item="F9(r) controls output 8" format="checkbox" label=""/>
-          <display item="F10(f) controls output 8" format="checkbox" label=""/>
-          <display item="F10(r) controls output 8" format="checkbox" label=""/>
-          <display item="F11(f) controls output 8" format="checkbox" label=""/>
-          <display item="F11(r) controls output 8" format="checkbox" label=""/>
-          <display item="F12(f) controls output 8" format="checkbox" label=""/>
-          <display item="F12(r) controls output 8" format="checkbox" label=""/>
-          <display item="F13(f) controls output 8" format="checkbox" label=""/>
-          <display item="F13(r) controls output 8" format="checkbox" label=""/>
-        </column>
-        <label label="    "/>
-        <column>
-          <label label=" ABV"/>
-          <display item="FS(f) controls output 9" format="checkbox" label=""/>
-          <display item="FS(r) controls output 9" format="checkbox" label=""/>
-          <display item="FF(f) controls output 9" format="checkbox" label=""/>
-          <display item="FF(r) controls output 9" format="checkbox" label=""/>
-          <display item="F0(f) controls output 9" format="checkbox" label=""/>
-          <display item="F0(r) controls output 9" format="checkbox" label=""/>
-          <display item="F1(f) controls output 9" format="checkbox" label=""/>
-          <display item="F1(r) controls output 9" format="checkbox" label=""/>
-          <display item="F2(f) controls output 9" format="checkbox" label=""/>
-          <display item="F2(r) controls output 9" format="checkbox" label=""/>
-          <display item="F3(f) controls output 9" format="checkbox" label=""/>
-          <display item="F3(r) controls output 9" format="checkbox" label=""/>
-          <display item="F4(f) controls output 9" format="checkbox" label=""/>
-          <display item="F4(r) controls output 9" format="checkbox" label=""/>
-          <display item="F5(f) controls output 9" format="checkbox" label=""/>
-          <display item="F5(r) controls output 9" format="checkbox" label=""/>
-          <display item="F6(f) controls output 9" format="checkbox" label=""/>
-          <display item="F6(r) controls output 9" format="checkbox" label=""/>
-          <display item="F7(f) controls output 9" format="checkbox" label=""/>
-          <display item="F7(r) controls output 9" format="checkbox" label=""/>
-          <display item="F8(f) controls output 9" format="checkbox" label=""/>
-          <display item="F8(r) controls output 9" format="checkbox" label=""/>
-          <display item="F9(f) controls output 9" format="checkbox" label=""/>
-          <display item="F9(r) controls output 9" format="checkbox" label=""/>
-          <display item="F10(f) controls output 9" format="checkbox" label=""/>
-          <display item="F10(r) controls output 9" format="checkbox" label=""/>
-          <display item="F11(f) controls output 9" format="checkbox" label=""/>
-          <display item="F11(r) controls output 9" format="checkbox" label=""/>
-          <display item="F12(f) controls output 9" format="checkbox" label=""/>
-          <display item="F12(r) controls output 9" format="checkbox" label=""/>
-          <display item="F13(f) controls output 9" format="checkbox" label=""/>
-          <display item="F13(r) controls output 9" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="Shunt"/>
-          <display item="FS(f) controls output 10" format="checkbox" label=""/>
-          <display item="FS(r) controls output 10" format="checkbox" label=""/>
-          <display item="FF(f) controls output 10" format="checkbox" label=""/>
-          <display item="FF(r) controls output 10" format="checkbox" label=""/>
-          <display item="F0(f) controls output 10" format="checkbox" label=""/>
-          <display item="F0(r) controls output 10" format="checkbox" label=""/>
-          <display item="F1(f) controls output 10" format="checkbox" label=""/>
-          <display item="F1(r) controls output 10" format="checkbox" label=""/>
-          <display item="F2(f) controls output 10" format="checkbox" label=""/>
-          <display item="F2(r) controls output 10" format="checkbox" label=""/>
-          <display item="F3(f) controls output 10" format="checkbox" label=""/>
-          <display item="F3(r) controls output 10" format="checkbox" label=""/>
-          <display item="F4(f) controls output 10" format="checkbox" label=""/>
-          <display item="F4(r) controls output 10" format="checkbox" label=""/>
-          <display item="F5(f) controls output 10" format="checkbox" label=""/>
-          <display item="F5(r) controls output 10" format="checkbox" label=""/>
-          <display item="F6(f) controls output 10" format="checkbox" label=""/>
-          <display item="F6(r) controls output 10" format="checkbox" label=""/>
-          <display item="F7(f) controls output 10" format="checkbox" label=""/>
-          <display item="F7(r) controls output 10" format="checkbox" label=""/>
-          <display item="F8(f) controls output 10" format="checkbox" label=""/>
-          <display item="F8(r) controls output 10" format="checkbox" label=""/>
-          <display item="F9(f) controls output 10" format="checkbox" label=""/>
-          <display item="F9(r) controls output 10" format="checkbox" label=""/>
-          <display item="F10(f) controls output 10" format="checkbox" label=""/>
-          <display item="F10(r) controls output 10" format="checkbox" label=""/>
-          <display item="F11(f) controls output 10" format="checkbox" label=""/>
-          <display item="F11(r) controls output 10" format="checkbox" label=""/>
-          <display item="F12(f) controls output 10" format="checkbox" label=""/>
-          <display item="F12(r) controls output 10" format="checkbox" label=""/>
-          <display item="F13(f) controls output 10" format="checkbox" label=""/>
-          <display item="F13(r) controls output 10" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label=" DB"/>
-          <display item="FS(f) controls output 11" format="checkbox" label=""/>
-          <display item="FS(r) controls output 11" format="checkbox" label=""/>
-          <display item="FF(f) controls output 11" format="checkbox" label=""/>
-          <display item="FF(r) controls output 11" format="checkbox" label=""/>
-          <display item="F0(f) controls output 11" format="checkbox" label=""/>
-          <display item="F0(r) controls output 11" format="checkbox" label=""/>
-          <display item="F1(f) controls output 11" format="checkbox" label=""/>
-          <display item="F1(r) controls output 11" format="checkbox" label=""/>
-          <display item="F2(f) controls output 11" format="checkbox" label=""/>
-          <display item="F2(r) controls output 11" format="checkbox" label=""/>
-          <display item="F3(f) controls output 11" format="checkbox" label=""/>
-          <display item="F3(r) controls output 11" format="checkbox" label=""/>
-          <display item="F4(f) controls output 11" format="checkbox" label=""/>
-          <display item="F4(r) controls output 11" format="checkbox" label=""/>
-          <display item="F5(f) controls output 11" format="checkbox" label=""/>
-          <display item="F5(r) controls output 11" format="checkbox" label=""/>
-          <display item="F6(f) controls output 11" format="checkbox" label=""/>
-          <display item="F6(r) controls output 11" format="checkbox" label=""/>
-          <display item="F7(f) controls output 11" format="checkbox" label=""/>
-          <display item="F7(r) controls output 11" format="checkbox" label=""/>
-          <display item="F8(f) controls output 11" format="checkbox" label=""/>
-          <display item="F8(r) controls output 11" format="checkbox" label=""/>
-          <display item="F9(f) controls output 11" format="checkbox" label=""/>
-          <display item="F9(r) controls output 11" format="checkbox" label=""/>
-          <display item="F10(f) controls output 11" format="checkbox" label=""/>
-          <display item="F10(r) controls output 11" format="checkbox" label=""/>
-          <display item="F11(f) controls output 11" format="checkbox" label=""/>
-          <display item="F11(r) controls output 11" format="checkbox" label=""/>
-          <display item="F12(f) controls output 11" format="checkbox" label=""/>
-          <display item="F12(r) controls output 11" format="checkbox" label=""/>
-          <display item="F13(f) controls output 11" format="checkbox" label=""/>
-          <display item="F13(r) controls output 11" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="Fire"/>
-          <display item="FS(f) controls output 12" format="checkbox" label=""/>
-          <display item="FS(r) controls output 12" format="checkbox" label=""/>
-          <display item="FF(f) controls output 12" format="checkbox" label=""/>
-          <display item="FF(r) controls output 12" format="checkbox" label=""/>
-          <display item="F0(f) controls output 12" format="checkbox" label=""/>
-          <display item="F0(r) controls output 12" format="checkbox" label=""/>
-          <display item="F1(f) controls output 12" format="checkbox" label=""/>
-          <display item="F1(r) controls output 12" format="checkbox" label=""/>
-          <display item="F2(f) controls output 12" format="checkbox" label=""/>
-          <display item="F2(r) controls output 12" format="checkbox" label=""/>
-          <display item="F3(f) controls output 12" format="checkbox" label=""/>
-          <display item="F3(r) controls output 12" format="checkbox" label=""/>
-          <display item="F4(f) controls output 12" format="checkbox" label=""/>
-          <display item="F4(r) controls output 12" format="checkbox" label=""/>
-          <display item="F5(f) controls output 12" format="checkbox" label=""/>
-          <display item="F5(r) controls output 12" format="checkbox" label=""/>
-          <display item="F6(f) controls output 12" format="checkbox" label=""/>
-          <display item="F6(r) controls output 12" format="checkbox" label=""/>
-          <display item="F7(f) controls output 12" format="checkbox" label=""/>
-          <display item="F7(r) controls output 12" format="checkbox" label=""/>
-          <display item="F8(f) controls output 12" format="checkbox" label=""/>
-          <display item="F8(r) controls output 12" format="checkbox" label=""/>
-          <display item="F9(f) controls output 12" format="checkbox" label=""/>
-          <display item="F9(r) controls output 12" format="checkbox" label=""/>
-          <display item="F10(f) controls output 12" format="checkbox" label=""/>
-          <display item="F10(r) controls output 12" format="checkbox" label=""/>
-          <display item="F11(f) controls output 12" format="checkbox" label=""/>
-          <display item="F11(r) controls output 12" format="checkbox" label=""/>
-          <display item="F12(f) controls output 12" format="checkbox" label=""/>
-          <display item="F12(r) controls output 12" format="checkbox" label=""/>
-          <display item="F13(f) controls output 12" format="checkbox" label=""/>
-          <display item="F13(r) controls output 12" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label=" Dim"/>
-          <display item="FS(f) controls output 13" format="checkbox" label=""/>
-          <display item="FS(r) controls output 13" format="checkbox" label=""/>
-          <display item="FF(f) controls output 13" format="checkbox" label=""/>
-          <display item="FF(r) controls output 13" format="checkbox" label=""/>
-          <display item="F0(f) controls output 13" format="checkbox" label=""/>
-          <display item="F0(r) controls output 13" format="checkbox" label=""/>
-          <display item="F1(f) controls output 13" format="checkbox" label=""/>
-          <display item="F1(r) controls output 13" format="checkbox" label=""/>
-          <display item="F2(f) controls output 13" format="checkbox" label=""/>
-          <display item="F2(r) controls output 13" format="checkbox" label=""/>
-          <display item="F3(f) controls output 13" format="checkbox" label=""/>
-          <display item="F3(r) controls output 13" format="checkbox" label=""/>
-          <display item="F4(f) controls output 13" format="checkbox" label=""/>
-          <display item="F4(r) controls output 13" format="checkbox" label=""/>
-          <display item="F5(f) controls output 13" format="checkbox" label=""/>
-          <display item="F5(r) controls output 13" format="checkbox" label=""/>
-          <display item="F6(f) controls output 13" format="checkbox" label=""/>
-          <display item="F6(r) controls output 13" format="checkbox" label=""/>
-          <display item="F7(f) controls output 13" format="checkbox" label=""/>
-          <display item="F7(r) controls output 13" format="checkbox" label=""/>
-          <display item="F8(f) controls output 13" format="checkbox" label=""/>
-          <display item="F8(r) controls output 13" format="checkbox" label=""/>
-          <display item="F9(f) controls output 13" format="checkbox" label=""/>
-          <display item="F9(r) controls output 13" format="checkbox" label=""/>
-          <display item="F10(f) controls output 13" format="checkbox" label=""/>
-          <display item="F10(r) controls output 13" format="checkbox" label=""/>
-          <display item="F11(f) controls output 13" format="checkbox" label=""/>
-          <display item="F11(r) controls output 13" format="checkbox" label=""/>
-          <display item="F12(f) controls output 13" format="checkbox" label=""/>
-          <display item="F12(r) controls output 13" format="checkbox" label=""/>
-          <display item="F13(f) controls output 13" format="checkbox" label=""/>
-          <display item="F13(r) controls output 13" format="checkbox" label=""/>
-        </column>
-        <label label="    "/>
-        <column>
-          <label label="Cross"/>
-          <display item="FS(f) controls output 14" format="checkbox" label=""/>
-          <display item="FS(r) controls output 14" format="checkbox" label=""/>
-          <display item="FF(f) controls output 14" format="checkbox" label=""/>
-          <display item="FF(r) controls output 14" format="checkbox" label=""/>
-          <display item="F0(f) controls output 14" format="checkbox" label=""/>
-          <display item="F0(r) controls output 14" format="checkbox" label=""/>
-          <display item="F1(f) controls output 14" format="checkbox" label=""/>
-          <display item="F1(r) controls output 14" format="checkbox" label=""/>
-          <display item="F2(f) controls output 14" format="checkbox" label=""/>
-          <display item="F2(r) controls output 14" format="checkbox" label=""/>
-          <display item="F3(f) controls output 14" format="checkbox" label=""/>
-          <display item="F3(r) controls output 14" format="checkbox" label=""/>
-          <display item="F4(f) controls output 14" format="checkbox" label=""/>
-          <display item="F4(r) controls output 14" format="checkbox" label=""/>
-          <display item="F5(f) controls output 14" format="checkbox" label=""/>
-          <display item="F5(r) controls output 14" format="checkbox" label=""/>
-          <display item="F6(f) controls output 14" format="checkbox" label=""/>
-          <display item="F6(r) controls output 14" format="checkbox" label=""/>
-          <display item="F7(f) controls output 14" format="checkbox" label=""/>
-          <display item="F7(r) controls output 14" format="checkbox" label=""/>
-          <display item="F8(f) controls output 14" format="checkbox" label=""/>
-          <display item="F8(r) controls output 14" format="checkbox" label=""/>
-          <display item="F9(f) controls output 14" format="checkbox" label=""/>
-          <display item="F9(r) controls output 14" format="checkbox" label=""/>
-          <display item="F10(f) controls output 14" format="checkbox" label=""/>
-          <display item="F10(r) controls output 14" format="checkbox" label=""/>
-          <display item="F11(f) controls output 14" format="checkbox" label=""/>
-          <display item="F11(r) controls output 14" format="checkbox" label=""/>
-          <display item="F12(f) controls output 14" format="checkbox" label=""/>
-          <display item="F12(r) controls output 14" format="checkbox" label=""/>
-          <display item="F13(f) controls output 14" format="checkbox" label=""/>
-          <display item="F13(r) controls output 14" format="checkbox" label=""/>
-        </column>
-        <label label="  "/>
-        <column>
-          <label label="Shift"/>
-          <display item="FS(f) controls output 15" format="checkbox" label=""/>
-          <display item="FS(r) controls output 15" format="checkbox" label=""/>
-          <display item="FF(f) controls output 15" format="checkbox" label=""/>
-          <display item="FF(r) controls output 15" format="checkbox" label=""/>
-          <display item="F0(f) controls output 15" format="checkbox" label=""/>
-          <display item="F0(r) controls output 15" format="checkbox" label=""/>
-          <display item="F1(f) controls output 15" format="checkbox" label=""/>
-          <display item="F1(r) controls output 15" format="checkbox" label=""/>
-          <display item="F2(f) controls output 15" format="checkbox" label=""/>
-          <display item="F2(r) controls output 15" format="checkbox" label=""/>
-          <display item="F3(f) controls output 15" format="checkbox" label=""/>
-          <display item="F3(r) controls output 15" format="checkbox" label=""/>
-          <display item="F4(f) controls output 15" format="checkbox" label=""/>
-          <display item="F4(r) controls output 15" format="checkbox" label=""/>
-          <display item="F5(f) controls output 15" format="checkbox" label=""/>
-          <display item="F5(r) controls output 15" format="checkbox" label=""/>
-          <display item="F6(f) controls output 15" format="checkbox" label=""/>
-          <display item="F6(r) controls output 15" format="checkbox" label=""/>
-          <display item="F7(f) controls output 15" format="checkbox" label=""/>
-          <display item="F7(r) controls output 15" format="checkbox" label=""/>
-          <display item="F8(f) controls output 15" format="checkbox" label=""/>
-          <display item="F8(r) controls output 15" format="checkbox" label=""/>
-          <display item="F9(f) controls output 15" format="checkbox" label=""/>
-          <display item="F9(r) controls output 15" format="checkbox" label=""/>
-          <display item="F10(f) controls output 15" format="checkbox" label=""/>
-          <display item="F10(r) controls output 15" format="checkbox" label=""/>
-          <display item="F11(f) controls output 15" format="checkbox" label=""/>
-          <display item="F11(r) controls output 15" format="checkbox" label=""/>
-          <display item="F12(f) controls output 15" format="checkbox" label=""/>
-          <display item="F12(r) controls output 15" format="checkbox" label=""/>
-          <display item="F13(f) controls output 15" format="checkbox" label=""/>
-          <display item="F13(r) controls output 15" format="checkbox" label=""/>
-        </column>
-        <label label="    "/>
-      </row>
-    </column>
-    <name>Output Map</name>
-  </pane>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/>
 </decoder-config>

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: 0NMRA.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -25,44 +25,54 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-      <variable label="Total PWM Period" item="Total PWM Period" CV="9">
+    <variable item="Total PWM Period" CV="9">
         <decVal/>
+        <label>Total PWM Period (Motor Drive Frequency)</label>
         <label xml:lang="fr">Total PWM Period(fr)</label>
-        <label xml:lang="it">Periodo Totale PWM</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
       </variable>
-      <variable label="EMF Feedback Cutout" item="EMF Feedback Cutout" CV="10">
+      <variable item="EMF Feedback Cutout" CV="10">
         <decVal/>
+        <label>EMF Feedback Cutout</label>
         <label xml:lang="fr">EMF Feedback Cutout(fr)</label>
         <label xml:lang="it">Limitazione Retroazione EMF</label>
       </variable>
-      <variable label="Packet Time-out Value" item="Packet Time-out Value" CV="11">
+      <variable item="Packet Time-out Value" CV="11">
         <decVal/>
+        <label>Packet Time-out Value</label>
         <label xml:lang="fr">Packet Time-out Value(fr)</label>
         <label xml:lang="it">Valore Time-out Packet</label>
       </variable>
-      <variable label="Analog Power Conversion" item="Analog Power Conversion" CV="12" mask="XXXXXXXV">
+      <variable item="Analog Power Conversion" CV="12" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Analog Power Conversion</label>
         <label xml:lang="fr">Analog Power Conversion(fr)</label>
         <label xml:lang="it">Conversione Alimentazione Analogica</label>
       </variable>
-      <variable label="Radio Power Conversion" item="Radio Power Conversion" CV="12" mask="XXXXXXVX">
+      <variable item="Radio Power Conversion" CV="12" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Radio Power Conversion</label>
         <label xml:lang="fr">Radio Power Conversion(fr)</label>
+        <label xml:lang="it">Conversione Alimentazione Radio</label>
       </variable>
-      <variable label="Zero-1 Power Conversion" item="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX">
+      <variable item="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Zero-1 Power Conversion</label>
         <label xml:lang="fr">Zero-1 Power Conversion(fr)</label>
+        <label xml:lang="it">Zero-1 Conversione Alimentazione</label>
       </variable>
-      <variable label="Trix Power Conversion" item="Trix Power Conversion" CV="12" mask="XXXXVXXX">
+      <variable item="Trix Power Conversion" CV="12" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Trix Power Conversion</label>
         <label xml:lang="fr">Trix Power Conversion(fr)</label>
         <label xml:lang="it">Trix Conversione Alimentazione</label>
       </variable>
-      <variable label="CTC/Railcommand Power Conversion" item="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX">
+      <variable item="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>CTC/Railcommand Power Conversion</label>
         <label xml:lang="fr">CTC/Railcommand Power Conversion(fr)</label>
         <label xml:lang="it">CTC/Railcommand Conversione Alimentazione</label>
       </variable>
@@ -71,52 +81,28 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
-      <variable label="Speed Table/Mid Range Cab Speed Step" CV="25" comment="See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied">
+      <variable item="Speed Table/Mid Range Cab Speed Step" CV="25" comment="See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied">
         <decVal/>
-        <label xml:lang="fr">Speed Table/Mid Range Cab Speed Step(fr)</label>
-        <label xml:lang="it">Tabella Velocità/Comando Palmare a metà velocità</label>
         <comment>See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied</comment>
+        <label>Speed Table/Mid Range Cab Speed Step</label>
+        <label xml:lang="fr">Speed Table/Mid Range Cab Speed Step(fr)</label>
+        <label xml:lang="it">Tabella VelocitÃ /Comando Palmare intermedio</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice xml:lang="it">Formato 14 step</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice xml:lang="it">Formato 28 step</choice>
-          </enumChoice>
-        </enumVal>
-        <label xml:lang="fr">FL Location(fr)</label>
-        <label xml:lang="it">Località FL</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX" item="Advanced Ack">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label xml:lang="fr">Advanced Decoder Acknowledgement(fr)</label>
-        <label xml:lang="it">Riconoscimento Decoder Avanzato(fr)</label>
-      </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice xml:lang="it">Usare Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use table in CVs 66 through 95">
-            <choice xml:lang="it">Usare tabella con CV dalla 66 alla 95</choice>
-          </enumChoice>
-        </enumVal>
-        <label xml:lang="fr">Speed Table Definition(fr)</label>
-        <label xml:lang="it">Definizioni Tabella Velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29AdvAck.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <!-- this next large group forms a table, so doesn't need translation -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>
       <!-- end of table that doesn't need translation -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable label="Speed Table" item="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
+        <label>Speed Table</label>
         <label xml:lang="fr">Speed Table(fr)</label>
-        <label xml:lang="it">Tabella Velocità</label>
+        <label xml:lang="it">Tabella VelocitÃ </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>

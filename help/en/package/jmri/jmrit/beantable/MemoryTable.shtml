@@ -1,21 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI: Memory Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Memory Table">
+ <title>
+      JMRI: Memory Variable Table Help
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Memory Variable Table">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -23,26 +16,26 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Memory Table</H1>
+<h1>The Memory Variable Table</h1>
     
-You can use the Memory Table to look at the contents of JMRI memory variables.
+You can use the Memory Variable Table to look at the contents of JMRI memory variables.
 <p>
 Note that you can sort the table by each of the columns, just click on the
 column heading.
 <p>
-To change the value stored in a particular memory, just click on the 
-value column in the desired row. Enter a new value, followed by hitting the 
-return or enter key to store the value.
+To change the value stored in a particular Memory Variable, just doubleclick on the 
+Value column in the desired row. Enter a new value, followed by hitting the 
+Return or Enter key to store the value.
 <p>
-To create a new memory variable, click on the 
-"<a href="MemoryAddEdit.shtml">Add...</a>" button at the bottom of the window.
+To create a new Memory Variable, click on the 
+"<a href="MemoryAddEdit.shtml">Add...</a>" button at the bottom left of the pane.
 
 <p>
-For more information on memories, see the 
-<a href="../../../../html/tools/Memories.shtml">memory help page</a>.
-<br>
+For more information on Memory Variables, see the 
+<a href="../../../../html/tools/Memories.shtml">Memory Variables help page</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

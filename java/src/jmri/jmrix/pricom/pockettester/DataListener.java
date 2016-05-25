@@ -1,5 +1,4 @@
 // pricom.pockettester.DataListener.java
-
 package jmri.jmrix.pricom.pockettester;
 
 /**
@@ -9,15 +8,14 @@ package jmri.jmrix.pricom.pockettester;
  *
  * @see jmri.jmrix.pricom.pockettester.DataSource
  *
- * @author			Bob Jacobsen    Copyright (C) 2005
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2005
+ * @version	$Revision$
  */
-public interface DataListener  {
+public interface DataListener {
 
     public void asciiFormattedMessage(String m);
-    
+
     // public void rawMessage(String m);
-    
 }
 
 /* @(#)DataListener.java */

@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2010/07/29 19:06:16 crosland Exp $ -->
-<!--Translated by Hervé Blorec le 2011/9/21-->
+<!-- <!-- $Id$ --> -->
+<!--Updated by Herv&#233; Blorec  2013-09-10-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: Bachrus
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Andrew Crosland" name=Author>
     <META name="keywords" content="Bachrus java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -28,22 +28,22 @@
     <div id="mainContent">
 
       <H2> 
-      Guide Matériel JMRI: Bachrus
+      Guide Mat&#233;riel JMRI: Bachrus
       </H2>
 
-	<H3>Matériel Supporté e</H3>
+	<H3>Mat&#233;riel Support&#233;</H3>
 
-    JMRI soutient le Bachrus MTS-CDC Speedometer train miniature, qui est un périphérique d'entrée unique, pour capturer les informations de vitesse à partir d'un module de lecteur sur un stand de course Bachrus "Saddle" . Pour plus d'informations sur les produits Bachrus voir le
-    <a href="http://www.bachrus.com">website Bachrus </a>.<br>
+    JMRI soutient le Bachrus MTS-DCC Speedometer pour train miniature, qui est un p&#233;riph&#233;rique d'entr&#233;e unique, pour capturer les informations de vitesse &#224; partir d'un module de lecteur sur un stand de course Bachrus "Saddle" . Pour plus d'informations sur les produits Bachrus voir le
+    <a href="http://www.bachrus.com">site web Bachrus</a>.<br>
 		<p>		
-		Lorsque le Bachrus MTS-CDC est défini comme une préférence de connexion de réseau, l'utilitaire Speedo peut être utilisé pour afficher l'échelle de toute la vitesse de course  aux échelles de Z à O et au-delà.
+		Lorsque le Bachrus MTS-DCC est d&#233;fini comme une pr&#233;f&#233;rence de connexion de r&#233;seau, l'utilitaire Speedo peut &#234;tre utilis&#233; pour afficher l'&#233;chelle de vitesse de course aux &#233;chelles de Z &#224; O et au-del&#224;.
 		</p>
 		<a href="images/dial.jpg">
     <img src="images/dial.jpg"
          width="306" height="238"
          alt="Speedometer dial display" ></a>
 		<p>
-		Lorsque le Bachrus MTS-CDC est défini comme une connexion mise parallèlement à un système matériel DCC l'utilitaire Seedo permet la mesure automatique d'une décodeur DCC équipé en profil de vitesse de Loco.
+		Lorsque le Bachrus MTS-DCC est d&#233;fini comme une connexion mise parall&#232;lement &#224; un syst&#232;me mat&#233;riel DCC l'utilitaire Speedo permet la mesure automatique d'une d&#233;codeur DCC &#233;quip&#233; en profil de vitesse de Loco.
 		</p>
 		<a href="images/profile.jpg">
     <img src="images/profile.jpg"

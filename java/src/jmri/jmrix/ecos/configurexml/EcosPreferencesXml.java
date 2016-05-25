@@ -1,16 +1,14 @@
 package jmri.jmrix.ecos.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
 
 /**
- * This class is here to prevent error messages
- * being presented to the user on opening JMRI
- * or saving the panel file, when connected to
- * an Ecos.  It currently serves no other function.
- * The ecos preferences are stored under the connection
- * configuration
+ * This class is here to prevent error messages being presented to the user on
+ * opening JMRI or saving the panel file, when connected to an Ecos. It
+ * currently serves no other function. The ecos preferences are stored under the
+ * connection configuration
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
@@ -32,17 +30,16 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
 
     protected void register() {
         /*log.error("unexpected call to register()");
-        new Exception().printStackTrace();*/
+         new Exception().printStackTrace();*/
         jmri.InstanceManager.configureManagerInstance().registerPref(this);
     }
     /*protected void register(String host, String port, String mode) {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, mode));
-    }*/
-    
-    public boolean load(Element e) {        
+     InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, mode));
+     }*/
+
+    public boolean load(Element shared, Element perNode) {
         return true;
     }
-    
 
-    static Logger log = LoggerFactory.getLogger(EcosPreferencesXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosPreferencesXml.class.getName());
 }

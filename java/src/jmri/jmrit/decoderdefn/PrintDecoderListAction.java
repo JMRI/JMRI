@@ -1,18 +1,17 @@
 // PrintDecoderListAction.java
-
 package jmri.jmrit.decoderdefn;
 
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import jmri.Version;
+import jmri.util.FileUtil;
+import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-import jmri.util.davidflanagan.*;
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
-
-import java.util.List;
-
 
 /**
  * Action to print a summary of available decoder definitions
@@ -20,12 +19,16 @@ import java.util.List;
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author	Bob Jacobsen   Copyright (C) 2003
- * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Dennis Miller Copyright (C) 2005
+ * @version $Revision$
  */
-public class PrintDecoderListAction  extends AbstractAction {
+public class PrintDecoderListAction extends AbstractAction {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4693793673785831632L;
 
     public PrintDecoderListAction(String actionName, Frame frame, boolean preview) {
         super(actionName);
@@ -41,21 +44,20 @@ public class PrintDecoderListAction  extends AbstractAction {
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
-    
 
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, "DecoderPro V"+Version.name()+" Decoder Definitions", 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, "DecoderPro V" + Version.name() + " Decoder Definitions", 10, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
         }
 
         // add the image
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
+        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         writer.write(icon.getImage(), new JLabel(icon));
 
@@ -65,9 +67,9 @@ public class PrintDecoderListAction  extends AbstractAction {
 
         DecoderIndexFile f = DecoderIndexFile.instance();
         List<DecoderFile> l = f.matchingDecoderList(null, null, null, null, null, null); // take all
-        int i=-1;
-        log.debug("Roster list size: "+l.size());
-        for (i = 0; i<l.size(); i++) {
+        int i = -1;
+        log.debug("Roster list size: " + l.size());
+        for (i = 0; i < l.size(); i++) {
             DecoderFile d = l.get(i);
             if (!d.getMfg().equals(lastMfg)) {
                 printMfg(d, writer);
@@ -78,7 +80,9 @@ public class PrintDecoderListAction  extends AbstractAction {
                 printFamily(d, writer);
                 lastFamily = d.getFamily();
             }
-            if (!d.getFamily().equals(d.getModel())) printEntry(d,writer);
+            if (!d.getFamily().equals(d.getModel())) {
+                printEntry(d, writer);
+            }
         }
 
         // and force completion of the printing
@@ -87,30 +91,30 @@ public class PrintDecoderListAction  extends AbstractAction {
 
     void printEntry(DecoderFile d, HardcopyWriter w) {
         try {
-            String s ="\n                       "+d.getModel();
+            String s = "\n                       " + d.getModel();
             w.write(s, 0, s.length());
         } catch (java.io.IOException e) {
-            log.error("Error printing: "+e);
+            log.error("Error printing: " + e);
         }
     }
 
     void printMfg(DecoderFile d, HardcopyWriter w) {
         try {
-            String s ="\n\n"+d.getMfg();
+            String s = "\n\n" + d.getMfg();
             w.write(s, 0, s.length());
         } catch (java.io.IOException e) {
-            log.error("Error printing: "+e);
+            log.error("Error printing: " + e);
         }
     }
 
     void printFamily(DecoderFile d, HardcopyWriter w) {
         try {
-            String s ="\n           "+d.getFamily();
+            String s = "\n           " + d.getFamily();
             w.write(s, 0, s.length());
         } catch (java.io.IOException e) {
-            log.error("Error printing: "+e);
+            log.error("Error printing: " + e);
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PrintDecoderListAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintDecoderListAction.class.getName());
 }

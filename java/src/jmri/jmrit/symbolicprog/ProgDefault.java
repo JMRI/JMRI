@@ -1,4 +1,3 @@
-// ProgDefault.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.File;
@@ -6,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import jmri.util.XmlFilenameFilter;
@@ -13,7 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Functions for use with programmer files, including the default file name. <P>
+ * Functions for use with programmer files, including the default file name.
+ * <P>
  * This was refactored from LocoSelPane in JMRI 1.5.3, which was the the right
  * thing to do anyway. But the real reason was that on MacOS Classic the static
  * member holding the default programmer name was being overwritten when the
@@ -22,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * {@link CombinedLocoSelPane} class; see comments there for more information.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class ProgDefault {
 
@@ -35,7 +35,11 @@ public class ProgDefault {
         XmlFilenameFilter filter = new XmlFilenameFilter();
         if (fp.exists()) {
             sp = fp.list(filter);
-            np = sp.length;
+            if(sp!=null) { 
+               np = sp.length;
+            } else {
+               np = 0;
+            }
         } else {
             log.warn(FileUtil.getUserFilesPath() + "programmers was missing, though tried to create it");
         }
@@ -48,7 +52,11 @@ public class ProgDefault {
         String[] sx;
         if (fp.exists()) {
             sx = fp.list(filter);
-            nx = sx.length;
+            if(sx!=null) {
+               nx = sx.length;
+            } else {
+               nx = 0;
+            }
             if (log.isDebugEnabled()) {
                 log.debug("Got " + nx + " programmers from " + fp.getPath());
             }
@@ -73,32 +81,26 @@ public class ProgDefault {
         // But for now I can live with that.
         String sbox[] = new String[np + nx];
         int n = 0;
-        for (String s : sp) {
-            sbox[n++] = s.substring(0, s.length() - 4);
+        if(np>0) {
+            for (String s : sp) {
+               sbox[n++] = s.substring(0, s.length() - 4);
+            }
         }
-        for (String s : sx) {
-            sbox[n++] = s.substring(0, s.length() - 4);
+        if(nx>0) {
+           for (String s : sx) {
+               sbox[n++] = s.substring(0, s.length() - 4);
+           }
         }
         return sbox;
     }
-    volatile static String defaultProgFile;
 
     synchronized static public String getDefaultProgFile() {
-        if (log.isDebugEnabled()) {
-            log.debug("get programmer: " + defaultProgFile);
-        }
-        return defaultProgFile;
+        return InstanceManager.getDefault(ProgrammerConfigManager.class).getDefaultFile();
     }
 
     synchronized static public void setDefaultProgFile(String s) {
-        if (log.isDebugEnabled()) {
-            log.debug("set programmer: " + s);
-        }
-        defaultProgFile = s;
+        InstanceManager.getDefault(ProgrammerConfigManager.class).setDefaultFile(s);
     }
 
-    static {
-        defaultProgFile = null;
-    }
-    static Logger log = LoggerFactory.getLogger(ProgDefault.class);
+    private final static Logger log = LoggerFactory.getLogger(ProgDefault.class);
 }

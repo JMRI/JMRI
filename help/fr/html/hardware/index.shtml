@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.36 2010/09/19 03:25:25 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233;  2013-09-09-->
 <html lang="fr">
 <head>
   <TITLE>
- 	JMRI: Hardware Support
+ 	JMRI: Support Materiel
   </TITLE>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,20 +24,20 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-        <H2>
-		JMRI: Support Matériel
-        </H2>
+        <h1>
+		JMRI: Support Materiel
+        </h1>
 
-	<p>JMRI prend en charge un large éventail de «Centrale de Commande" DCC produits par différents fournisseurs pour l'automatisation de 
-chemin de fer modèles. Nous supportons également la disposition non-DCC. 
-S'il ya un moyen de faire communiquer un ordinateur avec une partie donnée d'un équipement de  chemin de fer miniature
-, il est possible de le connecter à JMRI.
+	<p>JMRI prend en charge un large &#233;ventail de "Centrale de Commande" DCC produits par diff&#233;rents fournisseurs pour l'automatisation de 
+chemin de fer mod&#232;les. Nous prenons en charge &#233;galement la disposition non-DCC. 
+S'il y a un moyen de faire communiquer un ordinateur avec une partie donn&#233;e d'un &#233;quipement de  chemin de fer miniature
+, il est possible de le connecter &#224; JMRI.
 <p>
-Cette page donne la liste d'équipement de réseau qui est connu de JMRI
-pour travailler avec, et fournit des liens vers des informations sur la façon
+Cette page donne la liste d'&#233;quipement de r&#233;seau qui est connu de JMRI
+pour travailler avec, et fournit des liens vers des informations sur la fa&#231;on
 de configurer JMRI pour travailler avec chaque type particulier.
      <p>
- Si vous ne voyez pas votre système particulier ici, s'il vous plaît demander à ce sujet
+ Si vous ne voyez pas votre syst&#232;me particulier ici, s'il vous pla&#238;t demander &#224; ce sujet
 sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffusion utilisateur </a>
 	
 	<div class="list">
@@ -49,9 +49,9 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <dt>Atlas</dt>
 	    <dd>
 		<p class="dl"> Configurer: Atlas commander via
-<A HREF="XPressNet/index.shtml"> Lenz LI100, LI101F, LIUSB ou Genli interfaces XPressNet, ZTC contrôles ZTC640 interface, ou un XPA et modem compatible Hayes </a> </p>
+<A HREF="XPressNet/index.shtml"> Lenz LI100, LI101F, LIUSB ou Genli interfaces XPressNet, ZTC contr&#244;les ZTC640 interface, ou un XPA et modem compatible Hayes </a></p>
 
-<p> Note: vous ne pouvez pas programmer de  décodeurs avec cette configuration </p>
+<p> Note: vous ne pouvez pas programmer de  d&#233;codeurs avec cette configuration </p>
 </dd>
  <dt class="im">
 			<a href="http://www.bachrus.com/">
@@ -59,32 +59,32 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 			</dt>
 	    <dt>Bachrus</dt>
 	    <dd>
-		<p class="dl">Configurer: <a href="bachrus/index.shtml">Tachymètre Bachrus MTS-DCC pour train miniature </a></p> 
+		<p class="dl">Configurer: <a href="bachrus/index.shtml">Tachym&#232;tre Bachrus MTS-DCC pour train miniature </a></p> 
 	    </dd>
 
 
-<dt class="im"> <a href="http://www.jlcenterprises.net/"> C/MRI </a> </dt>
+<dt class="im"><a href="http://www.jlcenterprises.net/"> C/MRI </a></dt>
 <dt>C/MRI </dt>
 <dd>
-<p class="dl"> Configurer: <A HREF="cmri/CMRI.shtml"> Bruce Chubb système de contrôle C/MRI </a> </p> 
+<p class="dl"> Configurer: <A HREF="cmri/CMRI.shtml"> syst&#232;me de contr&#244;le C/MRI de Bruce Chubb</a></p> 
 </dd>
 
 <dt class="im">
-<img width="122" height="27" src="http://www.cti-electronics.com/banner.gif" alt="CTI"> </a>
+<img width="122" height="27" src="http://www.cti-electronics.com/banner.gif" alt="CTI"></a>
 </dt>
-<dt> CTI Acela Electronics </ dt>
-<dd> <p class="dl"> Configurer:Cartes  Electroniques CTI via l'adaptateur
+<dt> CTI Acela Electronics </dt>dt>
+<dd><p class="dl"> Configurer:Cartes Electroniques CTI via l'adaptateur
 <A HREF="acela/index.shtml">Acela </a>   </p>
 <p>&nbsp;</p>
 </dd>
 
 <dt class="im">
-<a href="http://www.cvpusa.com/"> <a
-<img width="44" height="34" src="images/ico-cvp.gif" alt="CVP"> </a>
-</ dt>
+<a href="http://www.cvpusa.com/"><a
+<img width="44" height="34" src="images/ico-cvp.gif" alt="CVP"></a>
+</dt>
 <dt>Produits CVP  EasyDCC </dt>
-<dd> <p class="dl"> Configurer:centrale de commande via EasyDCC
-<A HREF="easydcc/EasyDCC.shtml"> série </a> ou 
+<dd><p class="dl"> Configurer:centrale de commande via EasyDCC
+<A HREF="easydcc/EasyDCC.shtml"> s&#233;rie </a> ou 
 		<A HREF="TerminalServer.shtml">Serveur Terminal </a></p> ou
 		<p>&nbsp;</p>
 	    </dd>
@@ -93,7 +93,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 		<a href="http://www.dccspecialties.com">
 		<img src="http://www.dccspecialties.com/common/top-logo.gif" width="60" height="26" alt="DCC Specialties"></a>
 	    </dt>
-	    <dt>DCC Spécialities  </dt>
+	    <dt>DCC Sp&#233;cialities  </dt>
 	    <dd><p class="dl">Configurer:  
 		<A HREF="misc/DccSpecialties.shtml">Hare, Wabbit, Block Watcher ou famille de produits PSX</a>.</p>
 		<p>&nbsp;</p>
@@ -104,11 +104,11 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 		<img src="images/Digitrax-logo.jpg" width="44" height="34" alt="Digitrax"></a></dt>
 	    <dt>Digitrax</dt>
 	    <dd>
-	        <p class="dl"><A HREF="loconet/Digitrax.shtml">Informations générales sur la connexion de JMRI à Digitrax LocoNet </a>
-<p class="dl"> Configuration: Connexion à un LocoNet via
+	        <p class="dl"><A HREF="loconet/Digitrax.shtml">Informations g&#233;n&#233;rales sur la connexion de JMRI &#224; Digitrax LocoNet </a>
+<p class="dl"> Configuration: Connexion &#224; un LocoNet via
 		     <ul>
- 		    <li> <A HREF="loconet/PR3.shtml"> Digitrax interface PR3 </a>
-		    <li> <A HREF="loconet/LocoBufferUSB.shtml"> RR-CirKits LocoBuffer-USB </a>
+ 		    <li><A HREF="loconet/PR3.shtml"> Digitrax interface PR3 </a>
+		    <li><A HREF="loconet/LocoBufferUSB.shtml"> RR-CirKits LocoBuffer-USB </a>
 		    <li>Le plus vieux 
 	   		<A HREF="loconet/LocoBufferII.shtml"> LocoBuffer-II </a>,
  	  		<A HREF="loconet/LocoBuffer.shtml"> LocoBuffer </a> et les interface	
@@ -116,18 +116,18 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	            </ul>
 		    </p>
 		<p class="dl"> Configurer:
-		<A HREF="loconet/LocoNetSim.shtml"> LocoNet Simulator pour une utilisation en cas de déconnexion d'un réseau </a>. </p>
-		<p class="dl"> Configurationr: connexion à distance via un LocoNet
-		<A HREF="loconet/LocoNetServer.shtml"> JMRI Serveur LocoNet </a>. </p>
-		<p class="dl"> Configuration: connexion à distance via un LocoNet
+		<A HREF="loconet/LocoNetSim.shtml"> LocoNet Simulator pour une utilisation en cas de d&#233;connexion d'un r&#233;seau </a>. </p>
+		<p class="dl"> Configurationr: connexion &#224; distance via un LocoNet
+		<A HREF="loconet/LocoNetServer.shtml"> Serveur LocoNet JMRI </a>. </p>
+		<p class="dl"> Configuration: connexion &#224; distance via un LocoNet
 		<A HREF="loconet/LbServer.shtml">LbServer  </a>. </p>
-		<A HREF="loconet/LocoNetworking.shtml"> Plus informations sur la connexion de plusieurs ordinateurs à un seul LocoNet </a>
-		<p class="dl">:Configurion: programmation et test des décodeurs sans une centrale de commande au moyen d'une
+		<A HREF="loconet/LocoNetworking.shtml"> informations suppl&#233;mentaires sur la connexion de plusieurs ordinateurs &#224; un seul LocoNet </a>
+		<p class="dl">:Configurion: programmation et test des d&#233;codeurs sans une centrale de commande au moyen d'une
 		<A HREF="loconet/PR2.shtml">interface Digitrax PR2 </a>
 		ou
 		<A HREF="loconet/PR3.shtml"> interface PR3 </a>. </p>
-		<p class="dl">Configuration: connexion directe à un
-		LbServer <a href="loconet/Uhlenbrock.shtml">port série Intellibox </a>.
+		<p class="dl">Configuration: connexion directe &#224; un
+		LbServer <a href="loconet/Uhlenbrock.shtml">port s&#233;rie Intellibox </a>.
 	    </dd>
 
 	    <dt class="im">
@@ -135,30 +135,30 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 		<img src="http://www.esu.eu/fileadmin/template/gfx/banner1.jpg" width="70" height="50" alt="ESU"></a>
 	    </dt>
 	    <dt>ESU</dt>
-	    <dd><p class="dl"> configuration de la connexion à la centrale de commande
+	    <dd><p class="dl"> configuration de la connexion &#224; la centrale de commande
 		<A HREF="ecos/index.shtml"> ECoS </a> . </p>
 		<p>&nbsp;</p>
 	    </dd>
 
 	    <dt class="im">
 		<a href="http://www.fleischmann.de/"><a>
-		<img width="54" height="34" src="images/ico-fl.gif" alt="Fleischmann"> </a>
+		<img width="54" height="34" src="images/ico-fl.gif" alt="Fleischmann"></a>
 	    </dt>
 	    <dt>Fleischmann</dt>
-	    <dd><p class="dl"> Configuration: Twin Center par l'intermédiaire d'une
-		<A href="loconet/Fleischmann.shtml"> connexion série </a> </p>
+	    <dd><p class="dl"> Configuration: Twin Center par l'interm&#233;diaire d'une
+		<A href="loconet/Fleischmann.shtml"> connexion s&#233;rie </a></p>
 	    </dd>
 
 	   <dt class="im">
- 		<dt> <a href="http://www.hornby.com/">Hornby  </a>
+ 		<dt><a href="http://www.hornby.com/">Hornby  </a>
 	   </dt>
 	   <dt> Hornby </dt>
 	   <dd>
-		<p class="dl"> Configuration: Hornby Elite via<a HREF="XPressNet/index.shtml"> adaptateur construit dans un port USB </a> </p>
-                <p> <class="dl"> Configuration: Elite Hornby ou Hornby Sélectionnez via
-		<A HREF="XPressNet/index.shtml"> Lenz LI100, LI101F, LIUSB ou Genli interfaces XPressNet, ZTC contrôles ZTC640 interface, ou un XPA et modem compatible Hayes </a> </p>
+		<p class="dl"> Configuration: Hornby Elite via<a HREF="XPressNet/index.shtml"> un adaptateur construit dans un port USB </a></p>
+                <p><class="dl"> Configuration: Elite Hornby ou Hornby S&#233;lectionnez via
+		<A HREF="XPressNet/index.shtml"> Lenz LI100, LI101F, LIUSB ou Genli interfaces XPressNet, ZTC contr&#244;les ZTC640 interface, ou un XPA et modem compatible Hayes </a></p>
 
-		<p> S'il vous plaît consulter les notes ci-dessus pour les restrictions que JMRI peut faire sur ce système spécifique  </p>
+		<p> S'il vous pla�&reg;t consulter les notes ci-dessus pour les restrictions que JMRI peut apportere sur ce syst&#232;me sp&#233;cifique  </p>
 
 	    </dd>
 
@@ -173,7 +173,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, 
 		 ou un XPA et modem compatible Hayes</a></p> 
 
-		<p>S'il vous plaît consulter les notes ci-dessus pour les restrictions que JMRI peut faire sur ce système spécifique</p>
+		<p>S'il vous pla�&reg;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter sur ce syst&#232;me sp&#233;cifique</p>
 
 	    </dd>
 
@@ -181,22 +181,22 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <IMG src="images/ico-lionel.gif" width="108" height="35" alt="Lionel TMCC"></a></dt>
 	    <dt>Lionel TMCC</dt>
 	    <dd>
-		<p>Connexion: câble Série</p>
+		<p>Connexion: c&#226;ble S&#233;rie</p>
 	        <p class="dl">Configurer: <A HREF="tmcc/index.shtml">Centrale de commande TMCC </a></p>
 	    </dd>
 
 	    <dt class="im"><a href="http://www.maplesystems.com">
 	    <IMG src="http://www.maplesystems.com/images/homepage-new/MapleLogo.gif" width="95" height="90" alt="Maple Logo"></a></dt>
-	    <dt>Maple Système</dt>
+	    <dt>Maple Syst&#232;me</dt>
 	    <dd>
-		<p>M Écran tactile Systèmes Maple </p>
-	        <p class="dl">Configurer: <A HREF="maple/index.shtml">connexion via une liaison série</a></p>
+		<p> &#233;cran tactile Syst&#232;mes Maple </p>
+	        <p class="dl">Configurer: <A HREF="maple/index.shtml">connexion via une liaison s&#233;rie</a></p>
 	    </dd>
 
 	    <dt class="im"><a href="http://www.merg.org.uk/">
 	    <img src="http://www.merg.org.uk/images/logo1m.gif" alt="MERG logo" height="45" width="100"></a></dt>
 	    <dt>MERG CBUS</dt>
-	    <dd><p class="dl">Configuration: <A HREF="can/cbus/index.shtml"> réseaux MERG CBUS </a></p></dd>
+	    <dd><p class="dl">Configuration: <A HREF="can/cbus/index.shtml"> r&#233;seaux MERG CBUS </a></p></dd>
 
 	    <dt class=im><a href="http://www.proto87.com/RPS-MR-position-detection-system.html">
 	    <IMG src="images/RPS.gif"
@@ -204,56 +204,56 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <dt><a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS</a></dt>
 	    <dd>
 		<A HREF="rps/index.shtml">Configuration de la connexion</a>
-		 à un système de mesure de position RPS.
+		 &#224; un syst&#232;me de mesure de position RPS.
 		</dd>
 		
 	    <dt class="im"><a href="http://www.ncedcc.com/">
 	    <IMG src="images/ncelogo.jpg" width="44" height="34" alt="NCE"></a></dt>
 	    <dt>NCE</dt>
 	    <dd>
-		Configuration d'une connexion à une Powerhouse Pro via 
-		<A HREF="nce/NCE.shtml#phpro"> lien série</a> ou
-		<A HREF="nce/NCE.shtml#vianetwork"> Serveur Terminal </a>.
+		Configuration d'une connexion &#224; une Powerhouse Pro via un
+		<A HREF="nce/NCE.shtml#phpro"> lien s&#233;rie</a> ou
+		<A HREF="nce/NCE.shtml#vianetwork"> Serveur Terminal</a>.
 		<br>
-		Configuration d'une connexion à un PowerCab via 
-		<A HREF="nce/NCE.shtml#powercab">adapteur USB NCE </a>.
+		Configuration d'une connexion &#224; un PowerCab via un
+		<A HREF="nce/NCE.shtml#powercab">adapteur USB NCE</a>.
 		</dd>
 		    <dt class="im"><a href="http://www.oaktreesystems.com/">
 	    <IMG src="images/otslogosmall.gif" width="37" height="50" alt="Oak Tree Systems">
 	    </a></dt>
-	    <dt>Systèmes Oak Tree </dt>
+	    <dt>Syst&#232;mes Oak Tree </dt>
 	    <dd>
-	        <p class="dl">Configurer une connexion à une  <A href="oaktree/OakTree.shtml"> Interface de Contrôle d'un Chemin de fer Oak Tree</a>, incluant
+	        <p class="dl">Configurer une connexion &#224; une  <A href="oaktree/OakTree.shtml"> Interface de Contr&#244;le d'un Chemin de fer Oak Tree</a>, incluant
 	        les cartes d'interfaces <A HREF="http://www.oaktreesystems.com/io-24_card.htm">IO-24</A>, 
 	        <A HREF="http://www.oaktreesystems.com/HTML/io-48_card.htm">IO-48</A> 
 	        et <A HREF="http://www.oaktreesystemsor an XPA and  modem compatible Hayes.com/HTML/o-48_card.htm">O-48</a>  
-	        et <A HREF=""> 2 régulateurs manuels HH2 </A>.
+	        et <A HREF=""> 2 r&#233;gulateurs manuels HH2</A>.
 		</p>
 		</dd>
 
 	    <dt class="im"><a href="http://www.protrak.cc">
 	    <img src="http://www.protrak.cc/ptgif.gif"></a></dt>
 	    <dt>ProTrak Grapevine</dt>
-	    <dd><p class="dl">Configuration: <A HREF="grapevine/index.shtml">nœuds Grapevine </a></p></dd>
+	    <dd><p class="dl">Configuration: <A HREF="grapevine/index.shtml">noeuds Grapevine </a></p></dd>
 
 	    <dt class="im"><a href="http://www.qsisolutions.com/products/q-programmer.html">
 	    <img src="http://www.qsisolutions.com/image/qsi-solutions-logo.gif" height="57" width="67"></a></dt>
 	    <dt> Solutions QSI</dt>
 	    <dd>
 		<p>Connection: Programmateur Quantum</p>
-	        <p class="dl">Configurer: <A HREF="qsi/index.shtml"> connexion USB </a></p></dd>
+	        <p class="dl">Configurer: <A HREF="qsi/index.shtml"> connexion USB</a></p></dd>
 
 	    <dt class="im"><a href="http://www.raildriver.com"> RailDriver</a></dt>
 	    <dt>PI Engineering RailDriver</dt>
-	    <dd><p class="dl">Configuration: <A HREF="raildriver/index.shtml"> simulateur cab RailDriver </a></p></dd>
+	    <dd><p class="dl">Configuration: <A HREF="raildriver/index.shtml"> simulateur cab RailDriver</a></p></dd>
 
 	    <dt class="im"><a href="http://www.roco.com/">Roco</a></dt>
 	    <dt>Roco</dt>
 	    <dd>
-	        <p class="dl">Configurer: Roco LocoMaus 2 (Roco port série N° 10760), Roco MultiMaus (Roco N° 10810), ou Roco multiZENTRAL-Pro (Roco N° 10830) via
+	        <p class="dl">Configurer: Roco LocoMaus 2 (Roco port s&#233;rie r&#233;f: 10760), Roco MultiMaus (Roco r&#233;f: 10810), ou Roco multiZENTRAL-Pro (Roco r&#233;f: 10830) via
 		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, ou un XPA et  modem compatibles Hayes</a> 
 		</p>
-		<p>S'il vous plaît consulter les notes ci-dessus pour les restrictions que JMRI peut faire sur ce système spécifique</p>
+		<p>S'il vous pla�&reg;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce syst&#232;me sp&#233;cifique</p>
 		</dd>
 
 	    <dt class="im"><a href="http://www.sprog-dcc.co.uk/"><img src="http://www.sprog-dcc.co.uk/images/SprogDCC300.jpg" alt="SPROG" height="41" width="150"></a></dt>
@@ -263,19 +263,19 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 
 	    <dt class="im"><a href="http://srcpd.sourceforge.net/"><img src="http://www.der-moba.de/skins/dermoba/wiki.png" height="55" width="78"></a></dt>
 	    <dt>SRCP</dt>
-	    <dd><p class="dl">Configuration: <A HREF="SRCP/index.shtml"> Connexion au serveur SRCP </a></p></dd>
+	    <dd><p class="dl">Configuration: <A HREF="SRCP/index.shtml"> Connexion au serveur SRCP</a></p></dd>
 
 	    <dt class="im"><a href="http://www.uhlenbrock.de/">
 	    <IMG src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"></a></dt>
 	    <dt>Uhlenbrock</dt>
-	    <dd>Les Intellibox peuvent être connectées au programme JMRI soit par leurs connexions Loconet, ou via leurs propres ports série
+	    <dd>Les Intellibox peuvent &#234;tre connect&#233;es au programme JMRI soit par leurs connexions Loconet, ou via leurs propres ports s&#233;rie
 	    
 	    <p class="dl">Configuration: Uhlenbrock Intellibox via
 		<A HREF="loconet/Digitrax.shtml">MS100  ou les interfaces  LocoBuffer LocoNet </a></p>
 		</p>
 
-	    <p class="dl">Configuration: Uhlenbrock Intellibox via
-		<A href="loconet/Uhlenbrock.shtml">intégré dans le port série</a></p>
+	    <p class="dl">Configuration: Uhlenbrock Intellibox via un
+		<A href="loconet/Uhlenbrock.shtml"> Port s&#233;rie int&#233;gr&#233; </a></p>
 		</p>
 
 	    </dd>so
@@ -285,7 +285,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	        <p class="dl">Configurer: Viessmann Commander via
 		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, ou un  XPA et modem compatibles Hayes </a> 
 		</p>
-		<p>S'il vous plaît consulter les notes ci-dessus pour les restrictions que JMRI peut faire sur ce système spécifique</p>
+		<p>S'il vous pla�&reg;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce syst&#232;me sp&#233;cifique</p>
             </dd>
 
 	    <dt class="im">Wangrow</dt>
@@ -297,42 +297,43 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <dt class="im"><a href="http://www.x10.com">X10</a></dt>
 	    <dt>X10</dt>
 	    <dd>
-		<p>Connexion:power-line contrôleurs de courants porteurs X10 ou un XPA et un modem compatible Hayes</p>
-	        <p class="dl">Configurer: <A HREF="powerline/index.shtml">CM11 et contrôleurs compatibles </a></p></dd>
+	     <p>Connection: X10 contr&#244;leurs courant-porteur</p>
+	     <p class="dl">Configure: <a href="powerline/index.shtml">CM11 et contr&#244;leurs compatibles </a></p></dd>
 
 	    <dt class="im"><a href="http://w3.zimo.at/">Zimo</a></dt>
 	    <dt>Zimo</dt>
 	    <dd>
-	    	<p class="dl">Configurer: <A HREF="zimo/Zimo.shtml">Zimo MX-1</a> </p>
+			<p class="dl">Configure: <a href="zimo/Zimo.shtml">Zimo MX-1</a> </p>
 	    </dd>
 
 	    <dt class="im">
 	        <a href="http://ztccontrols.com/">
 		<img src="images/ztclogo.gif" width="44" height="34" alt="ZTC"></a>
 		</dt>
-	    <dt>Contrôles ZTC </dt>
+
+	    <dt>Contr&#244;les ZTC </dt>
 	    <dd>
-	    	<p class="dl">Configurer: ZTC Contrôles ZTC511, ZTC Contrôles ZTC521 via
+	    	<p class="dl">Configurer: ZTC Contr&#244;les ZTC511, ZTC Contr&#244;les ZTC521 via
 		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, ou un XPA et modem compatibles Hayes </a> 
-		(requière le logiciel XPressNet V3.0 )
+		(requi&#232;re le logiciel XPressNet V3.0 )
 		</p>
-		<p>S'il vous plaît consulter les notes ci-dessus pour les restrictions que JMRI peut faire sur ce système spécifique</p>
+		<p>S'il vous pla�&reg;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce ce syst&#232;me sp&#233;cifique</p>
 		</dd>
 
 	</dl>
-	</div> <!-- closes .list -->
+	</div><!-- closes .list -->
 
         <H2>JMRI: Connexion aux centrales de commande</H2>
 	<dl>
 	<dt class=left>Macintosh</dt>
 	<dd>
 		<p><a href="MacintoshSerialPorts.shtml">Mac connecteur Mini-DIN8 </a></p>
-		<p><a href="USBtoSerial.shtml">Via un adaptateur Série vers USB</a></p>
+		<p><a href="USBtoSerial.shtml">Via un adaptateur S&#233;rie vers USB</a></p>
 	</dd>
 
 	<dt class=left>PC</dt>
 	<dd>
-		<p><a href="USBtoSerial.shtml">Via un adaptateur USB vers série</a></p>
+		<p><a href="USBtoSerial.shtml">Via un USB vers un adaptateur S&#233;rie</a></p>
 	</dd>
 
 	<dt class=left>Serveur Terminal</dt>
@@ -343,16 +344,16 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	</dl>
 
         <H2>
-		JMRI: Infos Générales sur le matériel
+		JMRI: Infos G&#233;n&#233;rales sur le mat&#233;riel
         </H2>
 	<dl>
-	<dt class=left><a href="../doc/Technical/TurnoutFeedback.shtml">Rétroaction des aiguillages</a></dt>
+	<dt class=left><a href="../doc/Technical/TurnoutFeedback.shtml">R&#233;troaction des aiguillages</a></dt>
 	<dd>
-        Si votre réseau utilise un mécanisme de rétro-signalisation au sens réel
-        du terme, par exemple un micro-contact relié à la
-        barre de commande ou un décodeur qui renvoie un message de confirmation,
-        JMRI peut l'utiliser pour garder une trace de ce qui se passe réellement
-        sur le réseau. Nous appelons cela "Rétroaction ou Rétrosignalisation", et pour l'utiliser et la configurer voir
+        Si votre r&#233;seau utilise un m&#233;canisme de r&#233;tro-signalisation au sens r&#233;el
+        du terme, par exemple un micro-contact reli&#233; &#224; la
+        barre de commande ou un d&#233;codeur qui renvoie un message de confirmation,
+        JMRI peut l'utiliser pour garder une trace de ce qui se passe r&#233;ellement
+        sur le r&#233;seau. Nous appelons cela "R&#233;troaction ou R&#233;trosignalisation", et pour l'utiliser et la configurer voir
         <A HREF="../doc/Technical/TurnoutFeedback.shtml"> une autre page </a>.
 	</dd>
 

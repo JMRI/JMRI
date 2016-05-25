@@ -1,8 +1,5 @@
-// OlcbThrottleTest.java
-
 package jmri.jmrix.openlcb;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,23 +8,21 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.OlcbThrottle class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
- * @version     $Revision$
  */
 public class OlcbThrottleTest extends TestCase {
 
     public void testCtor() {
     }
-    
-    // from here down is testing infrastructure
 
+    // from here down is testing infrastructure
     public OlcbThrottleTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-    	String[] testCaseName = {OlcbThrottleTest.class.getName()};
-    	junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {OlcbThrottleTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -36,8 +31,12 @@ public class OlcbThrottleTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(OlcbThrottleTest.class.getName());
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

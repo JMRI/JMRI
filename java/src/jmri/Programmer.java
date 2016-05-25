@@ -1,9 +1,7 @@
-/* Programmer.java */
-
 package jmri;
 
-import jmri.ProgListener;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 /**
  * Provide access to the hardware DCC decoder programming capability.
@@ -21,251 +19,172 @@ import java.beans.PropertyChangeListener;
  * <LI>LocoNet Op Switch programmers
  * <li>etc
  * </UL>
- * Depending on which type you have, only certain modes can
- * be set. Valid modes are specified by the class static constants.
+ * Depending on which type you have, only certain modes can be set. Valid modes
+ * are specified by the class static constants.
  * <P>
- * You get a Programmer object from a {@link ProgrammerManager},
- * which in turn can be located from the {@link InstanceManager}.
+ * You get a Programmer object from a {@link ProgrammerManager}, which in turn
+ * can be located from the {@link InstanceManager}.
  * <p>
- * Starting in JMRI 3.5.5, the CV addresses are Strings for generality.
- * The methods that use ints for CV addresses will later be deprecated.
+ * Starting in JMRI 3.5.5, the CV addresses are Strings for generality. The
+ * methods that use ints for CV addresses will later be deprecated.
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @see         jmri.ProgrammerManager
+ * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
- * @version	$Revision$
  */
-public interface Programmer  {
-
-    // mode e.g. register, direct, paged
+public interface Programmer {
 
     /**
-     * No programming mode available
-     */
-    public static final int NONE	    =  0;
-    /**
-     * NMRA "Register" mode
-     */
-    public static final int REGISTERMODE    = 11;
-
-    /**
-     * NMRA "Paged" mode
-     */
-    public static final int PAGEMODE        = 21;
-    
-    /**
-     * NMRA "Direct" mode, using only the bit-wise operations
-     */
-    public static final int DIRECTBITMODE   = 31;
-
-    /**
-     * NMRA "Direct" mode, using only the byte-wise operations
-     */
-    public static final int DIRECTBYTEMODE  = 32;
-    /**
-     * NMRA "Address-only" mode. Often implemented as
-     * a proper subset of "Register" mode, as the 
-     * underlying operation is the same.
-     */
-    public static final int ADDRESSMODE     = 41;
-
-    /**
-     * NMRA "Operations" or "Programming on the main" mode, using only the byte-wise operations
-     */
-    public static final int OPSBYTEMODE     = 101;
-    /**
-     * NMRA "Operations" or "Programming on the main" mode, using only the bit-wise operations
-     */
-    public static final int OPSBITMODE      = 102;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the byte-wise operations. Note that this is 
-     * defined as using the "normal", not "extended" addressing.
-     */
-    public static final int OPSACCBYTEMODE  = 111;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the bit-wise operations. Note that this is 
-     * defined as using the "normal", not "extended" addressing.
-     */
-    public static final int OPSACCBITMODE   = 112;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the byte-wise operations and "extended" addressing.
-     */
-    public static final int OPSACCEXTBYTEMODE = 121;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the bit-wise operations and "extended" addressing.
-     */
-    public static final int OPSACCEXTBITMODE  = 122;
-
-    /**
-     * CBUS mode for programming node variables.
-     */
-    public static final int CBUSNODEVARMODE  = 140;
-
-    /**
-     * Perform a CV write in the system-specific manner,
-     * and using the specified programming mode.
-     *<P>
+     * Perform a CV write in the system-specific manner, and using the specified
+     * programming mode.
+     * <P>
      * Handles the legacy DCC case of a single-number address space.
-     *<P>
-     * Note that this returns before the write
-     * is complete; you have to provide a ProgListener to hear about
-     * completion. The exceptions will only be thrown at the start, not
-     * during the actual programming sequence. A typical exception would be
-     * due to an invalid mode (though that should be prevented earlier)
+     * <P>
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. The exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
+     * prevented earlier)
+     * @deprecated As of 4.1.1, use #writeCV(java.lang.String, int, jmri.ProgListener)
      */
+    @Deprecated
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
-     * Perform a CV write in the system-specific manner,
-     * and using the specified programming mode.
-     *<P>
-     * Handles a general address space through a String address.
-     * Each programmer defines the acceptable formats.
-     *<P>
-     * Note that this returns before the write
-     * is complete; you have to provide a ProgListener to hear about
-     * completion. The exceptions will only be thrown at the start, not
-     * during the actual programming sequence. A typical exception would be
-     * due to an invalid mode (though that should be prevented earlier)
+     * Perform a CV write in the system-specific manner, and using the specified
+     * programming mode.
+     * <P>
+     * Handles a general address space through a String address. Each programmer
+     * defines the acceptable formats.
+     * <P>
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. The exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
+     * prevented earlier)
      */
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
-     * Perform a CV read in the system-specific manner,
-     * and using the specified programming mode.
-     *<P>
+     * Perform a CV read in the system-specific manner, and using the specified
+     * programming mode.
+     * <P>
      * Handles the legacy DCC case of a single-number address space.
-     *<P>
-     * Note that this returns before the read
-     * is complete; you have to provide a ProgListener to hear about
-     * completion. The exceptions will only be thrown at the start, not
-     * during the actual programming sequence. A typical exception would be
-     * due to an invalid mode (though that should be prevented earlier)
+     * <P>
+     * Note that this returns before the read is complete; you have to provide a
+     * ProgListener to hear about completion. The exceptions will only be thrown
+     * at the start, not during the actual programming sequence. A typical
+     * exception would be due to an invalid mode (though that should be
+     * prevented earlier)
+     * @deprecated As of 4.1.1, use #readCV(java.lang.String, int, jmri.ProgListener)
      */
+    @Deprecated
     public void readCV(int CV, ProgListener p) throws ProgrammerException;
 
     /**
-     * Perform a CV read in the system-specific manner,
-     * and using the specified programming mode.
-     *<P>
-     * Handles a general address space through a String address.
-     * Each programmer defines the acceptable formats.
-     *<P>
-     * Note that this returns before the read
-     * is complete; you have to provide a ProgListener to hear about
-     * completion. The exceptions will only be thrown at the start, not
-     * during the actual programming sequence. A typical exception would be
-     * due to an invalid mode (though that should be prevented earlier)
+     * Perform a CV read in the system-specific manner, and using the specified
+     * programming mode.
+     * <P>
+     * Handles a general address space through a String address. Each programmer
+     * defines the acceptable formats.
+     * <P>
+     * Note that this returns before the read is complete; you have to provide a
+     * ProgListener to hear about completion. The exceptions will only be thrown
+     * at the start, not during the actual programming sequence. A typical
+     * exception would be due to an invalid mode (though that should be
+     * prevented earlier)
      */
     public void readCV(String CV, ProgListener p) throws ProgrammerException;
 
     /**
-     * Confirm the value of a CV using the specified programming mode.
-     * On some systems, this is faster than a read.
-     *<P>
+     * Confirm the value of a CV using the specified programming mode. On some
+     * systems, this is faster than a read.
+     * <P>
      * Handles the legacy DCC case of a single-number address space.
-     *<P>
-     * Note that this returns before the confirm
-     * is complete; you have to provide a ProgListener to hear about
-     * completion. The exceptions will only be thrown at the start, not
-     * during the actual programming sequence. A typical exception would be
-     * due to an invalid mode (though that should be prevented earlier)
+     * <P>
+     * Note that this returns before the confirm is complete; you have to
+     * provide a ProgListener to hear about completion. The exceptions will only
+     * be thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
+     * prevented earlier)
+     * @deprecated As of 4.1.1, use #confirmCV(java.lang.String, int, jmri.ProgListener)
      */
+    @Deprecated
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
-     * Confirm the value of a CV using the specified programming mode.
-     * On some systems, this is faster than a read.
-     *<P>
-     * Handles a general address space through a String address.
-     * Each programmer defines the acceptable formats.
-     *<P>
-     * Note that this returns before the confirm
-     * is complete; you have to provide a ProgListener to hear about
-     * completion. The exceptions will only be thrown at the start, not
-     * during the actual programming sequence. A typical exception would be
-     * due to an invalid mode (though that should be prevented earlier)
+     * Confirm the value of a CV using the specified programming mode. On some
+     * systems, this is faster than a read.
+     * <P>
+     * Handles a general address space through a String address. Each programmer
+     * defines the acceptable formats.
+     * <P>
+     * Note that this returns before the confirm is complete; you have to
+     * provide a ProgListener to hear about completion. The exceptions will only
+     * be thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
+     * prevented earlier)
      */
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
-     * Set the programmer to a particular mode.  Only certain
-     * modes may be available for any particular implementation.
-     * If an invalid mode is requested, the active mode is unchanged.
-     * @param mode One of the class-constant mode values
+     * Get the list of {@link ProgrammingMode} supported by this Programmer. If
+     * the order is significant, earlier modes are better.
      */
-    public void setMode(int mode);
+    public List<ProgrammingMode> getSupportedModes();
+
+    /**
+     * Set the programmer to a particular mode.
+     * <p>
+     * Mode is a bound parameter; mode changes fire listeneres.
+     * <p>
+     * Only modes returned by {@link #getSupportedModes} are supported. If an
+     * invalid mode is requested, the active mode is unchanged.
+     */
+    public void setMode(ProgrammingMode p);
+
     /**
      * Get the current programming mode
-     * @return one of the class constants identifying a mode
      */
-    public int  getMode();
+    public ProgrammingMode getMode();
 
     /**
-     * Check if a given mode is available
-     * @param mode Availability of this mode is returned
-     * @return True if the mode is available
-     */
-    public boolean hasMode(int mode);
-
-    /** 
      * Checks the general read capability, regardless of mode
      */
     public boolean getCanRead();
-    /** 
-     * Checks the general read capability, regardless of mode,
-     * for a specific address
+
+    /**
+     * Checks the general read capability, regardless of mode, for a specific
+     * address
      */
     public boolean getCanRead(String addr);
-    /** 
-     * Checks the read capability
-     * for a specific address and specific mode.
-     */
-    public boolean getCanRead(int mode, String addr);
-    
-    /** 
+
+    /**
      * Checks the general write capability, regardless of mode
      */
     public boolean getCanWrite();
-    /** 
-     * Checks the general write capability, regardless of mode,
-     * for a specific address
+
+    /**
+     * Checks the general write capability, regardless of mode, for a specific
+     * address
      */
     public boolean getCanWrite(String addr);
-    /** 
-     * Checks the write capability
-     * for a specific address and specific mode.
-     */
-    public boolean getCanWrite(int mode, String addr);
 
     public void addPropertyChangeListener(PropertyChangeListener p);
+
     public void removePropertyChangeListener(PropertyChangeListener p);
 
     // error handling on request is via exceptions
     // results are returned via the ProgListener callback
-
     public String decodeErrorCode(int i);
 
 }
-
-
-/* @(#)Programmer.java */

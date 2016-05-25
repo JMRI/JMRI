@@ -1,25 +1,21 @@
-// CvTableModelTest.java
-
 package jmri.jmrit.symbolicprog;
 
-import javax.swing.*;
+import javax.swing.JLabel;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @author			Bob Jacobsen
- * @version			$Revision$
+ * @author	Bob Jacobsen
+ * @version	$Revision$
  */
 public class CvTableModelTest extends TestCase {
 
     public void testStart() {
-        new CvTableModel(new JLabel(),null);
+        new CvTableModel(new JLabel(), null);
     }
 
-
     // from here down is testing infrastructure
-
     public CvTableModelTest(String s) {
         super(s);
     }
@@ -36,6 +32,5 @@ public class CvTableModelTest extends TestCase {
         return suite;
     }
 
-    // static Logger log = Logger.getLogger(CvTableModelTest.class.getName());
-
+    // static Logger log = LoggerFactory.getLogger(CvTableModelTest.class.getName());
 }

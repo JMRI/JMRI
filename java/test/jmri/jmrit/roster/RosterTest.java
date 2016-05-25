@@ -1,5 +1,3 @@
-// RosterTest.java
-
 package jmri.jmrit.roster;
 
 import java.io.File;
@@ -8,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
-
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.FileUtil;
 import junit.framework.Assert;
@@ -18,15 +15,15 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmrit.roster.Roster class.
- * @author	Bob Jacobsen     Copyright (C) 2001, 2002, 2012
- * @version     $Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
  */
 public class RosterTest extends TestCase {
 
     public void testDirty() {
         Roster r = new Roster();
         Assert.assertEquals("new object ", false, r.isDirty());
-        r.addEntry(null);
+        r.addEntry(new RosterEntry());
         Assert.assertEquals("after add ", true, r.isDirty());
     }
 
@@ -37,6 +34,34 @@ public class RosterTest extends TestCase {
         Assert.assertEquals("one item ", 1, r.numEntries());
     }
 
+    public void testDontAddNullEntriesLater() {
+        // test as documentation...
+        Roster r = new Roster();
+        r.addEntry(new RosterEntry());
+        r.addEntry(new RosterEntry());
+
+        boolean pass = false;
+        try {
+            r.addEntry(null);
+        } catch (NullPointerException e) {
+            pass = true;
+        }
+        Assert.assertTrue("Adding null entry should have caused NPE", pass);
+    }
+
+    public void testDontAddNullEntriesFirst() {
+        // test as documentation...
+        Roster r = new Roster();
+
+        boolean pass = false;
+        try {
+            r.addEntry(null);
+        } catch (NullPointerException e) {
+            pass = true;
+        }
+        Assert.assertTrue("Adding null entry should have caused NPE", pass);
+    }
+
     public void testAddrSearch() {
         Roster r = new Roster();
         RosterEntry e = new RosterEntry("file name Bob");
@@ -44,6 +69,29 @@ public class RosterTest extends TestCase {
         r.addEntry(e);
         Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, "321", null, null, null, null, null, null));
         Assert.assertEquals("search OK ", true, r.checkEntry(0, null, "123", null, null, null, null, null, null));
+    }
+
+    public void testGetByDccAddress() {
+        Roster r = new Roster();
+        RosterEntry e = new RosterEntry("file name Bob");
+        e.setDccAddress("456");
+        r.addEntry(e);
+        Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, null, "123", null, null, null, null, null));
+        Assert.assertEquals("search OK ", true, r.checkEntry(0, null, null, "456", null, null, null, null, null));
+        
+        List<RosterEntry> l;
+
+        l = r.matchingList(null, null, "123", null, null, null, null);
+        Assert.assertEquals("match 123", 0, l.size());
+
+        l = r.matchingList(null, null, "456", null, null, null, null);
+        Assert.assertEquals("match 456", 1, l.size());
+        
+        l = r.getEntriesByDccAddress("123");
+        Assert.assertEquals("address 123", 0, l.size());
+
+        l = r.getEntriesByDccAddress("456");
+        Assert.assertEquals("address 456", 1, l.size());
     }
 
     public void testSearchList() {
@@ -63,7 +111,7 @@ public class RosterTest extends TestCase {
         e.setRoadNumber("123");
         e.setRoadName("UP");
         r.addEntry(e);
-        
+
         java.util.List<RosterEntry> l;
         l = r.matchingList(null, "321", null, null, null, null, null);
         Assert.assertEquals("search for 0 ", 0, l.size());
@@ -72,7 +120,7 @@ public class RosterTest extends TestCase {
         Assert.assertEquals("search for 1 ", 1, l.size());
         Assert.assertEquals("search for 1 ", "UP", l.get(0).getRoadName());
         Assert.assertEquals("search for 1 ", "123", l.get(0).getRoadNumber());
-        
+
         l = r.matchingList(null, "123", null, null, null, null, null);
         Assert.assertEquals("search for 3 ", 3, l.size());
         Assert.assertEquals("search for 3 ", "SP", l.get(2).getRoadName());
@@ -103,23 +151,23 @@ public class RosterTest extends TestCase {
         e3.setRoadName("UP");
         e3.setId("entry 3");
         r.addEntry(e3);
-        
-        javax.swing.JComboBox box;
-        
+
+        javax.swing.JComboBox<Object> box;
+
         // "Select Loco" is the first entry in the RosterEntryComboBox, so an
         // empty comboBox has 1 item, and the first item is not a RosterEntry
         box = new RosterEntryComboBox(r, null, "321", null, null, null, null, null);
-        Assert.assertEquals("search for zero matches", 1, box.getItemCount() );
+        Assert.assertEquals("search for zero matches", 1, box.getItemCount());
 
         box = new RosterEntryComboBox(r, "UP", null, null, null, null, null, null);
-        Assert.assertEquals("search for one match", 2, box.getItemCount() );
-        Assert.assertEquals("search for one match", e3, box.getItemAt(1) );
+        Assert.assertEquals("search for one match", 2, box.getItemCount());
+        Assert.assertEquals("search for one match", e3, box.getItemAt(1));
 
         box = new RosterEntryComboBox(r, null, "123", null, null, null, null, null);
-        Assert.assertEquals("search for three matches", 4, box.getItemCount() );
-        Assert.assertEquals("search for three matches", e1, box.getItemAt(1) );
-        Assert.assertEquals("search for three matches", e2, box.getItemAt(2) );
-        Assert.assertEquals("search for three matches", e3, box.getItemAt(3) );
+        Assert.assertEquals("search for three matches", 4, box.getItemCount());
+        Assert.assertEquals("search for three matches", e1, box.getItemAt(1));
+        Assert.assertEquals("search for three matches", e2, box.getItemAt(2));
+        Assert.assertEquals("search for three matches", e3, box.getItemAt(3));
 
     }
 
@@ -128,46 +176,50 @@ public class RosterTest extends TestCase {
         // the resulting files go into the test tree area.
 
         // create a file in "temp"
-        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
-        Roster.setFileLocation("temp");
-        File f = new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"roster.xml");
+        String rosterDir = FileUtil.getUserFilesPath() + "temp" + File.separator;
+        FileUtil.createDirectory(rosterDir);
+        Roster.getDefault().setRosterLocation(rosterDir);
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+        File f = new File(rosterDir + "roster.xml");
         // remove it if its there
         f.delete();
         // load a new one
-        String contents = "stuff"+"           ";
-        PrintStream p = new PrintStream (new FileOutputStream(f));
+        String contents = "stuff" + "           ";
+        PrintStream p = new PrintStream(new FileOutputStream(f));
         p.println(contents);
         p.close();
         // delete previous backup file if there's one
-        File bf = new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterBackupTest");
+        File bf = new File(rosterDir + "rosterBackupTest");
         bf.delete();
 
         // now do the backup
         Roster r = new Roster() {
-                public String backupFileName(String name)
-                { return FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterBackupTest"; }
-            };
-        r.makeBackupFile("temp"+File.separator+"roster.xml");
+            @Override
+            public String backupFileName(String name) {
+                return rosterDir + "rosterBackupTest";
+            }
+        };
+        r.makeBackupFile(rosterDir + "roster.xml");
 
         // and check
-        InputStream in = new FileInputStream(new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterBackupTest"));
+        InputStream in = new FileInputStream(new File(rosterDir + "rosterBackupTest"));
         Assert.assertEquals("read 0 ", contents.charAt(0), in.read());
         Assert.assertEquals("read 1 ", contents.charAt(1), in.read());
         Assert.assertEquals("read 2 ", contents.charAt(2), in.read());
         Assert.assertEquals("read 3 ", contents.charAt(3), in.read());
         in.close();
-        
+
         // now see if backup works when a backup file already exists
-        contents = "NEWER JUNK"+"           ";
-        p = new PrintStream (new FileOutputStream(f));
+        contents = "NEWER JUNK" + "           ";
+        p = new PrintStream(new FileOutputStream(f));
         p.println(contents);
         p.close();
 
         // now do the backup
-        r.makeBackupFile("temp"+File.separator+"roster.xml");
+        r.makeBackupFile(rosterDir + "roster.xml");
 
         // and check
-        in = new FileInputStream(new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterBackupTest"));
+        in = new FileInputStream(new File(rosterDir + "rosterBackupTest"));
         Assert.assertEquals("read 4 ", contents.charAt(0), in.read());
         Assert.assertEquals("read 5 ", contents.charAt(1), in.read());
         Assert.assertEquals("read 6 ", contents.charAt(2), in.read());
@@ -178,26 +230,26 @@ public class RosterTest extends TestCase {
     public void testReadWrite() throws Exception {
         // create a test roster & store in file
         Roster r = createTestRoster();
-        Assert.assertNotNull("exists", r );
+        Assert.assertNotNull("exists", r);
 
         // create new roster & read
         Roster t = new Roster();
-        t.readFile(Roster.defaultRosterFilename());
+        t.readFile(Roster.getDefault().getRosterIndexPath());
 
         // check contents
         Assert.assertEquals("search for 0 ", 0, t.matchingList(null, "321", null, null, null, null, null).size());
-        Assert.assertEquals("search for 1 ", 1, t.matchingList("UP", null,  null, null, null, null, null).size());
+        Assert.assertEquals("search for 1 ", 1, t.matchingList("UP", null, null, null, null, null, null).size());
         Assert.assertEquals("search for 3 ", 3, t.matchingList(null, "123", null, null, null, null, null).size());
     }
 
     public void testAttributeAccess() throws Exception {
         // create a test roster & store in file
         Roster r = createTestRoster();
-        Assert.assertNotNull("exists", r );
+        Assert.assertNotNull("exists", r);
 
         //
         List<RosterEntry> l;
-        
+
         l = r.getEntriesWithAttributeKey("key a");
         Assert.assertEquals("match key a", 2, l.size());
         l = r.getEntriesWithAttributeKey("no match");
@@ -208,11 +260,11 @@ public class RosterTest extends TestCase {
     public void testAttributeValueAccess() throws Exception {
         // create a test roster & store in file
         Roster r = createTestRoster();
-        Assert.assertNotNull("exists", r );
+        Assert.assertNotNull("exists", r);
 
         //
         List<RosterEntry> l;
-        
+
         l = r.getEntriesWithAttributeKeyValue("key a", "value a");
         Assert.assertEquals("match key a", 2, l.size());
         l = r.getEntriesWithAttributeKeyValue("key a", "none");
@@ -225,13 +277,13 @@ public class RosterTest extends TestCase {
     public void testAttributeList() throws Exception {
         // create a test roster & store in file
         Roster r = createTestRoster();
-        Assert.assertNotNull("exists", r );
+        Assert.assertNotNull("exists", r);
 
         //
         java.util.Set<String> s;
-        
+
         s = r.getAllAttributeKeys();
-        
+
         Assert.assertTrue("contains right key", s.contains("key b"));
         Assert.assertTrue("not contains wrong key", !s.contains("no key"));
         Assert.assertEquals("length", 2, s.size());
@@ -243,11 +295,12 @@ public class RosterTest extends TestCase {
         // the resulting files go into the test tree area.
 
         // store files in "temp"
-        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
-        Roster.setFileLocation("temp"+File.separator);
-        Roster.setRosterFileName("rosterTest.xml");
+        String rosterDir = FileUtil.getUserFilesPath() + "temp" + File.separator;
+        FileUtil.createDirectory(rosterDir);
+        Roster.getDefault().setRosterLocation(rosterDir);
+        Roster.getDefault().setRosterIndexFileName("rosterTest.xml");
 
-        File f = new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterTest.xml");
+        File f = new File(rosterDir + "rosterTest.xml");
         // remove existing roster if its there
         f.delete();
 
@@ -282,13 +335,12 @@ public class RosterTest extends TestCase {
         r.addEntry(e);
 
         // write it
-        r.writeFile(Roster.defaultRosterFilename());
+        r.writeFile(Roster.getDefault().getRosterIndexPath());
 
         return r;
     }
 
     // from here down is testing infrastructure
-
     public RosterTest(String s) {
         super(s);
     }
@@ -306,7 +358,14 @@ public class RosterTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    @Override
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    @Override
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

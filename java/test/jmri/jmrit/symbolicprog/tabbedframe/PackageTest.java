@@ -1,14 +1,14 @@
-// PackageTest.java
-
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.symbolicprog.tabbedframe tree
  *
- * @author	    Bob Jacobsen  Copyright 2001, 2003, 2012
- * @version         $Revision: 21497 $
+ * @author	Bob Jacobsen Copyright 2001, 2003, 2012
+ * @version $Revision: 21497 $
  */
 public class PackageTest extends TestCase {
 
@@ -32,13 +32,18 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNames.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.QualifiedVarTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
         }
-                
+
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

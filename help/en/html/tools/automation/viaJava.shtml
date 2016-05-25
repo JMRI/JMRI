@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen, John Plocher 2005, 2006, 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Layout Automation in Java</title>
 
 <!-- Style -->
@@ -22,12 +21,12 @@
 
 
 <!-- Page Body -->
-<H2>JMRI: Layout Automation in Java</h2>
+<h2>JMRI: Layout Automation in Java</h2>
 
 The JMRI library provides a very powerful set of tools for
 automating your layout.  If the tools built into
-<A HREF="../../apps/PanelPro/PanelPro.shtml">PanelPro</a> or the
-<A HREF="../scripting/index.shtml">scripting capability</a>
+<a href="../../apps/PanelPro/PanelPro.shtml">PanelPro</a> or the
+<a href="../scripting/index.shtml">scripting capability</a>
 aren't sufficient to do what you want, writing your own
 control program certainly will be.
 
@@ -36,6 +35,13 @@ control program certainly will be.
 operating signals, running trains, and even subtle things like
 changing decoder sound volumes when a train goes into a tunnel.</p>
 
+<p>
+Note that you can also write your automation code using Jython
+as <a href="../scripting/index.shtml">JMRI "scripts"</a>.  
+For many purposes, this can be simpler
+because it's more interactive and has better debugging support.
+Java is really best for large and/or complex cases, or if you're
+writing something that you want to eventually contribute to JMRI itself.
 </p>
 
 <dl>
@@ -45,7 +51,7 @@ changing decoder sound volumes when a train goes into a tunnel.</p>
 for your layout using JMRI.</p>
 
 <p> The key class is
-<a HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>,
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>,
 which provides threading support to simplify custom automation code.</p>
 
 <p>Key aspect: These run in a separate thread, so they can wait for
@@ -65,8 +71,7 @@ on a piece of track by watching two sensors, reversing the locomotive
 when they change state.
 </ul></p>
 
-<p>These can be started from the "Development" Menu of the JMRI
-applications.  Note that they may not do anything useful on your
+<p>Note that they may not do anything useful on your
 railroad, as they have block and locomotive numbers hard-coded.
 They're meant to be examples for your own programming, not useful
 tools.
@@ -133,8 +138,61 @@ course).  And waiting for "Continue" to be pressed won't stop the operation
 of the rest of the program.</p>
 </dd>
 
+<dt class=left>Running Your Code</dt>
+<dd>
+There are two parts to doing this: Making your Java code available to JMRI, and invoking it.
+<p>
+The easiest way to make your code accessible is to make a .jar file and 
+place that in the "lib" directory in the JMRI program directory. 
+Alternately, you can create a "classes" directory, and compile your Java class into that. 
+In that case, it should end up in:
+
+<code><pre>
+classes/MyCode.class
+</pre></code>
+
+if you've specified no code in your package, or 
+
+<code><pre>
+classes/MyCode.class
+</pre></code>
+
+or
+
+<code><pre>
+classes/jmri/jmrit/automat/SampleAutomaton.class
+</pre></code>
+
+as an example of how code in a specific package gets stored.
+<p>
+The easiest way to invoke your code is to use JMRI's scripting support. 
+Open a Script Output window (so you can see errors) from the Panels menu, 
+then a Script Entry window, enter:
+
+<code><pre>
+MyCode().start()
+</pre></code>
+
+or
+
+<code><pre>
+import jmri.jmrit.automat
+jmri.jmrit.automat.SampleAutomaton().start()
+</pre></code>
+
+and hit Execute. The 2nd line creates an instance of your class and tells it to start running. 
+<p>
+Once you've got that working, you can put that in a little script file 
+and invoke it at startup, via a Logix, or whenever you desire.
+
+</dd>
+
+
 </dl>
+<p>Back to the <a href="index.shtml">Automation Help page</a>.
 
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

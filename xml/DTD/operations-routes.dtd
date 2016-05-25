@@ -38,4 +38,5 @@
 <!ATTLIST location trainIconX		CDATA #IMPLIED> 
 <!ATTLIST location trainIconY		CDATA #IMPLIED> 
 <!ATTLIST location comment			CDATA #IMPLIED>
+<!ATTLIST location randomControl	CDATA #IMPLIED>
 

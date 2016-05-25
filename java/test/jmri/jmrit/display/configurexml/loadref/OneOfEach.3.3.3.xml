@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>3</major>
+    <minor>9</minor>
+    <test>2</test>
+    <modifier>.2</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="IS0" inverted="false">
+      <systemName>IS0</systemName>
+    </sensor>
+    <sensor systemName="IS1" inverted="false">
+      <systemName>IS1</systemName>
+    </sensor>
+    <sensor systemName="IS2" inverted="false">
+      <systemName>IS2</systemName>
+    </sensor>
+    <sensor systemName="IS3" inverted="false">
+      <systemName>IS3</systemName>
+    </sensor>
+    <sensor systemName="IS4" inverted="false">
+      <systemName>IS4</systemName>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="IT" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT</systemName>
+    </turnout>
+    <turnout systemName="IT0" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT0</systemName>
+    </turnout>
+    <turnout systemName="IT1" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1</systemName>
+    </turnout>
+    <turnout systemName="IT10" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT10</systemName>
+    </turnout>
+    <turnout systemName="IT2" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT2</systemName>
+    </turnout>
+    <turnout systemName="IT3" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT3</systemName>
+    </turnout>
+    <turnout systemName="IT4" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT4</systemName>
+    </turnout>
+    <turnout systemName="IT5" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT5</systemName>
+    </turnout>
+    <turnout systemName="IT6" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT6</systemName>
+    </turnout>
+    <turnout systemName="IT7" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT7</systemName>
+    </turnout>
+    <turnout systemName="IT8" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT8</systemName>
+    </turnout>
+    <turnout systemName="IT9" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT9</systemName>
+    </turnout>
+  </turnouts>
+  <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
+    <light systemName="IL0" userName="light0" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>IL0</systemName>
+      <userName>light0</userName>
+    </light>
+  </lights>
+  <reporters class="jmri.jmrix.internal.configurexml.InternalReporterManagerXml">
+    <reporter systemName="IR0" userName="Report0">
+      <systemName>IR0</systemName>
+      <userName>Report0</userName>
+    </reporter>
+  </reporters>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM0">
+      <systemName>IM0</systemName>
+    </memory>
+    <memory systemName="IM1" value="0">
+      <systemName>IM1</systemName>
+    </memory>
+    <memory systemName="IM2" value="0">
+      <systemName>IM2</systemName>
+    </memory>
+    <memory systemName="IM3" userName="plain">
+      <systemName>IM3</systemName>
+      <userName>plain</userName>
+    </memory>
+    <memory systemName="IMCURRENTTIME" value="12:03 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH0" userName="Virtual 0">
+      <systemName>IH0</systemName>
+      <userName>Virtual 0</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH10" userName="Virtual 10">
+      <systemName>IH10</systemName>
+      <userName>Virtual 10</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.LsDecSignalHeadXml" systemName="IH2" userName="LDT">
+      <systemName>IH2</systemName>
+      <userName>LDT</userName>
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH20" userName="upper">
+      <systemName>IH20</systemName>
+      <userName>upper</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH21" userName="middle">
+      <systemName>IH21</systemName>
+      <userName>middle</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH22" userName="lower">
+      <systemName>IH22</systemName>
+      <userName>lower</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.MergSD2SignalHeadXml" systemName="IH3" aspects="2" userName="Merg">
+      <systemName>IH3</systemName>
+      <userName>Merg</userName>
+      <turnoutname defines="input1">IT0</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.MergSD2SignalHeadXml" systemName="IH4" aspects="3" userName="Merg3">
+      <systemName>IH4</systemName>
+      <userName>Merg3</userName>
+      <turnoutname defines="input1">IT0</turnoutname>
+      <turnoutname defines="input2">IT0</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.MergSD2SignalHeadXml" systemName="IH5" aspects="4" userName="Merg4">
+      <systemName>IH5</systemName>
+      <userName>Merg4</userName>
+      <turnoutname defines="input1">IT0</turnoutname>
+      <turnoutname defines="input2">IT0</turnoutname>
+      <turnoutname defines="input3">IT0</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.SingleTurnoutSignalHeadXml" systemName="IH7" userName="Single">
+      <systemName>IH7</systemName>
+      <userName>Single</userName>
+      <appearance defines="thrown">lunar</appearance>
+      <appearance defines="closed">yellow</appearance>
+      <turnoutname defines="aspect">1</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.SingleTurnoutSignalHeadXml" systemName="IH8" userName="Single1">
+      <systemName>IH8</systemName>
+      <userName>Single1</userName>
+      <appearance defines="thrown">yellow</appearance>
+      <appearance defines="closed">green</appearance>
+      <turnoutname defines="aspect">1</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml" systemName="IH9" userName="Triple">
+      <systemName>IH9</systemName>
+      <userName>Triple</userName>
+      <turnoutname defines="green">1</turnoutname>
+      <turnoutname defines="yellow">2</turnoutname>
+      <turnoutname defines="red">3</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.SE8cSignalHeadXml" systemName="IH:SE8C:&quot;1&quot;;&quot;2&quot;" userName="SE8c">
+      <systemName>IH:SE8C:"1";"2"</systemName>
+      <userName>SE8c</userName>
+      <turnoutname defines="low">1</turnoutname>
+      <turnoutname defines="high">2</turnoutname>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="CPL mast">
+      <systemName>IF$shsm:AAR-1946:CPL:IH20:IH21:IH22</systemName>
+      <userName>CPL mast</userName>
+      <unlit allowed="yes" />
+    </signalmast>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Mar 12 17:16:22 EST 2010" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <!--Written by JMRI version 20140804-0231-jake on Sun Aug 03 22:33:57 EDT 2014 $Id: XmlFile.java 26366 2014-06-20 03:34:25Z ken_c $-->
+</layout-config>
+

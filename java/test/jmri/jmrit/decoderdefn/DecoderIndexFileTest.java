@@ -1,20 +1,20 @@
-// DecoderIndexFileTest.java
-
 package jmri.jmrit.decoderdefn;
 
-import javax.swing.*;
+import java.util.List;
+import javax.swing.JComboBox;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Assert;
-import org.jdom.*;
-import java.util.List;
+import org.jdom2.DocType;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 /**
  * Tests for DecoderIndexFile class
  *
- * @author			Bob Jacobsen, Copyright (c) 2001, 2002
- * @version			$Revision$
+ * @author	Bob Jacobsen, Copyright (c) 2001, 2002
+ * @version	$Revision$
  */
 public class DecoderIndexFileTest extends TestCase {
 
@@ -133,18 +133,18 @@ public class DecoderIndexFileTest extends TestCase {
         di.readMfgSection(decoderIndexElement);
         di.readFamilySection(decoderIndexElement);
         // search for the two Digitrax decoders
-        JComboBox l1 = di.matchingComboBox("Digitrax", null, null, null, null, null);
+        JComboBox<String> l1 = di.matchingComboBox("Digitrax", null, null, null, null, null);
         Assert.assertEquals("Found with name Digitrax ", 3, l1.getItemCount());
-        Assert.assertEquals("Found with name Digitrax ", "DH142 (FX2 family)", (String)l1.getItemAt(1));
-        Assert.assertEquals("Found with name Digitrax ", "DN142 (FX2 family)", (String)l1.getItemAt(2));
+        Assert.assertEquals("Found with name Digitrax ", "DH142 (FX2 family)", l1.getItemAt(1));
+        Assert.assertEquals("Found with name Digitrax ", "DN142 (FX2 family)", l1.getItemAt(2));
         // search for the two decoders from mfgID 129
-        JComboBox l2 = di.matchingComboBox(null, null, "129", null, null, null);
+        JComboBox<String> l2 = di.matchingComboBox(null, null, "129", null, null, null);
         Assert.assertEquals("Found with id 129 ", 3, l2.getItemCount());
         // search for the two from the NMRA family
-        JComboBox l4 = di.matchingComboBox(null, "NMRA S&RP definitions", null, null, null, null);
+        JComboBox<String> l4 = di.matchingComboBox(null, "NMRA S&RP definitions", null, null, null, null);
         Assert.assertEquals("Found from NMRA family ", 3, l4.getItemCount());
         // search for the one with version ID 21
-        JComboBox l3 = di.matchingComboBox(null, null, null, "21", null, null);
+        JComboBox<String> l3 = di.matchingComboBox(null, null, null, "21", null, null);
         Assert.assertEquals("Found with version 21 ", 1, l3.getItemCount());
     }
 
@@ -183,62 +183,60 @@ public class DecoderIndexFileTest extends TestCase {
         // create a JDOM tree with just some elements
         root = new Element("decoderIndex-config");
         doc = new Document(root);
-        doc.setDocType(new DocType("decoderIndex-config","decoderIndex-config.dtd"));
+        doc.setDocType(new DocType("decoderIndex-config", "decoderIndex-config.dtd"));
 
         // add some elements
         root.addContent(decoderIndexElement = new Element("decoderIndex")
-                        .addContent(new Element("mfgList")
-                                    .addContent(new Element("manufacturer")
-                                                .setAttribute("mfg", "NMRA")
-                                    )
-                                    .addContent(new Element("manufacturer")
-                                                .setAttribute("mfg", "Digitrax")
-                                                .setAttribute("mfgID", "129")
-                                    )
+                .addContent(new Element("mfgList")
+                        .addContent(new Element("manufacturer")
+                                .setAttribute("mfg", "NMRA")
                         )
-                        .addContent(new Element("familyList")
-                                    .addContent(family1 = new Element("family")
-                                                .setAttribute("mfg", "NMRA")
-                                                .setAttribute("name", "NMRA S&RP definitions")
-                                                .setAttribute("file", "NMRA.xml")
-                                                .addContent(new Element("model")
-            .setAttribute("model", "full set")
-            .setAttribute("comment", "all CVs in RP 9.2.1")
-                                                )
-                                                .addContent(new Element("model")
-            .setAttribute("model", "required set")
-            .setAttribute("comment", "required CVs in RP 9.2.1")
-                                                )
-                                    )
-                                    .addContent(family2 = new Element("family")
-                                                .setAttribute("mfg", "Digitrax")
-                                                .setAttribute("name", "FX2 family")
-                                                .setAttribute("file", "DH142.xml")
-                                                .addContent(new Element("model")
-            .setAttribute("model", "DH142")
-            .setAttribute("numFns", "4")
-            .setAttribute("numOuts", "2")
-            .setAttribute("lowVersionID", "21")
-                                                )
-                                                .addContent(new Element("model")
-            .setAttribute("model", "DN142")
-            .setAttribute("numFns", "5")
-            .setAttribute("numOuts", "1")
-            .addContent(new Element("versionCV")
-                        .setAttribute("lowVersionID", "22")
-                        .setAttribute("highVersionID", "24")
-            )
-                                                )
-                                    )
+                        .addContent(new Element("manufacturer")
+                                .setAttribute("mfg", "Digitrax")
+                                .setAttribute("mfgID", "129")
                         )
-            )
-            ; // end of adding contents
+                )
+                .addContent(new Element("familyList")
+                        .addContent(family1 = new Element("family")
+                                .setAttribute("mfg", "NMRA")
+                                .setAttribute("name", "NMRA S&RP definitions")
+                                .setAttribute("file", "NMRA.xml")
+                                .addContent(new Element("model")
+                                        .setAttribute("model", "full set")
+                                        .setAttribute("comment", "all CVs in RP 9.2.1")
+                                )
+                                .addContent(new Element("model")
+                                        .setAttribute("model", "required set")
+                                        .setAttribute("comment", "required CVs in RP 9.2.1")
+                                )
+                        )
+                        .addContent(family2 = new Element("family")
+                                .setAttribute("mfg", "Digitrax")
+                                .setAttribute("name", "FX2 family")
+                                .setAttribute("file", "DH142.xml")
+                                .addContent(new Element("model")
+                                        .setAttribute("model", "DH142")
+                                        .setAttribute("numFns", "4")
+                                        .setAttribute("numOuts", "2")
+                                        .setAttribute("lowVersionID", "21")
+                                )
+                                .addContent(new Element("model")
+                                        .setAttribute("model", "DN142")
+                                        .setAttribute("numFns", "5")
+                                        .setAttribute("numOuts", "1")
+                                        .addContent(new Element("versionCV")
+                                                .setAttribute("lowVersionID", "22")
+                                                .setAttribute("highVersionID", "24")
+                                        )
+                                )
+                        )
+                )
+        ); // end of adding contents
 
         return;
     }
 
     // from here down is testing infrastructure
-
     public DecoderIndexFileTest(String s) {
         super(s);
     }
@@ -256,9 +254,13 @@ public class DecoderIndexFileTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
 
-    // static private Logger log = Logger.getLogger(DecoderIndexFileTest.class.getName());
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
+    // static private Logger log = LoggerFactory.getLogger(DecoderIndexFileTest.class.getName());
 }

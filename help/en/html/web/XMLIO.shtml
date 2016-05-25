@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright 2008 -->
+<!-- Copyright 2015 -->
 <!-- $Id$ -->
-<title>JMRI: XML IO Servlet</title>
+<title>JMRI: XML I/O Servlet - no longer supported</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,22 +21,27 @@
 <div id="mainContent">
 
 <h1> 
-JMRI: XML IO Servlet
+JMRI: XML I/O Servlet - no longer supported
 </h1>
 
-The JMRI XML Servlet provides bidirectional web access to JMRI services.
+<strong>The XML I/O protocol is deprecated and support was removed from JMRI in the 3.11 development cycle.</strong><br />
+Affected applications should be ported to using the <a href="JsonServlet.shtml">JSON protocol</a>.<br />
+This page is only for reference of older versions.
+
+<p>The JMRI XML I/O Servlet provides bidirectional web access to JMRI services.
 
 <p>
 The servlet lives in the 
 <a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">jmri.web.servlet.xmlio</a>
 package, and provides web access to the
-<a href="http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">JMRI XML IO package</a>.
-By default, the JMRI Web Server will send any URL that starts with /xmlio to this servlet.  It will list all 
+<a href="http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">JMRI XML I/O package</a>.
+By default, the JMRI Web Server will send any URL that starts with <code>/xmlio</code> to this servlet. It will list all 
 known elements of a specified type, accept changes to the value/state of elements, and respond with 
-current value/state of elements.  If sent a list of elements with current values, it will "monitor" for changes
+current value/state of elements. If sent a list of elements with current values, it will "monitor" for changes
 to any of those elements, returning the new values.</p>
 
-Element types fully supported:<ul>
+Element types fully supported:
+<ul>
 <li>power</li>
 <li>turnout</li>
 <li>sensor</li>
@@ -45,57 +50,55 @@ Element types fully supported:<ul>
 <li>memory</li>
 <li>route</li>
 </ul>
-Element types list-only:<ul>
+
+Element types list-only:
+<ul>
 <li>roster</li>
 <li>frame</li>
 <li>panel</li>
 <li>metadata</li>
 <li>railroad</li>
 </ul>
-Throttle is a unique case, slightly different syntax, supports read and change, but not list or monitoring:<ul>
+Throttle is a unique case, with a slightly different syntax, supporting read and change, but not list or monitoring:<ul>
 <li>throttle</li>
 </ul>
-There are several sample pages that show how this can be used:
+
+There are several sample pages that (used to) show how this can be used:
 <dl>
-<dt><a href="http://localhost:12080/index.html">index.html</a>
-<dd>(default JMRI Web Server home page)  This page makes several read-only xmlio requests to populate page title, frame and panel lists.
-<dt><a href="http://localhost:12080/web/request.html">web/request.html</a>
-<dd>Makes a single XML request for all available sensors, and shows their status in a table.
-<dt><a href="http://localhost:12080/web/monitor.html">web/monitor.html</a>
+<dt><a href="http://localhost:12080/web/request.html">web/request.html</a></dt>
+<dd>Makes a single XML request for all available sensors, and shows their status in a table.</dd>
+<dt><a href="http://localhost:12080/web/monitor.html">web/monitor.html</a></dt>
 <dd>Uses delayed requests to monitor the status of all sensors, 
-updating a table when any change.
-<dt><a href="http://localhost:12080/web/throttle.html">web/throttle.html</a>
-<dd>Sends a speed command to a DCC locomotive on the layout when a button is pressed.
-<dt><a href="http://localhost:12080/web/turnoutPanel.html">web/turnoutPanel.html</a>
-<dd>Example of a control panel on a web page.
-<dt><a href="http://localhost:12080/web/turnoutPanel.html">web/turnoutMonitor.html</a>
-<dd>More complex turnout table, with buttons to throw and close turnouts.
-<dt><a href="http://localhost:12080/web/JMRI_XMLIO_test.html">web/JMRI_XMLIO_test.html</a> 
-<dd>Useful for sending various commands to xmlio server and viewing the responses.
-<dt><a href="http://localhost:12080/web/showPanel.html">web/showPanel.html</a> and <a href="http://localhost:12080/web/JMRIMobile.html">web/JMRIMobile.html</a> 
-<dd>Both of these tools use the xmlio server for retrieving data from JMRI, sending changes and monitoring for changes to elements.
+updating a table when any change.</dd>
+<dt><a href="http://localhost:12080/web/throttle.html">web/throttle.html</a></dt>
+<dd>Sends a speed command to a DCC locomotive on the layout when a button is pressed.</dd>
+<dt><a href="http://localhost:12080/web/turnoutPanel.html">web/turnoutPanel.html</a></dt>
+<dd>Example of a control panel on a web page.</dd>
+<dt><a href="http://localhost:12080/web/turnoutMonitor.html">web/turnoutMonitor.html</a></dt>
+<dd>More complex turnout table, with buttons to throw and close turnouts.</dd>
+<dt><a href="http://localhost:12080/web/JMRI_XMLIO_test.html">web/JMRI_XMLIO_test.html</a></dt>
+<dd>Useful for sending various commands to xmlio server and viewing the responses.</dd>
+<dt><a href="http://localhost:12080/web/JMRIMobile.html">web/JMRIMobile.html</a></dt>
+<dd>This tool uses the xmlio server for retrieving data from JMRI, sending changes and monitoring for changes to elements.</dd>
 </dl>
 
 <p>
-Please note that this servlet has only been used with 
+Please note that the XML I/O servlet was only supported with 
 the 
-<a href="WebServer.shtml">JMRI Web Server</a>, and may
-not work with other servlet containers.  We're committed to
-making it work, however, so just get in touch with 
-the JMRI developers if you encounter any problems.
+<a href="index.shtml">JMRI Web Server</a>, and may
+not work with other servlet containers.
 
 <h2>Request Format</h2>
 
 <p>The XML schema is defined in the 
 <a href="http://jmri.org/xml/schema/xmlio.xsd">xmlio.xsd schema document</a>.</p>
-<p>There is also an attribute-based syntax available.  (see status examples below)  The xmlio server responds with the same syntax as the request uses.</p>
+<p>There is also an attribute-based syntax available  (see status examples below). The xmlio server responds with the same syntax used in the request.</p>
 
 <p>Below are some example requests and responses.
 
 <h3>Get the status of individual objects</h3>
 
 Request:
-
 <code><pre>
 &lt;xmlio&gt;
   &lt;item&gt;
@@ -135,8 +138,8 @@ Reply:
 </pre></code>
 
 The "value" element is inserted in the request, and then it's 
-returned as the reply.  You can just turn the reply around and use it 
-as another request.  If "value" elements are present for all items,
+returned as the reply. You can just turn the reply around and use it 
+as another request. If "value" elements are present for all items,
 the response will only be returned when one or more of the included
 item's state has changed to something different.
 
@@ -178,7 +181,6 @@ The response can be turned around and used as the next request.
 <h3>Set the status of an object</h3>
 
 Request:
-
 <code><pre>
 &lt;xmlio&gt;
   &lt;item&gt;
@@ -216,6 +218,7 @@ Request:
 <code><pre>
 &lt;turnout name="IT12" set="2" /&gt;
 </pre></code>
+
 Reply:
 <code><pre>
 &lt;turnout name="IT12" value="2" /&gt;
@@ -225,7 +228,7 @@ Reply:
 
 A &lt;throttle&gt; element
 can be used to control a DCC Throttle via the
-default ThrottleManager.  The first use 
+default ThrottleManager. The first use 
 allocates the throttle, and all later ones
 set any attributes present:
 
@@ -238,24 +241,27 @@ set any attributes present:
         &lt;F3&gt;false&lt;/F3&gt;
     &lt;/throttle&gt;
 &lt;/xmlio&gt;
-
 </pre></code>
 
 A throttle element is returned unchanged.
 
 <h2>Related Documentation</h2>
 
-C.F. K H Wolf, K Froitzheim, M Weber,
+<ul>
+<li>C.F. K. H. Wolf, K. Froitzheim, M. Weber,
 Department of Distributed Systems, University of Ulm, 
 "Interactive Video and Remote Control via the World Wide Web", 
-in "Lecture Notes in Computer Science", Springer, Berlin, 1996.
-<br>
-Previously in Volume 7, Number 5 of "Marklin Digital Newsletter", 
-Dr. T Catherall Ed, September/October 1995, 
-<a href="http://web.archive.org/web/*/http://rr-vs.informatik.uni-ulm.de/rr/">page referenced</a>
-<a href="http://rr.informatik.tu-freiberg.de/index.php?con=home&sel=&lang=eng&js=1&">rehosted</a>.
+in "<i>Lecture Notes in Computer Science</i>", Springer, Berlin, 1996.
+</li>
+<li>Previously in Volume 7, Number 5 of "<i>M&auml;rklin Digital Newsletter</i>", 
+Dr. T. Catherall Ed, September/October 1995 
+(<a href="http://rr.informatik.tu-freiberg.de/index.php?con=home&sel=&lang=eng&js=1&">project web site no longer online</a>).
+</li>
+</ul>
 
-</div>
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+
 </body>
 </html>

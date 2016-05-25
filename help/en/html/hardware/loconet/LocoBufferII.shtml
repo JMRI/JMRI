@@ -1,45 +1,36 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Connecting a LocoBuffer-II to LocoNet&reg;
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - LocoBuffer-II to LocoNet&reg;</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1> 
-      JMRI Hardware Guide: Connecting a LocoBuffer-II to LocoNet&reg;
-      </h1>
-
+  <h1>Hardware Support: Connecting a LocoBuffer-II to LocoNet&reg;</h1>
 
 <p>
 The LocoBuffer-II provides a very reliable way to 
 connect a computer serial port to a LocoNet&reg;.  
 It was produced by Dick Bronson's
-<A HREF="http://www.rr-cirkits.com">RR-CirKits</a> 
+<a href="http://www.rr-cirkits.com">RR-CirKits</a> 
 company, based in part on the original LocoBuffer design, but is
 currently out of production.  You might be able to find one
 in a local hobby shop.  It's been replaced
 by the 
-<A HREF="LocoBufferUSB.shtml">LocoBuffer-USB</a>,
+<a href="LocoBufferUSB.shtml">LocoBuffer-USB</a>,
 which uses a USB connection.
 </p>
 
@@ -47,30 +38,30 @@ which uses a USB connection.
 <p>
     The recommended LocoBuffer-II option switch settings are:</p>
 <ul>
-    <LI>19,200 baud or 57,600 baud</LI>
-    <LI>RS-232 echo off</LI>
-    <LI>LocoBuffer mode</LI>
-    <LI>ICSP Program Mode off</LI>
-    <LI>Boot Program Mode off</LI>
-    <LI>Isolated power (<a href="#locoBufferIIPower">see below</a>)</LI>
+    <li>19,200 baud or 57,600 baud</li>
+    <li>RS-232 echo off</li>
+    <li>LocoBuffer mode</li>
+    <li>ICSP Program Mode off</li>
+    <li>Boot Program Mode off</li>
+    <li>Isolated power (<a href="#locoBufferIIPower">see below</a>)</li>
 </ul>
     
 <p>The recommended JMRI setup for the LocoBuffer-II is:
 </p>
 
-<UL>
-<LI>Set all switches off (toward the front label side).
-<LI>Connect the LocoBuffer-II to a suitable power supply, for example
-a wall-wart of the correct voltage.
-<LI>
-Start DecoderPro or other program and configure it for:
-<UL>
-<LI>LocoNet LocoBuffer-II
-<LI>Select your port
-<LI>19,200 baud or 57,600 baud, to match the LocoBuffer-II internal option switch settings
-<LI>Hardware flow control
-</UL>
-</UL>
+<ul>
+	<li>Set all switches off (toward the front label side).
+	<li>Connect the LocoBuffer-II to a suitable power supply, for example
+	a wall-wart of the correct voltage.
+	<li>
+	Start DecoderPro or other program and configure it for:
+	<ul>
+		<li>LocoNet LocoBuffer-II
+		<li>Select your port
+		<li>19,200 baud or 57,600 baud, to match the LocoBuffer-II internal option switch settings
+		<li>Hardware flow control
+	</ul>
+</ul>
 
 <h2>Loop-back testing</h2>
 <p>
@@ -83,23 +74,22 @@ wall-wart, then you have created a loop back test. The only thing that is not
 tested is the LocoNet jack itself.
 </p>
 
-
 <p>
 Steps:
-<OL>
-<LI>Unplug The LocoNet cable
-<LI>Open case (use a small screw driver to work open the latches at the small slots on the sides)
-<LI>Install terminator
-<LI>Set Sw 7-8 ON, all other switches OFF
-<LI>Set the JMRI LocoBuffer options to 19,200 baud and hardware 
-handshaking enabled
-<LI>Open the JMRI LocoNet Monitor window.
-<LI>Using JMRI send some commands (e.g. switch commands)
-<LI>The commands should appear in the LocoNet monitor window and the 
-LocoBuffer-II activity LED should blink
-<li>Remove the terminator (unless your application requires it)
-<LI>Restore the LocoBuffer-II option switches to their normal settings for your application
-</OL>
+	<ol>
+	<li>Unplug The LocoNet cable
+	<li>Open case (use a small screw driver to work open the latches at the small slots on the sides)
+	<li>Install terminator
+	<li>Set Sw 7-8 ON, all other switches OFF
+	<li>Set the JMRI LocoBuffer options to 19,200 baud and hardware 
+	handshaking enabled
+	<li>Open the JMRI LocoNet Monitor window.
+	<li>Using JMRI send some commands (e.g. switch commands)
+	<li>The commands should appear in the LocoNet monitor window and the 
+	LocoBuffer-II activity LED should blink
+	<li>Remove the terminator (unless your application requires it)
+	<li>Restore the LocoBuffer-II option switches to their normal settings for your application
+	</ol>
 
 <h2><a name="locoBufferIIPower">LocoBuffer-II Power</a></h2>
 
@@ -123,8 +113,9 @@ connection and set switches 7 and 8 to ON (down, toward the switch
 illustration).
 
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div>
-  </div>
+
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

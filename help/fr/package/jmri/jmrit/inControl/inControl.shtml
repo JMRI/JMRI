@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author$) 2011 -->
+<!-- $Id$ -->
+<!-- Translated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02 -->
+
+<!-- Retain to prevent dead links -->
+
+<title>JMRI: inControl - Web Throttles and Frames</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>JMRI: inControl - R&#233;gulateurs Web et Fen&#234;tr    es (inControl.html application)</h1>
+<!-- Needs Translation -->
+<p>
+    <b>Notice </b> <i>inControl</i> is no longer supported. Use <a href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">WebThrottle</a> instead.
+</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

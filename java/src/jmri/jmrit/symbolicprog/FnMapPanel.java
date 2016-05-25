@@ -1,218 +1,340 @@
-// FnMapPanel.java
-
 package jmri.jmrit.symbolicprog;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import jmri.util.jdom.LocaleSelector;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
-import java.awt.*;
-
-import java.util.List;
-import org.jdom.Element;
-import org.jdom.Attribute;
-import jmri.util.jdom.LocaleSelector;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 
 /**
- * Provide a graphical representation of the NMRA S&RP mapping between cab functions
- * and physical outputs.
- *<P>
- * This is mapped via various definition variables.  A -1 means don't provide it. The
- * panel then creates a GridBayLayout: <dl>
- *  <DT>Column cvNum  	<DD> CV number (Typically 0)
- *  <DT>Column fnName  	<DD> Function name (Typically 1)
+ * Provide a graphical representation of the NMRA Standard mapping between cab
+ * functions and physical outputs.
+ * <p>
+ * Uses data from the "model" element from the decoder definition file to
+ * configure the number of rows and columns and set up any custom column
+ * names:</p>
+ * <dl>
+ * <dt>numOuts</dt>
+ * <dd>Number of physical outputs.</dd>
+ * <dd>&nbsp;</dd>
+ * <dt>numFns</dt>
+ * <dd>Maximum number of function rows to display.</dd>
+ * <dd>&nbsp;</dd>
+ * <dt>output</dt>
+ * <dd>name="n" label="yyy"</dd>
+ * <dd>&nbsp;-&nbsp;Set lower line of heading for column number "n" to
+ * "yyy".*</dd>
+ * <dd>&nbsp;</dd>
+ * <dd>name="n" label="xxx|yyy"</dd>
+ * <dd>&nbsp;-&nbsp;Set upper line of heading for column number "n" to "xxx" and
+ * lower line to "yyy".*</dd>
+ * <dd>&nbsp;</dd>
+ * <dd>name="n" label="|"</dd>
+ * <dd>&nbsp;-&nbsp;Sets both lines of heading for column number "n" to blank,
+ * causing the column to be suppressed from the table.*</dd>
+ * <dd>&nbsp;</dd>
+ * <dd>&nbsp;*&nbsp;The forms above increase the value of numOuts to n if
+ * numOuts &lt; n.</dd>
+ * <dd>&nbsp;</dd>
+ * <dd>name="text1" label="text2"</dd>
+ * <dd>&nbsp;-&nbsp;Set upper line of heading of column numOuts+1 to "xxx" and
+ * lower line to "yyy". numOuts is then incremented.</dd>
+ * <dd>&nbsp;(This is a legacy form, the other forms are preferred.)</dd>
+ * </dl>
+ * <dl>
+ * <dt>Default column headings:</dt>
+ * <dd>First row is the column number.</dd>
+ * <dd>Second row is defined in "SymbolicProgBundle.properties".</dd>
+ * <dd>Column headings can be overridden by the "output" elements documented
+ * above.</dd>
+ * <dd>&nbsp;</dd>
+ * <dt>Two rows are available for column headings:</dt>
+ * <dd>Use the "|" character to designate a row break.</dd>
+ * </dl>
+ * <dl>
+ * <dt>Columns will be suppressed if any of the following are true:</dt>
+ * <dd>No variables are found for that column.</dd>
+ * <dd>The column output name is of the form name="n" label="|".</dd>
+ * <dd>Column number is &gt; maxOut (an internal variable, currently 40).</dd>
+ * </dl>
+ * <dl>
+ * <dt>Searches the decoder file for variable definitions of the form:</dt>
+ * <dd>"Fd controls output n" (where d is a function number in the range 0-28
+ * and n is an output number in the range 0-maxOut)</dd>
+ * <dd>"Fd(f) controls output n"</dd>
+ * <dd>"Fd(r) controls output n"</dd>
+ * <dd>"FL controls output n" (L for light)</dd>
+ * <dd>"FL(f) controls output n"</dd>
+ * <dd>"FL(r) controls output n"</dd>
+ * <dd>"Fd controls output n(alt)" (allows an alternate definition for the same
+ * variable, such as used by Tsunami decoders)</dd>
+ * <dd>"Fd(f) controls output n(alt)"</dd>
+ * <dd>"Fd(r) controls output n(alt)"</dd>
+ * <dd>"FL controls output n(alt)"</dd>
+ * <dd>"FL(f) controls output n(alt)"</dd>
+ * <dd>"FL(r) controls output n(alt)"</dd>
+ * </dl>
  *
- *  <DT>Row outputLabel	<DD> "output label" (Typically 0)
- *  <DT>Row outputNum	<DD> "output number" (Typically 1)
- *  <DT>Row outputName	<DD> "output name (or color)" (Typically 2)
- *
- *  <DT>Row firstFn     <DD> Row for first function, usually FL0.  Will go up from this,
- *							 with higher numbered functions in higher numbered columns.
- *  <DT>Column firstOut  <DD> Column for leftmost numbered output
- *</dl>
- *<P>
- * Although support for the "CV label column" is still here, its turned off now.
- *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @author	Dave Heap Copyright (C) 2014
  */
 public class FnMapPanel extends JPanel {
-    // columns
-    int cvNum = -1;
-    int fnName = 0;
-    int firstOut = 1;
-    
-    // rows
-    int outputName = 0;
-    int outputNum = 1;
-    int outputLabel = 2;
-    int firstFn = 3;
-    
-    // these will eventually be passed in from the ctor
-    int numFn = 14;  // include FL(f) and FL(r) in the total
-    int numOut = 20;
-    int maxFn = 30;  // include FL(f) and FL(r) in the total; update list of names if you update this
-    int maxOut = 40; // update list of names if you update this
-    
+
+    // GridBayLayout column numbers
+    int fnNameCol = 0;
+    int firstOutCol = 1;
+
+    // GridBayLayout row numbers
+    int outputNameRow = 0;
+    int outputNumRow = 1;
+    int outputLabelRow = 2;
+    int firstFnRow = 3;
+
+    // Some limits and defaults
+    int highestFn = 28;
+    int highestSensor = 28;
+    int numFn;  // calculated later
+    int numOut = 20; // default number of physical outputs
+    int maxOut = 40; // maximum number of output columns
+
+    final String[] outName = new String[maxOut];
+    final String[] outLabel = new String[maxOut];
+    final boolean[] outIsUsed = new boolean[maxOut];
+
+    final String[] fnExtraList = new String[]{"STOP", "DRIVE", "FWD", "REV", "FL"};
+    final String[] fnVariantList = new String[]{"", "(f)", "(r)"};
+
+    List<String> fnList;
     GridBagLayout gl = null;
     GridBagConstraints cs = null;
     VariableTableModel _varModel;
-    
+
     public FnMapPanel(VariableTableModel v, List<Integer> varsUsed, Element model) {
-        if (log.isDebugEnabled()) log.debug("Function map starts");
+        if (log.isDebugEnabled()) {
+            log.debug("Function map starts");
+        }
         _varModel = v;
-        
+
+        // Set up fnList array
+        this.fnList = new ArrayList<>();
+        fnList.addAll(Arrays.asList(fnExtraList));
+        for (int i = 0; i <= highestFn; i++) {
+            fnList.add("F" + i);
+        }
+        for (int i = 0; i <= highestSensor; i++) {
+            fnList.add("S" + i);
+        }
+
+        numFn = fnList.size() * fnVariantList.length;
+
+        // set up default names and labels
+        for (int iOut = 0; iOut < maxOut; iOut++) {
+            outName[iOut] = Integer.toString(iOut + 1);
+            outIsUsed[iOut] = false;
+            // get default labels, if any
+            try {
+                outLabel[iOut] = Bundle.getMessage("FnMapOutLabelDefault_" + (iOut + 1));
+            } catch (java.util.MissingResourceException e) {
+                outLabel[iOut] = "";  // no default label specified
+            }
+        }
+
         // configure number of channels, arrays
         configOutputs(model);
-        
+
         // initialize the layout
         gl = new GridBagLayout();
         cs = new GridBagConstraints();
         setLayout(gl);
-        
+
         {
-            JLabel l = new JLabel("Output wire or operation");
-            cs.gridy = outputName;
-            cs.gridx = 3;
+            JLabel l = new JLabel(Bundle.getMessage("FnMapOutWireOr"));
+            cs.gridy = outputNameRow;
+            cs.gridx = firstOutCol;
             cs.gridwidth = GridBagConstraints.REMAINDER;
             gl.setConstraints(l, cs);
             add(l);
             cs.gridwidth = 1;
         }
-        // dummy structure until we figure out how to convey CV numbers programmatically
-        if (cvNum>=0) {
-            labelAt( 0, 0, "CV");
-            labelAt( firstFn   , cvNum, "33");
-            labelAt( firstFn+ 1, cvNum, "34");
-            labelAt( firstFn+ 2, cvNum, "35");
-            labelAt( firstFn+ 3, cvNum, "36");
-            labelAt( firstFn+ 4, cvNum, "37");
-            labelAt( firstFn+ 5, cvNum, "38");
-            labelAt( firstFn+ 6, cvNum, "39");
-            labelAt( firstFn+ 7, cvNum, "40");
-            labelAt( firstFn+ 8, cvNum, "41");
-            labelAt( firstFn+ 9, cvNum, "42");
-            labelAt( firstFn+10, cvNum, "43");
-            labelAt( firstFn+11, cvNum, "44");
-            labelAt( firstFn+12, cvNum, "45");
-            labelAt( firstFn+13, cvNum, "46");
-        }
-        
-        labelAt(0,fnName, "Description");
-        
-        labelAt( firstFn   , fnName, "Forward Headlight F0(F)");
-        labelAt( firstFn+ 1, fnName, "Reverse Headlight F0(R)");
-        if (numFn>2) labelAt( firstFn+ 2, fnName, "Function 1");
-        if (numFn>3) labelAt( firstFn+ 3, fnName, "Function 2");
-        if (numFn>4) labelAt( firstFn+ 4, fnName, "Function 3");
-        if (numFn>5) labelAt( firstFn+ 5, fnName, "Function 4");
-        if (numFn>6) labelAt( firstFn+ 6, fnName, "Function 5");
-        if (numFn>7) labelAt( firstFn+ 7, fnName, "Function 6");
-        if (numFn>8) labelAt( firstFn+ 8, fnName, "Function 7");
-        if (numFn>9) labelAt( firstFn+ 9, fnName, "Function 8");
-        if (numFn>10) labelAt( firstFn+10, fnName, "Function 9");
-        if (numFn>11) labelAt( firstFn+11, fnName, "Function 10");
-        if (numFn>12) labelAt( firstFn+12, fnName, "Function 11");
-        if (numFn>13) labelAt( firstFn+13, fnName, "Function 12");
-        if (numFn>14) labelAt( firstFn+14, fnName, "Function 13");
-        if (numFn>15) labelAt( firstFn+15, fnName, "Function 14");
-        if (numFn>16) labelAt( firstFn+16, fnName, "Function 15");
-        if (numFn>17) labelAt( firstFn+17, fnName, "Function 16");
-        if (numFn>18) labelAt( firstFn+18, fnName, "Function 17");
-        if (numFn>19) labelAt( firstFn+19, fnName, "Function 18");
-        if (numFn>20) labelAt( firstFn+20, fnName, "Function 19");
-        if (numFn>21) labelAt( firstFn+21, fnName, "Function 20");
-        if (numFn>22) labelAt( firstFn+22, fnName, "Function 21");
-        if (numFn>23) labelAt( firstFn+23, fnName, "Function 22");
-        if (numFn>24) labelAt( firstFn+24, fnName, "Function 23");
-        if (numFn>25) labelAt( firstFn+25, fnName, "Function 24");
-        if (numFn>26) labelAt( firstFn+26, fnName, "Function 25");
-        if (numFn>27) labelAt( firstFn+27, fnName, "Function 26");
-        if (numFn>28) labelAt( firstFn+28, fnName, "Function 27");
-        if (numFn>29) labelAt( firstFn+29, fnName, "Function 28");
-        
-        // label outputs
-        for (int iOut=0; iOut<numOut; iOut++) {
-            labelAt( outputNum,   firstOut+iOut, outName[iOut]);
-            labelAt( outputLabel, firstOut+iOut, outLabel[iOut]);
-        }
-        
-        for (int iFn = 0; iFn < numFn; iFn++) {
-            for (int iOut = 0; iOut < numOut; iOut++) {
-                // find the variable using the output label
-                String name = fnList[iFn]+" controls output "+outName[iOut];
-                int iVar = _varModel.findVarIndex(name);
-                if (iVar>=0) {
-                    if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
-                    varsUsed.add(Integer.valueOf(iVar));
-                    JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
-                    VariableValue var = _varModel.getVariable(iVar);
-                    j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
-                    int row = firstFn+iFn;
-                    int column = firstOut+iOut;
-                    saveAt(row, column, j);
-                } else {
-                    if (log.isDebugEnabled()) log.debug("Did not find var: "+name);
+
+        labelAt(0, fnNameCol, Bundle.getMessage("FnMapDesc"), GridBagConstraints.LINE_START);
+
+// Loop through function names and output names looking for variables
+        int row = firstFnRow;
+        for (String fnNameBase : fnList) {
+            if ((row - firstFnRow) >= numFn) {
+                break; // for compatibility with legacy defintions
+            }
+            for (String fnDirVariant : fnVariantList) {
+                String fnNameString = fnNameBase + fnDirVariant;
+//                log.info(fnNameString);
+                boolean rowIsUsed = false;
+                for (int iOut = 0; iOut < numOut; iOut++) {
+                    // if column is not suppressed by blank headers
+                    if (!outName[iOut].equals("") || !outLabel[iOut].equals("")) {
+                        // find the variable using the output number or label
+                        // include an (alt) variant to enable Tsunami function exchange definitions
+                        String searchNameBase = fnNameString + " controls output ";
+                        List<String> names = new ArrayList<>();
+                        if (!outName[iOut].equals(Integer.toString(iOut + 1))) {
+                            names.add(searchNameBase + (iOut + 1));
+                            names.add(searchNameBase + (iOut + 1) + "(alt)");
+                        }
+                        names.add(searchNameBase + outName[iOut]);
+                        names.add(searchNameBase + outName[iOut] + "(alt)");
+                        for (String name : names) {
+//                            log.info("Search name='" + name + "'");
+                            int iVar = _varModel.findVarIndex(name);
+                            if (iVar >= 0) {
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Process var: " + name + " as index " + iVar);
+                                }
+                                varsUsed.add(Integer.valueOf(iVar));
+                                VariableValue var = _varModel.getVariable(iVar);
+                                // Only single-bit (exactly two options) variables should use checkbox
+                                // this really would be better fixed in EnumVariableValue
+                                // done here to avoid side effects elsewhere
+                                String displayFormat = "checkbox";
+                                if ((var.getMask() != null) && (((var.getMask().replace("X", "")).length()) != 1)) {
+                                    displayFormat = "";
+                                }
+                                JComponent j = (JComponent) (_varModel.getRep(iVar, displayFormat));
+                                j.setToolTipText(PaneProgPane.addCvDescription((fnNameString + " "
+                                        + Bundle.getMessage("FnMapControlsOutput") + " "
+                                        + outName[iOut] + " " + outLabel[iOut]), var.getCvDescription(), var.getMask()));
+                                int column = firstOutCol + iOut;
+                                saveAt(row, column, j);
+                                rowIsUsed = true;
+                                outIsUsed[iOut] = true;
+                            } else {
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Did not find var: " + name);
+                                }
+                            }
+                        }
+                    }
                 }
+                if (rowIsUsed) {
+                    if (fnNameBase.matches("F\\d+")) {
+                        fnNameString = Bundle.getMessage("FnMap_F") + " " + fnNameBase.substring(1);
+                        if (!fnDirVariant.equals("")) {
+                            fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                        }
+                    } else if (fnNameBase.matches("S\\d+")) {
+                        fnNameString = Bundle.getMessage("FnMap_S") + " " + fnNameBase.substring(1);
+                        if (!fnDirVariant.equals("")) {
+                            fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                        }
+                    } else {
+                        try {  // See if we have a match for whole fnNameString
+                            fnNameString = Bundle.getMessage("FnMap_" + fnNameString);
+                        } catch (java.util.MissingResourceException e) {
+                            try {  // Else see if we have a match for fnNameBase
+                                fnNameString = Bundle.getMessage("FnMap_" + fnNameBase);
+                                if (!fnDirVariant.equals("")) { // Add variant
+                                    fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                                }
+                            } catch (java.util.MissingResourceException e1) {
+                                // No matches found
+                            }
+                        }
+                    }
+                    labelAt(row, fnNameCol, fnNameString, GridBagConstraints.LINE_START);
+                    row++;
+                }
+
             }
         }
-        if (log.isDebugEnabled()) log.debug("Function map complete");
+        if (log.isDebugEnabled()) {
+            log.debug("Function map complete");
+        }
+
+        // label used outputs only
+        for (int iOut = 0; iOut < numOut; iOut++) {
+            if (outIsUsed[iOut]) {
+                labelAt(outputNumRow, firstOutCol + iOut, outName[iOut]);
+                labelAt(outputLabelRow, firstOutCol + iOut, outLabel[iOut]);
+            }
+        }
+
+        // padding for the case of few outputs
+        cs.gridwidth = GridBagConstraints.REMAINDER;
+        labelAt(outputNumRow, firstOutCol + numOut, "");
     }
-    
-    final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", 
-                                           "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20",
-                                           "F21", "F22", "F23", "F24", "F25", "F26", "F27", "F28"
-                                            };
-    
-    final String[] outLabel = new String[] {"White", "Yellow", "Green", "Vlt/Brwn", "", "", "", "", "", "",
-                                            "", "", "", "", "","", "", "", "", "",
-                                            "", "", "", "", "","", "", "", "", "",
-                                            "", "", "", "", "","", "", "", "", ""
-                                            };
-    
-    final String[] outName = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-                                           "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-                                           "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
-                                           "31", "32", "33", "34", "35", "36", "37", "38", "39", "40"
-                                            };
-    
+
     void saveAt(int row, int column, JComponent j) {
-        if (row<0 || column<0) return;
+        this.saveAt(row, column, j, GridBagConstraints.CENTER);
+    }
+
+    void saveAt(int row, int column, JComponent j, int anchor) {
+        if (row < 0 || column < 0) {
+            return;
+        }
+        cs = new GridBagConstraints();
         cs.gridy = row;
         cs.gridx = column;
+        cs.anchor = anchor;
         gl.setConstraints(j, cs);
         add(j);
     }
-    
+
     void labelAt(int row, int column, String name) {
-        if (row<0 || column<0) return;
-        JLabel t = new JLabel(" "+name+" ");
-        saveAt(row, column, t);
+        this.labelAt(row, column, name, GridBagConstraints.CENTER);
     }
-    
+
+    void labelAt(int row, int column, String name, int anchor) {
+        if (row < 0 || column < 0) {
+            return;
+        }
+        JLabel t = new JLabel(" " + name + " ");
+        saveAt(row, column, t, anchor);
+    }
+
     /**
-     * Use the "model" element from the decoder definition file
-     * to configure the number of outputs and set up any that
-     * are named instead of numbered.
+     * Use the "model" element from the decoder definition file to configure the
+     * number of outputs and set up any that are named instead of numbered.
      */
-    @SuppressWarnings("unchecked")
-	protected void configOutputs(Element model) {
-        if (model==null) {
+    protected void configOutputs(Element model) {
+        if (model == null) {
             log.debug("configOutputs was given a null model");
             return;
         }
         // get numOuts, numFns or leave the defaults
         Attribute a = model.getAttribute("numOuts");
-        try { if (a!=null) numOut = Integer.valueOf(a.getValue()).intValue();}
-        catch (Exception e) {log.error("error handling decoder's numOuts value");}
+        try {
+            if (a != null) {
+                numOut = Integer.valueOf(a.getValue()).intValue();
+            }
+        } catch (Exception e) {
+            log.error("error handling decoder's numOuts value");
+        }
         a = model.getAttribute("numFns");
-        try { if (a!=null) numFn = Integer.valueOf(a.getValue()).intValue();}
-        catch (Exception e) {log.error("error handling decoder's numFns value");}
-        if (log.isDebugEnabled()) log.debug("numFns, numOuts "+numFn+","+numOut);
+        try {
+            if (a != null) {
+                numFn = Integer.valueOf(a.getValue()).intValue();
+            }
+        } catch (Exception e) {
+            log.error("error handling decoder's numFns value");
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("numFns, numOuts " + numFn + "," + numOut);
+        }
         // take all "output" children
         List<Element> elemList = model.getChildren("output");
-        if (log.isDebugEnabled()) log.debug("output scan starting with "+elemList.size()+" elements");
-        for (int i=0; i<elemList.size(); i++) {
+        if (log.isDebugEnabled()) {
+            log.debug("output scan starting with " + elemList.size() + " elements");
+        }
+        for (int i = 0; i < elemList.size(); i++) {
             Element e = elemList.get(i);
             String name = e.getAttribute("name").getValue();
             // if this a number, or a character name?
@@ -221,28 +343,50 @@ public class FnMapPanel extends JPanel {
                 // yes, since it was converted.  All we do with
                 // these are store the label index (if it exists)
                 String at = LocaleSelector.getAttribute(e, "label");
-                if ( at!=null && outputNum<=numOut)
-                    outLabel[outputNum-1] = at;
+                if (at != null) {
+                    loadSplitLabel(outputNum - 1, at);
+                    numOut = Math.max(numOut, outputNum);
+                }
             } catch (java.lang.NumberFormatException ex) {
                 // not a number, must be a name
-                if (numOut<maxOut) {
+                if (numOut < maxOut) {
                     outName[numOut] = name;
                     String at;
-                    if ((at=LocaleSelector.getAttribute(e, "label"))!=null)
+                    if ((at = LocaleSelector.getAttribute(e, "label")) != null) {
                         outLabel[numOut] = at;
-                    else
-                        outLabel[numOut] ="";
+                    } else {
+                        outLabel[numOut] = "";
+                    }
                     numOut++;
                 }
             }
         }
     }
-    
-    /** clean up at end */
+
+    // split and load two-line labels
+    void loadSplitLabel(int iOut, String theLabel) {
+        if (iOut < maxOut) {
+            String itemList[] = theLabel.split("\\|");
+//             log.info("theLabel=\""+theLabel+"\" itemList.length=\""+itemList.length+"\"");
+            if (theLabel.equals("|")) {
+                outName[iOut] = "";
+                outLabel[iOut] = "";
+            } else if (itemList.length == 1) {
+                outLabel[iOut] = itemList[0];
+            } else if (itemList.length > 1) {
+                outName[iOut] = itemList[0];
+                outLabel[iOut] = itemList[1];
+            }
+        }
+    }
+
+    /**
+     * clean up at end
+     */
     public void dispose() {
         removeAll();
     }
-    
+
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(FnMapPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FnMapPanel.class.getName());
 }

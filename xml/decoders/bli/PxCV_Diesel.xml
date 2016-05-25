@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable CV="112" default="8192" item="EMF Static Config" tooltip="BEMF proportional gain">
+	<splitVal highCV="113"/>
+	<label>BEMF Kp</label>
+  </variable>
+  <variable CV="114" default="306" item="EMF Dynamic Config" tooltip="BEMF integral gain">
+	<splitVal highCV="115"/>
+	<label>BEMF Ki</label>
+  </variable>
+  <variable CV="118" item="EMF Option 1" default="20">
+	<decVal/>
+	<label>KpSlow</label>
+  </variable>
+  <variable item="Analog Startup Voltage" CV="131" default="72">
+	<decVal/>
+	<label>DC Sound Unit Startup Voltage</label>
+  </variable>
+  <variable item="Analog Shutdown Voltage" CV="132" default="58">
+	<decVal/>
+	<label>DC Sound Unit Shutdown</label>
+  </variable>
+  <variable CV="135" default="128" item="Sound Setting 4">
+	<decVal/>
+	<label>Horn Volume</label>
+  </variable>
+  <variable CV="137" default="128" item="Sound Setting 6">
+	<decVal/>
+	<label>Diesel Volume</label>
+  </variable>
+  <variable CV="138" default="128" item="Sound Setting 7">
+	<decVal/>
+	<label>Horn2 Volume</label>
+  </variable>
+  <variable CV="143" default="128" item="Sound Setting 12">
+	<decVal/>
+	<label>Compressor Volume</label>
+  </variable>
+  <variable CV="144" default="128" item="Sound Setting 13">
+	<decVal/>
+	<label>Manual Air Release Volume</label>
+  </variable>
+  <variable CV="145" default="128" item="Sound Setting 14">
+	<decVal/>
+	<label>Air Filling Volume</label>
+  </variable>
+  <variable CV="148" default="128" item="Sound Setting 17">
+	<decVal/>
+	<label>Spit Valve Volume</label>
+  </variable>
+  <variable CV="149" default="128" item="Sound Setting 18">
+	<decVal/>
+	<label>Radiator Cooling Volume</label>
+  </variable>
+  <variable CV="150" default="128" item="Sound Setting 19">
+	<decVal/>
+	<label>Grid Blower Volume</label>
+  </variable>
+  <variable CV="152" default="128" item="Sound Setting 21">
+	<decVal/>
+	<label>Fuel Fill Volume</label>
+  </variable>
+  <variable CV="153" default="128" item="Sound Setting 22">
+	<decVal/>
+	<label>Station/Yard Volume</label>
+  </variable>
+  <variable CV="155" default="128" item="Sound Setting 23">
+	<decVal/>
+	<label>Maintenance/Radio Chatter Volume</label>
+  </variable>
+  <variable CV="156" default="128" item="Sound Setting 24">
+	<decVal/>
+	<label>City/Farm/Industrial/Lumber Volume</label>
+  </variable>
+  <variable item="Analog Brake Set Voltage" CV="191" default="70">
+	<decVal max="255"/>
+	<label>Analog Brake Set Voltage</label>
+  </variable>
+  <variable item="Analog Brake Release Voltage" CV="192" default="77">
+	<decVal max="255"/>
+	<label>Analog Brake Release Voltage</label>
+  </variable>
+  <variable item="Analog Rev Level 1 Voltage" CV="193" default="105">
+	<decVal max="255"/>
+	<label>Analog Rev Level 1 Voltage</label>
+  </variable>
+  <variable item="Analog Rev Level 2 Voltage" CV="194" default="120">
+	<decVal max="255"/>
+	<label>Analog Rev Level 2 Voltage</label>
+  </variable>
+  <variable item="Analog Rev Level 3 Voltage" CV="195" default="130">
+	<decVal max="255"/>
+	<label>Analog Rev Level 3 Voltage</label>
+  </variable>
+  <variable item="Analog Rev Level 4 Voltage" CV="196" default="160">
+	<decVal max="255"/>
+	<label>Analog Rev Level 4 Voltage</label>
+  </variable>
+  <variable item="Analog Rev Level 5 Voltage" CV="197" default="180">
+	<decVal max="255"/>
+	<label>Analog Rev Level 5 Voltage</label>
+  </variable>
+  <variable item="Analog Rev Level 6 Voltage" CV="198" default="200">
+	<decVal max="255"/>
+	<label>Analog Rev Level 6 Voltage</label>
+  </variable>
+  <variable item="Analog Rev Level 7 Voltage" CV="199" default="220">
+	<decVal max="255"/>
+	<label>Analog Rev Level 7 Voltage</label>
+  </variable>
+  <variable CV="200" default="0" item="Sound Setting 37">
+	<decVal max="255"/>
+	<label>DCC Throttle Magnitude Increase</label>
+  </variable>
+  <variable CV="201" default="0" item="Sound Setting 38">
+	<decVal max="255"/>
+	<label>DCC Throttle Magnitude Decrease</label>
+  </variable>
+  <variable item="Motor Load Power Filter" CV="202" default="12">
+	<decVal max="255"/>
+	<label>Motor Load Power Filter</label>
+  </variable>
+  <variable item="Smoke Unit" CV="221" mask="XXXXXXVX" default="0">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Smoke Unit</label>
+  </variable>
+  <variable item="Smoke Unit Fan Rev Speed" CV="234" default="2">
+	<decVal/>
+	<label>Smoke Unit Fan Rev Speed</label>
+  </variable>
+  <variable item="Smoke Unit Fan Idle Speed" CV="235" default="249">
+	<decVal/>
+	<label>Smoke Unit Fan Idle Speed</label>
+  </variable>
+  <variable item="Smoke Unit Rev Heater Power" CV="236" default="2">
+	<decVal max="110"/>
+	<label>Smoke Unit Rev Heater Power</label>
+  </variable>
+  <variable item="Smoke Unit Idle Heater Power" CV="237" default="50">
+	<decVal max="110"/>
+	<label>Smoke Unit Idle Heater Power</label>
+  </variable>
+  <variable item="Recorder Repeats" CV="238" mask="XXXXVVVV" default="15">
+	<decVal max="15"/>
+	<label>Recorder Repeats</label>
+  </variable>
+  <variable item="GSC2 bit 6" CV="246" mask="XVXXXXXX" default="0">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+	<label>Quantum Engineer Bell/Horn Detect</label>
+  </variable>
+  <variable item="Motor Startup Delay" CV="248" default="60">
+	<decVal max="255"/>
+	<label>Motor Startup Delay</label>
+  </variable>
+</variables>

@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.2 2010/03/05 00:05:12 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-03-06--> 
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; 2013-09-02--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: SignalPro Main Window
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset= utf-8">
+    <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,16 +24,16 @@
 <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-<H1>JMRI:Fenêtre Principale SignalPro</H1>
+<H1>JMRI:Fen&#234;tre Principale SignalPro</H1>
 
 <img src="../../../../../resources/logo.gif" align="right" height="100" width="100">
-La fenêtre principale SignalPro  vous donne accès à toutes les
-capacités de JMRI.
+La fen&#234;tre principale SignalPro  vous donne acc&#232;s &#224; toutes les
+capacit&#233;s de JMRI.
 
 <p>
-Aide sur les menus spécifiques:
+Aide sur les menus sp&#233;cifiques:
 <ul>
-<li>Edit - (<a href="../TabbedPreferences.shtml">Préférences</a>)
+<li>Edit - (<a href="../TabbedPreferences.shtml">Pr&#233;f&#233;rences</a>)
 <li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils</a>
 <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a>
 </ul>

@@ -1,0 +1,52 @@
+<!-- Sidebar -->
+<!-- This is the sidebar definition for (current) OperationsPro Manual pages -->
+<hr class="hide">
+
+<div id="mBody">
+
+<div id="side"> <!-- Block of text at top -->
+    <div style="text-align: center"><strong>The OpsPro Manual</strong></div>
+
+<dl class="toc"><!-- main table of contents -->
+<dt><h3>Setup JMRI</h3></dt>
+	  <dd>
+    <ul>
+    <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
+    </ul>
+    </dd>
+
+<dt><h3>Starting OperationsPro</h3></dt>
+    <dd>
+    <ul>
+    <li><a href="Start_DecoderPro.shtml">Starting JMRI&reg;</a></li>
+    <li><a href="Start_Preferences.shtml">Set Preferences</a></li>
+    </ul>
+    </dd>
+ 
+<dt><h3><a name="Main"></a>Using OperationsPro</h3></dt>
+    <dd>
+    <ul>
+      <li><a href="Main_Main.shtml">Main Window Menu</a></li>
+      <li><a href="Main_Tool.shtml">Tools Menu</a></li>
+ 	    <li><a href="Ops_Start.shtml">Operations</a>
+      <ul>
+        <li><a href="Ops_Settings.shtml">Settings</a></li>
+        <li><a href="Ops_Locations.shtml">Locations</a></li>
+        <li><a href="Ops_Cars.shtml">Cars</a></li>
+        <li><a href="Ops_Engines.shtml">Locomotive</a></li>
+        <li><a href="Ops_Routes.shtml">Routes</a></li>
+        <li><a href="Ops_Trains.shtml">Trains</a></li>
+     </ul></li>
+     <li><a href="Ops_TripThruOperations.shtml">A Trip through OperationsPro</a></li>
+   </ul>
+   </dd>
+<dt><a name="Error"></a><h3>Error Messages</h3></dt>  
+    <dd>
+    <ul>
+      <li><a href="../../html/setup/Errors.shtml">Error Codes explained</a></li>
+    </ul>
+    </dd>
+  
+  </dl>
+</div> <!-- close #side -->
+<!-- /Sidebar -->

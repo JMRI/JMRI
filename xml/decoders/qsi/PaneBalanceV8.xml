@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
@@ -12,19 +12,30 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
-<pane name="Balance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Balance</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <row>
-      <label label="Select the speaker and percent reduction of sound output for that speaker, other speaker remains at 100%"/>
+      <label>
+        <text>Select the speaker and percent reduction of sound output for that speaker, other speaker remains at 100%</text>
+      </label>
     </row>
     <row>
       <column>
@@ -42,11 +53,15 @@
         </row>
       </column>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <separator/>
     <row>
       <column>
-        <label label="Individual Sound Balances "/>
+        <label>
+          <text>Individual Sound Balances </text>
+        </label>
       </column>
     </row>
     <row>
@@ -63,7 +78,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.8 Sign" format="onradiobutton" label="" layout="left"/>
@@ -76,7 +93,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.10 Sign" format="onradiobutton" label="" layout="left"/>
@@ -89,7 +108,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.11 Sign" format="onradiobutton" label="" layout="left"/>
@@ -102,7 +123,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.13 Sign" format="onradiobutton" label="" layout="left"/>
@@ -115,7 +138,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.14 Sign" format="onradiobutton" label="" layout="left"/>
@@ -128,7 +153,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.15 Sign" format="onradiobutton" label="" layout="left"/>
@@ -141,7 +168,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.16 Sign" format="onradiobutton" label="" layout="left"/>
@@ -154,7 +183,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.17 Sign" format="onradiobutton" label="" layout="left"/>
@@ -167,7 +198,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.19 Sign" format="onradiobutton" label="" layout="left"/>
@@ -180,7 +213,24 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <column>
+            <display item="CV116.20 Sign" format="onradiobutton" label="" layout="left"/>
+            <display item="CV116.20 Sign" format="offradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV116.20 Value" layout="above" label=""/>
+              <display item="CV116.20 Value" layout="above" format="hslider-percent"/>
+            </row>
+          </column>
+        </row>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.21 Sign" format="onradiobutton" label="" layout="left"/>
@@ -193,13 +243,19 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <column>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.22 Sign" format="onradiobutton" label="" layout="left"/>
@@ -212,7 +268,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.24 Sign" format="onradiobutton" label="" layout="left"/>
@@ -225,7 +283,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.26 Sign" format="onradiobutton" label="" layout="left"/>
@@ -238,7 +298,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.28 Sign" format="onradiobutton" label="" layout="left"/>
@@ -251,7 +313,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.29 Sign" format="onradiobutton" label="" layout="left"/>
@@ -264,7 +328,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.30 Sign" format="onradiobutton" label="" layout="left"/>
@@ -277,7 +343,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.31 Sign" format="onradiobutton" label="" layout="left"/>
@@ -290,7 +358,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.32 Sign" format="onradiobutton" label="" layout="left"/>
@@ -303,7 +373,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.34 Sign" format="onradiobutton" label="" layout="left"/>
@@ -316,7 +388,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.37 Sign" format="onradiobutton" label="" layout="left"/>
@@ -329,7 +403,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.40 Sign" format="onradiobutton" label="" layout="left"/>
@@ -342,13 +418,34 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <column>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <column>
+            <display item="CV116.41 Sign" format="onradiobutton" label="" layout="left"/>
+            <display item="CV116.41 Sign" format="offradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV116.41 Value" layout="above" label=""/>
+              <display item="CV116.41 Value" layout="above" format="hslider-percent"/>
+            </row>
+          </column>
+        </row>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.46 Sign" format="onradiobutton" label="" layout="left"/>
@@ -361,7 +458,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.47 Sign" format="onradiobutton" label="" layout="left"/>
@@ -374,7 +473,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.53 Sign" format="onradiobutton" label="" layout="left"/>
@@ -387,7 +488,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.54 Sign" format="onradiobutton" label="" layout="left"/>
@@ -400,7 +503,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.55 Sign" format="onradiobutton" label="" layout="left"/>
@@ -413,7 +518,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.56 Sign" format="onradiobutton" label="" layout="left"/>
@@ -426,7 +533,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.57 Sign" format="onradiobutton" label="" layout="left"/>
@@ -439,7 +548,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.58 Sign" format="onradiobutton" label="" layout="left"/>
@@ -452,7 +563,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.59 Sign" format="onradiobutton" label="" layout="left"/>
@@ -465,7 +578,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.60 Sign" format="onradiobutton" label="" layout="left"/>
@@ -478,7 +593,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.61 Sign" format="onradiobutton" label="" layout="left"/>
@@ -491,7 +608,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.62 Sign" format="onradiobutton" label="" layout="left"/>
@@ -504,7 +623,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV116.64 Sign" format="onradiobutton" label="" layout="left"/>
@@ -519,11 +640,23 @@
         </row>
       </column>
     </row>
-    <label label=" "/>
-    <label label="Sets the relative volumes of the two speakers, adjust overall volume on the Volume tab"/>
-    <label label="Please treat the 'Off' in the sliders as '0%' also slider is percent reduction of selected speaker"/>
-    <label label="If silder is at 'Off' read as 0% reduction, ie both speakers are 100% of volume setting as set on Volume tab"/>
-    <label label="If Speaker 1 selected and silder is at '50%', speaker 1 is half the volume as speaker 2 and speaker 2 is as set on Volume tab"/>
-    <label label="If Speaker 2 selected and silder is at '100%', speaker 2 is silent and speaker 1 is as set on Volume tab"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>Sets the relative volumes of the two speakers, adjust overall volume on the Volume tab</text>
+    </label>
+    <label>
+      <text>Please treat the 'Off' in the sliders as '0%' also slider is percent reduction of selected speaker</text>
+    </label>
+    <label>
+      <text>If silder is at 'Off' read as 0% reduction, ie both speakers are 100% of volume setting as set on Volume tab</text>
+    </label>
+    <label>
+      <text>If Speaker 1 selected and silder is at '50%', speaker 1 is half the volume as speaker 2 and speaker 2 is as set on Volume tab</text>
+    </label>
+    <label>
+      <text>If Speaker 2 selected and silder is at '100%', speaker 2 is silent and speaker 1 is as set on Volume tab</text>
+    </label>
   </column>
 </pane>

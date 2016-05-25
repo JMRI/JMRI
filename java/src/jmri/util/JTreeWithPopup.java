@@ -1,24 +1,29 @@
-// StringUtil.java
-
 package jmri.util;
 
-import javax.swing.*;
-import javax.swing.tree.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 /**
  * JTree subclass that supports a popup menu.
- *<P>
- * From the 
- * <A HREF="http://www.java-tips.org/java-se-tips/javax.swing/have-a-popup-attached-to-a-jtree.html">Java Tips</a> web site.
- *
- * @version $Revision$
+ * <P>
+ * From the
+ * <A HREF="http://www.java-tips.org/java-se-tips/javax.swing/have-a-popup-attached-to-a-jtree.html">Java
+ * Tips</a> web site.
  */
+class JTreeWithPopup extends JTree implements ActionListener {
 
-class JTreeWithPopup extends JTree implements ActionListener{
     JPopupMenu popup;
     JMenuItem mi;
-    
+
     JTreeWithPopup(DefaultMutableTreeNode dmtn) {
         super(dmtn);
         // define the popup
@@ -33,35 +38,37 @@ class JTreeWithPopup extends JTree implements ActionListener{
         popup.add(mi);
         popup.setOpaque(true);
         popup.setLightWeightPopupEnabled(true);
-        
+
         addMouseListener(
                 new MouseAdapter() {
-            public void mouseReleased( MouseEvent e ) {
-                if ( e.isPopupTrigger()) {
-                    popup.show( (JComponent)e.getSource(), e.getX(), e.getY() );
+                    public void mouseReleased(MouseEvent e) {
+                        if (e.isPopupTrigger()) {
+                            popup.show((JComponent) e.getSource(), e.getX(), e.getY());
+                        }
+                    }
                 }
-            }
-        }
         );
-        
+
     }
+
     public void actionPerformed(ActionEvent ae) {
         DefaultMutableTreeNode dmtn, node;
-        
+
         TreePath path = this.getSelectionPath();
         dmtn = (DefaultMutableTreeNode) path.getLastPathComponent();
         if (ae.getActionCommand().equals("insert")) {
             node = new DefaultMutableTreeNode("children");
             dmtn.add(node);
             // thanks to Yong Zhang for the tip for refreshing the tree structure.
-            ((DefaultTreeModel )this.getModel()).nodeStructureChanged(dmtn);
+            ((DefaultTreeModel) this.getModel()).nodeStructureChanged(dmtn);
         }
         if (ae.getActionCommand().equals("remove")) {
-            node = (DefaultMutableTreeNode)dmtn.getParent();
+            node = (DefaultMutableTreeNode) dmtn.getParent();
             // Bug fix by essam
-            int nodeIndex=node.getIndex(dmtn); // declare an integer to hold the selected nodes index
+            int nodeIndex = node.getIndex(dmtn); // declare an integer to hold the selected nodes index
             dmtn.removeAllChildren();          // remove any children of selected node
             node.remove(nodeIndex);            // remove the selected node, retain its siblings
-            ((DefaultTreeModel )this.getModel()).nodeStructureChanged(dmtn);       }
+            ((DefaultTreeModel) this.getModel()).nodeStructureChanged(dmtn);
+        }
     }
 }

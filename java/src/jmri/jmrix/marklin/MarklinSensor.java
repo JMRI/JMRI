@@ -1,24 +1,26 @@
 // MarklinSensor.java
-
 package jmri.jmrix.marklin;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractSensor;
 
 /**
  * Implement a Sensor via Marklin communications.
  * <P>
- * This object doesn't listen to the Marklin communications.  This is because
- * the sensor manager will handle all the messages as some sensor updates will
- * come bundled together in one message.
- * It also saves having multiple sensor beans each having to decoder the same
- * message which would be better off being done in one location.
+ * This object doesn't listen to the Marklin communications. This is because the
+ * sensor manager will handle all the messages as some sensor updates will come
+ * bundled together in one message. It also saves having multiple sensor beans
+ * each having to decoder the same message which would be better off being done
+ * in one location.
  *
  * @author Kevin Dickerson (C) 2009
  * @version	$Revision: 20842 $
  */
 public class MarklinSensor extends AbstractSensor {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7029240754803015932L;
 
     public MarklinSensor(String systemName, String userName) {
         super(systemName, userName);
@@ -29,17 +31,15 @@ public class MarklinSensor extends AbstractSensor {
         super(systemName);
         init(systemName);
     }
-    
-    private void init(String id) { }
-    
-    public void requestUpdateFromLayout(){ }
+
+    private void init(String id) {
+    }
+
+    public void requestUpdateFromLayout() {
+    }
 
     static String[] modeNames = null;
     static int[] modeValues = null;
-
-    static Logger log = LoggerFactory.getLogger(MarklinSensor.class.getName());
 }
 
 /* @(#)MarklinSensor.java */
-
-

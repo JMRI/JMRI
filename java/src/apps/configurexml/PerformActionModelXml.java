@@ -1,21 +1,19 @@
 package apps.configurexml;
 
+import apps.PerformActionModel;
+import apps.StartupActionsManager;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
+import jmri.InstanceManager;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import apps.PerformActionModel;
-
-import java.awt.event.ActionEvent;
-
-import javax.swing.Action;
-
-import org.jdom.Element;
 
 /**
  * Handle XML persistance of PerformActionModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
- * @see apps.PerformActionPanel
+ * @see apps.startup.PerformActionModelFactory
  */
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -24,6 +22,7 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Default implementation for storing the model contents
+     *
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
@@ -39,6 +38,7 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Object should be loaded after basic GUI constructed
+     *
      * @return true to defer loading
      * @see jmri.configurexml.AbstractXmlAdapter#loadDeferred()
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
@@ -48,53 +48,49 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         return true;
     }
 
-    /**
-     * Create object from XML file
-     * @param e Top level Element to unpack.
-     * @return true if successful
-      */
-    public boolean load(Element e) {
-    	boolean result = true;
-        String className = e.getAttribute("name").getValue();
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        boolean result = true;
+        String className = shared.getAttribute("name").getValue();
         // rename MiniServerAction to WebServerAction
         if (className.equals("jmri.web.miniserver.MiniServerAction")) {
             className = "jmri.web.server.WebServerAction";
             log.debug("Updating MiniServerAction to WebServerAction");
         }
-        log.debug("Invoke Action from"+className);
+        log.debug("Invoke Action from {}", className);
         try {
-            Action action = (Action)Class.forName(className).newInstance();
+            Action action = (Action) Class.forName(className).newInstance();
             action.actionPerformed(new ActionEvent("prefs", 0, ""));
         } catch (ClassNotFoundException ex1) {
-            log.error("Could not find specified class: "+className);
+            log.error("Could not find specified class: {}", className);
             result = false;
         } catch (IllegalAccessException ex2) {
-            log.error("Unexpected access exception for  class: "+className, ex2);
+            log.error("Unexpected access exception for  class: " + className, ex2);
             result = false;
         } catch (InstantiationException ex3) {
-            log.error("Could not instantiate specified class: "+className, ex3);
+            log.error("Could not instantiate specified class: " + className, ex3);
             result = false;
         } catch (Exception ex4) {
-            log.error("Error while performing startup action for class: "+className, ex4);
+            log.error("Error while performing startup action for class: " + className, ex4);
             ex4.printStackTrace();
             result = false;
         }
         PerformActionModel m = new PerformActionModel();
         m.setClassName(className);
-        PerformActionModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformActionPanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         return result;
     }
 
     /**
      * Update static data from XML file
+     *
      * @param element Top level Element to unpack.
-     * @param o  ignored
+     * @param o       ignored
      */
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class.getName());
 
 }

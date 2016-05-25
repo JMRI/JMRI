@@ -1,0 +1,1299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/MGP_Servo5.xsl"?>
+
+<!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id:$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+  <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
+  
+  <decoder>
+    <family name="Servo5" mfg="MGP" type="stationary" comment="Servo5, a LocoNet decoder for railway switches">
+      <model model="Servo5" lowVersionID="1">
+			</model>
+    </family>
+    <programming direct="no" paged="no" register="no" ops="no">
+        <mode>LOCONETSV2MODE</mode>
+    </programming>
+    <variables>
+	
+	<!-- * * * * * * * * * * * * * * * * * -->
+	<!--  v v v v v   STANDARD  v v v v v  -->
+	<variable CV="2" item="Decoder Version" readOnly="yes" >
+        <decVal/>
+        <label>Manufacturer Version No.</label>
+	  </variable>	  
+      <variable CV="3" item="Serial Number" readOnly="yes" >
+		<splitVal highCV="4" upperMask="XXXXVVVV"/>
+        <label>Decoder serial number</label>
+      </variable>
+      <variable CV="7" item="Manufacturer" readOnly="yes" >
+        <decVal/>
+        <label>Manufacturer Id</label>
+      </variable>
+      <variable CV="8" item="Developer Id" readOnly="yes" >
+        <decVal/>
+        <label>Developer Id</label>
+      </variable>
+      <variable CV="9" item="Product Id" readOnly="yes" >
+        <decVal/>
+        <label>Product Id</label>
+      </variable>
+
+	  <variable CV="21" item="Short Address" default="1">
+		<splitVal highCV="22" upperMask="XXXXXVVV"/>
+		<label>Long Address</label>
+	  </variable>	  
+	<!--  ^ ^ ^ ^ ^ ^ STANDARD ^ ^ ^ ^ ^ ^ -->
+	<!-- * * * * * * * * * * * * * * * * * -->
+	
+	<!-- * * * * * * * * * * * * * * * * * -->
+	<!--  v v v v v   Servo v v v v v v v  -->
+	<!-- <SV type="int1" name="Servo 1, Min angle" svNumber="23" rw="1"/> -->
+      <variable CV="23" item="Servo 1, Min angle" >
+        <decVal/>
+        <label>Servo 1, Min angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 1, Max angle" svNumber="24" rw="1"/> -->
+      <variable CV="24" item="Servo 1, Max angle" >
+        <decVal/>
+        <label>Servo 1, Max angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 1, Speed" svNumber="25" rw="1"/> -->
+      <variable CV="25" item="Servo 1, Speed" >
+        <decVal/>
+        <label>Servo 1, Speed</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 2, Min angle" svNumber="26" rw="1"/> -->
+      <variable CV="26" item="Servo 2, Min angle" >
+        <decVal/>
+        <label>Servo 2, Min angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 2, Max angle" svNumber="27" rw="1"/> -->
+      <variable CV="27" item="Servo 2, Max angle" >
+        <decVal/>
+        <label>Servo 2, Max angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 2, Speed" svNumber="28" rw="1"/> -->
+      <variable CV="28" item="Servo 2, Speed" >
+        <decVal/>
+        <label>Servo 2, Speed</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 3, Min angle" svNumber="29" rw="1"/> -->
+      <variable CV="29" item="Servo 3, Min angle" >
+        <decVal/>
+        <label>Servo 3, Min angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 3, Max angle" svNumber="30" rw="1"/> -->
+      <variable CV="30" item="Servo 3, Max angle" >
+        <decVal/>
+        <label>Servo 3, Max angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 3, Speed" svNumber="31" rw="1"/> -->
+      <variable CV="31" item="Servo 3, Speed" >
+        <decVal/>
+        <label>Servo 3, Speed</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 4, Min angle" svNumber="32" rw="1"/> -->
+      <variable CV="32" item="Servo 4, Min angle" >
+        <decVal/>
+        <label>Servo 4, Min angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 4, Max angle" svNumber="33" rw="1"/> -->
+      <variable CV="33" item="Servo 4, Max angle" >
+        <decVal/>
+        <label>Servo 4, Min angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 4, Speed" svNumber="34" rw="1"/> -->
+      <variable CV="34" item="Servo 4, Speed" >
+        <decVal/>
+        <label>Servo 4, Speed</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 5, Min angle" svNumber="35" rw="1"/> -->
+      <variable CV="35" item="Servo 5, Min angle" >
+        <decVal/>
+        <label>Servo 5, Min angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 5, Max angle" svNumber="36" rw="1"/> -->
+      <variable CV="36" item="Servo 5, Max angle" >
+        <decVal/>
+        <label>Servo 5, Max angle</label>
+      </variable>
+	<!-- <SV type="int1" name="Servo 5, Speed" svNumber="37" rw="1"/> -->
+      <variable CV="37" item="Servo 5, Speed" >
+        <decVal/>
+        <label>Servo 5, Speed</label>
+      </variable>
+
+	<!-- <SV type="bits" start='0' length='1' name="Type of buttons" svNumber="38" rw="1"> -->
+	<variable item="Type of buttons" CV="38" mask="XXXXXXXV">
+		<enumVal>
+			<enumChoice choice="Toggle" value="0"/>
+			<enumChoice choice="Switch" value="1"/>
+		</enumVal>
+		<label>Type of buttons</label>
+	</variable>
+
+	  <!--
+	<SV type="bits" start='0' length='1' name="Servo 1 direction, Loconet" svNumber="39" rw="1">
+	<SV type="bits" start='1' length='1' name="Servo 2 direction, Loconet" svNumber="39" rw="1">
+	<SV type="bits" start='2' length='1' name="Servo 3 direction, Loconet" svNumber="39" rw="1">
+	<SV type="bits" start='3' length='1' name="Servo 4 direction, Loconet" svNumber="39" rw="1">
+	<SV type="bits" start='4' length='1' name="Servo 5 direction, Loconet" svNumber="39" rw="1">
+	 -->
+	<variable item="Servo 1 direction, Loconet" CV="39" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 1 direction, Loconet</label>
+	</variable>
+	<variable item="Servo 2 direction, Loconet" CV="39" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 2 direction, Loconet</label>
+	</variable>
+	<variable item="Servo 3 direction, Loconet" CV="39" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 3 direction, Loconet</label>
+	</variable>
+	<variable item="Servo 4 direction, Loconet" CV="39" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 4 direction, Loconet</label>
+	</variable>
+	<variable item="Servo 5 direction, Loconet" CV="39" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 5 direction, Loconet</label>
+	</variable>
+
+	<!--
+	<SV type="bits" start='0' length='1' name="Servo 1 direction, Polarisation" svNumber="40" rw="1">
+	<SV type="bits" start='1' length='1' name="Servo 2 direction, Polarisation" svNumber="40" rw="1">
+	<SV type="bits" start='2' length='1' name="Servo 3 direction, Polarisation" svNumber="40" rw="1">
+	<SV type="bits" start='3' length='1' name="Servo 4 direction, Polarisation" svNumber="40" rw="1">
+	<SV type="bits" start='4' length='1' name="Servo 5 direction, Polarisation" svNumber="40" rw="1">
+	 -->
+	 <variable item="Servo 1 direction, Polarisation" CV="40" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 1 direction, Polarisation</label>
+	</variable>
+	<variable item="Servo 2 direction, Polarisation" CV="40" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 2 direction, Polarisation</label>
+	</variable>
+	<variable item="Servo 3 direction, Polarisation" CV="40" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 3 direction, Polarisation</label>
+	</variable>
+	<variable item="Servo 4 direction, Polarisation" CV="40" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 4 direction, Polarisation</label>
+	</variable>
+	<variable item="Servo 5 direction, Polarisation" CV="40" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 5 direction, Polarisation</label>
+	</variable>
+
+	<!--
+	<SV type="bits" start='0' length='1' name="Servo 1 direction, Switch" svNumber="41" rw="1">
+	<SV type="bits" start='1' length='1' name="Servo 2 direction, Switch" svNumber="41" rw="1">
+	<SV type="bits" start='2' length='1' name="Servo 3 direction, Switch" svNumber="41" rw="1">
+	<SV type="bits" start='3' length='1' name="Servo 4 direction, Switch" svNumber="41" rw="1">
+	<SV type="bits" start='4' length='1' name="Servo 5 direction, Switch" svNumber="41" rw="1">
+	 -->
+	<variable item="Servo 1 direction, Switch" CV="41" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 1 direction, Switch</label>
+	</variable>
+	<variable item="Servo 2 direction, Switch" CV="41" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 2 direction, Switch</label>
+	</variable>
+	<variable item="Servo 3 direction, Switch" CV="41" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 3 direction, Switch</label>
+	</variable>
+	<variable item="Servo 4 direction, Switch" CV="41" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 4 direction, Switch</label>
+	</variable>
+	<variable item="Servo 5 direction, Switch" CV="41" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="Normal" value="0"/>
+          <enumChoice choice="Opposite" value="1"/>
+        </enumVal>
+		<label>Servo 5 direction, Switch</label>
+	</variable>
+
+	<!-- <SV type="bits" start='0' length='1' name="Polarisation switch for servo 1" svNumber="49" rw="1" minVersion='3'> -->
+	<variable item="Polarisation switch for servo 1" CV="49" mask="XXXXXXXV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Idle" value="0"/>
+          <enumChoice choice="USE" value="1"/>
+        </enumVal>
+		<label>Polarisation switch for servo 1</label>
+	</variable>
+	<variable item="Polarisation switch for servo 2" CV="49" mask="XXXXXXVX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Idle" value="0"/>
+          <enumChoice choice="USE" value="1"/>
+        </enumVal>
+		<label>Polarisation switch for servo 2</label>
+	</variable>
+	<variable item="Polarisation switch for servo 3" CV="49" mask="XXXXXVXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Idle" value="0"/>
+          <enumChoice choice="USE" value="1"/>
+        </enumVal>
+		<label>Polarisation switch for servo 3</label>
+	</variable>
+	<variable item="Polarisation switch for servo 4" CV="49" mask="XXXXVXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Idle" value="0"/>
+          <enumChoice choice="USE" value="1"/>
+        </enumVal>
+		<label>Polarisation switch for servo 4</label>
+	</variable>
+	<variable item="Polarisation switch for servo 5" CV="49" mask="XXXVXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Idle" value="0"/>
+          <enumChoice choice="USE" value="1"/>
+        </enumVal>
+		<label>Polarisation switch for servo 5</label>
+	</variable>
+
+	<!-- <array svNumber="172" name="Start Delay Servo" tip="" startIndex='1' length='5' rw='1' minVersion='6'>
+		<SV offset="0" type="bits" start='0' length='4' name="from THROWN" rw="1" minVersion='6'/>
+		<SV offset="0" type="bits" start='4' length='4' name="from CLOSED" rw="1" minVersion='6'/> -->
+	<variable item="Start Delay Servo 1, from THROWN" CV="172" mask="XXXXVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 1, from THROWN</label>
+	</variable>
+	<variable item="Start Delay Servo 1, from CLOSED" CV="172" mask="VVVVXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 1, from CLOSED</label>
+	</variable>
+
+	<variable item="Start Delay Servo 2, from THROWN" CV="173" mask="XXXXVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 2, from THROWN</label>
+	</variable>
+	<variable item="Start Delay Servo 2, from CLOSED" CV="173" mask="VVVVXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 2, from CLOSED</label>
+	</variable>
+
+	<variable item="Start Delay Servo 3, from THROWN" CV="174" mask="XXXXVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 3, from THROWN</label>
+	</variable>
+	<variable item="Start Delay Servo 3, from CLOSED" CV="174" mask="VVVVXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 3, from CLOSED</label>
+	</variable>
+
+	<variable item="Start Delay Servo 4, from THROWN" CV="175" mask="XXXXVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 4, from THROWN</label>
+	</variable>
+	<variable item="Start Delay Servo 4, from CLOSED" CV="175" mask="VVVVXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 4, from CLOSED</label>
+	</variable>
+
+	<variable item="Start Delay Servo 5, from THROWN" CV="176" mask="XXXXVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 5, from THROWN</label>
+	</variable>
+	<variable item="Start Delay Servo 5, from CLOSED" CV="176" mask="VVVVXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <decVal/>
+		<label>Start Delay Servo 5, from CLOSED</label>
+	</variable>
+
+	<!--  ^ ^ ^ ^ ^ ^ Sservo ^ ^ ^ ^ ^ ^ ^ -->
+	<!-- * * * * * * * * * * * * * * * * * -->
+
+	
+	<!-- * * * * * * * * * * * * * * * * * -->
+	<!--  v v v v v   Control v v v v v v  -->
+	<!--
+	<SV type="bits" start='0'  length='1' name="Feedback type" svNumber="42" rw="1">
+	<SV type="int1" name="Switch when button is" svNumber="43" rw="1">
+	<SV type="int1" name="Send LN for Buttons" svNumber="44" rw="1" minVersion='3' advanced="1">
+	-->
+	<variable item="Feedback type" CV="42" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Closed/Thrown only" value="0"/>
+          <enumChoice choice="C/T + unkown state info" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Switch when button is" CV="43">
+        <enumVal>
+          <enumChoice choice="pressed" value="0"/>
+          <enumChoice choice="released" value="1"/>
+          <enumChoice choice="both" value="2"/>
+        </enumVal>
+	</variable>
+	<variable item="Send LN for Buttons" CV="44">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+	</variable>
+	<!--  ^ ^ ^ ^ ^ ^ Control ^ ^ ^ ^ ^ ^ ^ -->
+	<!--  * * * * * * * * * * * * * * * * * -->
+
+	<!-- * * * * * * * * * * * * * * * * -->
+	<!-- v v v v v  Locking  v v v v v v  -->
+
+<!--
+	<SV type="int2" name="Lock Address" minValue='1' maxValue='2048' svNumber="45" rw="1" minVersion='3'/>
+
+	<SV type="bits" start='0' length='1' name="Lock switch 1" svNumber="47" rw="1" minVersion='3'>
+	<SV type="bits" start='1' length='1' name="Lock switch 2" svNumber="47" rw="1" minVersion='3'>
+	<SV type="bits" start='2' length='1' name="Lock switch 3" svNumber="47" rw="1" minVersion='3'>
+	<SV type="bits" start='3' length='1' name="Lock switch 4" svNumber="47" rw="1" minVersion='3'>
+	<SV type="bits" start='4' length='1' name="Lock switch 5" svNumber="47" rw="1" minVersion='3'>
+				<v name="No" value='0'/>
+				<v name="Yes" value='1'/>
+	<SV type="bits" start='0' length='1' name="Lock 1 in position" svNumber="48" rw="1" minVersion='3'>
+	<SV type="bits" start='1' length='1' name="Lock 2 in position" svNumber="48" rw="1" minVersion='3'>
+	<SV type="bits" start='2' length='1' name="Lock 3 in position" svNumber="48" rw="1" minVersion='3'>
+	<SV type="bits" start='3' length='1' name="Lock 4 in position" svNumber="48" rw="1" minVersion='3'>
+	<SV type="bits" start='4' length='1' name="Lock 5 in position" svNumber="48" rw="1" minVersion='3'>
+				<v name="Thrown" value='0'/>
+				<v name="Closed" value='1'/>
+-->	
+	  <variable CV="45" item="Lock Address" default="0">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<splitVal highCV="46" upperMask="XXXXXVVV"/>
+		<label>Lock Address</label>
+	  </variable>	  
+	<variable item="Lock switch 1" CV="47" mask="XXXXXXXV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Lock switch 2" CV="47" mask="XXXXXXVX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Lock switch 3" CV="47" mask="XXXXXVXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Lock switch 4" CV="47" mask="XXXXVXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Lock switch 5" CV="47" mask="XXXVXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+	</variable>
+	
+	<variable item="Lock 1 in position" CV="48" mask="XXXXXXXV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Thrown" value="0"/>
+          <enumChoice choice="Closed" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Lock 2 in position" CV="48" mask="XXXXXXVX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Thrown" value="0"/>
+          <enumChoice choice="Closed" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Lock 3 in position" CV="48" mask="XXXXXVXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Thrown" value="0"/>
+          <enumChoice choice="Closed" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Lock 4 in position" CV="48" mask="XXXXVXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Thrown" value="0"/>
+          <enumChoice choice="Closed" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Lock 5 in position" CV="48" mask="XXXVXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Thrown" value="0"/>
+          <enumChoice choice="Closed" value="1"/>
+        </enumVal>
+	</variable>
+	<!-- ^ ^ ^ ^ ^ ^ Locking ^ ^ ^ ^ ^ ^ ^ -->
+	<!-- * * * * * * * * * * * * * * * * * -->
+
+	<!-- * * * * * * * * * * * * * * * * -->
+	<!-- v v v v v v  Routes  v v v v v v  -->
+<!--
+	In XSL
+	<SV type="int2" name="Route 1-5, Address" maxValue='2048' svNumber="50" rw="1"/>
+	<array svNumber="52" name="Route 1-5, Switch" tip="" startIndex='1' length='6' rw='1'>
+		<SV  type="int2" minValue='1'  maxValue='2048' name="Address" rw="1"/>
+		<SV type="int1" name="Direction" rw="1">
+					<v name="Closed" value='1'/>
+					<v name="Thrown" value='0'/>
+	</array>
+-->	
+	<!--  ^ ^ ^ ^ ^ ^ Routes ^ ^ ^ ^ ^ ^ ^ -->
+	<!--  * * * * * * * * * * * * * * * * * -->
+	
+	<!-- * * * * * * * * * * * * * * * * * -->
+	<!-- v v v v v v  Special v v v v v v  -->
+	<!--
+	<SV type="int1" name="Polarisation switch for servo 5 locked to" svNumber="177" rw="1" minVersion='5' advanced="1">
+	<SV type="int1" name="Input sensor, Value for occupied state" svNumber="178" rw="1" minVersion='5'>
+	<SV type="int1" name="Input unconnected state" svNumber="179" rw="1" minVersion='5' advanced="1">
+	<SV type="int1" name="Input use" svNumber="180" rw="1" minVersion='3'>
+	<SV type="int2" name="Status start address" svNumber="181" minValue='1' maxValue='4090' rw="1" minVersion='3'/>  
+	<SV svNumber="400" type="int2" name="Sensor filter Pre (ms)" rw="1"/>
+	<SV svNumber="402" type="int2" name="Sensor filter Succ (ms)" rw="1"/>
+
+</group>
+	-->
+	<variable item="Polarisation switch for servo 5 locked to" CV="177">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
+        <enumVal>
+			<enumChoice choice="no locking, used as normal" value='0'/>
+			<enumChoice choice="Servo 1" value='1'/>
+			<enumChoice choice="Servo 2" value='2'/>
+			<enumChoice choice="Servo 3" value='3'/>
+			<enumChoice choice="Servo 4" value='4'/>
+        </enumVal>
+	</variable>
+	<variable item="Input sensor, Value for occupied state" CV="178">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
+        <enumVal>
+          <enumChoice choice="NORMAL, occupied at LOW" value="0"/>
+          <enumChoice choice="Occupied at HIGH" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Input unconnected state" CV="179">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>5</value></qualifier>
+        <enumVal>
+          <enumChoice choice="NORMAL, always high" value="0"/>
+          <enumChoice choice="undefined, floating state" value="1"/>
+        </enumVal>
+	</variable>
+	<variable item="Input use" CV="180">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Switch buttons" value="0"/>
+          <enumChoice choice="Internal routes" value="2"/>
+          <enumChoice choice="Track status" value="4"/>
+        </enumVal>
+	</variable>
+	<variable CV="181" item="Status start address" default="0">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<splitVal highCV="182" upperMask="XXXXVVVV"/>
+	</variable>	  
+	<variable CV="400" item="Sensor filter Pre (ms)" default="0">
+		<splitVal highCV="401" />
+	</variable>	  
+	<variable CV="402" item="Sensor filter Succ (ms)" default="0">
+		<splitVal highCV="403" />
+	</variable>	  
+	<!--  ^ ^ ^ ^ ^ ^ Special ^ ^ ^ ^ ^ ^ ^ -->
+	<!--  * * * * * * * * * * * * * * * * * -->
+
+	<!-- * * * * * * * * * * * * * * * * * * * * * * * * -->
+	<!-- v v v v v v  Extra hw-connections  v v v v v v  -->
+
+	<!-- <SV type="int1" name="Usage X1" svNumber="183" rw="1" minVersion='3' maxVersion='5'> -->
+	<variable item="Usage X1" CV="183">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Not used" value="0"/>
+          <enumChoice choice="Switch Closed" value="1"/>
+          <enumChoice choice="Switch Thrown" value="2"/>
+        </enumVal>
+	</variable>
+	<!-- <SV type="int1" name="Usage X1" svNumber="183" rw="1" minVersion='6'>
+			<v name="Not used" value='0'/>
+			<v name="Switch Closed" value='1'/>
+			<v name="Switch Thrown" value='2'/>
+			<v name="Switch Toggle" value='3'/>
+			<v name="Track Status" value='6'/>
+	-->
+	<variable item="Usage X1 new" CV="183">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Not used" value="0"/>
+          <enumChoice choice="Switch Closed" value="1"/>
+          <enumChoice choice="Switch Thrown" value="2"/>
+          <enumChoice choice="Switch Toggle" value="3"/>
+          <enumChoice choice="Track Status" value="6"/>
+        </enumVal>
+	</variable>
+	<!-- <SV type="int2" name="Address X1" svNumber="184" minValue='1' maxValue='4096' rw="1" minVersion='3'/>  -->
+	<variable CV="184" item="Address X1" default="0">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<splitVal highCV="185" upperMask="XXXXVVVV"/>
+	</variable>	  
+
+	<variable item="Usage X2" CV="186">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Not used" value="0"/>
+          <enumChoice choice="Switch Closed" value="1"/>
+          <enumChoice choice="Switch Thrown" value="2"/>
+        </enumVal>
+	</variable>
+
+	<variable item="Usage X2 new" CV="186">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Not used" value="0"/>
+          <enumChoice choice="Switch Closed" value="1"/>
+          <enumChoice choice="Switch Thrown" value="2"/>
+          <enumChoice choice="Switch Toggle" value="3"/>
+          <enumChoice choice="Track Status" value="6"/>
+        </enumVal>
+	</variable>
+
+	<variable CV="187" item="Address X2" default="0">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<splitVal highCV="188" upperMask="XXXXVVVV"/>
+	</variable>	  
+
+	<variable item="Usage X3" CV="189">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Not used" value="0"/>
+          <enumChoice choice="Switch Closed" value="1"/>
+          <enumChoice choice="Switch Thrown" value="2"/>
+          <enumChoice choice="Lock LOCAL" value="4"/>
+          <enumChoice choice="Lock as Lock List" value="5"/>
+        </enumVal>
+	</variable>
+	<variable item="Usage X3 new" CV="189">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <enumVal>
+			<enumChoice choice="Not used" value="0"/>
+			<enumChoice choice="Switch Closed" value="1"/>
+			<enumChoice choice="Switch Thrown" value="2"/>
+			<enumChoice choice="Switch Toggle" value="3"/>
+			<enumChoice choice="Track Status" value="6"/>
+			<enumChoice choice="Lock LOCAL" value="4"/>
+			<enumChoice choice="Lock as Lock List" value="5"/>
+			<enumChoice choice="Output - Servo Sync CLOSED" value='20'/>
+			<enumChoice choice="Output - Servo Sync THROWN" value='21'/>
+			<enumChoice choice="Output - Servo Sync Not CLOSED" value='22'/>
+			<enumChoice choice="Output - Servo Sync Not THROWN" value='23'/>
+			<enumChoice choice="Output - Servo Sync Unknown" value='24'/>
+			<enumChoice choice="Output - Servo Sync Moving C-T" value='25'/>
+			<enumChoice choice="Output - Servo Sync Moving T-C" value='26'/>
+			<enumChoice choice="Output - Relay Sync" value='30'/>
+			<enumChoice choice="Output - Relay Sync Opposite" value='31'/>
+        </enumVal>
+	</variable>
+	<variable CV="190" item="Address X3" default="0">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<splitVal highCV="191" upperMask="XXXXVVVV"/>
+	</variable>	  
+
+	<variable item="Usage X4" CV="192">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
+        <enumVal>
+          <enumChoice choice="Not used" value="0"/>
+          <enumChoice choice="Switch Closed" value="1"/>
+          <enumChoice choice="Switch Thrown" value="2"/>
+          <enumChoice choice="Lock LOCAL" value="4"/>
+          <enumChoice choice="Lock as Lock List" value="5"/>
+        </enumVal>
+	</variable>
+	<variable item="Usage X4 new" CV="192">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <enumVal>
+			<enumChoice choice="Not used" value="0"/>
+			<enumChoice choice="Switch Closed" value="1"/>
+			<enumChoice choice="Switch Thrown" value="2"/>
+			<enumChoice choice="Switch Toggle" value="3"/>
+			<enumChoice choice="Track Status" value="6"/>
+			<enumChoice choice="Lock LOCAL" value="4"/>
+			<enumChoice choice="Lock as Lock List" value="5"/>
+			<enumChoice choice="Output - Servo Sync CLOSED" value='20'/>
+			<enumChoice choice="Output - Servo Sync THROWN" value='21'/>
+			<enumChoice choice="Output - Servo Sync Not CLOSED" value='22'/>
+			<enumChoice choice="Output - Servo Sync Not THROWN" value='23'/>
+			<enumChoice choice="Output - Servo Sync Unknown" value='24'/>
+			<enumChoice choice="Output - Servo Sync Moving C-T" value='25'/>
+			<enumChoice choice="Output - Servo Sync Moving T-C" value='26'/>
+			<enumChoice choice="Output - Relay Sync" value='30'/>
+			<enumChoice choice="Output - Relay Sync Opposite" value='31'/>
+        </enumVal>
+	</variable>
+	<variable CV="193" item="Address X4" default="0">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+		<splitVal highCV="194" upperMask="XXXXVVVV"/>
+	</variable>	  
+	<!-- ^ ^ ^ ^ ^ ^ Extra HW ^ ^ ^ ^ ^ ^ ^ -->
+	<!--  * * * * * * * * * * * * * * * * * -->
+
+	<!-- * * * * * * * * * * * * * * * * * * -->
+	<!-- v v v v v v  Animation v v v v v v  -->
+<!--
+	<SV type="bits" start='0' length='7' name="Autoreturn, time, servo 1" svNumber="195" rw="1" minVersion='4' maxVersion='5'/>
+	<SV type="bits" start='0' length='6' name="Autoreturn, time, servo 1" svNumber="195" rw="1" minVersion='6'/>
+	<SV type="bits" start='6' length='1' name="Autoreturn, time factor, servo 1" svNumber="195" rw="1" minVersion='6'>
+				<v name="*1" value='0'/>
+				<v name="*10" value='1'/>
+	<SV type="bits" start='7' length='1' name="Autoreturn, state, servo 1" svNumber="195" rw="1" minVersion='4'>
+				<v name="Closed" value='1'/>
+				<v name="Thrown" value='0'/>
+-->	
+	<variable item="Autoreturn, time, servo 1" CV="195" mask="XVVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
+		<decVal/>
+	</variable>
+	<variable item="Autoreturn, time, servo 1 new" CV="195" mask="XXVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+		<decVal/>
+    </variable>
+	<variable item="Autoreturn, time factor, servo 1" CV="195" mask="XVXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <enumVal>
+				<enumChoice choice="*1" value='0'/>
+				<enumChoice choice="*10" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Autoreturn, state, servo 1" CV="195" mask="VXXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+        <enumVal>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='0'/>
+        </enumVal>
+    </variable>
+
+	<variable item="Autoreturn, time, servo 2" CV="196" mask="XVVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
+		<decVal/>
+    </variable>
+	<variable item="Autoreturn, time, servo 2 new" CV="196" mask="XXVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+		<decVal/>
+    </variable>
+	<variable item="Autoreturn, time factor, servo 2" CV="196" mask="XVXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <enumVal>
+				<enumChoice choice="*1" value='0'/>
+				<enumChoice choice="*10" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Autoreturn, state, servo 2" CV="196" mask="VXXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+        <enumVal>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='0'/>
+        </enumVal>
+    </variable>
+
+	<variable item="Autoreturn, time, servo 3" CV="197" mask="XVVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
+		<decVal/>
+    </variable>
+	<variable item="Autoreturn, time, servo 3 new" CV="197" mask="XXVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+		<decVal/>
+    </variable>
+	<variable item="Autoreturn, time factor, servo 3" CV="197" mask="XVXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <enumVal>
+				<enumChoice choice="*1" value='0'/>
+				<enumChoice choice="*10" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Autoreturn, state, servo 3" CV="197" mask="VXXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+        <enumVal>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='0'/>
+        </enumVal>
+    </variable>
+
+	<variable item="Autoreturn, time, servo 4" CV="198" mask="XVVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
+		<decVal/>
+    </variable>
+	<variable item="Autoreturn, time, servo 4 new" CV="198" mask="XXVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+		<decVal/>
+    </variable>
+	<variable item="Autoreturn, time factor, servo 4" CV="198" mask="XVXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <enumVal>
+				<enumChoice choice="*1" value='0'/>
+				<enumChoice choice="*10" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Autoreturn, state, servo 4" CV="198" mask="VXXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+        <enumVal>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='0'/>
+        </enumVal>
+    </variable>
+
+	<variable item="Autoreturn, time, servo 5" CV="199" mask="XVVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+		<qualifier><variableref>Decoder Version</variableref><relation>le</relation><value>5</value></qualifier>
+		<decVal/>
+    </variable>
+	<variable item="Autoreturn, time, servo 5 new" CV="199" mask="XXVVVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+		<decVal/>
+    </variable>
+	<variable item="Autoreturn, time factor, servo 5" CV="199" mask="XVXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>6</value></qualifier>
+        <enumVal>
+				<enumChoice choice="*1" value='0'/>
+				<enumChoice choice="*10" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Autoreturn, state, servo 5" CV="199" mask="VXXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>4</value></qualifier>
+        <enumVal>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='0'/>
+        </enumVal>
+    </variable>
+	<!--  ^ ^ ^ ^ ^ ^ Animation ^ ^ ^ ^ ^ ^ ^ -->
+	<!--  * * * * * * * * * * * * * * * * * * -->
+
+	<!-- * * * * * * * * * * * * * * * * * * * * * * * -->
+	<!-- v v v v v v  Secondary triggers  v v v v v v  -->
+
+
+<!--
+	<array svNumber="200" name="Secondary trigger" tip="" startIndex='1' length='5' rw='1'>
+		<SV offset="0" type="bits" start='0' length='3' name="Type" rw="1">
+				<v name="Not used" value='0'/>
+				<v name="Closed" value='1'/>
+				<v name="Thrown" value='2'/>
+				<v name="Both" value='3'/>
+		<SV offset="0" type="bits" start='3' length='1' name="When" rw="1">
+				<v name="Before move" value='0'/>
+				<v name="After move" value='1'/>
+		<SV offset="1" type="int1" name="Command" rw="1">
+				<v name="Same" value='0'/>
+				<v name="Opposite" value='1'/>
+				<v name="Closed" value='2'/>
+				<v name="Thrown" value='3'/>
+		<SV offset="2" type="int2" name="Controlled Address" maxValue='2048' rw="1"/>
+	-->
+	<variable item="Secondary trigger 1, Type" CV="200" mask="XXXXXVVV" default="0">
+        <enumVal>
+				<enumChoice choice="Not used" value='0'/>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='2'/>
+				<enumChoice choice="Both" value='3'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 1, When" CV="200" mask="XXXXVXXX" default="0">
+        <enumVal>
+				<enumChoice choice="Before move" value='0'/>
+				<enumChoice choice="After move" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 1, Command" CV="201" default="0">
+        <enumVal>
+				<enumChoice choice="Same" value='0'/>
+				<enumChoice choice="Opposite" value='1'/>
+				<enumChoice choice="Closed" value='2'/>
+				<enumChoice choice="Thrown" value='3'/>
+        </enumVal>
+    </variable>
+	<variable CV="202" item="Secondary trigger 1, Controlled Address" default="0">
+		<splitVal highCV="203" upperMask="XXXXXVVV"/>
+	</variable>	  
+
+	<variable item="Secondary trigger 2, Type" CV="204" mask="XXXXXVVV" default="0">
+        <enumVal>
+				<enumChoice choice="Not used" value='0'/>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='2'/>
+				<enumChoice choice="Both" value='3'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 2, When" CV="204" mask="XXXXVXXX" default="0">
+        <enumVal>
+				<enumChoice choice="Before move" value='0'/>
+				<enumChoice choice="After move" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 2, Command" CV="205" default="0">
+        <enumVal>
+				<enumChoice choice="Same" value='0'/>
+				<enumChoice choice="Opposite" value='1'/>
+				<enumChoice choice="Closed" value='2'/>
+				<enumChoice choice="Thrown" value='3'/>
+        </enumVal>
+    </variable>
+	<variable CV="206" item="Secondary trigger 2, Controlled Address" default="0">
+		<splitVal highCV="207" upperMask="XXXXXVVV"/>
+	</variable>	  
+
+	<variable item="Secondary trigger 3, Type" CV="208" mask="XXXXXVVV" default="0">
+        <enumVal>
+				<enumChoice choice="Not used" value='0'/>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='2'/>
+				<enumChoice choice="Both" value='3'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 3, When" CV="208" mask="XXXXVXXX" default="0">
+        <enumVal>
+				<enumChoice choice="Before move" value='0'/>
+				<enumChoice choice="After move" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 3, Command" CV="209" default="0">
+        <enumVal>
+				<enumChoice choice="Same" value='0'/>
+				<enumChoice choice="Opposite" value='1'/>
+				<enumChoice choice="Closed" value='2'/>
+				<enumChoice choice="Thrown" value='3'/>
+        </enumVal>
+    </variable>
+	<variable CV="210" item="Secondary trigger 3, Controlled Address" default="0">
+		<splitVal highCV="211" upperMask="XXXXXVVV"/>
+	</variable>	  
+
+	<variable item="Secondary trigger 4, Type" CV="212" mask="XXXXXVVV" default="0">
+        <enumVal>
+				<enumChoice choice="Not used" value='0'/>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='2'/>
+				<enumChoice choice="Both" value='3'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 4, When" CV="212" mask="XXXXVXXX" default="0">
+        <enumVal>
+				<enumChoice choice="Before move" value='0'/>
+				<enumChoice choice="After move" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 4, Command" CV="213" default="0">
+        <enumVal>
+				<enumChoice choice="Same" value='0'/>
+				<enumChoice choice="Opposite" value='1'/>
+				<enumChoice choice="Closed" value='2'/>
+				<enumChoice choice="Thrown" value='3'/>
+        </enumVal>
+    </variable>
+	<variable CV="214" item="Secondary trigger 4, Controlled Address" default="0">
+		<splitVal highCV="215" upperMask="XXXXXVVV"/>
+	</variable>	  
+
+	<variable item="Secondary trigger 5, Type" CV="216" mask="XXXXXVVV" default="0">
+        <enumVal>
+				<enumChoice choice="Not used" value='0'/>
+				<enumChoice choice="Closed" value='1'/>
+				<enumChoice choice="Thrown" value='2'/>
+				<enumChoice choice="Both" value='3'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 5, When" CV="216" mask="XXXXVXXX" default="0">
+        <enumVal>
+				<enumChoice choice="Before move" value='0'/>
+				<enumChoice choice="After move" value='1'/>
+        </enumVal>
+    </variable>
+	<variable item="Secondary trigger 5, Command" CV="217" default="0">
+        <enumVal>
+				<enumChoice choice="Same" value='0'/>
+				<enumChoice choice="Opposite" value='1'/>
+				<enumChoice choice="Closed" value='2'/>
+				<enumChoice choice="Thrown" value='3'/>
+        </enumVal>
+    </variable>
+	<variable CV="218" item="Secondary trigger 5, Controlled Address" default="0">
+		<splitVal highCV="219" upperMask="XXXXXVVV"/>
+	</variable>	  
+
+	<!-- ^ ^ ^ ^ ^ ^ Secondary triggers  ^ ^ ^ ^ ^ ^ -->
+	<!-- * * * * * * * * * * * * * * * * * * * * * * -->
+	
+	<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+	<!-- * * * * * * * * * * * * * * * * -->
+	<!-- v v v v v v  xxx  v v v v v v  -->
+
+	<!--  ^ ^ ^ ^ ^ ^ xxx ^ ^ ^ ^ ^ ^ ^ -->
+	<!--  * * * * * * * * * * * * * * * * * -->
+
+  
+    </variables>
+  </decoder>
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+  <pane>
+    <name>General decoder info</name>
+    <column>
+      <label>
+        <text>Address to decoder AND to first servo</text>
+      </label>
+      <display item="Short Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Decoder Version" label="Software Version"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Manufacturer Id" label="Manufacturer Id"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Developer Id" label="Developer Id"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Product Id" label="Product Id"/>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+  </pane>
+
+  <pane>
+    <name>Servo</name>
+    <column>
+      <label>
+        <text>Address to decoder AND to first servo</text>
+      </label>
+      <display item="Short Address"/>
+      <label><text> </text></label>
+      <label><text>Servo 1</text></label>
+      <display item="Servo 1, Min angle"/>
+      <display item="Servo 1, Max angle"/>
+      <display item="Servo 1, Speed"/>
+      <display item="Servo 1 direction, Loconet"/>
+      <display item="Servo 1 direction, Polarisation"/>
+      <display item="Servo 1 direction, Switch"/>
+      <display item="Polarisation switch for servo 1"/>
+      <display item="Start Delay Servo 1, from THROWN"/>
+      <display item="Start Delay Servo 1, from CLOSED"/>
+      <label><text>  </text></label>
+      <label><text>Servo 2</text></label>
+      <display item="Servo 2, Min angle"/>
+      <display item="Servo 2, Max angle"/>
+      <display item="Servo 2, Speed"/>
+      <display item="Servo 2 direction, Loconet"/>
+      <display item="Servo 2 direction, Polarisation"/>
+      <display item="Servo 2 direction, Switch"/>
+      <display item="Polarisation switch for servo 2"/>
+      <display item="Start Delay Servo 2, from THROWN"/>
+      <display item="Start Delay Servo 2, from CLOSED"/>
+      <label><text>  </text></label>
+      <label><text>Servo 3</text></label>
+      <display item="Servo 3, Min angle"/>
+      <display item="Servo 3, Max angle"/>
+      <display item="Servo 3, Speed"/>
+      <display item="Servo 3 direction, Loconet"/>
+      <display item="Servo 3 direction, Polarisation"/>
+      <display item="Servo 3 direction, Switch"/>
+      <display item="Polarisation switch for servo 3"/>
+      <display item="Start Delay Servo 3, from THROWN"/>
+      <display item="Start Delay Servo 3, from CLOSED"/>
+      <label><text>  </text></label>
+      <label><text>Servo 4</text></label>
+      <display item="Servo 4, Min angle"/>
+      <display item="Servo 4, Max angle"/>
+      <display item="Servo 4, Speed"/>
+      <display item="Servo 4 direction, Loconet"/>
+      <display item="Servo 4 direction, Polarisation"/>
+      <display item="Servo 4 direction, Switch"/>
+      <display item="Polarisation switch for servo 4"/>
+      <display item="Start Delay Servo 4, from THROWN"/>
+      <display item="Start Delay Servo 4, from CLOSED"/>
+      <label><text>  </text></label>
+      <label><text>Servo 5</text></label>
+	  <display item="Servo 5, Min angle"/>
+      <display item="Servo 5, Max angle"/>
+      <display item="Servo 5, Speed"/>
+      <display item="Servo 5 direction, Loconet"/>
+      <display item="Servo 5 direction, Polarisation"/>
+      <display item="Servo 5 direction, Switch"/>
+      <display item="Polarisation switch for servo 5"/>
+      <display item="Start Delay Servo 5, from THROWN"/>
+      <display item="Start Delay Servo 5, from CLOSED"/>
+      <label><text>  </text></label>
+    </column>
+  </pane>
+
+  <pane>
+    <name>Control</name>
+    <column>
+      <display item="Feedback type"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Type of buttons"/>
+      <display item="Switch when button is"/>
+      <display item="Send LN for Buttons"/>
+    </column>
+  </pane>
+
+  <pane>
+    <name>Locking</name>
+    <column>
+      <display item="Lock Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Lock switch 1"/>
+      <display item="Lock switch 2"/>
+      <display item="Lock switch 3"/>
+      <display item="Lock switch 4"/>
+      <display item="Lock switch 5"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Lock 1 in position"/>
+      <display item="Lock 2 in position"/>
+      <display item="Lock 3 in position"/>
+      <display item="Lock 4 in position"/>
+      <display item="Lock 5 in position"/>
+    </column>
+  </pane>
+  
+	<pane>
+		<name>RoutesPane</name>
+	</pane>
+
+  <pane>
+    <name>sensor and Special</name>
+    <column>
+      <display item="Input use"/>
+      <label><text> </text></label>
+      <display item="Status start address"/>
+      <label><text> </text></label>
+      <display item="Input sensor, Value for occupied state"/>
+      <display item="Input unconnected state"/>
+      <label><text> </text></label>
+      <display item="Sensor filter Pre (ms)"/>
+      <display item="Sensor filter Succ (ms)"/>
+      <label><text> </text></label>
+      <display item="Polarisation switch for servo 5 locked to"/>
+    </column>
+  </pane>
+
+  <pane>
+    <name>Extra HW connections</name>
+    <column>
+      <display item="Usage X1"/>
+      <display item="Usage X1 new" label="Usage X1"/>
+      <display item="Address X1"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Usage X2"/>
+      <display item="Usage X2 new" label="Usage X2"/>
+      <display item="Address X2"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Usage X3"/>
+      <display item="Usage X3 new" label="Usage X3"/>
+      <display item="Address X3"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Usage X4"/>
+      <display item="Usage X4 new" label="Usage X4"/>
+      <display item="Address X4"/>
+    </column>
+  </pane>
+
+  <pane>
+    <name>Animation</name>
+    <column>
+      <display item="Autoreturn, time, servo 1" label="Autoreturn, time, servo 1"/>
+      <display item="Autoreturn, time, servo 1 new" label="Autoreturn, time, servo 1"/>
+      <display item="Autoreturn, time factor, servo 1"/>
+      <display item="Autoreturn, state, servo 1"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Autoreturn, time, servo 2" label="Autoreturn, time, servo 2"/>
+      <display item="Autoreturn, time, servo 2 new" label="Autoreturn, time, servo 2"/>
+      <display item="Autoreturn, time factor, servo 2"/>
+      <display item="Autoreturn, state, servo 2"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Autoreturn, time, servo 3" label="Autoreturn, time, servo 3"/>
+      <display item="Autoreturn, time, servo 3 new" label="Autoreturn, time, servo 3"/>
+      <display item="Autoreturn, time factor, servo 3"/>
+      <display item="Autoreturn, state, servo 3"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Autoreturn, time, servo 4" label="Autoreturn, time, servo 4"/>
+      <display item="Autoreturn, time, servo 4 new" label="Autoreturn, time, servo 4"/>
+      <display item="Autoreturn, time factor, servo 4"/>
+      <display item="Autoreturn, state, servo 4"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Autoreturn, time, servo 5" label="Autoreturn, time, servo 5"/>
+      <display item="Autoreturn, time, servo 5 new" label="Autoreturn, time, servo 5"/>
+      <display item="Autoreturn, time factor, servo 5"/>
+      <display item="Autoreturn, state, servo 5"/>
+    </column>
+  </pane>
+
+<pane>
+    <name>Secondary trigger</name>
+    <column>
+      <label>
+        <text>Secondary trigger Servo 1</text>
+      </label>
+      <display item="Secondary trigger 1, Type" label="Type"/>
+      <display item="Secondary trigger 1, When" label="When"/>
+      <display item="Secondary trigger 1, Command" label="Command"/>
+      <display item="Secondary trigger 1, Controlled Address" label="Controlled Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Secondary trigger Servo 2</text>
+      </label>
+      <display item="Secondary trigger 2, Type" label="Type"/>
+      <display item="Secondary trigger 2, When" label="When"/>
+      <display item="Secondary trigger 2, Command" label="Command"/>
+      <display item="Secondary trigger 2, Controlled Address" label="Controlled Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Secondary trigger Servo 3</text>
+      </label>
+      <display item="Secondary trigger 3, Type" label="Type"/>
+      <display item="Secondary trigger 3, When" label="When"/>
+      <display item="Secondary trigger 3, Command" label="Command"/>
+      <display item="Secondary trigger 3, Controlled Address" label="Controlled Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Secondary trigger Servo 4</text>
+      </label>
+      <display item="Secondary trigger 4, Type" label="Type"/>
+      <display item="Secondary trigger 4, When" label="When"/>
+      <display item="Secondary trigger 4, Command" label="Command"/>
+      <display item="Secondary trigger 4, Controlled Address" label="Controlled Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Secondary trigger Servo 5</text>
+      </label>
+      <display item="Secondary trigger 5, Type" label="Type"/>
+      <display item="Secondary trigger 5, When" label="When"/>
+      <display item="Secondary trigger 5, Command" label="Command"/>
+      <display item="Secondary trigger 5, Controlled Address" label="Controlled Address"/>
+    </column>
+  </pane>
+
+ 	<pane>
+		<name>RulesPane</name>
+	</pane>
+ 
+	
+</decoder-config>

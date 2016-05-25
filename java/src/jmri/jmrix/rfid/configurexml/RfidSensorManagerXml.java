@@ -1,20 +1,19 @@
 package jmri.jmrix.rfid.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
 
 /**
- * Provides load and store functionality for
- * configuring RfidSensorManagers.
+ * Provides load and store functionality for configuring RfidSensorManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
- * @author      Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
- * @since       2.11.4
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
+ * @author Matthew Harris Copyright (C) 2011
+ * @since 2.11.4
  */
 public class RfidSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -22,17 +21,20 @@ public class RfidSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class",this.getClass().getName());
+        sensors.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
     private static final Logger log = LoggerFactory.getLogger(RfidSensorManagerXml.class.getName());

@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI Hardware Support - DCC++</title>
+<meta name="Author" content="Mark Underwood">
+<meta name="keywords" content="DCC++ java model railroad JMRI install">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>Hardware Support: DCC++</h1>
+<ul class="snav"><!-- TOC -->
+	<li><a href="#hardware">Hardware</a></li>
+	<li><a href="#Limitations">Limitations</a></li>
+	<li><a href="#connecting">Connecting</a></li>
+	<li><a href="#tools">JMRI Tools</a></li>
+	<li><a href="#documentation">Documentation</a></li>
+</ul>
+
+<h2 name="overview" id="overview">Overview</h2>
+<p>DCC++ is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC Command Station.</p>
+<p>You can learn more about DCC++ on the 
+    <a href="https://sites.google.com/site/dccppsite/home" target="_blank">DCC++ Website</a>.</p>
+
+<p>Features include:
+<ul>
+    <li>Fully compliant with NMRA DCC standards</li>
+    <li>2-byte and 4-byte locomotive addressing</li>
+    <li>Simultaneous control of multiple locomotives</li>
+    <li>128-step speed control</li>
+    <li>Control all cab functions F0-F28</li>
+    <li>Activate/de-activate all accessory function addresses 0-2048</li>
+    <li>Programming on the Programming Track</li>
+    <ul><li>Write configuration variable bytes</li>
+        <li>Set/clear specific configuration variable bits</li>
+        <li>Read configuration variable bytes</li>
+    </ul>
+    <li>Programming on the Main Operations Track</li>
+    <ul><li>Write configuration variable bytes</li>
+        <li>Set/clear specific configuration variable bits</li>
+    </ul>
+    <li>Control DCC turnouts and sensors</li>
+    <li>Directly access and control Arduino IO pins for accessory functions and sensors</li>
+</ul>
+
+<p><strong><em>NOTE:</em>DCC++ support is broken in JMRI 4.1.6 and 4.2.x releases. Please use JMRI 4.3.1 or newer releases with DCC++</strong></p>
+
+<a name="hardware"></a><h2>Supported Hardware</h2>
+
+<h3>Command Stations</h3>
+<p>
+    Currently DCC++ Base Stations can be built from either the Arduino Uno
+    or Arduino Mega platforms. JMRI should support either platform via USB or Network connection.
+
+<h3>Computer Interfaces</h3>
+
+ Currently, four interfaces are supported:
+ <ul>
+     <li>Serial/USB: Direct connection to Arduino via a USB cable</li>
+     <li>Simulator: Simulated Base Station for off-line operation and testing.</li>
+     <li>Network: TCP/IP connection from JMRI to a Base Station with an Ethernet or WiFi Shield.</li>
+     <li>DCC++ Over TCP: Remote network connection to a local JMRI instance connected to a Base Station</li>
+ </ul>
+ 
+ <h4>Simulator</h4>
+ <p>To use the Simulator, simply choose that option in the JMRI Preferences.  Note that some features do not work in
+ the Simulator.  For example, the Simulator does not (yet) support assigning, storing, and remembering Sensor
+ and Turnout assignments. The Simulator interface is functional enough to keep JMRI "happy" while working on
+ offline projects such as Operations or Panel and Logix design, but is not intended to be a full-fledged 
+ Base Station Emulator.
+ 
+ <h4>DCC++ Over TCP</h4>
+ <p>For the DCC++ Over TCP, a host computer must be connected to the Base Station
+ over a Serial or Network connection (or a simulator). This host computer then runs the DCC++ Over TCP
+ Server.  A remote computer (or several remote computers) can then use the
+ DCC++ Over TCP interface to remotely access and control the Base Station.
+ 
+<a name="Limitations"><h2>Limitations</h2></a>
+<div class="list">
+    <dl>
+    	<dt class="left">JMRI</dt>
+	<dd class="first">
+            <p>JMRI currently supports the V1.1 Base Station Interface. Some V1.0 commands may not work.</p>
+	</dd>
+     </dl>
+</div>
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Configuring an Arduino for use as a DCC++ Base Station</h3>
+<p>In order to use an Arduino as a Base Station, you must first assemble the device and download the
+    Base Station firmware to it.  Please follow the <a href="#documentation">instructional videos linked below under Other Info</a>.</p>
+
+<h3>Connecting to a DCC++ Base Station via USB</h3>
+<ol>
+    <li>To connect your computer to a DCC++ Base Station, first install the appropriate drivers.</li>
+    <ul>
+    <li>For the DCC++ Base Station with JMRI, you may need to install a device driver
+        on your computer. Please refer to the 
+        <a href="https://www.arduino.cc/en/Guide/HomePage">Arduino Getting Started pages</a>
+        for instructions.
+        <ul>
+            <li><a href="https://www.arduino.cc/en/Guide/Windows">Windows</a> (See <strong>Step 4</strong>)</li>
+            <li>Mac: No drivers should be required</li>
+            <li><a href="http://playground.arduino.cc/Learning/Linux">Linux</a></li>
+        </ul>
+        page
+         <br />
+    </ul>
+    
+    <p><strong>Note:</strong> If you have already installed the Arduino IDE software, the device drivers should already
+        be installed.</p>
+    
+    <p> When the device drivers are installed, connect the Arduino Base Station
+        to your computer using a standard USB cable.</p>
+
+    <li>Once the drivers are installed, you are ready to configure
+    JMRI.  Start one of the JMRI-based programs, Then go to the
+    preferences panel. This opens automatically the first time a program
+    is run, or you can select it from the "Edit" menu.  </li>
+
+    <li>Select "DCC++" from the top selection box ("System Manufacturer"). </li>
+    <li>Select "DCC++ Serial Port" from the second selection box ("System Connection")</li>
+    <li>Select the appropriate USB/Serial port from the third selection box 
+        ("Serial Port")    </li>
+    
+    <li>Click "Save". You'll be asked if it's OK for the program to  
+        quit, click "Yes".</li>
+
+    <li>Restart the program. You should be up and running.</li>
+</ol>
+
+<h3>Connecting to a DCC++ System using Network</h3>
+<ol>
+    <li>First, connect the DCC++ Base Station to wired or WiFi network and
+        record the IP Address and Port number.  You may need to connect the
+        Arduino to a host computer temporarily and use the Arduino Serial Monitor 
+        to get this information.</li>
+    <li>Now you are ready to configure
+    JMRI.  Start one of the JMRI-based programs, then go to the
+    Preferences panel. This opens automatically the first time a JMRI program
+    is run, or you can select it from the "Edit" menu (from the Application menu on OS X).</li>
+    <li>Select "DCC++" from the top selection box ("System Manufacturer").</li>
+    <li>Select "DCC++ Ethernet" from the second selection box ("System Connection").</li>
+    <li>Input the IP Address and Port Number of the DCC++ Base Station.</li>
+    
+    <li>Click "Save". You'll be asked if it's OK for the program to  
+        quit, click "Yes".</li>
+
+    <li>Restart the program. You should be up and running.</li>
+</ol>
+
+<h3>Connecting to a DCC++ System using DCC++ Over TCP</h3>
+ 
+<ol> 
+    <li>First, connect the DCC++ Base Station to the host computer via the
+        Serial or Network interface as described above.</li>
+    <li>On the host computer select "DCC++ Over TCP Server" from the DCC++ Menu.
+        Check the settings, then press the "Start Server" button. If you want
+        the server to automatically start when JMRI is launched, click the
+        checkbox provided.</li>
+    <li>The Host computer must be running with the DCC++ Server active before
+        launching the Client computer.</li>
+    <li>On the client computer, launch JMRI on the Client computer.</li>
+    <li>In the Connection Preferences, select DCC++ as the System Manufacturer</li>
+    <li>Select "DCC++ Over TCP" as the System Connection Type</li>
+    <li>Enter the network name or IP address of the host computer and verify
+        that the port number is the same as on the host computer.</li>
+    <li>Save your Preferences and restart.</li>
+</ol>
+
+<p>Once both the Host and Client instances of JMRI are configured,  you can use
+    the Client JMRI just the same as if it were directly connected to the Base
+    Station.  The client JMRI instance can be on the same computer, in the same
+    house, or across the country from the host.</p>
+
+<h3>Connecting to the DCC++ Simulator</h3>
+<ol> 
+    <li> Start one of the JMRI-based programs, Then go to the preferences panel.    
+    This opens automatically the first time a program is run, or you can select
+     it from the "Edit" menu.  
+
+    <li>Select "DCC++ Simulator" from the top selection box. There are no
+    additional configuration steps required to use the DCC++ Simulator.
+    
+    <li>Click "Save".  You'll be asked if it's OK for the program to  
+    quit, click "Yes".
+
+    <li>Restart the program. You should be up and running.
+</ol> 
+
+<a name="tools"></a><h2>JMRI DCC++ Tools</h2>
+<img src="images/DCCppMenu416.png" width="138" height="70" align="right">
+<p>The DCC++ menu contains 5 tools:
+<ul>
+<li>DCC++ Traffic Monitor
+<li>Send DCC++ Command
+<li>Track Current Meter
+<li>Configure Sensors and Turnouts
+<li>Load DCC++ over TCP Server
+</ul>
+<img src="images/DCCppGeneratePack.png" width="117" height="47">&nbsp;
+<img src="images/DCCppTrackCurrent.png" width="89" height="43">&nbsp;
+<img src="images/DCCppConfigTO.png" width="186" height="101">&nbsp;
+<img src="images/DCCppOverTCPIP.png" width="219" height="47">&nbsp;
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>Additional documentation will be provided on other pages linked here:
+
+<h3>Third Party info</h3>
+For more information on how to construct and program a DCC++ Base Station, refer to the following:
+<ul>
+    <li>DCC++ <a href="https://github.com/DccPlusPlus">GitHub Repository</a></li>
+    <li><a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw/feed">
+    YouTube Channel</a></li>
+    <li><a
+    href="http://www.trainboard.com/highball/index.php?threads/introducing-dcc-a-complete-open-source-dcc-station-and-interface.84800/">Trainboard.com
+    Discussion</a></li>
+    <li><a href="http://www.arduino.cc">Arduino Project Site</a></li>
+    <li><a href="http://www.sparkfun.com">Sparkfun</a> - one of many
+    places to acquire hardware</li>
+</ul>
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

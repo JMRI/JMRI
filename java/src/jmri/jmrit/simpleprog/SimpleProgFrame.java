@@ -1,40 +1,44 @@
 // SimpleProgFrame.java
-
 package jmri.jmrit.simpleprog;
 
-import java.awt.*;
-
-import javax.swing.*;
-
-import jmri.Programmer;
+import java.awt.GridLayout;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import jmri.ProgListener;
+import jmri.Programmer;
 
 /**
  * Frame providing a simple command station programmer
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @author  Giorgio Terdina Copyright (C) 2007
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Giorgio Terdina Copyright (C) 2007
+ * @version	$Revision$
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
+    /**
+     *
+     */
     // GUI member declarations
-    javax.swing.JToggleButton readButton 	= new javax.swing.JToggleButton();
-    javax.swing.JToggleButton writeButton 	= new javax.swing.JToggleButton();
-    javax.swing.JTextField  addrField       = new javax.swing.JTextField(4);
-    javax.swing.JTextField  valField        = new javax.swing.JTextField(4);
+    javax.swing.JToggleButton readButton = new javax.swing.JToggleButton();
+    javax.swing.JToggleButton writeButton = new javax.swing.JToggleButton();
+    javax.swing.JTextField addrField = new javax.swing.JTextField(4);
+    javax.swing.JTextField valField = new javax.swing.JTextField(4);
 
-    jmri.jmrit.progsupport.ProgModePane       modePane        = new jmri.jmrit.progsupport.ProgModePane(BoxLayout.Y_AXIS);
+    jmri.jmrit.progsupport.ProgModePane modePane = new jmri.jmrit.progsupport.ProgModePane(BoxLayout.Y_AXIS);
 
-    javax.swing.ButtonGroup radixGroup 		= new javax.swing.ButtonGroup();
-    javax.swing.JRadioButton hexButton    	= new javax.swing.JRadioButton();
-    javax.swing.JRadioButton decButton   	= new javax.swing.JRadioButton();
+    javax.swing.ButtonGroup radixGroup = new javax.swing.ButtonGroup();
+    javax.swing.JRadioButton hexButton = new javax.swing.JRadioButton();
+    javax.swing.JRadioButton decButton = new javax.swing.JRadioButton();
 
-    javax.swing.JLabel       resultsField   = new javax.swing.JLabel(" ");
+    javax.swing.JLabel resultsField = new javax.swing.JLabel(" ");
 
     public SimpleProgFrame() {
         super();
-        
+
         // configure items for GUI
         readButton.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ CV"));
         readButton.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ THE VALUE FROM THE SELECTED CV"));
@@ -67,7 +71,6 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
                 decHexButtonChanged(e);
             }
         });
-        
 
         resultsField.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
@@ -86,7 +89,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         getContentPane().add(tPane);
 
         tPane = new JPanel();
-        tPane.setLayout(new GridLayout(2,2));
+        tPane.setLayout(new GridLayout(2, 2));
         tPane.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("CV NUMBER:")));
         tPane.add(addrField);
         tPane.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("VALUE:")));
@@ -109,6 +112,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         tPane2.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("VALUE IS:")));
         tPane2.add(decButton);
         tPane2.add(hexButton);
+        tPane2.add(Box.createVerticalGlue());
         tPane.add(tPane2);
 
         getContentPane().add(tPane);
@@ -117,17 +121,14 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
         getContentPane().add(resultsField);
 
-       if (modePane.getProgrammer()== null){
-    	   readButton.setEnabled (false);
-    	   // boudreau let system Programmer determine default mode
-//         modePane.setDefaultMode();
-       }
-		// disable read button if non-functional
-        if (modePane.getProgrammer()!= null)
-			readButton.setEnabled(modePane.getProgrammer().getCanRead());
+        if (modePane.getProgrammer() != null) {
+            readButton.setEnabled(modePane.getProgrammer().getCanRead());
+        } else {
+            readButton.setEnabled(false);
+        }
 
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrit.simpleprog.SimpleProgFrame", true);
+        addHelpMenu("package.jmri.jmrit.simpleprog.SimpleProgFrame", true);
 
         pack();
     }
@@ -135,27 +136,31 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     // utility function to get value, handling radix
     private int getNewVal() {
         try {
-            if (decButton.isSelected())
+            if (decButton.isSelected()) {
                 return Integer.valueOf(valField.getText()).intValue();
-            else
-                return Integer.valueOf(valField.getText(),16).intValue();
+            } else {
+                return Integer.valueOf(valField.getText(), 16).intValue();
+            }
         } catch (java.lang.NumberFormatException e) {
             valField.setText("");
             return 0;
         }
     }
-    private int getNewAddr() {
-        try {
-            return Integer.valueOf(addrField.getText()).intValue();
-        } catch (java.lang.NumberFormatException e) {
-            addrField.setText("");
-            return 0;
+
+    private String getNewAddr() {
+        if (addrField.getText()!=null && !addrField.getText().equals("")) {
+            return addrField.getText();
+        } else {
+            addrField.setText("0");
+            return addrField.getText();
         }
     }
 
     private String statusCode(int status) {
         Programmer p = modePane.getProgrammer();
-        if (status == ProgListener.OK) return "OK";
+        if (status == ProgListener.OK) {
+            return "OK";
+        }
         if (p == null) {
             return "No programmer connected";
         } else {
@@ -172,11 +177,14 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         writeButton.setSelected(false);
 
         // capture the read value
-        if (value !=-1)  // -1 implies nothing being returned
-            if (decButton.isSelected())
-                valField.setText(""+value);
-            else
+        if (value != -1) // -1 implies nothing being returned
+        {
+            if (decButton.isSelected()) {
+                valField.setText("" + value);
+            } else {
                 valField.setText(Integer.toHexString(value));
+            }
+        }
     }
 
     // handle the buttons being pushed
@@ -186,18 +194,18 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
             resultsField.setText("No programmer connected");
             readButton.setSelected(false);
         } else {
-        	if (p.getCanRead()) {
-				try {
-					resultsField.setText("programming...");
-					p.readCV(getNewAddr(), this);
-				} catch (jmri.ProgrammerException ex) {
-					resultsField.setText("" + ex);
-					readButton.setSelected(false);
-				}
-			}else{
-				resultsField.setText("can't read in this Mode");
-				readButton.setSelected(false);
-			}
+            if (p.getCanRead()) {
+                try {
+                    resultsField.setText("programming...");
+                    p.readCV(getNewAddr(), this);
+                } catch (jmri.ProgrammerException ex) {
+                    resultsField.setText("" + ex);
+                    readButton.setSelected(false);
+                }
+            } else {
+                resultsField.setText("can't read in this Mode");
+                readButton.setSelected(false);
+            }
         }
     }
 
@@ -209,37 +217,40 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         } else {
             try {
                 resultsField.setText("programming...");
-                p.writeCV(getNewAddr(),getNewVal(), this);
+                p.writeCV(getNewAddr(), getNewVal(), this);
             } catch (jmri.ProgrammerException ex) {
-                resultsField.setText(""+ex);
+                resultsField.setText("" + ex);
                 writeButton.setSelected(false);
             }
         }
     }
-    
+
     // provide simple data conversion if dec or hex button changed
     public void decHexButtonChanged(java.awt.event.ActionEvent e) {
-    	resultsField.setText("OK");
-    	if (valField.getText().equals(""))
-			return;
-    	int value = 0;
-		try {
-			if (decButton.isSelected())
-				// convert from hex to dec
-				value = Integer.valueOf(valField.getText(), 16).intValue();
-			else
-				// convert from dec to hex
-				value = Integer.valueOf(valField.getText()).intValue();
-		} catch (java.lang.NumberFormatException ee) {
-			resultsField.setText("error");
-		}
-		if (value != 0) {
-			if (decButton.isSelected())
-				valField.setText(Integer.toString(value));
-			else
-				valField.setText(Integer.toHexString(value));
-		}
-	}
+        resultsField.setText("OK");
+        if (valField.getText().equals("")) {
+            return;
+        }
+        int value = 0;
+        try {
+            if (decButton.isSelected()) // convert from hex to dec
+            {
+                value = Integer.valueOf(valField.getText(), 16).intValue();
+            } else // convert from dec to hex
+            {
+                value = Integer.valueOf(valField.getText()).intValue();
+            }
+        } catch (java.lang.NumberFormatException ee) {
+            resultsField.setText("error");
+        }
+        if (value != 0) {
+            if (decButton.isSelected()) {
+                valField.setText(Integer.toString(value));
+            } else {
+                valField.setText(Integer.toHexString(value));
+            }
+        }
+    }
 
     public void dispose() {
         modePane.dispose();

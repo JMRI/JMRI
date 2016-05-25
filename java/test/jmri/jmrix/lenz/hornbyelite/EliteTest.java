@@ -1,22 +1,17 @@
-// EliteTest.java
-
-
 package jmri.jmrix.lenz.hornbyelite;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.lenz.hornbyelite package
- * @author                      Paul Bender  
- * @version                     $Revision$
+ *
+ * @author Paul Bender
  */
 public class EliteTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public EliteTest(String s) {
         super(s);
     }
@@ -33,7 +28,7 @@ public class EliteTest extends TestCase {
         suite.addTest(new TestSuite(HornbyEliteCommandStationTest.class));
         suite.addTest(new TestSuite(EliteAdapterTest.class));
         suite.addTest(new TestSuite(EliteConnectionTypeListTest.class));
-        suite.addTest(new TestSuite(EliteXNetInitilizationManagerTest.class));
+        suite.addTest(new TestSuite(EliteXNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(EliteXNetThrottleManagerTest.class));
         suite.addTest(new TestSuite(EliteXNetThrottleTest.class));
         suite.addTest(new TestSuite(EliteXNetTurnoutTest.class));
@@ -42,7 +37,4 @@ public class EliteTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(EliteTest.class.getName());
-
 }
-

@@ -1,18 +1,15 @@
-// JythonSigletAction.java
-
 package jmri.jmrit.automat;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import java.io.*;
-import javax.swing.*;
+import java.io.File;
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 
 /**
- * Swing action to create and register a
- * JythonSiglet object
+ * Swing action to create and register a JythonSiglet object
  *
- * @author	    Bob Jacobsen    Copyright (C) 2003, 2007
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003, 2007
  */
 public class JythonSigletAction extends AbstractAction {
 
@@ -36,5 +33,3 @@ public class JythonSigletAction extends AbstractAction {
         }
     }
 }
-
-/* @(#)JythonSigletAction.java */

@@ -1,11 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Internationalization
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="Author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code I8N internationalization">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -16,7 +15,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -29,173 +28,161 @@
 
 	<div id="mainContent">
 
-	    <H1>JMRI: Internationalization</H1>
-	    	    
-This page discusses how the JMRI libraries handle internationalization.
+	    <h1>JMRI: Internationalization</h1>
 
-<P>
+<p>
 The JMRI libraries are intended to be usable world-wide.
 To make this possible, they make use of the "internationalization"
-features built into the Java language and libraries.
+features built into the Java language and libraries. This page discusses how the JMRI libraries handle internationalization.
 
 <h2>Use of Locales</h2>
-
-JMRI uses the default Locale for locating internationalization
-information.  That means that JMRI will present its user interface
+<p>
+JMRI uses the default Locale for localizing internationalization
+information. That means that JMRI will present its user interface
 in the language Java has defined as the default for that computer.
 
-<P>
-Locals are specified by a language, and optionally a country. The
-language is a two letter lower-case code; the country is a two letter
+<p>
+Locales are specified by a Language, and optionally a Country. The
+Language is a two letter lower-case code; the Country is a two letter
 upper case code.  "en" is English, "fr" is French, "de" is German, 
 and "de_CH" is German as spoken in Switzerland.
-<P>
-When Java looks for resources (see below), it searches first for
-a file with the complete current locale at the end of it's name 
+<p>
+When Java looks for resources (see <a href="#resourcebundles">below</a>), it searches first for
+a file with the complete current Locale at the end of it's name 
 (e.g. foo_de_CH.properties). If that fails, it tries for a file
-ending in just the current locale's language:  foo_de.properties.
+ending in just the current Locale's language:  foo_de.properties.
 And if that fails, it goes to the defaults with no suffix:  foo.properties.
 A similar mechanism is used within XML files.
-<P>
+<p>
 By installing appropriate files and allowing the user to select 
-a default locale (as part of the 
-<a href="../../../package/apps/TabbedPreferences.shtml#locale">advanced preferences</a>), 
-we can
-customize the program to different countries and languages.
+a default Locale (as part of the 
+<a href="../../../package/apps/TabbedPreferences.shtml#locale">Advanced Preferences</a>), 
+we can customize the JMRI&reg; program to different countries and languages.
 
-<h2>Use of Resource Bundles</h2>
-The text for menus, buttons and similiar controls is contained in
-property files, which are accessed via the Resource Bundle mechanism
+<a name="resourcebundles"><h2>Use of Resource Bundles</h2></a>
+The text for menus, buttons and similiar controls is for the most part contained in
+<strong>property files</strong>, which are accessed via the Resource Bundle mechanism
 of java.util.
-<P>
+<p>
 For example, the property file that's used to configure the Roster
 panel contains lines like:
-<PRE>
-FieldRoadName       = Road Name:
-</PRE>
-To the left of the equal sign is the resource name that the program uses
+<pre>
+FieldRoadName = Road Name:
+</pre>
+To the left of the equal sign is the Resource Name that the program uses
 to refer to the string; to the right of the equals sign is the
-string that will be displayed.
+String that will be displayed.
 <p>
-By convention, resouce names for GUI elements start with one of
-<OL>
-<LI>Field - for a visible field, e.g. label, on the GUI
-<LI>Button - for a GUI button
-<LI>Menu - the name of a top-level menu
-<LI>MenuItem - an item in a menu (may be a nested item)
-<LI>ToolTip - contents of a tooltip
-<LI>Error - for an error message displayed as part of the GUI
-</ol>
+By convention, resource names for GUI elements start with one of
+    <ol>
+    <li>Field - for a visible field, e.g. label, on the GUI
+    <li>Button - for a GUI button
+    <li>Menu - the name of a top-level menu
+    <li>MenuItem - an item in a menu (may be a nested item)
+    <li>ToolTip - contents of a tooltip
+    <li>Error - for an error message displayed as part of the GUI
+    </ol>
 Other resources are named so as not to conflict with these.
 
-<H2>Adapting to a new language</h2>
+<h2>Adapting to a new language</h2>
 The primary steps to adapt JMRI to a new language are:
-<UL>
-<LI>Create new versions of the .properties files to change the language
-of the GUI controls.
-<LI>Translate the XML files for decoders, programmers and configuration.
-<LI>Translate the help files and other web pages.
-</UL>
-<P>
-Get a clean copy of the source code using SVN.
-(For more info on using SVN, please see the 
-<A HREF="getcode.shtml">page on getting a copy of the code</a>.)
+    <ol>
+    <li>Create new versions of the <code>.properties</code> files to change the language
+    of the GUI controls.
+    <li>Translate the XML files for decoders, programmers and configuration.
+    <li>Translate the Help files and other web pages.
+    </ol>
+<p>
+Get a clean copy of the source code from the JMRI code repository.
+(For more info on doing that, please see the 
+<a href="getgitcode.shtml">page on getting a copy of the code</a>.)
+
 <h3>Translating Properties Files</h3>
 If they don't exist already, 
 start by making copies of the properties files with suffix for your
-new locale.  On a MacOS X or Unix machine, this would be:
-<PRE>
+new locale.  On a Mac OS X or a Unix machine, this would be:
+<pre>
   cd java/src/apps
   cp AppsBundle.properties AppsBundle_xy.properties
-</PRE>
+</pre>
 and so on.  
-The easiest way to find the proper suffix letters is to set the
-program to your particular language via the 
-<a href="../../../package/apps/AppConfigPanel.shtml">advanced preferences</a>, 
+The easiest way to find the proper suffix letters for a Language and Country is to set the
+JMRI module to your particular Language via the 
+<a href="../../../package/apps/AppConfigPanel.shtml">Advanced Preferences</a> &gt; Display &gt; Language tab, 
 quit and restart the program,
-and then look at the suffix that it displays on the main window.
+and then look at the suffix that the JMRI module displays on the startup screen/main window (in the bottom line, between the brackets after the Java version).
 You can also check the official 
 <a href="http://ftp.ics.uci.edu/pub/ietf/http/related/iso639.txt">list of languages</a>
 (first part of the suffix) and 
 <a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists/english_country_names_and_code_elements.htm">list of countries/regions</a>
 (optional second part of the suffix).
 <p>
-You then edit the language-specific files to enter text in 
-your own language. Please don't edit the lines in the 
-file that contain things like $Release: $; those are used 
-by 
-<A HREF="SVNFAQ.shtml">SVN</a> 
-to keep track of the history of changes.
-<P>
-Languages that involve non-roman letters require some
-extra care. The property files must contain only
-ISO 8859-1 characters.  If you want to use unicode characters, 
-these must be manually escaped.  
-(The 'native2ascii' command-line tool can help with this.)
-Please see the 
-<A HREF="http://www.oracle.com/technetwork/java/javase/tech/faq-jsp-138165.html">Java internationalization FAQ</a>
-for more info on how to include those characters in your property files, particularly the
-question on "How do I specify non-ASCII strings in a properties file?".
-An example is the 
-<a href="https://sourceforge.net/p/jmri/code/22287/tree/trunk/jmri/java/src/apps/AppsBundle_cs_CZ.properties">java/src/apps/AppsBundle_cs_CZ.properties</a> 
-file, which contains diacritical letters for the Czech translation. 
-<P>
-There are several properties files that are used for internal control,
-and should not be translated.  These are marked by a comment at the top
-of the file.  Examples are the apps/AppsStructureBundle.properties,
-jmri/web/server/Services.properties and jmri/web/server/FilePaths.properties files.
+You then edit the language-specific files to enter text in  your own language. 
+<p>
+The lines in the file that contain things like <code>$Release: $;</code>
+are a vestige of older version control systems; they can be ignored or deleted.
+<p>
+There are several .properties files that are used for internal control,
+and should not be translated. These are marked by a comment at the top
+of the file. Examples are the <code>apps/AppsStructureBundle.properties</code>,
+<code>jmri/web/server/Services.properties</code> and <code>jmri/web/server/FilePaths.properties</code> files.
 
+<h3>Translating XML Files</h3>
+<p>The <code>xml/config/parts/jmri/</code> folder contains additional text strings to translate for programmers etc. Just as in <a href="#xml">decoder
+xml files</a>, translated strings are inserted as <code>&lt;name xml:lang="da"&gt;Your Translation&lt;/name&gt;</code> elements in each node.
+We provide a <a href="XmlEditors.shtml">list of editors</a> to effectively work on these files.</p>
+
+<h3>Check your Work</h3>
 <p>
 To check your work:
-<OL>
-<LI>Rebuild your copy of the program. 
-<LI>Start the program and select "Preferences" from the Edit menu
-<LI>Click the "show advanced preferences" box
-<LI>Select your language from the "Locale" drop-down box,
-<LI>Click "Save", quit and restart
-<li>You should immediately seen the items you've translated.
-</OL>
-<P>
+    <ol>
+    <li>Rebuild your copy of the program, i.e. with your <a href="index.shtml#buildyourcopy">IDE</a> or however you're doing that
+    <li>Start the JMRI&reg; application and select "<b>Preferences</b>" from the Edit menu;
+    <li>Click the <b>Display</b> tab at the left, and the <b>Locale</b> tab in the right hand pane;
+    <li>Select your language from the drop-down box (mind that once you run JMRI in another Locale,
+        the list of languages will also be translated to thta language, changing the order
+        for e.g. &quot;Anglais&quot; instead of &quot;English&quot;;
+    <li>Click "Save" at lower left, quit and restart;
+    <li>You should immediately seen the items you've translated.
+    </ol>
+<p>
 If there's a problem at this point, check to see what language is
 listed on the application startup screen.  
 Is it showing the same suffix (e.g. _fr or _cs_CZ) as you 
-gave to your files?  The suffix the program uses is determined
+gave to your files?  The suffix JMRI&reg; uses is determined
 by the Locale you selected in the preferences above.
-<P>
+<p>
 To make your work available to other JMRI users, please 
-share it with us.  To do that:
-<ul>
-<li>Make a patch file containing your changes. 
-On MacOS X or Linux, this is done with the command
-<code><pre>
-svn diff java/src &gt; patch.txt
-</pre></code>
-and Windows users can do a similar thing from their SVN application.
-<li>Upload that file to the "Patches" tracker on sourceforge:<br>
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315">http://sourceforge.net/tracker/?group_id=26788&atid=388315</a>.<br/>
-On that page:
-<ul>
-<LI>Click "Create ticket" on the left side
-<LI>Fill out the title and summary on the
-new page that appears (you can lead status, owner, type and priority as they are), 
-<LI>Click the "I would like to add an attachment" 
-box near the bottom, 
-<LI>and then select your patch file using the "Choose File" button.
-<LI>Click "Save" to upload the file and notify people that you've done this.
-</ul>
-</ul>
-By using this tracker and providing the patch file, it's easy for us to merge your new and/or changed
+share it with us <a href="index.shtml#contributing">contributing via GitHub</a>.
+By using a GitHub Pull Request, it's easy for us to merge your new and/or changed
 files into the code repository. If anything goes wrong, please don't hesitate to 
 ask for help with this.
-</UL>
+</ul>
 
-<a id="xml"><h3>Translating XML files</h3>
+<h4>Non-Roman characters</h4>
+<p>Languages that involve non-roman letters require some
+extra care. The .properties files must contain only
+ISO 8859-1 characters.  If you want to use Unicode characters, 
+these must be manually escaped.  
+Please see the 
+<a href="https://web.archive.org/web/20030217222249/http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Java internationalization FAQ</a>
+for more info on how to include those characters in your .properties files, particularly the
+question on "How do I specify non-ASCII strings in a properties file?".
+<p>An example is the 
+<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs_CZ.properties">java/src/apps/AppsBundle_cs_CZ.properties</a> 
+file, which contains diacritical letters for the Czech translation. 
+<p>The "<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/index.html#intl">native2ascii</a>" tool can help with this
+by converting special characters to the right sequences, but you must run your files through it before submitting them to JMRI.
+Special characters are somewhat machine-specific, so to make they're properly handled, they have to be converted to
+ISO 8859-1 sequences on your computer before submission.
+
+<a name="xml" id="xml"><h3>Translating XML files</h3>
 XML files can also be internationalized.  There are examples in the 
-decoder definition directories.  Look for elements with a xml:lang="fr"
+decoder definition directories.  Look for elements with an xml:lang
 attribute. Basically, you create additional elements with that attribute to 
 specify the language used:
 <code><pre>
-      &lt;variable label="Vmid" CV="6" default="22" item="Vmid"&gt;
+      &lt;variable CV="6" default="22" item="Vmid"&gt;
         &lt;decVal max="64"/&gt;
         &lt;label&gt;Vmid&lt;/label&gt;
         &lt;label xml:lang="fr"&gt;Vmoy&lt;/label&gt;
@@ -205,74 +192,72 @@ specify the language used:
 In the XML files, the 'item' attributes have to stay untranslated, as 
 does the entire xml/names.xml file.
 
-<a id="help"><h3>Translating help files</h3>
+<p>
+There are XSLT transforms that can insert default language elements
+into the files.  They still have English content, but 
+it's perhaps easier to just translate English text than to 
+edit in new XML elements, make sure the structure is correct, etc.
+For more information, see the <a href="http://jmri.org:/xml/XSLT/I18N">xml/XSLT/I18N file</a>
+or ask on the jmri-developers list.
+
+<a id="help"><h3>Translating Help files</h3>
 (This has only been done once, so these instructions may not be complete)
 <p>
 The English help files are found in the help/en directory.
 If you want to create a complete set of files:
 <ul>
 <li>Create a copy of the existing files from the help/en
-directory in a new help/LL directory, where LL is the language
+directory in a new help/LL directory, where LL is the Language
 code for your language, e.g. help/fr.  (Please be careful doing
-this in SVN, and ask a developer for help if needed)
-<li>Rename the help/fr/JmriHelp_en.hs file you just created to help/fr/JmriHelp_fr.hs
-<li>Edit the help/fr/format.xsl to create a <code>&lt;HTML LANG="fr"&gt;</code> tag.
-<li>Translate the .shtml files below the help/fr directory.  Do not translate
-any .xml, .jhm files or the web*.shtml files in the top directory, as they
+this directly in GitHub, and ask a developer for help if needed)
+<li>Rename the <code>help/fr/JmriHelp_en.hs</code> file in the copy you just created to <code>help/fr/JmriHelp_fr.hs</code>
+<li>Edit the <code>help/fr/format.xsl</code> to create a <code>&lt;HTML LANG="fr"&gt;</code> tag.
+<li>Translate all the .shtml files inside the help/fr/ directory. Do not translate
+any <code>.xml</code> and <code>.jhm</code> files or the <code>web*.shtml</code> files in the top help/LL/ directory, as they
 are automatically produced.
 </ul>
 
-
-
-
 <a name="dev"><h2>Internationalization for Developers</h2>
-
-For internationalization to work, you have to do a few things in the code 
-you write.
 <p>
-Some web references on how to do this:
-<UL>
-<li><A HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
-<LI><A HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Sun internationalization FAQ</a>
-</UL>
-
-<P>
+For internationalization to work, you have to do a few things in the code 
+you write. Some web references on how to do this:
+<ul>
+<li><a href="http://docs.oracle.com/javase/6/docs/technotes/guides/intl/">Java Internationalization main page</a>
+<li><a href="http://docs.oracle.com/javase/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
+</ul>
+<strong>Note: Those are Java 6 links.  There are useful advanced features in 
+<a href="http://docs.oracle.com/javase/7/docs/technotes/guides/intl/enhancements.7.html">Java 7</a> and
+<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/enhancements.8.html">Java 8</a>.</strong>
+<p>
 JMRI is moving toward a set of conventions on how to structure and
 use the large amount of I18N information required.  
 You'll still find code with older approaches, but you 
-should write new code using the new conventions.
+should write new code using the new conventions described below.
 
 <p>
-JMRI resource bundles are organized in a heirarchical tree.
-For example, code in the jmri.jmrit.display package
-may find a resource within a bundle in the jmri.jmrit.display package, jmri.jmrit package
-or finally the jmri package. As a special case in this, the apps package is 
-viewed as being below the jmri package itself, so code in the apps tree also
-can reference the jmri package.
+JMRI resource bundles are organized in a hierarchical tree.
+For example, code in the <code>jmri.jmrit.display</code> package
+may find a resource within a bundle in the <code>jmri.jmrit.display</code> package, the <code>jmri.jmrit</code> package
+or finally the <code>jmri</code> package. As a special case in this, the <code>apps</code> package is 
+viewed as being below the <code>jmri</code> package itself, so code in the <code>apps.</code> tree also
+can reference the <code>jmri.</code> package.
 <p>
-Cross-package references, e.g. between jmri.jmrit and jmri.jmrix, are discouraged
+Cross-package references, e.g. between <code>jmri.jmrit</code> and <code>jmri.jmrix</code>, are discouraged
 and existing ones are being removed.
 <p>
-Access is via a Bundle class local to teach package.  A typical one is
-<href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a>.
+Access is via a Bundle class local to each package.  A typical one is
+<code><href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
 It provides two key methods you use to access (translated) resource
-strings:
-
-<PRE>
-static String <B>getMessage</B>(String&nbsp;key)
-
-static String <B>getMessage</B>(String&nbsp;key, Object...&nbsp;subs)</PRE>
-
-</pre>
-The first provides direct access to a string via <P>
+strings:<br>
+<code>
+static String <b>getMessage</b>(String&nbsp;key)<br>
+static String <b>getMessage</b>(String&nbsp;key, Object...&nbsp;subs)</code>
+<p>The first method provides direct access to a string via:<br>
 <code>String msg = Bundle.getMessage("Title")</code>.
+<p>The second method is used to insert specific information into a message like:<br>
+<code>System name LT1 is already in use</code>
 <p>
-The second is used to insert specific information into a message like
-<pre><code>
-  System name LT1 is already in use
-</code></pre>
-<P>
-Here "LT1" can't be in the properties file, because it's only known
+Here "LT1" can't be in the .properties file, because it's only known
 which name to display when the program is running.  Different languages
 may put that part of the message in different places, and supporting that
 is important.  
@@ -281,18 +266,18 @@ That's handled by putting a placeholder in the message definition:
 Error123 = System name {0} is already in use
 </code></pre>
 (You can have more than one insertion, called {1}, {2}, etc)
-<P>
+<p>
 Next, format the final message by inserting the content into it:
 <pre><code>
   String msg = Bundle.getMessage("Error123", badName);
 </code></pre>
-<P>
+<p>
 The first argument is the message key
 followed by one or more strings to be inserted into the message.
 (This is better than 
 creating your own output string using e.g. String.format() because it allows
 the inserted terms to appear in different orders in different languages.)
-<P>
+<p>
 Different languages may need a different number of lines to express
 a message, or may need to break it before or after a particular 
 value is inserted.  It's therefore better to use "\n" within a
@@ -301,95 +286,124 @@ than providing multiple lines in the code itself.
 <p>
 Some parts of JMRI remain English only due to our developer population.
 In particular, comments and variable names in the code should remain in
-English, as should messages sent to the logging system.  
+English, as should messages sent to the logging system. Keys for 
+the translation bundles are another example. 
 In the Java code, these strings can be marked with a "<code>// NOI18N</code>"
-comment at the end of the line.
+comment at the end of the line. If needed, put that after another comment:
+<pre><code>
+  firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N
+</code></pre>
 
-<h4>Adding a new Bundle</h4>
-
+<h3>Adding a new Bundle</h3>
+<p>
 If your package does not already have a Bundle class, you can add it by:
 <ul>
-<li>Bring a copy of the Bundle class into your package:
-<br/><code>svn cp java/src/jmri/jmrit/Bundle.java java/src/jmri/mypackage/</code>
-<li>Edit that new file in three places:
-<ul>
-<li>The 'package' statement at the top should list your package
-<li>The 'class ... extends' should refer to the Bundle class directly above your package
+<li>Copy the Bundle class <code>java/src/jmri/jmrit/Bundle.java</code> into your package as <code>java/src/jmri/mypackage/Bundle.java</code>
+<li>Edit the new file in three places:
+<ol>
+<li>The 'package' statement at the top should list your package;
+<li>The 'class ... extends' should refer to the Bundle class directly above your package;
 <li>The assignment to the 'name' variable should be the name of your local
-    bundle, by convention "jmri/mypackage.Bundle".
-</ul>
-<li>Create a new Bundle.properties file in your package directory
+    bundle, by convention &quot;jmri/mypackage.Bundle&quot;.
+</ol>
+<li>Create a new <code>Bundle.properties</code> file in your package directory
     to hold your properties strings.
-<li>Ideally, you'll add a copy of java/test/jmri/jmrit/BundleTest.java to your
-    JUnit test directory to check that your strings are working:
-    <br/><code>svn cp java/test/jmri/jmrit/BundleTest.java java/test/jmri/mypackage/</code>
-    followed by editing the "package" statement in that file to point to your
+<li>Ideally, you'll add a copy of <code>java/test/jmri/jmrit/BundleTest.java</code> to your
+    JUnit test directory to check that your strings are working:<br>
+    Copy <code>java/test/jmri/jmrit/BundleTest.java</code> to  <code>java/test/jmri/mypackage/BundleTest.java</code>
+    and then edit the "package" statement in that file to point to your
     package, adding a few of your strings for testing (including ones you
     reference from parent bundles, if any), and including a reference
     in your PackageTest class.
 </ul>
 
 <h4>Older code</h4>
+<p>
 Older code typically references the bundles directly:
-
 <pre><code>
   java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 </code></pre>
 
-<P>
+<p>
 The getBundle argument is the complete package name (not file name)
-for the properties file this class will be using.  You can have 
+for the properties file this class will be using.  You can 
 reference more than one of these objects if you'd like to look up 
 strings in more than one properties file.
 
-<P>
+<p>
 You can then retrieve particular strings like this:
 <pre><code>
 java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle").getString("ButtonNew");
 </code></pre>
-<P>
+<p>
 We no longer recommend defining a class-static variable to hold the 
 reference to the Bundle object, as this ends up consuming a lot 
-of permanent memory in a program the size of JMRI.  Go ahead and 
-call the getBundle() each time, it's fast because it works through
+of permanent memory in a program the size of JMRI.<br>
+Go ahead and 
+call the <code>getBundle()</code> each time, it's fast because it works through
 a weakly-referenced and garbage-collected cache.
-<p>
 
-<a id="xml-dev">
+<a name="xml-dev" id="xml-dev"></a>
 <h3>XML Access</h3>
-Second, you have to retrieve XML elements and attributes properly.
+<p>Second, you have to retrieve XML elements and attributes properly.
 The jmri.util.jdom.LocaleSelector provides a getAttribute(...) method
 that replaces the JDOM getAttribute element when the content of the 
-attribute might have been internationalized.  You use it like this:
+attribute might have been internationalized. You use it like this:
 
 <code><pre>
 String choice = LocaleSelector.getAttribute(choiceElement, "choice")
 </pre></code>
-where "choiceElement" is a JDOM Element object containing a (possible translated)
-"choice" attribute.  Null will be returned if nothing is found.
+where "choiceElement" is a JDOM Element object containing a (possibly translated)
+"choice" attribute.  &quot;Null&quot; will be returned if nothing is found.
 
-<a id="testing">
+<a name="numbers" id="numbers"></a>
+<h3>Numbers</h3>
+<p>The number "10*10*10+2+3/10" is written in different ways in different places:
+"1002.3",
+"1,002.3", 
+"1.002,3" and perhaps other ways.
+<p>
+JMRI provides a helpful utility for handling this on input:
+
+<code><pre>
+   double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
+   float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
+</pre></code>
+
+Note that this can throw a <code>java.text.ParseException</code> if the input is unparsable, so 
+handling that is part of your user-error handling.
+
+<p>
+For output:
+<pre>
+   String s = jmri.util.IntlUtilities.valueOf(1002.3);
+</pre>
+<p>
+<strong>Note: You should still store and load values in XML files in Java's default coding,
+without using these formatting tools. That way, the files can be moved
+from one user to another without worrying about whether they are using the same Locale.</strong>
+
+<a name="testing" id="testing">
 <h3>Testing</h3>
-
+<p>
 You should check that you've properly internationalized 
 your code.  We provide a tool for doing this which creates
-and automatically translated version of your properties files,
-following the ideas of Harry Robinson and Arne Thormodsen.
+an automatically translated version of your properties files,
+following the ideas of Harry Robinson and Arne Thormodsen 
 (Their
-<a href="http://www.oocities.org/harry_robinson_testing/klingon.htm">paper on this</a> is recommended reading!)
+<a href="http://www.oocities.org/harry_robinson_testing/klingon.htm">paper on this</a> is recommended reading!).
 To use it:
 <ul>
-<li>Make sure your code compiles and builds OK.  We'll be modifying the compiled version.
+<li>Make sure your code compiles and builds OK in your <a href="index.shtml#buildyourcopy">IDE</a>.  We'll be modifying the compiled version.
 <li>Run the "translate.sh" script in your java/ build directory.  This creates new, temporary
-properties files in the classes/ directory tree. You will have to redo this
-every time the classes/ tree is removed by e.g. "ant clean" or an clean IDE build.
-
+.properties files in the classes/ directory tree. You will have to redo this
+every time the classes/ tree is removed by e.g. "ant clean" or a clean <a href="index.shtml#buildyourcopy">IDE</a> build.
+<li>Delete the JMRI Preference file, or edit it to remove the GUI definition line.
 <li>Run DecoderPro via "ant locale", which starts the DecoderPro program
-using the new properties files.  
+using the new .properties files.  
 </ul>
-If all is well, all the message text will have been translated to upper case.
+<p>If all is well, all the message text will have been translated to UPPER CASE.
 Anything you wrote that remains in lower case has not been completely internationalized.
-
 
 <!--#include virtual="/Footer" -->
 
@@ -397,4 +411,3 @@ Anything you wrote that remains in lower case has not been completely internatio
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-

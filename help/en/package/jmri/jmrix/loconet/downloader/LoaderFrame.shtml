@@ -7,6 +7,7 @@
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
+    <META content="B. Milhaupt" name=Author>
     <META name="keywords" content="JMRI help digitrax downloader">
 
 <!-- Style -->
@@ -23,36 +24,383 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Digitrax Firmware Downloader
-</H1>
-    
-Some Digitrax products can have new firmware (internal programs) downloaded to them.
-The firmware updates are distributed as ".dmf" (Digitrax Mangled Firmware) files.
-They contain both the code itself, and various managment information
-to make sure that it can only be downloaded into the hardware it expects.
-
-<p>
-Note that this is not the same as the 
-<a href="../soundloader/LoaderFrame.shtml">Sound Download Tool</a>, which
-is used with a PR2 or PR3 to load new sound projects into a Digitrax
-sound decoder.
-
-<p>
-To use this tool:
+<H1>LocoNet&reg; "Download Firmware" Tool</H1>
+<table border="0">
+    <tr><td align="left" colspan="2">Table of Contents</td></tr>
+    <tr>
+        <td align="left" valign="top" colspan="1">
+            <ul>
+                <li><a href="#General">General information</a></li>
+                <li><a href="#Disclaimer">Disclaimer</a></li>
+                <li><a href="#Updating">Updating Device Firmware Contents</a></li>
+                <li><a href="#Problem">What if my device does not work correctly 
+                        after updating the firmware?</a></li>
+                <li><a href="#Verify">Verifying Device Firmware Contents</a></li>
+                <li><a href="#ErrorMessages">Error Messages</a>
+                <ul>
+                    <li><a href="#NoInputFile">"You Must Select An Input File" 
+                            Pop-up Window</a></li>
+                    <li><a href="#FileNotFound">"File Not Found" Pop-up Window</a></li>
+                    <li><a href="#InvalidOptionsInFile">"Invalid value for 
+                            Options key" Pop-up Window</a></li>
+                    <li><a href="#FileReadError">"Firmware file cannot be read." 
+                            Status Message</a></li>
+                    <li><a href="#ParameterValidationProblem">"Invalid 
+                            parameter(s) above." Status Message</a></li>
+                    <li><a href="#nullFirmwareData">Do not have any firmware 
+                            information to send." Status Message</a></li>
+                    <li><a href="#ContentNotUnderstood">"Firmware content in the 
+                            file is not understood" Status message</a></li>
+                </ul>
+                </li>
+                <li><a href="#WhatItDoes">What this tool does and does not do</a></li>
+                <li><a href="#UpdatableDevices">Some devices which support 
+                        firmware update via this tool</a></li>
+                <li><a href="#Notes">Other Notes</a></li>
+                <li><a href="#ForHelp">If you need additional help</a></li>
+            </ul>
+        </td>
+        <td align="right" colspan="1">
+            <img src="./LocoNetDownloadFirmwareWindow.png" 
+                 alt="Example of the Download Firmware Window">
+        </td>
+    </tr>
+</table>
+<H2 id="General">General information</H2>
+<p>Some LocoNet devices allow users to update the firmware (internal program) via
+    the LocoNet connection.  The LocoNet Download Firmware tool provides a mechanism 
+    to perform updates via a LocoNet connection.</p>
+<p><em>This tool is not used for loading sound projects into Digitrax sound decoders.
+        The <a href="../soundloader/LoaderFrame.shtml">Sound Download Tool</a> may 
+        be used for that purpose.</em></p>
+<p>This tool supports firmware update files distributed as either the ".dmf" (Digitrax 
+    Mangled Firmware) file format or a ".hex" file format (sometimes referred to 
+    as the Intel "I8HEX" file format).</p>
+<p>This version of the tool automatically determines how to interpret the firmware 
+    update and performs a number of file and data integrity checks before the
+    update information can be used.  If any issues are identified in the firmware 
+    file, the user is informed and the tool will not allow the user to update the 
+    device with what could be erroneous firmware information.  This significantly 
+    reduces the risk of corrupting the device firmware as compared to previous 
+    versions of this tool.</p>
+<H2 id="Disclaimer">Disclaimer</H2>
+<p><strong>This tool is capable of modifying the firmware in LocoNet devices in 
+        ways that could make the devices inoperable.</strong>  The developers of 
+        this tool have attempted to reduce the chances that the tool would
+        corrupt a LocoNet device's firmware.  We have successfully tried this 
+        tool with a variety of LocoNet devices, computers, operating systems, 
+        LocoNet interfaces, and firmware update files.</p>
+<p><strong>We cannot guarantee that there is no risk of corrupting device 
+        firmware when using this tool.</strong>  It is impossible for the tool
+        developers to predict every way of using the tool and it is impossible 
+        to predict the nuances of various devices, firmware files, computer 
+        operating systems, computer-to-LocoNet interface hardware, etc.</p>
+<p>In cases where a firmware update attempt does not apply properly, it is often 
+        possible to <a href="#Problem">
+        re-apply the firmware update to the device</a> to restore proper  device 
+        functionality.  This has been recommended by at least one LocoNet device 
+        manufacturer and has been found to be effective in some cases by the 
+        developers of this tool.</p>
+<p><em><strong>Use this tool at your own risk.</strong></em></p>
+<H2 id="Updating">Updating Device Firmware Contents</H2>
+To use this tool to update a LocoNet device's firmware:
 <ul>
-<li>Click the select button, and select the .dmf file you want to download.
-<li>Click Read File to read the file into the program and verify its contents
-<li>Only if instructed to by Digitrax, change the various values in the 
-control fields (this is usuall not needed)
-<li>Click Download to load the firmware. This will take a little while, so
-there's progress bar below the buttons.
-<li>If desired, click Verify to double-check the contents. This also takes a 
-while.
+    <li>Consult the device manufacturer to determine if the device supports user 
+        updates of firmware.</li>
+    <li>Acquire the appropriate firmware file from the device manufacturer.</li>
+    <li>It is best to perform LocoNet firmware updates with a very simple LocoNet 
+        environment, including as little LocoNet hardware as possible.  A good
+        choice for a simple LocoNet firmware update configuration would include
+        the device to be updated, a LocoNet-based command station, and a PC-to-
+        LocoNet interface device.  A simple LocoNet configuration helps reduce
+        the amount of other LocoNet message traffic that could potentially 
+        disrupt the firmware update process.  If you plan to re-configure your 
+        LocoNet connectivity to perform firmware updates, be sure that you will
+        be able to restore your LocoNet connectivity properly once you have
+        completed the update process.  Take notes or make a drawing if necessary.</li>
+    <li>The device being updated must be plugged into a live LocoNet connection.  
+        If the device can be battery powered, ensure that the batteries are good 
+        before starting this process.  If the device uses an external power 
+        supply, ensure that it is powered and attached.</li>
+    <li>Some devices may require changes to jumpers or DIP switch settings, and 
+        perhaps require removal and restoration of power, in order to 
+        allow the device to accept the firmware update via LocoNet.  Devices 
+        produced by Digitrax which support LocoNet firmware updates do not 
+        require any physical configuration changes to the device.  Consult the 
+        LocoNet device manufacturer's firmware update instructions for details.</li>
+    <li>Open the LocoNet Firmware Download tool by selecting the "Download 
+        Firmware" item from the LocoNet menu.  If you  have more than one 
+        LocoNet connection, you must open the tool from the LocoNet menu 
+        which is associated with the connection which communicates with the 
+        device you wish to update.
+    </li>
+    <li>Click the Select button, and select the .dmf file or .hex file you want 
+        to use as the source of your firmware update.  Click the Open button to 
+        select the file for use.  The file will then be read and inspected for 
+        errors.
+        <p>If the file is read and parsed successfully, the tool window will
+            enable the "Download" and "Verify" buttons, and update the status 
+            message at the bottom of the window to state "Click Download to 
+            download new firmware".</p>
+        <p>If the file cannot be read and parsed successfully, a pop-up message
+            will appear or the tool window will update the status message at the 
+            bottom of the window with a description of the problem it found.  
+            For more information, see <a href="#ErrorMessages">Error 
+            Messages</a>, below.
+    </li>
+    <li>Only if instructed to by the device manufacturer, change the various values 
+        in the Firmware File Properties portion of the display. It is usually not 
+        necessary to change any of the values.
+    <li>Click the Download button to update the firmware in the device. This may  
+        take a few seconds or minutes, depending on the amount of firmware to
+        be updated and the speed at which the messages are sent to the device.   
+        A progress bar is displayed below the "Download", "Verify", and "Abort" 
+        buttons to show progress of the update process.  The bar will darken from 
+        one end to the other as the update gets closer to completion.
+    </li>
+    <li>Once the update tool completes its work, <em>the tool is unable to tell 
+            if the LocoNet device has properly accepted the update</em>.  
+            This is a limitation of the LocoNet messaging used for the firmware 
+            update and firmware verify processes.  Because of this limitation,
+            the tool is only able to report that it has completed its work.
+        <p>The device may provide an indication that the update process has 
+            completed (or failed) using lights on the product or on the display 
+            of the product.  Consult the device manufacturer's instructions for 
+            further information.</li>
+    <li>After performing the firmware update, it may be necessary to reset
+        or remove and restore power to the device.  Consult the manufacturer's 
+        firmware update instructions.</li>
+    <li>If you re-configured your LocoNet connectivity for a simplified LocoNet 
+        at the beginning of the firmware update process as described above, 
+        restore the LocoNet connectivity to its normal state.</li>
 </ul>
-<p>
-(This is the help/jmri/jmrix/loconet/downloader/LoaderFrame help page)
+<H2 id="Problem">What if my device does not work correctly after updating the 
+    firmware?</H2>
+<p>Sometimes the device firmware update process does not appear to work, and the 
+    device may fail to provide its normal functionality.  <em>Often,
+    repeating the firmware update process one or more times will solve the 
+    problem.  </em>This has been recommended by at least one LocoNet device 
+    manufacturer and has been found to be effective in many cases by the 
+    developers of this tool.</p>
+    <p>As an example, if the firmware in a Digitrax DT402D throttle has been
+        updated and that update was not successful, when the DT402D throttle is 
+        powered up, the display will usually show a series of dim, filled-in 
+        rectangles rather than the normal power-up display of model and firmware 
+        revision information.  In this case, re-updating the device, using the
+        process shown above, will usually restore the throttle to proper 
+        functionality.</p>
+    <p>In other cases, a device may not be easily restored to proper operation 
+        after a firmware update attempt.  In this case, consult the device
+        manufacturer for further instructions.</p>
+    <p>Consult your device documentation and, if necessary, the device manufacturer's 
+        technical support if your device fails to function properly after updating 
+        its firmware.</p>
+<H2 id="Verify">Verifying Device Firmware Contents</H2>
+<p>Some devices support a firmware "verify" process.  This tool can perform the 
+    process to send the appropriate LocoNet messages by using the "Verify" button
+    in the tool window.  This tool <em>cannot</em> provide any indication of whether 
+    the device firmware does or does not match the firmware update file's 
+    information because there is no well-defined LocoNet message that conveys 
+    this type of information to the tool.  Instead, the device may provide the 
+    pass or fail results of the verify process, perhaps by a specific blink 
+    sequence on an LED or by displaying a message on a display on the device.  
+    If a LocoNet device supports the verify operation, the manufacturer'
+    s instructions should describe how the product provides status information 
+    for the results of the verify process.</p>
 
+<H2 id="ErrorMessages">Error Messages</H2>
+<p>This tool can identify problems at two different stages of the firmware update 
+    process.  The tool checks for problems within the firmware update file when 
+    reading the file.  When the user activates the "Download" or "Verify" button,
+    the tool checks the validity of the parameters which the user can change in 
+    the tool window for obvious problems.  If any issues are found at either of 
+    these stages, the tool will update the message at the bottom of the tool 
+    window.  If a parameter is found to be out of range, that parameter value 
+    will be shown with red text instead of black text.  The "Download" and 
+    "Verify" buttons will not perform any useful function if any of the 
+    parameters are invalid.</p>
+<p>Typically, when this type of pop-up window appears, a message in the JMRI 
+    "console" log will provide additional technical detail about the problem.  The
+    firmware update file provider may find this information useful in correcting
+    firmware update file issues.</p>
+<p>The tool may also create a pop-up window under certain circumstances.</p>
+<H3 id="NoInputFile">"You Must Select An Input File" Pop-up Window</h3>
+<p>The tool will open a pop-up window with this message if the user uses the
+    "Cancel" button on the file selection pop-up window.  The tool cannot 
+    perform a firmware update if no firmware file is selected.</p>
+
+<H3 id="FileNotFound">"File Not Found" Pop-up Window</h3>
+<p>The tool will open a pop-up window if the file selected by the user does not 
+    exist.  The pop-up window will state that the file was not found.  Use the
+    "Select" button to re-specify the correct firmware file.</p>
+
+<H3 id="InvalidOptionsInFile">"Invalid value for Options key" Pop-up Window</h3>
+<p>The tool will open a pop-up window if the file selected by the user contains
+    a value for the "Options" key which is not supported by this tool.  Consult
+    the device manufacturer for advice if this occurs.</p>
+
+<H3 id="FileReadError">"Firmware file cannot be read." Status Message</h3>
+    <p>This status message is shown when an abnormal event occurs which prevents
+    the tool from reading the file from the disk.  This is typically a problem
+    with the computer or the media from which the file is being read.</p>
+
+<h3 id="ParameterValidationProblem">"Invalid parameter(s) above." Status Message</h3>
+<p>This message indicates that one or more of the values are out of range.  Usually 
+    it is unnecessary for the user to change any of the parameter values because 
+    either the tool's default values are appropriate or because the firmware file 
+    specifies the required values.  If an invalid value is found in one of the 
+    parameter entry fields, the invalid parameter will be highlighted in red.  To 
+    resolve the problem, close the Firmware Download tool, then re-open it and 
+    re-read the file.  Be careful not to change any of the parameter field values.
+    If the tool still identifies a value as invalid, consult the device 
+    manufacturer.</p>
+
+<H3 id="nullFirmwareData">Do not have any firmware information to send." Status 
+    Message</h3>
+<p>This status message indicates that the firmware file did not contain any valid
+    firmware information.  Consult the device manufacturer for a valid firmware
+    file.</p>
+
+<H3 id="ContentNotUnderstood">"Firmware content in the file is not understood" Status message</h3>
+<p>When the tool reads a firmware file which it does not understand, it will 
+    show the message "Firmware content in the file is not understood by this 
+    reader." in the status line at the bottom of the tool window.  Consult the
+    device manufacturer for support - usually this means that the manufacturer
+    must provide a new firmware file.</p>
+
+<br clear=all>
+<H2 id="WhatItDoes">What this tool does and does not do</H2>
+<p>The table below shows some capabilities and limitations of this tool.</p>
+<table border="2">
+    <tr>
+        <td align="center"><strong>"Download Firmware" Tool Capabilities</strong></td>
+        <td align="center"><strong>"Download Firmware" Tool Limitations</strong></td>
+    </tr>
+    <tr>
+        <td>This tool can read a firmware update file from the computer's local storage.</td>
+        <td>This tool does not acquire firmware update files from manufacturers.</td>
+    </tr>
+    <tr>
+        <td>With some older versions of this tool it was very easy to read the 
+            firmware update file in a way that caused improper interpretation of 
+            the information and which could result in corruption of the device's 
+            firmware.  This version performs several checks of the firmware update
+            file to ensure that the file is interpreted correctly and to identify
+            partial or damaged firmware update files.  If any issues are found in 
+            the firmware update file, the tool will not allow the user to perform
+            the update process.  This should significantly reduce the risk of 
+            corrupting a LocoNet device's firmware when using this tool.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>This tool can send the contents of a firmware update file to LocoNet 
+            with a request that the associated device(s) update their firmware 
+            based on the contents of the LocoNet Messages.</td>
+        <td>This tool cannot know whether any of the firmware update file 
+            information was successfully programmed into a LocoNet device's 
+            firmware.  The LocoNet messaging protocol does not provide any 
+            indication of the status of the firmware update process.</td>
+    </tr>
+    <tr>
+        <td>This tool can send the contents of a firmware update file to LocoNet 
+            with a request that the associated device(s) compare their firmware 
+            to the contents of the LocoNet Messages.</td>
+        <td>This tool cannot know whether any of the firmware update file 
+            information actually matches or is different from information within 
+            the device's firmware.  The LocoNet messaging protocol does not 
+            provide any indication of the status of the compare.</td>
+    </tr>
+    <tr>
+        <td>This tool allows the user to change some aspects of the firmware update
+            process, including some information used to identify which LocoNet 
+            device type is to accept the firmware update information, as well as
+            some LocoNet timing delays.  <strong>Changes to the information in 
+            the "Firmware File Properties" portion of the tool window should 
+            only be made under direction of the manufacturer.  Changes to the 
+            values could result in corruption of the targeted device OR other 
+            devices which may be connected to LocoNet.</strong></td>
+        <td>This tool cannot predict how changes to the information in the 
+            "Firmware File Properties" could possibly cause malfunction of any 
+            LocoNet device.  <strong>Changes to the information in 
+            the "Firmware File Properties" portion of the tool window should 
+            only be made under direction of the manufacturer.</strong></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>This tool does not read the contents of a LocoNet device's firmware.</td>
+    </tr>
+</table>
+<h2 id="UpdatableDevices">Some devices which support firmware update via this tool</h2>
+<p>The table below lists some devices which are believed to allow firmware updates 
+    using  this tool.  This list is not necessarily complete, and does not 
+    necessarily apply to all versions of the listed devices.</p>
+        
+    <table border="2">
+        <thead><td align="center"><strong>Manufacturer</strong></td><td align="center"><strong>Product</strong></td></thead>
+        <tr><td rowspan="6" align="center">Digitrax</td><td>UR92, UR92CE</td></tr>
+        <tr><td>DCS51</td></tr>
+        <tr><td>DT402-series throttles</td></tr>
+        <tr><td>LNRP</td></tr>
+        <tr><td>PR3</td></tr>
+        <tr><td>RF24 (the radio module found in Duplex devices like UR92, UR92CE and DT402D)</td></tr>
+        <tr><td rowspan="6" align="center">RR-CirKits</td><td>LocoBuffer-USB</td></tr>
+        <tr><td>LNCP</td></tr>
+        <tr><td>Tower Controller 64</td></tr>
+        <tr><td>TowerMan</td></tr>
+        <tr><td>SignalMan</td></tr>
+        <tr><td>WatchMan</td></tr>
+        <tr><td align="center">Fremo</td><td>FREDI (version 1.8 and above)</td></tr>
+        <tr><td align="center">Tam Valley Depot</td><td>Quad-LN</td></tr>
+        <tr><td colspan="2" align="center"><strong>Table updated June, 2014</strong></td></tr>
+        </table>
+<H2 id="Notes">Other Notes</H2>
+<ul>
+    <li>The LocoNet Firmware Download tool is similar to the "DigiIPL.exe" which 
+        has been released by Digitrax and is available from their web site.  
+        Support for the DigiIPL.exe program is provided by Digitrax.  Note that 
+        DigiIPL.exe is intended for use with Digitrax products and is not able 
+        to perform firmware updates on at least some non-Digitrax hardware.</li>
+    <li>This tool does <strong>not</strong> receive any LocoNet messages from the device as 
+        part of the firmware update process.  At the time this tool was written, 
+        the firmware protocol does not define any sort of feedback from the device 
+        to the programming tool.  As such, it is not possible for this tool to 
+        provide any definitive indication of the success of a firmware update or 
+        firmware verify operation.  It is up to the user to determine if the 
+        device has been properly updated.</li>
+    <li>This version of the tool does <strong>not</strong> allow the user to configure the 
+        file addressing format.  The tool automatically determines whether the file
+        uses 16-bit or 24-bit addressing.  This removes the possibility that the
+        wrong setting could be used.</li>
+    <li>This tool cannot be used to update the firmware in the LocoBuffer-II device.</li>
+    <li>While it is possible to update firmware on multiple devices of the same type at 
+        the same time.  If attempting this, ensure that the devices are all 
+        actively connected to LocoNet, properly powered, and properly configured 
+        before activating the "Download" button.  The developers of this tool do 
+        not recommend this as any failure of the process could result in all 
+        hardware becoming unusable.</li>
+    <li>Do not open multiple LocoNet Firmware Download tools at the same time.  
+        Do not perform firmware updates and/or verifies from multiple sources 
+        (computers) simultaneously, as this is likely to result in corrupted 
+        device firmware.</li>
+    <li>If the selected update file's filename is too long to fit the tool window,
+        the filename will be displayed in a shortened form.  If the cursor is
+        placed over the displayed filename, the "tool tip" will attempt to show 
+        the complete file name.</li>
+</ul>
+
+<h2 id="ForHelp">If you need additional help</h2>
+<p><strong>If you experience difficulty with this tool and believe that your problem is
+caused by the tool, seek help through the "JMRI Users" Yahoo Group.</strong></p>
+<p>If you believe that your problem is related to the firmware update file or the
+hardware itself, consult the hardware instructions and the hardware manufacturer's
+technical support.</p>
+<p>Note that <strong>Digitrax does not</strong> provide any support this tool.</p>
+
+<p>LocoNet is a registered trademark of Digitrax, Inc.</p>
+<p>(This is the package/jmri/jmrix/loconet/downloader/LoaderFrame help page)</p>
+
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>
-

@@ -4,8 +4,9 @@
  */
 package jmri.web.servlet;
 
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,19 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet that simply sends an HTTP 403 FORBIDDEN error.
- * 
- * Passing requests for certain resources protects those resources from
- * network access.
+ *
+ * Passing requests for certain resources protects those resources from network
+ * access.
  *
  * @author rhwood
  */
 public class DenialServlet extends HttpServlet {
 
-    static ResourceBundle htmlStrings = ResourceBundle.getBundle("jmri.web.server.Html");
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+        response.setContentType(UTF8_TEXT_HTML);
         response.sendError(HttpServletResponse.SC_FORBIDDEN);
     }
 

@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
-<!-- $Id: accelDecel.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -39,18 +39,22 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Acceleration Momentum (0-255)" CV="3" item="Accel" default="6" comment="Range 0-255">
+  <variable CV="3" item="Accel" default="6" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Acceleration Momentum (0-255)</label>
     <label xml:lang="it">Inerzia Accellerazione</label>
+    <label xml:lang="de">Anfahrverzögerung</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
   </variable>
-  <variable label="Deceleration (Brake) Momentum (0-255)" CV="4" item="Decel" default="5" comment="Range 0-255">
+  <variable CV="4" item="Decel" default="5" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Deceleration (Brake) Momentum (0-255)</label>
     <label xml:lang="it">Inerzia Decellarazione (Frenata) 0-225</label>
+    <label xml:lang="de">Bremsverzögerung</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
   </variable>
 </variables>

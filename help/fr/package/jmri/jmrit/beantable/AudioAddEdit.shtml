@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AudioAddEdit.shtml,v 1.2 2009/09/26 23:35:32 jacobsen Exp $ -->
-<!-- translated by Hervé Blorec le 2012/01/02-->
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec  2013-10-10 -->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Adding/Editing Audio objects
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Matt Harris" name=Author>
     <META name="keywords" content="JMRI help Audio Add Edit">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -26,32 +26,32 @@
 
 <H1>Ajout/Modification des Objets Audio</H1>
 
-Pour créer un objet audio, cliquez sur le bouton
-"Ajouter ..." sur l
-Table<a href="AudioTable.shtml"> audio</a>.
-Cela ouvrira une petite fenêtre avec un espace pour entrer 
-un nom  système et  nom 'tilisateur pour la nouvelle mémoire, plus
-et bouton "Ajouter".
+Pour cr&#233;er un objet audio, cliquez sur le bouton
+"Ajouter ..." 
+<a href="AudioTable.shtml"> Tableau Audio</a>.
+Cela ouvrira une petite fen&#234;tre avec un espace pour entrer 
+un nom  syst&#232;me et  nom utilisateur pour la nouvelle m&#233;moire, plus
+un bouton "Ajouter".
 <p>
-Vous devez entrer un nom  système unique. Le système des noms pour les objets audio ont
-un ensemble de motif. Ils commencent par "IAL" pour "Listener audio interne", "IAB" pour
-"Audio Buffer interne", ou "IAS" pour "Source audio interne".
+Vous devez entrer un nom  syst&#232;me unique. Le syst&#232;me des noms pour les objets audio ont
+un ensemble de mod&#232;le. Ils commencent par "IAL" pour "Auditeur audio interne", "IAB" pour
+"Tampon Audiointerne", ou "IAS" pour "Source audio interne".
 
 <p>
-Il ya des fenêtres séparées pour l'ajout de chacun des
-différents types.
+Il ya des fen&#234;tres s&#233;par&#233;es pour l'ajout de chacun des
+diff&#233;rents types.
 <a
- href="AddEditAudioListener.jpg">
-<img height="202" width="164" align="right" src="AddEditAudioListener.jpg" border="2">
+ href="AddEditAudioListener.png">
+<img height="202" width="164" align="right" src="AddEditAudioListener.png" border="2">
 </a>
 
-<a href="AddEditAudioBuffer.jpg"><img height="94" width="272" align="right" src="AddEditAudioBuffer.jpg" border="2">
+<a href="AddEditAudioBuffer.png"><img height="94" width="272" align="right" src="AddEditAudioBuffer.png" border="2">
 </a>
 
-<a href="AddEditAudioSource.jpg"><img height="263" width="164" align="right" src="AddEditAudioSource.jpg" border="2">
+<a href="AddEditAudioSource.png"><img height="263" width="164" align="right" src="AddEditAudioSource.png" border="2">
 </a>
 <p>
-Le nom utilisateur est facultatif, mais si on leur en donne un, il doit être unique.
+Le nom utilisateur est facultatif, mais si on leur en donne un, il doit &#234;tre unique.
 
 <p>
 Pour plus d'informations sur les objets audio, consultez la

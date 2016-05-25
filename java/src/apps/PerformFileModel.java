@@ -1,41 +1,21 @@
-// PerformFileModel.java
-
 package apps;
 
-import java.util.ArrayList;
-import java.util.List;
+import apps.startup.AbstractStartupModel;
 
 /**
- * A PerformFileModel object loads an xml file
- * when the program is started.
+ * A PerformFileModel object loads an xml file when the program is started.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision$
- * @see PerformFilePanel
+ * @author	Bob Jacobsen Copyright 2003
+ * @author Randall Wood (c) 2016
+ * @see apps.startup.PerformFileModelFactory
  */
-public class PerformFileModel {
-
-    public PerformFileModel() {
-        fileName=null;
-    }
-
-    String fileName;
+public class PerformFileModel extends AbstractStartupModel {
 
     public String getFileName() {
-        return fileName;
+        return this.getName();
     }
 
     public void setFileName(String n) {
-        fileName = n;
+        this.setName(n);
     }
-
-    static public void rememberObject(PerformFileModel m) {
-        l.add(m);
-    }
-    static public List<PerformFileModel> rememberedObjects() {
-        return l;
-    }
-    static List<PerformFileModel> l = new ArrayList<PerformFileModel>();
 }
-
-

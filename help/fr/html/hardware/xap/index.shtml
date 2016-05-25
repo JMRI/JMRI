@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: index.shtml,v 1.2 2010/03/21 05:39:28 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-23-->
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; le 2013-09-20-->
 <title>JMRI: xAP Support</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,55 +23,55 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Support XAP
+JMRI: Support xAP
 </h1>
 
 XAP est un protocole domotique
-populaire utilisé par les amateurs construisant eux-mêmes ou
+populaire utilis&#233; par les amateurs construisant eux-m&#234;mes &#224; travers
 par de grandes installations professionnelles.
 
 <p>
 Pour plus d'informations sur le protocole
-et les équipements disponibles, s'il vous plaît
+et les &#233;quipements disponibles, s'il vous pla&#238;t
 voir les
-<a href="http://www.xapautomation.org"> page d'accueil XAP </a>.
+<a href="http://www.xapautomation.org"> page d'accueil xAP </a>.
 
 <p>
-XAP ne doit pas être confondu avec le XPA Lenz, qui est
-un dispositif pour l'aide d'un téléphone portable comme un régulateur pour un système
+xAP ne doit pas &#234;tre confondu avec le xPA Lenz, qui est
+un dispositif pour l'aide d'un t&#233;l&#233;phone portable comme un r&#233;gulateur pour un syst&#232;me
 Lenz DCC.
 
 <p>
-Le soutien JMRI pour XAP a commencé avec un simple
+Le soutien JMRI pour xAP a commenc&#233; avec un simple
 <a href="http://jmri.org/jython/jython/xAPadapter.py "> script </a>
-disponible dans JMRI 2.9.5 et versions ultérieures.
-Finalement, un ensemble complet d'outils de JMRI XAP sera
+disponible dans JMRI 2.9.5 et versions ult&#233;rieures.
+Finalement, un ensemble complet d'outils de JMRI xAP sera
 disponibles directement au sein de l'ensemble des outils JMRI.
 
 <p>
-Les appareils XAP qui fournissent soit "l'entrée" ou la "sortie"
+Les appareils xAP qui fournissent soit "l'entr&#233;e" ou la "sortie"
 forme le
-<a  href="http://www.xapautomation.org/index.php?title=Basic_Status_and_Control_Schema">Statut de Base et de Contrôle du Schéma </a> (dispositifs BSC).
-"Entrée" appareils sont mappés aux objets capteurs JMRI, et
+<a  href="http://www.xapautomation.org/index.php?title=Basic_Status_and_Control_Schema">Statut de Base et de Contr&#244;le du Sch&#233;ma </a> (dispositifs BSC).
+"Entr&#233;e" des appareils sont mis en correspondance avec les capteurs JMRI, et
 "Sortie" des appareils sont mis en correspondance vers des aiguillages JMRI.
 <p>
 
 
 <p>
-Lorsque JMRI voit un nouveau dispositif BSC, il crée le capteur ou l'aiguillage nécessaire.
-Le nom de la source complète est utilisée pour créer le nom du système, par exemple:
+Lorsque JMRI voit un nouveau dispositif BSC, il cr&#233;e le Capteur ou l'Aiguillage n&#233;cessaire.
+Le nom de la source compl&#232;te est utilis&#233;e pour cr&#233;er le nom du syst&#232;me, par exemple:
 <code> <pre>
-  EST: XPA: xAPBSC: mi4.homeseer.scafell.91: VIOMBoard.Input14GJDRFXEnable
+  EST: xPA: xAPBSC: mi4.homeseer.scafell.91: VIOMBoard.Input14GJDRFXEnable
 </pre> </code>
-Le XPA-définis
-Nom défini par l'utilisateur
+Le xPA-d&#233;finis
+Nom d&#233;fini par l'utilisateur
 remplit le nom d'utilisateur JMRI, par exemple:
 <code> <pre>
-  Entrée 14 GJD RFX Activer
-</pre> <// code>
-Vous pouvez modifier ultérieurement le nom d'utilisateur JMRI
+  Entr&#233;e 14 GJD RFX Activer
+</pre> </code>
+Vous pouvez modifier ult&#233;rieurement le nom d'utilisateur JMRI
 pour tout ce que vous souhaitez via le
-tableau d'habituel, si désiré.
+tableau habituel, si d&#233;sir&#233;.
     
 <!--#include virtual="/Footer" -->
 </body>

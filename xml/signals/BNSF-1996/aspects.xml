@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>BNSF-1996</name>
+  <date>1996</date>
+  <reference>As described in the BNSF System Special Instructions All Subdivisions No1. In effect at 0001 Central, Mountain and Pacific Continental Time, Thursday August 1, 1996.</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-12-30</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 9.1.3</rule>
+      <indication>Proceed</indication>
+      <speed>Normal</speed>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>22</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Limited</name>
+      <rule>Rule 9.1.4</rule>
+      <indication>Proceed prepared to pass next signal not exceeding 60 MPH and be prepared to enter diverging route at prescribed speed.</indication>
+      <speed>Normal</speed>
+      <speed>Medium</speed>
+      <speed2>Sixty</speed2>
+      <route>Normal</route>
+      <dccAspect>21</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 9.1.5</rule>
+      <indication>Proceed prepared to pass next signal not exceeding 50 MPH and be prepared to enter diverging route at prescribed speed.</indication>
+      <speed>Normal</speed>
+      <speed>Medium</speed>
+      <speed2>Fifty</speed2>
+      <route>Normal</route>
+      <dccAspect>20</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Medium (Diverging)</name>
+      <rule>Rule 9.1.6</rule>
+      <indication>Proceed prepared to pass next signal not exceeding 40 MPH  and be prepared to enter diverging route at prescribed speed.</indication>
+      <speed>Medium</speed>
+      <speed>Slow</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>18</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 9.1.6</rule>
+      <indication>Proceed prepared to pass next signal not exceeding 40 MPH  and be prepared to enter diverging route at prescribed speed.</indication>
+      <speed>Normal</speed>
+      <speed>Slow</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>19</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Restricting</name>
+      <rule>Rule 9.1.7</rule>
+      <indication>Proceed prepared to pass next signal at restricted speed.</indication>
+      <speed>Normal</speed>
+      <speed>Medium</speed>
+      <speed2>Restricting</speed2>
+      <route>Normal</route>
+      <dccAspect>16</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 9.1.8</rule>
+      <indication>Proceed prepared to stop at next signal, trains exceeding 30 MPH immediately reduce to that speed.</indication>
+      <speed>Medium</speed>
+      <speed>Slow</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>17</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Clear</name>
+      <rule>Rule 9.1.9</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout. (Prescribed speed is 60 MPH).</indication>
+      <speed>Sixty</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Clear (Fifty)</name>
+      <rule>Rule 9.1.9</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout. (Prescribed speed is 50 MPH).</indication>
+      <speed>Fifty</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Clear (Medium)</name>
+      <rule>Rule 9.1.9</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout. (Prescribed speed is 40 MPH and route is primary divergance).</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Clear (Slow)</name>
+      <rule>Rule 9.1.9</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout. (Prescribed speed is 40 MPH or less and route is secondary divergance).</indication>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>13</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach Diverging</name>
+      <rule>Rule 9.1.10</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to advance on diverging route at the next signal not exceeding prescribed speed through turnout. (Prescribed speed is 60 MPH).</indication>
+      <speed>Normal</speed>
+      <speed>Sixty</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach Diverging (Fifty)</name>
+      <rule>Rule 9.1.10</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to advance on diverging route at the next signal not exceeding prescribed speed through turnout. (Prescribed speed is 50 MPH).</indication>
+      <speed>Fifty</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach Diverging (Medium)</name>
+      <rule>Rule 9.1.10</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to advance on diverging route at the next signal not exceeding prescribed speed through turnout. (Prescribed speed is 40 MPH or less).</indication>
+      <speed>Medium</speed>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach Medium</name>
+      <rule>Rule 9.1.11</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to pass next signal not exceeding 35 MPH.</indication>
+      <speed>Medium</speed>
+      <speed>Slow</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+      <dccAspect>10</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach</name>
+      <rule>Rule 9.1.12</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout, approach next signal preparing to stop. Trains exceeding 30 MPH immediately reduce to that speed. (Route is primary divergance).</indication>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+      <dccAspect>9</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach (Slow)</name>
+      <rule>Rule 9.1.12</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to stop at next signal, trains exceeding 30 MPH immediately reduce to that speed. (Route is secondary divergance).</indication>
+      <speed>Slow</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 9.1.13</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Normal</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricting (Diverging)</name>
+      <rule>Rule 9.1.13</rule>
+      <indication>Proceed at restricted speed. (Route is diverging).</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Diverging</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 9.1.15</rule>
+      <indication>Stop, then proceed at restricted speed.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 9.1.15</rule>
+      <indication>Stop.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Unlit</name>
+      <rule>-</rule>
+      <indication>Unlit</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
+  </aspects>
+  <imagetypes>
+    <imagetype type="aspects" />
+    <imagetype type="noflash" />
+  </imagetypes>
+  <appearancefiles>
+    <appearancefile href="appearance-SE-1A.xml" />
+    <appearancefile href="appearance-SE-1R.xml" />
+    <appearancefile href="appearance-SE-1S.xml" />
+    <appearancefile href="appearance-SE-1D.xml" />
+    <appearancefile href="appearance-SE-2A.xml" />
+    <appearancefile href="appearance-SE-2R.xml" />
+    <appearancefile href="appearance-SE-2S.xml" />
+    <appearancefile href="appearance-SE-2D.xml" />
+    <appearancefile href="appearance-SE-3A.xml" />
+    <appearancefile href="appearance-SL-1A.xml" />
+    <appearancefile href="appearance-SL-1P.xml" />
+    <appearancefile href="appearance-SL-1R.xml" />
+    <appearancefile href="appearance-SL-1S.xml" />
+    <appearancefile href="appearance-SL-1D.xml" />
+    <appearancefile href="appearance-SL-2A.xml" />
+    <appearancefile href="appearance-SL-2L.xml" />
+    <appearancefile href="appearance-SL-2R.xml" />
+    <appearancefile href="appearance-SL-2S.xml" />
+    <appearancefile href="appearance-SL-2SL.xml" />
+    <appearancefile href="appearance-SL-2D.xml" />
+    <appearancefile href="appearance-SL-2DL.xml" />
+    <appearancefile href="appearance-SL-3A.xml" />
+    <appearancefile href="appearance-SL-3L3.xml" />
+    <appearancefile href="appearance-SL-3L2.xml" />
+  </appearancefiles>
+</aspecttable>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: DuplexGroupTabbedPanel.shtml,v 1.0 2011/11/05 10:23:07 B. Milhaupt Exp $ -->
+<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -7,7 +7,7 @@
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="B. Milhaupt" name=Author>
-    <META name="keywords" content="JMRI configure LocoNet UR92">
+    <META name="keywords" content="JMRI configure LocoNet UR92 UR92CE">
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -62,6 +62,8 @@
 modify the Duplex Group identification information associated with a Digitrax 
 Duplex wireless network.  It also can scan the Duplex channels for radio 
 interference.</p>
+<p>This tool supports both the UR92 and the UR92CE.  For clarity, this text and 
+this tool uses the term UR92.</p>
 <p>This tool provides the same basic features as provided by the Digitrax 
 program "DuplexGroupSetup".  Duplex network "identification" information may 
 read and changed by using the fields availble in the "Group Identity" tab.  

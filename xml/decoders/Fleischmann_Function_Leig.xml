@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved-->
+<!-- $ $-->
+<!-- -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under-->
+<!-- the terms of version 2 of the GNU General Public License as published-->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy-->
+<!-- of this license.-->
+<!-- -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT-->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or-->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License-->
+<!-- for more details.-->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<version author="Xavier Chazelle" version="1.0" lastUpdated="2012/12/08"/>
+	<decoder>
+		<family name="Fleischmann function decoders" mfg="Fleischmann">
+			<model model="Leig Einheit: 2 specific decoders">
+			</model>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
+		<variables>
+			<variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="04" readOnly="yes">
+				<shortAddressVal/>
+			</variable>
+			<variable label="Decoder Lock Feature" CV="15" item="Decoder Lock Feature" comment="Adressed van for programming" default="01" mask="XXXXXXVV">
+				<enumVal>
+					<enumChoice choice="no decoder selected - locked"/>
+					<enumChoice choice="brake van selected nr1"/>
+					<enumChoice choice="non-brake van selected nr2"/>
+				</enumVal>
+			</variable>
+			<variable label="Manufacturer Version No: " CV="7" item="Decoder Version" default="110" readOnly="yes">
+				<decVal/>
+			</variable>
+			<variable label="Manufacturer ID: " CV="8" item="Manufacturer" default="155" readOnly="yes">
+				<decVal/>
+			</variable>
+			<variable label="Extended Address" CV="17" comment="4 digit address (Range 128-10240)" item="Long Address">
+				<longAddressVal/>
+				<label>Long Address</label>
+				<tooltip>Long Address: Each van should get the same address see Leig pane</tooltip>
+				<comment>4 digit address (Range 128-10240) van selected trhough CV 15</comment>
+			</variable>
+			<variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="Sets the speed step mode default 28/128">
+				<enumVal>
+					<enumChoice choice="14">
+						<choice>14</choice>
+					</enumChoice>
+					<enumChoice choice="28/128">
+						<choice>28/128</choice>
+					</enumChoice>
+				</enumVal>
+			</variable>
+			<variable label="Protocol" CV="29" default="1" mask="XXXXXVXX" comment="automatic detection see CV 12">
+				<enumVal>
+					<enumChoice choice="DCC only"/>
+					<enumChoice choice="automatic detection"/>
+				</enumVal>
+			</variable>
+			<variable label="Address Format" CV="29" default="0" mask="XXVXXXXX">
+				<enumVal>
+					<enumChoice choice="One byte (short) address"/>
+					<enumChoice choice="Two byte (extended) address"/>
+				</enumVal>
+			</variable>
+			<variable label="SX2 protocol" CV="12" mask="XXXXVXXX" default="1" item="SX protocol" tooltip="Sets on SX2 protocol">
+				<enumVal>
+					<enumChoice choice="not SX2"/>
+					<enumChoice choice="SX2"/>
+				</enumVal>
+			</variable>
+			<variable label="DCC protocol" CV="12" mask="XVXXXXXX" default="1" item="DCC protocol" tooltip="Sets on DCC protocol">
+				<enumVal>
+					<enumChoice choice="not DCC"/>
+					<enumChoice choice="DCC"/>
+				</enumVal>
+			</variable>
+			<!-- Specific variables definition for doors and light of  Leig Einheit-->
+			<variable label="Doors operation mode" CV="62" mask="XXXXXXXV" default="1">
+				<enumVal>
+					<enumChoice choice="Throttle control"/>
+					<enumChoice choice="Fn button control"/>
+				</enumVal>
+			</variable>
+			<variable label="Doors movement speed" CV="64" tooltip="min=2, max=16" default="8">
+				<decVal max="16" min="2"/>
+			</variable>
+			<variable label="Doors moving time" CV="65" tooltip="min=10, max=127" default="25">
+				<decVal max="127" min="10"/>
+			</variable>
+			<variable label="Internal light intensity" CV="63" tooltip="min=1, max=16" default="10">
+				<decVal max="16" min="1"/>
+			</variable>
+			<!-- Specific variables definition for doors and light of  Leig Einheit-->
+			<variable label="FL(f) controls light" CV="33" mask="XXVXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="FL(f) controls right door" CV="33" mask="XVXXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="FL(f) controls left door" CV="33" mask="VXXXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="FL(r) controls light" CV="34" mask="XXVXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="FL(r) controls right door" CV="34" mask="XVXXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="FL(r) controls left door" CV="34" mask="VXXXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<!--		F1 Button dedicated to van 1 only - brake van-->
+			<variable label="F1 controls light" CV="35" mask="XXVXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F1 controls right door" CV="35" mask="XVXXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F1 controls left door" CV="35" mask="VXXXXXXX" default="1">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<!--		F2 Button dedicated to van 1 only - brake van-->
+			<variable label="F2 controls light" CV="36" mask="XXVXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F2 controls right door" CV="36" mask="XVXXXXXX" default="1">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F2 controls left door" CV="36" mask="VXXXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<!--		F3 Button dedicated to van 2 only - non-brake van-->
+			<variable label="F3 controls light" CV="37" mask="XXVXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F3 controls right door" CV="37" mask="XVXXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F3 controls left door" CV="37" mask="VXXXXXXX" default="1">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<!--		F4 Button dedicated to van 2 only - non-brake van-->
+			<variable label="F4 controls light" CV="38" mask="XXXXXVXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F4 controls right door" CV="38" mask="XXXXVXXX" default="1">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F4 controls left door" CV="38" mask="XXXVXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<!--		F5 Button dedicated to van 1 only - brake van-->
+			<variable label="F5 controls light" CV="39" mask="XXXXXVXX" default="1">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F5 controls right door" CV="39" mask="XXXXVXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F5 controls left door" CV="39" mask="XXXVXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<!--		F6 Button dedicated to van 2 only - non-brake van-->
+			<variable label="F6 controls light" CV="40" mask="XXXXXVXX" default="1">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F6 controls right door" CV="40" mask="XXXXVXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F6 controls left door" CV="40" mask="XXXVXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F7 controls light" CV="41" mask="XXXXXVXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F7 controls right door" CV="41" mask="XXXXVXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F7 controls left door" CV="41" mask="XXXVXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F8 controls light" CV="42" mask="XXXXXVXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F8 controls right door" CV="42" mask="XXXXVXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F8 controls left door" CV="42" mask="XXXVXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F9 controls right door" CV="43" mask="XXXXXXXV" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F9 controls left door" CV="43" mask="XXXXXXVX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F10 controls right door" CV="44" mask="XXXXXXXV" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+			<variable label="F10 controls left door" CV="44" mask="XXXXXXVX" default="0">
+				<enumVal>
+					<enumChoice choice="No"/>
+					<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		</variables>
+		<resets>
+			<factReset label="Reset All CVs - selected unit dependent" CV="8" default="8"/>
+		</resets>
+	</decoder>
+	<pane>
+	    <name>Function Map</name>
+		<column>
+			<row>
+				<column>
+					<label label="Each decoder must be programmed separately See Leig Einheit Specific pane"/>
+					<label label="Functions F1,F2,F5 work only for brake van - F3,F4,F6 for non-brake van - are display accordingly"/>
+					<label label=" "/>
+				</column>
+			</row>
+			<separator/>
+			<separator/>
+			<row>
+				<column>
+					<label label="Lighting"/>
+					<label label=" "/>
+					<display item="FL(f) controls light" tooltip="CV 33, Bit 6" format="checkbox"/>
+					<display item="FL(r) controls light" tooltip="CV 34, Bit 6" format="checkbox"/>
+					<display item="F1 controls light" tooltip="CV 35, Bit 6" format="checkbox"/>
+					<label label=" "/>
+					<display item="F2 controls light" tooltip="CV 36, Bit 6" format="checkbox"/>
+					<label label=" "/>
+					<display item="F3 controls light" tooltip="CV 37, Bit 6" format="checkbox"/>
+					<label label=" "/>
+					<display item="F4 controls light" tooltip="CV 38, Bit 3" format="checkbox"/>
+					<label label=" "/>
+					<display item="F5 controls light" tooltip="CV 39, Bit 3" format="checkbox"/>
+					<label label=" "/>
+					<display item="F6 controls light" tooltip="CV 40, Bit 3" format="checkbox"/>
+					<label label=" "/>
+					<display item="F7 controls light" tooltip="CV 41, Bit 3" format="checkbox"/>
+					<display item="F8 controls light" tooltip="CV 42, Bit 3" format="checkbox"/>
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
+				</column>
+				<column>
+					<label label="Right Door"/>
+					<label label=" "/>
+					<display item="FL(f) controls right door" tooltip="CV 33, Bit 7" format="checkbox"/>
+					<display item="FL(r) controls right door" tooltip="CV 34, Bit 7" format="checkbox"/>
+					<display item="F1 controls right door" tooltip="CV 35, Bit 7" format="checkbox"/>
+					<label label="                      F1: brake van only"/>
+					<display item="F2 controls right door" tooltip="CV 36, Bit 7" format="checkbox"/>
+					<label label="                      F2: brake van only"/>
+					<display item="F3 controls right door" tooltip="CV 37, Bit 7" format="checkbox"/>
+					<label label="                   F3: non-brake van only"/>
+					<display item="F4 controls right door" tooltip="CV 38, Bit 4" format="checkbox"/>
+					<label label="                   F4: non-brake van only"/>
+					<display item="F5 controls right door" tooltip="CV 39, Bit 4" format="checkbox"/>
+					<label label="                      F5: brake van only"/>
+					<display item="F6 controls right door" tooltip="CV 40, Bit 4" format="checkbox"/>
+					<label label="                   F6: non-brake van only"/>
+					<display item="F7 controls right door" tooltip="CV 41, Bit 4" format="checkbox"/>
+					<display item="F8 controls right door" tooltip="CV 42, Bit 4" format="checkbox"/>
+					<display item="F9 controls right door" tooltip="CV 43, Bit 1" format="checkbox"/>
+					<display item="F10 controls right door" tooltip="CV 44, Bit 1" format="checkbox"/>
+				</column>
+				<column>
+					<label label="Left Door"/>
+					<label label=" "/>
+					<display item="FL(f) controls left door" tooltip="CV 33, Bit 8" format="checkbox"/>
+					<display item="FL(r) controls left door" tooltip="CV 34, Bit 8" format="checkbox"/>
+					<display item="F1 controls left door" tooltip="CV 35, Bit 8" format="checkbox"/>
+					<label label=" "/>
+					<display item="F2 controls left door" tooltip="CV 36, Bit 8" format="checkbox"/>
+					<label label=" "/>
+					<display item="F3 controls left door" tooltip="CV 37, Bit 8" format="checkbox"/>
+					<label label=" "/>
+					<display item="F4 controls left door" tooltip="CV 38, Bit 5" format="checkbox"/>
+					<label label=" "/>
+					<display item="F5 controls left door" tooltip="CV 39, Bit 5" format="checkbox"/>
+					<label label=" "/>
+					<display item="F6 controls left door" tooltip="CV 40, Bit 5" format="checkbox"/>
+					<label label=" "/>
+					<display item="F7 controls left door" tooltip="CV 41, Bit 5" format="checkbox"/>
+					<display item="F8 controls left door" tooltip="CV 42, Bit 5" format="checkbox"/>
+					<display item="F9 controls left door" tooltip="CV 43, Bit 1" format="checkbox"/>
+					<display item="F10 controls left door" tooltip="CV 44, Bit 1" format="checkbox"/>
+				</column>
+			</row>
+		</column>
+	</pane>
+	<pane>
+	    <name>Leig Einheit Specific</name>
+		<column>
+			<row>
+				<column>
+					<label label="Leig Einheit include one decoder per van. Both decoders are identical and have the same address."/>
+					<label label=" "/>
+					<label label="             IMPORTANT: Each decoder must be separately programmed for all CVs"/>
+					<label label=" "/>
+				</column>
+			</row>
+			<row>
+				<column>
+					<label label="CV15 defines which decoder is programmed"/>
+					<label label="CV16 has a different value in each decoder and is compared to CV15 to allow programmation or lock"/>
+					<label label="Van 1 (brake van) defined as 1 in CV16  -  Van 2 (van without brake-house) defined as 2 in CV16"/>
+					<label label=" "/>
+					<label label="It is preferable to use the MULTIPLE DECODER TOOL to select CV15 value"/>
+					<label label=" "/>
+					<display item="Decoder Lock Feature"/>
+					<label label="when using this command, write it alone and immediately"/>
+				</column>
+			</row>
+			<separator/>
+			<separator/>
+			<row>
+				<column>
+					<label label="light intensity value: (min:1 max:16)"/>
+					<display item="Internal light intensity" tooltip="CV 63, value between 1 and 16"/>
+				</column>
+				<column>
+					<label label="                                "/>
+				</column>
+				<separator/>
+				<column>
+					<label label="            "/>
+				</column>
+				<column>
+					<label label="Numeric Protocol SX2 or DCC or both"/>
+					<display item="SX2 protocol" tooltip="CV 12"/>
+					<display item="DCC protocol" tooltip="CV 12"/>
+					<display item="Protocol" tooltip="CV 12"/>
+				</column>
+			</row>
+			<separator/>
+			<row>
+				<column>
+					<label label="                                                                         DOORS"/>
+					<label label="Doors movement control: "/>
+					<label label="by Fn buttons in on/off mode or by throttle for movement direction (can generate a conflict if a loc has the same address)"/>
+					<display item="Doors operation mode" tooltip="change only if mandatory"/>
+					<label label=" "/>
+					<label label="Doors movement speed: (minimal speed:2) (maximal speed: 16) "/>
+					<display item="Doors movement speed"/>
+					<label label=" "/>
+					<label label="Doors closing or opening time: (min:10 max:127) - 50ms per unit i.e. 25 represents 1.25s"/>
+					<label label="a too large value can damage the friction mecanism - has to be considered with speed value"/>
+					<display item="Doors moving time" tooltip="avoid too long time - damage danger"/>
+				</column>
+			</row>
+		</column>
+	</pane>
+</decoder-config>

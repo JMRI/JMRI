@@ -1,8 +1,10 @@
 /**********************************************************************************************
 * 
-* JMRI JSON WebSockets and Ajax communication javascript (with support for throttles - script 'ThrottleMonitor.py' must be loaded)
+* JMRI JSON WebSockets and Ajax communication javascript 
+* File version 1.0 (old): script 'ThrottleMonitor.py' must be loaded for throttle support
+* File version 2.0: native JSON throttle support - doesn't need script 'ThrottleMonitor.py' anymore
 * 
-* >>> This file version: 1.0 - from original 'jquery.jmri.js' modified by Oscar Moutinho (oscar.moutinho@gmail.com)
+* >>> This file version: 2.1 - from original 'jquery.jmri.js' modified by Oscar Moutinho (oscar.moutinho@gmail.com)
 * 
 * Using HTML5 and jQuery 2...
 * Note that this JMRI extension relies on the jquery-websocket v.0.0.4 extension.
@@ -25,8 +27,8 @@
 			jmri.fullData = function(data) {};
 			jmri.error = function(code, message) {};
 			jmri.end = function() {};
-			jmri.refresh = function() {};
 			jmri.ready = function(jsonVersion, jmriVersion, railroadName) {};
+			jmri.throttle = function(name, address, speed, forward, fs) {};
 			jmri.light = function(name, userName, comment, state) {};
 			jmri.reporter = function(name, userName, state, comment, report, lastReport) {};
 			jmri.sensor = function(name, userName, comment, inverted, state) {};
@@ -36,11 +38,6 @@
 			jmri.route = function(name, userName, comment, state) {};
 			jmri.memory = function(name, userName, comment, value) {};
 			jmri.power = function(state) {};
-			jmri.throttleError = function(message) {};
-			jmri.throttleAddress = function(address) {};
-			jmri.throttleSpeed = function(address, speed) {};
-			jmri.throttleDirection = function(address, forward) {};
-			jmri.throttleFunctionState = function(address, functionNumber, active) {};
 			// Add user-defined handlers to the settings object
 			$.extend(jmri, bindings);
 			// Constants
@@ -62,11 +59,6 @@
 			jmri.EMERGENCY_STOP = '-1.0';
 			jmri.STOP = '0.0';
 			jmri.FULL_SPEED = '1.0';
-			jmri.strMemVarPrefix = 'IM#THROTTLE:';
-			jmri.strMemVar_NewThrottleAddress = 'NEW_THROTTLE_ADDRESS';
-			jmri.strMemVar_Speed = '_SPEED';
-			jmri.strMemVar_Forward = '_FORWARD';
-			jmri.strMemVar_Functions = '_F';
 			// Getters and Setters
 			var roster = null;
 			jmri.getRosterGroups = function() {
@@ -162,7 +154,7 @@
 			var loadRoster = function() {	//Retrieve roster
 				var roster = null;
 				$.ajax({
-					url: '/prefs/roster.xml',
+					url: '/roster?format=xml',
 					async: false,
 					cache: false,
 					type: 'GET',
@@ -171,7 +163,12 @@
 						if(jqXHR.status == 404) jmri.error(jqXHR.status, 'Roster empty.\nNo locos defined in JMRI.');
 						else jmri.error(jqXHR.status, 'Response:\n' + jqXHR.responseText + '\n\nError:\n' + errorThrown);
 					},
-					success: function(xmlReturned, status, jqXHR) {roster = $(xmlReturned);}
+					success: function(xmlReturned, status, jqXHR) {
+                                            roster = $(xmlReturned);
+                                            if (xmlReturned === null) {
+                                                jmri.error(200, 'Roster empty.\nNo locos defined in JMRI.');
+                                            }
+                                        }
 				});
 				return roster;
 			};
@@ -190,27 +187,23 @@
 				});
 				return list;
 			};
+			var heartbeatDelay;	// Heartbeat timer delay
 			var heartbeat = null;	// Heartbeat timer
 			jmri.closeSocket = function() {jmri.socket.close();};
 			jmri.getJMRI = function(type, name) {
-				if (!heartbeat) {jmri.error(0, 'JMRI not ready.'); return;}
+				if (!heartbeat) {jmri.error(0, 'The JMRI WebSocket service is not ready.\nSolve the problem and refresh web page.'); return;}
 				var lp = (name) ? {"name":name} : {};
 				jmri.toSend(JSON.stringify({"type":type,"data":lp}));
 				jmri.socket.send(type, lp);
 			};
 			jmri.setJMRI = function(type, name, args) {
-				if (!heartbeat) {jmri.error(0, 'JMRI not ready.'); return;}
-				var lp = (name) ? {"name":name} : {};
+				if (!heartbeat) {jmri.error(0, 'The JMRI WebSocket service is not ready.\nSolve the problem and refresh web page.'); return;}
+				var lp;
+				if (type == 'throttle') lp = (name) ? {"throttle":name} : {};
+				else lp = (name) ? {"name":name} : {};
 				jmri.toSend(JSON.stringify({"type":type,"data":jmri.jsonConcat(lp, args)}));
 				jmri.socket.send(type, jmri.jsonConcat(lp, args));
 			};
-			jmri.selectThrottle = function(address) {jmri.setJMRI('memory', jmri.strMemVarPrefix + jmri.strMemVar_NewThrottleAddress, {"value":address});};
-			jmri.getThrottleSpeed = function(address) {jmri.getJMRI('memory', jmri.strMemVarPrefix + address + jmri.strMemVar_Speed);};
-			jmri.setThrottleSpeed = function(address, speed) {jmri.setJMRI('memory', jmri.strMemVarPrefix + address + jmri.strMemVar_Speed, {"value":speed});};
-			jmri.getThrottleDirection = function(address) {jmri.getJMRI('memory', jmri.strMemVarPrefix + address + jmri.strMemVar_Forward);};
-			jmri.setThrottleForward = function(address, forward) {jmri.setJMRI('memory', jmri.strMemVarPrefix + address + jmri.strMemVar_Forward, {"value":forward});};
-			jmri.getThrottleFunctionState = function(address, functionNumber) {jmri.getJMRI('memory', jmri.strMemVarPrefix + address + jmri.strMemVar_Functions + functionNumber);};
-			jmri.setThrottleFunction = function(address, functionNumber, active) {jmri.setJMRI('memory', jmri.strMemVarPrefix + address + jmri.strMemVar_Functions + functionNumber, {"value":active});};
 			jmri.jsonConcat = function(o1, o2) {	// Concatenate JSON name-value pair lists
 				var o = {};
 				var key;
@@ -224,28 +217,25 @@
 					if (heartbeat) {
 						clearInterval(heartbeat);
 						heartbeat = null;
-						jmri.refresh();
 					}
 				},
 				message: function(e) {jmri.fullData(e.originalEvent.data);},
 				events: {
-					error: function(e) {
-						if (e.data.code == 404 && e.data.message.split(':')[0] === 'Unable to access memory ' + jmri.strMemVarPrefix.split(':')[0]) {
-							var s = e.data.message.split(':')[1];
-							if (s === jmri.strMemVar_NewThrottleAddress + '.') jmri.throttleError('Please, load the script \'ThrottleMonitor.py\'.\n(it may be loaded at JMRI startup - see Settings)');
-							else jmri.throttleError('Memory Variable \'' + jmri.strMemVarPrefix + s.split('.')[0] + '\' doesn\'t exist.\nSelect a throttle with the corresponding address.\nIf error persists, restart JMRI.');
-						} else jmri.error(e.data.code, e.data.message);	// Error not related to throttle
-					},
+					error: function(e) {jmri.error(e.data.code, e.data.message);},
 					pong: function(e) {},
 					goodbye: function(e) {
-						clearInterval(heartbeat);
-						heartbeat = null;
 						jmri.socket.close();
 						jmri.end();
 					},
 					hello: function(e) {	// Handle the initial handshake response from the server
-						heartbeat = setInterval(function() {jmri.toSend(JSON.stringify({"type":"ping"})); jmri.socket.send('ping');}, e.data.heartbeat);
+						heartbeatDelay = e.data.heartbeat;
+						heartbeat = setInterval(function() {jmri.toSend(JSON.stringify({"type":"ping"})); jmri.socket.send('ping');}, heartbeatDelay);
 						jmri.ready(e.data.json, e.data.JMRI, e.data.railroad);
+					},
+					throttle: function(e) {
+						var functions = new Array(29);
+						for (var i = 0; i < 29; i++) functions[i] = e.data['F' + i];
+						jmri.throttle(e.data.throttle, e.data.address, e.data.speed, e.data.forward, functions);
 					},
 					light: function(e) {jmri.light(e.data.name, e.data.userName, e.data.comment, e.data.state);},
 					reporter: function(e) {jmri.reporter(e.data.name, e.data.userName, e.data.state, e.data.comment, e.data.report, e.data.lastReport);},
@@ -254,27 +244,7 @@
 					signalHead: function(e) {jmri.signalHead(e.data.name, e.data.userName, e.data.comment, e.data.lit, e.data.appearance, e.data.held, e.data.state, e.data.appearanceName);},
 					signalMast: function(e) {jmri.signalMast(e.data.name, e.data.userName, e.data.aspect, e.data.lit, e.data.held, e.data.state);},
 					route: function(e) {jmri.route(e.data.name, e.data.userName, e.data.comment, e.data.state);},
-					memory: function(e) {
-						if (e.data.name.split(':')[0] === jmri.strMemVarPrefix.split(':')[0]) {
-							var s = e.data.name.split(':')[1];
-							if (s == jmri.strMemVar_NewThrottleAddress) {
-								if (e.data.value.split('-')[1] === 'OK') jmri.throttleAddress(e.data.value.split('-')[0]);
-							} else {
-								var n = s.split('_')[0];
-								switch ('_' + s.split('_')[1]) {
-									case jmri.strMemVar_Speed:
-										jmri.throttleSpeed(n, e.data.value);
-										break;
-									case jmri.strMemVar_Forward:
-										jmri.throttleDirection(n, e.data.value);
-										break;
-									default:
-										var f = s.split('F')[1];
-										jmri.throttleFunctionState(n, f, e.data.value);
-								}
-							}
-						} else jmri.memory(e.data.name, e.data.userName, e.data.comment, e.data.value);	// The name does not started with the content of [jmri.strMemVarPrefix]
-					},
+					memory: function(e) {jmri.memory(e.data.name, e.data.userName, e.data.comment, e.data.value);},
 					power: function(e) {jmri.power(e.data.state);}
 				}
 			});

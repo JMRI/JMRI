@@ -1,46 +1,46 @@
-// QualifierCombiner.java
-
 package jmri.jmrit.symbolicprog;
 
 import java.util.List;
 
 /**
- * Force a set of Qualifiers to work in an AND relationship
+ * Force a set of Qualifiers to work in an AND relationship.
+ * <P>
+ * On transition, the qualifiers are evaluated in order, stopping when the
+ * outcome is known.
  *
- * @author			Bob Jacobsen   Copyright (C) 2011
- * @version			$Revision: -1$
+ * @author	Bob Jacobsen Copyright (C) 2011
  *
  */
 public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeListener {
-    
-    public QualifierCombiner(VariableValue qualifiedVal, List<ValueQualifier> qualifiers) {
+
+    public QualifierCombiner(List<Qualifier> qualifiers) {
         this.qualifiers = qualifiers;
-        this.qualifiedVal = qualifiedVal;
-        
-        qualifiedVal.addPropertyChangeListener(this);
-        
-        setWatchedAvailable(availableCombinedState());
+
+        setWatchedAvailable(currentDesiredState());
 
     }
 
-    VariableValue qualifiedVal;
-    List<ValueQualifier> qualifiers;
-    
+    List<Qualifier> qualifiers;
+
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("Available"))
-            // this was a change, may want to change it back
-            setWatchedAvailable(availableCombinedState());  // relies on non-propogation of null changes
+        // this was a change, may want to change it back
+        setWatchedAvailable(currentDesiredState());  // relies on non-propogation of null changes
     }
 
-    protected void setWatchedAvailable(boolean enable) {
-        qualifiedVal.setAvailable(enable);
+    public void setWatchedAvailable(boolean enable) {
+        qualifiers.get(0).setWatchedAvailable(enable);
     }
 
-    protected boolean availableCombinedState() {
-        for (ValueQualifier q: qualifiers) {
-            if (! q.currentDesiredState()) return false;
+    public boolean currentDesiredState() {
+        for (Qualifier q : qualifiers) {
+            if (!q.currentDesiredState()) {
+                return false;
+            }
         }
         return true;
     }
-        
+
+    public void update() {
+        setWatchedAvailable(currentDesiredState());
+    }
 }

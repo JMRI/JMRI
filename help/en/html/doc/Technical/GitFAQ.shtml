@@ -1,0 +1,705 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title>
+ 	JMRI: Git FAQ
+    </title>
+
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI technical code Git FAQ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+
+<!-- FAQ-Head -->
+  <script type="text/javascript">/*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/</script>
+  <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen">
+<!-- /FAQ-Head -->
+
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+<h1>JMRI: Git FAQ</h1>
+
+<p>This is a list of Frequently Asked Questions for Git,
+   particularly regarding how we use it with JMRI.</p>
+
+<p>There's a 
+<a href="getgitcode.shtml">separate JMRI Help page</a>
+on how to 
+<a href="getgitcode.shtml">get the code with Git</a>.</p>
+
+<p>See also the <a href="index.shtml">Technical index</a>
+   for more information on maintaining JMRI code.</p>
+
+<h2>Common User Topics</h2>
+
+<dl class="faq">
+
+	<dt id="install" class="on">How do I install Git?</dt>
+	<dd>
+  Git is free software.  Depending on your computer type and your preferences,
+  there are several ways to install it. There's more info in the Git community's
+  <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Getting Started</a> guide.
+
+      <ul>
+      <li>Get it from the <a href="http://git-scm.com/downloads">Git download page</a>.
+      <li>It comes with the GitHub Desktop application,
+	    available from the <a href="https://desktop.github.com">Git desktop download page</a> (OS X and Windows only).
+      <li>On the Mac, it's included when you <a href="https://developer.apple.com/xcode/download/">install Xcode</a>.
+      <li>On Linux you can use your package installer, e.g. <code>sudo yum install git</code> or <code>sudo apt-get install git</code>.
+      </ul>
+	</dd>
+
+  <dt>Setting up a Git environment for JMRI Developers</dt>
+  <dd>
+	You can set your local repository to pull automatically
+	from the JMRI master on GitHub and push to your fork (also on GitHub):
+	<p>
+	<img src="/web/images/GitHubWorkflow.png">
+	<p>
+	That horizontal arrow is the &quot;Pull Request&quot; (and subsequent
+	pull) that records information about how things get into
+	the repository.
+	<p>
+	The arrows are both operations (push, pull) and also
+	definitions of <em>where</em> to look e.g. a URL.  Git can store
+	shorthand for a URL, called a &quot;remote&quot;.  The default remote
+	is called &quot;origin&quot;.  You can have many remotes defined.
+	<p>
+	Via the git command line tool you do this with this command:
+	<blockquote>
+		<code>$ git remote set-url --push origin https://github.com/<em>username</em>/JMRI.git</code>
+	</blockquote>
+	where <code>username</code> is your github user name.  You can check the
+	current status with of the push and pull repositories with:
+	<blockquote>
+		<code>$ git remote -v</code></br>
+		<code>origin    https://github.com/JMRI/JMRI.git (fetch)</code><br/>
+		<code>origin    https://github.com/<em>username</em>/JMRI.git (push)</code><br/>
+	</blockquote>
+
+	This says that, by default, fetches and pulls come from the
+	main JMRI/JMRI repository.  When you push, on the other hand,
+	it goes to your own repository.
+	<p>
+	Once you have a copy of your changes on GitHub, it is easy to 
+	<a href="https://help.github.com/articles/creating-a-pull-request/">generate a pull request</a> (link to GitHub):
+	<ul>
+	<li> In a browser, navigate to your repository on GitHub that has the changes you want someone else to pull and
+	<li> press the green compare icon <img src="/web/images/GitHubPR1.png">, then click on Create Pull Request.
+	<li> After your pull request has been reviewed, it can be
+	     merged back in to the main JMRI/JMRI repository.  The
+	     JMRI developer who &quot;pulls&quot; your changes into the
+	     community source needs to have access to an online
+	     repository that has your changes, which is why you
+	     need to have a place on GitHub in the first place...
+	</ul>
+	</dd>
+
+	<dt id="working">Working with Git</dt>
+	<dd>
+      <p>With SVN and CVS, you check out a &quot;working directory&quot; to make your
+      changes in, work in it for a while, and eventually commit all your changes back to the main repository.
+      <p>
+      Git works on a different idea. 
+      Instead of multiple working directories, you have a single repository that's been
+      &quot;cloned&quot; from the main repository.  If you're making individual little
+      changes, you can work directly on the default &quot;master&quot; branch within it.  If not,
+      see <A href="#branch"> Branching</a>, below.
+      <p>
+      To understand Git, it is good to know about the various <em>places</em> in your 
+      local git repository:
+      <ul>
+	      <li> The content from the &quot;remote&quot; repo, which lives under the <code>.git/</code> hidden directory,</li>
+	      <li> The &quot;staging&quot; area (also called &quot;index&quot; or &quot;cache&quot;), and </li>
+	      <li> The named &quot;branch&quot; you are using, which lives in</li>
+	      <li> The working tree.</li>
+      </ul>
+
+      <p>When you <i>clone</i> a git repo, you are creating a directory structure that holds 
+      all of these items.  Unless you tell it otherwise, the working tree starts off 
+      filled with contents of the <em>master branch</em> of the repo you cloned - and the <em>staging 
+      area</em> is empty.  As you make changes to the files in the working tree, you need
+      to explicitly <em>add</em> them to the staging area. Git knows about these files, but 
+      they aren't yet officially part of your local repo.  
+      <p>
+      Once you have populated the staging area with of all the things you have changed, a 
+      <em>commit</em> operation will, uhm, officially commit your changes to your repo's 
+      <code>.git/</code> structure.
+      <p>
+      When you <em>pull</em> or <em>push</em>, you are telling Git to synchronize your <code>.git/</code> 
+      content with that of the remote repo you originally cloned things from.
+      <p>
+      The following reference should get you started using either the git command line or GotHub Desktop:
+
+      <ul>
+      <li>Log in to GitHub and clone your own copy of the main JMRI repo.  
+	      This will give you a safe place to push and pull from without impacting others.
+	    </li>
+	    <li>Using git:
+		    <ul>
+	      <li>Clone the JMRI repo to your local system (or update it):
+		      <blockquote>
+			      <code>$ git clone https://github.com/JMRI/JMRI.git   </code><br/>
+		      or <br/>
+			      <code>$ git fetch                                    </code><br/>
+			      <code>$ git diff ...origin                           </code><br/>
+			      <code>$ git merge origin/master                      <br/>
+			      Auto-merging ... files ...	<br/>
+			      CONFLICT (content): Merge conflict in <em>some_file</em><br/>
+			      Automatic merge failed; fix conflicts and then commit the result.<br/>
+			      $ vi <em>some_file</em> # the file has the conflicts marked, edit to fix...<br/>
+			      $ git add <em>some_file</em><br/>
+			      $ git commit -m &quot;Merged master fixed conflict&quot;<br/>
+			      $ git merge origin/master                      </code><br/>
+		      or <br/>
+			      <code>$ git pull https://github.com/JMRI/JMRI.git    </code><br/>
+		      </blockquote>
+	      <li>Make your changes locally, test them, etc.
+		      <blockquote>
+			      <code>$ git add <i>newfile</i>                       </code><br/>
+			      <code>$ git rm <i>newfile</i>                        </code><br/>
+			      <code>$ git add .                                    </code><br/>
+		      <br/>
+			      <code>$ git status                                   </code><br/>
+		      <br/>
+			      <code>$ git fetch                                    </code><br/>
+			      <code>$ git merge                                    </code><br/>
+		      <br/>
+		      </blockquote>
+	      <li>Make your changes available to the community
+		      <blockquote>
+			      <code>$ git commit -m <i>&quot;commit message&quot;</i>       </code><br/>
+			      or <br/>
+			      <code>$ git commit -a -m <i>&quot;commit message&quot;</i>    </code><br/>
+		      </blockquote>
+	      </ul>
+      </li>
+      <li>Using GitHub Desktop:
+	      <ul>
+	      <li>Clone the JMRI repo to your local system by picking an item from the "Clone" tab in the File -&gt; Clone repository... menu and clicking "Clone":<br>
+	      <a href="images/GhDtCloneDialog.png"><img src="images/GhDtCloneDialog.png" width="267" height="184" alt="GitHub Desktop PR dialog"></a>
+	      </li>
+	      <li>Check your GitHub URL in the "Remote" tab from the Repository -&gt; Repository Settings menu as:<br>
+	      <a href="images/GhDtRepoSetting.png"><img src="images/GhDtRepoSetting.png" width="260" height="98" alt="GitHub Desktop Repo Setting"></a>
+	      </li>
+	      <li>Make your changes locally, test them, etc.<br>
+	      When it all works, <em>commit</em> your edit to your local JMRI repository by returning to the GitHub Desktop application, reviewing all changes noticed by the program, 
+	      enter a Summary [1] and Description [2] and finally clicking the Commit to &lt;branch&gt; [3] button:<br>
+		    <a href="images/GhDtWindow.png"><img src="images/GhDtWindow.png" width="410" height="256" alt="GitHub Desktop Window"></a>
+	      <p>After your Commit, a white dot will appear near the end of the line that looks like a siding in a <em>track plan</em>.
+	      Click it to read the title. 
+	      To see the files changed at another point in time, click an older commit dot:<br>
+		    <a href="images/GhDtWindowSeeCommit.png"><img src="images/GhDtWindowSeeCommit.png" width="456" height="79" alt="GitHub Desktop Commit"></a>
+		    <p>After a commit, your new edits are only added to your local copy of your branch. To have them show up in a place other people can see them, either click the <strong>Sync</strong>
+		    button at top right, choose Sync (Cmd-S) from the Repository menu or make Github Desktop automatically syncing after every commit by checking the Automatically Sync after Committing menu item in the Edit menu:<br>
+		    <a href="images/GhDtSyncSetting.png"><img src="images/GhDtSyncSetting.png" width="154" height="122" alt="GitHub Desktop auto sync menu"></a>
+	      </li>
+	      <li>
+	      When you've worked on something in GhDt for a week or more, other people definitely have worked on other parts of JMRI. 
+	      To integrate these new data into your copy, click the <strong>Update from JMRI/master</strong> button in the top left of the pane (or choose "Pull" from the "Repository" menu).<br>
+	      You will see an animation of a small branch symbol in a circle, moving from the straight white line down to the line below it:<br>
+			  <a href="images/GhDtUpdateFrom.png"><img src="images/GhDtUpdateFrom.png" width="456" height="79" alt="GitHub Desktop Pull"></a>
+	      <p>
+	      This tells you that new code has been copied to your repo, and in a few seconds this new code is also copied to your computer, 
+	      so you can view it or use it, unless they've been working on the same lines of code (See Resolve a Merge Conflict, below)</li>
+	      <li>To make your changes available to the community click "Pull Request" (top right button), enter a title and click "Create". 
+        <br>
+        <table><tr><td>
+		    <a href="images/GhDtPRCreate.png"><img src="images/GhDtPRCreate.png" width="129" height="215" alt="GitHub Desktop Create PR dialog"></a>
+		    <td>The name of the PR button will change into <strong>#123</strong><br>
+		    signaling you can't make another PR in this branch<br>
+		    from here (but you can still commit extra edits to it):
+	      <td>
+	      <a href="images/GhDtPRCreated.png"><img src="images/GhDtPRCreated.png" width="129" height="215" alt="GitHub Desktop PR Created message"></a>
+        </td>
+        </tr>
+        </table>
+        <p>Normally, a PR is meant for the master branch of the _original_ repo, say JMRI:master. You may pull your PR in your own remote repo,
+	      but only a couple of people, the maintainers, can pull your edits into the "real" JMRI:master. Before they do that, they study what 
+	      you've written, maybe even pull it into their own repo to test it before merging it for every other JMRI user to see.<br>
+	      When your PR is pulled &amp; merged &amp; closed, the PR #123 name will disappear and you may delete the branch safely.</li>	      
+	      </ul>
+      </li>
+      </ul>
+	 </dd>
+      
+   <dt id="branch">Branching</dt>
+   <dd>
+	      Always work on a named <em>branch</em>, never on the one named "master". Though you can work directly on
+	      the default &quot;master&quot; branch, good &quot;Git Hygiene&quot; encourages you
+	      to create a feature branch so you can work on it and never mess up your local copy of JMRI:master.  
+	      Branches in Git are easy and cheap to create and use; you can have multiple branches at the same time, 
+	      and switch between them as you work on different projects.
+
+	      <p>
+	      We recommend that you name branches starting with your GitHub account name or initials (for example, &quot;abc&quot;) 
+	      and something that suggests what you are working on:  
+	      <code>&quot;abc-decoder-xml-change&quot;</code>, 
+	      <code>&quot;abc-2015-09-14&quot;</code>, 
+	      <code>&quot;abc-next-cool-thing&quot;</code>, and
+	      <code>&quot;abc-patch-NNNN&quot;</code>
+	      are all fine.  That way, we know it's you, and you can sort out the rest.
+
+        <ul>
+        <li>Using git:
+	  	    <ul>
+		      <li>To create a branch called &quot;<em>branchname</em>&quot;, you do <br/>
+		      <blockquote>
+		      <code>git checkout -b <em>branchname</em></code><br/>
+		      </blockquote>
+	
+		      The &quot;-b&quot; says to create the branch.  To switch to an existing branch, just leave
+		      out that option:<br/>
+	
+		      <blockquote>
+		      <code>git checkout <em>branchname</em></code><br/>
+		      </blockquote>
+	
+		      To see all the current branches, do<br/>
+	
+		      <blockquote>
+		      <code>git branch</code><br/>
+		      </blockquote>
+					</li>
+					<li>
+		      If other people in the community make changes to the master branch, you can keep your 
+		      branch up to date by merging those changes in with your branch<br/>
+		      <blockquote>
+		      <code>
+		      git checkout <em>branchname</em><br/>
+		      git merge -m&quot;merging in current contents of master&quot; master
+		      </code><br/>
+		      </blockquote>
+	
+		      (If you leave off the message option, you may be prompted to add one in an editor) If any
+		      changes were picked up and merged in, you can then commit them to your branch:
+		      <blockquote>
+		      <code>git commit -a</code><br/>
+		      </blockquote>
+					</li>
+					<li>	
+		      <p>When you're done, merge your changes back into the common line of development with<br/>
+	
+		      <blockquote>
+		      <code>
+		      git checkout master<br/>
+		      git merge -m&quot;merging to master&quot; <em>branchname</em><br/>
+		      git commit -a
+		      </code>
+		      </blockquote>
+					</li>
+					<li>		      
+		      You can then delete your branch (if you're finally done 
+		      with it) with<br/>
+		      
+		      <blockquote>
+		      <code>
+		      git checkout master<br/>
+		      git branch -d branchname
+		      </code>
+		      </blockquote>
+					</li>
+					</ul>
+				</li>
+				<li>Using GitHub Desktop:
+			    <ul>
+			    <li>Click the "Add a Branch (+)" button, provide a name for your new branch and using the From: pop-up, select the branch from where you want to create the new branch:<br>
+		      <a href="images/GhDtNewBranch.png"><img src="images/GhDtNewBranch.png" width="208" height="122" alt="GitHub Desktop Repo Setting"></a>
+		      </li>
+			    <li>To delete a branch, select it in the "Show Branches" pop-up menu, and then select <strong>Delete "my-patch"</strong> from the Branch menu.<br>
+			    You can't do that with the master branch, so don't work in that, always work in a named branch. <br>
+			    <a href="images/GhDtDeleteBranch.png"><img src="images/GhDtDeleteBranch.png" width="156" height="79" alt="GitHub Desktop Repo Setting"></a>
+			    </li>
+			    </ul>
+				</li>
+				<li>You can opt to create and delete branches in Github web just as easily. More help on 
+				<a href="https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/">Github Web Branching</a>.</li>
+				</ul>
+	      
+      </dd>
+
+    <dt id="share">Sharing Branches</dt>
+      <dd>
+      One of the advantages of Git branches is that it's easy for people to share
+      them.  This lets one person work with something that another has done, 
+      including editing and improving it, without it having to be released to everybody.
+      <p>
+      Say Arnie has developed something on the "arnie-great-tool" branch.  Bill wants
+      to try to use it on his layout.  The steps are:
+      
+      <ol>
+      <li>Arnie commits it to local repository, and then pushes it to his GitHub repository.
+      <blockquote>
+      <code>
+      git checkout arnie-great-tool<br/>
+      (work on changes)<br/>
+      git commit -m"Added support for the Frobnab 2000"<br/>
+      git push
+      </code>
+      </blockquote>
+      
+      <li>Bill can then get that by pulling it from Arnie's repository. 
+      <blockquote>
+      <code>
+      git pull https://github.com/arnie/JMRI.git arnie-great-tool<br/>
+      git checkout arnie-great-tool
+      </code>
+      </blockquote>
+      where the 1st part of the "pull" is the URL for Arnie's repository.
+      
+      <li>Now Bill can work with that code, and even change it as needed.
+      If he makes changes that he wants Arnie to have, he does the same process
+      in reverse:
+      <blockquote>
+      <code>
+      git commit -m"Fixed a bug in sternerstat handling"<br/>
+      git push
+      </code>
+      </blockquote>
+      Then Arnie can merge those changes into his own copy with:
+      <blockquote>
+      <code>
+      git checkout arnie-great-tool<br/>
+      git pull https://github.com/bill/JMRI.git arnie-great-tool
+      </code>
+      </blockquote>
+      </ol>
+    </dd>
+    
+    <dt id="share">Resolving a Merge Conflict</dt>
+      <dd>
+			It's not uncommon for two or more people to have ideas about the same part of the program or the JMRI website, each making commits and 
+			PR's for parts of the same files. If they were working on different lines of text or code in one file, GitHub knows how to combine 
+			those changes into one updated file. You may have to check your proposal still works, as someone might have deleted the anchor you 
+			were referring to etc. If GHDt discovers that a change from one person was inserted into master, and you have prepared changes to 
+			the same line, GitHub Desktop asks you to help decide what to do by displaying the following Conflict screen (Note the orange dots next to one of the file names):<br>
+		  <a href="images/GhDtConflictNote.png"><img src="images/GhDtConflictNote.png" width="410" height="255" alt="GitHub Merge Conflict Note"></a>
+			<p>Click on that name and choose Show in Finder or Open with External Editor 
+			(GhDt itself has no edit tools).<br>
+			To find the spot where the Conflict occurred, look for the <code>&lt;&lt;&lt; HEAD ==== &gt;&gt;&gt; master</code> markers that were inserted by GitHub:<br>
+			<a href="images/GhDtConfictmark.png"><img src="images/GhDtConfictmark.png" width="212" height="184" alt="GitHub Merge Conflict marking in code"></a><br>
+			Choose which of both versions you wish to keep (or make some combination) and remove the <code>&lt; === &gt;</code> lines!<br>
+			<a href="images/GhDtConflictFixed.png"><img src="images/GhDtConflictFixed.png" width="212" height="184" alt="GitHub Merge Conflict solved in code"></a>
+			<p>This new proposal should still be Committed to JMRI, so give it a fitting title i.e. "Solve conflict" and click Commit (and Sync).
+			This extra commit will be added to your PR and be part of your proposal the maintainers will see. You shouldn't keep merge conflict
+			lurking overnight, as the maintainers have no way to fix them for you and they will have to ignore it till you solved it.
+      </dd>
+    
+    <dt id="ci-tests">Continuous Integration Tests</dt>
+    <dd>
+    The main JMRI repositories run a set of tests on every Pull Request (PR).  This is 
+    called Continuous Integration (CI), and is a time-proven method to keep code quality up.
+    <p>
+    You can add this to your repositor(ies) so that each push will get automatically tested.
+    <p>
+    The two CI test services are called "Travis" and "Appveyor":
+    <ul>
+    <li>Travis runs on Linux. It first does a check for wrong line ends (see
+        <a href="#lineends">later section</a>), 
+        then runs the complete set of JUnit tests, including testing screen operations.
+    <li>Appveyor runs on Windows.  It skips the line end test, as that isn't reliable on Windows.
+        In the interest of time, it also skips some of the XML format tests 
+        (Travis is covering those anyway). 
+    </ul>
+    To add these to your own repository:
+    <ul>
+    <li>For Travis, go to the 
+        <a href="https://travis-ci.org">Travis web page</a>
+        and "Sign Up".  Use your GitHub account and email.
+        At the end of that process, it will ask you which of your GitHub repositories
+        to monitor; you can select both the "JMRI" and "website" forks.
+    <li>For Appveyor, go to the 
+        <a href="https://www.appveyor.com">Appveyor web page</a>
+        and "Sign up for free".  Use your GitHub account and email.
+        At the end of that process, it will ask you which of your GitHub repositories
+        to monitor; you can select both the "JMRI" and "website" forks.
+    </ul>
+    From then on, pushing to your own repository will run the tests.  You'll get
+    an email when the tests are complete, or you can check on the web.
+    
+    <dt id="lineends">Handling Line Ends</dt>
+    <dd>
+    Mac and Linux use a LF character at the end of each line; Windows uses the CRLF pair.
+    JMRI's text files are, by convention, stored in Git with LF line ends. 
+    <p>
+    It's very important that Windows users not accidentally convert a file to CRLF line ends.
+    When that happens, Git thinks that every line has been changed: Git can no longer provide
+    useful, granular history information about earlier changes to the file.  
+    <p>
+    There is a ".gitattributes" file that tells (most) command-line Git implementations how to 
+    handle this properly.  Unfortunately, not all IDEs obey the directives in the file.
+    For example, to get NetBeans on Windows to handle line-ends properly, a 
+    specific plugin must be installed. See the 
+    <a href="NetBeans.shtml">NetBeans JMRI page</a> for specifics.
+    <p>
+    If a file with changed line-ends is accidentally committed and forwarded in a pull-request (PR), 
+    the bad file in that PR will be detected during the Travis CI test and the PI will <b>not</b> 
+    be accepted and merged.  Further, the PR will be marked with a "CRLF" label. Since the history
+    has already been lost in this file, the CRLF label reminds the maintainers that it's not sufficient
+    to just change the line-ends back to LF, commit and push:  The history has been <u>lost</u>, 
+    and more complicated measures must be taken.<br>
+    The two approaches are:
+			<ol>
+			<li>Abandon the PR and underlying edits, delete the branch, and redo it right.
+			If you're working properly, with your changes in a separate branch, and committing
+			small changes, this is the recommended course of action.
+			<li>Alternately, it's possible to use Git tools to remove the improper commit(s) from
+			the branch.  This is much more complicated.  Get one of the developers with 
+			Git expertise to do it for you, and then send them cookies as a thank-you.
+			</ol>
+    <p>Maintainers who encounter an updated PR with the CRLF label should check to see that all
+    the files in the PR do <u>not</u> show all lines changed. If they do, even if they have
+    the correct LF line ends, the PR should not be merged.</p>
+    <p>Many <a href="XmlEditors.shtml">XML Editors</a> have a Preference Setting for line ends.<br>
+    For example, in Espresso check that Line Endings are set to <strong> Unix (LF)</strong>
+    before starting to edit any JMRI file:<br> 
+    <a href="images/EspressoPrefsLF.png"><img src="images/EspressoPrefsLF.png" width="226" height="219" alt="Espresso LF Preference setting"></a>
+    </p>
+    <dd>
+    
+    <dt id="testPR">Testing a Pull Request</dt>
+    <dd>
+    <p>Pull requests are just a special case of a branch.  If you want to test them
+    before merging them into master, you can bring them into your local repository
+    and work with them.
+    <a href="images/GitHubPullPRLinks.png"><img src="images/GitHubPullPRLinks.png" align="right" width="392" height="104" alt="GitHub Web PR screen"></a>
+    <p>
+    In some cases, GitHub Web makes specific instructions available right on the pull-request itself.
+    Look near the bottom of the discussion thread, in the last information block.
+    The nice thing about those is that they automatically have the right branch names, etc, included.
+    <p>
+    Please note that, in some cases, these have a "Step 1" for looking at the pull request
+    locally, and a "Step 2" for merging it back.  Please do not do that Step 2 request from the command line,
+    but instead use the web interface for doing the actual merge.
+    <p>
+    If no instructions are displayed, here's the sequence of things to do:
+    <ul>
+        <li>Find the source repository and branch name.  To do this, look at the top of the branch request
+        for a line that says:
+        <blockquote>
+        <u>user</u> wants to merge <u>3</u> commits into JMRI:master from <u>user</u>:<u>branch</u>
+        </blockquote>
+        <a href="images/GitHubPRbranchInfo.png"><img src="images/GitHubPRbranchInfo.png" width="446" height="114" alt="GitHub Web branch screen"></a>
+    
+        <li>Next, pull that branch onto your own machine with the command:
+        <pre><code>
+        git fetch https://github.com/<u>user</u>/JMRI.git <u>branch</u>:<u>local-branch</u>
+        </code></pre>
+        where you have to replace each underlined value:
+        <ul>
+            <li>Change "user" to the correct GitHub user name
+            <li>Change "branch" to the name of the branch in the pull request (it's OK if this is e.g. master)
+            <li>Change "local-branch" to what you want to call the branch on your own machine. 
+            <em>This must not exist already</em>. Something like "me-user-branch" will remind you
+            of who's repository you pulled it from, while marking as subsequent changes as yours 
+            if you later share it with somebody else.  
+            (It's recommended that people start their branch names with 
+            their own name, which simplifies all sorts of operations)
+        </ul>
+        <li>The branch now exists in your machine, and you can just move to it:
+        <pre><code>
+        git checkout <u>local-branch</u>
+        </code></pre>
+        then compile, test, etc. as you'd like. You can even commit and share changes
+        if you'd like, because this is now your own development branch: It started at the 
+        other person's, but it's now your own.
+    </ul>
+    </dd>
+
+    <dt id="SFnetPatches">Handling a SF.net Patch</dt>
+      <dd>
+	      Eventually, we'll move from using the
+	      <a href="https://sourceforge.net/p/jmri/patches/">SF.net issue tracker</a> to 
+	      <a href="https://guides.github.com/features/issues/">GitHub issues</a>
+	      to handle code that people want to contribute.
+	      In the meantime, here's a suggested way to handle a SF.net patch.
+
+	      <ol>
+	      <li>In your local repository, create a branch to hold the patch:
+		      <blockquote>
+		      <code>
+			      git checkout -b patch-NNNN
+		      </code>
+		      </blockquote>			
+		      where NNNN is the patch number.
+	      <li>Merge in the changed code as needed.
+	      <li>Commit your changes:
+		      <blockquote>
+		      <code>
+			      git commit -m&quot;Patch-NNNN plus the patch subject line (author name)&quot;
+		      </code>
+		      </blockquote>			
+
+	      <li>It's now in your repository on a branch of it's own, where you can sanity test things as usual.
+		      
+	      <li>When you are happy, push your local repo's committed content to your GitHub repository 
+	      (assuming the default configuration, where &quot;push&quot; goes to your
+	      own repository on GitHub) with 
+	      <blockquote>
+	      <code>git push origin patch-NNNN</code>
+	      </blockquote>
+	      
+	      <li>Go to your repository on GitHub and start the &quot;pull request&quot; process.
+	      <li>On the second screen, switch the branch being compared in your repository from
+	      &quot;<strong>master</strong>&quot; to &quot;<strong>patch-NNNN</strong>&quot;.  Then the rest of the pull request goes as before.
+	      <li>Eventually, a JMRI maintainer will handle the pull request and merge it, which will
+	      put the patch changes on the master branch in the repository.
+	      <li>You can wait for the merge to the main repository, and then perform a 
+	      <blockquote>
+		      <code>git pull</code>
+	      </blockquote>
+	      to update your local repository with this patch on the 
+	      master branch.  Or, if you need them sooner,
+	      you can immediately merge these changes onto your local master via
+	      <blockquote>
+	      <code>
+	      git checkout master<br/>
+	      git merge patch-NNNN<br/>
+	      </code>
+	      </blockquote>
+	      </ol>
+	      The advantage of this approach is that it lets you keep all your own work separate 
+	      from any patches you're handling.  The patches are on different branches than your work,
+	      so they don't overlap.
+      </dd>
+
+</dl>
+
+<h2>Less-Common Operations</h2>
+<dl class="faq">
+   
+	<dt id="migrateSVN">Migrating un-committed changes from a SVN checkout</dt>
+	<dd>
+	      <p>As we migrated from SVN to Git in late 2015, you may still have edits based on old code.
+	      If you have changes to the JMRI code in an existing SVN checkout that you wish to commit to the current development version in Git, 
+	      here's what we recommend:
+
+		      <ol>
+		      <li>&quot;Update&quot; to the HEAD of SVN. You should be doing this routinely anyway, 
+		      because you'll need to do it before your changes can eventually be submitted.  
+		      Do this now and solve any problems.
+		      <blockquote>
+		      <code>$ svn update</code>
+		      </blockquote>
+	
+		      <li>Check the status and save the output.  Double check that no conflicts are showing.
+		      <blockquote>
+			      <code>$ svn status</code><br/><br/>
+			      save a copy to reference later ...<br/><br/>
+			      <code>$ svn status &gt; saved-status.txt</code>
+		      </blockquote>
+	
+		      <li>Diff the sources and save the output.
+		      <blockquote>
+		      <code>$ svn diff &gt; patch.txt</code>
+		      </blockquote>
+	
+		      <li>Clone a copy of the JMRI Git repository on your machine.
+		      (See the <a href="getgitcode.shtml">previous page</a> for detailed instructions.)
+		      <blockquote>
+		      <code>$ git clone https://github.com/JMRI/JMRI.git</code>
+		      </blockquote>
+	
+		      <li>In your new Git repo clone, checkout the sources as they were when the code was switched from SVN to Git:
+		      <blockquote>
+		      <code>$ git checkout tags/svn-30001</code>
+		      </blockquote>
+		      This sets your working copy to be exactly the same as the last contents of SVN, 
+		      the same as the base for the <code>svn diff</code> you took earlier.<br/>
+	
+		      <li>Apply the changes you had made in SVN to the new Git tree
+		      <blockquote>
+		      <code>$ patch -p0 &lt; patch.txt</code>
+		      </blockquote>
+	
+		      <li>If you had created any completely new files in the SVN working directory, 
+		      i.e. ones with &quot;A&quot; or &quot;?&quot; status:
+					  <ul>
+					  <li>Copy those files into the corresponding place in your Git checkout.
+					  <li><em>Add</em> them to the Git staging queue:
+					      To <code>git add (pathname)</code> on each of them to tell Git about them
+					      <blockquote>
+					      <code>$ git add <em>pathname/to/new/file</em></code>
+					      </blockquote>
+					  </ul>
+	
+		      <li>Check the status to get a list of changes.
+		      <blockquote>
+		      <code>$ git status</code>
+		      </blockquote>
+		      You should see the same list of changed files as the &quot;svn status&quot; you ran earlier.<br/>
+	
+		      <li><code>git stash save</code>
+	
+		      <li><code>git checkout master</code>
+	
+		      <li><code>git stash pop</code><br/><br/>
+			      Depending on how much progress has taken place in Git, 
+		      this might show some conflicts.  If so, you have to resolve them here.
+	
+		      </ol>  
+	      <p>Now you can start developing, without having lost anything.</p>
+   </dd>
+
+    <dt id="CVSCookies">Embedded CVS, RCS and SVN cookies</dt>
+      <dd>
+	      <p>When JMRI was originally using CVS, we used lines like:
+
+	      <code>
+	      # The next line is maintained by CVS, please don't change it<br/>
+	      # $Revision$
+	      </code>
+
+	      as an additional way of tracking file versions.  When we migrated to 
+	      SVN, we kept those lines in certain files, like decoder XML, properties files, etc,
+	      that users are likely to edit and submit back for inclusion.  
+
+	      <p>
+	      But with Git, 
+	      <!-- 
+		  there's really no good way to maintain these automatically,
+		  http://thomas-cokelaer.info/blog/2014/12/moving-from-svn-to-git-id-equivalent/
+ 
+		  see .git/info/attributes
+		  # see man gitattributes
+		  # expands $Id$ but not $Revision$ $Author$
+		  *.xml ident
+	      -->
+	      there's less need for these. 
+	      So we'll be removing these lines as time allows.
+	      If you're working on a file and happen to see one, usually
+	      in the header, you can just delete it  (if it has somebody's name,
+	      you might want to add that to the copyright notice if there is one.)</p>
+      </dd>
+	      
+</dl>
+
+  <!--#include virtual="/Footer" -->
+
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+
+<!-- FAQ-Tail -->
+<script type="text/javascript" src="/web/js/faq.js"></script>
+<!-- /FAQ-Tail -->
+
+</body>
+</html>

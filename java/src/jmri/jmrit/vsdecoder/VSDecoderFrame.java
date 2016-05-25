@@ -18,18 +18,17 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.util.JmriJFrame;
 import java.awt.BorderLayout;
-import java.util.List;
+import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import java.awt.Dimension;
 import jmri.jmrit.vsdecoder.swing.VSDPreferencesAction;
+import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 class VSDecoderFrame extends JmriJFrame {
@@ -41,59 +40,60 @@ class VSDecoderFrame extends JmriJFrame {
     private List<JMenu> menuList;
 
     public VSDecoderFrame() {
-	super();
-	initGUI();
+        super();
+        initGUI();
     }
 
     public void initGUI() {
-	log.debug("initGUI");
-	this.setTitle("VSDecoder - (no loco)");
-	this.buildMenu();
-	this.setLayout(new BorderLayout());
-	decpane = new VSDecoderPane(this);
-	decpane.initComponents();
-	this.getContentPane().add(decpane, BorderLayout.CENTER);
-	this.setSize(new Dimension(decpane.getPreferredSize().width + 20, decpane.getPreferredSize().height + 20));
-	log.debug("pane size + " + decpane.getPreferredSize());
-	this.setVisible(true);
+        log.debug("initGUI");
+        this.setTitle("VSDecoder - (no loco)");
+        this.buildMenu();
+        this.setLayout(new BorderLayout());
+        decpane = new VSDecoderPane(this);
+        decpane.initComponents();
+        this.getContentPane().add(decpane, BorderLayout.CENTER);
+        this.setSize(new Dimension(decpane.getPreferredSize().width + 20, decpane.getPreferredSize().height + 20));
+        log.debug("pane size + " + decpane.getPreferredSize());
+        this.setVisible(true);
 
-	//this.pack();
-	log.debug("done...");
+        //this.pack();
+        log.debug("done...");
     }
 
     private void buildMenu() {
-	JMenu fileMenu = new JMenu(vsdBundle.getString("VSDecoderFileMenu"));
+        JMenu fileMenu = new JMenu(vsdBundle.getString("VSDecoderFileMenu"));
 
-        fileMenu.add(new LoadVSDFileAction(vsdBundle.getString("VSDecoderFileMenuLoadVSDFile" )));
-        fileMenu.add(new StoreXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuSaveProfile" )));
+        fileMenu.add(new LoadVSDFileAction(vsdBundle.getString("VSDecoderFileMenuLoadVSDFile")));
+        fileMenu.add(new StoreXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuSaveProfile")));
         fileMenu.add(new LoadXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuLoadProfile")));
-	fileMenu.add(new VSDPreferencesAction(vsdBundle.getString("VSDecoderFileMenuPreferences")));
+        fileMenu.add(new VSDPreferencesAction(vsdBundle.getString("VSDecoderFileMenuPreferences")));
 
-	fileMenu.getItem(1).setEnabled(false); // disable XML store
-	fileMenu.getItem(2).setEnabled(false); // disable XML load
+        fileMenu.getItem(1).setEnabled(false); // disable XML store
+        fileMenu.getItem(2).setEnabled(false); // disable XML load
 
-	menuList = new ArrayList<JMenu>(2);
+        menuList = new ArrayList<JMenu>(2);
 
-	menuList.add(fileMenu);
+        menuList.add(fileMenu);
 
-	this.setJMenuBar(new JMenuBar());
-	this.getJMenuBar().add(fileMenu);
-	this.addHelpMenu("package.jmri.jmrit.vsdecoder.VSDecoderFrame", true);
-	
+        this.setJMenuBar(new JMenuBar());
+        this.getJMenuBar().add(fileMenu);
+        this.addHelpMenu("package.jmri.jmrit.vsdecoder.VSDecoderFrame", true);
+
     }
 
     public void windowClosing(java.awt.event.WindowEvent e) {
-	// Call the superclass function
+        // Call the superclass function
         super.windowClosing(e);
 
-	log.debug("VSDecoderFrame windowClosing() called... " + e.toString());
+        log.debug("VSDecoderFrame windowClosing() called... " + e.toString());
 
-	log.debug("Calling decpane.windowClosing() directly " + e.toString());
-	decpane.windowClosing(e);
+        log.debug("Calling decpane.windowClosing() directly " + e.toString());
+        decpane.windowClosing(e);
     }
 
+    public List<JMenu> getMenus() {
+        return menuList;
+    }
 
-    public List<JMenu> getMenus() { return menuList; }
-    
-    static Logger log = LoggerFactory.getLogger(VSDecoderFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderFrame.class.getName());
 }

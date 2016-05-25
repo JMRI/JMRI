@@ -1,49 +1,73 @@
 <!-- Sidebar -->
+<!-- This is the common sidebar definition for html/tools/scripting pages -->
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI is...</div>
-	    <dl>
+	  <div style="text-align: center">JMRI is...</div>
+	  <dl>
 
 		<dt><h3><a href="index.shtml">Scripting</a></h3></dt>
 		<dd>Information on writing scripts to control JMRI in more detail:
-		    <UL>
-		    <LI><dfn><a href="Start.shtml">Introduction</a></dfn>
-		    <LI><dfn><A HREF="Python.shtml">The Language</a></dfn>
-		    <LI><dfn><a href="Examples.shtml">Examples</a></dfn>
-		    <LI><dfn><a href="FAQ.shtml">Frequently Asked Questions (FAQs)</a></dfn>
-		    <LI><dfn><a href="ex_set_turnouts.shtml">Example: Setting Turnouts</a></dfn>
-		    <LI><dfn><a href="Jynstruments.shtml">Jynstruments to modify the GUI</a></dfn>
-		    </UL>
+		    <ul>
+		    <li><dfn><a href="Start.shtml">Introduction</a></dfn>
+		    <li><dfn><a href="Python.shtml">The Language</a></dfn>
+		    <li><dfn><a href="Examples.shtml">Examples</a></dfn>
+		    <li><dfn><a href="ex_set_turnouts.shtml">Example: Setting Turnouts</a></dfn>
+		    <li><dfn><a href="FAQ.shtml">Frequently Asked Questions (FAQs)</a></dfn>
+		    <li><dfn><a href="Jynstruments.shtml">Jynstruments to modify the GUI</a></dfn>
+		    </ul>
 		</dd>
 
 		<dt><h3><a href="http://www.python.org">Python</a></h3></dt>
 		<dd>JMRI scripts are in Python, a popular general-purpose computer language
-		    <UL>
-		    <LI><dfn><a href="Python.shtml">Python & JMRI</a></dfn>
-		    <LI><dfn><a href="http://www.python.org">Python home page</a></dfn>
-		    <LI><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/NonProgrammers">Python tutorial for non-programmers</a></dfn>
-		    <LI><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers">Python tutorial for programmers</a></dfn>
-		    </UL>
+		    <ul>
+		    <li><dfn><a href="Python.shtml">Python &amp; JMRI</a></dfn>
+		    <li><dfn><a href="http://www.python.org">Python home page</a></dfn>
+		    <li><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/NonProgrammers">Python tutorial for non-programmers</a></dfn>
+		    <li><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers">Python tutorial for programmers</a></dfn>
+		    </ul>
 		</dd>
 
-		<dt><h3><a href="../index.shtml">General Tools</a></h3></dt>
-		<dd>The general objects available to control your layout.
-		    <UL>
-		    <LI><dfn><a href="../Sensors.shtml">Sensors</a></dfn>
-		    <LI><dfn><a href="../Turnouts.shtml">Turnouts</a></dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">Throttles</a></dfn>
-		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">Consisting</a></dfn>
-		    <LI><dfn><a href="../Signals.shtml">Signals</a></dfn>
-		    <LI><dfn><a href="../Lights.shtml">Lights</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Routes</a></dfn>
-		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
-		    <LI><dfn><a href="../fastclock/index.shtml">Fast Clocks</a></dfn>
-		    <LI><dfn><a href="../speedometer/index.shtml">Speedometer</a></dfn>
-		    </UL>
+		<dt><h3><a href="../index.shtml">Tools</a></h3></dt>
+		<dd>JMRI provides powerful tools for working with your
+		layout.
+			<ul>
+			<li><dfn><a href="../Turnouts.shtml">Turnouts</a></dfn>
+			<li><dfn><a href="../Lights.shtml">Lights</a></dfn>
+			<li><dfn><a href="../Sensors.shtml">Sensors</a></dfn>
+			<li><dfn><a href="../throttle/ThrottleMain.shtml">Throttles</a></dfn>
+			<li><dfn><a href="../consisttool/ConsistTool.shtml">Consisting</a></dfn>
+			<li><dfn><a href="../signaling/index.shtml">Signaling</a></dfn>
+			<li><dfn><a href="../Blocks.shtml">Blocks</a></dfn>
+			<li><dfn><a href="../Reporters.shtml">Reporters</a></dfn>
+			<li><dfn><a href="../Memories.shtml">Memory Variables</a></dfn>
+			<li><dfn><a href="../Routes.shtml">Routes</a></dfn>
+			<li><dfn><a href="../LRoutes.shtml">LRoutes</a></dfn>
+	    <li><dfn><a href="../Sections.shtml">Sections</a></dfn>
+			<li><dfn><a href="../Logix.shtml">Logix</a></dfn>
+			<li><dfn><a href="../fastclock/index.shtml">Fast Clocks</a></dfn>
+			<li><dfn><a href="../speedometer/index.shtml">Speedometer</a></dfn>
+			<li><dfn><a href="../Audio.shtml">Audio</a></dfn>
+			<li><dfn><a href="../IdTags.shtml">Id Tags</a></dfn>
+	
+	    <li><dfn><a href="../index.shtml#systemSpecificTools">System-specific...</a></dfn>
+	    </ul>
 		</dd>
 
-	    </dl>
+		<dt><h3><a href="../automation/index.shtml">Layout Automation</a></h3></dt>
+		<dd>JMRI can be used to automate parts 
+		of your layout, from simply controlling a crossing gate
+		to running trains in the background.
+	    <ul>
+	    <li><dfn><a href="../signaling/index.shtml">Signaling</a></dfn>
+			<li><dfn><a href="../signaling/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+			<li><dfn><a href="../Routes.shtml">Routes</a></dfn>
+	    <li><dfn><a href="../fastclock/index.shtml">Fast Clocks</a></dfn>
+	    <li><dfn><a href="../scripting/index.shtml">Scripting</a></dfn>
+	    </ul>
+		</dd>
+
+	  </dl>
 
 	</div> <!-- closes #side -->
 

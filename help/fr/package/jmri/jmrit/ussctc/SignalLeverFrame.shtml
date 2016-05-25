@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalLeverFrame.shtml,v 1.2 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-4--> 
+<!--  $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Signal Lever Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help OS Indicator">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -26,29 +26,29 @@
 
 <H1> Levier Signal</H1>
 
-<b> Ce n'est pas encore complètement mis en oeuvre </b><p>
+<b> Ce n'est pas encore compl&#232;tement mis en oeuvre </b><p>
 
-Un levier de signal sur un panneau USS CCT
-possède deux entrées (capteurs) pour le levier lui-même,
-un certain nombre d'autres entrées et sorties
-pour le faire fonctionner. Cet outil vous permet de définir ceux-ci, et
-crée alors la logique sous-jacente pour les faire agir
+Un levier de Signal sur un panneau USS CTC
+poss&#232;de deux entr&#233;es (capteurs) pour le levier lui-m&#234;me,
+un certain nombre d'autres entr&#233;es et sorties
+pour le faire fonctionner. Cet outil vous permet de d&#233;finir ceux-ci, et
+cr&#233;e alors la logique sous-jacente pour les faire agir
 prototypiquement.
 
 <dl>
-<dt>Entrées signaux <dd>
-Aux fins d'une entrée multi-capteurs, vous pouvez vouloir avoir 
-un capteur de interne nul pour la position du médiane.
+<dt>Entr&#233;es signaux <dd>
+Aux fins d'une entr&#233;e multi-capteurs, vous pouvez vouloir avoir 
+un capteur  interne nul pour la position m&#233;diane.
 
- <dt>Têtes de Signal Gauche et Droite<dd>
+ <dt>T&#234;tes de Signal Gauche et Droite<dd>
 
-<dt> Les Têtes de signal qui sont détenues et libérées comme le levier agit
+Les T&#234;tes de signal qui sont maintenues et lib&#233;r&#233;es quand le levier agit
 
-<dd>Entrée Codé <dt> Le 
-<a href="CodeButtonFrame.shtml">bouton codé </a>défini
-qui force ce levier à agir.
+<dt>Entr&#233;e Cod&#233; <dt> Le 
+<a href="CodeButtonFrame.shtml">bouton cod&#233; </a>d&#233;fini
+qui force ce levier &#224 agir.
 
-<dt> Entrée inhibition <dd> Un capteur qui est utilisé et ACTIF qui indique
+<dt> Entr&#233;e inhibition <dd> Un capteur qui est utilis&#233; et ACTIF qui indique
 que les signaux ne peuvent pas changer de position.
 
 </dl>

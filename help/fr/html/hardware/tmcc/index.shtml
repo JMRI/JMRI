@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.2 2011/07/03 17:21:41 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-23-->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-09-19-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: Lionel TMCC
  </TITLE>
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,88 +24,89 @@
     <div id="mainContent">
 
       <h1> 
-    Guide Matériel JMRI: Lionel TMCC
+    Guide Mat&#233;riel JMRI: Lionel TMCC
       </h1>
 
-	<h2> Système supporté</h2>
+	<h2> Syst&#232;me support&#233;</h2>
 
-    (A écrire)
+    (Lionel TMCC ou Lionel universel &#224; travers le port s&#233;rie sur la centrale de base.)
     	  
 	<h2>Installation</h2>
 
 	  
-<p> D'abord, connecter le port série de votre ordinateur à la centrale de commande
- TMCC en utilisant un câble série. Cela devrait être un câble "droit"ou "modem" , <I> pas </I> un câble "croisé" ou "null-modem".
-Si votre ordinateur ne dispose pas d'un port série intégré, vous pouvez
-utiliser un adaptateur USB-série, mais assurez-vous d'installer les bon
+<p> D'abord, connecter le port s&#233;rie de votre ordinateur &#224; la centrale de commande
+ TMCC en utilisant un c&#226;ble s&#233;rie. Cela devrait &#234;tre un c&#226;ble "droit" ou "modem" , <I> pas </I> un c&#226;ble "crois&#233;" ou "null-modem".
+Si votre ordinateur ne dispose pas d'un port s&#233;rie int&#233;gr&#233;, vous pouvez
+utiliser un adaptateur USB-s&#233;rie, mais assurez-vous d'installer les bon
 conducteurs.
 
        <P>
        Ensuite, configurez le programme.
        <UL>
-     <LI>  Commencez avec votre programme JMRI basé sur (DecoderPro, PanelPro, etc.)</li>
-<li> Allez dans le panneau des préférences du programme.</li>
-<li><li>Celui-ci s'ouvre automatiquement la première fois qu'un programme est exécuté, ou vous
-pouvez le sélectionner dans le menu "Édition". </li>
-<li> Sélectionnez "TMCC (Lionel)" dans la boite de sélection du haut. </li>
+     <LI>  Commencez avec votre programme bas&#233; sur JMRI (DecoderPro, PanelPro, etc.)</li>
+<li> Allez dans le panneau des pr&#233;f&#233;rences du programme.</li>
+<li><li>Celui-ci s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous
+pouvez le s&#233;lectionner dans le menu "&#233;dition". </li>
+<li> S&#233;lectionnez "TMCC (Lionel)" dans la boite de s&#233;lection du haut. </li>
  </li>
 
-<LI> Dans la deuxième boîte de sélection, choisissez le nom du
-port série que vous avez connecté au système TMCC. </li>
+<LI> Dans la deuxi&#232;me bo&#238;te de s&#233;lection, choisissez le nom du
+port s&#233;rie auquel vous avez connect&#233; au syst&#232;me TMCC. </li>
 
-<li> Si la vitesse de transmission ne montre pas une valeur fixe, réglez la à 
+<li> Si la vitesse de transmission ne montre pas une valeur fixe, r&#233;glez la &#224; 
 9600 bauds.</li>
 
- <li>La série de boutons radio étiquetés «style graphique" vous permet 
-de sélectionner la façon dont le programme va apparaitre. "Metal" est le thème natif de Java 
+ <li>La s&#233;rie de boutons radio &#233;tiquet&#233;s "style graphique" vous permet 
+de s&#233;lectionner la fa&#231;on dont le programme va apparaitre. "Metal" est le th&#232;me natif de Java 
 et chercher ceux disponible sur tous les types. D'autres choix peuvent varier avec votre
-type d'ordinateur. "Motif", "Windows", "MacOS" et "MacOS adaptative»
+type d'ordinateur. "Motif", "Windows", "MacOS" et "MacOS adaptative"
 apparence native sous Linux, Windows, MacOS "Classic" et Mac OS X
 respectivement. </li>
 
-<li> Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut du
-format du programmateur. Vous pouvez remplacer celui ci à chaque fois que vous ouvrez le
-programmateur, ce n'est donc ici que par commodité. </li>
+<li> Dans la bo&#238;te de s&#233;lection en bas, vous pouvez choisir l'option par d&#233;faut du
+format du programmateur. Vous pouvez remplacer celui ci &#224; chaque fois que vous ouvrez le
+programmateur, ce n'est donc ici que par commodit&#233;. </li>
 
-<li> Cliquez sur "Enregistrer". Il vous sera demandé si vous voulez quitter le programme, cliquez sur "Oui". </li>
+<li> Cliquez sur "Enregistrer". Il vous sera demand&#233; si vous voulez quitter le programme, cliquez sur "Oui". </li>
 
-<li> Redémarrez le programme. Vous devriez être en place et fonctionnel. </li>
+<li> Red&#233;marrez le programme. Vous devriez &#234;tre en place et fonctionnel. </li>
 	  </ul>
 
 
-	<h2>Caractéristiques et Limitations </h2>
+	<h2>Caract&#233;ristiques et Limitations </h2>
 
    <p>  (Pas encore complet)</p>
     
      <P>
-     Avec JMRI 2.11.8, le fonctionnement des moteurs et des
-     décodeurs d'accessoires est disponible avec Lionel TMCC. Les commandes de train ne sont pas
+     Avec JMRI 2.11.8, le fonctionnement des machines et des
+     d&#233;codeurs d'accessoires est disponible avec Lionel TMCC. Les commandes de train ne sont pas
      encore disponibles.</p>
-    <P>Vous aurez encore besoin de votre CAB sur l'utilisation des fonctions comme la saisie d'une identification d'un moteur. Une fois mis en place, cependant, vous pouvez faire la plupart de toutes les fonctions de la withrotttles. <span Class="Apple-converted-space"> </span> </p>
-     <p> Il n'y a pas de Lionel TMCC sous les onglets des Fiches, mais vous pouvez configurer les moteurs TMCC utilisant le décodeur standard NMRA à proximité de de la liste. <span class="Apple-converted-space"> </span> </p>
-<P>Lorsque vous utilisez un régulateur JMRI pour faire fonctionner un moteur, les touches de fonction ont attribués:</p>
+    <P>Vous aurez encore besoin de votre CAB pour l'utilisation des fonctions comme la saisie d'une identification d'un moteur. Une fois mis en place, cependant, vous pouvez faire la plupart des fonctions de la withrotttles. <span Class="Apple-converted-space">_</span> </p>
+     <p> Il n'y a pas de Lionel TMCC sous les onglets des Fiches, mais vous pouvez configurer les moteurs TMCC utilisant le d&#233;codeur standard NMRA &#224; proximit&#233; de la liste. <span class="Apple-converted-space"> </span> </p>
+<p> Les actions communes sont indiqu&#233;es pour Railsounds 4, Err cartes de conversion et les cartes TAS. <span class="Apple-converted-space"> </ span> </ p>
+<P>Lorsque vous utilisez un r&#233;gulateur JMRI pour faire fonctionner un moteur, les touches de fonction sont attribu&#233;es:</p>
      <DL>
      <DT> F0 <DD> AUX2 (Feux On/Off) 
      <DT> F1 <DD> Cloche
      <DT> F2 <DD> Trompe/Sifflet 1
      <DT> F3 <DD> Coupleur Avant
-     <DT> F4 <DD> Coupleur Arrière
+     <DT> F4 <DD> Coupleur Arri&#232;re
      <DT> F5+0 <DD>Aux 1
      <DT> F6+1 <DD> + Volume		
-     <DT> F7+2 <DD> L'équipage discute
-     <DT> F8+3 <DD> Démarrage des Sons		
+     <DT> F7+2 <DD> L'&#233;quipage discute
+     <DT> F8+3 <DD> D&#233;marrage des Sons		
      <DT> F9+4 <DD> - Volume 
-     <DT> F10+5 <DT> Arrêt des Sons
+     <DT> F10+5 <DT> Arr&#234;t des Sons
      <DT> F11+6 <DT> Sortie de vapeur/diminution RPM 
      <DT> F12+7 <DT> Tower Comm
-     <DT> F13+8 <DT> Aux Off (Fumée OFF sur Vapeur Habituellemnt)
-     <DT> F14+9 <DT> Aux ON (Fumée ON sur Vapeur Habituellemnt)
+     <DT> F13+8 <DT> Aux Off (Fum&#233;e OFF sur Vapeur Habituellemnt)
+     <DT> F14+9 <DT> Aux ON (Fum&#233;e ON sur Vapeur Habituellemnt)
      <DT> F15 <DT> Aux 1
-     <DT> F16 <DT> laissez le son coupé
+     <DT> F16 <DT> laissez le son coup&#233;
      <DT> F17 <DT> Avant
-     <DT> F18 <DT> Arrière
+     <DT> F18 <DT> Arri&#232;re
      <DT> F19 <DT> Inverser la Direction
-     <DT> F20 <DT> Accélération	
+     <DT> F20 <DT> Acc&#233;l&#233;ration	
      <DT> F21 <DT> Freinage
  </DL>      
 <!--#include virtual="/Footer" -->

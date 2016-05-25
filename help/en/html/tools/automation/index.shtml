@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen, John Plocher 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Layout Automation</title>
 
 <!-- Style -->
@@ -21,36 +20,39 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H2>JMRI Layout Automation</h2>
+<h2>JMRI Layout Automation</h2>
 
 JMRI applications provide a large number of ways of automating your layout, 
 ranging from simple fill-in forms to full-fledged scripting and 
 programming capabilities.  These include:
 
-<DL>
+<dl>
 
-<DT><A HREF="../signaling/index.shtml">Signal logic</A>
-<DD>JMRI provides built-in signaling logic which can be used to
-drive your signal heads in many applications.
+<dt><a href="../signaling/index.shtml">Signaling</a>
+<dd>JMRI provides signaling logic from simple to prototypical, which can be used to
+drive your signals in many applications.
 
-<DT><A HREF="../Routes.shtml">Routes</A>
-<DD>A simple form of automation is to define Routes, which allow you
+<dt><a href="../Routes.shtml">Routes</a>
+<dd>A simple form of automation is to define Routes, which allow you
 to simplify the control of your turnouts.
 
-<DT><A HREF="../Logix.shtml">Logix</A>
-<DD>Using JMRI Logix, you can specify actions to happen when
+<dt><a href="../Logix.shtml">Logix</a>
+<dd>Using JMRI Logix, you can specify actions to happen when
 various conditions occur on the layout.
 
-<DT><A HREF="../scripting/index.shtml">Scripting</A>
-<DD>JMRI provides a very powerful scripting tool.  Based on a real
+<dt><a href="../scripting/index.shtml">Scripting</a>
+<dd>JMRI provides a very powerful scripting tool.  Based on a real
 programming language, it gives you access to all the JMRI capabilities.
 
-<DT><A HREF="viaJava.shtml">Writing your own code in Java</A>
-<DD>The JMRI libraries greatly simplify writing a program to 
+<dt><a href="viaJava.shtml">Writing your own code in Java</a>
+<dd>The JMRI libraries greatly simplify writing a program to 
 make your layout do exactly what you want.  
 
-</DL>
+</dl>
 
 <!--#include virtual="/Footer" -->
+
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

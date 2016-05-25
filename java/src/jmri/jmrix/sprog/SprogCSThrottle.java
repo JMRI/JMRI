@@ -1,94 +1,90 @@
 package jmri.jmrix.sprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
-
+import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-
 
 /**
  * An implementation of DccThrottle with code specific to a SPROG Command
  * Station connection.
  * <P>
- * Addresses of 99 and below are considered short addresses, and
- * over 100 are considered long addresses.
- * <P> Updated by Andrew Crosland February 2012 to enable 28 step
- * speed packets</P>
+ * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
- * @author	Andrew Crosland  Copyright (C) 2006, 2012
- * @version     $Revision$
+ * @author	Andrew Crosland Copyright (C) 2006, 2012
+ * @version $Revision$
  */
-public class SprogCSThrottle extends AbstractThrottle
-{
+public class SprogCSThrottle extends AbstractThrottle {
+
     /**
      * Constructor.
      */
-    public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address)
-    {
+    public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address) {
         super(memo);
 
         // cache settings.
         this.speedSetting = 0;
-        this.f0           = false;
-        this.f1           = false;
-        this.f2           = false;
-        this.f3           = false;
-        this.f4           = false;
-        this.f5           = false;
-        this.f6           = false;
-        this.f7           = false;
-        this.f8           = false;
-        this.f9           = false;
-        this.f10           = false;
-        this.f11           = false;
-        this.f12           = false;
-        this.address      = ((DccLocoAddress)address).getNumber();
-        this.isForward    = true;
-        
+        this.f0 = false;
+        this.f1 = false;
+        this.f2 = false;
+        this.f3 = false;
+        this.f4 = false;
+        this.f5 = false;
+        this.f6 = false;
+        this.f7 = false;
+        this.f8 = false;
+        this.f9 = false;
+        this.f10 = false;
+        this.f11 = false;
+        this.f12 = false;
+        this.address = ((DccLocoAddress) address);
+        this.isForward = true;
+
         //@TODO - this needs a little work. Current implementation looks like it
         //should support other modes, but doesn't in practice.  
         //@see AbstractThrottleManager.supportedSpeedModes()
-
         // Find our command station
         //commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
-        if((memo!=null) && (memo.get(jmri.CommandStation.class)!=null))
+        if ((memo != null) && (memo.get(jmri.CommandStation.class) != null)) {
             commandStation = memo.get(jmri.CommandStation.class);
-        else
+        } else {
             commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
+        }
 
     }
 
     private SprogCommandStation commandStation;
-    private int address;
+
+    DccLocoAddress address;
+
+    public LocoAddress getLocoAddress() {
+        return address;
+    }
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4 by
      * adding it to the S queue
      */
     protected void sendFunctionGroup1() {
-       commandStation.function0Through4Packet(address,
-                                              getF0(), getF0Momentary(), 
-                                              getF1(), getF1Momentary(),
-                                              getF2(), getF2Momentary(),
-                                              getF3(), getF3Momentary(),
-                                              getF4(), getF4Momentary());
+        commandStation.function0Through4Packet(address,
+                getF0(), getF0Momentary(),
+                getF1(), getF1Momentary(),
+                getF2(), getF2Momentary(),
+                getF3(), getF3Momentary(),
+                getF4(), getF4Momentary());
 
     }
-    
 
     /**
-     * Send the message to set the state of functions F5, F6, F7, F8 by#
-     * adding it to the S queue
+     * Send the message to set the state of functions F5, F6, F7, F8 by# adding
+     * it to the S queue
      */
     protected void sendFunctionGroup2() {
         commandStation.function5Through8Packet(address,
-                                               getF5(), getF5Momentary(),
-                                               getF6(), getF6Momentary(),
-                                               getF7(), getF7Momentary(),
-                                               getF8(), getF8Momentary());
+                getF5(), getF5Momentary(),
+                getF6(), getF6Momentary(),
+                getF7(), getF7Momentary(),
+                getF8(), getF8Momentary());
     }
 
     /**
@@ -97,14 +93,14 @@ public class SprogCSThrottle extends AbstractThrottle
      */
     protected void sendFunctionGroup3() {
         commandStation.function9Through12Packet(address,
-                                                getF9(), getF9Momentary(),
-                                                getF10(), getF10Momentary(),
-                                                getF11(), getF11Momentary(),
-                                                getF12(), getF12Momentary());
+                getF9(), getF9Momentary(),
+                getF10(), getF10Momentary(),
+                getF11(), getF11Momentary(),
+                getF12(), getF12Momentary());
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      * This intentionally skips the emergency stop value of 1 in 128 step mode
      * and the stop and estop values 1-3 in 28 step mode.
@@ -113,53 +109,61 @@ public class SprogCSThrottle extends AbstractThrottle
      */
     public void setSpeedSetting(float speed) {
         int mode = getSpeedStepMode();
-        if((mode & DccThrottle.SpeedStepMode28) != 0) {
+        if ((mode & DccThrottle.SpeedStepMode28) != 0) {
             // 28 step mode speed commands are 
             // stop, estop, stop, estop, 4, 5, ..., 31
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;
-            int value = (int)((31-3)*speed);     // -1 for rescale to avoid estop
-            if (value>0) value = value+3;  // skip estopx2 and stop
-            if (value>31) value = 31;      // max possible speed
-            if (value<0) value = 1;        // emergency stop
-            commandStation.setSpeed(DccThrottle.SpeedStepMode28, address, value, isForward );
-            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
-                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+            int value = (int) ((31 - 3) * speed);     // -1 for rescale to avoid estop
+            if (value > 0) {
+                value = value + 3;  // skip estopx2 and stop
+            }
+            if (value > 31) {
+                value = 31;      // max possible speed
+            }
+            if (value < 0) {
+                value = 1;        // emergency stop
+            }
+            commandStation.setSpeed(DccThrottle.SpeedStepMode28, address, value, isForward);
+            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
+                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            }
         } else {
             // 128 step mode speed commands are
             // stop, estop, 2, 3, ..., 127
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;
-            int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
-            if (value>0) value = value+1;  // skip estop
-            if (value>127) value = 127;    // max possible speed
-            if (value<0) value = 1;        // emergency stop
-            commandStation.setSpeed(DccThrottle.SpeedStepMode128, address, value, isForward );
-            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
-                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+            int value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
+            if (value > 0) {
+                value = value + 1;  // skip estop
+            }
+            if (value > 127) {
+                value = 127;    // max possible speed
+            }
+            if (value < 0) {
+                value = 1;        // emergency stop
+            }
+            commandStation.setSpeed(DccThrottle.SpeedStepMode128, address, value, isForward);
+            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
+                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            }
         }
         record(speed);
     }
 
     public void setIsForward(boolean forward) {
-        boolean old = isForward; 
+        boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // Update the speed setting
-        if (old != isForward)
-            notifyPropertyChangeListener("IsForward", old, isForward );
+        if (old != isForward) {
+            notifyPropertyChangeListener("IsForward", old, isForward);
+        }
     }
 
-    protected void throttleDispose(){
-        active=false;
+    protected void throttleDispose() {
+        active = false;
         commandStation.release(address);
         finishRecord();
     }
-
-    public LocoAddress getLocoAddress() {
-        return new DccLocoAddress(address, SprogCSThrottleManager.isLongAddress(address));
-    }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(SprogCSThrottle.class.getName());
 
 }

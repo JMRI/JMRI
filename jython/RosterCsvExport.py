@@ -8,16 +8,15 @@
 #
 # Note: this will replace any existing file
 #
-# Author: Matthew Harris, copyright 2010
+# Author: Matthew Harris, copyright 2010, 2016
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
+import jmri
 import jmri.jmrit.roster
 import com.csvreader
 from javax.swing import JFileChooser, JOptionPane
 from jmri.jmrit.symbolicprog import CvTableModel, IndexedCvTableModel
+import java
 
 # Define some default values
 
@@ -59,6 +58,10 @@ def writeHeader(csvFile):
     csvFile.write("CV19")
     csvFile.write("CV7")
     csvFile.write("CV8")
+
+    # Lastly, add some single bits from CV29
+    csvFile.write("Speed Steps (CV29.1)")
+    csvFile.write("DC mode (CV29.2)")
 
     # Notify the writer of the end of the header record
     csvFile.endRecord()
@@ -126,12 +129,54 @@ def writeDetails(csvFile):
         # function defined earlier.
         # These examples are all in decimal - if you require
         # hex, change "%d" to "0x%x" or "0x%X"
-        csvFile.write(writeCvValue(cvTable.getCvByNumber(19), "%d"))
-        csvFile.write(writeCvValue(cvTable.getCvByNumber(7), "%d"))
-        csvFile.write(writeCvValue(cvTable.getCvByNumber(8), "%d"))
+        csvFile.write(writeCvValue(cvTable.getCvByNumber("19"), "%d"))
+        csvFile.write(writeCvValue(cvTable.getCvByNumber("7"), "%d"))
+        csvFile.write(writeCvValue(cvTable.getCvByNumber("8"), "%d"))
+
+        # Lastly, we deal with examining specific bits of CV29.
+        #
+        # First, we read CV29 and store it temporarily as we will then use
+        # bitwise comparisons later.
+        #
+        # For the bitwise comparisons, use the following pattern to read the
+        # individual bits:
+        #
+        #   if (cv29Value & {value}) == {value}:
+        #       csvFile.write("bit set")
+        #   else:
+        #       csvFile.write("bit clear")
+        #
+        # where {value} is one of the following:
+        #
+        #   Pos  Bit  Value
+        #   1st    0      1
+        #   2nd    1      2
+        #   3rd    2      4
+        #   4th    3      8
+        #   5th    4     16
+        #   6th    5     32
+        #   7th    6     64
+        #   8th    7    128
+
+        # OK, read the value of CV29
+        cv29Value = cvTable.getCvByNumber("29").getValue()
+
+        # Now do the bitwise comparisons.
+        # First example is speedsteps, which is the second bit 
+        if (cv29Value & 2) == 2:
+            csvFile.write("28/128 Steps")
+        else:
+            csvFile.write("14 Steps")
+
+        # Second example is DC mode, which is the third bit 
+        if (cv29Value & 4) == 4:
+            csvFile.write("On")
+        else:
+            csvFile.write("Off")
 
         # Notify the writer of the end of this detail record
         csvFile.endRecord()
+        csvFile.flush()
         print "Entry", entry.getId(), "written"
 
 # Now do the actual work here
@@ -147,7 +192,7 @@ if ret == JFileChooser.APPROVE_OPTION:
     # We've got a valid filename
     outFile = fc.getSelectedFile().toString()
     print "Output file:", outFile
-    csvFile = com.csvreader.CsvWriter(outFile)
+    csvFile = com.csvreader.CsvWriter(java.io.BufferedOutputStream(java.io.FileOutputStream(outFile)),',',java.nio.charset.Charset.defaultCharset())
 
     # Output the header if required
     if outputHeader==True:

@@ -1,20 +1,16 @@
 // JMRIClientMessage.java
-
 package jmri.jmrix.jmriclient;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message to an JMRIClient server.  The JMRIClientReply
- * class handles the response from the server.
+ * Encodes a message to an JMRIClient server. The JMRIClientReply class handles
+ * the response from the server.
  * <P>
- * The {@link JMRIClientReply}
- * class handles the response from the server.
+ * The {@link JMRIClientReply} class handles the response from the server.
  *
- * @author			Bob Jacobsen  Copyright (C) 2001, 2004, 2008
- * @author                      Paul Bender Copyright (C) 2010
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
+ * @author Paul Bender Copyright (C) 2010
+ * @version	$Revision$
  */
 public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -23,17 +19,17 @@ public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // create a new one
-    public  JMRIClientMessage(int i) {
+    public JMRIClientMessage(int i) {
         super(i);
     }
 
     // copy one
-    public  JMRIClientMessage(JMRIClientMessage m) {
+    public JMRIClientMessage(JMRIClientMessage m) {
         super(m);
     }
 
     // from String
-    public  JMRIClientMessage(String m) {
+    public JMRIClientMessage(String m) {
         super(m);
     }
 
@@ -61,17 +57,15 @@ public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public JMRIClientMessage getProgMode(){
-         return null;
+    static public JMRIClientMessage getProgMode() {
+        return null;
     }
- 
-    static public JMRIClientMessage getExitProgMode(){
-         return null;
-    }
-    
-    final static protected int LONG_TIMEOUT=180000;  // e.g. for programming options
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientMessage.class.getName());
+    static public JMRIClientMessage getExitProgMode() {
+        return null;
+    }
+
+    final static protected int LONG_TIMEOUT = 180000;  // e.g. for programming options
 
 }
 

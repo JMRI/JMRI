@@ -1,75 +1,80 @@
-// LnPowerManagerTest.java
-
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.*;
-import junit.framework.*;
+import jmri.jmrix.AbstractPowerManagerTest;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * tests for the Jmri package LnPowerManager
- * @author	Bob Jacobsen   Copyright 2001
- * @version     $Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2001
  */
 public class LnPowerManagerTest extends AbstractPowerManagerTest {
 
-	/** service routines to simulate receiving on, off from interface */
-	protected void hearOn() {
-		LocoNetMessage l = new LocoNetMessage(2);
-		l.setOpCode(LnConstants.OPC_GPON);
-		controller.sendTestMessage(l);
-	}
-	protected void sendOnReply() { hearOn(); }
+    /**
+     * service routines to simulate receiving on, off from interface
+     */
+    protected void hearOn() {
+        LocoNetMessage l = new LocoNetMessage(2);
+        l.setOpCode(LnConstants.OPC_GPON);
+        controller.sendTestMessage(l);
+    }
 
-	protected void hearOff() {
-		LocoNetMessage l = new LocoNetMessage(2);
-		l.setOpCode(LnConstants.OPC_GPOFF);
-		controller.sendTestMessage(l);
-	}
-	protected void sendOffReply() { hearOff(); }
+    protected void sendOnReply() {
+        hearOn();
+    }
 
-	protected int numListeners() {
-		return controller.numListeners();
-	}
+    protected void hearOff() {
+        LocoNetMessage l = new LocoNetMessage(2);
+        l.setOpCode(LnConstants.OPC_GPOFF);
+        controller.sendTestMessage(l);
+    }
 
-	protected int outboundSize() {
-            return controller.outbound.size();
-	}
+    protected void sendOffReply() {
+        hearOff();
+    }
 
-	protected boolean outboundOnOK(int index) {
-	    return LnConstants.OPC_GPON ==
-                    controller.outbound.elementAt(index).getOpCode();
-	}
+    protected int numListeners() {
+        return controller.numListeners();
+    }
 
-	protected boolean outboundOffOK(int index) {
-            return LnConstants.OPC_GPOFF ==
-                controller.outbound.elementAt(index).getOpCode();
-	}
+    protected int outboundSize() {
+        return controller.outbound.size();
+    }
 
-	// setup a default interface
-	public void setUp() {
-		controller = new LocoNetInterfaceScaffold();
-		p = new LnPowerManager(new LocoNetSystemConnectionMemo(controller, null));
-	}
+    protected boolean outboundOnOK(int index) {
+        return LnConstants.OPC_GPON
+                == controller.outbound.elementAt(index).getOpCode();
+    }
 
+    protected boolean outboundOffOK(int index) {
+        return LnConstants.OPC_GPOFF
+                == controller.outbound.elementAt(index).getOpCode();
+    }
 
-	LocoNetInterfaceScaffold controller;  // holds dummy for testing
+    // setup a default interface
+    public void setUp() {
+        controller = new LocoNetInterfaceScaffold();
+        p = new LnPowerManager(new LocoNetSystemConnectionMemo(controller, null));
+    }
 
-	// from here down is testing infrastructure
+    LocoNetInterfaceScaffold controller;  // holds dummy for testing
 
-	public LnPowerManagerTest(String s) {
-		super(s);
-	}
+    // from here down is testing infrastructure
+    public LnPowerManagerTest(String s) {
+        super(s);
+    }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {LnPowerManagerTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {LnPowerManagerTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(LnPowerManagerTest.class);
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(LnPowerManagerTest.class);
+        return suite;
+    }
 
 }

@@ -1,87 +1,140 @@
 package jmri.jmrit.withrottle;
 
-
+import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Attribute;
-import org.jdom.Element;
 
 /**
- *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision$
+ * @author Brett Hoffman Copyright (C) 2010
+ * @version $Revision$
  */
-public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
-    
-    //  Flag that prefs have not been saved:
-    private boolean isDirty = false;
+public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
 
+    public static final int DEFAULT_PORT = 12090;
+
+    //  Flag that restart is required to apply preferences
+    private boolean isRestartRequired = false;
 
     private boolean useEStop = true;
     private int eStopDelay = 10;
-    
+
     private boolean useMomF2 = true;
-    
-    private boolean useJmdns = true;
-    private boolean useFixedPort = false;
-    private String port = null;
+
+    private int port = DEFAULT_PORT;
 
     private boolean allowTrackPower = true;
     private boolean allowTurnout = true;
     private boolean allowRoute = true;
     private boolean allowConsist = true;
     private boolean useWiFiConsist = true;
-    
-    public WiThrottlePreferences(String fileName){
-        super.openFile(fileName);
-            
-    }
-    
-    public WiThrottlePreferences(){}
 
+    // track as loaded / as saved state
+    private boolean asLoadedUseEStop = true;
+    private int asLoadedEStopDelay = 10;
+
+    private boolean asLoadedUseMomF2 = true;
+
+    private int asLoadedPort = 0;
+
+    private boolean asLoadedAllowTrackPower = true;
+    private boolean asLoadedAllowTurnout = true;
+    private boolean asLoadedAllowRoute = true;
+    private boolean asLoadedAllowConsist = true;
+    private boolean asLoadedUseWiFiConsist = true;
+
+    public WiThrottlePreferences(String fileName) {
+        super.openFile(fileName);
+    }
+
+    public WiThrottlePreferences() {
+    }
+
+    @Override
     public void load(Element child) {
         Attribute a;
-    	if ((a = child.getAttribute("isUseEStop")) != null )  setUseEStop(a.getValue().equalsIgnoreCase("true"));
-    	if ((a = child.getAttribute("getEStopDelay")) != null )
-            try{
+        if ((a = child.getAttribute("isUseEStop")) != null) {
+            setUseEStop(a.getValue().equalsIgnoreCase("true"));
+            this.asLoadedUseEStop = this.isUseEStop();
+        }
+        if ((a = child.getAttribute("getEStopDelay")) != null) {
+            try {
                 setEStopDelay(Integer.valueOf(a.getValue()));
-            }catch (NumberFormatException e){
+                this.asLoadedEStopDelay = this.getEStopDelay();
+            } catch (NumberFormatException e) {
                 log.debug(e.getLocalizedMessage(), e);
             }
-        if ((a = child.getAttribute("isUseMomF2")) != null )  setUseMomF2(a.getValue().equalsIgnoreCase("true"));
-    	if ((a = child.getAttribute("isUseJmdns")) != null )  setUseJmdns(a.getValue().equalsIgnoreCase("true"));
-    	if ((a = child.getAttribute("isUseFixedPort")) != null )  setUseFixedPort(a.getValue().equalsIgnoreCase("true"));
-    	if ((a = child.getAttribute("getPort")) != null ) setPort(a.getValue());
-            
-    	if ((a = child.getAttribute("isAllowTrackPower")) != null )  setAllowTrackPower(a.getValue().equalsIgnoreCase("true"));
-        if ((a = child.getAttribute("isAllowTurnout")) != null )  setAllowTurnout(a.getValue().equalsIgnoreCase("true"));
-        if ((a = child.getAttribute("isAllowRoute")) != null )  setAllowRoute(a.getValue().equalsIgnoreCase("true"));
-        if ((a = child.getAttribute("isAllowConsist")) != null )  setAllowConsist(a.getValue().equalsIgnoreCase("true"));
-        if ((a = child.getAttribute("isUseWiFiConsist")) != null )  setUseWiFiConsist(a.getValue().equalsIgnoreCase("true"));
+        }
+        if ((a = child.getAttribute("isUseMomF2")) != null) {
+            setUseMomF2(a.getValue().equalsIgnoreCase("true"));
+            this.asLoadedUseMomF2 = this.isUseMomF2();
+        }
+        if ((a = child.getAttribute("getPort")) != null) {
+            try {
+                setPort(a.getIntValue());
+            } catch (DataConversionException ex) {
+                log.error("Port {} is invalid.", a.getValue());
+            }
+            this.asLoadedPort = this.getPort();
+        }
+
+        if ((a = child.getAttribute("isAllowTrackPower")) != null) {
+            setAllowTrackPower(a.getValue().equalsIgnoreCase("true"));
+            this.asLoadedAllowTrackPower = this.isAllowTrackPower();
+        }
+        if ((a = child.getAttribute("isAllowTurnout")) != null) {
+            setAllowTurnout(a.getValue().equalsIgnoreCase("true"));
+            this.asLoadedAllowTurnout = this.isAllowTurnout();
+        }
+        if ((a = child.getAttribute("isAllowRoute")) != null) {
+            setAllowRoute(a.getValue().equalsIgnoreCase("true"));
+            this.asLoadedAllowRoute = this.isAllowRoute();
+        }
+        if ((a = child.getAttribute("isAllowConsist")) != null) {
+            setAllowConsist(a.getValue().equalsIgnoreCase("true"));
+            this.asLoadedAllowConsist = this.isAllowConsist();
+        }
+        if ((a = child.getAttribute("isUseWiFiConsist")) != null) {
+            setUseWiFiConsist(a.getValue().equalsIgnoreCase("true"));
+            this.asLoadedUseWiFiConsist = this.isUseWiFiConsist();
+        }
 
     }
 
-    public boolean compareValuesDifferent(WiThrottlePreferences prefs){
-        if (isAllowTrackPower() != prefs.isAllowTrackPower()) return true;
-        if (isAllowTurnout() != prefs.isAllowTurnout()) return true;
-        if (isAllowRoute() != prefs.isAllowRoute()) return true;
-        if (isAllowConsist() != prefs.isAllowConsist()) return true;
-        if (isUseWiFiConsist() != prefs.isUseWiFiConsist()) return true;
+    public boolean compareValuesDifferent(WiThrottlePreferences prefs) {
+        if (isAllowTrackPower() != prefs.isAllowTrackPower()) {
+            return true;
+        }
+        if (isAllowTurnout() != prefs.isAllowTurnout()) {
+            return true;
+        }
+        if (isAllowRoute() != prefs.isAllowRoute()) {
+            return true;
+        }
+        if (isAllowConsist() != prefs.isAllowConsist()) {
+            return true;
+        }
+        if (isUseWiFiConsist() != prefs.isUseWiFiConsist()) {
+            return true;
+        }
 
-        if (isUseEStop() != prefs.isUseEStop()) return true;
-        if (getEStopDelay() != prefs.getEStopDelay()) return true;
-        if (isUseMomF2() != prefs.isUseMomF2()) return true;
-        if (isUseFixedPort() != prefs.isUseFixedPort()) return true;
-        if (!(getPort().equals(prefs.getPort()))) return true;
-        if (isUseJmdns() != prefs.isUseJmdns()) return true;
-        return false;
+        if (isUseEStop() != prefs.isUseEStop()) {
+            return true;
+        }
+        if (getEStopDelay() != prefs.getEStopDelay()) {
+            return true;
+        }
+        if (isUseMomF2() != prefs.isUseMomF2()) {
+            return true;
+        }
+        return getPort() != prefs.getPort();
     }
 
-    public void apply(WiThrottlePreferences prefs){
+    public void apply(WiThrottlePreferences prefs) {
         setUseEStop(prefs.isUseEStop());
         setEStopDelay(prefs.getEStopDelay());
         setUseMomF2(prefs.isUseMomF2());
-        setUseJmdns(prefs.isUseJmdns());
-        setUseFixedPort(prefs.isUseFixedPort());
         setPort(prefs.getPort());
         setAllowTrackPower(prefs.isAllowTrackPower());
         setAllowTurnout(prefs.isAllowTurnout());
@@ -90,108 +143,122 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         setUseWiFiConsist(prefs.isUseWiFiConsist());
     }
 
+    @Override
     public Element store() {
-    	Element element = new Element("WiThrottlePreferences");
+        if (this.isDirty()) {
+            this.isRestartRequired = true;
+        }
+        Element element = new Element("WiThrottlePreferences");
         element.setAttribute("isUseEStop", "" + isUseEStop());
+        this.asLoadedUseEStop = this.isUseEStop();
         element.setAttribute("getEStopDelay", "" + getEStopDelay());
+        this.asLoadedEStopDelay = this.getEStopDelay();
         element.setAttribute("isUseMomF2", "" + isUseMomF2());
-        element.setAttribute("isUseJmdns", "" + isUseJmdns());
-        element.setAttribute("isUseFixedPort", "" + isUseFixedPort());
+        this.asLoadedUseMomF2 = this.isUseMomF2();
         element.setAttribute("getPort", "" + getPort());
+        this.asLoadedPort = this.getPort();
         element.setAttribute("isAllowTrackPower", "" + isAllowTrackPower());
+        this.asLoadedAllowTrackPower = this.isAllowTrackPower();
         element.setAttribute("isAllowTurnout", "" + isAllowTurnout());
+        this.asLoadedAllowTurnout = this.isAllowTurnout();
         element.setAttribute("isAllowRoute", "" + isAllowRoute());
+        this.asLoadedAllowRoute = this.isAllowRoute();
         element.setAttribute("isAllowConsist", "" + isAllowConsist());
+        this.asLoadedAllowConsist = this.isAllowConsist();
         element.setAttribute("isUseWiFiConsist", "" + isUseWiFiConsist());
-        setIsDirty(false);  //  Resets only when stored
+        this.asLoadedUseWiFiConsist = this.isUseWiFiConsist();
         return element;
     }
-    
-    public boolean getIsDirty(){
-        return isDirty;
-    }
-    public void setIsDirty(boolean value){
-        isDirty = value;
+
+    public boolean isDirty() {
+        return this.asLoadedUseEStop != this.isUseEStop()
+                || this.asLoadedEStopDelay != this.getEStopDelay()
+                || this.asLoadedUseMomF2 != this.isUseMomF2()
+                || this.asLoadedPort == 0
+                || this.asLoadedPort != this.getPort()
+                || this.asLoadedAllowTrackPower != this.isAllowTrackPower()
+                || this.asLoadedAllowTurnout != this.isAllowTurnout()
+                || this.asLoadedAllowRoute != this.isAllowRoute()
+                || this.asLoadedAllowConsist != this.isAllowConsist()
+                || this.asLoadedUseWiFiConsist != this.isUseWiFiConsist();
     }
 
+    public boolean isRestartRequired() {
+        return this.isRestartRequired;
+    }
 
-    public boolean isUseEStop(){
+    public boolean isUseEStop() {
         return useEStop;
     }
-    public void setUseEStop(boolean value){
+
+    public void setUseEStop(boolean value) {
         useEStop = value;
     }
 
-    public int getEStopDelay(){
+    public int getEStopDelay() {
         return eStopDelay;
     }
-    public void setEStopDelay(int value){
+
+    public void setEStopDelay(int value) {
         eStopDelay = value;
     }
-    
-    public boolean isUseMomF2(){
+
+    public boolean isUseMomF2() {
         return useMomF2;
     }
-    public void setUseMomF2(boolean value){
+
+    public void setUseMomF2(boolean value) {
         useMomF2 = value;
     }
 
-    public boolean isUseJmdns(){
-        return useJmdns;
-    }
-    public void setUseJmdns(boolean value){
-        useJmdns = value;
-    }
-
-    public boolean isUseFixedPort(){
-        return useFixedPort;
-    }
-    public void setUseFixedPort(boolean value){
-        useFixedPort = value;
-    }
-
-    public String getPort(){
+    public int getPort() {
         return port;
     }
-    public void setPort(String value){
+
+    public void setPort(int value) {
         port = value;
     }
 
-    public boolean isAllowTrackPower(){
+    public boolean isAllowTrackPower() {
         return allowTrackPower;
     }
-    public void setAllowTrackPower(boolean value){
+
+    public void setAllowTrackPower(boolean value) {
         allowTrackPower = value;
     }
 
-    public boolean isAllowTurnout(){
+    public boolean isAllowTurnout() {
         return allowTurnout;
     }
-    public void setAllowTurnout(boolean value){
+
+    public void setAllowTurnout(boolean value) {
         allowTurnout = value;
     }
 
-    public boolean isAllowRoute(){
+    public boolean isAllowRoute() {
         return allowRoute;
     }
-    public void setAllowRoute(boolean value){
+
+    public void setAllowRoute(boolean value) {
         allowRoute = value;
     }
 
-    public boolean isAllowConsist(){
+    public boolean isAllowConsist() {
         return allowConsist;
     }
-    public void setAllowConsist(boolean value){
+
+    public void setAllowConsist(boolean value) {
         allowConsist = value;
     }
-    
-    public boolean isUseWiFiConsist(){
+
+    public boolean isUseWiFiConsist() {
         return useWiFiConsist;
     }
-    public void setUseWiFiConsist(boolean value){
+
+    public void setUseWiFiConsist(boolean value) {
         useWiFiConsist = value;
     }
 
-    private static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class.getName());
+    private static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
 
 }

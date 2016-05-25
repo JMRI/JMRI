@@ -1,19 +1,17 @@
 package jmri.jmrix.loconet.sdf;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf package.
+ *
  * @author	Bob Jacobsen Copyright 2007
- * @version     $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -32,7 +30,5 @@ public class PackageTest extends TestCase {
         suite.addTest(SdfBufferTest.suite());
         return suite;
     }
-
-    static Logger log = Logger.getLogger(PackageTest.class.getName());
 
 }

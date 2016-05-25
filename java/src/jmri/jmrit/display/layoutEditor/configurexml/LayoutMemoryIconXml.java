@@ -1,16 +1,13 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import jmri.configurexml.AbstractXmlAdapter;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.configurexml.*;
 
-import org.jdom.Element;
-
-
- /**
- * Dummy class, just present so files that refer to this 
- * class (e.g. pre JMRI 2.7.8 files) can still be read by
- * deferring to the present class.
+/**
+ * Dummy class, just present so files that refer to this class (e.g. pre JMRI
+ * 2.7.8 files) can still be read by deferring to the present class.
  *
  * @author David Duchamp Copyright: Copyright (c) 2009
  * @author Kevin Dickerson, Deprecated
@@ -24,8 +21,8 @@ public class LayoutMemoryIconXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the contents of a
-     * LayoutMemoryIcon
+     * Default implementation for storing the contents of a LayoutMemoryIcon
+     *
      * @param o Object to store, of type LayoutMemoryIcon
      * @return Element containing the complete info
      */
@@ -34,22 +31,22 @@ public class LayoutMemoryIconXml extends AbstractXmlAdapter {
         return tmp.store(o);
     }
 
-
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
 
     /**
-     * Load, starting with the memoryicon element, then
-     * all the value-icon pairs
+     * Load, starting with the memoryicon element, then all the value-icon pairs
+     *
      * @param element Top level Element to unpack.
-     * @param o  LayoutEditor as an Object
+     * @param o       LayoutEditor as an Object
      */
-	public void load(Element element, Object o) {
+    public void load(Element element, Object o) {
         MemoryIconXml tmp = new MemoryIconXml();
         tmp.load(element, o);
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutMemoryIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutMemoryIconXml.class.getName());
 }

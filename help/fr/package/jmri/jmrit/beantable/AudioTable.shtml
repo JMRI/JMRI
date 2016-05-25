@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AudioTable.shtml,v 1.3 2010/01/26 00:31:13 jacobsen Exp $ -->
-<!-- translated by Hervé Blorec le 2012/01/02-->
+<!-- $Id$ -->
+<!-- Translated by Herv&#233; Blorec  2013-10-10-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Audio Table Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Matt Harris" name=Author>
     <META name="keywords" content="JMRI help Audio Table">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -30,13 +30,13 @@
 Vous pouvez utiliser la Table Audio pour regarder le contenu des objets audio JMRI.
 <p>
 Notez que vous pouvez trier la table par chacune des colonnes, cliquez simplement sur le
-tête de colonne.
+t&#234;te de colonne.
 </p>
  <a href="AudioTable.jpg"><img src="AudioTable.jpg" height="178" width="420">
 </a>
 <p>
-Pour créer un nouvel objet audio, cliquez sur le bouton
-"<a href="AudioAddEdit.shtml"> Ajouter ...</a>"  au bas de la fenêtre.
+Pour cr&#233;er un nouvel objet audio, cliquez sur le bouton
+"<a href="AudioAddEdit.shtml"> Ajouter ...</a>"  au bas de la fen&#234;tre.
 
 <p>
 Pour plus d'informations sur les objets audio, consultez la

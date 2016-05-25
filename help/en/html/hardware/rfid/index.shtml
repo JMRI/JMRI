@@ -1,18 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: RFID Reader Support</title>
+<title>JMRI Hardware Support - RFID Readers</title>
 
 <!-- Style -->
-<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<link REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -21,22 +17,49 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: RFID Reader Support
-</h1>
+<h1>Hardware Support: RFID Readers</h1>
 
-<em>The support on this page is rapidly evolving; the
+<em>RFID support in JMRI is rapidly evolving; the
 actual code might be ahead or behind the documentation
 on any given day.</em><p>
 
-JMRI provides support for general JMRI
+<p>JMRI provides support for general JMRI
 <a href="../../tools/Sensors.shtml">Sensors</a>
 and
 <a href="../../tools/Reporters.shtml">Reporters</a>
 in terms of RFID Reader "events". 
 
-<h2>Naming</h2>
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Protocols</h3>
+JMRI supports several different RFID Reader Protocols:
+<ul>
+    <li>CORE-ID / ID-Innovations - since version 2.11.4</li>
+    <li>Olimex - since v 3.9.2</li>
+    <li>Parallax - since v 3.9.2</li>
+</ul>
+<p>Choose the appropriate Protocol when setting the Preferences.
 
+<p>
+JMRI also supports up to 8 individual readers connected via a Concentrator.
+Right now, the only supported Concentrator is that from MERG, and then only for
+readers using the CORE-ID protocol.<br>
+Select "MERG Concentrator" for the "Adapter" on the Connections tab in the JMRI Preferences.
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Wiring</h3>
+<ul>
+	<li>Direct serial connections have been supported since JMRI 2.11.4
+	<li>Network connections are targeted for the JMRI 4.1 release series.
+</ul>
+
+<h3>Settings</h3>
+<a href="RFID_Preferences.png"><img src="RFID_Preferences.png" align="right" height="220" width="430"/></a>
+<p>You configure JMRI's connection to your RFID 
+hardware in JMRI's Preferences.<br>
+It appears as "RFID" in the System Manufacturer drop-down list.</p>
+
+<h3>Naming</h3>
+<p>
 The <a href="../../doc/Technical/Names.shtml">system letter</a> 
 for RFID connections is "F". Details of RFID 
 event and object names are described below.
@@ -44,22 +67,22 @@ event and object names are described below.
 
 <p>
 JMRI associates RFID events with individual
-JMRI objects (Sensors, Reporters, etc) via the 
-JMRI system names.  A system name like
+JMRI objects (Sensors, Reporters, etc.) via 
+System Names.  A System Name like
 "<code>FSA</code>"
-defines a Sensor that follows the "A" reader, whereas a system name like
+defines a Sensor that follows the "A" reader, whereas a System Name like
 "<code>FRB</code>"
 defines a Reporter that follows the "B" reader.
 
-<h2>Sensors</h2>
-
+<h3>Sensors</h3>
+<p>
 RFID readings coming into JMRI applications can be accessed via
 JMRI Sensor objects.  The Sensor's 
-<!-- <a href="Names.shtml">system name</a> -->system name
+<!-- <a href="Names.shtml">system name</a> -->System Name
 determines which RFID Reader it corresponds to.
 
 <p>
-A sensor is defined by two events: The one that sets it ACTIVE, and
+A Sensor is defined by two events: The one that sets it ACTIVE, and
 the one that sets it INACTIVE.  When an RFID Tag is within the proximity of an
 RFID Reader, the associated sensor is ACTIVE; outside of these times it is INACTIVE.
 You create Sensors using the 
@@ -67,8 +90,8 @@ You create Sensors using the
 button on the
 <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
 
-<h2>Reporters</h2>
-
+<h3>Reporters</h3>
+<p>
 RFID readings coming into JMRI applications can also be accessed via
 JMRI Reporter objects.  The Reporter's 
 <!-- <a href="Names.shtml">system name</a> -->system name
@@ -85,30 +108,31 @@ Reporter will contain details of the specific
 <a href="../../tools/IdTags.shtml">IdTag</a>
 seen.  This then enables other JMRI tools to react to this information.
 
-<h2>Reporter Table</h2>
-The 
-<a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
+<h4>Reporter Table</h4>
+<p>The <a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
 provides easy access to the contents of all Reporters that JMRI knows about.
-There's also an 
-<a href="../../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a> 
-for creating your own internal Reporters; JMRI automatically creates
-Reporter objects for devices on the layout.
+JMRI automatically creates
+Reporter objects for devices discovered on the layout.<br>
+There's also an <a href="../../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a> 
+for manually creating your own internal Reporters. 
 
-<h2>Displaying Reporter Values on Panels</h2>
-A Reporter's value can be displayed on a panel via an icon.
+<h4>Displaying Reporter Values on Panels</h4>
+<p>A Reporter's value can be displayed on a Panel via an icon.
 To do this:
 <ul>
-<li>On the Panel Editor window for your panel, find the "Add Reporter" 
-button.
-<li>In the text box next to that button, type the user name or system name of the
-desired Reporter.
-<li>Click the button.  The Reporter icon will be placed on the panel.
-If it's not visible, that might be because the value is currently blank;
-use the Reporter Table to change the value to something that will be visible.
-<li>You can drag the icon to where you want it in the usual way.
-<li>The pop-up menu on the icon will let you change the formatting.
+	<li>On the Panel Editor window for your panel, find the "Add Reporter" 
+	button.
+	<li>In the text box next to that button, type the User Name or System Name of the
+	desired Reporter.
+	<li>Click the button.  The Reporter icon will be placed on the Panel.
+	If it's not visible, that might be because the value is currently blank;
+	use the Reporter Table to change the value to something that will be visible.
+	<li>You can drag the icon to where you want it in the usual way.
+	<li>The pop-up menu on the icon will let you change the formatting.
 </ul>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

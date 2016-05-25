@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: InstallTest.shtml,v 1.3 2008/11/01 17:53:48 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-10-02--> 
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-10-09--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: InstallTest Main Window
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help preferences">
 
@@ -24,12 +24,12 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: Fenêtre  Principale InstallTest </H1>
+<H1>JMRI: Fen&#234;tre  Principale InstallTest </H1>
 
-La fenêtre principale InstallTest est destinée à montrer si vous avez Java et JMRI correctement installé.
-Vous ne devriez pas l'utiliser pour une activité normale.
+La fen&#234;tre principale InstallTest est destin&#233;e &#224; montrer si vous avez Java et JMRI correctement install&#233;.
+Vous ne devriez pas l'utiliser pour une activit&#233; normale.
 <p>
-Si vous avez obtenu cette page en exécutant et en sélectionnant Aide InstallTest, votre installation JMRI est fondamentalement OK. Vous pouvez passer à la configuration et l'éxecution de DecoderPro, PanelPro, etc
+Si vous avez obtenu cette page en ex&#233;cutant et en s&#233;lectionnant Aide InstallTest, votre installation JMRI est fondamentalement OK. Vous pouvez passer &#224; la configuration et l'&#233;xecution de DecoderPro, PanelPro, etc
 
 <p>
 Ceci est la page d'aide apps.InstallTest.InstallTest.shtml

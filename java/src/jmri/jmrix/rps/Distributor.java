@@ -1,23 +1,21 @@
 // Distributor.java
-
 package jmri.jmrix.rps;
 
+import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Vector;
 
 /**
  * Distributes Readings and the Measurements calculated from them.
  * <P>
- * @author	Bob Jacobsen  Copyright (C) 2006, 2008
+ * @author	Bob Jacobsen Copyright (C) 2006, 2008
  *
  * @version	$Revision$
  */
 public class Distributor {
 
     /**
-     * Request being informed when a new Reading 
-     * is available.
+     * Request being informed when a new Reading is available.
      */
     public void addReadingListener(ReadingListener l) {
         // add only if not already registered
@@ -34,30 +32,31 @@ public class Distributor {
             readingListeners.removeElement(l);
         }
     }
-    
+
     /**
      * Invoked when a new Reading is created
      */
     @SuppressWarnings("unchecked")
-	public void submitReading(Reading s) {
+    public void submitReading(Reading s) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<ReadingListener> v;
-        synchronized(this) {
+        synchronized (this) {
             v = (Vector<ReadingListener>) readingListeners.clone();
         }
-        if (log.isDebugEnabled()) log.debug("notify "+v.size()
-                                            +" ReadingListeners about item ");
+        if (log.isDebugEnabled()) {
+            log.debug("notify " + v.size()
+                    + " ReadingListeners about item ");
+        }
         // forward to all listeners
         int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
+        for (int i = 0; i < cnt; i++) {
             ReadingListener client = v.elementAt(i);
             javax.swing.SwingUtilities.invokeLater(new ForwardReading(s, client));
         }
     }
-    
+
     /**
-     * Request being informed when a new Measurement 
-     * is available.
+     * Request being informed when a new Measurement is available.
      */
     public void addMeasurementListener(MeasurementListener l) {
         // add only if not already registered
@@ -79,51 +78,54 @@ public class Distributor {
      * Invoked when a new Measurement is created
      */
     @SuppressWarnings("unchecked")
-	public void submitMeasurement(Measurement s) {
+    public void submitMeasurement(Measurement s) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<MeasurementListener> v;
-        synchronized(this) {
-                v = (Vector<MeasurementListener>) measurementListeners.clone();
+        synchronized (this) {
+            v = (Vector<MeasurementListener>) measurementListeners.clone();
         }
-        if (log.isDebugEnabled()) log.debug("notify "+v.size()
-                                            +" MeasurementListeners about item ");
+        if (log.isDebugEnabled()) {
+            log.debug("notify " + v.size()
+                    + " MeasurementListeners about item ");
+        }
         // forward to all listeners
         int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
+        for (int i = 0; i < cnt; i++) {
             MeasurementListener client = v.elementAt(i);
             javax.swing.SwingUtilities.invokeLater(new ForwardMeasurement(s, client));
         }
     }
-    
+
     static volatile private Distributor instance = null;
-    
+
     public static Distributor instance() {
-        if (instance == null) instance = new Distributor();
+        if (instance == null) {
+            instance = new Distributor();
+        }
         return instance;
     }
 
     ////////////////////////////
     // Implementation details //
     ////////////////////////////
-
     final private Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
     final private Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
 
-    static Logger log = LoggerFactory.getLogger(Distributor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Distributor.class.getName());
 
     /**
      * Forward the Reading from the Swing thread
      */
     static class ForwardReading implements Runnable {
-    
+
         Reading s;
         ReadingListener client;
-        
+
         ForwardReading(Reading s, ReadingListener client) {
             this.s = s;
             this.client = client;
         }
-        
+
         public void run() {
             client.notify(s);
         }
@@ -133,15 +135,15 @@ public class Distributor {
      * Forward the Measurement from the Swing thread
      */
     static class ForwardMeasurement implements Runnable {
-    
+
         Measurement s;
         MeasurementListener client;
-        
+
         ForwardMeasurement(Measurement s, MeasurementListener client) {
             this.s = s;
             this.client = client;
         }
-        
+
         public void run() {
             client.notify(s);
         }

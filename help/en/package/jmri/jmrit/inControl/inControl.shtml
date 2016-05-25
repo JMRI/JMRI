@@ -1,8 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: Oscar Moutinho $) 2011 -->
-<!-- $Id: inControl.shtml 17977 2011-11-04 22:00:00Z Oscar Moutinho $ -->
+<!-- Copyright ($Author$) 2011 -->
+<!-- $Id$ -->
+
+<!-- Retain to prevent dead links -->
+
 <title>JMRI: inControl - Web Throttles and Frames</title>
 
 <!-- Style -->
@@ -21,56 +24,8 @@
 
 <h1>JMRI: inControl - Web Throttles and Frames (inControl.html application)</h1>
 <p>
-This application is a single web page that runs on the most recent browsers in computers, smartphones and tablets.
-<br /><b>There is nothing to install !</b>
+    <b>Notice </b> <i>inControl</i> is no longer supported. Use <a href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">WebThrottle</a> instead.
 </p>
-<p>
-To start using JMRI through a web browser, you just need to activate the included <b>JMRI Web Server</b>.
-You may found additional information <a href="/help/en/html/web/index.shtml">here</a>.
-</p>
-<p>It controls not only locomotives and function decoders, as a web throttle, but also turnouts, lights and other devices through JMRI active frames.</p>
-<p><b>inControl</b> is completely resizable and it ajusts automatically to the size and orientation of the device screen.</p>
-<p>Anyone can create web pages with iframes containing <b>inControl.html</b>, in order to create more or less complex control panels.</p>
-<h3>Screen samples ...</h3>
-<p>
-<img src="images/Panel.png?Maxheigth=300" height="300" title="A frame example">
-&nbsp;&nbsp;
-<img src="images/AnalogClock.png?Maxheigth=300" height="300" title="An analog clock frame">
-&nbsp;&nbsp;
-<img src="images/Throttle1.png?Maxheigth=300" height="300" title="A throttle">
-&nbsp;&nbsp;
-<img src="images/Throttle2.png?Maxheigth=300" height="300" title="A throttle">
-&nbsp;&nbsp;
-<img src="images/2Throttles.png?Maxheigth=300" height="300" title="2 throttles at once">
-</p>
-<h3>Query String parameters</h3>
-<p>Almost all parameters may be passed to the application through the query string but they can be modified in the <b>Settings</b> and <b>Loco/Device parameters</b> sections.</p>
-<p><img src="images/QueryStringHelp.png?Maxheigth=600" height="600" title="Help for query string usage"></p>
-<h3>Settings</h3>
-<p>This section permits to modify global parameters. They are persistently stored in the browser local storage.</p>
-<p><img src="images/Settings.png?Maxheigth=600" height="600" title="Global settings section"></p>
-<h3>Loco/Device parameters</h3>
-<p>This section permits to modify loco or function decoder parameters. They are persistently stored in the browser local storage.</p>
-<p><b>Speed Control</b> can be disabled. This is suitable to control a function only decoder.</p>
-<p>To enable a function key, <b>Active</b> should be enabled.</p>
-<p>If a function key only activates some action when there is a transition from OFF to ON, <b>Auto Unpress</b> should be enabled.</p>
-<p>To control a standard decoder and function only decoders simultaneously with the same throttle, <b>Alternative Device Address</b> can be set to the addresses of the function only decoders.</p>
-<p>To provide a function key to activate shunting, <b>Shunt</b> should be enabled. It changes the behaviour of speed control in order to permit to control from -50% to +50% of the maximum speed. When positive, the loco runs towards the selected direction. <b>Toggle button</b> shoud be enabled.</p>
-<p><img src="images/LocoSettings.png?Maxheigth=600" height="600" title="Per loco settings section"></p>
-<h3>Help </h3>
-<p><img src="images/Help.png?Maxheigth=600" height="600" title="Generic Help"></p>
-<h2>Scan to be in control (Scan2BeInControl.html application)</h2>
-<p><b>Just point the smartphone and start controlling a loco or frame !</b></p>
-<p>This application lists the roster (locos) and frames defined in JMRI.</p>
-<p>To open a web throttle or frame using <b>inControl</b>, users may:
-<br />- scan the image using a smartphone (with qrCode compatible reader application)
-<br />- click or touch the Loco or Frame image or link
-<p>For locos, the parameters from JMRI are merged with the ones already stored in your device (computer, tablet or smartphone).
-<br />If you want to use only the parameters from JMRI, you must delete the loco from your device before scanning the qrCode graph or use the link.</p>
-<p>Non functional image sample:</p>
-<p><img src="images/Scan2BeInControl.png" width="100%" title="Just point the smartphone and start using it"></p>
-<p>&nbsp;</p>
-<p>This is the package/jmri/jmrit/inControl/inControl help page</p>
 
 <!--#include virtual="/Footer" -->
 </body>

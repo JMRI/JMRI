@@ -1,153 +1,158 @@
 // RouteCopyFrame.java
-
 package jmri.jmrit.operations.routes;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.setup.Control;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for copying a route for operations.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2010
  * @version $Revision$
  */
 public class RouteCopyFrame extends OperationsFrame {
 
-	RouteManager routeManager = RouteManager.instance();
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4478401682355496019L;
 
-	// labels
-	javax.swing.JLabel textCopyRoute = new javax.swing.JLabel(Bundle.getMessage("CopyRoute"));
-	javax.swing.JLabel textRouteName = new javax.swing.JLabel(Bundle.getMessage("RouteName"));
+    RouteManager routeManager = RouteManager.instance();
 
-	// text field
-	javax.swing.JTextField routeNameTextField = new javax.swing.JTextField(Control.max_len_string_route_name);
+    // labels
+    javax.swing.JLabel textCopyRoute = new javax.swing.JLabel(Bundle.getMessage("CopyRoute"));
+    javax.swing.JLabel textRouteName = new javax.swing.JLabel(Bundle.getMessage("RouteName"));
 
-	// check boxes
-	javax.swing.JCheckBox invertCheckBox = new javax.swing.JCheckBox(Bundle.getMessage("Invert"));
+    // text field
+    javax.swing.JTextField routeNameTextField = new javax.swing.JTextField(Control.max_len_string_route_name);
 
-	// major buttons
-	javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
+    // check boxes
+    javax.swing.JCheckBox invertCheckBox = new javax.swing.JCheckBox(Bundle.getMessage("Invert"));
 
-	// combo boxes
-	javax.swing.JComboBox routeBox = RouteManager.instance().getComboBox();
+    // major buttons
+    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
 
-	public RouteCopyFrame() {
-		super(Bundle.getMessage("TitleRouteCopy"));
-		// general GUI config
+    // combo boxes
+    JComboBox<Route> routeBox = RouteManager.instance().getComboBox();
 
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+    public RouteCopyFrame() {
+        super(Bundle.getMessage("TitleRouteCopy"));
+        // general GUI config
 
-		// Set up the panels
-		JPanel p1 = new JPanel();
-		p1.setLayout(new GridBagLayout());
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-		// Layout the panel by rows
-		// row 1 textRouteName
-		addItem(p1, textRouteName, 0, 1);
-		addItemWidth(p1, routeNameTextField, 3, 1, 1);
+        // Set up the panels
+        JPanel p1 = new JPanel();
+        p1.setLayout(new GridBagLayout());
 
-		// row 2
-		addItem(p1, textCopyRoute, 0, 2);
-		addItemWidth(p1, routeBox, 3, 1, 2);
+        // Layout the panel by rows
+        // row 1 textRouteName
+        addItem(p1, textRouteName, 0, 1);
+        addItemWidth(p1, routeNameTextField, 3, 1, 1);
 
-		// row 4
-		addItem(p1, invertCheckBox, 0, 4);
-		addItem(p1, copyButton, 1, 4);
+        // row 2
+        addItem(p1, textCopyRoute, 0, 2);
+        addItemWidth(p1, routeBox, 3, 1, 2);
 
-		getContentPane().add(p1);
+        // row 4
+        addItem(p1, invertCheckBox, 0, 4);
+        addItem(p1, copyButton, 1, 4);
 
-		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_CopyRoute", true); // NOI18N
+        getContentPane().add(p1);
 
-		pack();
-		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.smallPanelHeight));
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrit.operations.Operations_CopyRoute", true); // NOI18N
 
-		// setup buttons
-		addButtonAction(copyButton);
-	}
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight200));
 
-	public void setRouteName(String routeName) {
-		routeBox.setSelectedItem(routeManager.getRouteByName(routeName));
-	}
+        // setup buttons
+        addButtonAction(copyButton);
+    }
 
-	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-		if (ae.getSource() == copyButton) {
-			log.debug("copy route button activated");
-			if (!checkName())
-				return;
+    public void setRouteName(String routeName) {
+        routeBox.setSelectedItem(routeManager.getRouteByName(routeName));
+    }
 
-			Route newRoute = routeManager.getRouteByName(routeNameTextField.getText());
-			if (newRoute != null) {
-				reportRouteExists(Bundle.getMessage("add"));
-				return;
-			}
-			if (routeBox.getSelectedItem() == null || routeBox.getSelectedItem().equals("")) {
-				reportRouteDoesNotExist();
-				return;
-			}
-			Route oldRoute = (Route) routeBox.getSelectedItem();
-			if (oldRoute == null) {
-				reportRouteDoesNotExist();
-				return;
-			}
+    @Override
+    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+        if (ae.getSource() == copyButton) {
+            log.debug("copy route button activated");
+            if (!checkName()) {
+                return;
+            }
 
-			// now copy
-			newRoute = routeManager.copyRoute(oldRoute, routeNameTextField.getText(),
-					invertCheckBox.isSelected());
+            Route newRoute = routeManager.getRouteByName(routeNameTextField.getText());
+            if (newRoute != null) {
+                reportRouteExists(Bundle.getMessage("add"));
+                return;
+            }
+            if (routeBox.getSelectedItem() == null) {
+                reportRouteDoesNotExist();
+                return;
+            }
+            Route oldRoute = (Route) routeBox.getSelectedItem();
+            if (oldRoute == null) {
+                reportRouteDoesNotExist();
+                return;
+            }
 
-			RouteEditFrame f = new RouteEditFrame();
-			f.initComponents(newRoute);
-		}
-	}
+            // now copy
+            newRoute = routeManager.copyRoute(oldRoute, routeNameTextField.getText(),
+                    invertCheckBox.isSelected());
 
-	private void reportRouteExists(String s) {
-		log.info("Can not " + s + ", route already exists");
-		JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
-				MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
-				JOptionPane.ERROR_MESSAGE);
-	}
+            RouteEditFrame f = new RouteEditFrame();
+            f.initComponents(newRoute);
+        }
+    }
 
-	private void reportRouteDoesNotExist() {
-		log.debug("route does not exist");
-		JOptionPane.showMessageDialog(this, Bundle.getMessage("CopyRoute"),
-				Bundle.getMessage("CopyRoute"), JOptionPane.ERROR_MESSAGE);
-	}
+    private void reportRouteExists(String s) {
+        log.info("Can not " + s + ", route already exists");
+        JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
+                MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[]{s}),
+                JOptionPane.ERROR_MESSAGE);
+    }
 
-	/**
-	 * 
-	 * @return true if name length is okay
-	 */
-	private boolean checkName() {
-		if (routeNameTextField.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterRouteName"),
-					Bundle.getMessage("EnterRouteName"), JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		if (routeNameTextField.getText().length() > Control.max_len_string_route_name) {
-			JOptionPane.showMessageDialog(this, MessageFormat.format(
-					Bundle.getMessage("RouteNameLess"),
-					new Object[] { Control.max_len_string_route_name + 1 }), Bundle
-					.getMessage("CanNotAddRoute"), JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		return true;
-	}
+    private void reportRouteDoesNotExist() {
+        log.debug("route does not exist");
+        JOptionPane.showMessageDialog(this, Bundle.getMessage("CopyRoute"),
+                Bundle.getMessage("CopyRoute"), JOptionPane.ERROR_MESSAGE);
+    }
 
-	public void dispose() {
-		super.dispose();
-	}
+    /**
+     *
+     * @return true if name length is okay
+     */
+    private boolean checkName() {
+        if (routeNameTextField.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterRouteName"),
+                    Bundle.getMessage("EnterRouteName"), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (routeNameTextField.getText().length() > Control.max_len_string_route_name) {
+            JOptionPane.showMessageDialog(this, MessageFormat.format(
+                    Bundle.getMessage("RouteNameLess"),
+                    new Object[]{Control.max_len_string_route_name + 1}), Bundle
+                    .getMessage("CanNotAddRoute"), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 
-	static Logger log = LoggerFactory.getLogger(RouteCopyFrame.class
-			.getName());
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(RouteCopyFrame.class
+            .getName());
 }

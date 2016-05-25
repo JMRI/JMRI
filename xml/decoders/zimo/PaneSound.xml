@@ -1,40 +1,53 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1.4, Added Chuff for Articulated Locomotives,  Mark Waters, 4 Feb 2015 -->
+<!-- version 1.3, Nigel Cliffe, added diesel/electric "Solo" settings, V34 firmware related  23 Jan 2015 -->
 <!-- version 1.2, Nigel Cliffe, added "Standing Sound on premature shutdown" and "Chuff rate at higher speed steps" -->
 <!-- version 1.1, Nigel Cliffe, added "Steam chuff frequency at speed step 1" -->
 <!-- version 1, Mark Waters - for Unified Software -->
-<pane name="Sound">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <display item="Set sound program"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Total volume"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="On/off key for engine and random sound"/>
     <display item="On/off key for function sound"/>
     <display item="Blow-off key"/>
     <display item="Mute key"/>
     <display item="Fade in/out time"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Switch input 1 playback time"/>
     <display item="Switch input 2 playback time"/>
     <display item="Switch input 3 playback time"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Drive Away if Startup sound still playing"/>
     <display item="Delay Shutdown untill end of Starting Whistle"/>
@@ -44,26 +57,28 @@
     <display item="Virtual cam chuff frequency"/>
     <display item="Steam chuff frequency at speed step 1"/>
     <display item="Real cam sensor chuff rate"/>
+    <display item="Real cam sensor chuff rate 1" label="Real cam sensor chuff rate"/>
+    <display item="Chuff for Articulated Locomotives" format="checkbox"/>
     <display item="Lead chuff accentuated"/>
     <display item="Overlapping effect at high speeds"/>
     <display item="Chuff volume at low speed and no load"/>
     <display item="Chuff volume at high speed and no load"/>
     <display item="Degree of volume change under load"/>
     <display item="Chuff rate at higher speed steps"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Blow-off time"/>
     <display item="Delayed start after blow-off time"/>
     <display item="Blow-off schedule"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Load change threshold"/>
     <display item="Reaction time to load change"/>
@@ -73,37 +88,40 @@
     <display item="Acceleration threshold for full load sound"/>
     <display item="Duration of acceleration sound"/>
     <display item="Engine volume at full acceleration"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Threshold for deceleration sound"/>
     <display item="Duration of reduced volume on deceleration"/>
     <display item="Volume level during deceleration"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Brake squeal threshold"/>
     <display item="Minimum driving time before brake squeal"/>
     <display item="Run-on time for Diesel and Electric Auxiliaries"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Multi-system engine Quick Select key"/>
+	<display item="Condition for switching sound sets"/>
+	<display item="Fn key driving solo"/>
     <display item="Two Stage Air Compressor"/>
   </column>
   <column>
-    <label label="      ">
-      <label>      </label>
+    <label>
+      <text>      </text>
     </label>
   </column>
   <name>Sound</name>
+  <name xml:lang="it">Suono</name>
 </pane>

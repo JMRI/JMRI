@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Serialsensor.shtml,v 1.1 2008/02/17 04:07:54 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-13-07-->
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; 2013-10-01-->
 <title>JMRI: Using the serial port for block sensors</title>
 
 <!-- Style -->
@@ -22,10 +22,10 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h2>Utiliser le port série pour les capteurs de bloc </h2>
+<h2>Utiliser le port s&#233;rie pour les capteurs de canton </h2>
 
-Jim Scorse a fourni un schéma pour le raccordement d'un détecteur de bloc NCE
-au port série. <BR>
+Jim Scorse a fourni un sch&#233;ma pour le raccordement d'un d&#233;tecteur de canton NCE
+au port s&#233;rie. <BR>
 <IMG SRC="images/speed0.jpg" width="400" HEIGHT="300">
 <h3> DB9 et DB25 connexions </h3>
 

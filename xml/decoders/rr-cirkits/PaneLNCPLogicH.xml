@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
@@ -13,63 +13,88 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for LNCP files -->
 <!-- Panes to show Logic -->
-<pane name="Logic H">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Logic H</name>
   <column>
     <row>
       <column>
-        <label label="Each 'Logic Block' contains one or more Conditionals. Each Conditional contains">
-          </label>
-        <label label="one or two Variables and may perform a single action when 'True'.  Each Logic">
-          </label>
-        <label label="Block is evaluated top down from one Conditional to the next until a Conditional">
-          </label>
-        <label label="is evaluated as 'True', or an 'End Logic Block' is encountered. If 'True', then its">
-          </label>
-        <label label="'Action' is performed, and further evaluation of that block ceases.  Conditionals">
-          </label>
-        <label label="must be assigned in descending order from the most restrictive to the least">
-          </label>
-        <label label="restrictive aspect. Logic blocks are delineated by selecting the 'End Logic Block'">
-          </label>
+        <label>
+          <text>Each 'Logic Block' contains one or more Conditionals. Each Conditional contains</text>
+        </label>
+        <label>
+          <text>one or two Variables and may perform a single action when 'True'.  Each Logic</text>
+        </label>
+        <label>
+          <text>Block is evaluated top down from one Conditional to the next until a Conditional</text>
+        </label>
+        <label>
+          <text>is evaluated as 'True', or an 'End Logic Block' is encountered. If 'True', then its</text>
+        </label>
+        <label>
+          <text>'Action' is performed, and further evaluation of that block ceases.  Conditionals</text>
+        </label>
+        <label>
+          <text>must be assigned in descending order from the most restrictive to the least</text>
+        </label>
+        <label>
+          <text>restrictive aspect. Logic blocks are delineated by selecting the 'End Logic Block'</text>
+        </label>
       </column>
       <column>
-        <label label="       "/>
+        <label>
+          <text>       </text>
+        </label>
       </column>
       <column>
-        <label label="check box in the last Conditional of each block. For each Variable and Action">
-          </label>
-        <label label="entry you may select either a 'LN' (LocoNet - Closed/Thrown) OR a 'DCC' (A mast">
-          </label>
-        <label label="Address plus its Aspect) command. Any Variable with 'True' selected always">
-          </label>
-        <label label="evaluates as 'True'. All commands are entered as their actual LocoNet or DCC ">
-          </label>
-        <label label="address numbers. Eg. to send LT9 Closed enter 'Switch Request' '9' 'C'.">
-          </label>
-        <label label="   ">
-          </label>
-        <label label="Conditional 64 ends the Logic Blocks on this LNCP unit.">
-          </label>
+        <label>
+          <text>check box in the last Conditional of each block. For each Variable and Action</text>
+        </label>
+        <label>
+          <text>entry you may select either a 'LN' (LocoNet - Closed/Thrown) OR a 'DCC' (A mast</text>
+        </label>
+        <label>
+          <text>Address plus its Aspect) command. Any Variable with 'True' selected always</text>
+        </label>
+        <label>
+          <text>evaluates as 'True'. All commands are entered as their actual LocoNet or DCC </text>
+        </label>
+        <label>
+          <text>address numbers. Eg. to send LT9 Closed enter 'Switch Request' '9' 'C'.</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Conditional 64 ends the Logic Blocks on this LNCP unit.</text>
+        </label>
       </column>
     </row>
     <row>
       <column>
-        <label label="       "/>
+        <label>
+          <text>       </text>
+        </label>
       </column>
     </row>
     <separator/>
     <separator/>
     <row>
       <column>
-        <label label="Conditional: 57 "/>
+        <label>
+          <text>Conditional: 57 </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label="  V1:"/>
+        <label>
+          <text>  V1:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT57 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -96,7 +121,9 @@
         <display item="LT57 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
       </column>
       <column>
-        <label label="  "/>
+        <label>
+          <text>  </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -104,15 +131,21 @@
         <display item="LT57 Function" tooltip="Select Logic Function" label=""/>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label=" V2:"/>
+        <label>
+          <text> V2:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT57 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -156,7 +189,9 @@
       <separator/>
       <separator/>
       <column>
-        <label label="     Action: "/>
+        <label>
+          <text>     Action: </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -191,21 +226,29 @@
     <separator/>
     <separator/>
     <row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <separator/>
     <separator/>
     <row>
       <column>
-        <label label="Conditional: 58 "/>
+        <label>
+          <text>Conditional: 58 </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label="  V1:"/>
+        <label>
+          <text>  V1:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT58 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -232,7 +275,9 @@
         <display item="LT58 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
       </column>
       <column>
-        <label label="  "/>
+        <label>
+          <text>  </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -240,15 +285,21 @@
         <display item="LT58 Function" tooltip="Select Logic Function" label=""/>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label=" V2:"/>
+        <label>
+          <text> V2:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT58 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -292,7 +343,9 @@
       <separator/>
       <separator/>
       <column>
-        <label label="     Action: "/>
+        <label>
+          <text>     Action: </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -327,21 +380,29 @@
     <separator/>
     <separator/>
     <row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <separator/>
     <separator/>
     <row>
       <column>
-        <label label="Conditional: 59 "/>
+        <label>
+          <text>Conditional: 59 </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label="  V1:"/>
+        <label>
+          <text>  V1:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT59 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -368,7 +429,9 @@
         <display item="LT59 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
       </column>
       <column>
-        <label label="  "/>
+        <label>
+          <text>  </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -376,15 +439,21 @@
         <display item="LT59 Function" tooltip="Select Logic Function" label=""/>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label=" V2:"/>
+        <label>
+          <text> V2:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT59 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -428,7 +497,9 @@
       <separator/>
       <separator/>
       <column>
-        <label label="     Action: "/>
+        <label>
+          <text>     Action: </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -463,21 +534,29 @@
     <separator/>
     <separator/>
     <row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <separator/>
     <separator/>
     <row>
       <column>
-        <label label="Conditional: 60 "/>
+        <label>
+          <text>Conditional: 60 </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label="  V1:"/>
+        <label>
+          <text>  V1:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT60 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -504,7 +583,9 @@
         <display item="LT60 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
       </column>
       <column>
-        <label label="  "/>
+        <label>
+          <text>  </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -512,15 +593,21 @@
         <display item="LT60 Function" tooltip="Select Logic Function" label=""/>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label=" V2:"/>
+        <label>
+          <text> V2:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT60 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -564,7 +651,9 @@
       <separator/>
       <separator/>
       <column>
-        <label label="     Action: "/>
+        <label>
+          <text>     Action: </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -599,21 +688,29 @@
     <separator/>
     <separator/>
     <row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <separator/>
     <separator/>
     <row>
       <column>
-        <label label="Conditional: 61 "/>
+        <label>
+          <text>Conditional: 61 </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label="  V1:"/>
+        <label>
+          <text>  V1:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT61 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -640,7 +737,9 @@
         <display item="LT61 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
       </column>
       <column>
-        <label label="  "/>
+        <label>
+          <text>  </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -648,15 +747,21 @@
         <display item="LT61 Function" tooltip="Select Logic Function" label=""/>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label=" V2:"/>
+        <label>
+          <text> V2:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT61 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -700,7 +805,9 @@
       <separator/>
       <separator/>
       <column>
-        <label label="     Action: "/>
+        <label>
+          <text>     Action: </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -735,21 +842,29 @@
     <separator/>
     <separator/>
     <row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <separator/>
     <separator/>
     <row>
       <column>
-        <label label="Conditional: 62 "/>
+        <label>
+          <text>Conditional: 62 </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label="  V1:"/>
+        <label>
+          <text>  V1:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT62 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -776,7 +891,9 @@
         <display item="LT62 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
       </column>
       <column>
-        <label label="  "/>
+        <label>
+          <text>  </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -784,15 +901,21 @@
         <display item="LT62 Function" tooltip="Select Logic Function" label=""/>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label=" V2:"/>
+        <label>
+          <text> V2:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT62 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -836,7 +959,9 @@
       <separator/>
       <separator/>
       <column>
-        <label label="     Action: "/>
+        <label>
+          <text>     Action: </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -871,21 +996,29 @@
     <separator/>
     <separator/>
     <row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <separator/>
     <separator/>
     <row>
       <column>
-        <label label="Conditional: 63 "/>
+        <label>
+          <text>Conditional: 63 </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label="  V1:"/>
+        <label>
+          <text>  V1:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT63 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -912,7 +1045,9 @@
         <display item="LT63 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
       </column>
       <column>
-        <label label="  "/>
+        <label>
+          <text>  </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -920,15 +1055,21 @@
         <display item="LT63 Function" tooltip="Select Logic Function" label=""/>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label=" V2:"/>
+        <label>
+          <text> V2:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT63 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -972,7 +1113,9 @@
       <separator/>
       <separator/>
       <column>
-        <label label="     Action: "/>
+        <label>
+          <text>     Action: </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -1007,21 +1150,29 @@
     <separator/>
     <separator/>
     <row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <separator/>
     <separator/>
     <row>
       <column>
-        <label label="Conditional: 64 "/>
+        <label>
+          <text>Conditional: 64 </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label="  V1:"/>
+        <label>
+          <text>  V1:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT64 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -1048,7 +1199,9 @@
         <display item="LT64 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
       </column>
       <column>
-        <label label="  "/>
+        <label>
+          <text>  </text>
+        </label>
       </column>
       <separator/>
       <separator/>
@@ -1056,15 +1209,21 @@
         <display item="LT64 Function" tooltip="Select Logic Function" label=""/>
       </column>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <separator/>
       <separator/>
       <column>
-        <label label=" V2:"/>
+        <label>
+          <text> V2:</text>
+        </label>
       </column>
       <column>
-        <label label=""/>
+        <label>
+          <text/>
+        </label>
       </column>
       <column>
         <display item="LT64 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format LocoNet messages" label=""/>
@@ -1108,7 +1267,9 @@
       <separator/>
       <separator/>
       <column>
-        <label label="     Action: "/>
+        <label>
+          <text>     Action: </text>
+        </label>
       </column>
       <separator/>
       <separator/>

@@ -1,95 +1,107 @@
 // SprogSlotMonDataModel.java
-
 package jmri.jmrix.sprog.sprogslotmon;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogSlot;
 import jmri.jmrix.sprog.SprogSlotListener;
-import jmri.jmrix.sprog.SprogCommandStation;
-
-import javax.swing.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of slot manager contents
- * @author		Bob Jacobsen   Copyright (C) 2001
- *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001 Andrew Crosland (C) 2006 ported to
+ * SPROG
+ * @version	$Revision$
  */
-public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
+public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4486077436638200664L;
     static public final int SLOTCOLUMN = 0;
 //    static public final int ESTOPCOLUMN = 1;
     static public final int ADDRCOLUMN = 1;
-    static public final int SPDCOLUMN  = 2;
+    static public final int SPDCOLUMN = 2;
     static public final int STATCOLUMN = 3;  // status: free, common, etc
 //    static public final int DISPCOLUMN = 5;  // originally "dispatch" button, now "free"
 //    static public final int CONSCOLUMN = 4;  // consist state
-    static public final int DIRCOLUMN  = 4;
+    static public final int DIRCOLUMN = 4;
 
     static public final int NUMCOLUMN = 5;
 
     SprogSlotMonDataModel(int row, int column) {
-      // connect to SprogSlotManager for updates
-      SprogCommandStation.instance().addSlotListener(this);
+        // connect to SprogSlotManager for updates
+        SprogCommandStation.instance().addSlotListener(this);
     }
-
 
     /**
-     * Returns the number of rows to be displayed.  This
-     * can vary depending on whether only active rows
-     * are displayed.
+     * Returns the number of rows to be displayed. This can vary depending on
+     * whether only active rows are displayed.
      * <P>
-     * This should probably use a local cache instead
-     * of counting/searching each time.
+     * This should probably use a local cache instead of counting/searching each
+     * time.
      */
     public int getRowCount() {
-      int nMax = SprogConstants.MAX_SLOTS;
-      if (_allSlots) {
-        // will show the entire set, so don't bother counting
-        return nMax;
-      }
-      int n = 0;
-      int nMin = 0;
-      for (int i=nMin; i<nMax; i++) {
-        SprogSlot s = SprogCommandStation.instance().slot(i);
-        if (s.isFree() != true) n++;
-      }
-      return n;
+        int nMax = SprogConstants.MAX_SLOTS;
+        if (_allSlots) {
+            // will show the entire set, so don't bother counting
+            return nMax;
+        }
+        int n = 0;
+        int nMin = 0;
+        for (int i = nMin; i < nMax; i++) {
+            SprogSlot s = SprogCommandStation.instance().slot(i);
+            if (s.isFree() != true) {
+                n++;
+            }
+        }
+        return n;
     }
 
-
-    public int getColumnCount( ){ return NUMCOLUMN;}
+    public int getColumnCount() {
+        return NUMCOLUMN;
+    }
 
     public String getColumnName(int col) {
         switch (col) {
-        case SLOTCOLUMN: return "Slot";
+            case SLOTCOLUMN:
+                return "Slot";
 //        case ESTOPCOLUMN: return "";     // no heading, as button is clear
-        case ADDRCOLUMN: return "Address";
-        case SPDCOLUMN: return "Speed";
-        case STATCOLUMN: return "Use";
+            case ADDRCOLUMN:
+                return "Address";
+            case SPDCOLUMN:
+                return "Speed";
+            case STATCOLUMN:
+                return "Use";
 //        case CONSCOLUMN: return "Consisted";
-        case DIRCOLUMN: return "Dir";
+            case DIRCOLUMN:
+                return "Dir";
 //        case DISPCOLUMN: return "";     // no heading, as button is clear
-        default: return "unknown";
+            default:
+                return "unknown";
         }
     }
 
     public Class<?> getColumnClass(int col) {
         switch (col) {
-        case SLOTCOLUMN:
-        case ADDRCOLUMN:
-        case SPDCOLUMN:
-        case STATCOLUMN:
+            case SLOTCOLUMN:
+            case ADDRCOLUMN:
+            case SPDCOLUMN:
+            case STATCOLUMN:
 //        case CONSCOLUMN:
-        case DIRCOLUMN:
-            return String.class;
+            case DIRCOLUMN:
+                return String.class;
 //        case ESTOPCOLUMN:
 //        case DISPCOLUMN:
 //            return JButton.class;
-        default:
-            return null;
+            default:
+                return null;
         }
     }
 
@@ -98,8 +110,8 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 //        case ESTOPCOLUMN:
 //        case DISPCOLUMN:
 //            return true;
-        default:
-            return false;
+            default:
+                return false;
         }
     }
 
@@ -107,61 +119,106 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     static final Boolean False = Boolean.valueOf("False");
 
     @SuppressWarnings("null")
-	public Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         SprogSlot s = SprogCommandStation.instance().slot(slotNum(row));
-        if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
+        if (s == null) {
+            log.error("slot pointer was null for slot row: " + row + " col: " + col);
+        }
 
         switch (col) {
-        case SLOTCOLUMN:  // slot number
-            return Integer.valueOf(slotNum(row));
+            case SLOTCOLUMN:  // slot number
+                return Integer.valueOf(slotNum(row));
 //        case ESTOPCOLUMN:  //
 //            return "E Stop";          // will be name of button in default GUI
-        case ADDRCOLUMN:  //
-            return Integer.valueOf(s.locoAddr());
-        case SPDCOLUMN:  //
-            String t;
-            if (s.speed() == 1) t = "(estop) 1";
-            else t = "          "+s.speed();
-            return t.substring(t.length()-9, t.length()); // 9 comes from (estop)
-        case STATCOLUMN:  //
-            switch (s.slotStatus()) {
-            case SprogConstants.SLOT_IN_USE: 	return "In Use";
-            case SprogConstants.SLOT_FREE: 	return "Free";
-            default: 	                        return "<error>";
-            }
+            case ADDRCOLUMN:  //
+                    switch (s.slotStatus()) {
+                        case SprogConstants.SLOT_IN_USE:
+                            return Integer.toString(s.getAddr()) + "("+ (s.getIsLong() ? "L" : "S") + ")";
+                        case SprogConstants.SLOT_FREE:
+                            return "-";
+                        default:
+                            return "<error>";
+                    }
+            case SPDCOLUMN:  //
+                switch (s.slotStatus()) {
+                    case SprogConstants.SLOT_IN_USE:
+                        if (s.isF0to4Packet()) {
+                            return "F0to4Pkt";
+                        } else if (s.isF5to8Packet()) {
+                            return "F5to8Pkt";
+                        } else if (s.isF9to12Packet()) {
+                            return "F9to12Pkt";
+                        } else if (s.isOpsPkt()) {
+                            return "OpsPkt";
+                        } else if (s.isSpeedPacket()) {
+                            String t;
+                            if (s.speed() == 1) {
+                                t = "(estop) 1";
+                            } else {
+                                t = "          " + s.speed();
+                            }
+                            return t.substring(t.length() - 9, t.length()); // 9 comes from (estop)
+                        } else {
+                          return "<error>";
+                        }
+                    case SprogConstants.SLOT_FREE:
+                        return "-";
+                    default:
+                        return "<error>";
+                }
+            case STATCOLUMN:  //
+                switch (s.slotStatus()) {
+                    case SprogConstants.SLOT_IN_USE:
+                        return "In Use";
+                    case SprogConstants.SLOT_FREE:
+                        return "Free";
+                    default:
+                        return "<error>";
+                }
 //        case CONSCOLUMN:  //
 //            return "<n/a>";
 //        case DISPCOLUMN:  //
 //            return "Free";          // will be name of button in default GUI
-        case DIRCOLUMN:  //
-            return (s.isForward() ? "Fwd" : "Rev");
+            case DIRCOLUMN:  //
+                    switch (s.slotStatus()) {
+                        case SprogConstants.SLOT_IN_USE:
+                            if (s.isSpeedPacket()) {
+                                return (s.isForward() ? "Fwd" : "Rev");
+                            } else {
+                                return "-";                               
+                            }
+                        case SprogConstants.SLOT_FREE:
+                            return "-";
+                        default:
+                            return "<error>";
+                    }
 
-        default:
-            log.error("internal state inconsistent with table requst for "+row+" "+col);
-            return null;
+            default:
+                log.error("internal state inconsistent with table requst for " + row + " " + col);
+                return null;
         }
     }
 
     public int getPreferredWidth(int col) {
         switch (col) {
-        case SLOTCOLUMN:
-            return new JTextField(3).getPreferredSize().width;
+            case SLOTCOLUMN:
+                return new JTextField(3).getPreferredSize().width;
 //        case ESTOPCOLUMN:
 //            return new JButton("E Stop").getPreferredSize().width;
-        case ADDRCOLUMN:
-            return new JTextField(5).getPreferredSize().width;
-        case SPDCOLUMN:
-            return new JTextField(6).getPreferredSize().width;
-        case STATCOLUMN:
-            return new JTextField(6).getPreferredSize().width;
+            case ADDRCOLUMN:
+                return new JTextField(5).getPreferredSize().width;
+            case SPDCOLUMN:
+                return new JTextField(6).getPreferredSize().width;
+            case STATCOLUMN:
+                return new JTextField(6).getPreferredSize().width;
 //        case CONSCOLUMN:
 //            return new JTextField(4).getPreferredSize().width;
-        case DIRCOLUMN:
-            return new JTextField(3).getPreferredSize().width;
+            case DIRCOLUMN:
+                return new JTextField(3).getPreferredSize().width;
 //        case DISPCOLUMN:
 //            return new JButton("Free").getPreferredSize().width;
-        default:
-            return new JLabel(" <unknown> ").getPreferredSize().width;
+            default:
+                return new JLabel(" <unknown> ").getPreferredSize().width;
         }
     }
 
@@ -169,7 +226,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         // check for in use
         SprogSlot s = SprogCommandStation.instance().slot(slotNum(row));
         if (s == null) {
-            log.error("slot pointer was null for slot row: "+row+" col: "+col);
+            log.error("slot pointer was null for slot row: " + row + " col: " + col);
             return;
         }
 //        if (col == ESTOPCOLUMN) {
@@ -183,9 +240,10 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     }
 
     /**
-     * Configure a table to have our standard rows and columns.
-     * This is optional, in that other table formats can use this table model.
-     * But we put it here to help keep it consistent.
+     * Configure a table to have our standard rows and columns. This is
+     * optional, in that other table formats can use this table model. But we
+     * put it here to help keep it consistent.
+     *
      * @param slotTable
      */
     public void configureTable(JTable slotTable) {
@@ -196,7 +254,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         slotTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // resize columns as requested
-        for (int i=0; i<slotTable.getColumnCount(); i++) {
+        for (int i = 0; i < slotTable.getColumnCount(); i++) {
             int width = getPreferredWidth(i);
             slotTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
@@ -238,32 +296,34 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 //        slotTable.getColumnModel().getColumn(column)
 //			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
 //    }
-
     // methods to communicate with SprogSlotManager
     public synchronized void notifyChangedSlot(SprogSlot s) {
-      // update model from this slot
+        // update model from this slot
 
-      int slotNum = -1;
-      if (_allSlots) {          // this will be row until we show only active slots
-        slotNum = s.getSlotNumber();  // and we are displaying the System slots
-      }
-      log.debug("Received notification of changed slot: "+slotNum);
-      // notify the JTable object that a row has changed; do that in the Swing thread!
-      Runnable r = new Notify(slotNum, this);   // -1 in first arg means all
-      javax.swing.SwingUtilities.invokeLater(r);
+        int slotNum = -1;
+        if (_allSlots) {          // this will be row until we show only active slots
+            slotNum = s.getSlotNumber();  // and we are displaying the System slots
+        }
+        log.debug("Received notification of changed slot: " + slotNum);
+        // notify the JTable object that a row has changed; do that in the Swing thread!
+        Runnable r = new Notify(slotNum, this);   // -1 in first arg means all
+        javax.swing.SwingUtilities.invokeLater(r);
     }
 
     static class Notify implements Runnable {
+
         private int _row;
         javax.swing.table.AbstractTableModel _model;
+
         public Notify(int row, javax.swing.table.AbstractTableModel model) {
-            _row = row; _model = model;
+            _row = row;
+            _model = model;
         }
+
         public void run() {
             if (-1 == _row) {  // notify about entire table
                 _model.fireTableDataChanged();  // just that row
-            }
-            else {
+            } else {
                 // notify that _row has changed
                 _model.fireTableRowsUpdated(_row, _row);  // just that row
             }
@@ -272,25 +332,33 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 
     // methods for control of "all slots" vs "only active slots"
     private boolean _allSlots = true;
-    public void showAllSlots(boolean val) { _allSlots = val; }
+
+    public void showAllSlots(boolean val) {
+        _allSlots = val;
+    }
 
     /**
      * Returns slot number for a specific row.
      * <P>
-     * This should probably use a local cache instead
-     * of counting/searching each time.
+     * This should probably use a local cache instead of counting/searching each
+     * time.
+     *
      * @param row Row number in the displayed table
      */
     protected int slotNum(int row) {
-      // ??? Can't this just return row ???
+        // ??? Can't this just return row ???
         int slotNum;
         int n = -1;   // need to find a used slot to have the 0th one!
         int nMin = 0;
         int nMax = SprogConstants.MAX_SLOTS;
-        for (slotNum=nMin; slotNum<nMax; slotNum++) {
+        for (slotNum = nMin; slotNum < nMax; slotNum++) {
             SprogSlot s = SprogCommandStation.instance().slot(slotNum);
-            if (_allSlots || s.slotStatus() != SprogConstants.SLOT_FREE) n++;
-            if (n == row) break;
+            if (_allSlots || s.slotStatus() != SprogConstants.SLOT_FREE) {
+                n++;
+            }
+            if (n == row) {
+                break;
+            }
         }
         return slotNum;
     }
@@ -301,6 +369,6 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         // table = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogSlotMonDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonDataModel.class.getName());
 
 }

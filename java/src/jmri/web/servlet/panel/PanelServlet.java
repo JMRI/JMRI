@@ -11,12 +11,15 @@ import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
+import jmri.jmris.json.JSON;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -25,6 +28,7 @@ import org.jdom.output.XMLOutputter;
 public class PanelServlet extends AbstractPanelServlet {
 
     private static final long serialVersionUID = -5898335055123037426L;
+    private final static Logger log = LoggerFactory.getLogger(PanelServlet.class);
 
     @Override
     protected String getPanelType() {
@@ -33,22 +37,19 @@ public class PanelServlet extends AbstractPanelServlet {
 
     @Override
     protected String getXmlPanel(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("Getting " + getPanelType() + " for " + name);
-        }
+        log.debug("Getting {} for {}", getPanelType(), name);
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
 
             Element panel = new Element("panel");
 
             JFrame frame = editor.getTargetFrame();
-            log.info("Target Frame [" + frame.getTitle() + "]");
 
             panel.setAttribute("name", name);
             panel.setAttribute("height", Integer.toString(frame.getContentPane().getHeight()));
             panel.setAttribute("width", Integer.toString(frame.getContentPane().getWidth()));
-            panel.setAttribute("panelheight", Integer.toString(frame.getContentPane().getHeight()));
-            panel.setAttribute("panelwidth", Integer.toString(frame.getContentPane().getWidth()));
+            panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
+            panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
 
             panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
@@ -62,9 +63,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
             // include contents
             List<Positionable> contents = editor.getContents();
-            if (log.isDebugEnabled()) {
-                log.debug("N elements: " + contents.size());
-            }
+            log.debug("Panel has {} elements", contents.size());
             for (Positionable sub : contents) {
                 if (sub != null) {
                     try {
@@ -73,17 +72,29 @@ public class PanelServlet extends AbstractPanelServlet {
                             if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
                                 e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
                             }
+                            try {
+                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+                            } catch (NullPointerException ex) {
+                                if (sub.getNamedBean() == null) {
+                                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+                                } else {
+                                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+                                }
+                            }
                             parsePortableURIs(e);
                             panel.addContent(e);
                         }
                     } catch (Exception ex) {
-                        log.error("Error storing panel element: " + ex, ex);
+                        log.error("Error storing panel element: {}", ex.getMessage(), ex);
                     }
                 }
             }
 
             Document doc = new Document(panel);
-            XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
+            XMLOutputter out = new XMLOutputter();
+            out.setFormat(Format.getPrettyFormat()
+                    .setLineSeparator(System.getProperty("line.separator"))
+                    .setTextMode(Format.TextMode.TRIM));
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {
@@ -94,9 +105,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
     @Override
     protected String getJsonPanel(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("Getting " + getPanelType() + " for " + name);
-        }
+        log.debug("Getting {} for {}", getPanelType(), name);
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
 
@@ -104,7 +113,6 @@ public class PanelServlet extends AbstractPanelServlet {
             ObjectNode panel = root.putObject("panel");
 
             JFrame frame = editor.getTargetFrame();
-            log.info("Target Frame [" + frame.getTitle() + "]");
 
             panel.put("name", name);
             panel.put("height", frame.getContentPane().getHeight());
@@ -122,11 +130,8 @@ public class PanelServlet extends AbstractPanelServlet {
             }
 
             // include contents
-            if (log.isDebugEnabled()) {
-                log.debug("N elements: " + editor.getContents().size());
-            }
+            log.debug("N elements: {}", editor.getContents().size());
             for (Positionable sub : editor.getContents()) {
-                if (sub != null) {
                     try {
                         // TODO: get all panel contents as JSON
                         // I tried using JavaBean Introspection to simply build the contents using Jackson Databindings,
@@ -135,7 +140,6 @@ public class PanelServlet extends AbstractPanelServlet {
                     } catch (Exception ex) {
                         log.error("Error storing panel element: " + ex, ex);
                     }
-                }
             }
 
             return this.mapper.writeValueAsString(root);

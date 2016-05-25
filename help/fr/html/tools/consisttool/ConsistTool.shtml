@@ -1,21 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConsistTool.shtml,v 1.5 2008/09/30 14:04:39 jacobsen Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/18-->
+<!-- $Id$ -->
+<!-- Updated by Herv&#233; Blorec le 2013/09/25-->
 <html lang="fr">
 <head>
   <TITLE>
  	JMRI: Consisting Tool
   </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 
   <META content="Paul Bender" name=Author>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -32,26 +32,26 @@
 
 <H2> JMRI: Outil Couplage </H2>
 <h3>
-Renseignements généraux
+Renseignements g&#233;n&#233;raux
 </H3>
 <p>
-Il y a trois types de couplage utilisés sur les systèmes DCC:
+Il y a trois types de couplage utilis&#233;s sur les syst&#232;mes DCC:
 </P>
 <ul>
 <li> <p> <i> basique </i> ou <i> adresse principale de couplage </i>. Dans ce
-type de couplage, à chaque locomotive est attribuée la même adresse sur
+type de couplage, &#224; chaque locomotive est attribu&#233;e la m&#234;me adresse sur
 la voie de programmation, ou sur la voie principale avec la programmation OpsModepy
-(Si supporté par la centrale de commande et le décodeur). Vous pouvez
+(Si support&#233; par la centrale de commande et le d&#233;codeur). Vous pouvez
 soit utiliser une adresse longue (CV17 CV18 et) ou courte (CV1) pour
 une adresse principale de couplage. </p>
 </Li>
 <li>
-<p> Une <i> Centrale de Commande à Couplage Assisté </i> (CSAC). Une centrale de commande à couplage assisté  est construite en utilisant une fonction de votre
+<p> Une <i> Centrale de Commande &#224; Couplage Assist&#233; </i> (CSAC). Une centrale de commande &#224; couplage assist&#233;  est construite en utilisant une fonction de votre
 centrale de commande. </p>
 
-<p> Une centrale de commande à couplage assisté se trouve dans les noms commerciaux
-répertoriés dans le tableau ci-dessous. Le tableau indique également les
-limites connues imposées par chaque fabricant.py
+<p> Une centrale de commande &#224; couplage assist&#233; se trouve dans les noms commerciaux
+r&#233;pertori&#233;s dans le tableau ci-dessous. Le tableau indique &#233;galement les
+limites connues impos&#233;es par chaque fabricant.py
 <table>couplage
 <tr>
 <td> Fabricant </td>
@@ -61,90 +61,90 @@ Remarques sur l'utilisation <td> </td>
 <tr>couplage
 <td> Digitrax </td>
 <td> couplage universel </td>
-<td> limité au nombre de slots pris en charge par le système.
-Permet que n'importe quelle adresse doit être utilisée. </Td>
+<td> limit&#233; au nombre de slots pris en charge par le syst&#232;me.
+Permet que n'importe quelle adresse doit &#234;tre utilis&#233;e. </Td>
 </Tr>
 <tr>
 <td> Lenz </td>
 <td> Double Traction</td>py
-<td> Limité à 2 locomotives. Permet l'utilisation de n'importe quelle adresse sauf
+<td> Limit&#233; &#224; 2 locomotives. Permet l'utilisation de n'importe quelle adresse sauf
 00 . </Td>
 </Tr>
 <tr>
 <td> NCE </td>
 <td> Old Style couplage </td>
-<td> limité  à 8 locomotives. Permet n'importe quelle adresse sauf
+<td> limit&#233;  &#224; 8 locomotives. Permet n'importe quelle adresse sauf
 00 . </Td>
 </Tr>
 <tr>
 <td> EasyDCC </td>
 <td> Couplage sSandard  </td>
-<td> limité à 8 locomotives. Permet  l'utilisation de n'importe quelle adresse sauf
+<td> limit&#233; &#224; 8 locomotives. Permet  l'utilisation de n'importe quelle adresse sauf
 00 . </Td>
 <tr>
 </Table>couplage
 
 <p>
-Le trait commun partagé par toutes les versions de CSAC est
-qu'une vitesse de commande séparée et la direction est envoyée
-à la voie pour chaque locomotive qui est dans la couplage.
+Le trait commun partag&#233; par toutes les versions de CSAC est
+qu'une vitesse de commande s&#233;par&#233;e et la direction est envoy&#233;e
+&#224; la voie pour chaque locomotive qui est dans la couplage.
 </P>
 
 </Li>
 <li>
 <p>
-un <i> Décodeur Couplage Assisté </i> (CAD), qui est également
- souvent référencé comme un <i> Couplage Avancé</i>.
+un <i> D&#233;codeur Couplage Assist&#233; </i> (CAD), qui est &#233;galement
+ souvent r&#233;f&#233;renc&#233; comme un <i> Couplage Avanc&#233;</i>.
 </P>
 <p>
-Le NMRA a mis de côté CV19 comme un lieu dédié aux adresses de couplage.
+Le NMRA a mis de c&#244;t&#233; CV19 comme un lieu d&#233;di&#233; aux adresses de couplage.
 
 </P>
 <p>
 Si CV19 contient une valeur autre que 0, la locomotive
-réagira  aux instructions de vitesse et de direction contenues à l'
-adresse dans CV19. Sinon, elle  répondra à la vitesse et et commande de direction 
-envoyées sur l'adresse courte ou longue habituelle.
+r&#233;agira  aux instructions de vitesse et de direction contenues &#224; l'
+adresse dans CV19. Sinon, elle  r&#233;pondra &#224; la vitesse et et commande de direction 
+envoy&#233;es sur l'adresse courte ou longue habituelle.
 </P>
 <p>
-Comme l'adresse de couplage est un CV unique, elle est limitée
-à la gamme de 1 à 127. Si vous ajoutez 128 à l'
-adresse de couplage, la locomotive sera exécutée en arrière (par rapport 
-au sens normal de déplacement) dans les couplage.
+Comme l'adresse de couplage est un CV unique, elle est limit&#233;e
+&#224; la gamme de 1 &#224; 127. Si vous ajoutez 128 &#224; l'
+adresse de couplage, la locomotive sera ex&#233;cut&#233;e en arri&#232;re (par rapport 
+au sens normal de d&#233;placement) dans les couplage.
 </P>
 <p>
-Pour la plupart des décodeurs, ce type de couplage peut se faire par
-opérations de programmation de la même manière que le Couplage basique
-Peut être constitué. Nous le disons plus ici parce que certains décodeurs
-bloc écrit à toute adresse de CV en utilisant le mode des opérations
+Pour la plupart des d&#233;codeurs, ce type de couplage peut se faire par
+op&#233;rations de programmation de la m&#234;me mani&#232;re que le Couplage basique
+Peut &#234;tre constitu&#233;. Nous le disons plus ici parce que certains d&#233;codeurs
+bloc &#233;crit &#224; toute adresse de CV en utilisant le mode des op&#233;rations
 programmation.
 </P>
 <p>
-Le NMRA a également mis de côté une commande spéciale pour mettre en place un
-Décodeur à Couplage Assisté sur la ligne principale. Cette commande
-devrait être acceptée par tous les décodeurs qui supportent le Décodeur à
-Couplage Assisté.
+Le NMRA a &#233;galement mis de c&#244;t&#233; une commande sp&#233;ciale pour mettre en place un
+D&#233;codeur &#224; Couplage Assist&#233; sur la ligne principale. Cette commande
+devrait &#234;tre accept&#233;e par tous les d&#233;codeurs qui supportent le D&#233;codeur &#224;
+Couplage Assist&#233;.
 </P>
 <p>
  </p>
      <p>
-L'avantage de DAC, comparativement aux CSAC est que seulement
-une commande de  vitesse et de direction est envoyée à l'ensemble du couplage.
+L'avantage de DCA, comparativement aux CSAC est que seulement
+une commande de  vitesse et de direction est envoy&#233;e &#224; l'ensemble du couplage.
 
 </p>
 <p>
-Par défaut, les locomotives dans un DAC ignore les commandes de fonction
-envoyées à l'adresse couplage. Vous pouvez configurer certains décodeurs
-afin qu'ils répondent aux commandes de la fonction délivrée au
+Par d&#233;faut, les locomotives dans un DCA ignore les commandes de fonction
+envoy&#233;es &#224; l'adresse couplage. Vous pouvez configurer certains d&#233;codeurs
+afin qu'ils r&#233;pondent aux commandes de la fonction d&#233;livr&#233;e au
 couplagent adresse ainsi (par CVS 21 et 22). Si
-pris en charge par le décodeur, les valeurs appropriées peuvent également
-être configurées par DecoderPro en utilisant l'onglet couplage
+pris en charge par le d&#233;codeur, les valeurs appropri&#233;es peuvent &#233;galement
+&#234;tre configur&#233;es par DecoderPro en utilisant l'onglet couplage
 dans le programmateur complet.
 </P>
 <p>
-Une note finale, le Couplage Avancé fonctionner en 28 crans de vitesse
-(Toujours). Vous pouvez avoir besoin de vous assurer que votre régulateur  bien est sur
-l'envoi de 28 crans de vitesse à l'adresse pour éviter le clignotement des feux.
+Une note finale, le Couplage Avanc&#233; fonctionner en 28 crans de vitesse
+(Toujours). Vous pouvez avoir besoin de vous assurer que votre r&#233;gulateur  bien est sur
+l'envoi de 28 crans de vitesse &#224; l'adresse pour &#233;viter le clignotement des feux.
 </P>
 </Li>
 </Ul>
@@ -154,18 +154,18 @@ l'envoi de 28 crans de vitesse à l'adresse pour éviter le clignotement des feu
 <p>
 JMRI fournit un support pour les couplages  en utilisant l'outil couplage,
 qui est accessible via le menu outils de toute application JMRI.
-(Il y a aussi un <a  href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">  outil couplage NCE-spécifiques </a>
-qui fonctionne un peu différemment de l'outil décrit ici)
+(Il y a aussi un <a  href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">  outil couplage NCE-sp&#233;cifiques </a>
+qui fonctionne un peu diff&#233;remment de l'outil d&#233;crit ici)
 </P>
 <p>
 L'outilCouplage fournit  un outil visuel permettant de manipuler les
-Décodeur  à Couplage Assistée et, sur certaines centrales de commande,
-Centrale de Commande à Couplage Assistée.
+D&#233;codeur  &#224; Couplage Assist&#233;e et, sur certaines centrales de commande,
+Centrale de Commande &#224; Couplage Assist&#233;e.
 </P>
 <p>
 La sauvegarde de l'outil de couplageest un gestionnaire de couplage. Le gestionnaire de couplage
 est responsable du maintien de l'information sur les couplages
-existants et pour communiquer les informations nécessaires
+existants et pour communiquer les informations n&#233;cessaires
  entre l' outil couplage et la centrale de commande.
 </P>
 
@@ -174,153 +174,153 @@ existants et pour communiquer les informations nécessaires
 <ul>
 <li>
 <p>
-Le <i> Gestionnaire Générique de Couplage </i> est utilisé sur n'importe quel système
+Le <i> Gestionnaire G&#233;n&#233;rique de Couplage </i> est utilis&#233; sur n'importe quel syst&#232;me
 qui n'a pas son propre gestionnaire couplage, mais soutient le
-mode de programmation des opérations. Ce gestionnaire est seulement
-en mesure de manipuler le Décodeur Couplage Assisté.
+mode de programmation des op&#233;rations. Ce gestionnaire est seulement
+en mesure de manipuler le D&#233;codeur Couplage Assist&#233;.
 </P>
 <p>
-Le<i>  Gestionnaire Générique de Couplage contourne toutes les routines que la
-centrale de commande doit définir  pour l'adresse couplage. </i> L'
+Le<i>  Gestionnaire G&#233;n&#233;rique de Couplage contourne toutes les routines que la
+centrale de commande doit d&#233;finir  pour l'adresse couplage. </i> L'
 importance de cela est que si votre centrale de commande fournit un
-méthode pour faire fonctionner un couplage en sélectionnant une locomotive par
-son adresse, ça ne fonctionnera pas. Vous aurez besoin d'utiliser l'identifiant de
- l'adresse courte  que vous avez sélectionnée pour le ID couplage
-pour contrôler la vitesse et la direction du couplage.
+m&#233;thode pour faire fonctionner un couplage en s&#233;lectionnant une locomotive par
+son adresse, &#231;a ne fonctionnera pas. Vous aurez besoin d'utiliser l'identifiant de
+ l'adresse courte  que vous avez s&#233;lectionn&#233;e pour le ID couplage
+pour contr&#244;ler la vitesse et la direction du couplage.
 </P>
 </Li>
 <li>
 <p>
 Le <i>Gestionnaire de Couplage XPressNet  </i> utilise le support fournit
-par les systèmes XPressNet Basé pour manipuler les couplages. Cet
+par les syst&#232;mes XPressNet Bas&#233; pour manipuler les couplages. Cet
 gestionnaire de couplage est capable de construire une "Double Traction» Lenz
-en plus des Couplage Avancé.
+en plus des Couplage Avanc&#233;.
 </P>
 <p>
-Puisque ce gestionnaire utilise les instructions de création de couplage fournies par le protocole XPressNet, le dispositif Lenz de  <i>Couplage Intelligent</i> fonctionne avec les couplages créés
-par l'outil. Sur les systèmes Lenz, <i> i Couplage Intelligent </i>
-renvoie à la capacité d'être en mesure d'exécuter un couplage à partir de <i> toute </i>
-les  adresses de locomotive couplées ou depuis les adresse de couplage.
+Puisque ce gestionnaire utilise les instructions de cr&#233;ation de couplage fournies par le protocole XPressNet, le dispositif Lenz de  <i>Couplage Intelligent</i> fonctionne avec les couplages cr&#233;&#233;s
+par l'outil. Sur les syst&#232;mes Lenz, <i> i Couplage Intelligent </i>
+renvoie &#224; la capacit&#233; d'&#234;tre en mesure d'ex&#233;cuter un couplage &#224; partir de <i> toute </i>
+les  adresses de locomotive coupl&#233;es ou depuis les adresse de couplage.
 </P>
 <p>
 Le Gestionnaire de Couplage XPressNet est capable de lire les
-informations de couplage de la centrale de commande, tant pour Couplage Avancée  que
+informations de couplage de la centrale de commande, tant pour Couplage Avanc&#233;e  que
 pour les Doubles Tractions Lenz .
 </P>
 </Li>
 <li>
 <p>
-Le <i>Gestionnaire de Couplage EasyDCC  </i> supporte l'utilisations prévue 
-par le système EasyDCC CVP de manipuler des couplage. Ce gestionnaire de
+Le <i>Gestionnaire de Couplage EasyDCC  </i> supporte l'utilisations pr&#233;vue 
+par le syst&#232;me EasyDCC CVP de manipuler des couplage. Ce gestionnaire de
 couplagenest capable de construire un « couplage standard » EasyDCC "
-en plus du Couplage Avancé.
+en plus du Couplage Avanc&#233;.
 </P>
 <p>
-CVP ne fournit pas une méthode pour construire des Couplages Avancées
-En conséquence, les couplage avancés sont créés en contournant la
-centrale de commande. Contrairement au Gestionnaire Générique de Couplage, le Gestionnaire de Couplage EasyDCC  crée ces couplage en émettant un
+CVP ne fournit pas une m&#233;thode pour construire des Couplages Avanc&#233;es
+En cons&#233;quence, les couplage avanc&#233;s sont cr&#233;&#233;s en contournant la
+centrale de commande. Contrairement au Gestionnaire G&#233;n&#233;rique de Couplage, le Gestionnaire de Couplage EasyDCC  cr&#233;e ces couplage en &#233;mettant un
 paquets  de Commande de couplage  sur  la voie. Cela permet l'inclusion de
-locomotives qui ne permettent pas l'écriture en utilisant CV19 en
-mode de programmation Ops. Comme avec le Gestionnaire Générique de Couplage
-, vous devez utiliser l'adresse courte sélectionnée comme Adresse de couplage pour
- contrôler le couplage.
+locomotives qui ne permettent pas l'&#233;criture en utilisant CV19 en
+mode de programmation Ops. Comme avec le Gestionnaire G&#233;n&#233;rique de Couplage
+, vous devez utiliser l'adresse courte s&#233;lectionn&#233;e comme Adresse de couplage pour
+ contr&#244;ler le couplage.
 <p>
- Pour le Couplage Standard EasyDCC, il y a un couple de restrictions imposées par le Protocole EasyDCC. Premièrement, comme avec les couplage créés directement par la centrale de commande , ces couplage sont limités à 8
-adresses. Deuxièmement, contrairement au couplage créé par la centrale de commande directement,  CVP limite les adresses des couplages standard à des adresse
+ Pour le Couplage Standard EasyDCC, il y a un couple de restrictions impos&#233;es par le Protocole EasyDCC. Premi&#232;rement, comme avec les couplage cr&#233;&#233;s directement par la centrale de commande , ces couplage sont limit&#233;s &#224; 8
+adresses. Deuxi&#232;mement, contrairement au couplage cr&#233;&#233; par la centrale de commande directement,  CVP limite les adresses des couplages standard &#224; des adresse
 entre 1 et 255.
 </P>
 <p>
 Le Gestionnaire de Couplage EasyDCC lira standard les 'Informations Standard de Couplage 
-pour les couplages dans la gamme autorisée (1-255) de la mémoire de la centrale de commande.
-Puisque la centrale de commande  est contournée pour créer des
-Couplages Avancés, ceux-ci ne peuvent être lues à partir de la centrale de commande.
+pour les couplages dans la gamme autoris&#233;e (1-255) de la m&#233;moire de la centrale de commande.
+Puisque la centrale de commande  est contourn&#233;e pour cr&#233;er des
+Couplages Avanc&#233;s, ceux-ci ne peuvent &#234;tre lues &#224; partir de la centrale de commande.
 </Li>
 </Ul>
 
 <a name="tool">
 <h2> Utilisation de l'Outil couplage </h2> </a>
 <p>
-Lorsque vous ouvrez l'outil couplage, vous verrez un écran semblable au suivant:
+Lorsque vous ouvrez l'outil couplage, vous verrez un &#233;cran semblable au suivant:
 </P>
 <image src=images/ConsistTool.jpg alt="Blank Consit Tool">
 <p>
-sur la rangée supérieure sont utilisés pour choisir entre unCouplage Avancé (
-Décodeur Assisté)  et une
-. Si les Centrales de Commande  à Couplage Assisté ne sont pas
-prise en charge par l'outil de votre système, ces sélections seront
-grisées.
+sur la rang&#233;e sup&#233;rieure sont utilis&#233;s pour choisir entre unCouplage Avanc&#233; (
+D&#233;codeur Assist&#233;)  et une
+. Si les Centrales de Commande  &#224; Couplage Assist&#233; ne sont pas
+prise en charge par l'outil de votre syst&#232;me, ces s&#233;lections seront
+gris&#233;es.
 </P>
 <p>
-La case à côté de l'étiquette  <b> Couplage: </b> est utilisé pour spécifier le
-ID  du couplage. Pour les Décodeur à Couplage Assisté, ce devrait être l'
-adresse courte  qui doit être utilisée pour identifier les couplage. Pour les Centrale de 
-Commande à Couplage Assisté, , cette valeur peut être automatiquement
-rempli avec l'adresse locomotive de tête quand vous essayez de l'ajouter
+La case &#224; c&#244;t&#233; de l'&#233;tiquette  <b> Couplage: </b> est utilis&#233; pour sp&#233;cifier le
+ID  du couplage. Pour les D&#233;codeur &#224; Couplage Assist&#233;, ce devrait &#234;tre l'
+adresse courte  qui doit &#234;tre utilis&#233;e pour identifier les couplage. Pour les Centrale de 
+Commande &#224; Couplage Assist&#233;, , cette valeur peut &#234;tre automatiquement
+rempli avec l'adresse locomotive de t&#234;te quand vous essayez de l'ajouter
 dans le couplage.
 </P>
 <p>
-L'ajout d'une ID typique pour un d Décodeur à Couplage Assisté devrait ressembler
+L'ajout d'une ID typique pour un d D&#233;codeur &#224; Couplage Assist&#233; devrait ressembler
 omme suit:
 </P>
 <image src=images/ConsistTool-IDAdded.jpg alt="Consist Tool-ID Added">
 <p>
-La deuxième ligne de l'outil couplage est utilisé pour ajouter des locomotives.
-Une locomotive peut être ajoutée soit en entrant son numéro dans le
-case à côté de la <b> nouvelle locomotive</b> ou en sélectionnant son numéro à
-partir de la liste déroulante.
+La deuxi&#232;me ligne de l'outil couplage est utilis&#233; pour ajouter des locomotives.
+Une locomotive peut &#234;tre ajout&#233;e soit en entrant son num&#233;ro dans le
+case &#224; c&#244;t&#233; de la <b> nouvelle locomotive</b> ou en s&#233;lectionnant son num&#233;ro &#224;
+partir de la liste d&#233;roulante.
  </P>
 <image src=images/ConsistTool-LeadLoco.jpg alt="Locomotive Lead Selected">
 <p>
 En cliquant sur le bouton <b> ajouter </b> va ajouter une locomotive au
-couplage, et elle apparaîtra dans la liste ci-dessous à la deuxième ligne.
+couplage, et elle appara&#238;tra dans la liste ci-dessous &#224; la deuxi&#232;me ligne.
 </P>
 <image src=images/ConsistTool-LeadLocoAdded.jpg alt="Lead Locomotive Added to Consist ">
 <p>
-En cliquant sur le bouton <b>réinitialiser  </b>  effacera l'information pour
+En cliquant sur le bouton <b>r&#233;initialiser  </b>  effacera l'information pour
 cette locomotive.
 </P>
-<p> est boîte est
-grisée jusqu'à ce qu'une locomotive de tête soit sélectionnée. Avec les
-locomotives ultérieures, vous pouvez cocher cette case pour indiquer le
-direction de la locomotive par rapport à la locomotive de tête.
+<p> est bo&#238;te est
+gris&#233;e jusqu'&#224; ce qu'une locomotive de t&#234;te soit s&#233;lectionn&#233;e. Avec les
+locomotives ult&#233;rieures, vous pouvez cocher cette case pour indiquer le
+direction de la locomotive par rapport &#224; la locomotive de t&#234;te.
 </P>
 <image src=images/ConsistTool-SecondLoco.jpg alt="Second LocoMotive Selected - Direction Reversed" 
-<p>     Après l'ajout de la seconde locomotive au couplage, avec le
+<p>     Apr&#232;s l'ajout de la seconde locomotive au couplage, avec le
 sens inverse, vous devriez voir quelque chose comme ce qui suit:
 </P>
 <image src=images/ConsistTool-SecondLocoAdded.jpg alt="Second Locomotive Added">
 <p>
 Si vous faites une erreur, et ajouter une seconde locomotive au
 couplage avec la mauvaise direction, vous pouvez changer sa direction
-simplement en cliquant sur la case à cocher dans la colonne de direction normale.
+simplement en cliquant sur la case &#224; cocher dans la colonne de direction normale.
 </P>
 <image src=images/ConsistTool-SecondLocoDirChange.jpg alt="Second Locomotive-Direction Change">
 <p>
-La direction de la locomotive de tête ne peut pas être changée une fois
-ajoutée.
+La direction de la locomotive de t&#234;te ne peut pas &#234;tre chang&#233;e une fois
+ajout&#233;e.
 </P>
 <p>
 Pour supprimer une locomotive individuelle du couplage, vous pouvez
-sélectionner le bouton <b> Eff</b> dans la colonne la plus à droite de la
-ligne appropriée du tableau d'adresses.
+s&#233;lectionner le bouton <b> Eff</b> dans la colonne la plus &#224; droite de la
+ligne appropri&#233;e du tableau d'adresses.
 </P>
 <p>
 Pour supprimer un couplage entier, vous pouvez utiliser la commande <b> Supprimer </b>
- au bas de l'écran.
+ au bas de l'&#233;cran.
 </P>
 <p>
-Le bouton régulateur au bas de l'écran peut être utilisé pour
-mettre en place un régulateur JMRI pour cette adresse.
+Le bouton r&#233;gulateur au bas de l'&#233;cran peut &#234;tre utilis&#233; pour
+mettre en place un r&#233;gulateur JMRI pour cette adresse.
 </P>
 <p>
-Pour ajouter un nouveau couplage, vous pouvez sélectionner l'entrée vide dans la liste déroulante
-e à côté de l'actuel ID de couplage .
+Pour ajouter un nouveau couplage, vous pouvez s&#233;lectionner l'entr&#233;e vide dans la liste d&#233;roulante
+e &#224; c&#244;t&#233; de l'actuel ID de couplage .
 </P>
 <image src=images/ConsistTool-NewConsist.jpg alt="Select new Consist">
 <p>
-Pour rappeler un existantes couplage, vous pouvez sélectionner l'entrée appropriée de la boîte déroulante à côté de l'actuel ID  de couplage 
+Pour rappeler un existantes couplage, vous pouvez s&#233;lectionner l'entr&#233;e appropri&#233;e de la bo&#238;te d&#233;roulante &#224; c&#244;t&#233; de l'actuel ID  de couplage 
 </P>
-<image src=images/ConsistTool-SelectConsist.jpg alt="Select à Consist">
+<image src=images/ConsistTool-SelectConsist.jpg alt="Select &#224; Consist">
 
 
     

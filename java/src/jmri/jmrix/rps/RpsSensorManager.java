@@ -1,19 +1,15 @@
 // SensorManager.java
-
 package jmri.jmrix.rps;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 
 /**
  * Manage the RPS-specific Sensor implementation.
  * <P>
- * System names are "RSpppp", where ppp is a 
- * CSV representation of the region.
+ * System names are "RSpppp", where ppp is a CSV representation of the region.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2007
+ * @version	$Revision$
  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
@@ -21,7 +17,9 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
         super();
     }
 
-    public String getSystemPrefix() { return "R"; }
+    public String getSystemPrefix() {
+        return "R";
+    }
 
     // to free resources when no longer used
     public void dispose() {
@@ -35,14 +33,13 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     static public RpsSensorManager instance() {
-        if (_instance == null)
+        if (_instance == null) {
             _instance = new RpsSensorManager();
+        }
         return _instance;
     }
-    
+
     static RpsSensorManager _instance = null;
-    
-    static Logger log = LoggerFactory.getLogger(RpsSensorManager.class.getName());
 
     static { // class initialization
         // now want a SensorManager always, not just when RPS is created

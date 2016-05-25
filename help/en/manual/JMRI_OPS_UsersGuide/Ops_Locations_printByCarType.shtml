@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>Operations-Locations Print by Car</title>
+  
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent"><a name="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h2>Print Locations Servicing Car Types Window</h2>
+
+<div align="right">
+<p><a href="Ops_Locations_byCar.shtml">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+<hr>
+
+<p>The Modify Locations by Car Type Tool menu, opens the Print
+Locations Servicing Car Types open your system printer dialog and
+prints output as shown. Locations are places on your railroad that
+trains visit to pickup or drop off cars and engines.</p>
+
+<div style="margin-left: 40px;"><img src="images/Ops_Location_Print_carsByType.png" alt="print" height="777" width="710"></div>
+
+<hr>
+
+<div align="right">
+<p><a href="Ops_Locations_byCar.shtml">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

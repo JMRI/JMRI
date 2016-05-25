@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutAddEdit.shtml,v 1.6 2010/03/07 08:15:37 kevin-dickerson Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/11-->
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-13-->
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Turnouts</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Bob Jacobsen" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Turnout Add Edit">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,23 +24,24 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Ajouter/Éditer Branchements</H1>
+<H1> Ajout/&#201;dition Aiguillages</H1>
 
-<p> Lorsque vous ajoutez un Aiguillage, vous sélectionnez dans la liste déroulante le système auquel l'
-aiguillage est rattaché.</p>
-src="AddTurnout.png" <img>
-<p> Entrez  une adresse valide pour l'Aiguillage et, si désiré entrer dans un nom utilisateur.</p>
+<p> Lorsque vous ajoutez un Aiguillage, vous s&#233;lectionnez dans la liste d&#233;roulante le syst&#232;me auquel l'
+aiguillage est rattach&#233;.</p>
+<img src="AddTurnout.png" >
+<p> Entrez  une adresse valide pour l'Aiguillage et, si d&#233;sir&#233; entrer un nom utilisateur.</p>
 
-<H2> Création d'un  Nombre d'Aiguillage</H2>
-<p> Il est également possible de créer un certain nombre d' Aiguillage . <br>
-Où la case «Ajouter une plage"  sera activé.</P>
+<H2> Cr&#233;ation d'un  Nombre d'Aiguillage</H2>
+
+<p> Il est &#233;galement possible de cr&#233;er un certain nombre d'Aiguillage . <br>
+La case "Ajouter une plage" sera activ&#233;e.</P>
 <img src="AddTurnoutNumber.png">
-<p> Après l'activation de  la boite"Ajouter  Plage", il faudra ensuite activer le champ "numéro à ajouter".
-Ici entrez e nombre d' Aiguillages que vous suhaitez ajouter, ce qui créera ensuite
- un nombre d'aiguillages séquentiel.</p>
-Si un nom utilisateur a été entré un numéro sera ajouté à la fin du nom pour garder
+<p> Apr&#232;s l'activation de la boite "Ajouter  Plage", il faudra ensuite activer le champ "nombre &#224; ajouter".
+Ici entrez Le nombre d'Aiguillages que vous souhaitez ajouter, ce qui cr&#233;era ensuite
+ un nombre d'aiguillages s&#233;quentiel.</p>
+Si un nom utilisateur a &#233;t&#233; entr&#233; un num&#233;ro sera ajout&#233; &#224; la fin du nom pour garder
 chaque nom utilisateur unique. <br>
-Voir aide générale d'aide pour plus d'informations" <A HREF="../../../../html/doc/Technical/Names.shtml"> Noms</A>".
+Voir aide g&#233;n&#233;rale pour plus d'informations"sur les <A HREF="../../../../html/doc/Technical/Names.shtml"> Noms</A>".
 
 <!--#include virtual="/Footer" -->
 </BODY>

@@ -18,7 +18,6 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
 class VSDecoderManagerThread extends Thread {
 
     private static VSDecoderManagerThread instance = null;
@@ -32,8 +31,8 @@ class VSDecoderManagerThread extends Thread {
 
     public static VSDecoderManagerThread instance(Boolean create) {
         manager = new VSDecoderManager();
-    
-        return(instance());
+
+        return (instance());
     }
 
     public static VSDecoderManagerThread instance() {
@@ -41,13 +40,13 @@ class VSDecoderManagerThread extends Thread {
             VSDecoderManagerThread temp = new VSDecoderManagerThread();
             temp.start();
             instance = temp; // don't allow escape of VSDecoderManagerThread object until running
-        
+
         }
-        return(instance);
+        return (instance);
     }
 
     public static VSDecoderManager manager() {
-        return(VSDecoderManagerThread.manager);
+        return (VSDecoderManagerThread.manager);
     }
 
     @Override
@@ -57,7 +56,7 @@ class VSDecoderManagerThread extends Thread {
             // just nap.
             try {
                 sleep(20);
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
             }
         }
         // all done.

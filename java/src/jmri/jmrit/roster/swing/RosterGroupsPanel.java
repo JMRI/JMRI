@@ -1,28 +1,60 @@
 package jmri.jmrit.roster.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javax.swing.*;
+import javax.swing.DropMode;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.JTree;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.plaf.basic.BasicTreeUI;
-import javax.swing.tree.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.ExpandVetoException;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 import jmri.jmrit.roster.FullBackupExportAction;
+import jmri.jmrit.roster.FullBackupImportAction;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.util.FileUtil;
 import jmri.util.IterableEnumeration;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A JPanel that lists Roster Groups
@@ -30,16 +62,11 @@ import jmri.util.swing.WindowInterface;
  * This panel contains a fairly self-contained display of Roster Groups that
  * allows roster groups to be fully manipulated through context menus.
  *
- * @author  Randall Wood    Copyright (C) 2011
- * @see     jmri.jmrit.roster.Roster
+ * @author Randall Wood Copyright (C) 2011
+ * @see jmri.jmrit.roster.Roster
  */
 public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
-    /**
-     * Property change listeners can listen for property changes with this name
-     * from this object to take action when a user selects a roster group.
-     */
-    public final static String SELECTED_ROSTER_GROUP = "selectedRosterGroup";
     private static int GROUPS_MENU = 1;
     private static int ALL_ENTRIES_MENU = 2;
     private JScrollPane scrollPane;
@@ -90,7 +117,9 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     /**
      * Set the selected roster group.
      * <p>
-     * If the group is <code>null</code>, the selected roster group is set to "All Entries".
+     * If the group is <code>null</code>, the selected roster group is set to
+     * "All Entries".
+     *
      * @param group The name of the group to set the selection to.
      */
     public final void setSelectedRosterGroup(String group) {
@@ -131,6 +160,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     /**
      * Set the context menu for the "All Entries" roster group
+     *
      * @param menu The new menu for All Entries.
      */
     public final void setAllEntriesMenu(JPopupMenu menu) {
@@ -139,6 +169,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     /**
      * Get the context menu for "All Entries"
+     *
      * @return The menu for All Entries.
      */
     public JPopupMenu getAllEntriesMenu() {
@@ -149,15 +180,15 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
      * Set an action that the menu item "Open in New Window" will trigger.
      * <p>
      * Set a {@link JmriAbstractAction} that the "Open in New Window" menu item
-     * will trigger. <code>null</code> will remove the "Open in New Window"
-     * menu item from context menus. The "Open in New Window" menu item will be
-     * added or removed from the menu as appropriate.
+     * will trigger. <code>null</code> will remove the "Open in New Window" menu
+     * item from context menus. The "Open in New Window" menu item will be added
+     * or removed from the menu as appropriate.
      * <p>
      * If the action you pass has access to the RosterGroupPanel, it may call
      * RosterGroupPanel.getSelectedRosterGroup to determine which group to open
      * in the new window, otherwise it must accept a String defining the group
      * in JmriAbstractAction.setParameter(String, String).
-     * 
+     *
      * @param action - An action that can work on the current selection
      */
     public void setNewWindowMenuAction(JmriAbstractAction action) {
@@ -185,12 +216,13 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             allEntriesMenu.remove(0);
             newWindowMenuItemAction = null;
         }
-        groupsMenu.validate();
-        allEntriesMenu.validate();
+        groupsMenu.revalidate();
+        allEntriesMenu.revalidate();
     }
 
     /**
      * The action triggered by the "Open in New Window" menu item.
+     *
      * @return A JmriAbstractAction or null
      */
     public JmriAbstractAction getNewWindowMenuAction() {
@@ -216,12 +248,12 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         JToolBar controls = new JToolBar();
         controls.setLayout(new GridLayout(1, 0, 0, 0));
         controls.setFloatable(false);
-        final JToggleButton addGroupBtn = new JToggleButton(new ImageIcon("resources/icons/misc/gui3/Add.png"), false);
-        final JToggleButton actGroupBtn = new JToggleButton(new ImageIcon("resources/icons/misc/gui3/Action.png"), false);
+        final JToggleButton addGroupBtn = new JToggleButton(new ImageIcon(FileUtil.findURL("resources/icons/misc/gui3/Add.png")), false);
+        final JToggleButton actGroupBtn = new JToggleButton(new ImageIcon(FileUtil.findURL("resources/icons/misc/gui3/Action.png")), false);
         addGroupBtn.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {        
+            public void actionPerformed(ActionEvent e) {
                 new CreateRosterGroupAction("", scrollPane.getTopLevelAncestor()).actionPerformed(e);
                 addGroupBtn.setSelected(false);
             }
@@ -267,7 +299,8 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     }
 
     /**
-     * Get a JScrollPane containing the JTree that does not display horizontal scrollbars.
+     * Get a JScrollPane containing the JTree that does not display horizontal
+     * scrollbars.
      *
      * @return The internal JScrollPane
      */
@@ -336,6 +369,10 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         mi.addActionListener(ml);
         mi.setActionCommand("export");
         pm.add(mi);
+        mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Importddd"));
+        mi.addActionListener(ml);
+        mi.setActionCommand("import");
+        pm.add(mi);
         if (menu == GROUPS_MENU) {
             pm.addSeparator();
             mi = new JMenuItem("Rename...");
@@ -365,7 +402,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     // allow private classes to fire property change events as the RGP
     protected void firePropertyChangeAsRGP(String propertyName, Object oldValue, Object newValue) {
         if (propertyName.equals(SELECTED_ROSTER_GROUP)) {
-            selectedRosterGroup = (String)newValue;
+            selectedRosterGroup = (String) newValue;
         }
         this.firePropertyChange(propertyName, oldValue, newValue);
     }
@@ -379,6 +416,8 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             if (g.isDescendant(_tree.getSelectionPath())) {
                 if (e.getActionCommand().equals("export")) {
                     new FullBackupExportAction(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Exportddd"), wi).actionPerformed(e);
+                } else if (e.getActionCommand().equals("import")) {
+                    new FullBackupImportAction(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Importddd"), wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("rename")) {
                     new RenameRosterGroupAction("Rename", wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("duplicate")) {
@@ -388,10 +427,10 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                 } else if (e.getActionCommand().equals("newWindow") && newWindowMenuItemAction != null) {
                     newWindowMenuItemAction.actionPerformed(e);
                 } else {
-                    JOptionPane.showMessageDialog((JComponent) e.getSource(), 
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NotImplemented"), 
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NotImplemented"), 
-                        JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog((JComponent) e.getSource(),
+                            ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NotImplemented"),
+                            ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NotImplemented"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -511,6 +550,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     }
 
     static public class TreeCellRenderer extends DefaultTreeCellRenderer {
+
     }
 
     public class TreeSelectionListener implements javax.swing.event.TreeSelectionListener {
@@ -592,5 +632,5 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(RosterGroupsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterGroupsPanel.class.getName());
 }

@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: Massoth_LGB_6500x.xml,v 1.2 2007/10/28 23:15:49 jacobsen Exp $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -72,55 +72,60 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="no"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="Sets the Primary 2 digit address - LGB 0-22 for add-on, 1-23 for onboard">
-        <shortAddressVal/>
-      </variable>
-      <variable label="Starting voltage" CV="2" default="0" item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" default="0" item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed">
         <decVal min="0" max="255"/>
+        <label>Starting voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
       </variable>
-      <variable label="Acceleration" CV="3" default="3" item="Accel" tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration">
+      <variable CV="3" default="3" item="Accel" tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration">
         <decVal min="1" max="255"/>
+        <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
-      <variable label="Braking" CV="4" default="3" item="Decel" tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking)">
+      <variable CV="4" default="3" item="Decel" tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking)">
         <decVal min="1" max="255"/>
+        <label>Braking</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable label="Maximum Motor Voltage" CV="5" default="255" item="Vhigh" tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed">
+      <variable CV="5" default="255" item="Vhigh" tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed">
         <decVal min="1" max="255"/>
+        <label>Maximum Motor Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
-      <variable label="Software Version Number" CV="7" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only)">
-        <decVal/>
-      </variable>
-      <variable label="Manufacturer Code" CV="8" readOnly="yes" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
-        <decVal/>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS)">
-        <longAddressVal/>
-      </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <variable CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode">
         <enumVal>
-          <enumChoice choice="Forward"/>
-          <enumChoice choice="Reverse"/>
+          <enumChoice choice="14">
+            <choice>14</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 (not LGB MTS)">
+            <choice>28/128 (not LGB MTS)</choice>
+            <choice xml:lang="it">28/128 (non LGB MTS)</choice>
+          </enumChoice>
         </enumVal>
+        <label>Speed Steps</label>
+        <label xml:lang="it">Step Velocità</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode">
-        <enumVal>
-          <enumChoice choice="14"/>
-          <enumChoice choice="28/128 (not LGB MTS)"/>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="address 1-127 (LGB MTS: 0-22/1-23)"/>
-          <enumChoice choice="address 128-10239 (not LGB MTS)"/>
-        </enumVal>
-      </variable>
-      <variable label="Analog Starting Voltage" CV="58" default="48" tooltip="Adjust the sound to the loco starting settings - if sound starts before the loco starts moving, increase value">
+      <variable item="Analog Starting Voltage" CV="58" default="48" tooltip="Adjust the sound to the loco starting settings - if sound starts before the loco starts moving, increase value">
         <decVal min="1" max="255"/>
+        <label>Analog Starting Voltage</label>
       </variable>
-      <variable label="Analog Maximum Speed" CV="59" default="255" tooltip="Adjust the sound to the loco settings - if sound is too fast at high speed, decrease value">
+      <variable item="Analog Maximum Speed" CV="59" default="255" tooltip="Adjust the sound to the loco settings - if sound is too fast at high speed, decrease value">
         <decVal min="1" max="255"/>
+        <label>Analog Maximum Speed</label>
       </variable>
-      <variable label="Number of wheel magnets" CV="64" mask="XXXXXVVV" default="2" tooltip="Number of magnets on loco or sound car wheel/axle">
+      <variable item="Number of wheel magnets" CV="64" mask="XXXXXVVV" default="2" tooltip="Number of magnets on loco or sound car wheel/axle">
         <enumVal>
           <enumChoice choice="1" value="1"/>
           <enumChoice choice="2" value="2"/>
@@ -130,8 +135,9 @@
           <enumChoice choice="6" value="6"/>
           <enumChoice choice="7" value="7"/>
         </enumVal>
+        <label>Number of wheel magnets</label>
       </variable>
-      <variable label="Wheel diameter ratio" CV="64" mask="VVVVVXXX" default="10" tooltip="Ratio of loco wheel diameter to sound car wheel diameter">
+      <variable item="Wheel diameter ratio" CV="64" mask="VVVVVXXX" default="10" tooltip="Ratio of loco wheel diameter to sound car wheel diameter">
         <enumVal>
           <enumChoice choice="0.1" value="1"/>
           <enumChoice choice="0.2" value="2"/>
@@ -165,44 +171,66 @@
           <enumChoice choice="3.0" value="30"/>
           <enumChoice choice="3.1" value="31"/>
         </enumVal>
+        <label>Wheel diameter ratio</label>
       </variable>
       <!-- Do not attempt to read CV 105 on an LGB decoder -->
-      <variable label="ID for Decoder Type" CV="106" readOnly="yes" item="Product number" tooltip="ID for Decoder Type (read only)">
+      <variable CV="106" readOnly="yes" item="Product number" tooltip="ID for Decoder Type (read only)">
         <decVal/>
+        <label>ID for Decoder Type</label>
       </variable>
     </variables>
     <resets>
       <factReset label="Reset to factory settings" CV="55" default="55"/>
     </resets>
   </decoder>
-  <pane name="Basic">
+  <pane>
+    <name>Basic</name>
     <column>
       <dccaddress/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Short Address"/>
       <display item="Long Address"/>
       <display item="Address Format"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Locomotive Direction"/>
       <display item="Speed Step Mode"/>
     </column>
     <column>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Manufacturer"/>
       <display item="Decoder Version"/>
       <display item="Product number"/>
     </column>
   </pane>
-  <pane name="Sound Synchronization">
+  <pane>
+    <name>Sound Synchronization</name>
     <column>
-      <label label="Digital Synchronization"/>
-      <label label=" "/>
+      <label>
+        <text>Digital Synchronization</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1"/>
@@ -215,38 +243,69 @@
       </row>
       <row>
         <column>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Accel"/>
           <display item="Decel"/>
         </column>
       </row>
     </column>
     <column>
-      <label label="Analog Synchronization"/>
-      <label label=" "/>
+      <label>
+        <text>Analog Synchronization</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Analog Starting Voltage"/>
       <display item="Analog Maximum Speed"/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
     </column>
     <column>
-      <label label="Wheel Sensor"/>
-      <label label=" "/>
+      <label>
+        <text>Wheel Sensor</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Number of wheel magnets"/>
       <display item="Wheel diameter ratio"/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
     </column>
   </pane>
-  <pane name="CVs">
+  <pane>
+    <name>CVs</name>
     <column>
       <cvtable/>
     </column>

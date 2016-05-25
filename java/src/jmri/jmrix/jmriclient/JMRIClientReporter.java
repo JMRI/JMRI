@@ -1,95 +1,95 @@
 // JMRIClientReporter.java
-
 package jmri.jmrix.jmriclient;
 
+import jmri.implementation.AbstractReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.implementation.AbstractReporter;
 
 /**
  * JMRIClient implementation of the Reporter interface.
  * <P>
  *
- * Description:		extend jmri.AbstractReporter for JMRIClient layouts
- * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision$
+ * Description:	extend jmri.AbstractReporter for JMRIClient layouts
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author	Paul Bender Copyright (C) 2010
+ * @version	$Revision$
  */
 public class JMRIClientReporter extends AbstractReporter implements JMRIClientListener {
 
-	// data members
-	private int _number;   // reporter number
-        private JMRIClientTrafficController tc=null;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1164767908120216920L;
+    // data members
+    private int _number;   // reporter number
+    private JMRIClientTrafficController tc = null;
+    private String transmitName = null;
 
-	/**
-	 * JMRIClient reporters use the reporter  number on the remote host.
-	 */
-	public JMRIClientReporter(int number,JMRIClientSystemConnectionMemo memo)        {
-            super(memo.getSystemPrefix()+"R"+number);
-            _number = number;
-            tc = memo.getJMRIClientTrafficController();
-            // At construction, register for messages
-            tc.addJMRIClientListener(this);
-            // Then request status.
-            requestUpdateFromLayout(); 
-	}
+    /**
+     * JMRIClient reporters use the reporter number on the remote host.
+     */
+    public JMRIClientReporter(int number, JMRIClientSystemConnectionMemo memo) {
+        super(memo.getSystemPrefix() + "R" + number);
+        transmitName = memo.getTransmitPrefix() + "R" + number;
+        _number = number;
+        tc = memo.getJMRIClientTrafficController();
+        // At construction, register for messages
+        tc.addJMRIClientListener(this);
+        // Then request status.
+        requestUpdateFromLayout();
+    }
 
-	public int getNumber() { return _number; }
+    public int getNumber() {
+        return _number;
+    }
 
-	public void requestUpdateFromLayout() {
-		// get the message text
-        String text = "REPORTER "+ getSystemName() + "\n";
-            
-        // create and send the message itself
-	tc.sendJMRIClientMessage(new JMRIClientMessage(text),this);
-	}
+    public void requestUpdateFromLayout() {
+        // get the message text
+        String text = "REPORTER " + transmitName + "\n";
 
-
-	protected void sendMessage(boolean active) {
-		// get the message text
-        String text;
-        if (active) 
-            text = "REPORTER "+ getSystemName() + " ACTIVE\n";
-        else // thrown
-            text = "REPORTER "+ getSystemName() +" INACTIVE\n";
-            
         // create and send the message itself
         tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
-	}
+    }
 
-       // to listen for status changes from JMRIClient system
-        public void reply(JMRIClientReply m) {
-               String message=m.toString();
-               log.debug("Message Received: " +m );
-               log.debug("length "+ message.length() );
-               if(!message.contains(getSystemName()+" ")) return; // not for us
-	       else {
-		String text="REPORTER "+ getSystemName() +"\n";
-		 if(!message.equals(text)) {
-		    setReport(message.substring(text.length()));  // this is an update of the report.
-                 } else {
-                    setReport(null); // this is an update, but it is just 
-                                     // telling us the transient current 
-                                     // report is no longer valid.
-                 }
-               }
+    // to listen for status changes from JMRIClient system
+    public void reply(JMRIClientReply m) {
+        String message = m.toString();
+        log.debug("Message Received: " + m);
+        log.debug("length " + message.length());
+        if (!message.contains(transmitName + " ") &&
+            !message.contains(transmitName + "\n") &&
+            !message.contains(transmitName + "\r") ) {
+            return; // not for us
+        } else {
+            String text = "REPORTER " + transmitName + "\n";
+            if (!message.equals(text)) {
+                String report = message.substring(text.length());
+                log.debug("setting report to " + report);
+                setReport(report);  // this is an update of the report.
+            } else {
+                log.debug("setting report to null");
+                setReport(null); // this is an update, but it is just 
+                // telling us the transient current 
+                // report is no longer valid.
+            }
         }
+    }
 
-        public void message(JMRIClientMessage m) {
-        }
+    public void message(JMRIClientMessage m) {
+    }
 
-        private int state = UNKNOWN;
+    private int state = UNKNOWN;
 
-        public void setState(int s) {
-           state = s;
-        }
+    public void setState(int s) {
+        state = s;
+    }
 
-        public int getState() {
-           return state;
-        }
+    public int getState() {
+        return state;
+    }
 
-
-	static Logger log = LoggerFactory.getLogger(JMRIClientReporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientReporter.class.getName());
 
 }
 

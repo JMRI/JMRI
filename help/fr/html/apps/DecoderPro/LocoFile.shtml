@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: LocoFile.shtml,v 1.2 2009/03/12 22:59:03 matthewharris Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!-- <!-- $Id$ -->
+<!-- Translated by Blorec Herv&#233; le 2013-09-25-->
 <title>JMRI: DecoderPro User Guide - Locomotive Files</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -24,42 +24,42 @@
 
 <H1> Guide Utilisateur DecoderPro - Fichiers Locomotives</h1>
 
-<p>DecoderPro conserve les informations pour chaque entrée de Liste dans un fichier séparé.
-Vous n'avez généralement pas besoin de modifier celles-ci, ou même les regarder. Cette page décrit
-leur contenu au cas où vous seriez intéressés.
+<p>DecoderPro conserve les informations pour chaque entr&#233;e de Liste dans un fichier s&#233;par&#233;.
+Vous n'avez g&#233;n&#233;ralement pas besoin de modifier celles-ci, ou m&#234;me les regarder. Cette page d&#233;crit
+leur contenu au cas o&#249; vous seriez int&#233;ress&#233;s.
 <p>
-D'abord, le fichier .xml contient des informations d'en-tête qui décrit le format et l'historique du fichier:
+D'abord, le fichier .xml contient des informations d'en-t&#234;te qui d&#233;crit le format et l'historique du fichier:
 <p class=example>
-&lt;?xml version="1.0" encoding="utf-8"?&gt;<br>
+&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;<br>
 &lt;!doctype locomotive-config system "locomotive-config.dtd"&gt;<br>
 &lt;locomotive-config&gt;<br>
 &nbsp;&nbsp;&lt;!--written by jmri version 1.6.1 on sat oct 08 07:00:30 pdt 2005 $id: locofile.shtml,v 1.2 2009/03/12 22:59:03 matthewharris exp $--&gt;
 </p>
 
-Il est suivi par l'information sommaire pour l'entrée. La plupart de ces informatons
-proviennentt du volet"entrée Liste" dans DecoderPro:
+Il est suivi par l'information sommaire pour l'entr&#233;e. La plupart de ces informatons
+proviennentt du volet"entr&#233;e Liste" dans DecoderPro:
 
 <p class=example>
-&nbsp;&nbsp;&lt;locomotive id="up 792" numéroligne="" nomligne="" mfg="" modèle="" dccaddress="792" commentaire=""&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;décodeur model="dh163" famille="series 3 with fx3, silent, readback" commentaire="" /&gt;<br>
+&nbsp;&nbsp;&lt;locomotive id="up 792" num&#233;roligne="" nomligne="" mfg="" mod&#232;le="" dccaddress="792" commentaire=""&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;d&#233;codeur model="dh163" famille="series 3 with fx3, silent, readback" commentaire="" /&gt;<br>
 </p>
 
-qui est ensuite suivie par une section qui contient des valeurs pour toutes les variables définies dans le fichier de définition de décodeur. Noter que ce sont des valeurs numériques, les fichiers de définition de décodeur sont utilisés pour convertir ces chaînes, etc, lorsque cela est relue .
+qui est ensuite suivie par une section qui contient des valeurs pour toutes les variables d&#233;finies dans le fichier de d&#233;finition de d&#233;codeur. Noter que ce sont des valeurs num&#233;riques, les fichiers de d&#233;finition de d&#233;codeur sont utilis&#233;s pour convertir ces cha&#238;nes, etc, lorsque cela est relue .
 
 <p class=example>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;values&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;decoderdef&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="adresse primaire" value="24" /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="tension de démarrage" value="0" /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="Taux d'accélération" value="0" /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="Taux de décéleration" value="0" /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="tension de d&#233;marrage" value="0" /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="Taux d'acc&#233;l&#233;ration" value="0" /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="Taux de d&#233;c&#233;leration" value="0" /&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="tension max" value="0" /&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="Tension moyenne" value="0" /&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varvalue item="ID version" value="0" /&gt;<br>
 </p>
 
-Enfin, il ya une section similaire, qui contient des valeurs numériques pour tous les CVs.
-Nous stockons les deux variables et CVs de sorte que si un changement de définition décodeur survient à l'avenir, nous pouvons trier ce qui est fait dans le décodeur.
+Enfin, il ya une section similaire, qui contient des valeurs num&#233;riques pour tous les CVs.
+Nous stockons les deux variables et CVs de sorte que si un changement de d&#233;finition d&#233;codeur survient &#224; l'avenir, nous pouvons trier ce qui est fait dans le d&#233;codeur.
 
 <p class=example>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cvvalue name="1" value="24" /&gt;<br>

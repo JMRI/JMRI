@@ -1,5 +1,3 @@
-// VerticalLabelUI.java
-
 package jmri.util.swing;
 
 import java.awt.Dimension;
@@ -16,8 +14,8 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicLabelUI;
 
 /**
- * Allows a JLabel to be displayed vertically, with a defined orientation.
- * Usage (for a vertical label with anti-clockwise orientation):
+ * Allows a JLabel to be displayed vertically, with a defined orientation. Usage
+ * (for a vertical label with anti-clockwise orientation):
  * <code>
  * <br>JLabel label = new JLabel("Vertical Label");
  * <br>label.setUI(new VerticalLabelUI(VerticalLabelUI.ANTICLOCKWISE));
@@ -25,19 +23,16 @@ import javax.swing.plaf.basic.BasicLabelUI;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2010
- * @version $Revision$
+ * @author Matthew Harris copyright (c) 2010
  */
 public class VerticalLabelUI extends BasicLabelUI {
 
@@ -62,8 +57,8 @@ public class VerticalLabelUI extends BasicLabelUI {
     private int rotation;
 
     /**
-     * Static variables used to compute bounding rectangles for each
-     * constituent part of the VerticalLabel
+     * Static variables used to compute bounding rectangles for each constituent
+     * part of the VerticalLabel
      */
     private static Rectangle iconRectangle = new Rectangle();
     private static Rectangle textRectangle = new Rectangle();
@@ -79,11 +74,11 @@ public class VerticalLabelUI extends BasicLabelUI {
     }
 
     /**
-     * Constructor used to provide a vertical label of the specified
-     * orientation
+     * Constructor used to provide a vertical label of the specified orientation
+     *
      * @param rotation defines the rotation:
-     *             <br>{@link #CLOCKWISE} or
-     *             <br>{@link #ANTICLOCKWISE}
+     * <br>{@link #CLOCKWISE} or
+     * <br>{@link #ANTICLOCKWISE}
      */
     public VerticalLabelUI(int rotation) {
         super();
@@ -93,7 +88,7 @@ public class VerticalLabelUI extends BasicLabelUI {
     @Override
     public Dimension getPreferredSize(JComponent component) {
         Dimension dimension = super.getPreferredSize(component);
-    	return new Dimension(dimension.height, dimension.width);
+        return new Dimension(dimension.height, dimension.width);
     }
 
     @Override
@@ -102,10 +97,10 @@ public class VerticalLabelUI extends BasicLabelUI {
         // Retrieve the text and icon of the label being rotated
         JLabel label = (JLabel) component;
         String text = label.getText();
-        Icon icon = (label.isEnabled())?label.getIcon():label.getDisabledIcon();
+        Icon icon = (label.isEnabled()) ? label.getIcon() : label.getDisabledIcon();
 
         // If both the icon and text are empty, nothing to be done
-        if ((icon==null) && (text==null)) {
+        if ((icon == null) && (text == null)) {
             return;
         }
 
@@ -119,7 +114,7 @@ public class VerticalLabelUI extends BasicLabelUI {
         viewRectangle.x = viewInsets.left;
         viewRectangle.y = viewInsets.top;
 
-    	// Determine view height and width
+        // Determine view height and width
         // (inverting width and height as rotation not yet performed)
         viewRectangle.height = component.getWidth() - (viewInsets.left + viewInsets.right);
         viewRectangle.width = component.getHeight() - (viewInsets.top + viewInsets.bottom);
@@ -135,21 +130,21 @@ public class VerticalLabelUI extends BasicLabelUI {
         textRectangle.height = 0;
 
         // Grab the string to display
-        String clippedText =
-            layoutCL(label, fontMetrics, text, icon, viewRectangle, iconRectangle, textRectangle);
+        String clippedText
+                = layoutCL(label, fontMetrics, text, icon, viewRectangle, iconRectangle, textRectangle);
 
         // Store the current transform prior to rotation
         Graphics2D graphics2d = (Graphics2D) graphics;
-    	AffineTransform transform = graphics2d.getTransform();
+        AffineTransform transform = graphics2d.getTransform();
 
-   	// Perform the rotation
-        graphics2d.rotate((this.rotation==CLOCKWISE?1:-1) * (Math.PI/2));
+        // Perform the rotation
+        graphics2d.rotate((this.rotation == CLOCKWISE ? 1 : -1) * (Math.PI / 2));
         graphics2d.translate(
-                this.rotation==CLOCKWISE?0:-component.getHeight(),
-                this.rotation==CLOCKWISE?-component.getWidth():0);
+                this.rotation == CLOCKWISE ? 0 : -component.getHeight(),
+                this.rotation == CLOCKWISE ? -component.getWidth() : 0);
 
         // If necessary, paint the icon
-    	if (icon != null) {
+        if (icon != null) {
             icon.paintIcon(component, graphics, iconRectangle.x, iconRectangle.y);
         }
 
@@ -160,19 +155,19 @@ public class VerticalLabelUI extends BasicLabelUI {
 
             if (label.isEnabled()) {
                 paintEnabledText(label, graphics, clippedText, textX, textY);
-            }
-            else {
+            } else {
                 paintDisabledText(label, graphics, clippedText, textX, textY);
             }
         }
 
-    	// Finally, restore the original transform
+        // Finally, restore the original transform
         graphics2d.setTransform(transform);
     }
 
     /**
      * Return default VerticalLabelUI instance
-     * @param component 
+     *
+     * @param component
      * @return default VerticalLabelUI instance
      */
     public static ComponentUI createUI(JComponent component) {
@@ -180,7 +175,4 @@ public class VerticalLabelUI extends BasicLabelUI {
     }
 
     //private static final Logger log = LoggerFactory.getLogger(VerticalLabelUI.class.getName());
-
 }
-
-/* @(#)VerticalLabelUI.java */

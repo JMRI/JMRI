@@ -1,5 +1,3 @@
-// PackageTest.java
-
 package jmri.jmrix.cmri.serial;
 
 import junit.framework.Assert;
@@ -9,20 +7,19 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.cmri.serial package.
- * @author      Bob Jacobsen  Copyright 2003
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2003
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
 
     public void testDefinitions() {
         Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERUA,
-                                    SerialNode.MAXSENSORS+1);
+                SerialNode.MAXSENSORS + 1);
     }
 
     // Main entry point

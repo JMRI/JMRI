@@ -1,22 +1,22 @@
-// IndexedPairVarSlider.java
 package jmri.jmrit.symbolicprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /* Extends a JSlider so that its color & value are consistent with
  * an underlying variable; we return one of these in IndexedVariableValue.getNewRep.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author    Bob Jacobsen   Copyright (C) 2013
- * @version   $Revision$
+ * @deprecated // since 3.7.1
  */
+@Deprecated // since 3.7.1
 public class IndexedPairVarSlider extends JSlider implements ChangeListener {
 
     IndexedPairVariableValue _iVar;
@@ -26,6 +26,11 @@ public class IndexedPairVarSlider extends JSlider implements ChangeListener {
         _iVar = iVar;
         // get the original color right
         setBackground(_iVar.getColor());
+        if (_iVar.getColor() == _iVar.getDefaultColor()) {
+            setOpaque(false);
+        } else {
+            setOpaque(true);
+        }
         // set the original value
         setValue(Integer.valueOf(_iVar.getValueString()).intValue());
         // listen for changes here
@@ -49,17 +54,24 @@ public class IndexedPairVarSlider extends JSlider implements ChangeListener {
     }
 
     void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("IndexedVarSlider saw property change: "+e);
+        if (log.isDebugEnabled()) {
+            log.debug("IndexedVarSlider saw property change: " + e);
+        }
         // update this color from original state
         if (e.getPropertyName().equals("State")) {
             setBackground(_iVar.getColor());
+            if (_iVar.getColor() == _iVar.getDefaultColor()) {
+                setOpaque(false);
+            } else {
+                setOpaque(true);
+            }
         }
         if (e.getPropertyName().equals("Value")) {
-            int newValue = Integer.valueOf(((JTextField)_iVar.getCommonRep()).getText()).intValue();
+            int newValue = Integer.valueOf(((JTextField) _iVar.getCommonRep()).getText()).intValue();
             setValue(newValue);
         }
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(IndexedPairVarSlider.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndexedPairVarSlider.class.getName());
 }

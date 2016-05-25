@@ -1,29 +1,25 @@
-// PackageTest.java
-
-
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.lenz package
- * @author			Bob Jacobsen
- * @version			$Revision$
+ *
+ * @author	Bob Jacobsen
+ * @version	$Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -46,7 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XNetThrottleTest.class));
         suite.addTest(new TestSuite(XNetConsistManagerTest.class));
         suite.addTest(new TestSuite(XNetConsistTest.class));
-        suite.addTest(new TestSuite(XNetInitilizationManagerTest.class));
+        suite.addTest(new TestSuite(XNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerManagerTest.class));
         suite.addTest(new TestSuite(XNetOpsModeProgrammerTest.class));
@@ -54,6 +50,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XNetThrottleManagerTest.class));
         suite.addTest(new TestSuite(XNetExceptionTest.class));
         suite.addTest(new TestSuite(XNetMessageExceptionTest.class));
+        suite.addTest(new TestSuite(XNetStreamPortControllerTest.class));
         suite.addTest(jmri.jmrix.lenz.li100.LI100Test.suite());
         suite.addTest(jmri.jmrix.lenz.li100f.LI100FTest.suite());
         suite.addTest(jmri.jmrix.lenz.li101.LI101Test.suite());
@@ -63,14 +60,14 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.liusbethernet.LIUSBEthernetTest.suite());
         suite.addTest(jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest.suite());
         suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
-        
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
+        suite.addTest(BundleTest.suite());
+
+        suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
         }
-        
+
         return suite;
     }
-
-    static Logger log = Logger.getLogger(PackageTest.class.getName());
 
 }

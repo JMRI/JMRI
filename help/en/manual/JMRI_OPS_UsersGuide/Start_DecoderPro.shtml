@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI OperationsPro Manual: Getting Started</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>Getting Started with Operations</h1>
+<h2>OperationsPro: How to start the program</h2>
+
+<div align="right">
+<p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">| Next</a>
+<p><a href="index.shtml#startOps">Back to Index</a> </div>
+
+<hr>
+
+<p>The Operations Program is run from the DecoderPro&reg; Menu which is activated in the Operations Preferences.</p>
+<p>Once you have downloaded the DecoderPro&reg; software and installed it, simply
+open the program in the usual manner for your operating system. On MS Windows the installer will place an icon on your Desktop. For details please refer to the <a href="../../html/setup/index.shtml">JMRI Setup Help</a>.</p>
+<p>
+  <img src="images/DesktopIcons.png" width="223" height="79" alt="desktop icons">
+<p>Double click on the icon for the program to open, in this case we will open DecoderPro&reg;.
+<p>The following dialog will appear briefly as the program is loading:
+<p>
+  <img src="images/StartDialog.png" width="170" height="167" alt="Start dialog">
+<p>You should
+  see this or a similar opening screen displayed after one of the JMRI&reg; programs starts:
+  
+<h1><img src="images/Splash_Screen.png" width="496" height="282" alt="splash"></h1>
+
+<p>
+It may take a while for this screen to come up, especially on older
+and slower computers. Remember that you are essentially running the program
+on a Java emulator over your native operating system software. New computers
+can do this fairly quickly, but older ones will feel like they're taking
+forever. <strong>Be patient</strong> - it will come up eventually! Even on older computers, once the program is up the response time is quite good.
+<p>If this is the first time you have run the program after you installed the software, the <a href="Start_Preferences.shtml">Preferences</a> screen will  come up automatically to allow  you to set up the system for your particular configuration. Also if you change  your system configuration, OR if you have your laptop away from the railroad,  but you want to play with JMRI there is a simulator mode you may want to try. So click next, and we&quot;ll have a look at Preferences.
+
+<hr>
+<div align=right>
+<p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">| Next</a>
+<p><a href="index.shtml#startOps">Back to Index</a>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

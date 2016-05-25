@@ -1,52 +1,43 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
- JMRI: MacOS Serial Port conections
- 
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META content="Dick Bronson" name=Author>
-    <META content="Walter Thompson" name=Author>
-    <META content="John Plocher" name=Author>
-    <META name="keywords" content="java model railroad JMRI install windows">
+ <title>JMRI Hardware Setup Support - MacOS Serial Port connections</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta content="Dick Bronson" name="Author">
+    <meta content="Walter Thompson" name="Author">
+    <meta content="John Plocher" name="Author">
+    <meta name="keywords" content="java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H2> 
-      JMRI Install Guide: MacOS Serial Port conections
-      </H2>
+  <h1>Hardware Setup Support: MacOS Serial Port connections</h1>
 
-	<p>Macintosh serial ports use a "mini DIN-8" connector, which does not
+<a name="limitations"></a><h2>Limitations</h2>
+<p>Newer MacOS and OS X hardware come without a built in RS232 serial port but provide USB ports.<br>
+Connect a serial DCC Adapter using a <a href="USBtoSerial.shtml">USB-to-Serial Adapter</a>.</p>
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Wiring</h3>
+	<p>Macintosh serial ports used a "mini DIN-8" connector, which does not
 	contain all of the signals of a typical RS232 connector.  This page
 	discusses how to wire an adapter so that a Macintosh can work with JMRI
 	and a LocoBuffer or LocoBuffer II.  The same adapter may also work with
 	other protocols, particularly those that use "hardware flow control".</p>
 
-        <p>A good survey of Macintosh serial connections, including good
-        debugging techniques, is available at
-        <a href="http://francis.courtois.free.fr/jc1/serial/main.html">http://francis.courtois.free.fr/jc1/serial/main.html</a>.
-	<p>
-<img src="./images/LB-II-Mac.gif" ALT="Mac DIN-8 wiring diagram" WIDTH="374" HEIGHT="192" HSPACE="10" VSPACE="0"/>
-	</p>
-
+<img src="images/LB-II-Mac.gif" alt="Mac DIN-8 wiring diagram" width="374" height="192" hspace="10" vspace="0"/>
 
 	<p>Note that the Macintosh has only one status output and input.</p>
 
@@ -59,12 +50,23 @@
 	be connected to whatever status leads (e.g. RTS) the serial device
 	looks at.</p>
 
-	<p> The information on this page was provided by Dick Bronson and
-	Walter Thompson.</p>
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p>A good survey of (Macintosh) serial connections, including 
+debugging techniques, is available at:
+<ul>
+  <li><a href="http://www.applefool.com/se30/#serialdata">http://www.applefool.com/se30/#serialdata</a>
+  <li><a href="http://maxembedded.com/2013/09/serial-communication-rs232-basics/#SerialTerm">http://maxembedded.com/2013/09/serial-communication-rs232-basics/#SerialTerm</a>
+  <li><a href="https://en.wikipedia.org/wiki/Serial_port">https://en.wikipedia.org/wiki/Serial_port</a> provides general information
+  <li><a href="http://permalink.gmane.org/gmane.os.netbsd.ports.macppc/7467">http://permalink.gmane.org/gmane.os.netbsd.ports.macppc/7467</a> provides a simple pin out
+</ul>
 
-      <hr class="hide">
+<h2>Credits</h2>
+	<p> The information on this page was provided by Dick Bronson and Walter Thompson.</p>
 
+<hr class="hide">
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

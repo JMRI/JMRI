@@ -1,34 +1,50 @@
 // DuplexGroupScanPanel.java
-
 package jmri.jmrix.loconet.duplexgroup.swing;
 
+import java.awt.BasicStroke;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.event.*;
-import java.awt.*;
-import jmri.jmrix.loconet.*;
-import java.util.ResourceBundle;
-import javax.swing.*;
-import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 
 /**
  * Defines a GUI and associated logic to perform energy scan operations on
- * Duplex radio channels.  Displays energy scan data in a graphical form.
+ * Duplex radio channels. Displays energy scan data in a graphical form.
+ *
+ * This tool works equally well with UR92 and UR92CE devices. The UR92 and
+ * UR92CE behave identically with respect to this tool. For the purpose of
+ * clarity, only the term UR92 is used herein.
  *
  * @author B. Milhaupt Copyright 2010, 2011
- * @version			$Revision: 1.0 $
+ * @version	$Revision: 1.0 $
  */
 public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
-                    implements LocoNetListener, javax.swing.event.ChangeListener {
+        implements LocoNetListener, javax.swing.event.ChangeListener {
 
-    DuplexChannelInfo dci[] = new DuplexChannelInfo[LnDplxGrpInfoImplConstants.DPLX_MAX_CH-LnDplxGrpInfoImplConstants.DPLX_MIN_CH+1];
-    private javax.swing.Timer   tmr;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2574511937558247304L;
+    DuplexChannelInfo dci[] = new DuplexChannelInfo[LnDplxGrpInfoImplConstants.DPLX_MAX_CH - LnDplxGrpInfoImplConstants.DPLX_MIN_CH + 1];
+    private javax.swing.Timer tmr;
     private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.DuplexGroupScan");
     DuplexGroupScanPanel safe;
 
     private final static int DEFAULT_SCAN_COUNT = 25;
     private boolean isInitialized = false;
-
 
     public DuplexGroupScanPanel() {
         super();
@@ -36,26 +52,25 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         safe = this;
     }
 
-
-    javax.swing.JButton         scanLoopButton = null;
-    javax.swing.JLabel          scanLoopLabel = null;
-    javax.swing.JButton         clearButton = null;
-    javax.swing.JLabel          grStatusValue = null;
-    boolean                     stopRequested;
-    Integer                     scanLoopDelay;
-    boolean                     waitingForPreviousGroupChannel;
-    int                         previousGroupChannel;
+    javax.swing.JButton scanLoopButton = null;
+    javax.swing.JLabel scanLoopLabel = null;
+    javax.swing.JButton clearButton = null;
+    javax.swing.JLabel grStatusValue = null;
+    boolean stopRequested;
+    Integer scanLoopDelay;
+    boolean waitingForPreviousGroupChannel;
+    int previousGroupChannel;
 //    Dimension channelTextSize;
 
-
-    @Override public void initComponents() throws Exception {
+    @Override
+    public void initComponents() throws Exception {
         int i;
         int j;
         int minWindowWidth = 0;
         JPanel p;
         j = 0;
 
-        for ( i = LnDplxGrpInfoImplConstants.DPLX_MIN_CH; i <= LnDplxGrpInfoImplConstants.DPLX_MAX_CH; ++i) {
+        for (i = LnDplxGrpInfoImplConstants.DPLX_MIN_CH; i <= LnDplxGrpInfoImplConstants.DPLX_MAX_CH; ++i) {
             dci[j] = new DuplexChannelInfo();
             dci[j].channel = i;
             dci[j].numSamples = 0;
@@ -80,22 +95,22 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         add(p);
 
         p = new JPanel();
-        p.setLayout(new java.awt.GridLayout(4,1));
+        p.setLayout(new java.awt.GridLayout(4, 1));
 
-        JLabel graphicAreaLabel1 = new JLabel (rb.getString("LabelGraphicArea1"));
+        JLabel graphicAreaLabel1 = new JLabel(rb.getString("LabelGraphicArea1"));
         graphicAreaLabel1.setFont(new Font("Dialog", Font.PLAIN, 10));
         p.add(graphicAreaLabel1);
 
-        JLabel graphicAreaLabel2 = new JLabel (rb.getString("LabelGraphicArea2"));
+        JLabel graphicAreaLabel2 = new JLabel(rb.getString("LabelGraphicArea2"));
         graphicAreaLabel2.setFont(new Font("Dialog", Font.PLAIN, 10));
         p.add(graphicAreaLabel2);
 
-        JLabel graphicAreaLabel3 = new JLabel (rb.getString("LabelGraphicArea3"));
+        JLabel graphicAreaLabel3 = new JLabel(rb.getString("LabelGraphicArea3"));
         graphicAreaLabel3.setFont(new Font("Dialog", Font.PLAIN, 10));
         p.add(graphicAreaLabel3);
         add(p);
 
-        JLabel graphicAreaLabel4 = new JLabel (rb.getString("LabelGraphicArea4"));
+        JLabel graphicAreaLabel4 = new JLabel(rb.getString("LabelGraphicArea4"));
         graphicAreaLabel4.setFont(new Font("Dialog", Font.PLAIN, 10));
         p.add(graphicAreaLabel4);
         add(p);
@@ -115,55 +130,58 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         p = new JPanel();
         // Apply a rigid area with a width that is wide enough to display the longest status message
         try {
-            minWindowWidth = Integer.parseInt(rb.getString("MinimumWidthForWIndow"),10);
+            minWindowWidth = Integer.parseInt(rb.getString("MinimumWidthForWIndow"), 10);
         } catch (Exception e) {
             minWindowWidth = 400;
         }
 
-        p.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(minWindowWidth,0))) ;
+        p.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(minWindowWidth, 0)));
         add(p);
 
         scanLoopButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (scanLoopButton.getText().equals(rb.getString("ButtonScanChannelsStop"))) {
-                        scanLoopStopButtonActionPerformed();
-                    }
-                    else {
-                        scanLoopButton.setText(rb.getString("ButtonScanChannelsStop"));
-                        scanLoopButtonActionPerformed();
-                    }
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (scanLoopButton.getText().equals(rb.getString("ButtonScanChannelsStop"))) {
+                    scanLoopStopButtonActionPerformed();
+                } else {
+                    scanLoopButton.setText(rb.getString("ButtonScanChannelsStop"));
+                    scanLoopButtonActionPerformed();
                 }
-            });
+            }
+        });
 
         clearButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    scanLoopStopButtonActionPerformed();
-                    clearButtonActionPerformed();
-                    graphicArea.repaint();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                scanLoopStopButtonActionPerformed();
+                clearButtonActionPerformed();
+                graphicArea.repaint();
+            }
+        });
 
         // send message to get current Duplex Channel number
-            try {
-                scanLoopDelay = Integer.parseInt(rb.getString("SetupDefaultChannelDelayInMilliSec"));
-            }
-            catch (Exception e) {
-                log.error("Bad value in prop files for SetupDefaultChannelDelayInMilliSec.");
-                scanLoopDelay = 200;
-            }
+        try {
+            scanLoopDelay = Integer.parseInt(rb.getString("SetupDefaultChannelDelayInMilliSec"));
+        } catch (Exception e) {
+            log.error("Bad value in prop files for SetupDefaultChannelDelayInMilliSec.");
+            scanLoopDelay = 200;
+        }
         if (memo != null) {
-           isInitialized = true;
+            isInitialized = true;
         }
 
     }
 
-    @Override public String getHelpTarget() { return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel"; }
+    @Override
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel";
+    }
 
-    @Override public String getTitle() {
+    @Override
+    public String getTitle() {
         return rb.getString("Title");
     }
 
-    @Override public void initComponents(LocoNetSystemConnectionMemo memo) {
+    @Override
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
         // connect to the LnTrafficController
@@ -171,51 +189,57 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         waitingForPreviousGroupChannel = true;
         memo.getLnTrafficController().sendLocoNetMessage(createGetGroupChannelPacketInt());
         if (grStatusValue != null) {
-           isInitialized = true;
+            isInitialized = true;
         }
     }
 
-    public boolean isInitialized() {return isInitialized;}
+    public boolean isInitialized() {
+        return isInitialized;
+    }
 
     /**
      * Process all incoming LocoNet messages to look for Duplex Group
-     * information operations.  Only pays attention to LocoNet report
-     * of Duplex Group Name/password/channel/groupID, and ignores all other
-     * LocoNet messages.
+     * information operations. Only pays attention to LocoNet report of Duplex
+     * Group Name/password/channel/groupID, and ignores all other LocoNet
+     * messages.
      * <p>
-     * If tool has sent a query for Duplex group information and has not
-     * yet received a Duplex group report, the method updates the GUI with
-     * the received information.
+     * If tool has sent a query for Duplex group information and has not yet
+     * received a Duplex group report, the method updates the GUI with the
+     * received information.
      * <p>
-     * If the tool is not currently waiting for a
-     * response to a query, then the method compares the received information
-     * against the information currently displayed in the GUI.  If the received
-     * information does not match, a message is displayed on the status line
-     * in the GUI, else nothing is displayed in the GUI status line.
+     * If the tool is not currently waiting for a response to a query, then the
+     * method compares the received information against the information
+     * currently displayed in the GUI. If the received information does not
+     * match, a message is displayed on the status line in the GUI, else nothing
+     * is displayed in the GUI status line.
      * <p>
      * @param m
      */
     public void message(LocoNetMessage m) {
-        if (stopRequested == true) return;
+        if (stopRequested == true) {
+            return;
+        }
         if (handleMessageDuplexScanReport(m)) {
             return;
         }
-        if (handleMessageDuplexChannelReport(m))
+        if (handleMessageDuplexChannelReport(m)) {
             return;
+        }
         return;
     }
 
     /**
      * Examines incoming LocoNet messages to see if the message is a Duplex
-     * Group Channel Report.  If so, captures the group number.
+     * Group Channel Report. If so, captures the group number.
+     *
      * @param m - incoming LocoNetMessage
      * @return true if message m is a Duplex Group Channel Report
      */
     private boolean handleMessageDuplexChannelReport(LocoNetMessage m) {
-        if ((m.getElement(0) != LnConstants.OPC_PEER_XFER) ||
-                (m.getElement(1) != LnConstants.RE_DPLX_OP_LEN) ||
-                (m.getElement(2) != LnConstants.RE_DPLX_GP_CHAN_TYPE) ||
-                (m.getElement(3) != LnConstants.RE_DPLX_SCAN_REPORT_B3) ) {
+        if ((m.getElement(0) != LnConstants.OPC_PEER_XFER)
+                || (m.getElement(1) != LnConstants.RE_DPLX_OP_LEN)
+                || (m.getElement(2) != LnConstants.RE_DPLX_GP_CHAN_TYPE)
+                || (m.getElement(3) != LnConstants.RE_DPLX_SCAN_REPORT_B3)) {
             return false;
         }
         if (waitingForPreviousGroupChannel) {
@@ -226,20 +250,20 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Interprets a received LocoNet message.  If message is an IPL report of
-     * attached IPL-capable equipment, check to see if it reports a UR92
-     * device as attached.  If so, increment count of UR92 devices.  Else
-     * ignore.
+     * Interprets a received LocoNet message. If message is an IPL report of
+     * attached IPL-capable equipment, check to see if it reports a UR92 device
+     * as attached. If so, increment count of UR92 devices. Else ignore.
+     *
      * @param m
-     * @return true if message is an IPL device report indicating a UR92 present,
-     * else return false.
+     * @return true if message is an IPL device report indicating a UR92
+     *         present, else return false.
      */
     private boolean handleMessageDuplexScanReport(LocoNetMessage m) {
-        if ((m.getElement(0) != LnConstants.OPC_PEER_XFER) ||
-                (m.getElement(1) != LnConstants.RE_DPLX_SCAN_OP_LEN) ||
-                (m.getElement(2) != LnConstants.RE_DPLX_SCAN_REPORT_B2) ||
-                (m.getElement(3) != LnConstants.RE_DPLX_SCAN_REPORT_B3) ) {
-                return false;
+        if ((m.getElement(0) != LnConstants.OPC_PEER_XFER)
+                || (m.getElement(1) != LnConstants.RE_DPLX_SCAN_OP_LEN)
+                || (m.getElement(2) != LnConstants.RE_DPLX_SCAN_REPORT_B2)
+                || (m.getElement(3) != LnConstants.RE_DPLX_SCAN_REPORT_B3)) {
+            return false;
         }
         handleChannelSignalReport(m.getElement(4), m.getElement(5), m.getElement(6));
         return true;
@@ -248,14 +272,15 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     private void handleChannelSignalReport(int extendedVal, int channelNum, int signalValue) {
         int index = -1;
         int fullSignal;
-        fullSignal = signalValue + 128*(((extendedVal & 0x2)==2) ? 1 : 0);
+        fullSignal = signalValue + 128 * (((extendedVal & 0x2) == 2) ? 1 : 0);
         for (int i = 0; i < dci.length; i++) {
-            if (dci[i].channel == channelNum)
+            if (dci[i].channel == channelNum) {
                 index = i;
+            }
         }
         if (index != -1) {
             if (index == 16) {
-            log.error(rb.getString("ErrorLogUnexpectedChannelNumber")+" "+channelNum+ " " + rb.getString("ErrorLogUnexpectedChannelNumberPart2")+"\n");
+                log.error(rb.getString("ErrorLogUnexpectedChannelNumber") + " " + channelNum + " " + rb.getString("ErrorLogUnexpectedChannelNumberPart2") + "\n");
 
             }
             dci[index].numSamples++;
@@ -267,13 +292,13 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                 dci[index].minSigValue = fullSignal;
             }
             dci[index].sumSamples += fullSignal;
-            dci[index].avgSamples = dci[index].sumSamples/dci[index].numSamples;
+            dci[index].avgSamples = dci[index].sumSamples / dci[index].numSamples;
 
             graphicArea.repaint();
 
+        } else {
+            log.error(rb.getString("ErrorLogUnexpectedChannelNumber") + " " + channelNum + " " + rb.getString("ErrorLogUnexpectedChannelNumberPart2") + "\n");
         }
-        else
-            log.error(rb.getString("ErrorLogUnexpectedChannelNumber")+" "+channelNum+ " " + rb.getString("ErrorLogUnexpectedChannelNumberPart2")+"\n");
     }
 
     /**
@@ -293,7 +318,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         m.setElement(i++, LnConstants.RE_DPLX_SCAN_QUERY_B3);   // Query Operation
         m.setElement(i++, LnConstants.RE_DPLX_SCAN_QUERY_B4);
         m.setElement(i++, channelNum);                                  // Duplex Channel Number
-        for (;i < (LnConstants.RE_DPLX_OP_LEN - 1); i++) {
+        for (; i < (LnConstants.RE_DPLX_OP_LEN - 1); i++) {
             m.setElement(i, 0);   // always 0 for duplex group ID write
         }
         // LocoNet send process will compute and add checksum byte in correct location
@@ -303,7 +328,8 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     /**
      * Create a LocoNet packet to get the current Duplex group channel number.
      * <p>
-     * @return  The packet which writes the Group Channel Number to the UR92 device(s)
+     * @return The packet which writes the Group Channel Number to the UR92
+     *         device(s)
      */
     private LocoNetMessage createGetGroupChannelPacketInt() {
         int i;
@@ -316,7 +342,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         m.setElement(i++, LnConstants.RE_DPLX_OP_LEN);   // 20-byte message
         m.setElement(i++, LnConstants.RE_DPLX_GP_CHAN_TYPE);   // Group Channel Operation
         m.setElement(i++, LnConstants.RE_DPLX_OP_TYPE_QUERY);   // Write Operation
-        for (;i < (LnConstants.RE_DPLX_OP_LEN - 1); i++) {
+        for (; i < (LnConstants.RE_DPLX_OP_LEN - 1); i++) {
             m.setElement(i, 0);   // always 0 for duplex group channel query
         }
         // LocoNet send process will compute and add checksum byte in correct location
@@ -330,10 +356,10 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     private void updateScanLoopCountStatus(int current, int total) {
         String countStatus = rb.getString("StatusCurrentLoopCounter");
-        String begin = countStatus.substring(0,countStatus.indexOf("%count"));
+        String begin = countStatus.substring(0, countStatus.indexOf("%count"));
 
-        String middle  = countStatus.substring(begin.length()+6, countStatus.indexOf("%loops"));
-        String end = countStatus.substring(countStatus.indexOf("%loops")+6);
+        String middle = countStatus.substring(begin.length() + 6, countStatus.indexOf("%loops"));
+        String end = countStatus.substring(countStatus.indexOf("%loops") + 6);
         countStatus = begin + Integer.toString(current) + middle + Integer.toString(total) + end;
         grStatusValue.setText(countStatus);
     }
@@ -345,7 +371,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         } catch (Exception e) {
             whenToStop = DEFAULT_SCAN_COUNT;
         }
-        if ((whenToStop <=0) || (whenToStop > 1000)) {
+        if ((whenToStop <= 0) || (whenToStop > 1000)) {
             grStatusValue.setText(rb.getString("ErrorBadLoopCount"));
             return;
         }
@@ -362,8 +388,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                 if (stopRequested == true) {
                     stopRequested = false;
                     showOnlyMaxAvgValues();
-                }
-                else if (channelIndexToScan <= maxChannelIndexToScan) {
+                } else if (channelIndexToScan <= maxChannelIndexToScan) {
 
                     graphicArea.setChannelBeingScanned(dci[channelIndexToScan].channel);
                     graphicArea.repaint();
@@ -371,11 +396,9 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                     tmr.setInitialDelay(scanLoopDelay);
                     tmr.setRepeats(false);
                     tmr.start();
-                    channelIndexToScan ++;
-                }
-                else if (loopNum < whenToStop)
-                {
-                    loopNum ++;
+                    channelIndexToScan++;
+                } else if (loopNum < whenToStop) {
+                    loopNum++;
                     // update displayed Loop Count
                     updateScanLoopCountStatus(loopNum, whenToStop);
 
@@ -387,9 +410,8 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                     tmr.setInitialDelay(scanLoopDelay);
                     tmr.setRepeats(false);
                     tmr.start();
-                    channelIndexToScan ++;
-                }
-                else {
+                    channelIndexToScan++;
+                } else {
                     // must be done with all channels and all loops.
                     showOnlyMaxAvgValues();
                     scanLoopButton.setText(rb.getString("ButtonScanChannelsLoop"));
@@ -397,7 +419,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                     grStatusValue.setText(" ");
                     graphicArea.setChannelBeingScanned(-1);
                     graphicArea.repaint();
-               }
+                }
             }
         });
         // need to trigger first delay to get first channel to be scanned
@@ -419,7 +441,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         int index;
         int maxIndex;
         maxIndex = LnDplxGrpInfoImplConstants.DPLX_MAX_CH - LnDplxGrpInfoImplConstants.DPLX_MIN_CH;
-        for (index=0; index <= maxIndex; ++index) {
+        for (index = 0; index <= maxIndex; ++index) {
             dci[index].numSamples = 0;
             dci[index].maxSigValue = -1;
             dci[index].minSigValue = 256;
@@ -440,12 +462,15 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     /**
      * Break connection with the LnTrafficController and stop timers
      */
-    @Override public void dispose() {
+    @Override
+    public void dispose() {
         javax.swing.Timer exitTmr;
 
         stopRequested = true;
-        if (tmr != null) tmr.stop();
-        tmr=null;
+        if (tmr != null) {
+            tmr.stop();
+        }
+        tmr = null;
 
         if (waitingForPreviousGroupChannel == false) {
             exitTmr = new javax.swing.Timer(200, new ActionListener() {
@@ -470,14 +495,14 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(DuplexGroupScanPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DuplexGroupScanPanel.class.getName());
 
-    public void stateChanged (javax.swing.event.ChangeEvent e) {
-        graphicArea.repaint ();
+    public void stateChanged(javax.swing.event.ChangeEvent e) {
+        graphicArea.repaint();
     }
 
     private void showOnlyMaxAvgValues() {
-        for (int i = 0 ; i < (LnDplxGrpInfoImplConstants.DPLX_MAX_CH - LnDplxGrpInfoImplConstants.DPLX_MIN_CH) + 1;++i) {
+        for (int i = 0; i < (LnDplxGrpInfoImplConstants.DPLX_MAX_CH - LnDplxGrpInfoImplConstants.DPLX_MIN_CH) + 1; ++i) {
             dci[i].mostRecentSample = -1;
         }
         graphicArea.repaint();
@@ -486,16 +511,21 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     private duplexGroupChannelScanGuiCanvas graphicArea;
 
     private class duplexGroupChannelScanGuiCanvas extends java.awt.Canvas {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = 3311247866128360812L;
         private int barWidth = 7;
-        private int barSpace = barWidth +8;
-        private int barOffset = (barSpace - barWidth)/2;
-        private final static int channelCount = 26-11+1;
+        private int barSpace = barWidth + 8;
+        private int barOffset = (barSpace - barWidth) / 2;
+        private final static int channelCount = 26 - 11 + 1;
         private final static int barGraphScale = 2;
         private final static int maxScanValue = 255;
-        private final static int maxScaledBarValue = ((maxScanValue+1)/barGraphScale);
+        private final static int maxScaledBarValue = ((maxScanValue + 1) / barGraphScale);
         private int baseline = maxScaledBarValue + 5;
 
-        public int requiredMinWindowWidth = (channelCount*barSpace);
+        public int requiredMinWindowWidth = (channelCount * barSpace);
         public int requiredMinWindowHeight = (baseline + 10);
         private static final int HORIZ_PADDING = 12;
         private static final int VERT_PADDING = 4;
@@ -510,10 +540,11 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         private final java.awt.Color maxLineColor = java.awt.Color.RED;
         private final java.awt.Color averageLineColor = java.awt.Color.GREEN;
         private final java.awt.Color lowerLimitLineColor = java.awt.Color.LIGHT_GRAY;
+
         public duplexGroupChannelScanGuiCanvas() {
             super();
-            setBackground (backgroundColor);
-            setForeground (foregroundColor);
+            setBackground(backgroundColor);
+            setForeground(foregroundColor);
             // create a smaller font
             signalBarsFont = new Font("Dialog", Font.PLAIN, 8);
 
@@ -528,51 +559,52 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                 // get the advance of my text in this font and render context
                 textWidth = metrics.stringWidth("38");  // representative (but not accurate) example text string
                 // calculate the size of a box to hold the text with some padding.
-                channelTextSize = new Dimension(textWidth+HORIZ_PADDING, textHeight+VERT_PADDING);
-                requiredMinWindowWidth = channelCount*channelTextSize.width;
-                requiredMinWindowHeight += (2*channelTextSize.height);
+                channelTextSize = new Dimension(textWidth + HORIZ_PADDING, textHeight + VERT_PADDING);
+                requiredMinWindowWidth = channelCount * channelTextSize.width;
+                requiredMinWindowHeight += (2 * channelTextSize.height);
                 baseline += channelTextSize.height;
                 barSpace = channelTextSize.width;
                 barWidth = textWidth;
-                barOffset = (barSpace - barWidth)/2;
-                }
-                textWidth = 0;
-                setSize(requiredMinWindowWidth, requiredMinWindowHeight);
+                barOffset = (barSpace - barWidth) / 2;
             }
+            textWidth = 0;
+            setSize(requiredMinWindowWidth, requiredMinWindowHeight);
+        }
 
         /**
-         * Used by this class to specify a channel number to highlight in the GUI.
-         * An invalid channel number may be used to cause the class to clear the
-         * channel highlight.  After invoking this method, a call to this class'
-         * repaint() method is required to cause the GUI update.
+         * Used by this class to specify a channel number to highlight in the
+         * GUI. An invalid channel number may be used to cause the class to
+         * clear the channel highlight. After invoking this method, a call to
+         * this class' repaint() method is required to cause the GUI update.
          * <p>
-         * @param channelNum - integer representing a Duplex Group channel number.
+         * @param channelNum - integer representing a Duplex Group channel
+         *                   number.
          */
         public void setChannelBeingScanned(int channelNum) {
-            if ((channelNum <11) ||(channelNum > 26)) {
+            if ((channelNum < 11) || (channelNum > 26)) {
                 indexBeingScanned = -1;
                 return;
             }
-            indexBeingScanned = channelNum-11;
+            indexBeingScanned = channelNum - 11;
         }
 
-        final float dash1[] = {7.0f,3.0f};
+        final float dash1[] = {7.0f, 3.0f};
         final BasicStroke dashedStroke = new BasicStroke(1.0f,
-                                          BasicStroke.CAP_BUTT,
-                                          BasicStroke.JOIN_MITER,
-                                          10.0f, dash1, 0.0f);
-        
+                BasicStroke.CAP_BUTT,
+                BasicStroke.JOIN_MITER,
+                10.0f, dash1, 0.0f);
+
         final BasicStroke plainStroke = new BasicStroke(1.0f);
-        
-        @Override public void paint (java.awt.Graphics g) {
+
+        @Override
+        public void paint(java.awt.Graphics g) {
             int channelIndex;
             java.awt.Graphics2D g2;
             g2 = (java.awt.Graphics2D) g;
-            for (int i = 11; i <=26; ++i) {
-                g2.drawString(Integer.toString(i), (i-11) * channelTextSize.width, channelTextSize.height);
-                g2.drawString(Integer.toString(i), (i-11) * channelTextSize.width, requiredMinWindowHeight-1);
+            for (int i = 11; i <= 26; ++i) {
+                g2.drawString(Integer.toString(i), (i - 11) * channelTextSize.width, channelTextSize.height);
+                g2.drawString(Integer.toString(i), (i - 11) * channelTextSize.width, requiredMinWindowHeight - 1);
             }
-
 
             // draw a simple line to act as a bottom line in the graphic block
             g2.setColor(lowerLimitLineColor);
@@ -584,22 +616,24 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                 redrawSignalBar(g2, dci[channelIndex]);
             }
             // draw a diamond for the area showing the channel being scanned
-            redrawChannelAtIndicator(g2,indexBeingScanned);
+            redrawChannelAtIndicator(g2, indexBeingScanned);
 
             // draw the recommended limit line
             g2.setColor(recommendationLineColor);
             g2.setStroke(dashedStroke);
-            g2.draw(new java.awt.geom.Line2D.Float(1, baseline -(96/barGraphScale),
-                    requiredMinWindowWidth - 1, baseline -(96/barGraphScale)));
+            g2.draw(new java.awt.geom.Line2D.Float(1, baseline - (96 / barGraphScale),
+                    requiredMinWindowWidth - 1, baseline - (96 / barGraphScale)));
             g2.setStroke(plainStroke);
-       }
+        }
 
         private void redrawSignalBar(java.awt.Graphics2D g2, DuplexChannelInfo dci) {
             int index = dci.channel - 11;
             int current = dci.mostRecentSample;
             int max = dci.maxSigValue;
             int avg = dci.avgSamples;
-            if (avg < 0) avg = 0;
+            if (avg < 0) {
+                avg = 0;
+            }
             int numSamples = dci.numSamples;
 
             if (current > 0) {
@@ -612,41 +646,40 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                 width = barSpace;
 
                 // clear anything above the "bottoms line"
-                upperY = baseline - maxScaledBarValue ;
-                height = (maxScaledBarValue-1);
+                upperY = baseline - maxScaledBarValue;
+                height = (maxScaledBarValue - 1);
                 g2.setColor(backgroundColor);
                 g2.fillRect(upperX, upperY,
-                        width , height-1);
+                        width, height - 1);
 
                 // draw the filled rectangle for the current value.
-                upperY = baseline-(current/barGraphScale);
-                g2.setColor (valueBarColor);
-                g2.fillRect(upperX+barOffset, upperY,
-                        barWidth , (current/barGraphScale));
+                upperY = baseline - (current / barGraphScale);
+                g2.setColor(valueBarColor);
+                g2.fillRect(upperX + barOffset, upperY,
+                        barWidth, (current / barGraphScale));
 
-            }
-            else {
+            } else {
                 // clear anything above the "bottoms line"
                 g2.setColor(backgroundColor);
                 g2.fillRect(
-                        (barOffset + (barSpace * index)),((baseline - maxScaledBarValue)-1),
-                        barWidth , maxScaledBarValue);
+                        (barOffset + (barSpace * index)), ((baseline - maxScaledBarValue) - 1),
+                        barWidth, maxScaledBarValue);
             }
 
             if (numSamples > 1) {
                 // draw the line for the average value.
-                g2.setColor (averageLineColor);
+                g2.setColor(averageLineColor);
                 g2.draw(new java.awt.geom.Line2D.Float(
-                        (barSpace * index)+1, ((baseline - (avg/barGraphScale))-1),
-                        (barSpace * (index+1))-2, (baseline - (avg/barGraphScale))-1));
+                        (barSpace * index) + 1, ((baseline - (avg / barGraphScale)) - 1),
+                        (barSpace * (index + 1)) - 2, (baseline - (avg / barGraphScale)) - 1));
             }
 
             // draw the line for the max value.
             if (max >= 0) {
-                g2.setColor (maxLineColor);
+                g2.setColor(maxLineColor);
                 g2.draw(new java.awt.geom.Line2D.Float(
-                        (barSpace * index)+1, ((baseline - (max/barGraphScale))-1),
-                        (barSpace * (index+1))-2, (baseline - (max/barGraphScale))-1));
+                        (barSpace * index) + 1, ((baseline - (max / barGraphScale)) - 1),
+                        (barSpace * (index + 1)) - 2, (baseline - (max / barGraphScale)) - 1));
             }
         }
 
@@ -656,31 +689,31 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             int width;
             int height;
             // clear anything below the "bottoms line"
-            upperY = baseline+2 ;
-            height = requiredMinWindowHeight-upperY - channelTextSize.height - 2;
+            upperY = baseline + 2;
+            height = requiredMinWindowHeight - upperY - channelTextSize.height - 2;
             upperX = 0;
             width = requiredMinWindowWidth;
             g2.setColor(backgroundColor);
             g2.fillRect(upperX, upperY,
-                    width , height-1);
+                    width, height - 1);
 
             // show the highlight only if a valid channel index (1-16) is specified
             if ((channelIndex >= 0) && (channelIndex < 16)) {
                 // draw a diamond in black using polyline mechanisms
                 g2.setColor(foregroundColor);
-                int x2Points[] = {(channelIndex * barSpace) + (barSpace/2),
+                int x2Points[] = {(channelIndex * barSpace) + (barSpace / 2),
                     (channelIndex * barSpace) + barOffset,
-                    channelIndex * barSpace + (barSpace/2),
-                    (channelIndex * barSpace) + (barSpace-barOffset)};
-                int y2Points[] = {baseline +2, baseline +5, baseline +8 , baseline+5};
-                java.awt.geom.GeneralPath polygon =
-                    new java.awt.geom.GeneralPath(java.awt.geom.GeneralPath.WIND_EVEN_ODD,
-                    x2Points.length);
+                    channelIndex * barSpace + (barSpace / 2),
+                    (channelIndex * barSpace) + (barSpace - barOffset)};
+                int y2Points[] = {baseline + 2, baseline + 5, baseline + 8, baseline + 5};
+                java.awt.geom.GeneralPath polygon
+                        = new java.awt.geom.GeneralPath(java.awt.geom.GeneralPath.WIND_EVEN_ODD,
+                                x2Points.length);
 
-                polygon.moveTo (x2Points[0], y2Points[0]);
+                polygon.moveTo(x2Points[0], y2Points[0]);
 
                 for (int index = 1; index < x2Points.length; index++) {
-                         polygon.lineTo(x2Points[index], y2Points[index]);
+                    polygon.lineTo(x2Points[index], y2Points[index]);
                 }
                 polygon.closePath();
                 g2.draw(polygon);
@@ -695,6 +728,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * @author B. Milhaupt Copyright 2010, 2011
      */
     private static class DuplexChannelInfo {
+
         public int channel;
         public int numSamples;
         public int maxSigValue;
@@ -703,7 +737,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         public int avgSamples;
         public int mostRecentSample;
 
-        public DuplexChannelInfo () {
+        public DuplexChannelInfo() {
             channel = -1;
             numSamples = 0;
             maxSigValue = -1;

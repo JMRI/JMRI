@@ -1,31 +1,29 @@
 /* CbusDccProgrammerManager.java */
-
 package jmri.jmrix.can.cbus;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.AddressedProgrammer;
+import jmri.Programmer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.Programmer;
 
 /**
  * Extend DefaultProgrammerManager to provide programmers for CBUS systems
  *
- * @see         jmri.ProgrammerManager
+ * @see jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2009
  * @version	$Revision$
  */
-public class CbusDccProgrammerManager  extends DefaultProgrammerManager {
-    
-    public CbusDccProgrammerManager(Programmer serviceModeProgrammer, CanSystemConnectionMemo memo){
+public class CbusDccProgrammerManager extends DefaultProgrammerManager {
+
+    public CbusDccProgrammerManager(Programmer serviceModeProgrammer, CanSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
         tc = memo.getTrafficController();
     }
-    
+
     jmri.jmrix.can.TrafficController tc;
 
     /**
-     * MERG CAN_CMD supports ops mode 
+     * MERG CAN_CMD supports ops mode
      *
      * @return true
      */
@@ -42,15 +40,13 @@ public class CbusDccProgrammerManager  extends DefaultProgrammerManager {
         return true;
     }
 
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new CbusDccOpsModeProgrammer(pAddress, pLongAddress, tc);
     }
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
-
-    static Logger log = LoggerFactory.getLogger(CbusDccProgrammerManager.class.getName());
 }
 
 

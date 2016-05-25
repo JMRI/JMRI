@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
 <!--                                                                        -->
@@ -12,56 +12,73 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new include file for SoundTraxx Tsunami -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Disabled, Speed Curves not used">
     <choice>Disabled, Speed Curves not used</choice>
+    <choice xml:lang="it">Disabilitata, Curva velocità non utilizzata</choice>
   </enumChoice>
   <enumChoice choice="Disabled, Speed Curves not used">
     <choice>Disabled, Speed Curves not used</choice>
+    <choice xml:lang="it">Disabilitata, Curva velocità non utilizzata</choice>
   </enumChoice>
   <enumChoice choice="Linear Speed Curve (Straight Line)">
     <choice>Linear Speed Curve (Straight Line)</choice>
+    <choice xml:lang="it">Curva velocità Lineare (retta)</choice>
   </enumChoice>
   <enumChoice choice="Logarithmic Curve 1">
     <choice>Logarithmic Curve 1</choice>
+    <choice xml:lang="it">Curva velocità Logaritmica 1</choice>
   </enumChoice>
   <enumChoice choice="Logarithmic Curve 2">
     <choice>Logarithmic Curve 2</choice>
+    <choice xml:lang="it">Curva velocità Logaritmica 2</choice>
   </enumChoice>
   <enumChoice choice="Logarithmic Curve 3">
     <choice>Logarithmic Curve 3</choice>
+    <choice xml:lang="it">Curva velocità Logaritmica 3</choice>
   </enumChoice>
   <enumChoice choice="Logarithmic Curve 4">
     <choice>Logarithmic Curve 4</choice>
+    <choice xml:lang="it">Curva velocità Logaritmica 4</choice>
   </enumChoice>
   <enumChoice choice="Logarithmic Curve 5">
     <choice>Logarithmic Curve 5</choice>
+    <choice xml:lang="it">Curva velocità Logaritmica 5</choice>
   </enumChoice>
   <enumChoice choice="Logarithmic Curve 6">
     <choice>Logarithmic Curve 6</choice>
+    <choice xml:lang="it">Curva velocità Logaritmica 6</choice>
   </enumChoice>
   <enumChoice choice="Logarithmic Curve 7">
     <choice>Logarithmic Curve 7</choice>
+    <choice xml:lang="it">Curva velocità Logaritmica 7</choice>
   </enumChoice>
   <enumChoice choice="Exponential Curve 1">
     <choice>Exponential Curve 1</choice>
+    <choice xml:lang="it">Curva velocità Esponenziale 1</choice>
   </enumChoice>
   <enumChoice choice="Exponential Curve 2">
     <choice>Exponential Curve 2</choice>
+    <choice xml:lang="it">Curva velocità Esponenziale 2</choice>
   </enumChoice>
   <enumChoice choice="Exponential Curve 3">
     <choice>Exponential Curve 3</choice>
+    <choice xml:lang="it">Curva velocità Esponenziale 3</choice>
   </enumChoice>
   <enumChoice choice="Exponential Curve 4">
     <choice>Exponential Curve 4</choice>
+    <choice xml:lang="it">Curva velocità Esponenziale 4</choice>
   </enumChoice>
   <enumChoice choice="Exponential Curve 5">
     <choice>Exponential Curve 5</choice>
+    <choice xml:lang="it">Curva velocità Esponenziale 5</choice>
   </enumChoice>
   <enumChoice choice="Exponential Curve 6">
     <choice>Exponential Curve 6</choice>
+    <choice xml:lang="it">Curva velocità Esponenziale 6</choice>
   </enumChoice>
   <enumChoice choice="User Defined Speed Table">
     <choice>User Defined Speed Table</choice>
+    <choice xml:lang="it">Curva velocità definita da Utente</choice>
   </enumChoice>
 </enumVal>

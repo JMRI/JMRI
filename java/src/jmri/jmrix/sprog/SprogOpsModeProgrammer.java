@@ -1,26 +1,31 @@
 /* SprogOpsModeProgrammer.java */
-
 package jmri.jmrix.sprog;
 
+import java.util.ArrayList;
+import java.util.List;
+import jmri.AddressedProgrammer;
+import jmri.ProgListener;
+import jmri.ProgrammerException;
+import jmri.ProgrammingMode;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-import jmri.jmrix.sprog.SprogCommandStation;
 
 /**
- * Provide an Ops Mode Programmer via a wrapper what works with the SPROG command
- * station object.
+ * Provide an Ops Mode Programmer via a wrapper what works with the SPROG
+ * command station object.
  * <P>
  * Functionally, this just creates packets to send via the command station.
  *
- * @see             jmri.Programmer
- * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision$
+ * @see jmri.Programmer
+ * @author	Andrew Crosland Copyright (C) 2006
+ * @version	$Revision$
  */
-public class SprogOpsModeProgrammer extends SprogProgrammer  {
+public class SprogOpsModeProgrammer extends SprogProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
+
     public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr) {
 
         mAddress = pAddress;
@@ -31,7 +36,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
      * Forward a write request to an ops-mode write operation
      */
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        log.debug("write CV="+CV+" val="+val);
+        log.debug("write CV=" + CV + " val=" + val);
 
         // record state.  COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
@@ -41,33 +46,42 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
         _cv = CV;
 
         // Add the packet to the queue rather than send it directly
-        SprogCommandStation.instance().opsModepacket(mAddress, mLongAddr, CV, val);
-        notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+        // [AC 23/01/16] Check that there is a free slot for the ops mode packet.
+        // Delay the reply to allow time for the ops mode packet to be sent and prevent all slots from filling up
+        // when writing multiple CVs, e.g. writing a sheet in the comprehensive programmer.
+        if (SprogCommandStation.instance().opsModepacket(mAddress, mLongAddr, CV, val) != null) {
+            javax.swing.Timer t = new javax.swing.Timer(250, (java.awt.event.ActionEvent evt)->{notifyProgListenerEnd(_val, jmri.ProgListener.OK);});
+            t.setRepeats(false);
+            t.start();
+        } else {
+            notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
+        }
     }
 
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) log.debug("read CV="+CV);
+        if (log.isDebugEnabled()) {
+            log.debug("read CV=" + CV);
+        }
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
     synchronized public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) log.debug("confirm CV="+CV);
+        if (log.isDebugEnabled()) {
+            log.debug("confirm CV=" + CV);
+        }
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
     }
 
-    public void setMode(int mode) {
-        if (mode!=Programmer.OPSBYTEMODE)
-            log.error("Can't switch to mode "+mode);
-    }
-
-    public int  getMode() {
-        return Programmer.OPSBYTEMODE;
-    }
-
-    public boolean hasMode(int mode) {
-        return (mode==Programmer.OPSBYTEMODE);
+    /**
+     * Types implemented here.
+     */
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        return ret;
     }
 
     synchronized public void notifyReply(SprogReply m) {
@@ -75,8 +89,9 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
     }
 
     /**
-     * Can this ops-mode programmer read back values?  For now, no,
-     * but maybe later.
+     * Can this ops-mode programmer read back values? For now, no, but maybe
+     * later.
+     *
      * @return always false for now
      */
     @Override
@@ -84,18 +99,29 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
         return false;
     }
 
+    public boolean getLongAddress() {
+        return mLongAddr;
+    }
+
+    public int getAddressNumber() {
+        return mAddress;
+    }
+
+    public String getAddress() {
+        return "" + getAddressNumber() + " " + getLongAddress();
+    }
 
     /**
-     * Ops-mode programming doesn't put the command station in programming
-     * mode, so we don't have to send an exit-programming command at end.
-     * Therefore, this routine does nothing except to replace the parent
-     * routine that does something.
+     * Ops-mode programming doesn't put the command station in programming mode,
+     * so we don't have to send an exit-programming command at end. Therefore,
+     * this routine does nothing except to replace the parent routine that does
+     * something.
      */
     void cleanup() {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class.getName());
 
 }
 

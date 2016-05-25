@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head><title>Comprehensive Programmer - Lighting Functions and FX Pane</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>DecoderPro&reg; Comprehensive Programmer</h1>
+<h2>Lighting and FX Functions Pane</h2>
+
+<div align="right">
+<p><a href="Comp_FMap.shtml">Previous | </a>
+  <a href="Comp_Analog.shtml">Next</a>
+</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+</p></div>
+
+<hr>
+<p>This pane provides for control of some of the most "gee-whiz" functions
+on the decoder. While fine-tuning the motor is important, and speed tables
+help add to the realism of operation, everyone notices the lights - especially
+when they change intensity, flicker, flash, or fade. They attract even
+more attention when, for example, the ditch lights that were steadily shining
+as the locomotive approached the crossing suddenly begin flashing alternately,
+then return to a steady glow; or when a locomotive pulls into a siding,
+stops, and dims its headlight for the approaching train.
+All  these effects are possible with the right decoder and proper set-up, and set-up  is what DecoderPro is all about. 
+</p><p>Every Manufacturer and decoder family handles the lighting in a unique manner, so there are many versions of this pane.
+</p><p>
+The specific effects available differ widely between manufacturers,
+and even between different "families" of decoders from the same maker.
+The above example is from a Digitrax FX decoder. Some of the advanced features
+you will see in many decoders (though they may go by different but similar
+names)
+</p><p>
+The <b>Lamp keep-alive voltage</b> determines how dark a light gets
+between "full on" moments. This can let you adjust effects to give the
+impression of, for example, a marker light that also has a rotary beacon
+in the same housing. Play with this value and see what kind of results
+you get for your specific decoder.
+</p><p>
+<b>FX rate adjust</b> controls how fast an FX effect operates. The higher
+the number, the slower the frequency of flash or "rotation" of the effect.
+This can be used to set subtle differences between locomotives. As you can
+see from the panel above, there are twin alternating strobe lights on the engines.If you vary the setting for the <b>FX Rate</b> slightly, the locomotives
+flash at slightly different rates. This keeps MU units from looking <u>too</u>
+coordinated!
+</p><p><b>Ditch light hold-over time</b> CV establishes how long the ditch light
+effect (alternating flashing) stays activated after you hit the <b>F2</b>
+function key. Since the <b>F2</b> key is non-latching (think of it as a
+momentary contact switch) that normally turns off when it is released. By
+raising the value of this CV you can make them stay on for up to 30 seconds
+from a single momentary activation.
+</p><p align="center"><img src="images/Comp_06A_Lights.png" alt="lights" height="800" width="923">
+</p><p>Sound decoders such as the Tsunami in our OEM FP-45 has an extremely complicated Lighting progam pane.
+</p><p><img style="width: 902px; height: 608px;" alt="lights" src="images/Comp_06B_Lights.png"><br>
+</p><p>Note that some of the lighting functions can be tied to a sound
+function which is unique to sound decoders. Sound decoders have many
+more functions than normal motor control decoders.
+</p><p>The other lighting effects are highly variable between decoders. Check
+  your specific decoder documentation for what the decoder is supposed to
+  be capable of doing, and have fun playing with them. They are the most visually
+  satisfying of all the capabilities of the decoders!
+</p><p>Even if the function and effect are available, you may have to
+add the lighting to your locomotive in order to be able to use that
+function, such as adding ditch lights, beacons, etc. </p>
+<hr>
+<div align="right">
+<p><a href="Comp_Consist.shtml"></a><a href="Comp_FMap.shtml">Previous | </a> <a href="Comp_Analog.shtml">Next</a>
+</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a> </p></div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

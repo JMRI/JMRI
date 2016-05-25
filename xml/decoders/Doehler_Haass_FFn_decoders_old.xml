@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="1" author="Alain Le Marchand" lastUpdated="20140716"/>
+  <!-- 1 Creation (nearly) from scratch - very different from D&D decoders with firmware version 3+   -->
+  <decoder>
+    <family name="Function Decoders (old)" mfg="Doehler und Haass">
+      <model model="DHF250" lowVersionID="1" highVersionID="1" numOuts="2" numFns="9" productID="DHF250" comment="without cable" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="other">
+        <output name="1" label="Front Light" maxcurrent="1.0A"/>
+        <output name="2" label="Rear Light" maxcurrent="1.0A"/>
+        <size length="21.5" width="7.3" height="2.1" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="DHF251" lowVersionID="1" highVersionID="1" numOuts="2" numFns="9" productID="DHF251" comment="with NEM651 cable" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="NEM651">
+        <output name="1" label="Front Light" maxcurrent="1.0A"/>
+        <output name="2" label="Rear Light" maxcurrent="1.0A"/>
+        <size length="21.5" width="7.3" height="2.1" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="DHF253" lowVersionID="1" highVersionID="1" numOuts="2" numFns="9" productID="DHF253" comment="with 4 wires" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Wires/NEM651">
+        <output name="1" label="Front Light" maxcurrent="1.0A"/>
+        <output name="2" label="Rear Light" maxcurrent="1.0A"/>
+        <size length="21.5" width="7.3" height="2.1" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>	 	  
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>  
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+	  <!-- Specific decoder CVs start here -->
+      <variable CV="33" mask="XXXXVVVV" item="Function F0F options" default="0" tooltip="Functions F0 to F8 (F9 for SelecTRIX only)">
+        <enumVal>
+          <enumChoice choice="F0">
+            <choice>F0</choice>
+          </enumChoice>
+          <enumChoice choice="F1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9">
+            <choice>F9</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output F0F (white) function mapping</label>
+        <label xml:lang="it">Uscita F0 in avanti (bianca) mappa funzioni</label>
+        <label xml:lang="de">Ausgang F0F (weiss) Funktionszuordnung</label>
+      </variable>
+	  <variable CV="33" mask="XXXVXXXX" item="Function F0F check 1" default="0">
+		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Running only</label>
+        <label xml:lang="de">Fahrtabhängig</label>
+        <label xml:lang="it">Solo in marcia</label>
+		    <tooltip>Output is ON only when the vehicle is running (speed different from 0)</tooltip>
+		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia (velocità diversa da 0)</tooltip>
+        <tooltip xml:lang="de">Der Ausgang ist nur an, wenn das Fahrzeug fährt (Fahrstufe nicht 0)</tooltip>
+	  </variable>
+	  <variable CV="33" mask="XXVXXXXX" item="Function F0F check 2" default="1">
+		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		    <label>Forward only</label>
+		    <label xml:lang="it">Solo in avanti</label>
+        <label xml:lang="de">Richtungsabhängig (vorwärts)</label>
+		    <tooltip>Output is ON only when the vehicle is running forwards</tooltip>
+		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia in avanti</tooltip>
+        <tooltip xml:lang="de">Der Ausgang ist nur an, wenn die Fahrtrichtung vorwärts ist</tooltip>			
+	  </variable>
+	  <variable CV="33" mask="XVXXXXXX" item="Function F0F check 3" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		    <label>Reverse</label>
+        <label xml:lang="de">Invertiert</label>
+        <label xml:lang="it">Invertita</label>
+		    <tooltip>Output is ON when the function is OFF (use for reverse)</tooltip>
+		    <tooltip xml:lang="it">Uscita in On quando la funzione è in Off</tooltip>
+        <tooltip xml:lang="de">Der Ausgang ist an, wenn die zugeordnete Funktion aus ist (benutzen für rückwärts)</tooltip>
+	  </variable>
+	  <variable CV="33" mask="VXXXXXXX" item="Function F0F check 4" default="0">
+		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		    <label>Impulse</label>
+        <label xml:lang="de">Impuls</label>
+        <label xml:lang="it">Impulsiva</label>
+		    <tooltip>Ouptut is ON during ca. 0.5 sec</tooltip>
+		    <tooltip xml:lang="it">Uscita in On per circa 0,5 sec</tooltip>
+        <tooltip xml:lang="de">Abschaltung des Ausgangs nach ca. 0,5 Sekunden</tooltip>
+	  </variable>
+     <variable CV="34" mask="XXXXVVVV" item="Function F0R options" default="0" tooltip="Functions F0 to F8 (F9 for SelecTRIX only)">
+        <enumVal>
+          <enumChoice choice="F0">
+            <choice>F0</choice>
+          </enumChoice>
+          <enumChoice choice="F1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9">
+            <choice>F9</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output F0R (yellow) function mapping</label>
+        <label xml:lang="it">Uscita F0 (giallo) in retro mappa funzioni</label>
+        <label xml:lang="de">Ausgang F0R (gelb) Funktionszuordnung</label>
+      </variable>	  
+	  <variable CV="34" mask="XXXVXXXX" item="Function F0R check 1" default="0">
+		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Running only</label>
+        <label xml:lang="it">Solo in marcia</label>
+        <label xml:lang="de">Fahrtabhängig</label>
+		    <tooltip>Output is ON only when the vehicle is running (speed different from 0)</tooltip>
+		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia (velocità diversa da 0)</tooltip>
+        <tooltip xml:lang="de">Der Ausgang ist nur an, wenn das Fahrzeug fährt (Fahrstufe nicht 0)</tooltip>
+	  </variable>
+	  <variable CV="34" mask="XXVXXXXX" item="Function F0R check 2" default="1">
+		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		    <label>Forward only</label>
+		    <label xml:lang="it">Solo in avanti</label>
+        <label xml:lang="de">Richtungsabhängig (vorwärts)</label>
+		    <tooltip>Output is ON only when the vehicle is running forwards</tooltip>
+		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia in avanti</tooltip>
+        <tooltip xml:lang="de">Der Ausgang ist nur an, wenn die Fahrtrichtung vorwärts ist</tooltip>
+	  </variable>
+	  <variable CV="34" mask="XVXXXXXX" item="Function F0R check 3" default="1">
+		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		    <label>Reverse</label>
+		    <label xml:lang="it">Invertita</label>
+        <label xml:lang="de">Invertiert</label>
+		    <tooltip>Output is ON when the function is OFF (use for reverse)</tooltip>
+		    <tooltip xml:lang="it">Uscita in On quando la funzione è in Off</tooltip>
+        <tooltip xml:lang="de">Der Ausgang ist an, wenn die zugeordnete Funktion aus ist (benutzen für rückwärts)</tooltip>
+	  </variable>
+	  <variable CV="34" mask="VXXXXXXX" item="Function F0R check 4" default="0">
+		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		    <label>Impulse</label>
+		    <label xml:lang="it">Impulsiva</label>
+        <label xml:lang="de">Impuls</label>
+		    <tooltip>Ouptut is ON during ca. 0.5 sec</tooltip>
+		    <tooltip xml:lang="it">Uscita in On per circa 0,5 sec</tooltip>
+        <tooltip xml:lang="de">Abschaltung des Ausgangs nach ca. 0,5 Sekunden</tooltip>
+	  </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+     </factReset>
+    </resets>
+  </decoder>
+</decoder-config>

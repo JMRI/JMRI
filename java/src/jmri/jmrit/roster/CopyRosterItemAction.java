@@ -1,5 +1,4 @@
 // CopyRosterItemAction.java
-
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -7,7 +6,7 @@ import java.io.File;
 import javax.swing.Icon;
 import jmri.util.FileUtil;
 import jmri.util.swing.WindowInterface;
-import org.jdom.Element;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,28 +16,31 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @version	$Revision$
- * @see         jmri.jmrit.XmlFile
+ * @see jmri.jmrit.XmlFile
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1887063385344105392L;
+
     public CopyRosterItemAction(String s, WindowInterface wi) {
-    	super(s, wi);
+        super(s, wi);
     }
-     
- 	public CopyRosterItemAction(String s, Icon i, WindowInterface wi) {
-    	super(s, i, wi);
+
+    public CopyRosterItemAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
     }
 
     public CopyRosterItemAction(String pName, Component pWho) {
@@ -66,14 +68,13 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
 
         // locate the file
         //File f = new File(mFullFromFilename);
-
         // read it
         LocoFile lf = new LocoFile();  // used as a temporary
         Element lroot;
         try {
             lroot = lf.rootFromName(mFullFromFilename);
         } catch (Exception e) {
-            log.error("Exception while loading loco XML file: "+mFullFromFilename+" exception: "+e);
+            log.error("Exception while loading loco XML file: " + mFullFromFilename + " exception: " + e);
             return false;
         }
 
@@ -86,17 +87,17 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         // detach the content element from it's existing file so 
         // it can be reused
         lroot.detach();
-        
+
         // transfer the contents to a new file
         LocoFile newLocoFile = new LocoFile();
-        File fout = new File(LocoFile.getFileLocation()+mToEntry.getFileName());
+        File fout = new File(LocoFile.getFileLocation() + mToEntry.getFileName());
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CopyRosterItemAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CopyRosterItemAction.class.getName());
 
     // never invoked, because we overrode actionPerformed above
     @Override

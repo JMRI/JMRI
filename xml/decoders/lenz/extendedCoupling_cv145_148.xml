@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+	<author>
+      <personname>
+        <firstname>Bernd (Ba)</firstname>
+        <surname>Wisotzki</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2014-05-20</date>
+      <authorinitials>Ba</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+    </revision>
+  </revhistory>
+  <!-- Add Your "includes" here -->
+  <variable item="Enable forward coupling with F1" CV="145" mask="XXXXXXXV">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F1</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F1</label>
+  </variable>
+  <variable item="Enable forward coupling with F2" CV="145" mask="XXXXXXVX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F2</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F2</label>
+  </variable>
+  <variable item="Enable forward coupling with F3" CV="145" mask="XXXXXVXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F3</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F3</label>
+  </variable>
+  <variable item="Enable forward coupling with F4" CV="145" mask="XXXXVXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F4</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F4</label>
+  </variable>
+  <variable item="Enable forward coupling with F5" CV="145" mask="XXXVXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F5</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F5</label>
+  </variable>
+  <variable item="Enable forward coupling with F6" CV="145" mask="XXVXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F6</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F6</label>
+  </variable>
+  <variable item="Enable forward coupling with F7" CV="145" mask="XVXXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F7</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F7</label>
+  </variable>
+  <variable item="Enable forward coupling with F8" CV="145" mask="VXXXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable forward coupling with F8</label>
+	<label xml:lang="de">Entkuppeln vorwärts mit F8</label>
+  </variable>
+  <variable item="Enable backward coupling with F1" CV="146" mask="XXXXXXXV">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F1</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F1</label>
+  </variable>
+  <variable item="Enable backward coupling with F2" CV="146" mask="XXXXXXVX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F2</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F2</label>
+  </variable>
+  <variable item="Enable backward coupling with F3" CV="146" mask="XXXXXVXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F3</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F3</label>
+  </variable>
+  <variable item="Enable backward coupling with F4" CV="146" mask="XXXXVXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F4</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F4</label>
+  </variable>
+  <variable item="Enable backward coupling with F5" CV="146" mask="XXXVXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F5</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F5</label>
+  </variable>
+  <variable item="Enable backward coupling with F6" CV="146" mask="XXVXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F6</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F6</label>
+  </variable>
+  <variable item="Enable backward coupling with F7" CV="146" mask="XVXXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F7</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F7</label>
+  </variable>
+  <variable item="Enable backward coupling with F8" CV="146" mask="VXXXXXXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+	<label>Enable backward coupling with F8</label>
+	<label xml:lang="de">Entkuppeln rückwärts mit F8</label>
+  </variable>
+  <variable CV="147" item="CKICK" default="30" tooltip="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>    Coupler kick duration</label>
+	<label xml:lang="de">Kickdauer</label>
+	<tooltip xml:lang="de">Wertebereich 0-255</tooltip>
+  </variable>
+  <variable CV="148" item="CMOVE" default="80" tooltip="Range 0-255">
+	<decVal min="0" max="255"/>
+	<label>    Decoupling movement</label>
+	<label xml:lang="de">Verfahrweg</label>
+	<tooltip xml:lang="de">Wertebereich 0-255</tooltip>
+  </variable>
+  
+</variables>

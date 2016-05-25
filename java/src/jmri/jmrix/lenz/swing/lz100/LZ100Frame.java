@@ -1,37 +1,41 @@
 // LZ100Frame.java
-
 package jmri.jmrix.lenz.swing.lz100;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 /**
  * Frame displaying the LZ100 configuration utility
  *
- * This is a container for the LZ100 configuration utility. The actual 
- * utiliy is defined in {@link LZ100InternalFrame}
+ * This is a container for the LZ100 configuration utility. The actual utiliy is
+ * defined in {@link LZ100InternalFrame}
  *
- * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision$
+ * @author	Paul Bender Copyright (C) 2005
+ * @version	$Revision$
  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
     //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4830621452390220529L;
 
     public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-	    this("LZ100 Configuration Utility",memo);
+        this("LZ100 Configuration Utility", memo);
     }
 
-    public LZ100Frame(String FrameName,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+    public LZ100Frame(String FrameName, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super(FrameName);
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
- 	javax.swing.JInternalFrame LZ100IFrame=new LZ100InternalFrame(memo);
+        javax.swing.JInternalFrame LZ100IFrame = new LZ100InternalFrame(memo);
 
-	javax.swing.JPanel pane0 = new JPanel();
-	pane0.add(LZ100IFrame);
+        javax.swing.JPanel pane0 = new JPanel();
+        pane0.add(LZ100IFrame);
         getContentPane().add(pane0);
 
         JPanel pane1 = new JPanel();
@@ -42,16 +46,15 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
         pack();
 
         // install close button handler
-        closeButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                	setVisible(false);
-        		dispose();
-                }
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                setVisible(false);
+                dispose();
             }
+        }
         );
 
     }
-
 
     JToggleButton closeButton = new JToggleButton("Close");
 
@@ -59,7 +62,5 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
         // take apart the JFrame
         super.dispose();
     }
-
-    static Logger log = LoggerFactory.getLogger(LZ100Frame.class.getName());
 
 }

@@ -1,5 +1,3 @@
-// AudioCommandThread.java
-
 package jmri.jmrit.audio;
 
 import org.slf4j.Logger;
@@ -12,19 +10,16 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
- * @version $Revision$
+ * @author Matthew Harris copyright (c) 2009
  */
 public class AudioCommandThread extends AbstractAudioThread {
 
@@ -40,18 +35,20 @@ public class AudioCommandThread extends AbstractAudioThread {
      */
     public AudioCommandThread(AudioFactory activeAudioFactory) {
         super();
-        this.setName("command-"+super.getName());
+        this.setName("command-" + super.getName());
         this.activeAudioFactory = activeAudioFactory;
-        if (log.isDebugEnabled()) log.debug("Created AudioThread for AudioFactory " + activeAudioFactory.toString());
+        if (log.isDebugEnabled()) {
+            log.debug("Created AudioThread for AudioFactory " + activeAudioFactory.toString());
+        }
     }
 
     /**
-     * Main loop for processing commands.
-     * Starts out asleep, and also sleeps once finished processing commands, so
-     * must be interrupted to process any queued commands.
+     * Main loop for processing commands. Starts out asleep, and also sleeps
+     * once finished processing commands, so must be interrupted to process any
+     * queued commands.
      */
     @Override
-    public void run(){
+    public void run() {
 
         // Start out asleep (5 minutes)
         snooze(300000);
@@ -67,7 +64,9 @@ public class AudioCommandThread extends AbstractAudioThread {
         }
 
         // Finish up
-        if (log.isDebugEnabled()) log.debug("Clean up thread " + this.getName());
+        if (log.isDebugEnabled()) {
+            log.debug("Clean up thread " + this.getName());
+        }
         cleanup();
     }
 
@@ -90,5 +89,3 @@ public class AudioCommandThread extends AbstractAudioThread {
     private static final Logger log = LoggerFactory.getLogger(AudioCommandThread.class.getName());
 
 }
-
-/* @(#)AudioCommandThread.java */

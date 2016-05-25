@@ -1,121 +1,163 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
-  <variable label="Input mapping for internal F0" CV="400">
+<!-- version 1.1 - Added include statment for CV399, Mark Waters 26 Jan 2015 -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV399.xml"/>
+  <variable item="Input mapping for internal F0" CV="400">
     <decVal/>
     <label>Input mapping for internal F0</label>
+    <label xml:lang="it">Assegnazione per F0 interno</label>
   </variable>
-  <variable label="Input mapping for internal F1" CV="401">
+  <variable item="Input mapping for internal F1" CV="401">
     <decVal/>
     <label>Input mapping for internal F1</label>
+    <label xml:lang="it">Assegnazione per F1 interno</label>
   </variable>
-  <variable label="Input mapping for internal F2" CV="402">
+  <variable item="Input mapping for internal F2" CV="402">
     <decVal/>
     <label>Input mapping for internal F2</label>
+    <label xml:lang="it">Assegnazione per F2 interno</label>
   </variable>
-  <variable label="Input mapping for internal F3" CV="403">
+  <variable item="Input mapping for internal F3" CV="403">
     <decVal/>
     <label>Input mapping for internal F3</label>
+    <label xml:lang="it">Assegnazione per F3 interno</label>
   </variable>
-  <variable label="Input mapping for internal F4" CV="404">
+  <variable item="Input mapping for internal F4" CV="404">
     <decVal/>
     <label>Input mapping for internal F4</label>
+    <label xml:lang="it">Assegnazione per F4 interno</label>
   </variable>
-  <variable label="Input mapping for internal F5" CV="405">
+  <variable item="Input mapping for internal F5" CV="405">
     <decVal/>
     <label>Input mapping for internal F5</label>
+    <label xml:lang="it">Assegnazione per F5 interno</label>
   </variable>
-  <variable label="Input mapping for internal F6" CV="406">
+  <variable item="Input mapping for internal F6" CV="406">
     <decVal/>
     <label>Input mapping for internal F6</label>
+    <label xml:lang="it">Assegnazione per F6 interno</label>
   </variable>
-  <variable label="Input mapping for internal F7" CV="407">
+  <variable item="Input mapping for internal F7" CV="407">
     <decVal/>
     <label>Input mapping for internal F7</label>
+    <label xml:lang="it">Assegnazione per F7 interno</label>
   </variable>
-  <variable label="Input mapping for internal F8" CV="408">
+  <variable item="Input mapping for internal F8" CV="408">
     <decVal/>
     <label>Input mapping for internal F8</label>
+    <label xml:lang="it">Assegnazione per F8 interno</label>
   </variable>
-  <variable label="Input mapping for internal F9" CV="409">
+  <variable item="Input mapping for internal F9" CV="409">
     <decVal/>
     <label>Input mapping for internal F9</label>
+    <label xml:lang="it">Assegnazione per F9 interno</label>
   </variable>
-  <variable label="Input mapping for internal F10" CV="410">
+  <variable item="Input mapping for internal F10" CV="410">
     <decVal/>
     <label>Input mapping for internal F10</label>
+    <label xml:lang="it">Assegnazione per F10 interno</label>
   </variable>
-  <variable label="Input mapping for internal F11" CV="411">
+  <variable item="Input mapping for internal F11" CV="411">
     <decVal/>
     <label>Input mapping for internal F11</label>
+    <label xml:lang="it">Assegnazione per F11 interno</label>
   </variable>
-  <variable label="Input mapping for internal F12" CV="412">
+  <variable item="Input mapping for internal F12" CV="412">
     <decVal/>
     <label>Input mapping for internal F12</label>
+    <label xml:lang="it">Assegnazione per F12 interno</label>
   </variable>
-  <variable label="Input mapping for internal F13" CV="413">
+  <variable item="Input mapping for internal F13" CV="413">
     <decVal/>
     <label>Input mapping for internal F13</label>
+    <label xml:lang="it">Assegnazione per F13 interno</label>
   </variable>
-  <variable label="Input mapping for internal F14" CV="414">
+  <variable item="Input mapping for internal F14" CV="414">
     <decVal/>
     <label>Input mapping for internal F14</label>
+    <label xml:lang="it">Assegnazione per F14 interno</label>
   </variable>
-  <variable label="Input mapping for internal F15" CV="415">
+  <variable item="Input mapping for internal F15" CV="415">
     <decVal/>
     <label>Input mapping for internal F15</label>
+    <label xml:lang="it">Assegnazione per F15 interno</label>
   </variable>
-  <variable label="Input mapping for internal F16" CV="416">
+  <variable item="Input mapping for internal F16" CV="416">
     <decVal/>
     <label>Input mapping for internal F16</label>
+    <label xml:lang="it">Assegnazione per F16 interno</label>
   </variable>
-  <variable label="Input mapping for internal F17" CV="417">
+  <variable item="Input mapping for internal F17" CV="417">
     <decVal/>
     <label>Input mapping for internal F17</label>
+    <label xml:lang="it">Assegnazione per F17 interno</label>
   </variable>
-  <variable label="Input mapping for internal F18" CV="418">
+  <variable item="Input mapping for internal F18" CV="418">
     <decVal/>
     <label>Input mapping for internal F18</label>
+    <label xml:lang="it">Assegnazione per F18 interno</label>
   </variable>
-  <variable label="Input mapping for internal F19" CV="419">
+  <variable item="Input mapping for internal F19" CV="419">
     <decVal/>
     <label>Input mapping for internal F19</label>
+    <label xml:lang="it">Assegnazione per F19 interno</label>
   </variable>
-  <variable label="Input mapping for internal F20" CV="420">
+  <variable item="Input mapping for internal F20" CV="420">
     <decVal/>
     <label>Input mapping for internal F20</label>
+    <label xml:lang="it">Assegnazione per F20 interno</label>
   </variable>
-  <variable label="Input mapping for internal F21" CV="421">
+  <variable item="Input mapping for internal F21" CV="421">
     <decVal/>
     <label>Input mapping for internal F21</label>
+    <label xml:lang="it">Assegnazione per F21 interno</label>
   </variable>
-  <variable label="Input mapping for internal F22" CV="422">
+  <variable item="Input mapping for internal F22" CV="422">
     <decVal/>
     <label>Input mapping for internal F22</label>
+    <label xml:lang="it">Assegnazione per F22 interno</label>
   </variable>
-  <variable label="Input mapping for internal F23" CV="423">
+  <variable item="Input mapping for internal F23" CV="423">
     <decVal/>
     <label>Input mapping for internal F23</label>
+    <label xml:lang="it">Assegnazione per F23 interno</label>
   </variable>
-  <variable label="Input mapping for internal F24" CV="424">
+  <variable item="Input mapping for internal F24" CV="424">
     <decVal/>
     <label>Input mapping for internal F24</label>
+    <label xml:lang="it">Assegnazione per F24 interno</label>
   </variable>
-  <variable label="Input mapping for internal F25" CV="425">
+  <variable item="Input mapping for internal F25" CV="425">
     <decVal/>
     <label>Input mapping for internal F25</label>
+    <label xml:lang="it">Assegnazione per F25 interno</label>
   </variable>
-  <variable label="Input mapping for internal F26" CV="426">
+  <variable item="Input mapping for internal F26" CV="426">
     <decVal/>
     <label>Input mapping for internal F26</label>
+    <label xml:lang="it">Assegnazione per F26 interno</label>
   </variable>
-  <variable label="Input mapping for internal F27" CV="427">
+  <variable item="Input mapping for internal F27" CV="427">
     <decVal/>
     <label>Input mapping for internal F27</label>
+    <label xml:lang="it">Assegnazione per F27 interno</label>
   </variable>
-  <variable label="Input mapping for internal F28" CV="428">
+  <variable item="Input mapping for internal F28" CV="428">
     <decVal/>
     <label>Input mapping for internal F28</label>
+    <label xml:lang="it">Assegnazione per F28 interno</label>
   </variable>
 </variables>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2015 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20150306"/>
+	<!--	Tweaked to match changes to D&H range (braking options now on separate pane, pane_map_adv.xml deprecated).
+  -->
+  <version version="1" author="Bjørn Kvisli - Alain Le Marchand" lastUpdated="20150118"/>
+	<!--	First version of decoder definition for the Trix 66840.
+				It is based on the definitions for Doehler & Haass decoders,
+				as this Minitrix decoder is actually an OEM version of D&H decoders.
+				Trix documentation is incomplete compared to D&H one, some variables have been removed but could however be active.
+				Software updates for this decoder, available on D&H website, may result in additional functions not declared in this file.
+				Decoder version in CV7 is not sufficient to discriminate the real version in use. Selectrix parameters provide more details.
+  -->
+  <decoder>
+     <family name="Minitrix" mfg="Trix Modelleisenbahn">
+      <model model="66840" lowVersionID="3" highVersionID="3" numOuts="4" productID="Trix 66840" comment="Trix Selectrix &amp; DCC decoder, designed by Doehler &amp; Haass" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="other">
+        <output name="1" label="Front Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX 1" maxcurrent="300mA"/>
+        <output name="4" label="AUX 2" maxcurrent="300mA"/>
+        <output name="5" label="|"/>	<!-- AUX 3 not available for this decoder -->
+        <output name="6" label="|"/>	<!-- AUX 4 not available for this decoder -->
+        <output name="7" label="Dimmed|Headlights"/>	<!-- not a physical output -->
+        <output name="8" label="Shunting|Speed"/>		<!-- not a physical output -->
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Lights</functionlabel>
+        <functionlabel num="4" lockable="true">Shunting Speed</functionlabel>
+        <functionlabel num="6" lockable="true">Rear lights off</functionlabel>
+        <functionlabel num="8" lockable="true">Front lights off</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Common D&H variable files, with Trix default values for this decoder -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_Trix.xml"/>
+      <!-- NON common D&H variable files. Deactivate or Activate depending on decoder model and firmware version -->
+      <!-- SECTION 1a - Standard variables with defaults for regular decoders  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
+			<!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
+      <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>	 --> <!-- CV27, CV121, CV122, CV123, CV134 not listed in Trix documentation -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
+      <!-- SECTION 3	- Analog functions  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
+
+			<!-- None of the functions and variables below are documented in the Trix manual for this decoder -->
+			<!-- 		they are therefore disabled 																															-->
+      <!-- SECTION 4	- Basic Railcom feedback  -->
+      <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>  -->
+      <!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
+      <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/> -->
+      <!-- SECTION 6	- Extra general options as of fw3.03 -->
+      <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/> -->
+      <!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
+      <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/> -->
+      <!-- SECTION 8	- Motorola format as of fw3.04 -->
+      <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_motorola.xml"/>  -->
+    </variables>
+    <resets>
+		<factReset label="Reset All CVs" CV="8" default="8">
+			<label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+			<label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+		</factReset>
+    </resets>
+  </decoder>
+  <!-- Common pane(s) for all Doehler und Haass decoders  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_StartBrakeShunt.xml"/>
+</decoder-config>

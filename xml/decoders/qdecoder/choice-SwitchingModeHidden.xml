@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-24</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- Specific modes for function generator   -->
+	<!-- "Platzhalter" - Placeholders					   -->
+  <enumChoice choice="[241]" value="241">
+		<choice>[241] 2 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[241] 2 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[242]" value="242">
+		<choice>[242] 3 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[242] 3 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[243]" value="243">
+		<choice>[243] 4 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[243] 4 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[244]" value="244">
+		<choice>[244] 5 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[244] 5 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[245]" value="245">
+		<choice>[245] 6 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[245] 6 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[246]" value="246">
+		<choice>[246] 7 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[246] 7 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[247]" value="247">
+		<choice>[247] 8 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[247] 8 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[248]" value="248">
+		<choice>[248] 9 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[248] 9 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+ <enumChoice choice="[249]" value="249">
+		<choice>[249] 10 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[249] 10 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[250]" value="250">
+		<choice>[250] 11 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[250] 11 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[251]" value="251">
+		<choice>[251] 12 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[251] 12 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[252]" value="252">
+		<choice>[252] 13 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[252] 13 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[253]" value="253">
+		<choice>[253] 14 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[253] 14 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[254]" value="254">
+		<choice>[254] 15 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[254] 15 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+  <enumChoice choice="[255]" value="255">
+		<choice>[255] 16 Lamps/LEDs (hidden)</choice>
+		<choice xml:lang="de">[255] 16 Lampen/LEDs (verborgen)</choice>
+  </enumChoice>
+</enumChoiceGroup>

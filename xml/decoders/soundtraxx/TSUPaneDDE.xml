@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
 <!--                                                                        -->
@@ -12,16 +12,16 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new pane file for SoundTraxx Tsunami -->
-<pane name="DDE">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
-      <label label="DYNAMIC DIGITAL EXHAUST CONTROLS">
-        <label>DYNAMIC DIGITAL EXHAUST CONTROLS</label>
-	<label xml:lang="it">CONTROLLO DIGITALE DINAMICO SCARICO </label>
+      <label>
+        <text>DYNAMIC DIGITAL EXHAUST CONTROLS</text>
+        <text xml:lang="it">CONTROLLO DIGITALE DINAMICO SCARICO </text>
       </label>
     </row>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <row>
       <column>
@@ -29,54 +29,54 @@
           <display item="Throttle Gain" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Throttle Gain" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Motor Load Gain" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Motor Load Gain" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Attack Time Constant" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Attack Time Constant" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Release Time Constant" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Release Time Constant" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="          ">
-          <label>          </label>
+        <label>
+          <text>          </text>
         </label>
       </column>
       <column>
@@ -84,54 +84,54 @@
           <display item="Exhaust Low Volume Limit" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Exhaust Low Volume Limit" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Exhaust High Volume Limit" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Exhaust High Volume Limit" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Side Rod Clank Low Volume Limit" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Side Rod Clank Low Volume Limit" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Side Rod Clank High Volume Limit" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Side Rod Clank High Volume Limit" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="          ">
-          <label>          </label>
+        <label>
+          <text>          </text>
         </label>
       </column>
       <column>
@@ -139,52 +139,53 @@
           <display item="DDE Filter Initial Frequency" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="DDE Filter Initial Frequency" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="DDE Filter Control Gain" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="DDE Filter Control Gain" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="DDE Filter Damping" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="DDE Filter Damping" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="DDE Tracking Coefficient" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="DDE Tracking Coefficient" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
   </column>
   <name>DDE</name>
+  <name xml:lang="it">Controllo Dinamico</name>
 </pane>

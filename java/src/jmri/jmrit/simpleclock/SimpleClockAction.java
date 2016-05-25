@@ -1,41 +1,44 @@
 // SimpleClockAction.java
+package jmri.jmrit.simpleclock;
 
- package jmri.jmrit.simpleclock;
-
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
 
 /**
- * Swing action to create and register a
- *  SimpleClockFrame object
+ * Swing action to create and register a SimpleClockFrame object
  *
- * @author			Dave Duchamp    Copyright (C) 2004
- * @version			$Revision$
+ * @author	Dave Duchamp Copyright (C) 2004
+ * @version	$Revision$
  */
- 
 public class SimpleClockAction extends AbstractAction {
 
- 	public SimpleClockAction(String s) {
-    	super(s);
-     }
- 	public SimpleClockAction() {
-    	super("Fast Clock Setup");
-     }
-     
-     public void actionPerformed(ActionEvent e) {
-         
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3576996090549666302L;
+
+    public SimpleClockAction(String s) {
+        super(s);
+    }
+
+    public SimpleClockAction() {
+        super("Fast Clock Setup");
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
         SimpleClockFrame f = new SimpleClockFrame();
         try {
             f.initComponents();
         } catch (Exception E) {
-            log.error("Exception in Simple Clock: "+e);
+            log.error("Exception in Simple Clock: " + e);
         }
         f.setVisible(true);
-     }
-     
-    static Logger log = LoggerFactory.getLogger(SimpleClockAction.class.getName());
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SimpleClockAction.class.getName());
 }
 
 /* @(#)SimpleClockAction.java */

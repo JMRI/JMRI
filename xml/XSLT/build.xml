@@ -23,28 +23,25 @@
   Provides build services for JMRI web pages
   </description>
 
-  <property name="jmri.copyright.year" value="1997-2013"/>
+  <property name="jmri.copyright.year" value="1997-2016"/>
 
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>
-  <property name="toDTD" value="DTD"/>
+  <property name="toDTD" value="DTD/"/>
   <property name="fromDTD" value="../DTD"/>
   <property name="decoders" value="../decoders"/>
-  <property name="target" value="pages"/>
-  <property name="propertiesdir" value="properties"/>
-  <property name="jartarget" value=".."/>
+  <property name="target" value="pages/"/>
+  <property name="propertiesdir" value="properties/"/>
 
-  <path id="project.class.path">
-    <pathelement location="../lib/collections.jar" />
-    <pathelement location="../lib/crimson.jar" />
-    <pathelement location="../lib/comm.jar" />
-    <pathelement location="../lib/jdom-jdk11.jar" />
-    <pathelement location="../lib/log4j.jar" />
-    <pathelement location="../lib/Serialio.jar" />
-    <pathelement location="../lib/junit.jar" />
-    <pathelement location="../lib/jython.jar" />
-    <pathelement location="classes/" />
-  </path>
+    <!-- ../../local.properties file      (not an error if doesn't exist)                -->
+    <!--                                                                                 -->
+    <!-- Things you might want to set:                                                   -->
+    <!--    # Your SourceForge ID (used for upload) if different                         -->
+    <!--    sourceforge.userid=me                                                        -->               
+    <!--                                                                                 -->
+    <!-- This file should NEVER be checked-in to Git, it is in the .gitignore file       -->
+    <!--                                                                                 -->
+    <property file="../../local.properties"/>
 
   <target name="init" description="create needed directories">
     <!-- Create the time stamp -->
@@ -55,10 +52,14 @@
     <mkdir dir="${propertiesdir}"/>
   </target>
 
-  <target name="clean" depends="init"
+  <target name="clean" 
   			description="remove results">
-    <delete dir="${target}" />
-    <delete dir="${propertiesdir}"/>
+    <delete includeEmptyDirs="true" quiet="true" >
+       <fileset dir="${target}"/>
+       <fileset dir="${toDTD}"/>
+       <fileset dir="${propertiesdir}"/>
+       <fileset dir="xml"/>
+    </delete>
   </target>
 
   <target name="copyDTD" description="ensure local DTD file copies present where needed for processing">
@@ -269,13 +270,13 @@
       <arg value="-avz"/>
       <arg value="--delete"/>
       <arg value="pages"/>
-      <arg value="jacobsen,jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
+      <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
     </exec>
     <exec executable="rsync">
       <arg value="-avz"/>
       <arg value="--delete"/>
       <arg value="properties"/>
-      <arg value="jacobsen,jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
+      <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
     </exec>
   </target>
 

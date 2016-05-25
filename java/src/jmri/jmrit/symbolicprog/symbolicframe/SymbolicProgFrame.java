@@ -1,73 +1,89 @@
-// SymbolicProgFrame.java
-
 package jmri.jmrit.symbolicprog.symbolicframe;
 
+import java.io.File;
+import java.util.List;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.progsupport.ProgModePane;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.IndexedCvTableModel;
+import jmri.jmrit.symbolicprog.ValueEditor;
+import jmri.jmrit.symbolicprog.ValueRenderer;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.jmrit.symbolicprog.VariableValue;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.decoderdefn.*;
-import jmri.jmrit.progsupport.ProgModePane;
-import jmri.jmrit.symbolicprog.*;
-import java.io.*;
-
-import javax.swing.*;
-
-import java.util.List;   // resolve ambiguity with java.awt.List
-import org.jdom.*;
-import org.jdom.output.*;
 
 /**
- * Frame providing a table-organized command station programmer from decoder definition files
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision$
+ * Frame providing a table-organized command station programmer from decoder
+ * definition files
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007
  */
-public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
+public class SymbolicProgFrame extends jmri.util.JmriJFrame {
 
-    // GUI member declarations
+    JTextField locoRoadName = new JTextField(12);
+    JTextField locoRoadNumber = new JTextField(5);
+    JTextField locoMfg = new JTextField(12);
+    JTextField locoModel = new JTextField(12);
 
-    JTextField locoRoadName 	= new JTextField(12);
-    JTextField locoRoadNumber 	= new JTextField(5);
-    JTextField locoMfg 		= new JTextField(12);
-    JTextField locoModel 	= new JTextField(12);
+    JLabel progStatus = new JLabel(" OK ");
 
-    JLabel progStatus       	= new JLabel(" OK ");
+    JButton selectFileButton = new JButton();
+    JButton storeFileButton = new JButton();
 
-    JButton selectFileButton 	= new JButton();
-    JButton storeFileButton 	= new JButton();
-
-    CvTableModel cvModel	= new CvTableModel(progStatus, null);
-    JTable cvTable		= new JTable(cvModel);
-    JScrollPane cvScroll	= new JScrollPane(cvTable);
+    CvTableModel cvModel = new CvTableModel(progStatus, null);
+    JTable cvTable = new JTable(cvModel);
+    JScrollPane cvScroll = new JScrollPane(cvTable);
 
     IndexedCvTableModel icvModel = new IndexedCvTableModel(progStatus, null);
-    JTable icvTable		= new JTable(icvModel);
-    JScrollPane icvScroll	= new JScrollPane(icvTable);
+    JTable icvTable = new JTable(icvModel);
+    JScrollPane icvScroll = new JScrollPane(icvTable);
 
-    VariableTableModel	variableModel = new VariableTableModel(progStatus,
-        new String[]  {"Name", "Value", "Range", "State", "Read", "Write", "CV", "Mask", "Comment" },
-        cvModel, icvModel);
-    JTable variableTable	= new JTable(variableModel);
-    JScrollPane variableScroll	= new JScrollPane(variableTable);
+    VariableTableModel variableModel = new VariableTableModel(progStatus,
+            new String[]{"Name", "Value", "Range", "State", "Read", "Write", "CV", "Mask", "Comment"},
+            cvModel, icvModel);
+    JTable variableTable = new JTable(variableModel);
+    JScrollPane variableScroll = new JScrollPane(variableTable);
 
-    JButton  newCvButton 	= new JButton();
-    JLabel   newCvLabel  	= new JLabel();
-    JTextField newCvNum  	= new JTextField(4);
+    JButton newCvButton = new JButton();
+    JLabel newCvLabel = new JLabel();
+    JTextField newCvNum = new JTextField(4);
 
-    JButton  	newVarButton 	= new JButton();
-    JLabel   	newVarNameLabel = new JLabel();
-    JTextField 	newVarName  	= new JTextField(4);
-    JLabel   	newVarCvLabel 	= new JLabel();
-    JTextField 	newVarCv  	= new JTextField(4);
-    JLabel   	newVarMaskLabel = new JLabel();
-    JTextField 	newVarMask  	= new JTextField(9);
+    JButton newVarButton = new JButton();
+    JLabel newVarNameLabel = new JLabel();
+    JTextField newVarName = new JTextField(4);
+    JLabel newVarCvLabel = new JLabel();
+    JTextField newVarCv = new JTextField(4);
+    JLabel newVarMaskLabel = new JLabel();
+    JTextField newVarMask = new JTextField(9);
 
-    ProgModePane   modePane 	= new ProgModePane(BoxLayout.X_AXIS);
+    ProgModePane modePane = new ProgModePane(BoxLayout.X_AXIS);
 
-    JLabel decoderMfg  		= new JLabel("         ");
-    JLabel decoderModel   	= new JLabel("         ");
+    JLabel decoderMfg = new JLabel("         ");
+    JLabel decoderModel = new JLabel("         ");
 
     // member to find and remember the configuration file in and out
     JFileChooser fci;
-    final JFileChooser fco 	= new JFileChooser("xml"+File.separator+"decoders"+File.separator);
+    final JFileChooser fco = new JFileChooser("xml" + File.separator + "decoders" + File.separator);
 
     // ctor
     public SymbolicProgFrame() {
@@ -116,25 +132,25 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
         // add actions to buttons
         selectFileButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    selectFileButtonActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                selectFileButtonActionPerformed(e);
+            }
+        });
         storeFileButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    writeFile();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                writeFile();
+            }
+        });
         newCvButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    cvModel.addCV(newCvNum.getText(), false, false, false);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                cvModel.addCV(newCvNum.getText(), false, false, false);
+            }
+        });
         newVarButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    newVarButtonPerformed();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                newVarButtonPerformed();
+            }
+        });
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -203,13 +219,12 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         getContentPane().add(tPane4);
 
         // for debugging
-
         pack();
     }
 
     protected void selectFileButtonActionPerformed(java.awt.event.ActionEvent e) {
-        if (fci==null) {
-            fci = new JFileChooser("xml"+File.separator+"decoders"+File.separator);
+        if (fci == null) {
+            fci = new JFileChooser("xml" + File.separator + "decoders" + File.separator);
             fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
         }
         // show dialog
@@ -219,38 +234,46 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
-            if (log.isDebugEnabled()) log.debug("selectFileButtonActionPerformed: located file "+file+" for XML processing");
+            if (log.isDebugEnabled()) {
+                log.debug("selectFileButtonActionPerformed: located file " + file + " for XML processing");
+            }
             progStatus.setText("Reading file...");
             // handle the file (later should be outside this thread?)
             readAndParseConfigFile(file);
             progStatus.setText("OK");
-            if (log.isDebugEnabled()) log.debug("selectFileButtonActionPerformed: parsing complete");
+            if (log.isDebugEnabled()) {
+                log.debug("selectFileButtonActionPerformed: parsing complete");
+            }
 
         }
     }
 
-    protected void newVarButtonPerformed()  {
+    protected void newVarButtonPerformed() {
         String name = newVarName.getText();
-        int CV = Integer.valueOf(newVarCv.getText()).intValue();
+        String CV = newVarCv.getText();
         String mask = newVarMask.getText();
 
         // ask Table model to do the actuall add
-        variableModel.newDecVariableValue(name, CV, mask, false, false, false, false);
+        variableModel.newDecVariableValue(name, CV, null, mask, false, false, false, false);
         variableModel.configDone();
     }
 
     // Close the window when the close box is clicked
     public void windowClosing(java.awt.event.WindowEvent e) {
         // check for various types of dirty - first table data not written back
-        if (cvModel.decoderDirty() || variableModel.decoderDirty() ) {
+        if (cvModel.decoderDirty() || variableModel.decoderDirty()) {
             if (JOptionPane.showConfirmDialog(null,
-                                              "Some changes have not been written to the decoder. They will be lost. Close window?",
-                                              "choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
+                    "Some changes have not been written to the decoder. They will be lost. Close window?",
+                    "choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) {
+                return;
+            }
         }
-        if (variableModel.fileDirty() ) {
+        if (variableModel.fileDirty()) {
             if (JOptionPane.showConfirmDialog(null,
-                                              "Some changes have not been written to a configuration file. Close window?",
-                                              "choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
+                    "Some changes have not been written to a configuration file. Close window?",
+                    "choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) {
+                return;
+            }
         }
 
         modePane.dispose();
@@ -260,7 +283,8 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
     void readAndParseConfigFile(File file) {
         try {
-            DecoderFile xf = new DecoderFile(){};  // XmlFile is abstract
+            DecoderFile xf = new DecoderFile() {
+            };  // XmlFile is abstract
             Element root = xf.rootFromFile(file);
 
             // decode type, invoke proper processing routine if a decoder file
@@ -270,11 +294,14 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
                 log.debug("succeeded");
             } else { // try again as a loco file
                 log.debug("Attempt to open as loco file");
-                if (root.getChild("locomotive") != null) processLocoFile(root.getChild("locomotive"));
-                else log.error("Unrecognized config file contents");
+                if (root.getChild("locomotive") != null) {
+                    processLocoFile(root.getChild("locomotive"));
+                } else {
+                    log.error("Unrecognized config file contents");
+                }
             }
-        } catch (Exception e) {
-            log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
+        } catch (org.jdom2.JDOMException | java.io.IOException e) {
+            log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: " + e);
         }
     }
 
@@ -286,8 +313,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         xf.loadVariableModel(decoderElem, variableModel);
     }
 
-    @SuppressWarnings({ "unchecked" })
-	void processLocoFile(Element loco) {
+    void processLocoFile(Element loco) {
         // load the name et al
         locoRoadName.setText(loco.getAttributeValue("roadName"));
         locoRoadNumber.setText(loco.getAttributeValue("roadNumber"));
@@ -299,89 +325,118 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             // get the file name
             String mfg = decoder.getAttribute("mfg").getValue();
             String model = decoder.getAttribute("model").getValue();
-            String filename = "xml"+File.separator+mfg+"_"+model+".xml";
-            if (log.isDebugEnabled()) log.debug("will read decoder info from "+filename);
+            String filename = "xml" + File.separator + mfg + "_" + model + ".xml";
+            if (log.isDebugEnabled()) {
+                log.debug("will read decoder info from " + filename);
+            }
             readAndParseConfigFile(new File(filename));
-            if (log.isDebugEnabled()) log.debug("finished processing decoder file for loco file");
-        } else log.error("No decoder element found in config file");
+            if (log.isDebugEnabled()) {
+                log.debug("finished processing decoder file for loco file");
+            }
+        } else {
+            log.error("No decoder element found in config file");
+        }
 
         // get the CVs and load
         Element values = loco.getChild("values");
         if (values != null) {
             // get the CV values and load
             List<Element> varList = values.getChildren("CVvalue");
-            if (log.isDebugEnabled()) log.debug("Found "+varList.size()+" CVvalues");
+            if (log.isDebugEnabled()) {
+                log.debug("Found " + varList.size() + " CVvalues");
+            }
 
-            for (int i=0; i<varList.size(); i++) {
+            for (int i = 0; i < varList.size(); i++) {
                 // locate the row
-                if ( ((varList.get(i))).getAttribute("name") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((varList.get(i)))+" "+((varList.get(i))).getAttributes());
+                if (((varList.get(i))).getAttribute("name") == null) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("unexpected null in name " + ((varList.get(i))) + " " + ((varList.get(i))).getAttributes());
+                    }
                     break;
                 }
-                if ( ((varList.get(i))).getAttribute("value") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((varList.get(i)))+" "+((varList.get(i))).getAttributes());
+                if (((varList.get(i))).getAttribute("value") == null) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("unexpected null in value " + ((varList.get(i))) + " " + ((varList.get(i))).getAttributes());
+                    }
                     break;
                 }
 
                 String name = ((varList.get(i))).getAttribute("name").getValue();
                 String value = ((varList.get(i))).getAttribute("value").getValue();
-                if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
+                if (log.isDebugEnabled()) {
+                    log.debug("CV: " + i + "th entry, CV number " + name + " has value: " + value);
+                }
 
-                int cv = Integer.valueOf(name).intValue();
-                CvValue cvObject = cvModel.allCvVector().elementAt(cv);
+                CvValue cvObject = cvModel.allCvMap().get(name);
                 cvObject.setValue(Integer.valueOf(value).intValue());
                 cvObject.setState(CvValue.FROMFILE);
             }
             variableModel.configDone();
         } else {
-        	log.error("no values element found in config file; CVs not configured");
-        	return;
+            log.error("no values element found in config file; CVs not configured");
+            return;
         }
         // get the variable values and load
         Element decoderDef = values.getChild("decoderDef");
         if (decoderDef != null) {
             List<Element> varList = decoderDef.getChildren("varValue");
-            if (log.isDebugEnabled()) log.debug("Found "+varList.size()+" varValues");
+            if (log.isDebugEnabled()) {
+                log.debug("Found " + varList.size() + " varValues");
+            }
 
-            for (int i=0; i<varList.size(); i++) {
+            for (int i = 0; i < varList.size(); i++) {
                 // locate the row
                 Attribute itemAttr = null;
-                if ( (itemAttr = varList.get(i).getAttribute("item")) == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in item "+varList.get(i));
+                if ((itemAttr = varList.get(i).getAttribute("item")) == null) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("unexpected null in item " + varList.get(i));
+                    }
                     break;
                 }
-                if ( (itemAttr = varList.get(i).getAttribute("name")) == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+varList.get(i));
+                if ((itemAttr = varList.get(i).getAttribute("name")) == null) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("unexpected null in name " + varList.get(i));
+                    }
                     break;
                 }
                 String item = itemAttr.getValue();
 
-                if ( ((varList.get(i))).getAttribute("value") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((varList.get(i))));
+                if (((varList.get(i))).getAttribute("value") == null) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("unexpected null in value " + ((varList.get(i))));
+                    }
                     break;
                 }
                 String value = ((varList.get(i))).getAttribute("value").getValue();
 
-                if (log.isDebugEnabled()) log.debug("Variable "+i+" is "+item+" value: "+value);
+                if (log.isDebugEnabled()) {
+                    log.debug("Variable " + i + " is " + item + " value: " + value);
+                }
 
                 int row;
-                for (row=0; row<variableModel.getRowCount(); row++) {
-                    if (variableModel.getLabel(row).equals(item)) break;
+                for (row = 0; row < variableModel.getRowCount(); row++) {
+                    if (variableModel.getLabel(row).equals(item)) {
+                        break;
+                    }
                 }
-                if (log.isDebugEnabled()) log.debug("Variable "+item+" is row "+row);
-                if ( ! value.equals("")) { // don't set if no value was stored
+                if (log.isDebugEnabled()) {
+                    log.debug("Variable " + item + " is row " + row);
+                }
+                if (!value.equals("")) { // don't set if no value was stored
                     variableModel.setIntValue(row, Integer.valueOf(value).intValue());
                 }
                 variableModel.setState(row, VariableValue.FROMFILE);
             }
             variableModel.configDone();
-        } else log.error("no decoderDef element found in config file");
+        } else {
+            log.error("no decoderDef element found in config file");
+        }
 
         // the act of loading values marks as dirty, but we're actually in synch
         variableModel.setFileDirty(false);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
     void writeFile() {
         log.warn("SymbolicProgFrame writeFile invoked - is this still right, or should the LocoFile method be used?");
         log.warn("Note use of VersionID attribute...");
@@ -389,40 +444,39 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             // get the file
             int retVal = fco.showSaveDialog(this);
             // handle selection or cancel
-            if (retVal != JFileChooser.APPROVE_OPTION) return; // leave early
-
+            if (retVal != JFileChooser.APPROVE_OPTION) {
+                return; // leave early
+            }
             File file = fco.getSelectedFile();
 
             // This is taken in large part from "Java and XML" page 368
-
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = jmri.jmrit.XmlFile.newDocument(root, jmri.jmrit.XmlFile.dtdLocation+"locomotive-config.dtd");
+            Document doc = jmri.jmrit.XmlFile.newDocument(root, jmri.jmrit.XmlFile.dtdLocation + "locomotive-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
-            java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+            java.util.Map<String, String> m = new java.util.HashMap<String, String>();
             m.put("type", "text/xsl");
-            m.put("href", jmri.jmrit.XmlFile.xsltLocation+"locomotive.xsl");
+            m.put("href", jmri.jmrit.XmlFile.xsltLocation + "locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
-            doc.addContent(0,p);
-            
+            doc.addContent(0, p);
+
             // add top-level elements
             Element values;
-            root.addContent(new Element("locomotive")		// locomotive values are first item
-                            .setAttribute("roadNumber",locoRoadNumber.getText())
-                            .setAttribute("roadName",locoRoadName.getText())
-                            .setAttribute("mfg",locoMfg.getText())
-                            .setAttribute("model",locoModel.getText())
-                            .addContent(new Element("decoder")
-                                        .setAttribute("model",decoderModel.getText())
-                                        .setAttribute("mfg",decoderMfg.getText())
-                                        .setAttribute("versionID","")
-                                        .setAttribute("mfgID","")
-                                        )
-                            .addContent(values = new Element("values"))
-                            )
-                ;
+            root.addContent(new Element("locomotive") // locomotive values are first item
+                    .setAttribute("roadNumber", locoRoadNumber.getText())
+                    .setAttribute("roadName", locoRoadName.getText())
+                    .setAttribute("mfg", locoMfg.getText())
+                    .setAttribute("model", locoModel.getText())
+                    .addContent(new Element("decoder")
+                            .setAttribute("model", decoderModel.getText())
+                            .setAttribute("mfg", decoderMfg.getText())
+                            .setAttribute("versionID", "")
+                            .setAttribute("mfgID", "")
+                    )
+                    .addContent(values = new Element("values"))
+            );
 
             // Append a decoderDef element to values
             Element decoderDef;
@@ -430,24 +484,25 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             // add the variable values to the decoderDef Element
             for (int i = 0; i < variableModel.getRowCount(); i++) {
                 decoderDef.addContent(new Element("varValue")
-                                      .setAttribute("item", variableModel.getLabel(i))
-                                      .setAttribute("value", variableModel.getValString(i))
-                                      );
+                        .setAttribute("item", variableModel.getLabel(i))
+                        .setAttribute("value", variableModel.getValString(i))
+                );
             }
             // add the CV values to the values Element
             for (int i = 0; i < cvModel.getRowCount(); i++) {
                 values.addContent(new Element("CVvalue")
-                                  .setAttribute("name", cvModel.getName(i))
-                                  .setAttribute("value", cvModel.getValString(i))
-                                  );
+                        .setAttribute("name", cvModel.getName(i))
+                        .setAttribute("value", cvModel.getValString(i))
+                );
             }
 
             // write the result to selected file
             java.io.FileOutputStream o = new java.io.FileOutputStream(file);
             try {
                 XMLOutputter fmt = new XMLOutputter();
-                // fmt.setNewlines(true);   // pretty printing
-                // fmt.setIndent(true);
+                fmt.setFormat(Format.getPrettyFormat()
+                        .setLineSeparator(System.getProperty("line.separator"))
+                        .setTextMode(Format.TextMode.PRESERVE));
                 fmt.output(doc, o);
             } finally {
                 o.close();
@@ -455,12 +510,11 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
             // mark file as OK
             variableModel.setFileDirty(false);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SymbolicProgFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SymbolicProgFrame.class.getName());
 
 }

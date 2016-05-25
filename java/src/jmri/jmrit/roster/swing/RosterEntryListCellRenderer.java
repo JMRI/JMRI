@@ -8,14 +8,20 @@ import javax.swing.ListCellRenderer;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
 
-public class RosterEntryListCellRenderer extends JLabel implements ListCellRenderer {
+/**
+ * Render RosterEntry objects or Strings as cells in a JComboBox.
+ *
+ * @see jmri.jmrit.roster.swing.RosterEntryComboBox
+ */
+public class RosterEntryListCellRenderer extends JLabel implements ListCellRenderer<Object> {
 
     public RosterEntryListCellRenderer() {
         super();
         setOpaque(true);
     }
 
-    public Component getListCellRendererComponent(JList list, Object value,
+    // FIXME: JList needs typed
+    public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (value != null) {
             if (value instanceof RosterEntry) {

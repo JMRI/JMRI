@@ -1,51 +1,43 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: zoo $) 2009 -->
-<!-- $Id: TemplatePlain.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
-<title>JMRI: JMRIClient and SimpleServer Configuration</title>
+<title>JMRI Hardware Support - JMRIClient and SimpleServer</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: JMRIClient Connection
-</h1>
+<h1>Hardware Support: JMRIClient Connection</h1>
 
-<p>The JMRIClient connection provides a method of remotely connecting one JMRI program to another.  it can be used to build a panel on one computer, which is connected to th layout directly, but actually operate the panel on a computer without a physical connection to the layout.</p>
+<p>The JMRIClient Connection provides a method of remotely connecting one JMRI program to another. It can be used to build a Panel on one computer, which is connected to the layout directly, but actually operate the Panel on a computer without a physical connection to the layout.</p>
 
- <p>The JMRIClient connection can also be used to share information between two adjacent operators without completly replicating the information on each computer.  This configuration is particularly useful on modular layous where multiple module builders are involved.</p>
-    
+<p>The JMRIClient Connection can also be used to share information between two adjacent operators without completely replicating the information on each computer.  This configuration is particularly useful on modular layouts where multiple module builders are involved.</p>
 
-<h2>
-The JMRI Simple Server
-</h2>
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>The JMRI Simple Server</h3>
 
 <p>"Simple" in this case actually refers to the protocol, not the server
-itself.  It uses pretty simple commands that include the device name
+itself. It uses pretty simple commands that include the device name
 (except for the power command) to send information bi-directionally. The
 protocol itself limits the actions that can be taken, so it will
 eventually be replaced with a more complete (and complicated) protocol.</p>
 
-<p>The server currently supports throwing turnouts, turnling lights on and
-off, sensors feedback, reporter feedback and controlling Power. You can
-start the server through a configuration action.  It uses TCP port 2048. The 
-port is set in a preference, so you can change it if needed.</p>
+<p>The server currently supports throwing Turnouts, turning Lights on and
+off, Sensor feedback, Reporter feedback and controlling Power. You can
+start the server through a configuration action. It uses TCP port 2048. The 
+port is set in a Preference, so you can change it if needed.</p>
 
-<h2>The JMRIClient</h2>
+<h3>The JMRIClient</h3>
 <p>The JMRIClient works with the server to allow remote control of
 turnouts, lights, and power, and remote feedback from sensors and 
 reporters.</p>
@@ -72,21 +64,20 @@ state changes are shown on both the client and the server.</p>
 <h2>Operational Examples</h2>
 
 <h3>Simple Connection Replication</h3>
-
 <p>The simplest operational use of the JMRIClient and the simple server
 is having one computer connected directly to the layout (the server computer) 
 and a second computer ( the client computer) connected to the first via a 
 computer network where you would like to operate a panel.</p>
 
-<p>For this example, we will assume the server computer has a Loconet 
+<p>For this example, we will assume the server computer has a LocoNet 
 connection with the prefix 'L'.</p>
 
-<p>On the server computer, open the preferences, and select the Start Up group.  
-click the "Add Action" button, and select "Start Simple JMRI Server" from the list 
+<p>On the server computer, open the Preferences, and select the Start Up group.  
+click the "Add &#x25BE;" button, select "Perform action..." and select "Start Simple JMRI Server" from the list 
 of options.  Save the preferences and restart the program.</p>
 
 <p>
-<img src="images/simpleserver-autostart.png" alt="Action added to automatically start the JMRI SimpleServer">
+<img src="images/simpleserver-autostart.png" alt="Action added to automatically start the JMRI SimpleServer" width="452" height="213">
 </p>
 
 <p>On the client machine, add a "JMRI (Network)" connection.  Change the system 
@@ -94,21 +85,21 @@ connection prefix to "L". and set the IP address to the IP  address of the serve
 the preferences and restart the program.</p>
 
 <p>
-<img src="images/jmriclient-base-configuration.png" alt="JMRIClient Configuration screen (configured for LocoNet with a server on localhost)">
+<img src="images/jmriclient-base-configuration.png" alt="JMRIClient Configuration screen (configured for LocoNet with a server on localhost)" width="452" height="213">
 </p>
 
 <p>Once both computers have restarted JMRI, you will be able to load a panel
 file on the client computer which was created on the server computer.</p>
 
 <p>Each machine will have its own set of tables and ( optionally) panel files loaded,
-if the client causes an action, information will be transfered to the server, and the 
+if the client causes an action, information will be transferred to the server, and the 
 server will trigger an action on the layout.  If an action occurs on the server,  the
-server will tramsmit an indication of the action to the client if the client has
+server will transmit an indication of the action to the client if the client has
 indicated it is interested in the device.</p>
 
-<h2>Operational Notes</H2>
+<h3>Operational Notes</h3>
 <ol>
-<li> If you have any logixs or routes, you probably only want those running
+<li> If you have any Logix or Routes, you probably only want those running
 on one of the two machines.</li>
 <li> In order for any information about a light/turnout/sensor to be
    returned to the client, it must be defined on the client.</li>
@@ -123,11 +114,12 @@ in this case 1) load a panel without inverted set on the client or 2)
 Run the panel on the server through a second instance of JMRI which is
 acting as a client to the first instance.</p>
    <p>If your use case is that the server just provides connections, but
-doesn't do any logic, then this is not a bug.  </p>
+doesn't do any logic, then this is not a bug.</p>
    </li>
 </ol>
 
-
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

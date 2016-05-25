@@ -1,49 +1,46 @@
 // LsDecSignalHeadXml.java
-
 package jmri.implementation.configurexml;
 
+import java.util.List;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.SignalHead;
+import jmri.Turnout;
+import jmri.implementation.LsDecSignalHead;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.SignalHead;
-import jmri.implementation.LsDecSignalHead;
-import jmri.Turnout;
-import jmri.NamedBeanHandle;
-
-import java.util.List;
-import org.jdom.Element;
 
 /**
  * Handle XML configuration for LsDecSignalHead objects.
  *
  * This file is part of JMRI.
- * 
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * 
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ *
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ *
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @author Petr Koud'a  Copyright: Copyright (c) 2007
+ * @author Petr Koud'a Copyright: Copyright (c) 2007
  * @version $Revision$
  */
 public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public LsDecSignalHeadXml() {}
+    public LsDecSignalHeadXml() {
+    }
 
     /**
-     * Default implementation for storing the contents of a
-     * LsDecSignalHead
+     * Default implementation for storing the contents of a LsDecSignalHead
+     *
      * @param o Object to store, of type LsDecSignalHead
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        LsDecSignalHead p = (LsDecSignalHead)o;
+        LsDecSignalHead p = (LsDecSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
@@ -53,7 +50,7 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
-        
+
         element.addContent(addTurnoutElement(p.getGreen().getName(), p.getGreenState()));
         element.addContent(addTurnoutElement(p.getYellow().getName(), p.getYellowState()));
         element.addContent(addTurnoutElement(p.getRed().getName(), p.getRedState()));
@@ -61,33 +58,27 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         element.addContent(addTurnoutElement(p.getFlashYellow().getName(), p.getFlashYellowState()));
         element.addContent(addTurnoutElement(p.getFlashRed().getName(), p.getFlashRedState()));
         element.addContent(addTurnoutElement(p.getDark().getName(), p.getDarkState()));
-        
+
         return element;
     }
 
     Element addTurnoutElement(String name, int s) {
         int state = s;
-        
+
         Element el = new Element("turnout");
         el.setAttribute("systemName", name);
         if (state == Turnout.THROWN) {
-            el.setAttribute("state","THROWN");
-        }
-        else {
-            el.setAttribute("state","CLOSED");
+            el.setAttribute("state", "THROWN");
+        } else {
+            el.setAttribute("state", "CLOSED");
         }
 
         return el;
     }
 
-    /**
-     * Create a LsDecSignalHead
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    @SuppressWarnings("unchecked")
-	public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnout");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("turnout");
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> yellow = loadTurnout(l.get(1));
         NamedBeanHandle<Turnout> red = loadTurnout(l.get(2));
@@ -102,31 +93,32 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         int flashyellowstatus = loadTurnoutStatus(l.get(4));
         int flashredstatus = loadTurnoutStatus(l.get(5));
         int darkstatus = loadTurnoutStatus(l.get(6));
-        
-        // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
-        SignalHead h;
-        if (uname == null)
-            h = new LsDecSignalHead(sys, green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
-        else
-            h = new LsDecSignalHead(sys, uname, green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
 
-        loadCommon(h, element);
-        
+        // put it together
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
+        SignalHead h;
+        if (uname == null) {
+            h = new LsDecSignalHead(sys, green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
+        } else {
+            h = new LsDecSignalHead(sys, uname, green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
+        }
+
+        loadCommon(h, shared);
+
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
     }
-    
+
     NamedBeanHandle<Turnout> loadTurnout(Object o) {
-        Element e = (Element)o;
+        Element e = (Element) o;
         String name = e.getAttribute("systemName").getValue();
         Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(name);
         return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
     }
 
     int loadTurnoutStatus(Object o) {
-        Element e = (Element)o;
+        Element e = (Element) o;
         String rState = e.getAttribute("state").getValue();
         int tSetState = Turnout.CLOSED;
         if (rState.equals("THROWN")) {
@@ -139,5 +131,5 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(LsDecSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LsDecSignalHeadXml.class.getName());
 }

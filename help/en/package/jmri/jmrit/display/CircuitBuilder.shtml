@@ -1,29 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Item Palette Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Item Palette">
+<html lang="en">
+<head>
+<title>JMRI: Circuit Builder Help</title>
+
+<meta name="author" content="Pete Cressman">
+<meta name="keywords" CONTENT="JMRI Circuit builder Help">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Circuit Builder</H1>
+<h1>Circuit Builder</h1>
 
 <b>The Circuit Builder</b> is a view of a <b>Control Panel Editor</b>  
 panel used to create track circuits that are implemented in JMRI by 
@@ -34,9 +33,12 @@ prototype name for track having a device that can detect occupancy is
 The term <b>Block</b> in the prototype world is <i>a length of track defined
 by limits, whose use is governed by block signals, cab signals or block limit 
 markers and train orders.</i>  That is, a prototype block incorporates a 
-signalling system providing a way to manage safe usage of its trackage.  Combining
-JMRI track circuits into such blocks will be addressed later.  For now, the 
-Circuit Builder tool is concerned with the creation of track circuits.
+signalling system providing a way to manage safe usage of its trackage.  So
+to model a prototype block, several track circuits may be needed.
+The term JMRI track circuit is just an attempt to get a little closer to
+prototype usage..  For now, the 
+Circuit Builder tool is concerned with the creation of track circuits,
+that is, OBlocks and their elements.
 </p>
 <p>Circuit Builder is an alternative to using the Occupancy Block Tables.
 OBlocks, Portals and OPaths are created and linked by "point and click" on the
@@ -49,51 +51,51 @@ original look of the panel.</p>
 Panel files previously made with Panel Editor
 can be used with Circuit Builder as long as they can be loaded into this
 version of JMRI.  Circuit Builder will upgrade the track icons to
-Indicator Track icons.  See <A HREF="ItemPalette.shtml"> The Item Palette</A>
+Indicator Track icons.  See <a href="ItemPalette.shtml"> The Item Palette</a>
 for more information about indicator track icons.
 </p>
 
  
-<H3>Mouse Operations</H3>
-When in one of the editing modes,
-Circuit Builder has different mouse click conventions from those of the panel editors.
-In the basic window frame it shares most of the operations with them.  
-You can easily move back and forth between the editors and editing modes.
-of Circuitbuilder.  Note the following:
-<ul>
-<li>Dragging is not permitted in the editing modes. (except for portal icons when editing Portals)</li>
-<li>Popup menus for panel items can only be activated in the basic window frame.</li>
-<li>Adding, modifying and deleting panel items can only be done in the basic window frame.</li>
-<li>CircuitBuilder editing is done on window frames activated under the "Add/Edit Circuits" menu.</li>
-<li>When in an editing mode, only track and portal icons can be selected.</li>
-</ul> 
+<h3>Mouse Operations</h3>
+When in one of the editing modes of
+Circuit Builder, the mouse click conventions differ somewhat from those of the panel editors.
+When one the menu items is selected an editing window is opened and the panel is in Circuit 
+Builder editing mode. Note the following when in CircuitBuilder editing mode:
+	<ul>
+	<li>Dragging is not supported except for portal icons when creating or editing Portals</li>
+	<li>Several Control Panel Menus are disabled.</li>
+	<li>Only track and portal icons can be selected.</li>
+	</ul>
 
-<H2>The Menus</H2>
+<h2>The Menus</h2>
    
-<H3>The File Menu</H3>
+<h3>The File Menu</h3>
 The only menu item, <b>Change View to Control Panel Editor</b>, returns the CircuitBuilder 
 view to the Control Panel Editor view.</P>
 
-<H3>Menus in Common With Control Panel Editor</H3>
+<h3>Menus in Common With Control Panel Editor</h3>
 The <b>Edit, Options, Zoom</b> and <b>Add Item</b> menus are identical to those in Control
 Panel Editor.  When in an editing mode (i.e. in any of menu items under the <b>Add/Edit Circuits</b>
 menu) these menus are disabled. 
 
-<H3>The Add/Edit Circuits Menu</H3>
+<h3>The Circuit Builder Menu</h3>
 Creates and Edit OBlocks, Portals and OPaths and their display icons. The menu has the following menu items:
 <ul>
  <li><b>Add Detector Circuit</b> - Create an OBlock track circuit and assign the icons that display it. 
         You will be prompted for the system and user names to create a new OBlock.  Then
         you will be in <b>circuit editing</b> mode.</li>
- <li><b>Edit Circuit Block</b> - Edit an existing circuit (OBlock).  You will be asked to select an OBlock
+ <li><b>Edit Circuit OBlock</b> - Edit an existing circuit (OBlock).  You will be asked to select an OBlock
         from a picklist.  Then you will be in <b>circuit editing</b> mode.</li>
  <li><b>Edit Circuit Portals</b> -  Create or edit Portals connecting two track circuits.  You will be 
         asked to select an OBlock from a picklist.  Then you will be in <b>portal editing</b> mode.</li>
  <li><b>Edit Circuit Paths</b> - Create or edit the paths (OPath) through a track circuit.  You will be 
         asked to select an OBlock from a picklist.  Then you will be in <b>path editing</b> mode.</li>
+ <li><b>Edit Portal Direction Icons</b> - Choose arrows to indicate the direction of a warrant route
+ 		through a block.  You will be asked to select an OBlock from a picklist.  
+        Then you will be in <b>Portal icon editing</b> mode.</li>
 </ul>
 
-<H3>The Error Check Menu</H3>
+<h3>The Error Check Menu Item</h3>
 Verify OBlocks, Portals and OPaths are complete and without errors. The menu has the following menu items:
 <ul>
  <li><b>Circuits without icons</b> - Has a submenu for each track circuit OBlock that does not have an icon.
@@ -122,10 +124,12 @@ Verify OBlocks, Portals and OPaths are complete and without errors. The menu has
         found.</li>
 </ul>
 
-<H2>How to Make OBlocks, Portals and OPaths</H2>
+<h2>How to Make OBlocks, Portals and OPaths</h2>
 Creation and editing of these objects is done is with three editing modes of CircuitBuilder.
-<H3>OBlocks - Circuit Editing mode</H3>
-<H4>Creating OBlocks</H4>
+
+<h3>OBlocks - Circuit Editing mode</h3>
+
+<h4>Creating OBlocks</h4>
 <ul>
  1. From the <b>Add/Edit Circuits</b> menu select the <b>Add Detector Circuit</b> menu item.
  This opens a dialog for you to create a circuit OBlock by supplying its system and user name.  Creating
@@ -134,13 +138,15 @@ Creation and editing of these objects is done is with three editing modes of Cir
  The Add Detector Circuit window is identical to the Edit Circuit window.  See the Circuit Editing mode
  section below for information about this window.
 </ul>
-<H4>Editing OBlocks</H4>
+
+<h4>Editing OBlocks</h4>
 <ul>
  1. From the <b>Add/Edit Circuits</b> menu select the <b>Edit Circuit Block</b> menu item.
  This opens a picklist for you to select a circuit OBlock to edit.  Selecting a row and pressing
  the <Open Circuit> button opens the <b>Edit Circuit</b> window.
 </ul>
-<H4>Circuit Editing mode</H4>
+
+<h4>Circuit Editing mode</h4>
 The Edit Circuit window is identical to the Add Detector Circuit window.  Its purpose is to identify
 all the track icons that are used to display the track circuit.  It also configures the OBlock
 sensors for occupancy detection and error indication.  Oblock names can be changed and the track circuit 
@@ -153,7 +159,7 @@ deleted.  Finally, the circuit track icons can be upgraded to Indicator Track ic
  has no effect.  Also, panel items cannot be dragged and repositioned.
 </ul>
    
-<H4>Circuit Editing mode Dialog Box</H4>
+<h4>Circuit Editing mode Dialog Box</h4>
 <ul>
  2. When adding or editing a circuit, the dialog window has text fields to name the sensor that will detect
  occupancy and a sensor that can detect power problems.  Each of these sensors are optional
@@ -182,7 +188,7 @@ deleted.  Finally, the circuit track icons can be upgraded to Indicator Track ic
 You may leave <b>Dark</b> blocks (no occupancy detection) with track icons unconverted.
 There is a trade-off here on the appearance.
   
-<H3>Portals</H3>
+<h3>Portals</h3>
 <ul>
  1. From the <b>Add/Edit Circuits</b> menu select the <b>Edit Circuit Portals</b> menu item.  
  This opens a picklist for you to select a circuit OBlock to edit.  Selecting a row and pressing
@@ -190,7 +196,8 @@ There is a trade-off here on the appearance.
  The track circuit will be highlighted in blue and if any Portals have been defined, they
  will be shown with a red circle. 
 </ul>
-<H4>Portal Editing mode</H4>
+
+<h4>Portal Editing mode</h4>
  The purpose of this window is to create and edit portals. A portal is represented by a red circle icon.
  The blocks it connects are determined by positioning the portal icon so it spans the two
  blocks it connects.  That is, circle the gap between the two blocks with the red circle.
@@ -226,7 +233,7 @@ There is a trade-off here on the appearance.
  7. The <b>Done</b> button completes the creation and/or editing of Portals.
 </ul> 
 
-<H3>Paths</H3>
+<h3>Paths</h3>
 <ul>
  1. From the <b>Add/Edit Circuits</b> menu select the <b>Edit Circuit Paths</b> menu item.  
  This opens a picklist for you to select a circuit OBlock to edit.  Selecting a row and pressing
@@ -235,7 +242,8 @@ There is a trade-off here on the appearance.
  will be shown with a red circle. 
 <p>
 </ul>
-<H4>Path Editing mode</H4>
+
+<h4>Path Editing mode</h4>
  The purpose of this window is to create and edit the paths in the track circuit.  
  In this mode, no panel items can be moved or selected.
 <ul>
@@ -249,7 +257,7 @@ There is a trade-off here on the appearance.
  displayed green.  A second mouse click deselects the icon.
 <p>
  4. When selecting a turnout icon for the path, it needs to have its points set correctly.  To keep
- the icon selected gren wheen you throw the switch, hold the Shift Key down when clicking 
+ the icon selected green when you throw the switch, hold the Shift Key down when clicking 
  with the mouse.  This keeps the selection green while throwing the switch.  
 <p>
  5. It is important the portals for the entrance and/or exit of the path be selected also.
@@ -262,6 +270,9 @@ There is a trade-off here on the appearance.
 <p>
  7. To delete a path, select it from the list and press the <b>Delete Path</b> button.
 </ul> 
+
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

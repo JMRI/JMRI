@@ -1,23 +1,19 @@
 // MarklinSystemConnectionMemo.java
-
 package jmri.jmrix.marklin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.ResourceBundle;
 
+import java.util.ResourceBundle;
 import jmri.InstanceManager;
 
 /**
- * Lightweight class to denote that a system is active,
- * and provide general information.
+ * Lightweight class to denote that a system is active, and provide general
+ * information.
  * <p>
- * Objects of specific subtypes are registered
- * in the instance manager to activate their
- * particular system.
+ * Objects of specific subtypes are registered in the instance manager to
+ * activate their particular system.
  *
- * @author		Bob Jacobsen  Copyright (C) 2010
- * @author		Kevin Dickerson  Copyright (C) 2012
- * @version             $Revision: 20728 $
+ * @author	Bob Jacobsen Copyright (C) 2010
+ * @author	Kevin Dickerson Copyright (C) 2012
+ * @version $Revision: 20728 $
  */
 public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -30,140 +26,161 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.store(cf = new jmri.jmrix.marklin.swing.MarklinComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
     }
-    
+
     public MarklinSystemConnectionMemo() {
         super("MC", "Marklin-CS2");
         register(); // registers general type
         InstanceManager.store(this, MarklinSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
         InstanceManager.store(cf = new jmri.jmrix.marklin.swing.MarklinComponentFactory(this),
-                        jmri.jmrix.swing.ComponentFactory.class);
+                jmri.jmrix.swing.ComponentFactory.class);
     }
-    
+
     jmri.jmrix.swing.ComponentFactory cf = null;
-    
-     /**
-     * Provides access to the TrafficController for this
-     * particular connection.
+
+    /**
+     * Provides access to the TrafficController for this particular connection.
      */
-    public MarklinTrafficController getTrafficController() { return et; }
-    public void setMarklinTrafficController(MarklinTrafficController et) { 
+    public MarklinTrafficController getTrafficController() {
+        return et;
+    }
+
+    public void setMarklinTrafficController(MarklinTrafficController et) {
         this.et = et;
         et.setAdapterMemo(this);
     }
     private MarklinTrafficController et;
 
     /**
-     * This puts the common manager config in one
-     * place. 
+     * This puts the common manager config in one place.
      */
     public void configureManagers() {
-      
+
         powerManager = new jmri.jmrix.marklin.MarklinPowerManager(getTrafficController());
-        jmri.InstanceManager.setPowerManager(powerManager);
-        
+        jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
+
         turnoutManager = new jmri.jmrix.marklin.MarklinTurnoutManager(this);
         jmri.InstanceManager.setTurnoutManager(turnoutManager);
-        
+
         /*locoManager = new jmri.jmrix.marklin.MarklinLocoAddressManager(this);*/
-        
         throttleManager = new jmri.jmrix.marklin.MarklinThrottleManager(this);
         jmri.InstanceManager.setThrottleManager(throttleManager);
 
         sensorManager = new jmri.jmrix.marklin.MarklinSensorManager(this);
         jmri.InstanceManager.setSensorManager(sensorManager);
-        
+
         /*reporterManager = new jmri.jmrix.marklin.MarklinReporterManager(this);
-        jmri.InstanceManager.setReporterManager(reporterManager);*/
-        
+         jmri.InstanceManager.setReporterManager(reporterManager);*/
     }
-    
-    protected ResourceBundle getActionModelResourceBundle(){
+
+    protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.marklin.MarklinActionListBundle");
     }
 
     private MarklinSensorManager sensorManager;
     private MarklinTurnoutManager turnoutManager;
     /*private MarklinLocoAddressManager locoManager;
-    private MarklinPreferences prefManager;*/
+     private MarklinPreferences prefManager;*/
     private MarklinThrottleManager throttleManager;
     private MarklinPowerManager powerManager;
     //private MarklinReporterManager reporterManager;
-    
+
     /*public MarklinLocoAddressManager getLocoAddressManager() { return locoManager; }*/
-    public MarklinTurnoutManager getTurnoutManager() { return turnoutManager; }
-    public MarklinSensorManager getSensorManager() { return sensorManager; }
+    public MarklinTurnoutManager getTurnoutManager() {
+        return turnoutManager;
+    }
+
+    public MarklinSensorManager getSensorManager() {
+        return sensorManager;
+    }
     /*public MarklinPreferences getPreferenceManager() { return prefManager; }*/
-    public MarklinThrottleManager getThrottleManager() { return throttleManager; }
-    public MarklinPowerManager getPowerManager() { return powerManager; }
+
+    public MarklinThrottleManager getThrottleManager() {
+        return throttleManager;
+    }
+
+    public MarklinPowerManager getPowerManager() {
+        return powerManager;
+    }
     //public MarklinReporterManager getReporterManager() { return reporterManager; }
-    
-    /** 
+
+    /**
      * Tells which managers this provides by class
      */
     public boolean provides(Class<?> type) {
-        if (getDisabled())
+        if (getDisabled()) {
             return false;
-        if (type.equals(jmri.ThrottleManager.class))
+        }
+        if (type.equals(jmri.ThrottleManager.class)) {
             return true;
-        if (type.equals(jmri.PowerManager.class))
+        }
+        if (type.equals(jmri.PowerManager.class)) {
             return true;
-        if (type.equals(jmri.SensorManager.class))
+        }
+        if (type.equals(jmri.SensorManager.class)) {
             return true;
-        if (type.equals(jmri.TurnoutManager.class))
+        }
+        if (type.equals(jmri.TurnoutManager.class)) {
             return true;
+        }
         /*if (type.equals(jmri.ReporterManager.class))
-            return true;*/
+         return true;*/
         return false; // nothing, by default
     }
-    
+
     @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
-        if (getDisabled())
+        if (getDisabled()) {
             return null;
-        if (T.equals(jmri.ThrottleManager.class))
-            return (T)getThrottleManager();
-        if (T.equals(jmri.PowerManager.class))
-            return (T)getPowerManager();
-        if (T.equals(jmri.SensorManager.class))
-            return (T)getSensorManager();
-        if (T.equals(jmri.TurnoutManager.class))
-            return (T)getTurnoutManager();
+        }
+        if (T.equals(jmri.ThrottleManager.class)) {
+            return (T) getThrottleManager();
+        }
+        if (T.equals(jmri.PowerManager.class)) {
+            return (T) getPowerManager();
+        }
+        if (T.equals(jmri.SensorManager.class)) {
+            return (T) getSensorManager();
+        }
+        if (T.equals(jmri.TurnoutManager.class)) {
+            return (T) getTurnoutManager();
+        }
         /*if (T.equals(jmri.ReporterManager.class))
-            return (T)getReporterManager();*/
+         return (T)getReporterManager();*/
         return null; // nothing, by default
     }
-    
+
     @Override
-    public void dispose(){
-        if(sensorManager!=null){
+    public void dispose() {
+        if (sensorManager != null) {
             sensorManager.dispose();
-            sensorManager=null;
+            sensorManager = null;
         }
-        if(turnoutManager!=null){
+        if (turnoutManager != null) {
             turnoutManager.dispose();
-            turnoutManager=null;
+            turnoutManager = null;
         }
         /*if(reporterManager!=null){
-            reporterManager.dispose();
-            reporterManager=null;
-        }*/
-        
-        if (powerManager != null) 
-            InstanceManager.deregister(powerManager, jmri.jmrix.marklin.MarklinPowerManager.class);
+         reporterManager.dispose();
+         reporterManager=null;
+         }*/
 
-        if (throttleManager != null) 
+        if (powerManager != null) {
+            InstanceManager.deregister(powerManager, jmri.jmrix.marklin.MarklinPowerManager.class);
+        }
+
+        if (throttleManager != null) {
             InstanceManager.deregister(throttleManager, jmri.jmrix.marklin.MarklinThrottleManager.class);
-            
+        }
+
         et = null;
         InstanceManager.deregister(this, MarklinSystemConnectionMemo.class);
-        if (cf != null) 
+        if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
-        
+        }
+
         super.dispose();
     }
-    
-    static Logger log = LoggerFactory.getLogger(MarklinSystemConnectionMemo.class.getName());
 }
 
 

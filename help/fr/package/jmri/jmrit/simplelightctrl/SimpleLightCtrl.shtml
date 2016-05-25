@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleLightCtrl.shtml,v 1.7 2010/01/24 02:04:03 ken_c Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-6-->
+<!-- $Id$ --> -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Light Control</TITLE>
@@ -24,112 +24,113 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Contrôle Lumière </H1>
+<H1>Commande Lumi&#232;re </H1>
 
-Entrez le nom du système de lumière 
-e que vous souhaitez contrôler dans la boîte à droite de "lumière".
-Par exemple, entrer 678 et en appuyant surle bouton ON ou OFF
-, vous devriez être en mesure de changer l'état de la lumière numéro 678
-sur le réseau. Un autre exemple, un nom de lumière valable pour les appareils du système PowerLine
-pourrait être PL9. Puis en appuyant sur le bouton On ou Off, vous
-devriez être capable de changer l'état de la lumière sur
-le réseau. Un autre exemple, un nom système de lumière valable  pourrait être IL123
-qui est une lumière interne numéro 123 . En appuyant surle bouton On ou Off
-changerera seulement l'état de la lumière interne et ne changera pas une
-lumière sur le réseau. Voir "
+Entrez le nom du syst&#232;me de lumi&#232;re 
+que vous souhaitez commander dans la bo&#238;te &#224 droite de "lumi&#232;re".
+Par exemple, entrer 678 et en appuyant sur le bouton ON ou OFF
+, vous devriez &#234;tre en mesure de changer l'&#233;tat de la lumi&#232;re num&#233;ro 678
+sur le r&#233;seau. Un autre exemple, un nom de lumi&#232;re valable pour les appareils du syst&#232;me PowerLine
+pourrait &#234;tre PL9. Puis en appuyant sur le bouton On ou Off, vous
+devriez &#234;tre capable de changer l'&#233;tat de la lumi&#232;re sur
+le r&#233;seau. Un autre exemple, un nom syst&#232;me de lumi&#232;re valable  pourrait &#234;tre IL123
+qui est une lumi&#232;re interne num&#233;ro 123 . Appuyer sur le bouton On ou Off
+changerera seulement l'&#233;tat de la lumi&#232;re interne et ne changera pas une
+lumi&#232;re sur le r&#233;seau. Voir "
 <A HREF="../../../../html/doc/Technical/Names.shtml"> Noms </A>
-"Voire l'aide générale pour plus d'informations.
+"Voire l'aide g&#233;n&#233;rale pour plus d'informations.
 
-<H2>Boutons de Contrôle Lumière et États </H2>
+<H2>Boutons de Commande Lumi&#232;re et &#201;tats </H2>
 
 <DL>
-<DT> État actuel: </DT>
+<DT> &#201;tat actuel: </DT>
 
-<DD> Montre l'état actuel connu de la lumière. </Dd>
+<DD> Montre l'&#233;tat actuel connu de la lumi&#232;re. </Dd>
 <DL>
 <DT> <Inconnu> </DT>
-<DD> Soit aucun nom de lumière sélectionnée ou nom de Lumière non valide. </Dd>
+<DD> Soit aucun nom de lumi&#232;re s&#233;lectionn&#233; ou nom de Lumi&#232;re non valide. </Dd>
 <DT> Off </DT>
-<DD>La Lumière est au minimum d'intensité si l'intensité variable est prise en charge, ou Off. </Dd>
+<DD>La Lumi&#232;re est au minimum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou Off. </Dd>
 <DT>On </DT>
-<DD>La Lumière est au maximum d'intensité si l'intensité variable est prise en charge, ou On. </Dd>
-<DT> Intermédiaire </DT>
+<DD>La Lumi&#232;re est au maximum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou On. </Dd>
+<DT> Interm&#233;diaire </DT>
 <DD>
-L'intensité lumineuse se situe entre 0 et 100% et l'intensité du courant est égale à
-l'intensité cible.
+L'intensit&#233; lumineuse se situe entre 0 et 100% et l'intensit&#233; du courant est &#233;gale &#224
+l'intensit&#233; cible.
 </Dd>
-<DT> Transition supérieur </DT>
+<DT> Transition sup&#233;rieur </DT>
 <DD>
-L'intensité de la cible est plus élevée que l'intensité du courant et la lumière ajustée à chaque minute rapide selon la valeur du Temps de Transition.
+L'intensit&#233; de la cible est plus &#233;lev&#233;e que l'intensit&#233; du courant et la lumi&#232;re ajust&#233;e &#224 chaque minute rapide selon la valeur du Temps de Transition.
 </dd>
 <DT> Transition Basse </DT>
 <DD>
-L'intensité de la cible est plus faible que l'intensité du courant et la lumière est ajustée à chaque
+L'intensit&#233; de la cible est plus faible que l'intensit&#233; du courant et la lumi&#232;re est ajust&#233;e &#224 chaque
  minute rapide selon la valeur du Temps de Transition.
 </Dd>
- <DT>La transition Vers Le Plein On </DT>
+ <DT>La transition Vers Le Maximum On </DT>
 <DD>
-L'intensité de la cible est plus élevée que l'intensité du courant,
-et supérieure ou égale à l'intensité maximale et la lumière est ajustée
-à chaque minute rapide selon la valeur du Temps de Transition.
+L'intensit&#233; de la cible est plus &#233;lev&#233;e que l'intensit&#233; du courant,
+et sup&#233;rieure ou &#233;gale &#224 l'intensit&#233; maximale et la lumi&#232;re est ajust&#233;e
+&#224 chaque minute rapide selon la valeur du Temps de Transition.
 </ Dd>
-<DT>La transition vers le Plein Off </DT>
+<DT>La transition vers le Minimum Off </DT>
 <DD>
-L'intensité de la cible est plus faible que l'intensité du courant,
-et inférieure ou égale à l'intensité minimale et la lumière est ajustée à
+L'intensit&#233; de la cible est plus faible que l'intensit&#233; du courant,
+et inf&#233;rieure ou &#233;gale &#224 l'intensit&#233; minimale et la lumi&#232;re est ajust&#233;e &#224
 chaque minute rapide selon la valeur Temps de Transition.
 </Dd>
 </DL>
 </Dd>
 
-<DT>Configuration des Options des Lumières: </DT>
+<DT>Configuration des Options des Lumi&#232;res: </DT>
 <DD>
 <DL>
-<DT> Activée: </DT>
-<DD> La lumière va répondre à son type de contrôle automatique. </Dd>
+<DT> Activ&#233;e: </DT>
+<DD> La lumi&#232;re va r&#233;pondre &#224 son type de commande automatique. </Dd>
 <DT>Variable: </DT>
-<DT>La Lumière peut être commandée à des valeurs comprises entre 0% et 100%. </Dd>
+<DT>La Lumi&#232;re peut &#234;tre command&#233;e &#224 des valeurs comprises entre 0% et 100%. </Dd>
 <DT>Transition: </DT>
-<DD>Les changements d'intensité vont utiliser le temps de transition ppour évoluer
-entre l'intensité du courant et la cible.
+<DD>Les changements d'intensit&#233; vont utiliser le temps de transition ppour &#233;voluer
+entre l'intensit&#233; du courant et la cible.
 </Dd>
 </DL>
 </Dd>
 
 <DT>On</DT>
-<DD> Appuyez sur ce bouton pour allumer la lumière. </Dd>
+<DD> Appuyez sur ce bouton pour allumer la lumi&#232;re. </Dd>
 
 <DT> Off </DT>
-<DD> Appuyez sur ce bouton pour éteindre la lumière. </Dd>
+<DD> Appuyez sur ce bouton pour &#233;teindre la lumi&#232;re. </Dd>
 
-<DT>Changer d'Intensité </DT>
-<DD> Entrez une nouvelle valeur pour la lumière (0% à 100%) et en appuyant sur
-ce bouton régler l'intensité à la nouvelle cible.
+<DT>Changer d'Intensit&#233; </DT>
+<DD> Entrez une nouvelle valeur pour la lumi&#232;re (0% &#224 100%) et en appuyant sur
+ce bouton r&#233;gler l'intensit&#233; &#224 la nouvelle cible.
 Si le transitoire est pris en charge si vous utilisez le temps de transition
- pour le calcul de la vitesse pour passer de l'intensité du courant
-à l'intensité de la nouvelle cible
+ pour le calcul de la vitesse pour passer de l'intensit&#233; du courant
+&#224 l'intensit&#233; de la nouvelle cible
 	</DD>
 	
-<DT> Intensité minimale: </DT>
-<DD> Une valeur 0 à 100 (pour cent) qui définit la plus faible quantité de lumière qui
+<DT> Intensit&#233; minimale: </DT>
+<DD> Une valeur 0 &#224 100 (pour cent) qui d&#233;finit la plus faible quantit&#233; de lumi&#232;re qui
 sera de sortie par une commande DIM.
 Une commande non explicite ignorera cette valeur.
 <Dd>
 
-<DT>Intensité maximale: </DT>
-<DD> Une valeur 0 à 100 (pour cent) qui définit le montant maximal de la lumière qui
-sera de sortie par une commande DIM.
+<DT>Intensit&#233; maximale: </DT>
+<DD> Une valeur 0 &#224 100 (pour cent) qui d&#233;finit le montant maximal de la lumi&#232;re qui
+sera en sortie par une commande DIM.
 Une commande non explicite ignorera cette valeur.
 </Dd>
 
 <DT>Temps de transition: </DT>
 <DD>
-Nombre de minutes pour passer de 0% à 100% d'intensité.
-Une valeur de zéro règlera l'appareil pour changer l'intensité d'un réglage
-à l'intensité du nouveaux réglage aussi vite que l'appareil est en mesure de le faire.
+Nombre de minutes pour passer de 0% &#224 100% d'intensit&#233;.
+Une valeur de z&#233;ro r&#232;glera l'appareil pour changer l'intensit&#233; d'un r&#233;glage
+&#224 l'intensit&#233; du nouveaux r&#233;glage aussi vite que l'appareil est en mesure de le faire.
 	</DD>
 </DL>
 
+Ceci est la page d'aide help/fr/package/jmri/jmrit/simpleligghtctrl/SimpleLightCtrl.shtml
 <!--#include virtual="/Footer" -->
 </BODY>
 </HTML>

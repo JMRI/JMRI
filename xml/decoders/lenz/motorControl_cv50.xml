@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+	<author>
+      <personname>
+        <firstname>Bernd (Ba)</firstname>
+        <surname>Wisotzki</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2014-05-18</date>
+      <authorinitials>Ba</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+    </revision>
+  </revhistory>
+  <!-- Add Your the "includes" here -->
+  <variable CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
+	<enumVal>
+	  <enumChoice choice="0 ">
+		<choice>0 </choice>
+		<choice xml:lang="de">0 </choice>
+	  </enumChoice>
+	  <enumChoice choice="1 ">
+		<choice>1 </choice>
+		<choice xml:lang="de">1 </choice>
+	  </enumChoice>
+	  <enumChoice choice="2 ">
+		<choice>2 </choice>
+		<choice xml:lang="de">2 </choice>
+	  </enumChoice>
+	  <enumChoice choice="3 ">
+		<choice>3 </choice>
+		<choice xml:lang="de">3 </choice>
+	  </enumChoice>
+	  <enumChoice choice="4 ">
+		<choice>4 </choice>
+		<choice xml:lang="de">4 </choice>
+	  </enumChoice>
+	  <enumChoice choice="5 ">
+		<choice>5 </choice>
+		<choice xml:lang="de">5 </choice>
+	  </enumChoice>
+	</enumVal>
+	<label>Motor Type(0-5)</label>
+	<label xml:lang="it">Tipo Motore (0-5)</label>
+	<comment>Range 0-5</comment>
+	<comment xml:lang="it">Valori da 0 a 5</comment>
+	<label xml:lang="de">Motortyp (0-5)</label>
+	<comment xml:lang="de">Wertebereich 0-5</comment>
+  </variable>
+  <variable CV="50" mask="XXVXXXXX" item="EMF Switch" default="0">
+	<enumVal>
+	  <enumChoice choice="Inactive">
+		<choice>Inactive</choice>
+		<choice xml:lang="it">Inattivo</choice>
+		<choice xml:lang="de">Aus</choice>
+	  </enumChoice>
+	  <enumChoice choice="Active">
+		<choice>Active</choice>
+		<choice xml:lang="it">Attivo</choice>
+		<choice xml:lang="de">Ein</choice>
+	  </enumChoice>
+	</enumVal>
+	<label>EMF Switch</label>
+	<label xml:lang="it">Interruttore EMF</label>
+	<label xml:lang="de">EMK Teiler</label>
+  </variable>
+  <variable CV="50" mask="XVXXXXXX" item="BEMF Control" default="0">
+	<enumVal>
+	  <enumChoice choice="On ">
+		<choice>On </choice>
+		<choice xml:lang="de">Ein </choice>
+	  </enumChoice>
+	  <enumChoice choice="Off">
+		<choice>Off</choice>
+		<choice xml:lang="de">Aus</choice>
+	  </enumChoice>
+	</enumVal>
+	<label>BEMF Control</label>
+	<label xml:lang="it">Controllo BEMF</label>
+	<label xml:lang="de">Regelung</label>
+  </variable>
+  <variable CV="50" mask="VXXXXXXX" item="Motor Frequency" default="0">
+	<enumVal>
+	  <enumChoice choice="High ">
+		<choice>High </choice>
+		<choice xml:lang="it">Alta</choice>
+		<choice xml:lang="de">Hoch </choice>
+	  </enumChoice>
+	  <enumChoice choice="Low ">
+		<choice>Low </choice>
+		<choice xml:lang="it">bassa</choice>
+		<choice xml:lang="de">Niedrig </choice>
+	  </enumChoice>
+	</enumVal>
+	<label>Motor Drive Frequency</label>
+	<label xml:lang="it">Frequenza Pilotaggio Motore</label>
+	<label xml:lang="de">Frequenz zur Motoransteuerung</label>
+  </variable>
+  
+</variables>

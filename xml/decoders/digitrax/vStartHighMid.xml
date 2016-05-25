@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: vStartHighMid.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -39,21 +39,25 @@
       <revremark>Revision in original Digitrax_01x3.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Start Volts" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
+  <variable CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
     <decVal/>
     <label>Start Volts</label>
-    <label xml:lang="it">Volts Minimi</label>
+    <label xml:lang="it">Volt Partenza</label>
+    <label xml:lang="fr">V démarr.v</label>
+    <label xml:lang="de">Startspannung</label>
     <comment>A value of 255 corresponds to 100%</comment>
-    <comment xml:lang="it">Un valore di 255 corrisponde al 100%i</comment>
+    <comment xml:lang="it">Un valore di 255 corrisponde al 100%</comment>
   </variable>
-  <variable label="Max Volts" CV="5" item="Vhigh">
+  <variable CV="5" item="Vhigh">
     <decVal/>
     <label>Max Volts</label>
     <label xml:lang="it">Volts massimi</label>
+    <label xml:lang="de">Vmax (0-255)</label>
   </variable>
-  <variable label="Mid Volts" CV="6" item="Vmid">
+  <variable CV="6" item="Vmid">
     <decVal/>
     <label>Mid Volts</label>
-    <label xml:lang="it">Volts medi</label>
+    <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
   </variable>
 </variables>

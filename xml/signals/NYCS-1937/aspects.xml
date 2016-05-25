@@ -42,6 +42,8 @@
       <indication>Proceed</indication>
       <reference>Page 92</reference>
       <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
@@ -49,6 +51,8 @@
       <rule>Rule 281</rule>
       <indication>Proceed</indication>
       <reference>Page 92</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
@@ -56,6 +60,8 @@
       <rule>Rule 281A</rule>
       <indication>Proceed approaching second signal at medium speed</indication>
       <reference>Page 93</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -63,6 +69,8 @@
       <rule>Rule 281B</rule>
       <indication>Proceed approaching next signal at limited speed</indication>
       <reference>Hand written note</reference>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
     </aspect>
 
     <aspect>
@@ -70,6 +78,8 @@
       <rule>Rule 281C</rule>
       <indication>Proceed; limited speed within interlocking limits</indication>
       <reference>Hand written note</reference>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
     </aspect>
 
     <aspect>
@@ -77,6 +87,8 @@
       <rule>Rule 282</rule>
       <indication>Proceed approaching next signal at medium speed</indication>
       <reference>Page 94</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -84,6 +96,8 @@
       <rule>Rule 282A</rule>
       <indication>Proceed preparing to stop at second signal</indication>
       <reference>Page 95</reference>
+      <speed>Medium</speed>
+      <speed2>Approach</speed2>
     </aspect>
 
     <aspect>
@@ -91,6 +105,8 @@
       <rule>Rule 283</rule>
       <indication>Proceed; medium speed within interlocking limits</indication>
       <reference>Page 45</reference>
+      <speed>Medium</speed>
+      <speed2>Clear</speed2>
     </aspect>
 
     <aspect>
@@ -98,6 +114,8 @@
       <rule>Rule 283A</rule>
       <indication>Proceed preparing to stop at second signal; medium speed within interlocking limits</indication>
       <reference>Page 96</reference>
+      <speed>Medium</speed>
+      <speed2>Approach</speed2>
     </aspect>
 
     <aspect>
@@ -105,6 +123,8 @@
       <rule>Rule 283B</rule>
       <indication>Proceed at medium speed approaching next signal at slow speed</indication>
       <reference>Page 96</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
     </aspect>
 
     <aspect>
@@ -112,6 +132,8 @@
       <rule>Rule 284</rule>
       <indication>Proceed approaching next signal at slow speed. Train exceeding medium speed must at once reduce to that speed.</indication>
       <reference>Page 97</reference>
+      <speed>Approach</speed>
+      <speed2>Slow</speed2>
     </aspect>
 
     <aspect>
@@ -119,6 +141,8 @@
       <rule>Rule 285</rule>
       <indication>Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed.</indication>
       <reference>Page 98</reference>
+      <speed>Approach</speed>
+      <speed2>Approach</speed2>
     </aspect>
 
     <aspect>
@@ -126,6 +150,8 @@
       <rule>Rule 286</rule>
       <indication>Proceed at medium speed preparing to stop at next signal</indication>
       <reference>Page 99</reference>
+      <speed>Medium</speed>
+      <speed2>Approach</speed2>
     </aspect>
 
     <aspect>
@@ -133,6 +159,8 @@
       <rule>Rule 287</rule>
       <indication>Proceed; slow speed within interlocking limits.</indication>
       <reference>Page 100</reference>
+      <speed>Slow</speed>
+      <speed2>Clear</speed2>
     </aspect>
 
     <aspect>
@@ -140,6 +168,8 @@
       <rule>Rule 288</rule>
       <indication>Proceed preparing to stop at next signal; slow speed within interlocking limits.</indication>
       <reference>Page 100</reference>
+      <speed>Slow</speed>
+      <speed2>Approach</speed2>
     </aspect>
 
     <aspect>
@@ -147,6 +177,8 @@
       <rule>Rule 289</rule>
       <indication>Proceed; Manual Block</indication>
       <reference>Page 101</reference>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
     </aspect>
 
     <aspect>
@@ -154,6 +186,8 @@
       <rule>Rule 289A</rule>
       <indication>Block occupied; proceed prepared to stop short of train ahead. Manual Block</indication>
       <reference>Page 101</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
     </aspect>
 
     <aspect>
@@ -161,6 +195,8 @@
       <rule>Rule 289B</rule>
       <indication>Stop; Manual Block</indication>
       <reference>Page 102</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -168,6 +204,8 @@
       <rule>Rule 289C</rule>
       <indication>Proceed; Train Orders</indication>
       <reference>Page 102</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
     </aspect>
 
     <aspect>
@@ -175,6 +213,8 @@
       <rule>Rule 289E</rule>
       <indication>Stop; Train Orders</indication>
       <reference>Page 49</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -182,6 +222,8 @@
       <rule>Rule 290</rule>
       <indication>Proceed at restricted speed.</indication>
       <reference>Page 103</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
     </aspect>
 
     <aspect>
@@ -189,6 +231,8 @@
       <rule>Rule 291</rule>
       <indication>Stop; then proceed at restricted speed.</indication>
       <reference>Page 104</reference>
+      <speed>Stop</speed>
+      <speed2>Restricted</speed2>
     </aspect>
 
     <aspect>
@@ -196,6 +240,8 @@
       <rule>Rule 292</rule>
       <indication>Stop.</indication>
       <reference>Page 105</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
   </aspects>

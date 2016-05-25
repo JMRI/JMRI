@@ -16,6 +16,10 @@ import jmri.jmrix.JmrixConfigPane;
  */
 public final class ConnectionLabel extends JLabel implements PropertyChangeListener {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4404932240707919099L;
     ConnectionConfig connection;
 
     public ConnectionLabel(ConnectionConfig connection) {
@@ -41,11 +45,11 @@ public final class ConnectionLabel extends JLabel implements PropertyChangeListe
         if (ConnectionStatus.instance().isConnectionOk(this.connection.getInfo())) {
             this.setForeground(Color.BLACK);
             this.setText(Bundle.getMessage("ConnectionSucceeded",
-                            name, this.connection.name(), this.connection.getInfo()));
+                    name, this.connection.name(), this.connection.getInfo()));
         } else {
             this.setForeground(Color.RED);
             this.setText(Bundle.getMessage("ConnectionFailed",
-                            name, this.connection.name(), this.connection.getInfo()));
+                    name, this.connection.name(), this.connection.getInfo()));
         }
         this.revalidate();
     }

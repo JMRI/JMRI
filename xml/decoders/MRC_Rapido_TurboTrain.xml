@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
-<!-- $Id: MRC_Rapido_TurboTrain.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -29,32 +29,39 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Range 1 - 127" item="Short Address" default="3" tooltip="sets the Short or 2-digit address [range 1-127]" mask="VVVVVVVV">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Range 1 - 127</comment>
-      </variable>
-      <variable label="Start Volts" CV="2" comment="Range 0-32" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" mask="VVVVVVVV">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" comment="Range 0-32" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" mask="VVVVVVVV">
         <decVal max="32"/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Acceleration" CV="3" comment="Range 0-32" item="Accel" default="0" tooltip="sets the acceleration rate [range 0-32]" mask="VVVVVVVV">
+      <variable CV="3" comment="Range 0-32" item="Accel" default="0" tooltip="sets the acceleration rate [range 0-32]" mask="VVVVVVVV">
         <decVal max="32"/>
         <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-32)</label>
+        <label xml:lang="fr">Accelération (0-32)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-32)</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Deceleration" CV="4" item="Decel" default="0" tooltip="sets the deceleration rate [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
+      <variable CV="4" item="Decel" default="0" tooltip="sets the deceleration rate [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
         <decVal max="32"/>
         <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-32)</label>
+        <label xml:lang="fr">Décélération (1-32)</label>
+        <label xml:lang="de">Bremszeit (1-32)</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Max Voltage" CV="5" item="Vhigh" default="32" tooltip="sets the motor voltage at the top Speed Step [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
+      <variable CV="5" item="Vhigh" default="32" tooltip="sets the motor voltage at the top Speed Step [range 0-32]" comment="Range 0-32" mask="VVVVVVVV">
         <decVal max="32"/>
         <label>Max Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-32):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Speed Curve Select" CV="6" item="Speed Table/Mid Range Cab Speed Step" default="0" tooltip="sets Speed Curve">
+      <variable CV="6" item="Speed Table/Mid Range Cab Speed Step" default="0" tooltip="sets Speed Curve">
         <enumVal>
           <enumChoice choice="Linear">
             <choice>Linear</choice>
@@ -68,121 +75,51 @@
         </enumVal>
         <label>Speed Curve Select</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" tooltip="is the Decoder ID, Read Only" item="Decoder Version">
-        <decVal/>
-        <label>Version ID</label>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="is the Manufacturer ID, MRC=143, Read Only" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
-      <variable label="Long Address" CV="17" tooltip="CVs 17 and 18 set the Extended (4 digit) address, range 1-9999" item="Extended Address">
-        <longAddressVal/>
-        <label>Long Address</label>
-      </variable>
-      <variable label="Advanced Consist address" CV="19" item="Consist Address" default="0" tooltip="set the Advanced Consist address, range 0-127" mask="XVVVVVVV">
-        <decVal max="127"/>
-        <label>Advanced Consist address</label>
-      </variable>
-      <variable label="Locomotive Direction In Consist" CV="19" item="Consist Direction" default="0" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction In Consist</label>
-      </variable>
-      <variable label="Consist Function" CV="21" item="Functions Respond To" default="0" tooltip="selects the address accessory functions will respond to" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Functions respond to Locomotive Address Only">
-            <choice>Functions respond to Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Functions respond to Consist Address Only">
-            <choice>Functions respond to Consist Address Only</choice>
-          </enumChoice>
-        </enumVal>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable CV="21" item="Functions Respond To" default="0" tooltip="selects the address accessory functions will respond to" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Function</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" item="Locomotive Direction" tooltip="Sets the direction of motion" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable label="Speed Steps" CV="29" item="Speed Step Mode" default="1" tooltip="Sets the Speed Step resolution" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable label="Analog Conversion Mode" CV="29" item="Analog (DC) Operation" default="0" tooltip="Determines if loco motor will respond to DCC only (OFF) or DC and DCC (ON)" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Conversion Mode</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" item="Address Format" tooltip="Sets the Addressing Mode" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
-      <variable label="Announcement volume" CV="50" item="Sound Setting 1" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="50" item="Sound Setting 1" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
         <decVal max="3" min="0"/>
         <label>Announcement volume</label>
       </variable>
-      <variable label="Horn Volume" CV="51" item="Sound Setting 2" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+      <variable CV="51" item="Sound Setting 2" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
         <decVal max="3" min="0"/>
         <label>Horn Volume</label>
       </variable>
-      <variable label="Bell Volume" CV="53" item="Sound Setting 3" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+      <variable CV="53" item="Sound Setting 3" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
         <decVal max="3" min="0"/>
         <label>Bell Volume</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="54" item="Sound Option 1" default="0" tooltip="Range 0-1" mask="VVVVVVVV">
+      <variable CV="54" item="Sound Option 1" default="0" tooltip="Range 0-1" mask="VVVVVVVV">
         <decVal max="1" min="0"/>
         <label>Bell Ring Rate</label>
       </variable>
-      <variable label="Turbine Volume" CV="55" item="Sound Setting 4" default="2" tooltip="Range 0-4 (4=engine sound off)" mask="VVVVVVVV">
+      <variable CV="55" item="Sound Setting 4" default="2" tooltip="Range 0-4 (4=engine sound off)" mask="VVVVVVVV">
         <decVal max="4" min="0"/>
         <label>Turbine Volume</label>
       </variable>
-      <variable label="Brake Squeal Volume" CV="56" item="Sound Setting 5" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+      <variable CV="56" item="Sound Setting 5" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
         <decVal max="3" min="0"/>
         <label>Brake Squeal Volume</label>
       </variable>
-      <variable label="Air release volume" CV="57" item="Sound Setting 6" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+      <variable CV="57" item="Sound Setting 6" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
         <decVal max="3" min="0"/>
         <label>Air release volume</label>
       </variable>
-      <variable label="Door open/close volume" CV="58" item="Sound Setting 7" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
+      <variable CV="58" item="Sound Setting 7" default="3" tooltip="Range 0-3" mask="VVVVVVVV">
         <decVal max="3" min="0"/>
         <label>Door open/close volume</label>
       </variable>
-      <variable label="American/Canadian version" CV="59" item="Sound Option 2" default="0" tooltip="American = 0 / Canadian = 1" mask="VVVVVVVV">
+      <variable CV="59" item="Sound Option 2" default="0" tooltip="American = 0 / Canadian = 1" mask="VVVVVVVV">
         <enumVal>
           <enumChoice choice="American">
             <choice>American</choice>
@@ -193,53 +130,49 @@
         </enumVal>
         <label>American/Canadian version</label>
       </variable>
-      <variable label="User ID #1" CV="105" item="User Id #1" default="0" tooltip="sets the User ID #1 [range 0-255]" mask="VVVVVVVV">
-        <decVal max="255" min="0"/>
-        <label>User ID #1</label>
-      </variable>
-      <variable label="User ID #2" CV="106" item="User Id #2" default="0" tooltip="sets the User ID #2 [range 0-255]" mask="VVVVVVVV">
-        <decVal max="255" min="0"/>
-        <label>User ID #2</label>
-      </variable>
+      <!-- CV 105-106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="125" default="1"/>
+      <factReset label="Reset All CVs" CV="125" default="1">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-  <pane name="MRC" nameFmt="label">
+  <pane nameFmt="label">
     <column>
-      <label label="MRC NOTE: Some DCC systems do not have enough power on the program track for programming">
-        <label>MRC NOTE: Some DCC systems do not have enough power on the program track for programming</label>
+      <label>
+        <text>MRC NOTE: Some DCC systems do not have enough power on the program track for programming</text>
       </label>
-      <label label="sound decoders. If your system is one of these, There are Program Track Boosters availlable">
-        <label>sound decoders. If your system is one of these, There are Program Track Boosters availlable</label>
+      <label>
+        <text>sound decoders. If your system is one of these, There are Program Track Boosters availlable</text>
       </label>
-      <label label="from aftermarket DCC suppliers.">
-        <label>from aftermarket DCC suppliers.</label>
+      <label>
+        <text>from aftermarket DCC suppliers.</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="MRC NOTE: The decoders in your Turbo support all program methods, including: register mode,">
-        <label>MRC NOTE: The decoders in your Turbo support all program methods, including: register mode,</label>
+      <label>
+        <text>MRC NOTE: The decoders in your Turbo support all program methods, including: register mode,</text>
       </label>
-      <label label="paged mode, CV programming mode, direct mode, and programming on the main (OPS">
-        <label>paged mode, CV programming mode, direct mode, and programming on the main (OPS</label>
+      <label>
+        <text>paged mode, CV programming mode, direct mode, and programming on the main (OPS</text>
       </label>
-      <label label="mode programming). Program the Turbo the same way you would program any other">
-        <label>mode programming). Program the Turbo the same way you would program any other</label>
+      <label>
+        <text>mode programming). Program the Turbo the same way you would program any other</text>
       </label>
-      <label label="NMRA-compatible decoder with your DCC system. Although the sound decoders in the">
-        <label>NMRA-compatible decoder with your DCC system. Although the sound decoders in the</label>
+      <label>
+        <text>NMRA-compatible decoder with your DCC system. Although the sound decoders in the</text>
       </label>
-      <label label="Turbo support &quot;read back on a program track&quot;, there may be some DCC systems that either">
-        <label>Turbo support "read back on a program track", there may be some DCC systems that either</label>
+      <label>
+        <text>Turbo support "read back on a program track", there may be some DCC systems that either</text>
       </label>
-      <label label="do not support reading back decoders, or do not have the capability to read back sound">
-        <label>do not support reading back decoders, or do not have the capability to read back sound</label>
+      <label>
+        <text>do not support reading back decoders, or do not have the capability to read back sound</text>
       </label>
-      <label label="decoders.">
-        <label>decoders.</label>
+      <label>
+        <text>decoders.</text>
       </label>
     </column>
     <name>MRC</name>

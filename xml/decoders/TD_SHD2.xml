@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="td@teamdigital1.com" version="2.0" lastUpdated="20140407"/>
+  <!-- Version 1 inital release -->
+  <!-- Version 2 4/7/14 release add turnout control option-->
+  <!-- Version 2.1 10/10/14 release added aspect memory option-->
+  <decoder>
+    <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
+      <model model="SHD2" lowVersionID="1" comment="SHD2 is a DCC Signal decoder"/>
+    </family>
+    <programming direct="yes" paged="yes" register="no" ops="no"/>
+    <variables>
+      <variable item="Head 1" CV="2" mask="VVVVVVVV" default="1" tooltip="Range 1-2040">
+        <splitVal highCV="3" upperMask="XXXXXVVV"/>
+        <label>Head 1</label>
+      </variable>
+      <variable item="Head 2" CV="2" mask="VVVVVVVV" infoOnly="yes" default="1" tooltip="Address derived from head 1 address">
+        <splitVal highCV="3" offset="1" upperMask="XXXXVVVV"/>
+        <label>Head 2</label>
+      </variable>
+      <variable item="Sw Address" CV="5" mask="VVVVVVVV" default="0" tooltip="Range 1-2040">
+        <splitVal highCV="6" upperMask="XXXXXVVV"/>
+        <label>Sw Address</label>
+      </variable>
+      <variable CV="7" item="Decoder Version">
+        <decVal/>
+        <label>Version ID</label>
+      </variable>
+      <variable CV="8" item="Manufacturer" default="25">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
+      <variable CV="18" mask="XXXXVVVV" item="Alt1" default="5">
+        <enumVal>
+          <enumChoice choice=" 0-Red"/>
+          <enumChoice choice=" 1-Yellow"/>
+          <enumChoice choice=" 2-Green"/>
+          <enumChoice choice=" 3-Lunar"/>
+          <enumChoice choice=" 4-Flash Red"/>
+          <enumChoice choice=" 5-Flash Yellow"/>
+          <enumChoice choice=" 6-Flash Green"/>
+          <enumChoice choice=" 7-Flash Lunar"/>
+          <enumChoice choice=" 8-Dark"/>
+        </enumVal>
+        <label>Alternate Aspect H1</label>
+      </variable>
+      <variable CV="19" mask="XXXXVVVV" item="Alt2" default="5">
+        <enumVal>
+          <enumChoice choice=" 0-Red"/>
+          <enumChoice choice=" 1-Yellow"/>
+          <enumChoice choice=" 2-Green"/>
+          <enumChoice choice=" 3-Lunar"/>
+          <enumChoice choice=" 4-Flash Red"/>
+          <enumChoice choice=" 5-Flash Yellow"/>
+          <enumChoice choice=" 6-Flash Green"/>
+          <enumChoice choice=" 7-Flash Lunar"/>
+          <enumChoice choice=" 8-Dark"/>
+        </enumVal>
+        <label>Alternate Aspect H2</label>
+      </variable>
+      <variable CV="20" mask="VVVVVVVV" item="R1" default="128">
+        <decVal/>
+        <label>Red 1</label>
+      </variable>
+      <variable CV="21" mask="VVVVVVVV" item="Y1" default="128">
+        <decVal/>
+        <label>Yellow 1</label>
+      </variable>
+      <variable CV="22" mask="VVVVVVVV" item="G1" default="128">
+        <decVal/>
+        <label>Green 1</label>
+      </variable>
+      <variable CV="23" mask="VVVVVVVV" item="L1" default="128">
+        <decVal/>
+        <label>Lunar 1</label>
+      </variable>
+      <variable CV="24" mask="VVVVVVVV" item="R2" default="128">
+        <decVal/>
+        <label>Red 1</label>
+      </variable>
+      <variable CV="25" mask="VVVVVVVV" item="Y2" default="128">
+        <decVal/>
+        <label>Yellow 2</label>
+      </variable>
+      <variable CV="26" mask="VVVVVVVV" item="G2" default="128">
+        <decVal/>
+        <label>Green 2</label>
+      </variable>
+      <variable CV="27" mask="VVVVVVVV" item="L2" default="128">
+        <decVal/>
+        <label>Lunar 2</label>
+      </variable>
+      <variable CV="29" mask="XXXXXXXV" item="Opt1" default="0">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Option 1</label>
+      </variable>
+      <variable CV="29" mask="XXXXXXVX" item="Opt2" default="0">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Option 2</label>
+      </variable>
+      <variable CV="29" mask="XXXXXVXX" item="Opt3" default="0">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Option 3</label>
+      </variable>
+      <variable CV="29" mask="XXXXVXXX" item="Opt4" default="0">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Option 4</label>
+      </variable>      
+    </variables>
+  </decoder>
+  <pane>
+    <name>SHD2</name>
+    <column>
+      <row>
+        <column>
+          <label>
+            <text>*** NOTE:  Ops Mode programming is not available! ***</text>
+          </label>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>------  Decoder Address ------ </text>
+          </label>
+          <display item="Head 1"/>
+        </column>
+        <column>
+          <display item="Head 2"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>------ Turnout Address ------ </text>
+          </label>
+          <display item="Sw Address"/>
+          <label>
+            <text>This is the base address if Option 3 is enabled.</text>
+          </label>
+          <label>
+            <text>If Option 2 and 3 are disabled and</text>
+          </label>
+          <label>
+            <text>this address is greater than zero</text>
+          </label>
+          <label>
+            <text>then this address controls the lunar</text>
+          </label>
+          <label>
+            <text>outputs with close/throw commands.</text>
+          </label>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>------ Alternate Aspect ------ </text>
+          </label>
+          <display item="Alt1"/>
+          <display item="Alt2"/>
+          <label>
+            <text>These are only valid when Option 3 is enabled.</text>
+          </label>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>------  Aspect Brightness ------ </text>
+          </label>
+          <display item="R1"/>
+          <display item="Y1"/>
+          <display item="G1"/>
+          <display item="L1"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="R2"/>
+          <display item="Y2"/>
+          <display item="G2"/>
+          <display item="L1"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>------ Decoder Configuration CV29  ------ </text>
+          </label>
+          <display item="Opt1" format="checkbox"/>
+          <label>
+            <text>3-lead bi-color LED</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Opt2" format="checkbox"/>
+          <label>
+            <text>Lunar on solid, use for position signals</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Opt3" format="checkbox"/>
+          <label>
+            <text>Turnout close/throw commands control the aspects</text>
+          </label>
+          <label>
+            <text>*** Option 3 only available in version 2 or later of the SHD2 ****</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Opt4" format="checkbox"/>
+          <label>
+            <text>Aspect memory, aspect at power on same as power off</text>
+          </label>          
+        </column>
+      </row>
+    </column>
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label> </label>
+      <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
+      <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
+    </column>
+    <name>Mfg</name>
+  </pane>
+  <pane>
+    <column>
+      <cvtable/>
+    </column>
+    <name>CVs</name>
+  </pane>
+</decoder-config>

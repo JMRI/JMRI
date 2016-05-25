@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2003-2008 -->
-<!-- $Id: index.shtml,v 1.6 2009/02/23 02:02:24 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!-- $Id$ -->
+<!-- Updated by Blorec Herv&#233; le 2013-08-31; Egbert Broerse (html markup); le 2015-10-18 -->
 <title>JMRI: DecoderPro Symbolic Programmer</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -22,87 +22,87 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H1>DecoderPro Programmateur Symbolique</H1>
+<h1>DecoderPro Programmateur Symbolique</h1>
 
-<P>Les décodeurs DCC modernes sont des bêtes compliquées à programmer. L'idée simple
-de «mettre l'adresse dans CV01" ne s'adaptent pas bien lorsque vous programmer des fonctions complexes en utilisant des combinaisons de motifs de bits. Une interface plus conviviale est nécessaire. Il existe des programmes qui offrent de meilleures façons de programmer des décodeurs spécifiques. Malheureusement, elles sont limitées à certains types d'ordinateurs, et que leurs auteurs ne puissent les personnaliser pour les nouveaux types de décodeurs.</P>
+<p>Les d&#233;codeurs DCC modernes sont des b&#234;tes compliqu&#233;es &#224; programmer. L'id&#233;e simple
+de "mettre l'adresse dans CV01" ne s'adaptent pas bien lorsque vous programmer des fonctions complexes en utilisant des combinaisons de motifs de bits. Une interface plus conviviale est n&#233;cessaire. Il existe des programmes qui offrent de meilleures fa&#231;ons de programmer des d&#233;codeurs sp&#233;cifiques. Malheureusement, elles sont limit&#233;es &#224; certains types d'ordinateurs, et que leurs auteurs ne puissent les personnaliser pour les nouveaux types de d&#233;codeurs.</p>
 
-<P> Le programmateur symbolique DecoderPro est destiné à améliorer la situation. Il est configuré en utilisant des fichiers texte, de sorte qu'il peut être adapté aux types de décodeur supplémentaire facilement. Il communique avec les décodeurs en utilisant l'interface de programmation JMRI, de sorte qu'il peut fonctionner sur n'importe quel matériel informatique et de mise en page qui supporte JMRI. Il est disponible gratuitement en téléchargement. Et puisque le code est disponible via l'open source, si vous voulez l'améliorer, vous pouvez le faire.</p>
+<p>Le programmateur symbolique DecoderPro est destin&#233; &#224; am&#233;liorer la situation. Il est configur&#233; en utilisant des fichiers texte, de sorte qu'il peut &#234;tre adapt&#233; aux types de d&#233;codeur suppl&#233;mentaires facilement. Il communique avec les d&#233;codeurs en utilisant l'interface de programmation JMRI, de sorte qu'il peut fonctionner sur n'importe quel mat&#233;riel informatique et Mat&#233;riel R&#233;seau qui supporte JMRI. Il est disponible gratuitement en t&#233;l&#233;chargement. Et puisque le code est disponible via l'open source, si vous voulez l'am&#233;liorer, vous pouvez le faire.</p>
 
-<h2>Introduction Rapide à l'Utilisation de DecoderPro</h2>
+<h2>Introduction Rapide &#224; l'Utilisation de DecoderPro</h2>
 
 La page  
 <a href="./Tour.shtml">Visite Rapide</A>
-vous donnera de plus amples renseignements sur la façon dont DecoderPro regarde et les bases sur la façon de l'utiliser. 
-De là, vous pouvez aller au 
+vous donnera de plus amples renseignements sur la fa&#231;on dont DecoderPro regarde et les bases sur la fa&#231;on de l'utiliser. 
+De l&#224;, vous pouvez aller au 
 <a href="../../../manual/index.shtml">Manuel Complet de DecoderPro</a>
-pour plus d'informations sur la façon de l'utiliser, ou consultez le 
-<a href="#guide">Guide Utilisateur</a> pour plus d'information sur sa façon de travailler.
-<P>
+pour plus d'informations sur la fa&#231;on de l'utiliser, ou consultez le 
+<a href="#guide">Guide Utilisateur</a> pour plus d'information sur sa fa&#231;on de travailler.
+<p>
 DecoderPro est aussi couvert par le 
-<A HREF="http://mymemoirs.net/model-trains-set1-vol3b.php">Volume 3</a> 
-<A HREF="http://mymemoirs.net/model-trains.php">des séries de vidéos</a>
-sur les sujets DCC de Joe Fugate
+<a HREF="http://mymemoirs.net/model-trains-set1-vol3b.php">Volume 3</a> 
+<a HREF="http://mymemoirs.net/model-trains.php">des s&#233;ries de vid&#233;os</a>
+sur les sujets DCC de Joe Fugate.
 
+<h2>De Quoi Avez vous Besoin pour Utiliser DecoderPro?</h2>
 
-<H2>De Quoi Avez vous Besoin pour Utiliser DecoderPro</H2>
+<p>Le logiciel DecoderPro fonctionne sur Windows, Linux, Macintosh (OS 8.6 &#224; 9.2 et Mac OS X), et OS/2. Il pourra sans doute aussi travailler avec la plupart des autres syst&#232;mes d'exploitation modernes qui disposent de Java; nous contacter pour vous aider si vous souhaitez l'essayer sur un autre syst&#232;me. Vous avez besoin d'un port s&#233;rie disponible, soit sur l'ordinateur lui-m&#234;me, ou via un <A HREF="../../hardware/USBtoSerial.shtml">adaptateur USB</a>. Pour plus d'informations sur la fa&#231;on de l'utiliser, ou consultez les
+<a href="http://jmri.org/download/index.shtml">pages de t&#233;l&#233;chargement</a>.</p>
 
-<p>Le logiciel DecoderPro fonctionne sur Windows, Linux, Macintosh (OS 8.6 à 9.2 et Mac OS X), et OS/2. Il pourra sans doute aussi travailler avec la plupart des autres systèmes d'exploitation modernes qui disposent de Java; nous contacter pour vous aider si vous souhaitez l'essayer sur un autre système. Vous avez besoin d'un port série disponible, soit sur l'ordinateur lui-même, ou via un <A HREF="../../hardware/USBtoSerial.shtml">adaptateur USB</a>. Pour plus d'informations sur la façon de l'utiliser, ou consultez les
-<A HREF="http://jmri.sourceforge.net/download/index.shtml">pages de téléchargement</a>.</p>
-
-<p>Vous devez également disposer d'une connexion série à votre système DCC.
-Pour plus d'informations, s'il vous plaît voir la
-<A HREF="../../hardware/index.shtml"> pages de matériel DCC  </a>.</p>
+<p>Vous devez &#233;galement disposer d'une connexion s&#233;rie &#224; votre syst&#232;me DCC.
+Pour plus d'informations, s'il vous pla&#238;t voir la
+<a HREF="../../hardware/index.shtml"> pages de mat&#233;riel DCC</a>.</p>
 
 <h2>Ce que vous pouvez faire pour aider</h2>
 
-DecoderPro est la création d'un grand nombre de
-<A HREF="../../../Acknowledgements.shtml"> bénévoles </a>, les modélistes ferroviaires comme vous qui avez contribué à faire de chaque DecoderPro une grande ressource pour nous tous. Vous pouvez aussi aider, même si vous n'êtes pas un programmateur informatique;
-<a href="http://jmri.sourceforge.net//Help.html"> cliquez ici pour des suggestions sur la façon d'apporter de l'aide </a>..
+DecoderPro est la cr&#233;ation d'un grand nombre de
+<a href="../../../Acknowledgements.shtml"> b&#233;n&#233;voles</a>, les mod&#233;listes ferroviaires comme vous qui avez contribu&#233; &#224; faire de chaque DecoderPro une grande ressource pour nous tous. Vous pouvez aussi aider, m&#234;me si vous n'&#234;tes pas un programmateur informatique;
+<a href="http://jmri.org/Help.html">cliquez ici pour des suggestions sur la fa&#231;on d'apporter de l'aide</a>.
 
 <a name="guide">
-<H2>DecoderPro Guide Utilisateur</H2></a>
+<h2>DecoderPro Guide Utilisateur</h2></a>
 Ces sections Guide de l'utilisateur suivent la
 <a href="./Tour.shtml"> Visite Rapide </A>
-avec plus d'informations sur la façon dont DecoderPro fonctionne et comment
+avec plus d'informations sur la fa&#231;on dont DecoderPro fonctionne et comment
 l'installer et l'adapter.
 <p>
 
 <p>
 Voir aussi le
 <a href="../../../manual/index.shtml"> manuel DecoderPro </a>
-pour plus d'informations sur la façon d'utiliser DecoderPro.
+pour plus d'informations sur la fa&#231;on d'utiliser DecoderPro.
 <p>
 Les pages Guide de l'utilisateur:
-<dl class=toc>
-<dt> <a href="./MoreInfo.shtml"> Détails </A> </dt>
-<dt> <a HREF="./Files.shtml"> fichiers de configuration </a> </dt>
-<dt> <a HREF="./Roster.shtml">travail avec la Liste </a> </dt>
-<dt> <a HREF="./FAQ.shtml"> Foire aux questions </a> </dt>
-<dt> <a HREF="./Install.shtml"> Téléchargement et installation de DecoderPro </a>
+<dl class="toc">
+<dt> <a href="./MoreInfo.shtml"> D&#233;tails</a></dt>
+<dt> <a HREF="./Files.shtml"> fichiers de configuration</a></dt>
+<dt> <a HREF="./Roster.shtml">travail avec la Liste</a></dt>
+<dt> <a HREF="./FAQ.shtml"> Foire aux questions</a></dt>
+<dt> <a HREF="./Install.shtml"> T&#233;l&#233;chargement et installation de DecoderPro</a>
 </dt>
 </dl>
 
-
-<H2>Plus d'informations avancées </H2>
-<dl class=toc> 
-<dt> <a HREF="./IntroXML.shtml"> Introductionaux fichiers XML </a> </dt>
-<dt> <a href="./CreateDecoder.shtml"> Créer votre propre définition décodeur </a> </dt>
-<dt> <a href="./Programmer.shtml"> Créer un programmateureur personnalisé de définition </a> </dt>
-<dt> <a HREF="./RosterFile.shtml"> Comment le fichier est stocké, sa mise à jour à la main </a> </dt>
-<dt> <a HREF="./LocoFile.shtml"> Fichiers des Locomotive  </a> </dt>
-<dt>  <a HREF="./Debug.shtml">  Débogage </a> </dt>
-<dt> <a  HREF="./NetworkFiles.shtml"> Partage entre les ordinateurs </a> </dt>
-<dt> <a HREF="./FileUpdate.shtml"> Mise à jour de définitions Décodeur </a> </dt>
+<h2>Plus d'informations avanc&#233;es</h2>
+<dl class="toc"> 
+<dt> <a HREF="./IntroXML.shtml">Introductionaux fichiers XML</a></dt>
+<dt> <a href="./CreateDecoder.shtml">Cr&#233;er votre propre d&#233;finition d&#233;codeur</a></dt>
+<dt> <a href="./Programmer.shtml">Cr&#233;er un programmateureur personnalis&#233; de d&#233;finition</a></dt>
+<dt> <a HREF="./RosterFile.shtml">Comment le fichier est stock&#233;, sa mise &#224; jour &#224; la main</a></dt>
+<dt> <a HREF="./LocoFile.shtml">Fichiers des Locomotive</a></dt>
+<dt> <a HREF="./Debug.shtml">D&#233;bogage</a></dt>
+<dt> <a HREF="./NetworkFiles.shtml">Partage entre les ordinateurs</a></dt>
+<dt> <a HREF="./FileUpdate.shtml">Mise &#224; jour de d&#233;finitions D&#233;codeur</a></dt>
 
 </dl>
 
-<H2> informations décodeur </h2>
-
-Le projet JMRI a compilé un grand nombre d'informations sur les décodeurs de nombreux fabricants, nous les laissons librement disponible sous plusieurs formes.
+<h2>Informations d&#233;codeur</h2>
+<p>
+Le projet JMRI a compil&#233; un grand nombre d'informations sur les d&#233;codeurs de nombreux fabricants, nous les laissons librement disponible sous plusieurs formes. 
 Pour en savoir plus, consultez les
-<a href="http://jmri.sourceforge.net/xml/XSLT/"> informations sur la page décodeur </a>.
+<a href="http://jmri.org/xml/XSLT/">informations sur la page d&#233;codeur</a>.
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

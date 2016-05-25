@@ -1,0 +1,1346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20150412"/>
+  <!-- 2 Bug fix
+  Railcom toggle now shown. 
+  -->
+  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20140102"/>
+  <!-- 1 2013/07/24 Creation 
+		This is the first decoder template for the FD-R basic from Tams Elektronik.
+		File is different from FD-R Extended definition because of many
+		differences in functionality for the same CVs.
+  -->
+  <decoder>
+    <family name="Function decoders (FD)" mfg="Tams Elektronik GmbH">
+      <model model="FD-R Basic" numOuts="2" numFns="14" productID="FD-R-B">
+        <output name="1" label="AUX 1" maxcurrent="100mA"/>
+        <output name="2" label="AUX 2" maxcurrent="100mA"/>
+        <size length="12.5" width="9.5" height="3.3" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Calls to std NMRA templates (not in original LD-G-32.xml file)    -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+      <!-- Consist address (consist direction bit 7 not supported) -->
+      <variable item="Consist Address" CV="19" mask="XVVVVVVV">
+        <decVal max="127"/>
+        <label>Consist Address</label>
+        <label xml:lang="it">Indirizzo Consist</label>
+        <label xml:lang="fr">Adresse UM</label>
+        <label xml:lang="de">Verbundadresse</label>
+      </variable>
+      <!-- Definitions for Railcom/Motorola Panel -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+      <!-- Motorola for FD-R Basic: CV 114, for FD-R Extended: CV 47  -->
+      <variable item="Motorola 2nd Address" CV="114" tooltip="CV114" default="4">
+        <decVal min="1" max="255"/>
+        <label>Motorola 2nd Address</label>
+        <label xml:lang="fr">2ème adresse Motorola</label>
+        <label xml:lang="de">2. Motorola Adresse</label>
+      </variable>
+      <!-- Function tables for outputs 1-8  -->
+      <!-- Code bits from http://jmri.org/xml/nmra/functionmap.xml , added full range off functions for Tams Decoders-->
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+		    </enumChoice>
+        </enumVal>
+        <label>FL(f) controls output 1</label>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(f) controls output 2</label>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(f) controls output 3</label>
+      </variable>
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(f) controls output 4</label>
+      </variable>
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(f) controls output 5</label>
+      </variable>
+      <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(f) controls output 6</label>
+      </variable>
+      <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(f) controls output 7</label>
+      </variable>
+      <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(f) controls output 8</label>
+      </variable>
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(r) controls output 1</label>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(r) controls output 2</label>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(r) controls output 3</label>
+      </variable>
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(r) controls output 4</label>
+      </variable>
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(r) controls output 5</label>
+      </variable>
+      <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(r) controls output 6</label>
+      </variable>
+      <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(r) controls output 7</label>
+      </variable>
+      <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>FL(r) controls output 8</label>
+      </variable>
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F1 controls output 1</label>
+      </variable>
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F1 controls output 2</label>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F1 controls output 3</label>
+      </variable>
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F1 controls output 4</label>
+      </variable>
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F1 controls output 5</label>
+      </variable>
+      <variable item="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F1 controls output 6</label>
+      </variable>
+      <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F1 controls output 7</label>
+      </variable>
+      <variable item="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F1 controls output 8</label>
+      </variable>
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F2 controls output 1</label>
+      </variable>
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F2 controls output 2</label>
+      </variable>
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F2 controls output 3</label>
+      </variable>
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F2 controls output 4</label>
+      </variable>
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F2 controls output 5</label>
+      </variable>
+      <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F2 controls output 6</label>
+      </variable>
+      <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F2 controls output 7</label>
+      </variable>
+      <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F2 controls output 8</label>
+      </variable>
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F3 controls output 1</label>
+      </variable>
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F3 controls output 2</label>
+      </variable>
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F3 controls output 3</label>
+      </variable>
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F3 controls output 4</label>
+      </variable>
+      <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F3 controls output 5</label>
+      </variable>
+      <variable item="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F3 controls output 6</label>
+      </variable>
+      <variable item="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F3 controls output 7</label>
+      </variable>
+      <variable item="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F3 controls output 8</label>
+      </variable>
+      <variable item="F4 controls output 1" CV="38" mask="XXXXXXXV" minOut="1" minFn="3">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F4 controls output 1</label>
+      </variable>
+      <variable item="F4 controls output 2" CV="38" mask="XXXXXXVX" minOut="2" minFn="4">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F4 controls output 2</label>
+      </variable>
+      <variable item="F4 controls output 3" CV="38" mask="XXXXXVXX" minOut="3" minFn="4">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F4 controls output 3</label>
+      </variable>
+      <variable item="F4 controls output 4" CV="38" mask="XXXXVXXX" minOut="4" minFn="4">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F4 controls output 4</label>
+      </variable>
+      <variable item="F4 controls output 5" CV="38" mask="XXXVXXXX" minOut="5" minFn="4">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F4 controls output 5</label>
+      </variable>
+      <variable item="F4 controls output 6" CV="38" mask="XXVXXXXX" minOut="6" minFn="4">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F4 controls output 6</label>
+      </variable>
+      <variable item="F4 controls output 7" CV="38" mask="XVXXXXXX" minOut="7" minFn="4">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F4 controls output 7</label>
+      </variable>
+      <variable item="F4 controls output 8" CV="38" mask="VXXXXXXX" minOut="8" minFn="4">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F4 controls output 8</label>
+      </variable>
+      <variable item="F5 controls output 1" CV="39" mask="XXXXXXXV" minOut="1" minFn="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F5 controls output 1</label>
+      </variable>
+      <variable item="F5 controls output 2" CV="39" mask="XXXXXXVX" minOut="2" minFn="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F5 controls output 2</label>
+      </variable>
+      <variable item="F5 controls output 3" CV="39" mask="XXXXXVXX" minOut="3" minFn="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F5 controls output 3</label>
+      </variable>
+      <variable item="F5 controls output 4" CV="39" mask="XXXXVXXX" minOut="4" minFn="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F5 controls output 4</label>
+      </variable>
+      <variable item="F5 controls output 5" CV="39" mask="XXXVXXXX" minOut="5" minFn="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F5 controls output 5</label>
+      </variable>
+      <variable item="F5 controls output 6" CV="39" mask="XXVXXXXX" minOut="6" minFn="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F5 controls output 6</label>
+      </variable>
+      <variable item="F5 controls output 7" CV="39" mask="XVXXXXXX" minOut="7" minFn="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F5 controls output 7</label>
+      </variable>
+      <variable item="F5 controls output 8" CV="39" mask="VXXXXXXX" minOut="8" minFn="5">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F5 controls output 8</label>
+      </variable>
+      <variable item="F6 controls output 1" CV="40" mask="XXXXXXXV" minOut="1" minFn="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F6 controls output 1</label>
+      </variable>
+      <variable item="F6 controls output 2" CV="40" mask="XXXXXXVX" minOut="2" minFn="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F6 controls output 2</label>
+      </variable>
+      <variable item="F6 controls output 3" CV="40" mask="XXXXXVXX" minOut="3" minFn="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F6 controls output 3</label>
+      </variable>
+      <variable item="F6 controls output 4" CV="40" mask="XXXXVXXX" minOut="4" minFn="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F6 controls output 4</label>
+      </variable>
+      <variable item="F6 controls output 5" CV="40" mask="XXXVXXXX" minOut="5" minFn="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F6 controls output 5</label>
+      </variable>
+      <variable item="F6 controls output 6" CV="40" mask="XXVXXXXX" minOut="6" minFn="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F6 controls output 6</label>
+      </variable>
+      <variable item="F6 controls output 7" CV="40" mask="XVXXXXXX" minOut="7" minFn="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F6 controls output 7</label>
+      </variable>
+      <variable item="F6 controls output 8" CV="40" mask="VXXXXXXX" minOut="8" minFn="6">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F6 controls output 8</label>
+      </variable>
+      <variable item="F7 controls output 1" CV="41" mask="XXXXXXXV" minOut="1" minFn="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F7 controls output 1</label>
+      </variable>
+      <variable item="F7 controls output 2" CV="41" mask="XXXXXXVX" minOut="2" minFn="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F7 controls output 2</label>
+      </variable>
+      <variable item="F7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3" minFn="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F7 controls output 3</label>
+      </variable>
+      <variable item="F7 controls output 4" CV="41" mask="XXXXVXXX" minOut="4" minFn="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F7 controls output 4</label>
+      </variable>
+      <variable item="F7 controls output 5" CV="41" mask="XXXVXXXX" minOut="5" minFn="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F7 controls output 5</label>
+      </variable>
+      <variable item="F7 controls output 6" CV="41" mask="XXVXXXXX" minOut="6" minFn="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F7 controls output 6</label>
+      </variable>
+      <variable item="F7 controls output 7" CV="41" mask="XVXXXXXX" minOut="7" minFn="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F7 controls output 7</label>
+      </variable>
+      <variable item="F7 controls output 8" CV="41" mask="VXXXXXXX" minOut="8" minFn="7">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F7 controls output 8</label>
+      </variable>
+      <variable item="F8 controls output 1" CV="42" mask="XXXXXXXV" minOut="1" minFn="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F8 controls output 1</label>
+      </variable>
+      <variable item="F8 controls output 2" CV="42" mask="XXXXXXVX" minOut="2" minFn="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F8 controls output 2</label>
+      </variable>
+      <variable item="F8 controls output 3" CV="42" mask="XXXXXVXX" minOut="3" minFn="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F8 controls output 3</label>
+      </variable>
+      <variable item="F8 controls output 4" CV="42" mask="XXXXVXXX" minOut="4" minFn="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F8 controls output 4</label>
+      </variable>
+      <variable item="F8 controls output 5" CV="42" mask="XXXVXXXX" minOut="5" minFn="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F8 controls output 5</label>
+      </variable>
+      <variable item="F8 controls output 6" CV="42" mask="XXVXXXXX" minOut="6" minFn="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F8 controls output 6</label>
+      </variable>
+      <variable item="F8 controls output 7" CV="42" mask="XVXXXXXX" minOut="7" minFn="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F8 controls output 7</label>
+      </variable>
+      <variable item="F8 controls output 8" CV="42" mask="VXXXXXXX" minOut="8" minFn="8">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F8 controls output 8</label>
+      </variable>
+      <variable item="F9 controls output 1" CV="43" mask="XXXXXXXV" minOut="1" minFn="9">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F9 controls output 1</label>
+      </variable>
+      <variable item="F9 controls output 2" CV="43" mask="XXXXXXVX" minOut="2" minFn="9">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F9 controls output 2</label>
+      </variable>
+      <variable item="F9 controls output 3" CV="43" mask="XXXXXVXX" minOut="3" minFn="9">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F9 controls output 3</label>
+      </variable>
+      <variable item="F9 controls output 4" CV="43" mask="XXXXVXXX" minOut="4" minFn="9">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F9 controls output 4</label>
+      </variable>
+      <variable item="F9 controls output 5" CV="43" mask="XXXVXXXX" minOut="5" minFn="9">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F9 controls output 5</label>
+      </variable>
+      <variable item="F9 controls output 6" CV="43" mask="XXVXXXXX" minOut="6" minFn="9">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F9 controls output 6</label>
+      </variable>
+      <variable item="F9 controls output 7" CV="43" mask="XVXXXXXX" minOut="7" minFn="9">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F9 controls output 7</label>
+      </variable>
+      <variable item="F9 controls output 8" CV="43" mask="VXXXXXXX" minOut="8" minFn="9">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F9 controls output 8</label>
+      </variable>
+      <variable item="F10 controls output 1" CV="44" mask="XXXXXXXV" minOut="1" minFn="10">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F10 controls output 1</label>
+      </variable>
+      <variable item="F10 controls output 2" CV="44" mask="XXXXXXVX" minOut="2" minFn="10">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F10 controls output 2</label>
+      </variable>
+      <variable item="F10 controls output 3" CV="44" mask="XXXXXVXX" minOut="3" minFn="10">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F10 controls output 3</label>
+      </variable>
+      <variable item="F10 controls output 4" CV="44" mask="XXXXVXXX" minOut="4" minFn="10">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F10 controls output 4</label>
+      </variable>
+      <variable item="F10 controls output 5" CV="44" mask="XXXVXXXX" minOut="5" minFn="10">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F10 controls output 5</label>
+      </variable>
+      <variable item="F10 controls output 6" CV="44" mask="XXVXXXXX" minOut="6" minFn="10">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F10 controls output 6</label>
+      </variable>
+      <variable item="F10 controls output 7" CV="44" mask="XVXXXXXX" minOut="7" minFn="10">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F10 controls output 7</label>
+      </variable>
+      <variable item="F10 controls output 8" CV="44" mask="VXXXXXXX" minOut="8" minFn="10">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F10 controls output 8</label>
+      </variable>
+      <variable item="F11 controls output 1" CV="45" mask="XXXXXXXV" minOut="1" minFn="11">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F11 controls output 1</label>
+      </variable>
+      <variable item="F11 controls output 2" CV="45" mask="XXXXXXVX" minOut="2" minFn="11">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F11 controls output 2</label>
+      </variable>
+      <variable item="F11 controls output 3" CV="45" mask="XXXXXVXX" minOut="3" minFn="11">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F11 controls output 3</label>
+      </variable>
+      <variable item="F11 controls output 4" CV="45" mask="XXXXVXXX" minOut="4" minFn="11">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F11 controls output 4</label>
+      </variable>
+      <variable item="F11 controls output 5" CV="45" mask="XXXVXXXX" minOut="5" minFn="11">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F11 controls output 5</label>
+      </variable>
+      <variable item="F11 controls output 6" CV="45" mask="XXVXXXXX" minOut="6" minFn="11">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F11 controls output 6</label>
+      </variable>
+      <variable item="F11 controls output 7" CV="45" mask="XVXXXXXX" minOut="7" minFn="11">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F11 controls output 7</label>
+      </variable>
+      <variable item="F11 controls output 8" CV="45" mask="VXXXXXXX" minOut="8" minFn="11">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F11 controls output 8</label>
+      </variable>
+      <variable item="F12 controls output 1" CV="46" mask="XXXXXXXV" minOut="1" minFn="12">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F12 controls output 1</label>
+      </variable>
+      <variable item="F12 controls output 2" CV="46" mask="XXXXXXVX" minOut="2" minFn="12">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F12 controls output 2</label>
+      </variable>
+      <variable item="F12 controls output 3" CV="46" mask="XXXXXVXX" minOut="3" minFn="12">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F12 controls output 3</label>
+      </variable>
+      <variable item="F12 controls output 4" CV="46" mask="XXXXVXXX" minOut="4" minFn="12">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F12 controls output 4</label>
+      </variable>
+      <variable item="F12 controls output 5" CV="46" mask="XXXVXXXX" minOut="5" minFn="12">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F12 controls output 5</label>
+      </variable>
+      <variable item="F12 controls output 6" CV="46" mask="XXVXXXXX" minOut="6" minFn="12">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F12 controls output 6</label>
+      </variable>
+      <variable item="F12 controls output 7" CV="46" mask="XVXXXXXX" minOut="7" minFn="12">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F12 controls output 7</label>
+      </variable>
+      <variable item="F12 controls output 8" CV="46" mask="VXXXXXXX" minOut="8" minFn="12">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes">
+			  </enumChoice>
+        </enumVal>
+        <label>F12 controls output 8</label>
+      </variable>
+      <!-- Definitions for Direction dependant controls -->
+      <variable item="AUX 1 direction mode" CV="53" mask="XXXXXXVV" tooltip="CV53 Bits 0-1">
+        <enumVal>
+          <enumChoice choice="Non Directional" value="0">
+            <choice>Non Directional</choice>
+            <choice xml:lang="fr">Pas d'influence</choice>
+            <choice xml:lang="de">Richtungsunabhängig</choice>
+          </enumChoice>
+          <enumChoice choice="Inactive in Forward" value="1">
+            <choice>Inactive in Forward</choice>
+            <choice xml:lang="fr">Inactif en marche avant</choice>
+            <choice xml:lang="de">Vorwärts aus</choice>
+          </enumChoice>
+          <enumChoice choice="Inactive in Reverse" value="2">
+            <choice>Inactive in Reverse</choice>
+            <choice xml:lang="fr">Inactif en marche arrière</choice>
+            <choice xml:lang="de">Rückwärts aus</choice>
+          </enumChoice>
+        </enumVal>
+        <label>AUX 1 direction mode</label>
+        <label xml:lang="fr">AUX 1 influence du sens de la marche</label>
+        <label xml:lang="de">AUX 1 Richtungsabhängigkeit</label>
+      </variable>
+      <variable item="AUX 2 direction mode" CV="54" mask="XXXXXXVV" tooltip="CV54 Bits 0-1">
+        <enumVal>
+          <enumChoice choice="Non Directional" value="0">
+            <choice>Non Directional</choice>
+            <choice xml:lang="fr">Pas d'influence</choice>
+            <choice xml:lang="de">Richtungsunabhängig</choice>
+          </enumChoice>
+          <enumChoice choice="Inactive in Forward" value="1">
+            <choice>Inactive in Forward</choice>
+            <choice xml:lang="fr">Inactif en marche avant</choice>
+            <choice xml:lang="de">Vorwärts aus</choice>
+          </enumChoice>
+          <enumChoice choice="Inactive in Reverse" value="2">
+            <choice>Inactive in Reverse</choice>
+            <choice xml:lang="fr">Inactif en marche arrière</choice>
+            <choice xml:lang="de">Rückwärts aus</choice>
+          </enumChoice>
+        </enumVal>
+        <label>AUX 2 direction mode</label>
+        <label xml:lang="fr">AUX 2 influence du sens de la marche</label>
+        <label xml:lang="de">AUX 2 Richtungsabhängigkeit</label>
+      </variable>
+      <!-- Shunting lights with F3 or F4 (FD-R Basic)-->
+      <variable item="AUX 1 shunting light with F3" CV="53" mask="XXXVXXXX" default="0" tooltip="CV53 Bit 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>AUX 1 shunting light with F3</label>
+        <label xml:lang="fr">AUX 1 feux de manoeuvre avec F3</label>
+        <label xml:lang="de">AUX 1 Rangierlicht mit F3</label>
+      </variable>
+      <variable item="AUX 1 shunting light with F4" CV="53" mask="XXVXXXXX" default="0" tooltip="CV53 Bit 5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>AUX 1 shunting light with F4</label>
+        <label xml:lang="fr">AUX 1 feux de manoeuvre avec F4</label>
+        <label xml:lang="de">AUX 1 Rangierlicht mit F4</label>
+      </variable>
+      <variable item="AUX 2 shunting light with F3" CV="54" mask="XXXVXXXX" default="0" tooltip="CV54 Bit 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>AUX 2 shunting light with F3</label>
+        <label xml:lang="fr">AUX 2 feux de manoeuvre avec F3</label>
+        <label xml:lang="de">AUX 2 Rangierlicht mit F3</label>
+      </variable>
+      <variable item="AUX 2 shunting light with F4" CV="54" mask="XXVXXXXX" default="0" tooltip="CV54 Bit 5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>AUX 2 shunting light with F4</label>
+        <label xml:lang="fr">AUX 2 feux de manoeuvre avec F4</label>
+        <label xml:lang="de">AUX 2 Rangierlicht mit F4</label>
+      </variable>
+      <!-- Definitions for Dimming FD-R basic  -->
+      <variable item="AUX 1 Dim" CV="49" default="64" tooltip="CV49">
+        <decVal min="1" max="64"/>
+        <label>AUX 1 Dim</label>
+      </variable>
+      <variable item="AUX 2 Dim" CV="50" default="64" tooltip="CV50">
+        <decVal min="1" max="64"/>
+        <label>AUX 2 Dim</label>
+      </variable>
+      <!-- Output mode definitions for FD-R-Basic -->
+      <variable item="AUX 1 phase length" CV="61" tooltip="CV61 (0=off, 128=symmetric flashing, 255=always on)" default="255">
+        <decVal min="0" max="255"/>
+        <label>AUX 1 phase length</label>
+        <label xml:lang="fr">AUX 1 longueur de phase</label>
+        <label xml:lang="de">AUX 1 Phasenlänge</label>
+      </variable>
+      <variable item="AUX 2 phase length" CV="62" tooltip="CV62 (0=off, 128=symmetric flashing, 255=always on)" default="255">
+        <decVal min="0" max="255"/>
+        <label>AUX 2 phase length</label>
+        <label xml:lang="fr">AUX 1 longueur de phase</label>
+        <label xml:lang="de">AUX 1 Phasenlänge</label>
+      </variable>
+      <!-- Flash frequency configuration   -->
+      <variable item="Common flashing frequency" CV="112" tooltip="CV112 (10=2Hz, 255=0.125Hz)" default="48">
+        <decVal min="10" max="255"/>
+        <label>Common flashing frequency</label>
+        <label xml:lang="fr">Fréquence de clignotement commune</label>
+        <label xml:lang="de">Gemeinsame Blinkfrequenz</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <!-- RailCom/Motorola configuration   -->
+  <pane>
+    <column>
+      <display item="RailCom Enable" label="RailCom"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Important! This decoder has 2 parallels CVs tables. One</text>
+        <text xml:lang="fr">Important! Ce décodeur possède deux tables de CVs.</text>
+        <text xml:lang="de">Wichtig! Zum Programmieren des Funktionsdecoder-Bereichs   </text>
+      </label>
+      <label>
+        <text>is the actual CV table used for functions, the other</text>
+        <text xml:lang="fr">L'une est la table de CVs réels, pour les fonctions.</text>
+        <text xml:lang="de">des FD-RBasic muss RailCom ausgeschaltet sein.</text>
+      </label>
+      <label>
+        <text>is the RailCom section (only short/consist/long adresses).</text>
+        <text xml:lang="fr">L'autre est la table RailCom.</text>
+        <text xml:lang="de"> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>It can 'simulate' feedback of a certain locomotive via Railcom,   </text>
+        <text xml:lang="fr">Il peut donc simuler le feedback Railcom d'une loco donnée,</text>
+        <text xml:lang="de">Mit RailCom 'an' können dann unterschiedliche</text>
+      </label>
+      <label>
+        <text>while answering to DCC functions according to the actual CVs.</text>
+        <text xml:lang="fr">tout en répondant aux ordres DCC en fonction des CVs réels.  </text>
+        <text xml:lang="de">Werte für die RailCom Rückmeldung programmiert werden.</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>To program actual CVs, leave Railcom off. Then to </text>
+        <text xml:lang="fr">Pour programmer les CVs réels, éteignez RailCom.</text>
+        <text xml:lang="de">So meldet der FD-R eine Lok an die Zentrale, wird</text>
+      </label>
+      <label>
+        <text>program the RailCom section, turn it on. </text>
+        <text xml:lang="fr">Pour programmer la section RailCom, activer Railcom.</text>
+        <text xml:lang="de">aber mit einer abweichenden Adresse geschaltet.</text>
+      </label>
+	  <display item="Enable RailCom" format="checkbox"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Motorola protocol</text>
+        <text xml:lang="fr">Protocole Motorola</text>
+        <text xml:lang="de">Motorola Protokoll</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Motorola 2nd Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Address to switch additional functions in Motorola</text>
+        <text xml:lang="fr">Adresse pour contrôle des fonctions Motorola supplémentaires.</text>
+        <text xml:lang="de">Adresse, über die im Motorola-Format zusätzliche Funktionen geschaltet werden.</text>
+      </label>
+      <label>
+        <text>format. Functions F5-F8 accessible with buttons F1-F4,</text>
+        <text xml:lang="fr">F5-F8 activées par les boutons F1-F4,</text>
+        <text xml:lang="de">Die Funktionen F5 bis F8 werden über die Funktionstasten F1 bis F4,</text>
+      </label>
+      <label>
+        <text>function F9 accessible via button F0.</text>
+        <text xml:lang="fr">F9 activé par le bouton F0.</text>
+        <text xml:lang="de">die Funktion F9 über die Funktionstaste F0 erreicht.</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <name>RailCom/Motorola</name>
+  </pane>
+  <!-- RailCom/Motorola configuration   -->
+  <!-- Direction control    -->
+  <pane>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <row>
+            <column>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 1 direction mode"/>
+              <label>
+                <text> </text>
+              </label>
+            </column>
+            <column>
+              <label>
+                <text>                                          </text>
+              </label>
+            </column>
+            <column>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text>AUX 1 shunting light with  </text>
+                <text xml:lang="fr">AUX 1 feux de manoeuvre avec  </text>
+                <text xml:lang="de">AUX 1 Rangierlicht mit  </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+            </column>
+            <column>
+              <row>
+                <display item="AUX 1 shunting light with F3" format="checkbox" layout="above" label="F3"/>
+                <display item="AUX 1 shunting light with F4" format="checkbox" layout="above" label="F4"/>
+              </row>
+              <label>
+                <text> </text>
+              </label>
+            </column>
+          </row>
+          <row>
+            <column>
+              <row>
+                <display item="AUX 1 Dim"/>
+                <label>
+                  <text> </text>
+                </label>
+                <display item="AUX 1 Dim" label="" format="hslider"/>
+              </row>
+            </column>
+            <column>
+              <label>
+                <text>              </text>
+              </label>
+            </column>
+            <column>
+              <row>
+                <display item="AUX 1 phase length"/>
+                <label>
+                  <text> </text>
+                </label>
+                <display item="AUX 1 phase length" label="" format="hslider"/>
+              </row>
+            </column>
+          </row>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <row>
+            <column>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 2 direction mode"/>
+              <label>
+                <text> </text>
+              </label>
+            </column>
+            <column>
+              <label>
+                <text>                                          </text>
+              </label>
+            </column>
+            <column>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text>AUX 2 shunting light with  </text>
+                <text xml:lang="fr">AUX 2 feux de manoeuvre avec  </text>
+                <text xml:lang="de">AUX 2 Rangierlicht mit  </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+            </column>
+            <column>
+              <row>
+                <display item="AUX 2 shunting light with F3" format="checkbox" layout="above" label="F3"/>
+                <display item="AUX 2 shunting light with F4" format="checkbox" layout="above" label="F4"/>
+              </row>
+              <label>
+                <text> </text>
+              </label>
+            </column>
+          </row>
+          <row>
+            <column>
+              <row>
+                <display item="AUX 2 Dim"/>
+                <label>
+                  <text> </text>
+                </label>
+                <display item="AUX 2 Dim" label="" format="hslider"/>
+              </row>
+            </column>
+            <column>
+              <label>
+                <text>              </text>
+              </label>
+            </column>
+            <column>
+              <row>
+                <display item="AUX 2 phase length"/>
+                <label>
+                  <text> </text>
+                </label>
+                <display item="AUX 2 phase length" label="" format="hslider"/>
+              </row>
+            </column>
+          </row>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Common flashing frequency"/>
+        <!-- FD-R Basic -->
+        <label>
+          <text> </text>
+        </label>
+        <display item="Common flashing frequency" label="" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <name>AUX</name>
+  </pane>
+</decoder-config>

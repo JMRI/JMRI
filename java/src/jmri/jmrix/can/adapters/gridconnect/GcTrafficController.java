@@ -1,64 +1,67 @@
 // GcTrafficController.java
-
 package jmri.jmrix.can.adapters.gridconnect;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.*;
-
 import java.io.DataInputStream;
-
+import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractMRListener;
-
+import jmri.jmrix.can.CanListener;
+import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Traffic controller for the GridConnect protocol.
  * <P>
- * GridConnect uses messages transmitted
- * as an ASCII string of up to 24 characters of the form:
- *      :ShhhhNd0d1d2d3d4d5d6d7;
- * The S indicates a standard CAN frame
- * hhhh is the two byte header (11 useful bits)
- * N or R indicates a normal or remote frame
- * d0 - d7 are the (up to) 8 data bytes
+ * GridConnect uses messages transmitted as an ASCII string of up to 24
+ * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; The S indicates a standard
+ * CAN frame hhhh is the two byte header (11 useful bits) N or R indicates a
+ * normal or remote frame d0 - d7 are the (up to) 8 data bytes
  *
- * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision$
+ * @author Andrew Crosland Copyright (C) 2008
+ * @version	$Revision$
  */
 public class GcTrafficController extends TrafficController {
-    
+
     public GcTrafficController() {
         super();
     }
-   
+
     /**
      * Forward a CanMessage to all registered CanInterface listeners.
      */
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
-        ((CanListener)client).message((CanMessage)m);
+        ((CanListener) client).message((CanMessage) m);
     }
 
     /**
      * Forward a CanReply to all registered CanInterface listeners.
      */
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
-        ((CanListener)client).reply((CanReply)r);
+        ((CanListener) client).reply((CanReply) r);
     }
-    
+
     // Current state
     public static final int NORMAL = 0;
     public static final int BOOTMODE = 1;
-    
-    public int getgcState() { return gcState; }
+
+    public int getgcState() {
+        return gcState;
+    }
+
     public void setgcState(int s) {
         gcState = s;
-        if (log.isDebugEnabled()) log.debug("Setting gcState " + s);
+        if (log.isDebugEnabled()) {
+            log.debug("Setting gcState " + s);
+        }
     }
-    public boolean isBootMode() {return gcState == BOOTMODE; }
-    
+
+    public boolean isBootMode() {
+        return gcState == BOOTMODE;
+    }
+
     /**
      * Forward a preformatted message to the actual interface.
      */
@@ -69,7 +72,8 @@ public class GcTrafficController extends TrafficController {
 
     /**
      * Add trailer to the outgoing byte stream.
-     * @param msg  The output byte stream
+     *
+     * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
@@ -77,9 +81,10 @@ public class GcTrafficController extends TrafficController {
     }
 
     /**
-     * Determine how much many bytes the entire
-     * message will take, including space for header and trailer
-     * @param m  The message to be sent
+     * Determine how much many bytes the entire message will take, including
+     * space for header and trailer
+     *
+     * @param m The message to be sent
      * @return Number of bytes
      */
     protected int lengthOfByteStream(AbstractMRMessage m) {
@@ -87,18 +92,18 @@ public class GcTrafficController extends TrafficController {
     }
 
     // New message for hardware protocol
-    protected AbstractMRMessage newMessage() { 
+    protected AbstractMRMessage newMessage() {
         log.debug("New GridConnectMessage created");
         GridConnectMessage msg = new GridConnectMessage();
         return msg;
     }
 
-    /** 
+    /**
      * Make a CanReply from a GridConnect reply
      */
     public CanReply decodeFromHardware(AbstractMRReply m) {
         log.debug("Decoding from hardware");
-	    GridConnectReply gc = (GridConnectReply)m;
+        GridConnectReply gc = (GridConnectReply) m;
         CanReply ret = gc.createReply();
         return ret;
     }
@@ -108,28 +113,30 @@ public class GcTrafficController extends TrafficController {
      */
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         //log.debug("Encoding for hardware");
-	    GridConnectMessage ret = new GridConnectMessage(m);
+        GridConnectMessage ret = new GridConnectMessage(m);
 
         return ret;
     }
 
     // New reply from hardware
-    protected AbstractMRReply newReply() { 
+    protected AbstractMRReply newReply() {
         log.debug("New GridConnectReply created");
         GridConnectReply reply = new GridConnectReply();
         return reply;
     }
-    
+
     /*
      * Normal CAN-RS replies will end with ";"
      * Bootloader will end with ETX with no preceding DLE
      */
     protected boolean endOfMessage(AbstractMRReply r) {
-        if (endNormalReply(r)) return true;
+        if (endNormalReply(r)) {
+            return true;
+        }
 //        if (endBootReply(r)) return true;
         return false;
     }
-    
+
     boolean endNormalReply(AbstractMRReply r) {
         // Detect if the reply buffer ends with ";"
         int num = r.getNumDataElements() - 1;
@@ -140,55 +147,57 @@ public class GcTrafficController extends TrafficController {
         }
         return false;
     }
-    
+
     /**
      * Get characters from the input source, and file a message.
      * <P>
      * Returns only when the message is complete.
      * <P>
-     * This is over-ridden from AbstractMRTrafficController so we can 
-     * add suppression of the characters before ':'. We can't use 
+     * This is over-ridden from AbstractMRTrafficController so we can add
+     * suppression of the characters before ':'. We can't use
      * waitForStartOfReply() because that strips the 1st character also.
      * <P>
      * Handles timeouts on read by ignoring zero-length reads.
      *
-     * @param msg message to fill
+     * @param msg     message to fill
      * @param istream character source.
-     * @throws IOException when presented by the input source.
+     * @throws java.io.IOException when presented by the input source.
      */
     protected void loadChars(AbstractMRReply msg, DataInputStream istream)
-                           throws java.io.IOException {
+            throws java.io.IOException {
         int i;
         for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
-            if (i == 0 && char1 !=':') {
+            if (i == 0 && char1 != ':') {
                 // skip until you find ':'
-                while (char1 != ':') char1 = readByteProtected(istream);
+                while (char1 != ':') {
+                    char1 = readByteProtected(istream);
+                }
             }
             //if (log.isDebugEnabled()) log.debug("char: "+(char1&0xFF)+" i: "+i);
             // if there was a timeout, flush any char received and start over
-            if(flushReceiveChars){
-                log.warn("timeout flushes receive buffer: "+ msg.toString());
+            if (flushReceiveChars) {
+                log.warn("timeout flushes receive buffer: " + msg.toString());
                 msg.flush();
                 i = 0;  // restart
                 flushReceiveChars = false;
             }
             if (canReceive()) {
                 msg.setElement(i, char1);
-                if (endOfMessage(msg))
+                if (endOfMessage(msg)) {
                     break;
+                }
             } else {
                 i--; // flush char
-                log.error("unsolicited character received: "+ Integer.toHexString(char1));
+                log.error("unsolicited character received: " + Integer.toHexString(char1));
             }
         }
     }
 
     private int gcState;
-    
-    static Logger log = LoggerFactory.getLogger(GcTrafficController.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(GcTrafficController.class.getName());
 }
 
 
 /* @(#)GcTrafficController.java */
-

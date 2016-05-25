@@ -6,17 +6,19 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
-  <node>
-  <name>Tests</name>
+    <node>
+        <name>Tests</name>
 
-      <node><name>License</name>
-        <adapter>apps.LicenseAction</adapter>
-      </node>
-      <node><name>Sample</name>
-        <panel>jmri.util.swing.SamplePane</panel>
-      </node>
+        <node>
+            <name>License</name>
+            <adapter>apps.LicenseAction</adapter>
+        </node>
+        <node>
+            <name>Sample</name>
+            <panel>jmri.util.swing.SamplePane</panel>
+        </node>
 
-  </node>
+    </node>
 
 </nodes>
   

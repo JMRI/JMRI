@@ -1,5 +1,4 @@
 // GetJavaProperty.java
-
 package jmri.util;
 
 /**
@@ -7,13 +6,13 @@ package jmri.util;
  * <p>
  * Intented to be invoked like:<br>
  * <code><pre>
- java jmri.util.GetJavaProperty java.home
+ * java jmri.util.GetJavaProperty java.home
  * </pre><code><br>
- * to print the value of a Java system property in the current JVM, 
- * e.g. for including in a script
+ * to print the value of a Java system property in the current JVM, e.g. for
+ * including in a script
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
- * @version         $Revision$
+ * @version $Revision$
  */
 public class GetJavaProperty {
 

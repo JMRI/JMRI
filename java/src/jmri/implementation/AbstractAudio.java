@@ -1,5 +1,4 @@
 // AbstractAudio.java
-
 package jmri.implementation;
 
 import jmri.Audio;
@@ -14,18 +13,16 @@ import jmri.Audio;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
@@ -33,10 +30,10 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
     private int _state = STATE_INITIAL;
 
     private static final int INT_PRECISION = (int) Math.pow(10, DECIMAL_PLACES);
-    
+
     /**
      * Abstract constructor for new Audio with system name
-     * 
+     *
      * @param systemName Audio object system name (e.g. IAS1, IAB4)
      */
     public AbstractAudio(String systemName) {
@@ -45,14 +42,14 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
 
     /**
      * Abstract constructor for new Audio with system name and user name
-     * 
+     *
      * @param systemName Audio object system name (e.g. IAS1, IAB4)
-     * @param userName Audio object user name
+     * @param userName   Audio object user name
      */
     public AbstractAudio(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }
-    
+
     @Override
     public int getState() {
         return this._state;
@@ -78,10 +75,10 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
     abstract protected void cleanUp();
 
     /**
-     * Static method to round a float value to the specified number
-     * of decimal places
+     * Static method to round a float value to the specified number of decimal
+     * places
      *
-     * @param value float value to round
+     * @param value  float value to round
      * @param places number of decimal places to round to
      * @return float value rounded to specified number of decimal places
      */
@@ -99,7 +96,11 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * @return float value rounded to DECIMAL_PLACES decimal places
      */
     public static float roundDecimal(float value) {
-            return roundDecimal(value, Math.log10(INT_PRECISION));
+        return roundDecimal(value, Math.log10(INT_PRECISION));
+    }
+
+    public String getBeanType() {
+        return Bundle.getMessage("BeanNameAudio");
     }
 
 }

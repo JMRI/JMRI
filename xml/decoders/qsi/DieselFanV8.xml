@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,9 +12,9 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file for QSi V8 files -->
 <!-- Diesel fan selections -->
-<ienumVal>
-  <ienumChoice choice="Native Cooling Fans" value="1"/>
-  <ienumChoice choice="Fan 1              "/>
-  <ienumChoice choice="Fan 2              "/>
-  <ienumChoice choice="Fan 3              "/>
-</ienumVal>
+<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Native Cooling Fans" value="1"/>
+  <enumChoice choice="Fan 1              "/>
+  <enumChoice choice="Fan 2              "/>
+  <enumChoice choice="Fan 3              "/>
+</enumVal>

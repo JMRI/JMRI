@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Create a Custom DecoderPro Programmer</title>
+<title>JMRI: DecoderPro - Create a Custom DecoderPro Programmer</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,81 +19,102 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>DecoderPro User Guide - Create a Custom Programmer</H1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Create a Custom Programmer</h2>
 
 <p>How do I create my own custom programmer?</p>
 
 <p>The answer starts with the creation of an xml file in the
 "programmers" subdirectory of the JMRI distribution.  The
-contents of the file are described below.</p>
+contents of the file are described here.</p>
+
+<p>After some initial parts (which you can just copy from 
+an existing file), the rest of the file is a series of
+"pane" definition elements.
+Each one become a pane in the DecoderPro window.
+<p>The panes in the programmer file appear when you select that
+programmer in DecoderPro.  Note that panes can also be defined
+in the decoder definition, in which case those panes appear after
+the ones in the programmer definitions.
+	<ul>
+	<li>There is an option to present/hide panes from the decoder file.  If
+	you're writing a very basic programmer, you might want to hide them
+	to keep the interface simple. 
+	<li>If a pane is defined in the decoder file and programmer file with the
+	same name, the one from the decoder file (the more specific one) appears.
+	</ul>
+</p>
 
 <dl>
 <dt class=left>Specifying items to display</dt>
 <dd class=first>
 <p>The basic element of a programmer pane is a "display". This tells the
 programmer to present a single variable.  The attributes are:
-<ul>
-<li><dfn>name</dfn> - (Required)
-This is the "standard name" of the variable to be presented.
-<li><dfn>label</dfn> -
-If present, this will be used to label the variable on the pane
-instead of the name or standard name of the variable.
-<li><dfn>layout</dfn> -
-Where to locate the label with respect to the edittable field,
-e.g. the text box.  Possible values are "left", "above",
-"below", "right" with a default of "right".
-<li><dfn>format</dfn> -
-<p>How the variable should be presented.  Numeric variables can be presented as
-<ul>
-<li>an editable text field, which is the default if nothing is specified
-<li><dfn>hslider</dfn> - a horizontal slider
-<li><dfn>vslider</dfn> - a vertical slider
-</ul></p>
-<p>Enum variables can be presented as
-<ul>
-<li>a selection box, which is the default if nothing is
-specified
-<li><dfn>radiobuttons</dfn> - Each possible value is presented
-as an individual button
-<li><dfn>checkbox</dfn> - An enum with only two states can also
-be presented as a checkbox
-<li><dfn>offradiobutton</dfn> - A single button that sets the 0
-choice for the variable when selected
-<li><dfn>onradiobutton</dfn> - A single button that sets the 1
-choice for the variable when selected
-</ul></p>
-<p>These last two can be useful for indicating which parts of a
-configuration are active; see the "Speed Table" pane of
-Comprehensive.xml for an example.</p>
-<li><dfn>tooltip</dfn> -
-Allows you to specify a tooltip to be presented when the cursor
-is left over the variable.  If not present, the tooltip defined
-in the decoder file is used. (Note: This is not fully
-implemented yet, but you should include them in your programmer
-definitions as they will work soon)
-</ul>
+	<ul>
+	<li><dfn>name</dfn> - (Required)
+	This is the "standard name" of the variable to be presented.</li>
+	<li><dfn>label</dfn> -
+	If present, this will be used to label the variable on the pane
+	instead of the name or standard name of the variable.</li>
+	<li><dfn>layout</dfn> -
+	Where to locate the label with respect to the editable field,
+	e.g. the text box.  Possible values are "left", "above",
+	"below", "right" with a default of "right".</li>
+	<li><dfn>format</dfn> -
+	<p>How the variable should be presented.  Numeric variables can be presented as
+		<ul>
+		<li>an editable text field, which is the default if nothing is specified</li>
+		<li><dfn>hslider</dfn> - a horizontal slider</li>
+		<li><dfn>vslider</dfn> - a vertical slider</li>
+		</ul>
+	</p>
+	<p>Enum variables can be presented as
+		<ul>
+		<li>a selection box, which is the default if nothing is
+		specified</li>
+		<li><dfn>radiobuttons</dfn> - Each possible value is presented
+		as an individual button</li>
+		<li><dfn>checkbox</dfn> - An enum with only two states can also
+		be presented as a checkbox</li>
+		<li><dfn>offradiobutton</dfn> - A single button that sets the 0
+		choice for the variable when selected</li>
+		<li><dfn>onradiobutton</dfn> - A single button that sets the 1
+		choice for the variable when selected</li>
+		</ul>
+	</p>
+	<p>These last two can be useful for indicating which parts of a
+	configuration are active; see the "Speed Table" pane of
+	Comprehensive.xml for an example.</p>
+	<li><dfn>tooltip</dfn> -
+	Allows you to specify a tooltip to be presented when the cursor
+	is left over the variable.  If not present, the tooltip defined
+	in the decoder file is used. (Note: This is not fully
+	implemented yet, but you should include them in your programmer
+	definitions as they will work soon)</li>
+	</ul>
 
-<A name="display">
+<a name="display">
 <p> Which name to display is controlled by the pane's  'nameFmt'
 attribute, and the 'label' attribute on each display element (variable).</p></a>
 
 <p>The choices are:
-<ul>
-<li>If a label is specified, it will be used.  Use a label if you
-want absolute control over what a variable should be called, regardless
-of what the decoder file calls it, and you don't like the standard name.
-<li>The pane's nameFmt attribute is "item", in which case the item
-name will be used regardless of what the decoder file calls the variable.
-Use this is you want a uniform appearance for the pane for all decoders.
-But be aware that some standard names are really so generic as to be useless.
-<li>If the pane's nameFmt attribute is allowed to default, or contains "mfg",
-the decoder definition file's name will be used.  This is the normal form,
-as it allows a manufacturer to specify in some detail what a
-variable defines.
-</ul></p>
+	<ul>
+	<li>If a label is specified, it will be used.  Use a label if you
+	want absolute control over what a variable should be called, regardless
+	of what the decoder file calls it, and you don't like the standard name.</li>
+	<li>The pane's nameFmt attribute is "item", in which case the item
+	name will be used regardless of what the decoder file calls the variable.
+	Use this is you want a uniform appearance for the pane for all decoders.
+	But be aware that some standard names are really so generic as to be useless.</li>
+	<li>If the pane's nameFmt attribute is allowed to default, or contains "mfg",
+	the decoder definition file's name will be used.  This is the normal form,
+	as it allows a manufacturer to specify in some detail what a
+	variable defines.</li>
+	</ul>
+</p>
 </dd>
 
-<dt class=left>Formatting</dt>
+<dt class="left">Formatting</dt>
 <dd>
 <p>Each pane of the programmer consists of (nested) rows and/or columns.
 Columns lay out variables from top to bottom.  Rows lay out variables from
@@ -104,30 +124,106 @@ It has two columns, the left of each uses a row to put some sliders from
 left to right.</p>
 </dd>
 
-<dt class=left>Special Elements</dt>
+<dt class="left">Special Elements</dt>
 <dd>
 There are a number of elements you can use to get the programmer
 formatted exactly the way you want:
-<ul>
-<li><dfn>label</dfn> - Add text to a pane.
-<li><dfn>separator</dfn> - Add a separator line to a pane.  If included
-in a column, this will be a horizontal separator line.  If
-included in a row, it will be a vertical line.
-<li><dfn>cvtable</dfn> - Insert a table of CV values onto the pane.
-To get the spacing right, etc, you should probably not combine
-this with other variables on the same pane.
-<li><dfn>fnmapping</dfn> - Show a function mapping grid.
-This requires variables with specific names, which
-are described on a
-<A HREF="FnMapping.shtml">separate page</a>.
-<li><dfn>dccaddress</dfn> - Show a combined variable for the DCC address.  This
-consists of a checkbox that selects use of short vs long address, and
-a single text field for entering the address.  Depending on how
-the checkbox is set, the text field will configure the CV1 short
-address or the CV17/18 long address.
-</ul>
+	<ul>
+	<li><dfn>grid</dfn> - Create a grid for laying out elements in aligned rows and columns. See the <a href="#grid">Grid Layout</a> section below.</li>
+	<li><dfn>label</dfn> - Add text to a pane.</li>
+	<li><dfn>soundlabel</dfn> - Add a soundlabel (from the decoder definition file) to a pane. It has a one attribute:</li>
+		<ul>
+		<li><dfn>num</dfn> - (Required)
+		This is the number of the sound label to be presented.</li>
+		</ul>
+	<li><dfn>separator</dfn> - Add a separator line to a pane.  If included
+	in a column, this will be a horizontal separator line.  If
+	included in a row, it will be a vertical line.</li>
+	<li><dfn>cvtable</dfn> - Insert a table of CV values onto the pane.
+	To get the spacing right you should probably not combine
+	this with other variables on the same pane.</li>
+	<li><dfn>fnmapping</dfn> - Show a function mapping grid.
+	This requires variables with specific names, which
+	are described on a
+	<a href="FnMapping.shtml">separate page</a>.</li>
+	<li><dfn>dccaddress</dfn> - Show a combined variable for the DCC address.  This
+	consists of a checkbox that selects use of short vs long address, and
+	a single text field for entering the address.  Depending on how
+	the checkbox is set, the text field will configure the CV1 short
+	address or the CV17/18 long address.</li>
+	</ul>
 </dd>
 
+<a id="grid"/>
+<dt class="left">Formatting with the Grid Layout</dt>
+<dd>
+<p>
+  The "row" and "column" elements allow you to align elements in rows or columns,
+  but if you have multiple columns within a row element (or vice versa)
+  it is not possible to ensure that rows in adjacent columns (or vice versa) stay aligned.
+</p>
+<p>
+The Grid Layout allows you to align elements in rows and columns,
+maintaining alignment even if a particular element is absent. There are two elements:
+	<ul>
+	  <li><dfn>grid</dfn> - Create a grid layout (within a "row" or "column" element):</li>
+	  <ul>
+	    <li>It may have one or more optional attributes.</li>
+	    <li>The only allowed sub-element is "griditem" and there must be at least one of these.</li>
+	  </ul>
+	  <li><dfn>griditem</dfn> - Create a grid item (within a "grid" element):</li>
+	  <ul>
+	    <li>It should have "gridx" and "gridy" attributes.</li>
+	    <li>It may also have one or more optional attributes.</li>
+	    <li>It must contain one or more elements,
+	      which can be any combination of any of the other elements listed above, including "row", "column", or even another "grid".</li>
+	  </ul>
+	</ul>
+</p>
+<p>
+The "gridx" and "gridy" attributes of a grid item specify the location of that item within the grid.
+A value of gridx="0" puts the item in the lefmost column.
+A value of gridy="0" puts the item in the topmost row.
+Other attributes to control the format of the grid items are available and are documented in the
+<a href="http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target="_blank">
+    Java&reg; GridBagLayout Tutorial</a>.
+	<ul>
+	  <li>Attributes of "grid" apply to all items in the table.</li>
+	  <li>Attributes of "griditem" apply to only that item and override any equivalent attribute of "grid".</li>
+	  <li>Both numeric and named constant values (as specified by the
+	      <a href="http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target="_blank">
+	          documentation</a>) can be used.
+	  </li>
+	  <li>Two extra named constant values are available for "gridx" and "gridy":</li>
+		<ul>
+		  <li>"CURRENT" is the value from the last added "griditem" (i.e. the same row or column).</li>
+		  <li>
+		    "NEXT" is one more than the value from the last added "griditem" (i.e. the next row or column).
+		    <br/>&nbsp;&nbsp;("NEXT" is actually a synonym for "RELATIVE".)
+		  </li>
+		</ul>
+	<li>The "insets" attribute is specified as insets="top,left,bottom,right" where "top" etc. are integers.</li>
+	<li>A "griditem" can span more than one grid cell. Attributes "gridwidth" and "gridheight" control this.</li>
+	<li>By default grid items clump together in the centre of a container. Attribute "weightx" can override this and left/right justify.</li>
+	<li>It is possible in some circumstances to omit either or both of "gridx" and "gridy" from a "griditem" and
+	specify a default value in "grid". See
+	<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4fnOutPane.xml" target="_blank">
+	    xml/decoders/esu/v4fnOutPane.xml</a>
+	    for an example of this usage to generate a simple single-column right-aligned grid.
+	    (However if you are not careful with use of this technique and/or the "RELATIVE" constant, results can be bizarre.)
+	</li>
+	<li>
+	Unfortunately "ipadx", "ipady" and "insets" allocate space even if the enclosed display variable(s) fail qualification.
+	A workaround is to qualify the whole "griditem" enclosing the variable (if that is appropriate to the situation).
+	</li>
+	</ul>
+</p>
+<p>
+  For an example of Grid Layout use (with some explanations of attributes used), see
+  <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4soundPane.xml" target="_blank">
+      xml/decoders/esu/v4soundPane.xml</a>.
+  The LokSound Select (and V4) definitions use this file.
+</p>
 <dt class=left>Installing your new programmer</dt>
 <dd>
 <p>
@@ -138,53 +234,49 @@ Decoder Pro.  To use your new file, just put it in the
 select it.  You don't have to restart the program, as the
 list is remade each time you open a new programmer window.
 
-<p> There is an option to present/hide panes from the decoder file.  If
-you're writing a very basic programmer, you might want to hide them.</p>
 </dd>
-
 </dl>
 
-<A name="id">
+<a name="id">
 <h3>How variables in a decoder file match up with the programmer file</h3></a>
 
 Each decoder file defines 
-<A HREF="CreateDecoder.shtml#variable">variables</a> that describe specific controls within the
+<a href="CreateDecoder.shtml#variable">variables</a> that describe specific controls within the
 decoder.  The programmer file then describes how to place those on
 panes so that the user can find and manipulate them.
-<P>
+<p>
 Each "display" element in the programmer file defines one thing to show.
 But which one?  That's controlled by the "name" attribute
 of the "display" element.  DecoderPro takes that "name" and looks through
 the decoder definition for a "variable" element that has either the
 same "item" or "label" attribute.
-<P>
+<p>
 This has some nice effects:
-<OL>
-<LI>The "name" in the "display" element is effectively a "standard name", that 
-can be used in decoder definition files from many different
-manufacturers.  Since this is separate from the "label" on the decoder
-variable, it's possible to have a generic programmer file that works for
-many types of different decoders, while still displaying specific variable
-names.  For more on this, please
-<A HREF="#display">see above</a>.
-<LI>
-It lets you use very generic names to control where somewhat different
-things go.  For example, different sound decoders provide different
-controls.  One might have "Airpump", while another doesn't have that
-at all, and instead has "Brake Squeal".  We don't want to have 
-the programmer files contain zillions of "display" elements to
-handle every possible option.  Instead, we use elements with more
-generic names, like "Sound Option 1", for the display name.
-<P>
-The decoder definition then has a "label" of "Airpump" or whatever, and
-an "item" of "Sound Option 1". Everything matches up properly, and
-"Airpump" appears on the computer's screen.
-</OL>
-<P>
+	<ol>
+	<li>The "name" in the "display" element is effectively a "standard name", that 
+	can be used in decoder definition files from many different
+	manufacturers.  Since this is separate from the "label" on the decoder
+	variable, it's possible to have a generic programmer file that works for
+	many types of different decoders, while still displaying specific variable
+	names.  For more on this, please
+	<a href="#display">see above</a>.</li>
+	<li>
+	It lets you use very generic names to control where somewhat different
+	things go.  For example, different sound decoders provide different
+	controls.  One might have "Airpump", while another doesn't have that
+	at all, and instead has "Brake Squeal".  We don't want to have 
+	the programmer files contain zillions of "display" elements to
+	handle every possible option.  Instead, we use elements with more
+	generic names, like "Sound Option 1", for the display name.
+	<p>
+	The decoder definition then has a "label" of "Airpump" or whatever, and
+	an "item" of "Sound Option 1". Everything matches up properly, and
+	"Airpump" appears on the computer's screen.</li>
+	</ol>
+<p>
 
-
-    
-<!--#include virtual="/Footer" -->
-</div>
+  <!--#include virtual="/Footer" -->
+  </div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->    
 </body>
 </html>

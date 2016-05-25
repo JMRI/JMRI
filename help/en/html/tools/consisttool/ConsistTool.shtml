@@ -1,345 +1,337 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-  <TITLE>
+  <title>
  	JMRI: Consisting Tool
-  </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-
-  <META content="Paul Bender" name=Author>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  </title>
+  <meta content="Paul Bender" name="Author">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
 
-<H2>JMRI: Consisting Tool</H2>
+<h1>JMRI: Consisting Tool</h1>
 
-        <h3>
-		Background Information
-        </h3>
+<h2>What is a Consist?</h2>
 	<p>
-           There are three types of consists used on DCC systems:
+	There are three types of consists used on DCC systems:
 	</p>
-	<ul>
-	<li> <p>A <i>basic</i> or <i>primary address consist</i>.  In this 
-             type of consist, each locomotive is assigned the same address on 
-             the programming track, or on the main with OpsMode Programming 
-             (if supported by the command station and decoder). You can 
-             use either a long (CV17 and CV18) or short (CV1) address for 
-             a primary address consist.</p>
-        </li>
-	<li> 
-             <p>A <i>Command Station Assisted Consist</i> (CSAC).  A command 
-             station assisted consist is built using a function of your 
-             command station.</p>
-             
-             <p>Command Station Assisted Consists go by the trade names 
-                listed in the table below.  The table also lists the known 
-                limitations imposed by each manufacturer. 
-	     <table>
+		<ol>
+		<li>A <i>basic</i> or <i>primary address consist</i>.  In this 
+		type of consist, each Locomotive is assigned the same address on 
+		the programming track, or on the main with OpsMode Programming 
+		(if supported by the command station and decoder). You can 
+		use either a long (CV17 and CV18) or short (CV1) address for 
+		a primary address consist.
+		</li>
+		<li> 
+		<p>A <i>Command Station Assisted Consist</i> (CSAC).  A command 
+		station assisted consist is built using a function of your 
+		command station.</p>
+		
+		<p>Command Station Assisted Consists go by the trade names 
+		listed in the table below.  The table also lists the known 
+		limitations imposed by each manufacturer. 
+		<table>
 		<tr>
-		   <td>Manufacturer</td>
-                   <td>Trade Name</td>
-                   <td>Usage Notes</td>
-                </tr>
-                <tr>
-                   <td>Digitrax</td>
-                   <td>Universal Consist</td>
-                   <td>Limited to number of slots supported by the system.  
-                       Allows any address to be used.</td>
-               </tr>
-               <tr>
-                   <td>Lenz</td>
-                   <td>Double Header</td>
-                   <td>Limited to 2 locomotives.  Allows any address but 
-                       00 to be used.</td>
-               </tr>
-               <tr>
-                   <td>NCE</td>
-                   <td>Old Style Consist</td>
-                   <td>Limited to 8 locomotives.  Allows any address but 
-                       00 to be used.</td>
-	       </tr>
-               <tr>
-                   <td>EasyDCC</td>
-                   <td>Standard Consist</td>
-                   <td>Limited to 8 locomotives.  Allows any address but 
-                       00 to be used.</td>
-               <tr>
-	     </table>
-
-             <p>
-                The common trait shared by all versions of CSAC is 
-                that a separate speed and direction command is sent 
-                to the track for each locomotive that is in the consist.
-             </p>
-
-        </li>
-	<li> 
-             <p>
-                a <i>Decoder Assisted Consist</i> (DAC), Which is also 
-                referred to frequently as an <i>Advanced Consist</i>.
-             </p>  
-             <p>
-                The NMRA has set aside CV19 as a dedicated location for 
-                consist addresses.
-             </p>
-             <p>
-                If CV19 contains a value other than 0, the locomotive will
-                respond to speed and direction instructions on the 
-                address in CV19.  Otherwise, it will respond to speed and 
-                direction commands sent only on the usual short
-                or long decoder address.
-             </p>  
-             <p>
-                Since the consist address is a single CV, it is limited 
-                to the range of 1 to 127.  If you add 128 to the consist 
-                address, the locomotive will run backwards (relative to
-                it's normal direction of travel) in the consist.
-             </p>
-             <p>
-                For most decoders, this type of consist can be by 
-                programming operations in the same ways that a basic 
-                Consist can be.  We say most here because some decoders 
-                block writing to any address CV using operations mode 
-                programming.  
-             </p>
-             <p>
-                The NMRA has also set aside a special command to set up a
-                Decoder Assisted Consist on the mainline.  This command 
-                should be supported by all decoders that support Decoder 
-                Assisted Consisting.
-             </p>
-             <p>
-                The advantage to DAC, when compared to CSAC is that only 
-                one speed and direction command is sent to the entire 
-                consist.
-             </p>
-	     <p>
-                By default, locomotives in a DAC ignore function commands 
-                sent to the consist address.  You can configure some decoders 
-                so they will respond to function commands issued to the 
-                consist address as well (through CVS 21 and 22).  If 
-                supported by the decoder, The appropriate values can also 
-                be configured through DecoderPro using the Consisting Tab 
-                in the comprehensive programmer.
-             </p>
-	     <p>
+		<td>Manufacturer</td>
+		   <td>Trade Name</td>
+		   <td>Usage Notes</td>
+		</tr>
+		<tr>
+		   <td>Digitrax</td>
+		   <td>Universal Consist</td>
+		   <td>Limited to number of slots supported by the system.  
+		       Allows any address to be used.</td>
+		</tr>
+		<tr>
+		   <td>Lenz</td>
+		   <td>Double Header</td>
+		   <td>Limited to 2 Locomotives.  Allows any address but 
+		       00 to be used.</td>
+		</tr>
+		<tr>
+		   <td>NCE</td>
+		   <td>Old Style Consist</td>
+		   <td>Limited to 8 Locomotives.  Allows any address but 
+		       00 to be used.</td>
+		</tr>
+		<tr>
+		   <td>EasyDCC</td>
+		   <td>Standard Consist</td>
+		   <td>Limited to 8 Locomotives.  Allows any address but 
+		       00 to be used.</td>
+		<tr>
+		</table>
+		
+		<p>
+		The common trait shared by all versions of CSAC is 
+		that a separate speed and direction command is sent 
+		to the track for each Locomotive that is in the consist.
+		</p>
+		</li>
+		
+		<li> 
+		<p>A <i>Decoder Assisted Consist</i> (DAC), Which is also 
+		referred to frequently as an <i>Advanced Consist</i>.
+		</p>  
+		<p>
+		The NMRA has set aside CV19 as a dedicated location for 
+		consist addresses.
+		</p>
+		<p>
+		If CV19 contains a value other than 0, the Locomotive will
+		respond to speed and direction instructions on the 
+		address in CV19.  Otherwise, it will respond to speed and 
+		direction commands sent only on the usual short
+		or long decoder address.
+		</p>  
+		<p>
+		Since the consist address is a single CV, it is limited 
+		to the range of 1 to 127.  If you add 128 to the consist 
+		address, the Locomotive will run backwards (relative to
+		it's normal direction of travel) in the consist.
+		</p>
+		<p>
+		For most decoders, this type of consist can be by 
+		programming operations in the same ways that a basic 
+		Consist can be.  We say most here because some decoders 
+		block writing to any address CV using operations mode 
+		programming.  
+		</p>
+		<p>
+		The NMRA has also set aside a special command to set up a
+		Decoder Assisted Consist on the mainline.  This command 
+		should be supported by all decoders that support Decoder 
+		Assisted Consisting.
+		</p>
+		<p>
+		The advantage to DAC, when compared to CSAC is that only 
+		one speed and direction command is sent to the entire 
+		consist.
+		</p>
+		<p>
+		By default, Locomotives in a DAC ignore function commands 
+		sent to the consist address.  You can configure some decoders 
+		so they will respond to function commands issued to the 
+		consist address as well (through CVs 21 and 22).  If 
+		supported by the decoder, The appropriate values can also 
+		be configured through DecoderPro using the Consisting Tab 
+		in the comprehensive programmer.
+		</p>
+		<p>
 		One final note, Advanced Consists operate in 28 speed steps
-                (always).  You may need to make sure your throttle is 
-                sending 28 speed steps to the address to avoid flickering 
-                headlights.
-             </p>
-        </li>
-        </ul>
+		(always).  You may need to make sure your throttle is 
+		sending 28 speed steps to the address to avoid flickering 
+		headlights.
+		</p>
+		</li>
+		</ol>
 
-	<h3>
-	   Consisting Support in JMRI.
-        </h3>
-        <p>
-           JMRI provides support for consists using the consist tool, 
-           which is accessible through the tools menu of any JMRI 
-           application.
-           (There is also a 
-           <a href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">NCE-specific consisting tool</a>
-           that works somewhat differently from the tool described here)
-        </p>
-        <p>
-           The Consisting tool provides a visual tool for manipulating the 
-	   Decoder Assisted Consists and, on some command stations, 
-	   Command Station Assisted Consists.  
-        </p>
-        <p>
-           Backing up the consist tool is a consist manager.  The consist 
-           manager is responsible for maintaining information about 
-           existing consists and for communicating the necessary 
-           information between the consist tool and the command station.
-        </p>
-        
-	<b>Available Consist Managers</b>
-        </p>
-        <ul>
-        <li>
-	   <p>
-              The <i>Generic Consist Manager</i> is used on any system 
-              which does not have it's own consist manager, but supports 
-              operations mode programming.  This manager is only 
-              able to manipulate Decoder Assisted Consists.
-           </p>
-           <p>
-              <i>The Generic Consist Manager bypasses any routines the 
-              command station has to set the consist address.</i>  The 
-              importance of this is that IF your command station provides a 
-              method for you to run a consist by selecting a locomotive by 
-              it's address, this won't function.  You'll need to use the 
-              short address identifier you selected for the consist ID to 
-              control the consist speed and direction.
-           </p>
-        </li>
-        <li>
-           <p>
-	      The <i>XPressNet Consist Manager</i> uses support provided 
-              by XPressNet Based systems to manipulate consists.  This 
-              consist manager is able to construct a Lenz "Double Header" 
-              in addition to Advanced Consists.
-           </p>
-           <p>
-              Since this consist manager uses the consist creation 
-              instructions provided by the XPressNet protocol, the Lenz 
-              <i>Smart Consisting</i> feature works with consists created 
-              by the tool.  On Lenz systems, <i>Smart Consisting</i> 
-              refers to the ability to be able to run a consist from <i>any</i> 
-              of the consisted locomotive addresses or from the consist 
-              address.
-           </p>
-           <p>
-              The XPressNet Consist Manager is capable of reading consist 
-              information from the command station, both for Advanced Consists 
-              and Lenz Double Headers.  
-           </p>
-        </li>
-        <li>
-           <p>
-	      The <i>EasyDCC Consist Manager</i> uses support provided 
-              by CVP's EasyDCC system to manipulate consists.  This 
-              consist manager is able to construct EasyDCC "Standard Consists" 
-              in addition to Advanced Consists.
-           </p>
-           <p>
-              CVP does not provide a method to construct Advanced Consists.  
-              As a result, advanced consists are created by bypassing the 
-              command station.  Unlike the Generic Consist Manager, the 
-              EasyDCC Consist Manager creates these by issuing a Consist 
-              Control packet to the track.  This allows inclusion of 
-              locomotives that do not permit writing CV19 using 
-              operations mode programming.  As with the Generic Consist 
-              Manager, you must use the short address selected as the consist 
-              address to control the consist.
-           <p>
-              For EasyDCC Standard Consists, there are a couple of restrictions               imposed by the EasyDCC Protocol.  First, as with consists created               on the command station directly, consists are limited to 8 
-              addresses.  Second, unlike consists created on the command station              directly, CVP limits the standard consist address to addresses 
-              between 1 and 255.
-           </p>
-           <p>
-              The EasyDCC Consist Manager will read Standard Consist information
-              for consists in the allowed range (1-255) from the command 
-              station's memory.  Since the command station is bypassed to create
-              Advanced Consists, these cannot be read from the command station.
-        </li>
-        </ul>
+	<h3>Consisting Support in JMRI</h3>
+	<p>
+	   JMRI provides support for consists using the consist tool, 
+	   which is accessible through the tools menu of any JMRI 
+	   application.
+	   (There is also a 
+	   <a href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">NCE-specific consisting tool</a>
+	   that works somewhat differently from the tool described here)
+	</p>
+	<p>
+	   The Consisting tool provides a visual tool for manipulating the 
+	Decoder Assisted Consists and, on some command stations, 
+	Command Station Assisted Consists.  
+	</p>
+	<p>
+	   Backing up the consist tool is a consist manager.  The consist 
+	   manager is responsible for maintaining information about 
+	   existing consists and for communicating the necessary 
+	   information between the consist tool and the command station.
+	</p>
+	
+	<b>Available JMRI Consist Managers</b>
+	</p>
+		<ul>
+		<li>
+		<p>
+		      The <i>Generic Consist Manager</i> is used on any system 
+		      which does not have it's own consist manager, but supports 
+		      operations mode programming.  This manager is only 
+		      able to manipulate Decoder Assisted Consists.
+		   </p>
+		   <p>
+		      <i>The Generic Consist Manager bypasses any routines the 
+		      command station has to set the consist address.</i>  The 
+		      importance of this is that IF your command station provides a 
+		      method for you to run a consist by selecting a Locomotive by 
+		      it's address, this won't function.  You'll need to use the 
+		      short address identifier you selected for the consist ID to 
+		      control the consist speed and direction.
+		   </p>
+		</li>
+		<li>
+		   <p>
+		  The <i>XPressNet Consist Manager</i> uses support provided 
+		      by XPressNet Based systems to manipulate consists.  This 
+		      consist manager is able to construct a Lenz "Double Header" 
+		      in addition to Advanced Consists.
+		   </p>
+		   <p>
+		      Since this consist manager uses the consist creation 
+		      instructions provided by the XPressNet protocol, the Lenz 
+		      <i>Smart Consisting</i> feature works with consists created 
+		      by the tool.  On Lenz systems, <i>Smart Consisting</i> 
+		      refers to the ability to be able to run a consist from <i>any</i> 
+		      of the consisted Locomotive addresses or from the consist 
+		      address.
+		   </p>
+		   <p>
+		      The XPressNet Consist Manager is capable of reading consist 
+		      information from the command station, both for Advanced Consists 
+		      and Lenz Double Headers.  
+		   </p>
+		</li>
+		<li>
+		   <p>
+		  The <i>EasyDCC Consist Manager</i> uses support provided 
+		      by CVP's EasyDCC system to manipulate consists.  This 
+		      consist manager is able to construct EasyDCC "Standard Consists" 
+		      in addition to Advanced Consists.
+		   </p>
+		   <p>
+		      CVP does not provide a method to construct Advanced Consists.  
+		      As a result, advanced consists are created by bypassing the 
+		      command station.  Unlike the Generic Consist Manager, the 
+		      EasyDCC Consist Manager creates these by issuing a Consist 
+		      Control packet to the track.  This allows inclusion of 
+		      Locomotives that do not permit writing CV19 using 
+		      operations mode programming.  As with the Generic Consist 
+		      Manager, you must use the short address selected as the consist 
+		      address to control the consist.
+		   <p>
+		      For EasyDCC Standard Consists, there are a couple of restrictions
+		      imposed by the EasyDCC Protocol.  First, as with consists created 
+		      on the command station directly, consists are limited to 8 
+		      addresses.  Second, unlike consists created on the command station 
+		      directly, CVP limits the standard consist address to addresses 
+		      between 1 and 255.
+		   </p>
+		   <p>
+		      The EasyDCC Consist Manager will read Standard Consist information
+		      for consists in the allowed range (1-255) from the command 
+		      station's memory.  Since the command station is bypassed to create
+		      Advanced Consists, these cannot be read from the command station.
+		</li>
+		</ul>
 
 	<a name="tool">
 	<h2>Using the Consist Tool</h2></a>
 	<p>
 	When you first open the consist tool, you will see a screen similar to the following:
-        </p>
-	<image src=images/ConsistTool.jpg alt="Blank Consist Tool">
-        <p>
-	   on the top row are used to select between an Advanced (or 
-           Decoder Assisted) Consist and a Command Station Assisted 
-           Consist.  If the Command Station Assisted Consists are not 
-           supported by the tool for your system, these selections will be 
-           grayed out.
-        </p>
-	<p>
-           The box Next to the label <b>Consist:</b> is used to specify the 
-           consist ID.  For Decoder Assisted Consists, this should be the 
-           short address used to identify the consist.  For Command 
-           Station Assisted Consists, this value may automatically be 
-           filled in with the lead locomotive address when you try to add 
-           it to the consist.
-        </p>
-        <p>
-           Adding a typical ID for a Decoder Assisted Consist should look 
-           like the following:
-        </p>
-	   <image src=images/ConsistTool-IDAdded.jpg alt="Consist Tool - ID Added">
-        <p>
-	   The second line of the consisting tool is used to add locomotives.
-           A locomotive may be added either by entering it's number in the 
-           box next to <b>New Locomotive</b> or by selecting it's number 
-           from the roster drop down box.
-        </p>
-           <image src=images/ConsistTool-LeadLoco.jpg alt="Lead Locomotive Selected">
-        <p>
-          Clicking the <b>add</b> button will add a locomotive to the 
-          consist, and it will appear in the list below the second line.
-        </p>
-          <image src=images/ConsistTool-LeadLocoAdded.jpg alt="Lead Locomotive Added to Consist">
-        <p>
-          Clicking the <b>reset</b> button will clear the information for 
-          this locomotive.
-        </p>
-	<p>
-           The <b>Direction Normal</b> checkbox is used to determine if 
-           the locomotive is traveling in forward or reverse when the 
-           consist is traveling forward.
-        </p>
-        <p>
-           You may notice from the previous screen shots that this box is 
-           grayed out until a lead locomotive is selected.  With 
-           subsequent locomotives, you can check this box to indicate the
-           direction of the locomotive relative to the lead locomotive.
-        </p>
-           <image src=images/ConsistTool-SecondLoco.jpg alt="Second LocoMotive Selected - Direction Reversed">
-        <p>
-           After adding the second locomotive to the consist, with the
-           direction reversed, you should see something like the following:
-        </p>
-           <image src=images/ConsistTool-SecondLocoAdded.jpg alt="Second Locomotive Added">
-        <p>
-           If you made a mistake, and add a second locomotive to the 
-           consist with the wrong direction, you can change it's direction 
-           simply by clicking on the checkbox in the Direction Normal column.
 	</p>
-           <image src=images/ConsistTool-SecondLocoDirChange.jpg alt="Second Locomotive - Direction Change">
-        <p>
-           The direction of the lead locomotive cannot be changed once 
-           added.
-        </p>
-        <p>
-           To delete an individual locomotive from the consist, you can
-           select the <b>Del</b> button in the right most column of the 
-           appropriate row of the table of addresses.
-        </p>
-        <p>
-           To delete an entire consist you can use the <b>Delete</b> 
-           button at the bottom of the screen.
-        </p>
-        <p>
-           The throttle button at the bottom of the screen can be used to
-           bring up a JMRI throttle for this address.
-        </p>
-        <p>
-           To Add a new consist, you can select the blank entry in the 
-           drop-down box next to the current consist's ID.
-        </p>
-	   <image src=images/ConsistTool-NewConsist.jpg alt="Select New Consist">
-        <p>
-           To Recall an existing consist, you can select the appropriate 
-           entry from the drop-down box next to the current consist's ID.
-        </p>
-	   <image src=images/ConsistTool-SelectConsist.jpg alt="Select a Consist">
+	<image src=images/ConsistTool.jpg alt="Blank Consist Tool">
+	<p>
+	on the top row are used to select between an Advanced (or 
+	   Decoder Assisted) Consist and a Command Station Assisted 
+	   Consist.  If the Command Station Assisted Consists are not 
+	   supported by the tool for your system, these selections will be 
+	   grayed out.
+	</p>
+	<p>
+	   The box Next to the label <b>Consist:</b> is used to specify the 
+	   consist ID.  For Decoder Assisted Consists, this should be the 
+	   short address used to identify the consist.  For Command 
+	   Station Assisted Consists, this value may automatically be 
+	   filled in with the lead Locomotive address when you try to add 
+	   it to the consist.
+	</p>
+	<p>
+	   Adding a typical ID for a Decoder Assisted Consist should look 
+	   like the following:
+	</p>
+	<image src=images/ConsistTool-IDAdded.jpg alt="Consist Tool - ID Added">
+	<p>
+	The second line of the consisting tool is used to add Locomotives.
+	   A Locomotive may be added either by entering it's number in the 
+	   box next to <b>New Locomotive</b> or by selecting it's number 
+	   from the roster drop down box.
+	</p>
+	   <image src=images/ConsistTool-LeadLoco.jpg alt="Lead Locomotive Selected">
+	<p>
+	  Clicking the <b>add</b> button will add a Locomotive to the 
+	  consist, and it will appear in the list below the second line.
+	</p>
+	  <image src=images/ConsistTool-LeadLocoAdded.jpg alt="Lead Locomotive Added to Consist">
+	<p>
+	  Clicking the <b>reset</b> button will clear the information for 
+	  this Locomotive.
+	</p>
+	<p>
+	   The <b>Direction Normal</b> checkbox is used to determine if 
+	   the Locomotive is traveling in forward or reverse when the 
+	   consist is traveling forward.
+	</p>
+	<p>
+	   You may notice from the previous screen shots that this box is 
+	   grayed out until a lead Locomotive is selected.  With 
+	   subsequent Locomotives, you can check this box to indicate the
+	   direction of the Locomotive relative to the lead Locomotive.
+	</p>
+	   <image src=images/ConsistTool-SecondLoco.jpg alt="Second Locomotive Selected - Direction Reversed">
+	<p>
+	   After adding the second Locomotive to the consist, with the
+	   direction reversed, you should see something like the following:
+	</p>
+	   <image src=images/ConsistTool-SecondLocoAdded.jpg alt="Second Locomotive Added">
+	<p>
+	   If you made a mistake, and add a second Locomotive to the 
+	   consist with the wrong direction, you can change it's direction 
+	   simply by clicking on the checkbox in the Direction Normal column.
+	</p>
+	   <image src=images/ConsistTool-SecondLocoDirChange.jpg alt="Second Locomotive - Direction Change">
+	<p>
+	   The direction of the lead Locomotive cannot be changed once 
+	   added.
+	</p>
+	<p>
+	   To delete an individual Locomotive from the consist, you can
+	   select the <b>Del</b> button in the right most column of the 
+	   appropriate row of the table of addresses.
+	</p>
+	<p>
+	   To delete an entire consist you can use the <b>Delete</b> 
+	   button at the bottom of the screen.
+	</p>
+	<p>
+	   The throttle button at the bottom of the screen can be used to
+	   bring up a JMRI throttle for this address.
+	</p>
+	<p>
+	   To Add a new consist, you can select the blank entry in the 
+	   drop-down box next to the current consist's ID.
+	</p>
+	<image src=images/ConsistTool-NewConsist.jpg alt="Select New Consist">
+	<p>
+	   To Recall an existing consist, you can select the appropriate 
+	   entry from the drop-down box next to the current consist's ID.
+	</p>
+	<image src=images/ConsistTool-SelectConsist.jpg alt="Select a Consist">
 
-    
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>
 

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -11,11 +11,13 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="30-40mA incandescent bulb">
     <choice>30-40mA incandescent bulb</choice>
+    <choice xml:lang="it">Lampada incandescenza 30-40mA</choice>
   </enumChoice>
   <enumChoice choice="LED and limiting resistor">
     <choice>LED and limiting resistor</choice>
+    <choice xml:lang="it">LED con Resistenza limitazione</choice>
   </enumChoice>
 </enumVal>

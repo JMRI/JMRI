@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2015-11-01</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Included similar CVs from SUSI sound modules</revremark>
+    </revision>
+	<revision>
+      <revnumber>2</revnumber>
+      <date>2015-03-05</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Moved Flash-Rom option</revremark>
+    </revision>
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-10-13</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+   </revhistory>
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
+  <variable label="Flash-ROM protection" CV="360" tooltip="CV360" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 4" readOnly="yes" exclude="SUSI sound modules">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+	<label xml:lang="fr">Protection mémoire flash</label>
+	<label xml:lang="de">Schreibschutz Flash-ROM</label>
+  </variable>
+  <variable label="Flash-ROM protection" CV="960" tooltip="CV960" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 4" readOnly="yes" exclude="Combo sound decoders,SH10A_1.00">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+	<label xml:lang="fr">Protection mémoire flash</label>
+	<label xml:lang="de">Schreibschutz Flash-ROM</label>
+  </variable>
+  <!-- END SIMILAR CV --> 
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
+  <variable label="Threshold ZVS" CV="361" tooltip="CV361 (0-14)" default="9" item="Sound Option 21" exclude="SUSI sound modules">
+	<decVal min="0" max="14"/>
+	<label xml:lang="fr">Seuil ZVS</label>
+	<label xml:lang="de">Schwellenwert ZVS</label>
+   </variable>
+  <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="9" item="Sound Option 21" exclude="Combo sound decoders,SH10A_1.00">
+	<decVal min="0" max="14"/>
+	<label xml:lang="fr">Seuil ZVS</label>
+	<label xml:lang="de">Schwellenwert ZVS</label>
+   </variable>
+  <!-- END SIMILAR CV --> 
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
+   <variable label="Smoke puffs at speed 127" CV="362" tooltip="CV362 (0-255)" default="0" item="Sound Option 22" exclude="SUSI sound modules">
+	<decVal min="0" max="255"/>
+	<label xml:lang="fr">Poussée de fumée en vitesse 127</label>
+	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
+   </variable>
+   <variable label="Smoke puffs at speed 127" CV="962" tooltip="CV962 (0-255)" default="0" item="Sound Option 22" exclude="Combo sound decoders,SH10A_1.00">
+	<decVal min="0" max="255"/>
+	<label xml:lang="fr">Poussée de fumée en vitesse 127</label>
+	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
+   </variable>
+   <!-- END SIMILAR CV --> 
+</variables>

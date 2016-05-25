@@ -1,16 +1,15 @@
 package jmri.jmrix.sprog.configurexml;
 
+import jmri.jmrix.sprog.SprogTurnoutManager;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
-import jmri.jmrix.sprog.SprogTurnoutManager;
 
 /**
- * Provides load and store functionality for
- * configuring SprogTurnoutManagers.
+ * Provides load and store functionality for configuring SprogTurnoutManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @version $Revision$
@@ -22,20 +21,21 @@ public class SprogTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
     }
 
     public void setStoreElementClass(Element turnouts) {
-        turnouts.setAttribute("class","jmri.jmrix.sprog.configurexml.SprogTurnoutManagerXml");
+        turnouts.setAttribute("class", "jmri.jmrix.sprog.configurexml.SprogTurnoutManagerXml");
     }
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         SprogTurnoutManager.instance();
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
-	// initialize logging
-    static Logger log = LoggerFactory.getLogger(SprogTurnoutManagerXml.class.getName());
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(SprogTurnoutManagerXml.class.getName());
 }

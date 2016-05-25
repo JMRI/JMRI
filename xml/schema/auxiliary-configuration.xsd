@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.netbeans.org/ns/auxiliary-configuration/1"
+            xmlns="http://www.netbeans.org/ns/auxiliary-configuration/1"
+            elementFormDefault="qualified">
+    <!--
+Note JMRI-specific addition of http://jmri.org/xml/schema/ to schemaLocation entries.
+NetBeans schemaLocations are versioned abstractions without real backings.
+    -->
+    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://jmri.org/xml/schema/auxiliary-configuration.xsd"/>
+    <xsd:element name="auxiliary-configuration">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

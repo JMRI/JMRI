@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2012-01-22-->
-<!-- $Id: Signals.shtml,v 1.6 2010/01/09 22:25:56 jacobsen Exp $ -->
+<!-- Updated by Blorec Herv&#233;  2013-10-05-->
+<!-- $Id$ -->
 <html lang="fr">
 <head>
-   <TITLE>_ <META http-equiv=C<META http-eqontent-Type content="text/html; charset=iso-utf-8">
+   <TITLE>_ <META http-equiv=C<META http-eqontent-Type content="text/html; charset=iso-iso-8859-1">
 JMRI: Signal Head Documentation
   </TITLE>
-   <META http-equiv=Content-Type content="text/html; charset=iso-utf-8">
+   <META http-equiv=Content-Type content="text/html; charset=iso-iso-8859-1">
 
  <META content="Bob Jacobsen" name=Author>
  <META http-equiv=Cont<!--#include virtual="/Header" --><!--#include virtual="/Header" -->
@@ -15,7 +15,7 @@ JMRI: Signal Head Documentation
 	    content="turnout model railroad JMRI decoderpro panelpro">
 <!--#include virtual="/Header" --><!--#include virtual="/Header" -->
 <!-- Style-->
- <META http-equiv=Content-Type content="text/html; charset=iso-utf-8">
+ <META http-equiv=Content-Type content="text/html; charset=iso-iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -28,15 +28,15 @@ JMRI: Signal Head Documentation
 <body>
 <div id="container">	JMRI: Signal Head Documentation
   </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 
 <META content="Bob Jacobsen" name=Author
- <META http-equiv=Content-Type content="text/html; charset=utf-8">
+ <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <meta name="keywords"
         content="turnout model railroad JMRI decoderpro panelpro">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -52,81 +52,15 @@ JMRI: Signal Head Documentation
 
       <div id="mainContent">
       <!-- Page Body -->
-<h1> JMRI Documentation Tête de Signal</h1>
+<h1> JMRI Documentation de la Signalisation</h1>
 
-Les Signaux (ou plus formellementement les Têtes de Signal) sont comment JMRI représente et
-contrôle les têtes de signal sur un réseau. Ils sont un type spécifique de
-périphérique de sortie qui peut être réglé pour différentes couleurs: Rouge, Jaune, Vert, Jaune clignotant, etc
-
-<p>
-Beaucoup plus d'informations à propos de signalisation JMRI est disponible
-depuis la
-<a href="signaling/index.shtml"> page d'aide de signalisation JMRI </a>.
-
-<a name="table"><h3> La Table Tête de Signal </h3></a>
-
-<A Href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN= RIGHT WIDTH= "149" height= "179" hspace = "0" vspace = "0" ALT = " simple panneau de signaux logiques"></a>
-<!-- La section suivante est tirée de, et doit être conservé compatible avec-->
-<!-- help/fr/package/JMRI/jmrit/beantable/SignalHeadTable.html -->
-
-Toutes les têtes de signal que JMRI connaît peuveuvent être référencées
-en utilisant l'outil "Table Tête de Signal" dans le menu Outils des programmes JMRI.
-<p>
-Pour plus d'informations sur la configuration et l'exploitation des signaux avec la chef du signal
-Tableau, s'il vous plaît voir la
-<a href="../../package/jmri/jmrit/beantable/SignalHeadTable.shtml"> page d'aide de tableau Tête de Signal </a>.
-
-<a name="add"><h3> Créer une Tête de Signal </h3></a>
-<A Href="./images/SigAdd.gif"><IMG SRC="./images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" height="218" hspace="0" vspace="0" ALT ="Simple Signal Logic panel figure"></a> >
-
-<! - La section suivante est tirée de, et doit être conservé compatible avec ->
-<! - help/fr/package/JMRI/jmrit/beantable/SignalAddEdit.html ->
-
-<P> Pour définir une nouvelle tête de signal , cliquez sur le bouton <b> Ajouter Nouvelle Tête signal </b> dans la Table Tête de Signal .
-Il vous sera
- demander le type de tête de signal (sorties contrôlées par l'aiguillage; SE8c; etc), et
-toutes les informations de configuration nécessaire pour votre choix.
-Il ya plus d'informations sur la
-page d'aide <a href="../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"> sur l'ajout des têtes de signal </a>.
-
-<a name="edit"><h3> Modification d'une tête signal existante </h3>
-
-<P> Une fois qu'une tête de signal a été définie, vous ne pouvez pas actuellement changer
-son type directement depuis le programme.
-Il s'agit d'une demande de capacités, un jour peut être l'écrira probablement.
-En attendant, vous pouvez simplement ignorer les têtes signal que vous avez défini
-et que nous ne voulez pas'utiliser, ils ne dérange en rien.
-Ou vous pouvez éditer vos fichiers de configuration sauvegardé pour retirer l'ensemble de la
-ligne contenant la définition de signal, cherchez le nom du signal
-pour localiser la ligne droite. Notez que vous devez supprimer la ligne entière, et
-ne pas laisser toute partie de celui-ci, en particulier l'ouverture et la fermeture de parenthèses. Enregistrer
-une copie du fichier comme une première sauvegarde!
-
-<h3> Contrôle d'une Tête Signal </h3>
-
-Les Têtes Signal peut être contrôlé de différentes façons par JMRI, y compris
-<ul>
-<LI><a Href="signaling/index.shtml"> simple signal logique </a>, pourla signalisation de base ABS* de signalisation de type  Nord américain
-<li><a href="Logix.shtml"> Logix </a>, un moyen graphique de contrôle des têtes de signal avec une logique simple
-<li> JMRI <a href="scripting/index.shtml"> scripts </a>, en utilisant un langage de programmation complet à faire tout ce que vous aimeriez
-</UL>
-
-<LI><a Href="signaling/index.shtml"> simple signal logique </a>, pourla signalisation de base ABS* de signalisation de type  Nord américain
-<li><a href="Logix.shtml"> Logix </a>, un moyen graphique de contrôle des têtes 
-<h2> Sauvegarder et Recharger la configuration </h2>
-
-<LI><a Href="signaling/index.shtml"> simple signal logique </a>, pourla signalisation de base ABS* de signalisation de type  Nord américain
-<li><a href="Logix.shtml"> Logix </a>, un moyen graphique de contrôle des têtes 
-L'informations tête de signal est enregistrée avec la configuration dans un fichier XML, le long
-avec l'installation du panneau de commande et des trucs similaires. Pour plus d'informations
-sur la création et l'affichage des panneaux, y compris la façon de montrer les têtes signal
-sur vos panneaux,
-S'il vous plaît voir les
-<A Panneaux HREF="../apps/PanelPro/Panels.html"> pages </a>.
-<p>
-* ABS= Block Système Automatique
+<!-- Nouveau pages en Anglais, Avril 2014 -->
+	<p>
+Venez &aacute; la 
+<a href="signaling/index.shtml">page d'aide de la Signalisation JMRI</a>.
 </p>
-<!--#include virtual="/Footer" -->
+
+		  <!--#include virtual="/Footer" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
@@ -15,16 +15,27 @@
 <!-- version 2 - Add minor version to top of pane -->
 <!-- version 3 - Add CV55.154.x hoot/fancy ending -->
 <!-- version 4 - Add support for V8 -->
-<pane name="Sound Control" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Sound Control</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.9.5 or later is required for QSI V7"/>
-        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.9.5 or later is required for QSI V7</text>
+        </label>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <row>
@@ -127,7 +138,9 @@
         <display item="CV55.178.0 Miles" format="checkbox"/>
         <display item="CV55.178.0 Volts" format="checkbox"/>
       </column>
-      <label label="      "/>
+      <label>
+        <text>      </text>
+      </label>
       <column>
         <display item="CV51.3 Fuel"/>
         <display item="CV55.3.0"/>
@@ -146,10 +159,14 @@
         <display item="CV56.32.0"/>
         <display item="CV51.16"/>
         <display item="CV129.10.0 Transition"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <column>
         <row>
@@ -173,29 +190,47 @@
         </row>
         <display item="CV55.154.6 hoot" format="checkbox"/>
       </column>
-      <label label="        "/>
+      <label>
+        <text>        </text>
+      </label>
       <column>
         <row>
           <display item="CV55.154.1" layout="above" label=""/>
           <display item="CV55.154.1" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV55.154.3" layout="above" label=""/>
           <display item="CV55.154.3" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV55.154.5" layout="above" label=""/>
           <display item="CV55.154.5" layout="above" format="hslider-percent"/>
         </row>
       </column>
     </row>
-    <label label="    "/>
-    <label label="If Hoot/Fancy Ending checked and value is 9 or less then hoot sound used, if value is 10 or greater then fancy ending sound used"/>
-    <label label="Not all Firmware have Hoot and/or Fancy Ending, regular sound will be played instead"/>
-    <label label="Earlier Firmware do not support Hoot/Fancy Ending for Grade Crossing, if checked 12.8 seconds will be added to value"/>
+    <label>
+      <text>    </text>
+    </label>
+    <label>
+      <text>If Hoot/Fancy Ending checked and value is 9 or less then hoot sound used, if value is 10 or greater then fancy ending sound used</text>
+    </label>
+    <label>
+      <text>Not all Firmware have Hoot and/or Fancy Ending, regular sound will be played instead</text>
+    </label>
+    <label>
+      <text>Earlier Firmware do not support Hoot/Fancy Ending for Grade Crossing, if checked 12.8 seconds will be added to value</text>
+    </label>
   </column>
 </pane>

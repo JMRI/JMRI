@@ -1,5 +1,4 @@
 // SpeedoPortController.java
-
 package jmri.jmrix.bachrus;
 
 import java.io.DataInputStream;
@@ -7,24 +6,33 @@ import java.io.DataOutputStream;
 
 /**
  * Abstract base for classes representing a Bachrus speedo communications port
- * @author			Bob Jacobsen        Copyright (C) 2001
- * @author			Andrew Crosland     Copyright (C) 2010
- * @version			$Revision$
- */public abstract class SpeedoPortController extends jmri.jmrix.AbstractSerialPortController {
-	// base class. Implementations will provide InputStream and OutputStream
-	// objects to SprogTrafficController classes, who in turn will deal in messages.
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @author	Andrew Crosland Copyright (C) 2010
+ * @version	$Revision$
+ */
+public abstract class SpeedoPortController extends jmri.jmrix.AbstractSerialPortController {
 
-	// returns the InputStream from the port
-	public abstract DataInputStream getInputStream();
+    // base class. Implementations will provide InputStream and OutputStream
+    // objects to SprogTrafficController classes, who in turn will deal in messages.
+    protected SpeedoPortController(SpeedoSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
 
-	// returns the outputStream to the port
-	public abstract DataOutputStream getOutputStream();
+    // returns the InputStream from the port
+    public abstract DataInputStream getInputStream();
 
-	// check that this object is ready to operate
-	public abstract boolean status();
-    
-    protected SpeedoSystemConnectionMemo adaptermemo = null;
+    // returns the outputStream to the port
+    public abstract DataOutputStream getOutputStream();
+
+    // check that this object is ready to operate
+    public abstract boolean status();
+
+    @Override
+    public SpeedoSystemConnectionMemo getSystemConnectionMemo() {
+        return (SpeedoSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
+
 }
-
 
 /* @(#)SpeedoPortController.java */

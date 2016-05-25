@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
 <!--                                                                        -->
@@ -12,53 +12,69 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new include file for SoundTraxx Tsunami -->
-<enumVal>
-  <enumChoice choice="Manual notching, engine RPM controlled by F10/F9">
-    <choice>Manual notching, engine RPM controlled by F10/F9</choice>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Manual notching, engine RPM controlled by functions">
+    <choice>Manual notching, engine RPM controlled by functions</choice>
+    <choice xml:lang="it">Regolazione manuale, Giri motore controllati da funzioni</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases at each speed step">
     <choice>Engine RPM increases at each speed step</choice>
+    <choice xml:lang="it">Giri motore aumentano ad ogni step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 2 speed steps">
     <choice>Engine RPM increases every 2 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 2 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 3 speed steps">
     <choice>Engine RPM increases every 3 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 3 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 4 speed steps">
     <choice>Engine RPM increases every 4 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 4 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 5 speed steps">
     <choice>Engine RPM increases every 5 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 5 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 6 speed steps">
     <choice>Engine RPM increases every 6 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 6 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 7 speed steps">
     <choice>Engine RPM increases every 7 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 7 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 8 speed steps">
     <choice>Engine RPM increases every 8 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 8 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 9 speed steps">
     <choice>Engine RPM increases every 9 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 9 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 10 speed steps">
     <choice>Engine RPM increases every 10 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 10 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 11 speed steps">
     <choice>Engine RPM increases every 11 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 11 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 12 speed steps">
     <choice>Engine RPM increases every 12 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 12 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 13 speed steps">
     <choice>Engine RPM increases every 13 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 13 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 14 speed steps">
     <choice>Engine RPM increases every 14 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 14 step Velocità</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases every 15 speed steps">
     <choice>Engine RPM increases every 15 speed steps</choice>
+    <choice xml:lang="it">Giri motore aumentano ogni 15 step Velocità</choice>
   </enumChoice>
 </enumVal>

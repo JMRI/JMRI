@@ -1,58 +1,57 @@
 // AbstractCanTrafficController.java
-
 package jmri.jmrix.can;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base for TrafficControllers in a CANbus based Message/Reply protocol.
+ * Abstract base for TrafficControllers in a CANbus based Message/Reply
+ * protocol.
  * <P>
  * AbstractMRTrafficController is extended to allow for the translation between
  * CAN messages and the message format of the CAN adapter that connects to the
  * layout.
  *
- * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision$
+ * @author	Andrew Crosland Copyright (C) 2008
+ * @version	$Revision$
  */
-
-abstract public class AbstractCanTrafficController 
-            extends AbstractMRTrafficController 
-            implements CanInterface {
+abstract public class AbstractCanTrafficController
+        extends AbstractMRTrafficController
+        implements CanInterface {
 
     public AbstractCanTrafficController() {
         super();
         allowUnexpectedReply = true;
     }
-    
-    protected void setInstance(){
-    
+
+    protected void setInstance() {
+
     }
 
     // The methods to implement the CAN Interface
- 
     public synchronized void addCanListener(CanListener l) {
         this.addListener(l);
     }
-    
+
     public synchronized void removeCanListener(CanListener l) {
         this.removeListener(l);
     }
-    
+
     /**
      * Actually transmits the next message to the port
      *
-     * Overridden to include translation to the correct CAN hardware message format
+     * Overridden to include translation to the correct CAN hardware message
+     * format
      */
-     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
 //        if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
-        log.debug("forwardToPort message: ["+m+"]");//warn
+        log.debug("forwardToPort message: [" + m + "]");//warn
 
         // remember who sent this
         mLastSender = reply;
@@ -67,10 +66,11 @@ abstract public class AbstractCanTrafficController
         AbstractMRMessage hm = newMessage();
 
         // Encode the message to be sent
-        if ( ((CanMessage)m).isTranslated() ) 
+        if (((CanMessage) m).isTranslated()) {
             hm = m;
-        else
-            hm = encodeForHardware((CanMessage)m);
+        } else {
+            hm = encodeForHardware((CanMessage) m);
+        }
         log.debug("Encoded for hardware: [" + hm.toString() + "]");
 
         // stream to port in single write, as that's needed by serial
@@ -81,11 +81,12 @@ abstract public class AbstractCanTrafficController
 
         // add data content
         int len = hm.getNumDataElements();
-        for (int i=0; i< len; i++)
-            msg[i+offset] = (byte) hm.getElement(i);
+        for (int i = 0; i < len; i++) {
+            msg[i + offset] = (byte) hm.getElement(i);
+        }
 
         // add trailer
-        addTrailerToOutput(msg, len+offset, hm);
+        addTrailerToOutput(msg, len + offset, hm);
 
         // and stream the bytes
         try {
@@ -94,29 +95,33 @@ abstract public class AbstractCanTrafficController
                     //String f = "formatted message: ";
                     StringBuffer buf = new StringBuffer("formatted message: ");
                     //for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
-                    for (int i = 0; i<msg.length; i++) {
-                        buf.append(Integer.toHexString(0xFF&msg[i]));
+                    for (int i = 0; i < msg.length; i++) {
+                        buf.append(Integer.toHexString(0xFF & msg[i]));
                         buf.append(" ");
                     }
                     log.debug(buf.toString());
                 }
-                while(hm.getRetries()>=0) {
-                    if(portReadyToSend(controller)) {
+                while (hm.getRetries() >= 0) {
+                    if (portReadyToSend(controller)) {
                         ostream.write(msg);
                         log.debug("message written");
                         break;
-                    } else if(hm.getRetries()>=0) {
-                        if (log.isDebugEnabled()) log.debug("Retry message: "+hm.toString() +" attempts remaining: " + hm.getRetries());
+                    } else if (hm.getRetries() >= 0) {
+                        if (log.isDebugEnabled()) {
+                            log.debug("Retry message: " + hm.toString() + " attempts remaining: " + hm.getRetries());
+                        }
                         hm.setRetries(hm.getRetries() - 1);
                         try {
-                            synchronized(xmtRunnable) {
+                            synchronized (xmtRunnable) {
                                 xmtRunnable.wait(hm.getTimeout());
                             }
-                        } catch (InterruptedException e) { 
+                        } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
                             log.error("retry wait interupted");
                         }
-                    } else log.warn("sendMessage: port not ready for data sending: " +Arrays.toString(msg));
+                    } else {
+                        log.warn("sendMessage: port not ready for data sending: " + Arrays.toString(msg));
+                    }
                 }
             } else {
                 // no stream connected
@@ -127,18 +132,18 @@ abstract public class AbstractCanTrafficController
         }
     }
 
-     /*
-      * Default implementations of some of the abstract classes to save having
-      * to implement them in every sub class
-      */
+    /*
+     * Default implementations of some of the abstract classes to save having
+     * to implement them in every sub class
+     */
     protected AbstractMRMessage pollMessage() {
         return null;
     }
-          
+
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
-    
+
     /*
      * enterProgMode() and enterNormalMode() return any message that 
      * needs to be returned to the command station to change modes.
@@ -161,56 +166,61 @@ abstract public class AbstractCanTrafficController
     /**
      * Get the correct concrete class for the hardware connection message
      */
-
     abstract protected AbstractMRMessage newMessage();
 
     abstract public CanReply decodeFromHardware(AbstractMRReply m);
 
     abstract public AbstractMRMessage encodeForHardware(CanMessage m);
-  
+
     /**
      * Handle each reply when complete.
      * <P>
      * Overridden to include translation form the CAN hardware format
+     *
      * @throws IOException
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DLS_DEAD_LOCAL_STORE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // Ignore false positive that msg is never used
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
-        
+
         // Create messages off the right concrete classes
         // for the CanReply
         CanReply msg = new CanReply();
-        
+
         // and for the incoming reply from the hardware
         AbstractMRReply hmsg = newReply();
-        
+
         // wait for start if needed
         waitForStartOfReply(istream);
-        
+
         // message exists, now fill it
         loadChars(hmsg, istream);
-        
+
         // Decode the message from the hardware into a CanReply
         msg = decodeFromHardware(hmsg);
-        if (msg == null) return;  // some replies don't get forwarded
-        
+        if (msg == null) {
+            return;  // some replies don't get forwarded
+        }
         // message is complete, dispatch it !!
         replyInDispatch = true;
-        
-        if (log.isDebugEnabled()) log.debug("dispatch reply of length "+msg.getNumDataElements()+
-                " contains "+msg.toString()+" state "+mCurrentState);
-        
+
+        if (log.isDebugEnabled()) {
+            log.debug("dispatch reply of length " + msg.getNumDataElements()
+                    + " contains " + msg.toString() + " state " + mCurrentState);
+        }
+
         // actually distribute the reply
         distributeOneReply(msg, mLastSender);
-        
+
         if (!msg.isUnsolicited()) {
-            if (log.isDebugEnabled()) log.debug("switch on state "+mCurrentState);
+            if (log.isDebugEnabled()) {
+                log.debug("switch on state " + mCurrentState);
+            }
             // effect on transmit:
             switch (mCurrentState) {
-                
+
                 case WAITMSGREPLYSTATE: {
                     // update state, and notify to continue
                     synchronized (xmtRunnable) {
@@ -220,12 +230,12 @@ abstract public class AbstractCanTrafficController
                     }
                     break;
                 }
-                
+
                 case WAITREPLYINPROGMODESTATE: {
                     // entering programming mode
                     mCurrentMode = PROGRAMINGMODE;
                     replyInDispatch = false;
-                    
+
                     // check to see if we need to delay to allow decoders to become
                     // responsive
                     int warmUpDelay = enterProgModeDelayTime();
@@ -237,9 +247,9 @@ abstract public class AbstractCanTrafficController
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
                         }
-                        
+
                     }
-                    
+
                     // update state, and notify to continue
                     synchronized (xmtRunnable) {
                         mCurrentState = OKSENDMSGSTATE;
@@ -247,7 +257,7 @@ abstract public class AbstractCanTrafficController
                     }
                     break;
                 }
-                
+
                 case WAITREPLYINNORMMODESTATE: {
                     // entering normal mode
                     mCurrentMode = NORMALMODE;
@@ -259,13 +269,14 @@ abstract public class AbstractCanTrafficController
                     }
                     break;
                 }
-                
+
                 default: {
                     replyInDispatch = false;
                     if (allowUnexpectedReply == true) {
-                        if (log.isDebugEnabled())
+                        if (log.isDebugEnabled()) {
                             log.debug("Allowed unexpected reply received in state: "
-                                    + mCurrentState	+ " was " + msg.toString());
+                                    + mCurrentState + " was " + msg.toString());
+                        }
                     } else {
                         log.error("reply complete in unexpected state: "
                                 + mCurrentState + " was " + msg.toString());
@@ -286,20 +297,13 @@ abstract public class AbstractCanTrafficController
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
         } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" +e);
+            log.error("Unexpected exception in invokeAndWait:" + e);
             e.printStackTrace();
         }
     }
-    
-    static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class.getName());
 
 }
 
-
-
 /* @(#)AbstractCanTrafficController.java */
-
-
-
-
-

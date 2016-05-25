@@ -1,24 +1,20 @@
-// SerialPacketGenFrame.java
-
 package jmri.jmrix.cmri.serial.packetgen;
-
-import jmri.util.StringUtil;
-import jmri.jmrix.cmri.serial.SerialMessage;
-import jmri.jmrix.cmri.serial.SerialReply;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import jmri.jmrix.cmri.serial.SerialMessage;
+import jmri.jmrix.cmri.serial.SerialReply;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.util.StringUtil;
 
 /**
  * Frame for user input of CMRI serial messages
- * @author	Bob Jacobsen   Copyright (C) 2002, 2003
- * @version	$Revision: 17977 $
+ *
+ * @author	Bob Jacobsen Copyright (C) 2002, 2003
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -47,10 +43,10 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         packetTextField.setText("");
         packetTextField.setToolTipText("Enter command as hexadecimal bytes separated by a space");
         packetTextField.setMaximumSize(
-                                       new Dimension(packetTextField.getMaximumSize().width,
-                                                     packetTextField.getPreferredSize().height
-                                                     )
-                                       );
+                new Dimension(packetTextField.getMaximumSize().width,
+                        packetTextField.getPreferredSize().height
+                )
+        );
 
         setTitle("Send CMRI serial command");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -59,12 +55,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(packetTextField);
         getContentPane().add(sendButton);
 
-
         sendButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    sendButtonActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sendButtonActionPerformed(e);
+            }
+        });
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -79,10 +74,10 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    pollButtonActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                pollButtonActionPerformed(e);
+            }
+        });
         pollButton.setToolTipText("Send poll request");
 
         // pack for display
@@ -101,12 +96,19 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     SerialMessage createPacket(String s) {
         // gather bytes in result
         byte b[] = StringUtil.bytesFromHexString(s);
-        if (b.length == 0) return null;  // no such thing as a zero-length message
+        if (b.length == 0) {
+            return null;  // no such thing as a zero-length message
+        }
         SerialMessage m = new SerialMessage(b.length);
-        for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
+        for (int i = 0; i < b.length; i++) {
+            m.setElement(i, b[i]);
+        }
         return m;
     }
 
-    public void  message(SerialMessage m) {}  // ignore replies
-    public void  reply(SerialReply r) {} // ignore replies
+    public void message(SerialMessage m) {
+    }  // ignore replies
+
+    public void reply(SerialReply r) {
+    } // ignore replies
 }

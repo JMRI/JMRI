@@ -1,30 +1,27 @@
-// FileUtil.java
-
+// SystemType.java
 package jmri.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Common utility methods for determining which type
- * of operating system is in use.
+ * Common utility methods for determining which type of operating system is in
+ * use.
  *
- * @author Bob Jacobsen  Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  * @author Daniel Boudreau Copyright 2012 (add Unix)
  * @author Randall Wood Copyright 2013
  * @version $Revision$
  */
-
 public class SystemType {
 
-    static final public int MACCLASSIC	= 1; // no longer supported - latest JVM is 1.1.8
-    static final public int MACOSX		= 2;
-    static final public int WINDOWS		= 4;
-    static final public int LINUX		= 5;
-    static final public int OS2			= 6;
-    static final public int UNIX		= 7;
-    
-    
+    static final public int MACCLASSIC = 1; // no longer supported - latest JVM is 1.1.8
+    static final public int MACOSX = 2;
+    static final public int WINDOWS = 4;
+    static final public int LINUX = 5;
+    static final public int OS2 = 6;
+    static final public int UNIX = 7;
+
     static int type = 0;
     static boolean isSet = false;
 
@@ -86,18 +83,18 @@ public class SystemType {
     /**
      * Convenience method to determine if OS is OS/2. Useful if an exception
      * needs to be made for OS/2.
-     * 
+     *
      * @return true if on OS/2
      */
     public static boolean isOS2() {
         setType();
         return (type == OS2);
     }
-    
+
     /**
      * Convenience method to determine if OS is Unix. Useful if an exception
      * needs to be made for Unix.
-     * 
+     *
      * @return true if on Unix
      */
     public static boolean isUnix() {
@@ -110,7 +107,7 @@ public class SystemType {
             return;
         }
         isSet = true;
-        
+
         osName = System.getProperty("os.name");
         String lowerCaseName = osName.toLowerCase();
 
@@ -127,15 +124,15 @@ public class SystemType {
             // Windows
             type = WINDOWS;
         } else if (lowerCaseName.contains("nix") || lowerCaseName.contains("nux") || lowerCaseName.contains("aix") || lowerCaseName.contains("solaris")) {
-        	// Unix
-        	type = UNIX;
+            // Unix
+            type = UNIX;
         } else {
             // No match
             type = 0;
-            log.error("Could not determine system type from os.name=/"+osName+"/");
+            log.error("Could not determine system type from os.name=/" + osName + "/");
         }
     }
-    
+
     // initialize logging
     static private Logger log = LoggerFactory.getLogger(SystemType.class.getName());
 }

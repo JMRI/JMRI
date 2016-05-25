@@ -8,8 +8,8 @@ import java.util.List;
  * connected wi-fi device.
  *
  *
- *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision$
+ * @author Brett Hoffman Copyright (C) 2010
+ * @version $Revision$
  */
 abstract public class AbstractController {
 
@@ -20,56 +20,58 @@ abstract public class AbstractController {
     boolean canBuildList = true;
 
     /**
-     * isValid is used to indicate if the Controller is created.
-     * If false, we can null the controller and reduce overhead.
+     * isValid is used to indicate if the Controller is created. If false, we
+     * can null the controller and reduce overhead.
+     *
      * @return isValid
      */
     abstract boolean verifyCreation();
 
-/**
- * Break down a message and use it.
- * @param message
- */
+    /**
+     * Break down a message and use it.
+     *
+     * @param message
+     */
     abstract void handleMessage(String message);
 
-/**
- * Register as listener of NamedBeans to be updated of changes.
- */
+    /**
+     * Register as listener of NamedBeans to be updated of changes.
+     */
     abstract void register();
 
-/**
- * Deregister as listener of NamedBeans
- */
+    /**
+     * Deregister as listener of NamedBeans
+     */
     abstract void deregister();
 
-/**
- *  Build list only if there are no controller listeners.
- *  This way the list is not changed while in use.
- *  This should only be called by a subclass of jmri.Manager
- *  *Manager can implement specifics in register().
- * @param manager
- */
-    public void buildList(jmri.Manager manager){
-        if (sysNameList == null){
+    /**
+     * Build list only if there are no controller listeners. This way the list
+     * is not changed while in use. This should only be called by a subclass of
+     * jmri.Manager *Manager can implement specifics in register().
+     *
+     * @param manager
+     */
+    public void buildList(jmri.Manager manager) {
+        if (sysNameList == null) {
             sysNameList = manager.getSystemNameList();
             filterList();   //  To remove unwanted objects
             register();
             canBuildList = false;
         }
-        
+
     }
 
-    public void filterList(){
+    public void filterList() {
         //  Override to filter by wifiControlled field of turnout or route object.
     }
 
-/**
- *  If no listeners, clear sysNameList pointer and allow list to be re-built
- *  *Manager can implement specifics in deregister().
- */
-    public void checkCanBuildList(){
-        if (listeners.isEmpty()){
-            if (sysNameList != null){
+    /**
+     * If no listeners, clear sysNameList pointer and allow list to be re-built
+     * *Manager can implement specifics in deregister().
+     */
+    public void checkCanBuildList() {
+        if (listeners.isEmpty()) {
+            if (sysNameList != null) {
                 deregister();
                 sysNameList = null;
             }
@@ -77,23 +79,27 @@ abstract public class AbstractController {
         }
     }
 
-/**
- * Add a listener to handle:
- * listener.sendPacketToDevice(message);
- * @param listener
- */
-    public void addControllerListener(ControllerInterface listener){
-        if (listeners == null)
-                listeners = new ArrayList<ControllerInterface>(1);
-        if (!listeners.contains(listener))
-                listeners.add(listener);
+    /**
+     * Add a listener to handle: listener.sendPacketToDevice(message);
+     *
+     * @param listener
+     */
+    public void addControllerListener(ControllerInterface listener) {
+        if (listeners == null) {
+            listeners = new ArrayList<ControllerInterface>(1);
+        }
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
     }
 
-    public void removeControllerListener(ControllerInterface listener){
-        if (listeners == null)
-                return;
-        if (listeners.contains(listener))
-                listeners.remove(listener);
+    public void removeControllerListener(ControllerInterface listener) {
+        if (listeners == null) {
+            return;
+        }
+        if (listeners.contains(listener)) {
+            listeners.remove(listener);
+        }
         checkCanBuildList();
     }
 

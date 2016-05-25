@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: Details.shtml,v 1.1 2010/09/19 03:25:25 jacobsen Exp $ -->
-<!--Translated by Hervé Blorec le 2011/9/22-->
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec le 2013-09-18-->
 <title>JMRI: OpenLCB Details</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,31 +23,44 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Support des Détails Techniques  OpenLCB Support
+JMRI: Support des D&#233;tails Techniques OpenLCB Support
 </h1>
 
-<em>Le support sur cette page est en évolution rapide, le
-code réel pourrait être en avance ou retard sur la documentation
-sur un jour donné
+<em>Le support sur cette page est en &#233;volution rapide, le
+code r&#233;el pourrait &#234;tre en avance ou retard sur la documentation
+sur un jour donn&#233;
 .</em><p>
 
-Cette page décrit les détails techniques de la JMRI
+Cette page d&#233;crit les d&#233;tails techniques du support de JMRI
 <a href="index.shtml"> OpenLCB </a>
-soutien. Voir aussi les pages sur ce que  JMRI
-<A Href="../index.shtml"> peut généralement supporter </a>.T
+. Voir aussi les pages sur ce que  JMRI
+<A Href="../index.shtml"> peut g&#233;n&#233;ralement supporter </a>.T
 <p>
 
 <h2>Adaptateurs CAN </h2>
 
-L'approche générale de JMRI est de soutenir le plus grand nombre de
-combinaisons de matériel possible. En soutenant les désirs d'un plus grand nombre de
-personnes et leur matériel, nous pouvons  créer une communauté croissante de développeurs, donc plus de
+L'approche g&#233;n&#233;rale de JMRI est de soutenir le plus grand nombre de
+combinaisons de mat&#233;riel possible. En soutenant les d&#233;sirs d'un plus grand nombre de
+personnes et leur mat&#233;riel, nous pouvons  cr&#233;er une communaut&#233; croissante de d&#233;veloppeurs, donc plus de
 code.
 
 <P>
-Dans ce cadre, le support JMRI CAN  est conçu pour
+Dans ce cadre, le support JMRI CAN  est con&#231;u pour
 utiliser autant de types d'adaptateur CAN que possible.
 
+<h2> Noeud ID </h2>
+
+JMRI sur un r&#233;seau OpenLCB actes, en partie, comme un noeud OpenLCB.
+En tant que tel, il a besoin d'une ID de noeud unique OpenLCB sur 6-octet   .
+Il s'appuie sur cela automatiquement chaque fois qu'il d&#233;marre.
+Il est construit &#224; partir du pr&#233;fixe unique OpenLCB JMRI,
+avec un octet de l'adresse IP de l'ordinateur,
+et deux octets de l'ID de processus du programme.
+Cela vous permet par exemple ex&#233;cuter JMRI sur plusieurs ordinateurs
+ou des copies multiples sur beaucoup ordinateur sans probl&#232;mes.
+<p>
+Une am&#233;lioration future rendra ceci persistant d'une ex&#233;cution &#224; l'autre
+, de sorte qu'ils peuvent &#234;tre utilis&#233;s pour cr&#233;er facilement une ID ev&#232;nement unique et persistant.
 
 <!--#include virtual="/Footer" -->
 </body>

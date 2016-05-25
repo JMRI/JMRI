@@ -1,21 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Add/Edit Sections
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Section Add Edit">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Section Add Edit">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -23,117 +16,120 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Sections</H1>
+<h1>Adding/Editing Sections</h1>
     
 <a name="addSection">
-<H2>Adding a new Section</H2></a>
-To add a new Section, follow this procedure:
-<ol>
-<li><p>Click <b><a href="SectionTable.shtml">Sections</a></b> in the 
-<b>Tables</b> submenu of the <b>Tools</b> menu to bring up
-the Section Table, and click the <b>Add...</b> button at the bottom of the 
-table to bring up the Add/Edit Section window.</p>
-<img src="SectionAddFrame.jpg" height="591" width="638">
-<li><p>Enter a <b>System Name</b>, according to the JMRI convention. Since Sections 
-are internal objects, the first letter should be "I" (for internal). The second 
-letter should be "Y" to indicate a Section. This is usually followed by a 
-number, but the program will accept any numeric or alphabetic characters. The 
-system name must be different from the System Name of other Sections. JMRI will 
-force all alphabetic characters in the System Name to upper case.</p>
-</li>
-<li><p>Enter a <b>User Name</b>. Any string of characters that is different 
-from the User Name of other Sections will be accepted, but it's 
-wise to use a string that describes the intended use of the Section.</p>
-</li>
-<li><p>Next add <b>Blocks</b> to the Section.  Every Section must have at least 
-one Block, but may have more. Blocks must be connected,and must be entered in 
-order. Select the Block you would like to begin the Section in the popup menu. 
-At any point during Block addition, the popup menu lists only those Blocks that 
-are eligible for addition. Click <b>Add Selected Block</b> to add the first block of 
-the Section.</p>
-</li>
-<li><p>If the Section is to have multiple Blocks, add more Blocks in the same
-manner. Select the Block to be added in the popup menu, and click <b>Add Selected 
-Block</b>. Important Note: The order Blocks are added determines the <b>FORWARD</b> 
-and <b>REVERSE</b> directions of the Section. The FORWARD direction is from the top 
-Block to the bottom Block. If at any time you decide you want to start over, 
-click <b>Delete All Blocks</b> to clear the table of Blocks, and return to 
-step 4 above.</p>
-</li>
-<li><p>Next set the <b>Travel Direction</b> of each <b>Entry Point</b> to the 
-Section. As Blocks were entered, the program gathered a list of all the 
-Entry Points to the new Section. In the <b>Block Entered From</b> column, all 
-Blocks not in the Section, but connected to Blocks in the Section are listed. 
-For each Block, the System Name and User Name (in parenthesis) are shown, 
-followed by the Path direction.  Normally Path direction may be ignored, 
-but if there are two Entry Points from the same Block, Path direction should 
-allow you to identify which is which.</p>
-<p><b>Travel Direction</b> column entries are popup menus that must be set to 
-FORWARD if a train entering the Section from that Block will be traveling in 
-the FORWARD direction in the Section, or set to REVERSE if a train entering from 
-that Block will be traveling in the REVERSE direction in the Section. Note: Don't 
-confuse FORWARD and REVERSE directions in a Section, with forward and reverse 
-settings on a throttle--they are two different things.</p>
-<p>Where possible, the program entered FORWARD or REVERSE for you. If it couldn't 
-determine direction unambiguously, it entered <b>UNKNOWN</b>. You must assign 
-all UNKNOWN Travel Directions before the new Section can be created. Important 
-Note: <b>Travel Direction assignments must be consistent.</b> If the new Section 
-has only one Block, it's not important which direction you choose as FORWARD, but 
-once you make that choice, all assignments must conform to it. If the new 
-Section has multiple Blocks, the FORWARD direction is the direction a train 
-would travel if moving from the top Block toward the bottom Block.</p>
-</li>
-<li><p>If you are using <b>Direction Sensors</b>, enter the names of your 
-<b>Forward Sensor</b> and <b>Reverse Sensor</b> in the designated fields. These 
-sensors are usually internal sensors (beginning with "IS" in their system name). 
-If you haven't yet created the sensors, enter their system names, and entries will 
-be made in the Sensor Table for those sensors. More information on direction 
-sensors and their use is given in the <a href="SectionTable.shtml">Section 
-Table help file</a>. If direction sensors are not needed, leave the fields 
-blank--you can always add them later via the Edit function.</p>
-</li>
-<li><p>If you are using <b>Stopping Sensors</b>, enter the names of your 
-<b>Forward Stopping Sensor</b> and <b>Reverse Stopping Sensor</b> in the 
-designated fields. These sensors are physical sensors on the layout that 
-go active when a train has reached the end of the Section when traveling in 
-the FORWARD direction or the REVERSE direction. If you haven't yet created entries 
-for these sensors in the Sensor Table, enter their system names, and entries will 
-be added to the Sensor Table. More information on stopping 
-sensors and their use is given in the <a href="SectionTable.shtml">Section 
-Table help file</a>. If stopping sensors are not needed, leave the fields 
-blank--you can always add them later via the Edit function.</p>
-</li><li><p>Click the <b>Create</b> button at the bottom of the window.  
-If everything is fine, the window will close and a new Section will appear in 
-the Section Table. If there is trouble with anything, a message will be 
-displayed indicating the error and what you should do to fix it. 
-Correct the error and click <b>Create</b> again.</p></li>
-</ol>
+<h2>Adding a new Section</h2></a>
+
+<p>To add a new Section, follow this procedure:
+	<ol>
+	<li><p>Click <b><a href="SectionTable.shtml">Sections</a></b> in the 
+	<b>Tables</b> submenu of the <b>Tools</b> menu to bring up
+	the Section Table, and click the <b>Add...</b> button at the bottom of the 
+	table to bring up the Add/Edit Section window.</p>
+	<img src="SectionAddFrame.jpg" height="591" width="638">
+	<li><p>Enter a <b>System Name</b>, according to the JMRI convention. Since Sections 
+	are internal objects, the first letter should be "I" (for internal). The second 
+	letter should be "Y" to indicate a Section. This is usually followed by a 
+	number, but the program will accept any numeric or alphabetic characters. The 
+	system name must be different from the System Name of other Sections. JMRI will 
+	force all alphabetic characters in the System Name to upper case.</p>
+	</li>
+	<li><p>Enter a <b>User Name</b>. Any string of characters that is different 
+	from the User Name of other Sections will be accepted, but it's 
+	wise to use a string that describes the intended use of the Section.</p>
+	</li>
+	<li><p>Next add <b>Blocks</b> to the Section.  Every Section must have at least 
+	one Block, but may have more. Blocks must be connected,and must be entered in 
+	order. Select the Block you would like to begin the Section in the popup menu. 
+	At any point during Block addition, the popup menu lists only those Blocks that 
+	are eligible for addition. Click <b>Add Selected Block</b> to add the first block of 
+	the Section.</p>
+	</li>
+	<li><p>If the Section is to have multiple Blocks, add more Blocks in the same
+	manner. Select the Block to be added in the popup menu, and click <b>Add Selected 
+	Block</b>. Important Note: The order Blocks are added determines the <b>FORWARD</b> 
+	and <b>REVERSE</b> directions of the Section. The FORWARD direction is from the top 
+	Block to the bottom Block. If at any time you decide you want to start over, 
+	click <b>Delete All Blocks</b> to clear the table of Blocks, and return to 
+	step 4 above.</p>
+	</li>
+	<li><p>Next set the <b>Travel Direction</b> of each <b>Entry Point</b> to the 
+	Section. As Blocks were entered, the program gathered a list of all the 
+	Entry Points to the new Section. In the <b>Block Entered From</b> column, all 
+	Blocks not in the Section, but connected to Blocks in the Section are listed. 
+	For each Block, the System Name and User Name (in parenthesis) are shown, 
+	followed by the Path direction.  Normally Path direction may be ignored, 
+	but if there are two Entry Points from the same Block, Path direction should 
+	allow you to identify which is which.</p>
+	<p><b>Travel Direction</b> column entries are popup menus that must be set to 
+	FORWARD if a train entering the Section from that Block will be traveling in 
+	the FORWARD direction in the Section, or set to REVERSE if a train entering from 
+	that Block will be traveling in the REVERSE direction in the Section. Note: Don't 
+	confuse FORWARD and REVERSE directions in a Section, with forward and reverse 
+	settings on a throttle--they are two different things.</p>
+	<p>Where possible, the program entered FORWARD or REVERSE for you. If it couldn't 
+	determine direction unambiguously, it entered <b>UNKNOWN</b>. You must assign 
+	all UNKNOWN Travel Directions before the new Section can be created. Important 
+	Note: <b>Travel Direction assignments must be consistent.</b> If the new Section 
+	has only one Block, it's not important which direction you choose as FORWARD, but 
+	once you make that choice, all assignments must conform to it. If the new 
+	Section has multiple Blocks, the FORWARD direction is the direction a train 
+	would travel if moving from the top Block toward the bottom Block.</p>
+	</li>
+	<li><p>If you are using <b>Direction Sensors</b>, enter the names of your 
+	<b>Forward Sensor</b> and <b>Reverse Sensor</b> in the designated fields. These 
+	sensors are usually internal sensors (beginning with "IS" in their system name). 
+	If you haven't yet created the sensors, enter their system names, and entries will 
+	be made in the Sensor Table for those sensors. More information on direction 
+	sensors and their use is given in the <a href="SectionTable.shtml">Sections 
+	Table help file</a>. If direction sensors are not needed, leave the fields 
+	blank--you can always add them later via the Edit function.</p>
+	</li>
+	<li><p>If you are using <b>Stopping Sensors</b>, enter the names of your 
+	<b>Forward Stopping Sensor</b> and <b>Reverse Stopping Sensor</b> in the 
+	designated fields. These sensors are physical sensors on the layout that 
+	go active when a train has reached the end of the Section when traveling in 
+	the FORWARD direction or the REVERSE direction. If you haven't yet created entries 
+	for these sensors in the Sensor Table, enter their system names, and entries will 
+	be added to the Sensor Table. More information on stopping 
+	sensors and their use is given in the <a href="SectionTable.shtml">Sections 
+	Table help file</a>. If stopping sensors are not needed, leave the fields 
+	blank--you can always add them later via the Edit function.</p>
+	</li><li><p>Click the <b>Create</b> button at the bottom of the window.  
+	If everything is fine, the window will close and a new Section will appear in 
+	the Section Table. If there is trouble with anything, a message will be 
+	displayed indicating the error and what you should do to fix it. 
+	Correct the error and click <b>Create</b> again.</p></li>
+	</ol>
 
 <h2>Editing an existing Section</h2>
 To edit an existing Section, follow  this procedure:
-<ol>
-<li><p>Click a Section's <b>Edit</b> button in the <a href="SectionTable.shtml">
-Section Table</a> to bring up the Add/Edit Section window. The window will 
-be the same as that shown above, except the System Name will be fixed, and 
-the <b>Create</b> button will be replaced with an <b>Update</b> Button.</p>
-</li>
-<li><p>Make whatever changes or additions you need to the information in
-the window. Note that the System Name of the edited Section may not be 
-changed, but the User Name may be changed. Items that may be edited are described 
-<A HREF="#addSection">above</a> in steps 3 through 8 in the procedure for adding 
-a new Section.</p></li>
-<li><p>After making changes to the Section information, click <b>Update</b> 
-to change the selected Section.  If everything is fine, the window will close.
-If there is any trouble, a message will be displayed indicating the error and 
-what you should do to fix it. Correct the error and click <b>Update</b> again.</p>
-</li>
-<li>Click <b>Cancel</b> to exit without changing the selected Section. 
-If the Add/Edit Section window is dismissed (closed) while editing, <b>Cancel</b> 
-is automatically selected, and no changes are made to the selected Section.
-</li>
-</ol>
+	<ol>
+	<li><p>Click a Section's <b>Edit</b> button in the <a href="SectionTable.shtml">
+	Section Table</a> to bring up the Add/Edit Section window. The window will 
+	be the same as that shown above, except the System Name will be fixed, and 
+	the <b>Create</b> button will be replaced with an <b>Update</b> Button.</p>
+	</li>
+	<li><p>Make whatever changes or additions you need to the information in
+	the window. Note that the System Name of the edited Section may not be 
+	changed, but the User Name may be changed. Items that may be edited are described 
+	<a href="#addSection">above</a> in steps 3 through 8 in the procedure for adding 
+	a new Section.</p></li>
+	<li><p>After making changes to the Section information, click <b>Update</b> 
+	to change the selected Section.  If everything is fine, the window will close.
+	If there is any trouble, a message will be displayed indicating the error and 
+	what you should do to fix it. Correct the error and click <b>Update</b> again.</p>
+	</li>
+	<li>Click <b>Cancel</b> to exit without changing the selected Section. 
+	If the Add/Edit Section window is dismissed (closed) while editing, <b>Cancel</b> 
+	is automatically selected, and no changes are made to the selected Section.
+	</li>
+	</ol>
 
+  <p>Back to the <a href="SectionTable.shtml">Section Table help page<a>.</p>
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

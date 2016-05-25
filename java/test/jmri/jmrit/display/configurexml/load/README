@@ -1,0 +1,5 @@
+This directory contains submitted "real" panel files
+for testing. The SchemaTest class ensures that they
+pass full schema validation.  (Files submitted a while
+ago are sometimes loaded and resaved, or directly edited,
+to get the most recent content form)

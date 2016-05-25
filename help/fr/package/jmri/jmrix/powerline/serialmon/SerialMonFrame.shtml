@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SerialMonFrame.shtml,v 1.4 2009/04/24 21:00:38 jacobsen Exp $ -->
+<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -30,7 +30,7 @@ Ceci est la page d'aide help/jmri/jmrix/powerline/serialmon/SerialMonFrame
 
 <p>
 Pour plus d'informations sur les
-différents contrôles et les options, s'il vous plaît voir la
+différents contrôles et les options, s'il vous pla�&reg;t voir la
 <a href="../../AbstractMonFrame.shtml"> page Fenêtre du Moniteur de Communication </a>.
 
 <!--#include virtual="/Footer" -->

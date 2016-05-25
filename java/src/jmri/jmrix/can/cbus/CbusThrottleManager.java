@@ -1,69 +1,68 @@
 package jmri.jmrix.can.cbus;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Iterator;
-import jmri.ThrottleManager;
-import jmri.LocoAddress;
+import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
-
+import jmri.DccThrottle;
+import jmri.LocoAddress;
+import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleManager;
-
-import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-
-import javax.swing.JOptionPane;
-import jmri.DccThrottle;
+import jmri.jmrix.can.TrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CBUS implementation of a ThrottleManager.
  * <P>
- * @author		Bob Jacobsen  Copyright (C) 2001
- * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @author	Andrew Crosland Copyright (C) 2009
  */
-public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
+public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener {
+
     private boolean _handleExpected = false;
     private int _intAddr;
     private DccLocoAddress _dccAddr;
 
     private HashMap<Integer, CbusThrottle> softThrottles = new HashMap<Integer, CbusThrottle>(CbusConstants.CBUS_MAX_SLOTS);
-    
+
     public CbusThrottleManager(CanSystemConnectionMemo memo) {
-    	super(memo);
+        super(memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
     }
-    
-    TrafficController tc;
 
+    TrafficController tc;
 
     /**
      * CBUS allows only one throttle per address
      */
     @Override
-    protected boolean singleUse() { return true; }
+    protected boolean singleUse() {
+        return true;
+    }
 
     /**
      * Request a new throttle object be created for the address
-     **/
+     *
+     */
     @Override
     synchronized public void requestThrottleSetup(LocoAddress address, boolean control) {
-        _dccAddr = (DccLocoAddress)address;
+        _dccAddr = (DccLocoAddress) address;
         _intAddr = _dccAddr.getNumber();
 
         // The CBUS protocol requires that we request a session from the command
         // station. Throttle object will be notified by Command Station
         log.debug("Requesting session for throttle");
-                
+
         CanMessage msg = new CanMessage(3, tc.getCanid());
         // Request a session for this throttle
         msg.setOpCode(CbusConstants.CBUS_RLOC);
-        if (((DccLocoAddress)address).isLongAddress()) {
+        if (((DccLocoAddress) address).isLongAddress()) {
             _intAddr = _intAddr | 0xC000;
         }
         msg.setElement(1, (_intAddr / 256));
@@ -75,7 +74,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
 
     /**
      * stopAll()
-     * 
+     *
      * <P>
      * Called when track stopped message received. Sets all JMRI managed
      * throttles to speed zero
@@ -118,7 +117,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     synchronized public void reply(CanReply m) {
         int opc = m.getElement(0);
         int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
-        boolean rcvdIsLong = (m.getElement(2) & 0xc0) > 0;
+        boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
         int handle = m.getElement(1);
         int errCode = m.getElement(3);
         DccLocoAddress rcvdDccAddr;
@@ -172,7 +171,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         errStr = "Throttle session cancelled for loco ";
                         break;
                 }
-                
+
                 log.debug("Throttle manager received ERR " + errStr);
                 rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
                 switch (errCode) {
@@ -190,7 +189,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                             log.debug("ERR address not matched");
                         }
                         break;
-                    
+
                     case CbusConstants.ERR_SESSION_NOT_PRESENT:
                         if ((_handleExpected) && rcvdDccAddr.equals(_dccAddr)) {
                             // We were expecting an engine report and it matches our address
@@ -198,7 +197,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         }
                         JOptionPane.showMessageDialog(null, "CBUS ERR:" + errStr);
                         break;
-                        
+
                     case CbusConstants.ERR_CONSIST_EMPTY:
                     case CbusConstants.ERR_LOCO_NOT_FOUND:
                         // Ignore for now CAN_CMD only supports advanced consisting
@@ -215,7 +214,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         // when you are stealing, but as you don't yet have a session id, it
                         // won't match so you will ignore it, then a PLOC will come with that
                         // session id and your requested loco number which is giving it to you.
- 
+
                         // Inform the throttle associated with this session handle, if any
                         itr = softThrottles.keySet().iterator();
                         while (itr.hasNext()) {
@@ -234,7 +233,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     default:
                         break;
                 }
-            break;
+                break;
 
             case CbusConstants.CBUS_DSPD:
                 // Find a throttle corresponding to the handle
@@ -256,7 +255,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     CbusThrottle throttle = softThrottles.get(itr.next());
                     if (throttle.getHandle() == handle) {
                         // Set the throttle session to match the DFUN packet received
-                        log.debug("DFUN group: "+m.getElement(2)+" Fns: "+m.getElement(3)+" for session: "+m.getElement(1));
+                        log.debug("DFUN group: " + m.getElement(2) + " Fns: " + m.getElement(3) + " for session: " + m.getElement(1));
                         switch (m.getElement(2)) {
                             case 1:
                                 throttle.updateFunctionGroup1(m.getElement(3));
@@ -279,8 +278,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         }
                     }
                 }
-            break;
-				
+                break;
+
             case CbusConstants.CBUS_DFNON:
             case CbusConstants.CBUS_DFNOF:
                 // Find a throttle corresponding to the handle
@@ -292,7 +291,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     }
                 }
                 break;
-				
+
             case CbusConstants.CBUS_ESTOP:
             case CbusConstants.CBUS_RESTP:
                 stopAll();
@@ -305,24 +304,34 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
 
     /**
      * CBUS does not have a Dispatch function
-     **/
+     *
+     */
     @Override
-    public boolean hasDispatchFunction(){ return false; }
+    public boolean hasDispatchFunction() {
+        return false;
+    }
 
     /**
      * Any address is potentially a long address
-     **/
+     *
+     */
     @Override
     public boolean canBeLongAddress(int address) {
-        return true;
+        if (address > 0) {
+            return true;
+        }
+        return false;
     }
-    
+
     /**
      * Address 127 and below is a short address
-     **/
+     *
+     */
     @Override
     public boolean canBeShortAddress(int address) {
-        if (address < 128) { return true; }
+        if (address < 128) {
+            return true;
+        }
         return false;
     }
 
@@ -330,18 +339,20 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      * Short and long address spaces overlap and are not unique
      */
     @Override
-    public boolean addressTypeUnique() { return false; }
+    public boolean addressTypeUnique() {
+        return false;
+    }
 
     /*
      * Local method for deciding short/long address
      */
     static boolean isLongAddress(int num) {
-        return (num>=128);
+        return (num >= 128);
     }
 
     javax.swing.Timer throttleRequestTimer = null;
 
-	/**
+    /**
      * Start timer to wait for command station to respond to RLOC
      */
     protected void startThrottleRequestTimer() {
@@ -365,21 +376,20 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     }
 
     /**
-     * What speed modes are supported by this system?                       
-     * value should be xor of possible modes specifed by the 
-     * DccThrottle interface
+     * What speed modes are supported by this system? value should be xor of
+     * possible modes specifed by the DccThrottle interface
      */
     @Override
     public int supportedSpeedModes() {
-        return(DccThrottle.SpeedStepMode128
+        return (DccThrottle.SpeedStepMode128
                 | DccThrottle.SpeedStepMode28
                 | DccThrottle.SpeedStepMode14);
     }
-    
+
     @Override
-    public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l){
+    public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
         log.debug("disposeThrottle called for " + t);
-        if ( super.disposeThrottle(t, l)){
+        if (super.disposeThrottle(t, l)) {
             CbusThrottle lnt = (CbusThrottle) t;
             lnt.throttleDispose();
             return true;
@@ -387,5 +397,5 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusThrottleManager.class.getName());
 }

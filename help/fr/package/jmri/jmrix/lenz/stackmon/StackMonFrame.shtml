@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: StackMonFrame.shtml,v 1.1 2008/02/03 07:08:33 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<!--  $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14--> 
 <title>JMRI: Stack Monitor Tool</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"

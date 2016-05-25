@@ -4,19 +4,19 @@
 
 <layout-config>
 
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="RPS Location Test" x="20" y="22" height="639" width="781" editable="yes" positionable="yes" controlling="yes" hide="no" panelmenu="yes">
+    <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="RPS Location Test" x="20" y="22" height="639" width="781" editable="yes" positionable="yes" controlling="yes" hide="no" panelmenu="yes">
 
-     <sensoricon x="788" y="215" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="12.40959188245664" syscale="-12.565053227901437" sxorigin="17" syorigin="404" showid="true" filter="27" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" />
+        <sensoricon x="788" y="215" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="12.40959188245664" syscale="-12.565053227901437" sxorigin="17" syorigin="404" showid="true" filter="27" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" />
 
-     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="20" y="390" level="5" text="Should be active icon with ID 27 below" size="13" style="0" />
+        <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="20" y="390" level="5" text="Should be active icon with ID 27 below" size="13" style="0" />
 
-     <sensoricon x="20" y="480" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="12.40959188245664" syscale="-12.565053227901437" sxorigin="17" syorigin="404" showid="true" filter="29" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" />
+        <sensoricon x="20" y="480" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="12.40959188245664" syscale="-12.565053227901437" sxorigin="17" syorigin="404" showid="true" filter="29" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" />
 
-     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="20" y="460" level="5" text="Should be inactive icon below" size="13" style="0" />
+        <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="20" y="460" level="5" text="Should be inactive icon below" size="13" style="0" />
 
-  </paneleditor>
+    </paneleditor>
 
-  <!--Written by JMRI version 1.7.5 on Sat Sep 16 14:46:29 PDT 2006 $Id$-->
+    <!--Written by JMRI version 1.7.5 on Sat Sep 16 14:46:29 PDT 2006 $Id$-->
 
 </layout-config>
 

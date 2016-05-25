@@ -1,6 +1,6 @@
 <!-- Sidebar -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- Translated by Blorec Hervé le 2012-01-19-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- UpDated by Blorec Herv&#233;  2013-09-25-->
 <html lang="fr"> 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
@@ -9,26 +9,26 @@
 
     <dt><h3>DecoderPro Guide d'Utilisation</h3></dt><DD><UL>
     <LI><a href="./Tour.html">Visite Rapide</A>
-    <LI><a href="./MoreInfo.html">Details</A>
+    <LI><a href="./MoreInfo.html">D&#233;tails</A>
     <LI><a HREF="./Files.html">Fichiers de Configuration</a>
     <LI><a HREF="./Roster.html">Travailler avec la liste</a>
-    <LI><a HREF="./FAQ.html">Questions fréquemment posées</a>
-    <LI><a HREF="./Install.html">Téléchargement et installation deDecoderPro</a>
+    <LI><a HREF="./FAQ.html">Questions fr&#233;quemment pos&#233;es</a>
+    <LI><a HREF="./Install.html">T&#233;l&#233;chargement et installation deDecoderPro</a>
     </UL>
 
-		<dt><h3><a href="index.shtml">Outils Généraux</a></h3></dt>
-		<dd>JMRI fournit des outils puissants pour travailler avec votre réseau.
+		<dt><h3><a href="index.shtml">Outils G&#233;n&#233;raux</a></h3></dt>
+		<dd>JMRI fournit des outils puissants pour travailler avec votre r&#233;seau.
 		    <UL>
 		    <LI><dfn><a href="../Sensors.shtml"Capteurs</a></dfn>
 		    <LI><dfn><a href="../Turnouts.shtml"Aiguillages</a></dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">Régulateurs</a></dfn>
+		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
 		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
 		    <LI><dfn><a href="../Signals.shtml">Signaux</a></dfn>
-		    <LI><dfn><a href="../Lights.shtml">Lumières</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Itinéraires</a></dfn>
+		    <LI><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
+		    <LI><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
 		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
 		    <LI><dfn><a href="../fastclock/index.shtml">Horloge Rapide</a></dfn>
-		    <LI><dfn><a href="../speedometer/index.shtml">Tachymètre</a></dfn>
+		    <LI><dfn><a href="../speedometer/index.shtml">Tachym&#232;tre</a></dfn>
 		    <LI><dfn><a href="../scripting/index.shtml">Script</a></dfn>
 		    </UL>
 		</dd>

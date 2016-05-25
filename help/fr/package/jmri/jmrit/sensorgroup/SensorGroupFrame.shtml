@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SensorGroupFrame.shtml,v 1.4 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-6-->
+<!--  $Id$ -->
+<!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-11-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Sensor Groups
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Sensor Groups">
 
@@ -26,35 +26,37 @@
 <H1>Groupes Capteur 
 </H1>
    
-La fenêtre de l'outil Groupe de Capteur vous permet de définir des groupes de capteur,
-un groupe de capteurs dont plus d'un ne peut pas être actif.
-Quand un membre du groupe devient actif, tous les autres sont mis à l'état inactif.
+La fen&#234;tre de l'outil Groupe de Capteur vous permet de d&#233;finir des groupes de capteur,
+un groupe de capteurs dont plus d'un ne peut pas &#234;tre actif.
+Quand un membre du groupe devient actif, tous les autres sont mis &#224; l'&#233;tat inactif.
 <P>
-Généralement, vous pouvez utiliser quelque chose comme cela pour simuler un commutateur rotatif
-sur un panneau de contrôle réel. Le commutateur réel serait d'activer une seule entrée
-quand il a été tourné de position en position, l'entrée précédente deviendra
-inactive quand l'interrupteur sera tourné vers la position suivante. Sur un 
-panneau de contrôle PanelPro, chaque position peut être représentée par une icône de capteur séparée
+G&#233;n&#233;ralement, vous pouvez utiliser quelque chose comme cela pour simuler un commutateur rotatif
+sur un panneau de contr&#244;le r&#233;el. Le commutateur r&#233;el serait d'activer une seule entr&#233;e
+quand il a &#233;t&#233; tourn&#233; de position en position, l'entr&#233;e pr&#233;c&#233;dente deviendra
+inactive quand l'interrupteur sera tourn&#233; vers la position suivante. Sur un 
+panneau de commande PanelPro, chaque position peut &#234;tre repr&#233;sent&#233;e par une ic&#244;ne de capteur s&#233;par&#233;e
 sur laquelle vous cliquez pour l'activer. Mettre ce jeu de capteurs dans un groupe de capteurs
-ferait  alors  devenir le capteur de la position précédente inactif lorsque
-vous avez cliqué pour modifier le commutateur rotatif simulé.
+ferait  alors  devenir le capteur de la position pr&#233;c&#233;dente inactif lorsque
+vous avez cliqu&#233; pour modifier le commutateur rotatif simul&#233;.
 <P>
-Pour définir un groupe:
+Pour d&#233;finir un groupe:
 <UL>
-<LI> Cochez la case "inclus" à côté de chaque capteur que vous voulez
+<LI> Cochez la case "inclus" &#224; c&#244;t&#233; de chaque capteur que vous voulez
 inclure dans le groupe. Vous pouvez cliquer sur les titres au sommet de la
-colonnes pour les trier si vous avez beaucoup de capteurs à parcourir.
+colonnes pour les trier si vous avez beaucoup de capteurs &#224; parcourir.
 <LI> Mettez un nom de capteur unique au groupe dans la case en bas. Pas 
- de format particulièrement requis, mais il ne peut pas reproduire celui que vous avez déjà défini.
-<LI> Cliquez sur ajouter/mise à jour
+ de format particuli&#232;rement requis, mais il ne peut pas reproduire celui que vous avez d&#233;j&#224; d&#233;fini.
+<LI> Cliquez sur ajouter/mise &#224; jour
 </ UL>
 <P>
-Pour voir un groupe de capteurs que vous avez déjà défini, mettre son nom dans la
+Pour voir un groupe de capteurs que vous avez d&#233;j&#224; d&#233;fini, mettre son nom dans la
 Zone Nom du groupe, et cliquez sur Afficher. Vous pouvez ensuite modifier les cases pour
-ajouter ou supprimer des capteurs du groupe, et cliquez sur Ajouter/Mettre à jour pour faire
+ajouter ou supprimer des capteurs du groupe, et cliquez sur Ajouter/Mettre &#224; jour pour faire
 vos modifications.
 <P>
 N'oubliez pas de sauvegarder vos modifications d'une nouvelle configuration ou d'un fichier du panneau avant de quitter le programme!
+<P>
+Ceci est la page d'aide help/fr/package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml
 
 <!--#include virtual="/Footer" -->
 </body>

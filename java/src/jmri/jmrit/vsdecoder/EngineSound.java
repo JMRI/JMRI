@@ -18,20 +18,17 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.jdom.Element;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
-
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // Usage:
 // EngineSound() : constructor
 // play() : plays short horn pop
 // loop() : starts extended sustain horn
 // stop() : ends extended sustain horn (plays end sound)
-
 class EngineSound extends VSDSound {
 
     // Engine Sounds
@@ -46,171 +43,177 @@ class EngineSound extends VSDSound {
     javax.swing.Timer t;
 
     public EngineSound(String name) {
-	super(name);
-	is_playing = false;
-	engine_started = false;
-	initialized = init();
+        super(name);
+        is_playing = false;
+        engine_started = false;
+        initialized = init();
     }
 
     public boolean init() {
-	auto_start_engine = VSDecoderManager.instance().getVSDecoderPreferences().isAutoStartingEngine();
-	return(true);
+        auto_start_engine = VSDecoderManager.instance().getVSDecoderPreferences().isAutoStartingEngine();
+        return (true);
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     public void play() {
-	log.debug("EngineSound Play");
-	if (engine_started || auto_start_engine) {
-	    is_playing = true;
-	}
+        log.debug("EngineSound Play");
+        if (engine_started || auto_start_engine) {
+            is_playing = true;
+        }
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     public void loop() {
-	log.debug("EngineSound Loop");
-	if (engine_started || auto_start_engine) {
-	    is_playing = true;
-	}
+        log.debug("EngineSound Loop");
+        if (engine_started || auto_start_engine) {
+            is_playing = true;
+        }
     }
 
     public void stop() {
-	is_playing = false;
+        is_playing = false;
     }
 
     public void fadeIn() {
-	this.play();
+        this.play();
     }
 
     public void fadeOut() {
-	this.stop();
+        this.stop();
     }
 
     public int getFadeInTime() {
-	return(this.fade_in_time);
+        return (this.fade_in_time);
     }
 
     public int getFadeOutTime() {
-	return(this.fade_out_time);
+        return (this.fade_out_time);
     }
 
     protected void setFadeInTime(int t) {
-	this.fade_in_time = t;
+        this.fade_in_time = t;
     }
 
     protected void setFadeInTime(String s) {
-	if (s == null) {
-	    log.debug("setFadeInTime null string");
-	    return;
-	}
-	try {
-	    this.setFadeInTime(Integer.parseInt(s));
-	} catch (NumberFormatException e) {
-	    log.debug("setFadeInTime Failed to parse int from: " + s);
-	}
+        if (s == null) {
+            log.debug("setFadeInTime null string");
+            return;
+        }
+        try {
+            this.setFadeInTime(Integer.parseInt(s));
+        } catch (NumberFormatException e) {
+            log.debug("setFadeInTime Failed to parse int from: " + s);
+        }
     }
 
     protected void setFadeOutTime(int t) {
-	this.fade_out_time = t;
+        this.fade_out_time = t;
     }
 
     protected void setFadeOutTime(String s) {
-	if (s == null) {
-	    log.debug("setFadeInTime null string");
-	    return;
-	}
+        if (s == null) {
+            log.debug("setFadeInTime null string");
+            return;
+        }
 
-	try {
-	    this.setFadeOutTime(Integer.parseInt(s));
-	} catch (NumberFormatException e) {
-	    log.debug("setFadeOutTime Failed to parse int from: " + s);
-	}
+        try {
+            this.setFadeOutTime(Integer.parseInt(s));
+        } catch (NumberFormatException e) {
+            log.debug("setFadeOutTime Failed to parse int from: " + s);
+        }
     }
 
     static final public int calcEngineNotch(final float throttle) {
-	// This will convert to a value 0-8.
-	int notch = ((int) Math.rint(throttle * 8)) + 1;
-	if (notch < 1) { notch = 1; }
-	log.warn("Throttle: " + throttle + " Notch: " + notch);
-	return(notch);
+        // This will convert to a value 0-8.
+        int notch = ((int) Math.rint(throttle * 8)) + 1;
+        if (notch < 1) {
+            notch = 1;
+        }
+        log.warn("Throttle: " + throttle + " Notch: " + notch);
+        return (notch);
 
     }
 
     static final public int calcEngineNotch(final double throttle) {
-	// This will convert from a % to a value 0-8.
-	int notch = ((int) Math.rint(throttle * 8)) + 1;
-	if (notch < 1) { notch = 1; }
-	//log.warn("Throttle: " + throttle + " Notch: " + notch);
-	return(notch);
+        // This will convert from a % to a value 0-8.
+        int notch = ((int) Math.rint(throttle * 8)) + 1;
+        if (notch < 1) {
+            notch = 1;
+        }
+        //log.warn("Throttle: " + throttle + " Notch: " + notch);
+        return (notch);
 
     }
 
     // This is the default behavior.  Subclasses can do fancier things
     // if they want.
     public void handleSpeedChange(Float s, EnginePane e) {
-	e.setThrottle(EngineSound.calcEngineNotch(s));
+        e.setThrottle(EngineSound.calcEngineNotch(s));
     }
 
     protected Timer newTimer(int time, boolean repeat, ActionListener al) {
-	t = new Timer(time, al);
-	t.setRepeats(repeat);
-	return(t);
+        t = new Timer(time, al);
+        t.setRepeats(repeat);
+        return (t);
     }
 
     public void startEngine() {
-	log.debug("Starting Engine");
+        log.debug("Starting Engine");
     }
 
     public void stopEngine() {
-	engine_started = false;
+        engine_started = false;
     }
 
     public boolean isEngineStarted() {
-	return(engine_started);
+        return (engine_started);
     }
 
     public void setEngineStarted(boolean es) {
-	engine_started = es;
+        engine_started = es;
     }
 
     public void shutdown() {
-	// do nothing.
+        // do nothing.
     }
 
     public void mute(boolean m) {
-	// do nothing.
+        // do nothing.
     }
 
     public void setVolume(float v) {
-	// do nothing.
+        // do nothing.
     }
 
     protected float setXMLGain(Element e) {
-	String g = e.getChildText("gain");
-	log.debug("  gain: " + g);
-	if ((g != null) && !(g.equals("")))
-	    return(Float.parseFloat(g));
-	else
-	    return(default_gain);
+        String g = e.getChildText("gain");
+        log.debug("  gain: " + g);
+        if ((g != null) && !(g.equals(""))) {
+            return (Float.parseFloat(g));
+        } else {
+            return (default_gain);
+        }
 
     }
 
     public Element getXml() {
-	Element me = new Element("sound");
-	me.setAttribute("name", this.getName());
-	me.setAttribute("type", "engine");
-	// Do something, eventually...
-	return(me);
+        Element me = new Element("sound");
+        me.setAttribute("name", this.getName());
+        me.setAttribute("type", "engine");
+        // Do something, eventually...
+        return (me);
     }
 
     public void setXml(Element e, VSDFile vf) {
-	// Do only the stuff common...
-	if (this.getName() == null)
-	    this.setName(e.getAttributeValue("name"));
-	//log.debug("EngineSound: " + this.getName());
-	this.setFadeInTime(e.getChildText("fade-in-time"));
-	this.setFadeOutTime(e.getChildText("fade-out-time"));
-	log.debug("Name: " + this.getName() + "Fade-In-Time: " + this.getFadeInTime() +
-		  " Fade-Out-Time: " + this.getFadeOutTime());
+        // Do only the stuff common...
+        if (this.getName() == null) {
+            this.setName(e.getAttributeValue("name"));
+        }
+        //log.debug("EngineSound: " + this.getName());
+        this.setFadeInTime(e.getChildText("fade-in-time"));
+        this.setFadeOutTime(e.getChildText("fade-out-time"));
+        log.debug("Name: " + this.getName() + "Fade-In-Time: " + this.getFadeInTime()
+                + " Fade-Out-Time: " + this.getFadeOutTime());
     }
 
     private static final Logger log = LoggerFactory.getLogger(EngineSound.class.getName());

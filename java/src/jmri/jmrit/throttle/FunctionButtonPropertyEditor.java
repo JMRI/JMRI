@@ -1,19 +1,30 @@
 package jmri.jmrit.throttle;
 
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.*;
-
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
 
 /**
- * A very specific dialog for editing the properties of a FunctionButton
- * object.
+ * A very specific dialog for editing the properties of a FunctionButton object.
  */
-public class FunctionButtonPropertyEditor extends JDialog
-{
+public class FunctionButtonPropertyEditor extends JDialog {
+
     private FunctionButton button;
 
     private JTextField textField;
@@ -24,12 +35,11 @@ public class FunctionButtonPropertyEditor extends JDialog
     private EditableResizableImagePanel _imageFilePath;
     private EditableResizableImagePanel _imagePressedFilePath;
     final static int BUT_IMG_SIZE = 45;
-    
+
     /**
      * Constructor. Create it and pack it.
      */
-    public FunctionButtonPropertyEditor()
-    {
+    public FunctionButtonPropertyEditor() {
         initGUI();
         pack();
     }
@@ -37,8 +47,7 @@ public class FunctionButtonPropertyEditor extends JDialog
     /**
      * Create, initilize, and place the GUI objects.
      */
-    private void initGUI()
-    {
+    private void initGUI() {
         this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         this.setTitle(Bundle.getMessage("ButtonEditFunction"));
         JPanel mainPanel = new JPanel();
@@ -106,43 +115,38 @@ public class FunctionButtonPropertyEditor extends JDialog
         constraints.gridy = 5;
         constraints.gridx = 0;
         propertyPanel.add(new JLabel(Bundle.getMessage("OffIcon")), constraints);
-        
+
         constraints.gridx = 1;
         propertyPanel.add(new JLabel(Bundle.getMessage("OnIcon")), constraints);
-        
+
         constraints.gridy = 6;
         constraints.gridx = 0;
-        _imageFilePath = new EditableResizableImagePanel("",BUT_IMG_SIZE,BUT_IMG_SIZE);
-		_imageFilePath.setDropFolder(FileUtil.getUserResourcePath());
-		_imageFilePath.setBackground(new Color(0,0,0,0));
-		_imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+        _imageFilePath = new EditableResizableImagePanel("", BUT_IMG_SIZE, BUT_IMG_SIZE);
+        _imageFilePath.setDropFolder(FileUtil.getUserResourcePath());
+        _imageFilePath.setBackground(new Color(0, 0, 0, 0));
+        _imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
         propertyPanel.add(_imageFilePath, constraints);
-        
+
         constraints.gridx = 1;
-        _imagePressedFilePath = new EditableResizableImagePanel("",BUT_IMG_SIZE,BUT_IMG_SIZE);
+        _imagePressedFilePath = new EditableResizableImagePanel("", BUT_IMG_SIZE, BUT_IMG_SIZE);
         _imagePressedFilePath.setDropFolder(FileUtil.getUserResourcePath());
-        _imagePressedFilePath.setBackground(new Color(0,0,0,0));
+        _imagePressedFilePath.setBackground(new Color(0, 0, 0, 0));
         _imagePressedFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
         propertyPanel.add(_imagePressedFilePath, constraints);
-              
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
         JButton saveButton = new JButton(Bundle.getMessage("ButtonOk"));
-        saveButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        saveButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 saveProperties();
             }
         });
 
-
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 finishEdit();
             }
         });
@@ -156,12 +160,12 @@ public class FunctionButtonPropertyEditor extends JDialog
     }
 
     /**
-     * Set the FunctionButton this dialog will edit. Method will
-     * initialize GUI from button properties.
+     * Set the FunctionButton this dialog will edit. Method will initialize GUI
+     * from button properties.
+     *
      * @param button The FunctionButton to edit.
      */
-    public void setFunctionButton(FunctionButton button)
-    {
+    public void setFunctionButton(FunctionButton button) {
         this.button = button;
         textField.setText(button.getButtonLabel());
         lockableCheckBox.setSelected(button.getIsLockable());
@@ -176,17 +180,15 @@ public class FunctionButtonPropertyEditor extends JDialog
     /**
      * Save the user-modified properties back to the FunctionButton.
      */
-    private void saveProperties()
-    {
-        if (isDataValid())
-        {
+    private void saveProperties() {
+        if (isDataValid()) {
             button.setButtonLabel(textField.getText());
             button.setIsLockable(lockableCheckBox.isSelected());
             button.setIdentity(Integer.parseInt(idField.getText()));
             String name = button.getFont().getName();
             button.setFont(new Font(name,
-                                    button.getFont().getStyle(),
-                                    Integer.parseInt(fontField.getText())));
+                    button.getFont().getStyle(),
+                    Integer.parseInt(fontField.getText())));
             button.setVisible(visibleCheckBox.isSelected());
             button.setDisplay(visibleCheckBox.isSelected());
             button.setIconPath(_imageFilePath.getImagePath());
@@ -200,52 +202,39 @@ public class FunctionButtonPropertyEditor extends JDialog
     /**
      * Finish the editing process. Hide the dialog.
      */
-    private void finishEdit()
-    {
+    private void finishEdit() {
         this.setVisible(false);
     }
 
     /**
      * Verify the data on the dialog. If invalid, notify user of errors.
      */
-    private boolean isDataValid()
-    {
+    private boolean isDataValid() {
         StringBuffer errors = new StringBuffer();
         int errorNumber = 0;
         /* ID >=0 && ID <= 28 */
-        try
-        {
+        try {
             int id = Integer.parseInt(idField.getText());
-            if ((id < 0) || id > 28)
-            {
+            if ((id < 0) || id > 28) {
                 throw new NumberFormatException("");
             }
-        }
-        catch (NumberFormatException ex)
-        {
+        } catch (NumberFormatException ex) {
             errors.append(String.valueOf(++errorNumber));
             errors.append(". " + Bundle.getMessage("ErrorFunctionKeyRange") + "\n");
         }
 
         /* font > 0 */
-        try
-        {
+        try {
             int size = Integer.parseInt(fontField.getText());
-            if (size < 1)
-            {
+            if (size < 1) {
                 throw new NumberFormatException("");
             }
-        }
-        catch (NumberFormatException ex)
-        {
+        } catch (NumberFormatException ex) {
             errors.append(String.valueOf(++errorNumber));
             errors.append(". " + Bundle.getMessage("ErrorFontSize"));
         }
 
-
-
-        if (errorNumber > 0)
-        {
+        if (errorNumber > 0) {
             JOptionPane.showMessageDialog(this, errors,
                     "Errors on page", JOptionPane.ERROR_MESSAGE);
             return false;

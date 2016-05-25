@@ -1,119 +1,114 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Me 2008 -->
-<!-- $Id$ -->
-<title>JMRI: RailDriver Throttle</title>
+<title>JMRI Hardware Support - RailDriver Throttle</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
+<h1>Hardware Support: RailDriver Throttle</h1>
 
-
-
-<h2> 
-JMRI: RailDriver Throttle
-</h2>
-
-<img src="../../../images/bangdesk.gif" align="left">
-This page is under construction. 
-JMRI's RailDriver support was first available in 
-<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>.
-It is evolving rapidly, so check back here or on the
-<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers mailing list<a/>
-for changes.
-
+<p>
+JMRI support for RailDriver is evolving rapidly, so check back here or on the
+<a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo group<a/> for changes.
 <br>
 <a href="RailDriver.gif">
 <img src="RailDriver.gif" align="right" width="389" height="236" alternate="RailDriver line drawing">
 </a>
 
+<a name="hardware"></a><h2>Supported Hardware</h2>
 <p>
 JMRI allows you to use a 
-<a href="http://www.raildriver.com/">RailDriver</a> from
+<a href="http://raildriver.com/">RailDriver</a> from
 <a href="http://www.piengineering.com/">PI Engineering</a>
-as a throttle to run locomotives with your DCC system.
-    
+as a Hardware Throttle to run Locomotives with your DCC system. RailDriver support was first available in 
+<a href="http://jmri.org/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>.
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Wiring</h3>
 <p>
 First, connect your computer to your DCC system and make sure that
 the regular 
-<a href="../../tools/throttle/ThrottleMain.shtml">JMRI throttles</a>
-are working fine.  (Unless you do this first,
-debugging possible problems connecting the RailDriver is very difficult)
+<a href="../../tools/throttle/ThrottleMain.shtml">JMRI Throttles</a>
+are working fine (Unless you do this first,
+debugging possible problems connecting the RailDriver is very difficult.)
 
 <p>
 Next, plug the RailDriver into a USB port on your computer while
 your JMRI application (PanelPro or DecoderPro) isn't running.
 
+<h3>Settings</h3>
 <p>
-Finally, start the JMRI program
-and select "RailDriver Throttle" from the Debug menu.
-(It's temporarily there while we develop the support)
-A Throttle window with the title "RailDriver" should open.
+Once connected, start the JMRI program
+and select "RailDriver Throttle" from the Debug menu
+(It's temporarily located there while we develop the support).
+
+<p>A Throttle window titled "RailDriver" should open:
 <br>
 <img src="../../tools/throttle/images/jmri012.jpg" alt="throttle window" align="right" height="188" width="154">
 
 <p>
-Type the address of your locomotive (DCC address) into the address box,
+Type the DCC address of your Locomotive into the address box,
 just like a 
-<a href="../../tools/throttle/ThrottleMain.shtml">regular JMRI throttle</a>,
+<a href="../../tools/throttle/ThrottleMain.shtml">regular JMRI Throttle</a>,
 and click "Set". 
-This connects both the throttle window and the RailDriver console through the DCC
-system to the decoder. You should now be able to operate the locomotive from
+This connects both the Throttle window and the RailDriver console through the DCC
+system to the decoder. You should now be able to operate the Locomotive from
 the RailDriver.
 
-<p>
-The top row of buttons across the front edge control the decoder functions.
-The left most (1 in the figure) is F0, usually the headlight.
-The next button to the right (2 in the figure) is F1, etc.
-When you press the button, the function toggles: From off to on, or on to off.
-Try pressing one, and see if the throttle function buttons on the screen and the
-functions in the locomotive respond.
-
-<p>
-The "Bell" button (37 in the figure) drives F3 (this can be changed by editting a file in the 
-JMRI distribution if your DCC system uses something different).  
-It's momentary, so F3 is set on when the button is pressed, and off when it's
-released.
-
-<p>
-The horn lever (38 in the figure) operates F2.
-Push it forward or back to turn F2 on, and release or center it to turn F2 off.
-
-<p>
-The left-most large handle, labeled "Forward N Reverse" (39 in the figure)
-serves to control direction.  
-Since (most) DCC decoders don't have a neutral position,
-the N position isn't used.  
-
-<p>
-The next lever, labelled "Dyn Brake Throttle" (40 in the figure),
-controls the decoder speed 
-setting.  For now, zero speed is (roughly) the center, and higher speeds
-are when the lever is pulled back.
+<a name="tools"></a><h2>Raildriver Tools</h2>
+	<ul>
+	<li>
+	The top row of buttons across the front edge control the decoder functions.
+	The left most (#1 in the figure) is F0, usually the headlight.
+	The next button to the right (#2 in the figure) is F1, etc.
+	When you press the button, the function toggles: From Off to On, or On to Off.
+	Try pressing one, and see if the Throttle function buttons on the screen and the
+	functions in the Locomotive respond.</li>
+	<li>
+	The "Bell" button (#37 in the figure) drives F3 (this can be changed by editing a file in the 
+	JMRI distribution if your DCC system uses something different).  
+	It's momentary, so F3 is set on when the button is pressed, and off when it's
+	released.</li>
+	<li>
+	The horn lever (#38 in the figure) operates F2.
+	Push it forward or back to turn F2 On, and release or center it to turn F2 Off.</li>
+	<li>
+	The left-most large handle, labeled "Forward N Reverse" (#39 in the figure)
+	serves to control direction.  
+	Since (most) DCC decoders don't have a neutral position,
+	the N position isn't used.</li>
+	<li>
+	The next lever, labelled "Dyn Brake Throttle" (#40 in the figure),
+	controls the decoder speed 
+	setting.  For now, zero speed is (roughly) the center, and higher speeds
+	are when the lever is pulled back.</li>
+	</ul>
 
 <p>
 Eventually, we'd like to make a more detailed simulation available 
 by connecting the rest of the controls, and adding a detailed model of
-the trains braking and accelaration.
+the trains braking and acceleration.
 
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
 <p>
-For technical information, please see the 
-<a href="details.shtml">details page</a>.
+For technical information on Raildriver, please see the 
+<a href="details.shtml">Details Help page</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

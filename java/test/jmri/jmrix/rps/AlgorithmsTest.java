@@ -1,5 +1,3 @@
-// AlgorithmsTest.java
-
 package jmri.jmrix.rps;
 
 import junit.framework.Test;
@@ -9,16 +7,14 @@ import junit.framework.TestSuite;
 /**
  * Test all the RPS algorithms.
  *
- * Separated from RpsTest to make it easy to run just the algorithms,
- * not all the package tests.
+ * Separated from RpsTest to make it easy to run just the algorithms, not all
+ * the package tests.
  *
- * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision$
+ * @author Bob Jacobsen Copyright 2008
  */
 public class AlgorithmsTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public AlgorithmsTest(String s) {
         super(s);
     }
@@ -35,17 +31,14 @@ public class AlgorithmsTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.rps.AlgorithmsTest");
 
         suite.addTest(InitialAlgorithmTest.suite());
-        
+
         // suite.addTest(Ash1_0AlgorithmTest.suite());
         // suite.addTest(Ash1_1AlgorithmTest.suite());
-        
         suite.addTest(Ash2_0AlgorithmTest.suite());
         suite.addTest(Ash2_1AlgorithmTest.suite());
         suite.addTest(Ash2_2AlgorithmTest.suite());
-        
-        
-        // suite.addTest(Analytic_AAlgorithmTest.suite());
 
+        // suite.addTest(Analytic_AAlgorithmTest.suite());
         return suite;
     }
 

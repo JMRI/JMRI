@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
@@ -13,37 +13,56 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add support for V8 -->
-<pane name="BEMF" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>BEMF</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.9.5 or later is required for QSI V7"/>
-        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.9.5 or later is required for QSI V7</text>
+        </label>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Wheel Diameter"/>
         <display item="Locomotive Scale"/>
         <display item="Scale Wheel Diameter"/>
         <display item="Power Conversion Stopping Distance"/>
       </column>
-      <label label="        "/>
+      <label>
+        <text>        </text>
+      </label>
       <column>
         <row>
           <display item="CV56.4"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.5" layout="above" label=""/>
           <display item="CV56.5" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.6" layout="above" label=""/>
           <display item="CV56.6" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV56.8 Sign" format="offradiobutton" label="" layout="left"/>
@@ -60,89 +79,139 @@
           <display item="CV56.9" layout="above" label=""/>
           <display item="CV56.9" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="SMPH-BEMF Ratio"/>
         <display item="BEMF-SMPH Calibration Distance"/>
       </column>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <column>
         <row>
           <display item="CV56.18.0" layout="above" label=""/>
           <display item="CV56.18.0" layout="above" format="hslider-percent"/>
         </row>
-        <label label="BEMF less then (Min_BEMF + 5)"/>
-        <label label=" "/>
+        <label>
+          <text>BEMF less then (Min_BEMF + 5)</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.19.0" layout="above" label=""/>
           <display item="CV56.19.0" layout="above" format="hslider-percent"/>
         </row>
-        <label label="BEMF between (Min_BEMF + 5) and 54"/>
-        <label label=" "/>
+        <label>
+          <text>BEMF between (Min_BEMF + 5) and 54</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.20.0" layout="above" label=""/>
           <display item="CV56.20.0" layout="above" format="hslider-percent"/>
         </row>
-        <label label="BEMF between 54 and 108"/>
-        <label label=" "/>
+        <label>
+          <text>BEMF between 54 and 108</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.21.0" layout="above" label=""/>
           <display item="CV56.21.0" layout="above" format="hslider-percent"/>
         </row>
-        <label label="BEMF greater then 108"/>
+        <label>
+          <text>BEMF greater then 108</text>
+        </label>
       </column>
-      <label label="        "/>
+      <label>
+        <text>        </text>
+      </label>
       <column>
         <row>
           <display item="CV56.18.1" layout="above" label=""/>
           <display item="CV56.18.1" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.19.1" layout="above" label=""/>
           <display item="CV56.19.1" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.20.1" layout="above" label=""/>
           <display item="CV56.20.1" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.21.1" layout="above" label=""/>
           <display item="CV56.21.1" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
-      <label label="        "/>
+      <label>
+        <text>        </text>
+      </label>
       <column>
         <row>
           <display item="CV56.18.2" layout="above" label=""/>
           <display item="CV56.18.2" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.19.2" layout="above" label=""/>
           <display item="CV56.19.2" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.20.2" layout="above" label=""/>
           <display item="CV56.20.2" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV56.21.2" layout="above" label=""/>
           <display item="CV56.21.2" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
   </column>

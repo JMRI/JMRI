@@ -1,20 +1,21 @@
 /* NceProgrammerManager.java */
-
 package jmri.jmrix.sprog;
 
+import jmri.AddressedProgrammer;
+import jmri.Programmer;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.Programmer;
 
 /**
  * Extend DefaultProgrammerManager to provide programmers for SPROG systems
  *
- * @see         jmri.ProgrammerManager
+ * @see jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2001
  * @version	$Revision$
  */
-public class SprogProgrammerManager  extends DefaultProgrammerManager {
-	//private Programmer localProgrammer;
+public class SprogProgrammerManager extends DefaultProgrammerManager {
+
+    //private Programmer localProgrammer;
     private SprogMode mode;
 
     public SprogProgrammerManager(Programmer serviceModeProgrammer, SprogSystemConnectionMemo memo) {
@@ -30,25 +31,31 @@ public class SprogProgrammerManager  extends DefaultProgrammerManager {
     }
 
     /**
-     * Classic SPROG is service mode only
-     * SPROG Command Station is Ops mode only
+     * Classic SPROG is service mode only SPROG Command Station is Ops mode only
+     *
      * @return true
      */
     public boolean isAddressedModePossible() {
-      if (mode == SprogMode.OPS) {return true;}
-      else return false;
+        if (mode == SprogMode.OPS) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean isGlobalProgrammerAvailable() {
-      if (mode == SprogMode.SERVICE) {return true;}
-      else return false;
+        if (mode == SprogMode.SERVICE) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new SprogOpsModeProgrammer(pAddress, pLongAddress);
     }
 
-    public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

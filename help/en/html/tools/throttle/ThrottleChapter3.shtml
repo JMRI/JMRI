@@ -1,20 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
   <title>Throttle: Advanced Configuration </title>
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
   <meta name="Description" content="Throttle documentation for JMRI project">
-  <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="EN">
-  <meta name="Robots" content="Index, Follow">
-  <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
+  
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -29,9 +21,9 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-<h1 style="color:#ff0000">Updated version of the Throttle documentation</h1>
+<h1>Current Throttle documentation</h1>
 
-<p>Please note that this documentation was updated, refer to links bellow:</p>
+<p>Please note that the Throttles Help was updated. Current version:</p>
 <ul>
   <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle menu in JMRI</a></li>
   <li>The <a href="BasicThrottleWindow.shtml">Throttle Window itself</a></li>
@@ -44,7 +36,9 @@
     pane</a></li>
 </ul>
 
-<h1>Advanced Configuration of the Function Panel</h1>
+<hr>
+<h1>Throttles in JMRI v2.x</h2>
+<h2>Advanced Configuration of the Function Panel</h2>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>
@@ -59,12 +53,11 @@
 
         <p>The example image on the right shows the default Function Panel
         window. When the mouse pointer hovers over the top of the button, a
-        <strong>right click</strong> of the mouse will display a menu — with
+        <strong>right click</strong> of the mouse will display a menu with
         the only option on this menu at this time being "<b>Properties</b>".</p>
       </td>
       <td><img width="20" height="20" src="images/spacer.gif"> </td>
-      <td align="center" valign="top"><br>
-
+      <td align="center" valign="top">
 
         <p style="text-align: center; font-size: xx-small"><img width="206"
         height="250" src="images/jmri022.jpg"
@@ -81,8 +74,6 @@
   <tbody>
     <tr>
       <td align="left" valign="top"><br>
-
-
         <p style="text-align: center; font-size: xx-small"><img width="180"
         height="181" src="images/jmri023.jpg" title="Edit Function Button"><br>
         Figure 3-2: Edit Function Button </p>
@@ -92,35 +83,33 @@
         clicked on, the "<b>Edit Function Button</b>" window opens (see the
         example image on the left).</p>
         <ul>
-          <li><strong>Function Number</strong> — associates the button with a
+          <li><strong>Function Number</strong> associates the button with a
             function number </li>
-          <li><strong>Text</strong> — customizable button label text </li>
-          <li><strong>Font Size</strong> — size of text displayed on button
+          <li><strong>Text</strong> customizable button label text </li>
+          <li><strong>Font Size</strong> set the size of text displayed on button
           </li>
-          <li><strong>Lockable</strong> — identifies whether the button acts as
+          <li><strong>Lockable</strong> identifies whether the button acts as
             an "on/off" toggle switch; or as a momentary switch </li>
-          <li><strong>Visible</strong> — identifies whether the button is
+          <li><strong>Visible</strong> identifies whether the button is
             visible in the Function Panel window </li>
         </ul>
       </td>
     </tr>
   </tbody>
 </table>
-<br>
-
 
 <p>By default, the <strong>Function Number</strong> is associated with the
 button number that you initially right-clicked on. For example, in the figures
 shown above, function number "1" (F1) is being edited. It is recommended that
 you leave this number as is, however, you <u>can</u> change this to a different
 function number if you really wish. An example of why you might want to do this
-is if you really want the "lights" button — which is usually F0 (located as the
-last/bottom button by default) — to be located as the first button in the
+is if you really want the "lights" button, which is usually F0 (located as the
+last/bottom button by default), to be located as the first button in the
 Function Panel.</p>
 
-<p class="important"><b>Warning!   If any modifications are done to the
+<p class="important"><b>Warning! If any modifications are done to the
 "Function Number" field, verify to make sure that no two buttons are assigned
-the same function number — some unwanted consequences may occur.</b> </p>
+the same function number as some unwanted consequences may occur.</b> </p>
 
 <p>The <strong>Text</strong> field will be the most welcome and modified field.
 By default, it is set similar to hand-held throttles: F1...F2...F3...etc. The
@@ -128,15 +117,15 @@ content of the field is pretty much open to the imagination, however, there is
 going to be a point where the length of the text is <u>not</u> going to fit on
 the button. The <strong>Font Size</strong> field is available to also assist in
 getting the wanted text to fit on the button. A little experimentation will be
-required here to determine what looks good for you — and what will fit.</p>
+required here to determine what looks good for you and what will fit.</p>
 
 <p>The <strong>Lockable</strong> check box may be a little confusing at first.
-When enabled — as it is by default — it simply means that when the button is
+When enabled, as it is by default, it simply means that when the button is
 clicked on, it will "lock" itself in either an "on" state or an "off" state. In
-other words, the button will act as a toggle switch — click once to turn the
+other words, the button will act as a toggle switch: click once to turn the
 function "on"; click again to turn the function "off". The opposite of this
 action is what happens when the check box is <b>disabled</b>. Then the button
-acts like a momentary switch — supplying a momentary "on" command for as long
+acts like a momentary switch: supplying a momentary "on" command for as long
 as the mouse button is clicked <i>and held</i> over the button. When the mouse
 button is released, an "off" command is sent to the function. A good example of
 where one might want to use this is when customizing a throttle setup for a
@@ -148,20 +137,17 @@ blast of the whistle.</p>
 
 <p>The <strong>Visible</strong> check box allows for the "removal" of unwanted
 buttons. By default, all function buttons are enabled as "visible" so that they
-can obviously be seen. But if there is only a single function being used — for
-example the "lights" (F0) — then this option does provide the ability to "hide"
+can obviously be seen. But if there is only a single function being used, for
+example the "lights" (F0), then this option does provide the ability to "hide"
 all of the other buttons.</p>
 
-<p class="important"><b>Warning!   Disabling the "Visible" check box should be
+<p class="important"><b>Warning! Disabling the "Visible" check box should be
 one of the last steps performed during this customization process. The reason
 for this is that once the button is marked as "invisible" (by removing the
 check box), it is indeed invisible to the user and therefore can't be
 right-clicked on with the mouse in order to get the "Edit Function Button"
 window back. To make all buttons visible select "View-&gt;Show All Function
 Buttons."</b> </p>
-<br>
-<br>
-
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>
@@ -186,20 +172,15 @@ Buttons."</b> </p>
     </tr>
   </tbody>
 </table>
-<br>
-<br>
-<br>
-<a name="WinMenuOptions"></a> 
 
+<a name="WinMenuOptions"></a> 
 <h1>Throttle Window Menu Options</h1>
 
 <p>There are a few optional options that affect the general preferences of the
 overall JMRI Throttle window. These are found in a couple of menu options
 located just under the main title bar of the window.</p>
-<br>
-<br>
-<a name="ViewPanels"></a> 
 
+<a name="ViewPanels"></a> 
 <h2>View (Panels)</h2>
 <dir>
 
@@ -207,7 +188,7 @@ located just under the main title bar of the window.</p>
     <tbody>
       <tr>
         <td align="left" valign="top"><p>Clicking on the "<big>View</big>" menu
-          option displays a small menu of 3 items — by default, each with a
+          option displays a small menu of 3 items. By default, each with a
           check mark preceding the item. This corresponds to the 3 sub-windows
           (Address Panel, Function Panel, &amp; Control Panel) that make up the
           overall throttle window.</p>
@@ -240,11 +221,8 @@ located just under the main title bar of the window.</p>
     </tbody>
   </table>
 </dir>
-<br>
-<br>
-<br>
-<a name="EditFrameProperties"></a> 
 
+<a name="EditFrameProperties"></a> 
 <h2>Edit (Frame Properties)</h2>
 <dir>
 
@@ -289,11 +267,6 @@ located just under the main title bar of the window.</p>
     </tbody>
   </table>
 </dir>
-<br>
-<br>
-<br>
-<br>
-
 
 <p>This chapter concludes the advanced throttle options that are currently
 available. The next chapter demonstrates how to save all these customized
@@ -315,14 +288,14 @@ You can use the right arrow below to go to this chapter now.</p>
       <td><img src="images/spacer.gif" width="30" height="10"> </td>
       <td align="left"><b><a href="ThrottleChapter4.shtml"
         title="Advance to the next chapter"><img width="18" height="18"
-        src="images/RightArrow2.jpg"></a></b> </td>
+        src="images/RightArrow2.jpg"></a></b></td>
     </tr>
   </tbody>
 </table>
-<br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --> </div>
+
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>

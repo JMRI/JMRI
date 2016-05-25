@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLayoutSlip.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Edit Level Crossing Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor Level Crossing">
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help Layout Editor Level Crossing">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Edit Layout Slip</H1>    
+<h1>Edit Layout Slip</h1>    
 
 A Slip is a special piece of track that represents two tracks crossing
 at grade, with the ability to switch between the tracks.  It can come in two 
@@ -47,6 +45,7 @@ that drive the slip and test these prior to confirming the configuration.
 </p>
 
 <!--#include virtual="/Footer" -->
-</body>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>
-

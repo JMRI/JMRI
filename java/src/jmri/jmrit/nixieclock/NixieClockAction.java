@@ -1,35 +1,37 @@
 // NixieClockAction.java
+package jmri.jmrit.nixieclock;
 
- package jmri.jmrit.nixieclock;
-
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a
- *  NixieClockFrame object
+ * Swing action to create and register a NixieClockFrame object
  *
- * @author			Bob Jacobsen    Copyright (C) 2004
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2004
+ * @version	$Revision$
  */
+public class NixieClockAction extends AbstractAction {
 
- public class NixieClockAction extends AbstractAction {
-	 
-	 public NixieClockAction() {
-         this("Nixie Clock");
-     }
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5653182277242573672L;
 
- 	public NixieClockAction(String s) {
-    	super(s);
-     }
+    public NixieClockAction() {
+        this("Nixie Clock");
+    }
 
-     public void actionPerformed(ActionEvent e) {
+    public NixieClockAction(String s) {
+        super(s);
+    }
 
-         NixieClockFrame f = new NixieClockFrame();
-         f.setVisible(true);
+    public void actionPerformed(ActionEvent e) {
 
-     }
+        NixieClockFrame f = new NixieClockFrame();
+        f.setVisible(true);
 
- }
+    }
+
+}
 
 /* @(#)NixieClockAction.java */

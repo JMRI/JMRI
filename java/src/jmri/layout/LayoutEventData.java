@@ -1,40 +1,39 @@
 package jmri.layout;
 
+import java.util.Date;
+
 /**
- * Title:
- * Description:
- * Copyright:    Copyright (c) 2002
- * Company:
- * @author
- * @version $Revision$
+ * @deprecated 4.3.5
  */
+@Deprecated
+public class LayoutEventData {
 
-import java.util.Date ;
+    private Date mTimeStamp;
+    private LayoutAddress mLayoutAddress;
+    private String mState;
 
-public class LayoutEventData
-{
-    private Date            mTimeStamp ;
-    private LayoutAddress   mLayoutAddress ;
-    private String          mState ;
-
-    LayoutEventData( String pLayoutName, int pType, int pOffset, String pState )
-    {
-        mTimeStamp = new Date() ;
-        mState = pState ;
-        mLayoutAddress = new LayoutAddress( pLayoutName, pType, pOffset ) ;
+    LayoutEventData(String pLayoutName, int pType, int pOffset, String pState) {
+        mTimeStamp = new Date();
+        mState = pState;
+        mLayoutAddress = new LayoutAddress(pLayoutName, pType, pOffset);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK in hibernating code
-    public Date getTimeStamp() { return mTimeStamp ; }
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK in hibernating code
+    public Date getTimeStamp() {
+        return mTimeStamp;
+    }
 
-    public LayoutAddress getLayoutAddress() { return mLayoutAddress ; }
+    public LayoutAddress getLayoutAddress() {
+        return mLayoutAddress;
+    }
 
-    public String getState() { return mState ; }
+    public String getState() {
+        return mState;
+    }
 
-    public String toString()
-    {
-        return "TimeStamp: " + mTimeStamp.toString() +
-            " Address: " + mLayoutAddress.toString() +
-            " State: " + getState() ;
+    public String toString() {
+        return "TimeStamp: " + mTimeStamp.toString()
+                + " Address: " + mLayoutAddress.toString()
+                + " State: " + getState();
     }
 }

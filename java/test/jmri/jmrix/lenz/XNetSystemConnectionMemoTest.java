@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -9,15 +8,15 @@ import junit.framework.TestSuite;
 /**
  * XNetSystemConnectionMemoTest.java
  *
- * Description:	    tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
- * @author			Paul Bender
- * @version         $Revision$
+ * Description:	tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
+ *
+ * @author	Paul Bender
  */
 public class XNetSystemConnectionMemoTest extends TestCase {
 
     public void testCtor() {
-       // infrastructure objects
-       XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        // infrastructure objects
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo(tc);
         Assert.assertNotNull(t);
@@ -28,8 +27,8 @@ public class XNetSystemConnectionMemoTest extends TestCase {
     }
 
     public void testXNetTrafficControllerSetCtor() {
-       // infrastructure objects
-       XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        // infrastructure objects
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
         Assert.assertNotNull(t);
@@ -43,28 +42,30 @@ public class XNetSystemConnectionMemoTest extends TestCase {
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }
 
-	// from here down is testing infrastructure
+    // from here down is testing infrastructure
+    public XNetSystemConnectionMemoTest(String s) {
+        super(s);
+    }
 
-	public XNetSystemConnectionMemoTest(String s) {
-		super(s);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading", XNetSystemConnectionMemoTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", XNetSystemConnectionMemoTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
-
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(XNetSystemConnectionMemoTest.class);
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(XNetSystemConnectionMemoTest.class);
+        return suite;
+    }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
 
-    static Logger log = Logger.getLogger(XNetSystemConnectionMemoTest.class.getName());
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

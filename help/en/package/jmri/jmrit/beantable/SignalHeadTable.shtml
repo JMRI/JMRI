@@ -1,21 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Signal Head Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Signal Head Table">
+ </title>
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta name="Author" content="Bob Jacobsen, Kevin Dickerson, Egbert Broerse">
+	  <meta name="Date.Modified" content="20140515"/>
+    <meta name="keywords" content="JMRI help Signal Head Table">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -23,58 +17,62 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Signal Head Table
-</H1>
+<h1>The Signal Head Table</h1>
 
-<A href="../../../../html/tools/images/SigTable.gif">
- <IMG SRC="../../../../html/tools/images/SigTable.gif" ALIGN=RIGHT WIDTH="375" HEIGHT="166" HSPACE="0" VSPACE="0" ALT="Signal Head Table figure">
+<a href="SignalHeads.png">
+ <img src="SignalHeads.png" align="right" width="554" height="184" hspace="0" vspace="0" alt="Signal Head Table">
 </a>
 
-<p>All the signal heads that JMRI knows about can be referenced
-using the "Signal Head Table" tool in the Tools menu of most JMRI programs.
-There are eight columns in the table:
-<UL>
-<LI>The system name is assigned to the signal head when it's created, 
-and can't be changed.
-<LI>If you're interested in having your signal heads carry "human readable"
-names, you can click in the "User Name" column and change that information
-to whatever you want.
-<LI>As the signal head changes, for whatever reason, the current
-appearance will show in the table in the "State" column.  You can also click on the
-appearance button to cycle through the available appearances:
-red, yellow, green, flashing red, flashing yellow, flashing green, and dark.
-Some signal heads may also have lunar and flashing lunar available.
-<LI> The "Comment" column is for your use to record any comment you may want
-to help keep track of your signal heads. It is for information only.
-<LI>Click the "Delete" button in a specific row to delete the signal head. 
-Be sure to first remove any signal head icons associated with this signal head,
-any associated Simple Signal Logic,
-and all references to this signal head. Use this button with caution!
-<LI>The check box in the "Lit" column lets you control whether the
-signal head on the layout is lit (checked) or stays dark (unchecked).
-<LI>The check box in the "Held" column shows the "held" property of the
-signal head, and allows you to change it.  This property is used by e.g. CTC
-machine logic to say "Don't change this signal head from red, even if it 
-would be safe to do so, because I want to hold a train here".
-<LI>Click the "Edit" button in a row to view or change optional information
-for a signal head. Notes: System name and type cannot be changed. Only one 
-signal head may be edited at a time.
-</UL>
-<P>To define a new signal head, click on the 
-"<A HREF="SignalAddEdit.shtml">Add.." button</a>.
-It will
-prompt you for the type (Triple Output; Double Output; SE8c; etc), and
-whatever setup information is needed.
-<P> Use the Store item in the File menu to save signal information to disk. 
+<p>All the Signal Heads that JMRI knows about can be referenced
+using the "Signal Head Table" tool in the Tools menu of most JMRI programs. Signal Heads are also referenced to build Signal Masts in a later step.
+There are eight columns in the Signal Head Table:
+	<ol>
+	<li>The System Name is assigned to the Signal Head when it's created, 
+	and can't be changed later.
+	<li>If you're interested in having your Signal Heads carry "human readable"
+	names, you can doubleclick in the "User Name" column and change that information
+	to whatever you want.
+	<li>As the Signal Head changes, for whatever reason, the current
+	Appearance will show in the table in the "State" column.  You can also click on a
+	State button to cycle through the available appearances:
+	Red, Yellow, Green, Flashing red, Flashing Yellow, Flashing Green, and Dark.
+	Some Signal Heads may also have Lunar and Flashing Lunar available.
+	<li> The "Comment" column is for your use to record any comment you may want
+	to help keep track of your Signal Heads. It is for information only. Doubleclick to edit the contents.
+	<li>Click the "Delete" button in a specific row to delete the Signal Head. 
+	Be sure to first remove any Signal Head icons associated with this Signal Head,
+	any associated Simple Signal Logic,
+	and all references to this Signal Head. Use this button with caution!
+	<li>The check box in the "Lit" column lets you control whether the
+	Signal Head on the layout is lit (checked) or stays dark (unchecked).
+	<li>The check box in the "Held" column shows the "held" property of the
+	Signal Head, and allows you to change it.  This property is used by e.g. CTC
+	machine logic to say "Don't change this Signal Head from red, even if it 
+	would be safe to do so, because I want to hold a train here".
+	<li>Click the "Edit" button in a row to view or change optional information
+		for a Signal Head.<br/>
+		Notes: System Name and Signal type cannot be changed. Only one 
+	Signal Head may be edited at a time.
+	</ol>
+		
+<p>To define a new Signal Head, click on the 
+	"<a href="SignalAddEdit.shtml">Add.."</a> button at the bottom of the Signal Head Table.
+It will prompt you for the Signal Head connection type and whatever information is needed.
+	
+<p> Use the Store item in the File menu to save signal information to disk. 
 This information is saved with the configuration in an XML file, along
 with control panel setup and similar stuff.  To store your panels in the same 
-file (recommended), select <b>File>Store>Store Configuration and Panels To 
-File...</b> or select <b>Panels>Store panels...</b> in the main JMRI window.
-<P>For more information on creating and displaying panels, including how to 
+file (recommended), select <b>File > Store > Store Configuration and Panels To 
+File...</b> or select <b>Panels > Save Panels...</b> in the main JMRI window.
+<p>For more information on creating and displaying panels, including how to 
 show signals on your panels, please see the 
-<A HREF="../../../../html/apps/PanelPro/Panels.shtml">Panels pages</a>.
+<a href="../../../../html/apps/PanelPro/Panels.shtml">Panels pages</a>.
 
+	<p>Back to the <a href="../../../../html/tools/signaling/SignalHeads.shtml">Signal Heads help page</a>.
 <!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
 

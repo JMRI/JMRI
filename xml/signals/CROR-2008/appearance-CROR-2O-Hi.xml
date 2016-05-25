@@ -33,6 +33,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Added permissive specific appearance as Restricting Signal</revremark>
     </revision>
+    <revision>
+      <revnumber>1.04</revnumber>
+      <date>2014-03-05</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Changed Danger specific appearance to Stop Signal</revremark>
+    </revision>
   </revhistory>
   <aspecttable>CROR-2008</aspecttable>
   <name>Double head staggered searchlight high signal</name>
@@ -160,7 +166,7 @@
   </appearances>
   <specificappearances>
     <danger>
-      <aspect>Restricting Signal</aspect>
+      <aspect>Stop Signal</aspect>
     </danger>
     <permissive>
       <aspect>Restricting Signal</aspect>

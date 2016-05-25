@@ -19,6 +19,10 @@
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
     </author>    
+    <author>
+        <personname><firstname>Oscar</firstname><surname>Moutinho</surname></personname>
+        <email>oscar.moutinho@gmail.com</email>
+    </author>    
   </authorgroup>
     
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -40,6 +44,12 @@
         <authorinitials>JCV</authorinitials>
         <revremark>Added small and medium size icons more suitable for panels</revremark>
     </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2015-03-03</date>
+        <authorinitials>OM</authorinitials>
+        <revremark>Add Speed and Route to Aspects. Add Aspect Mapping and Specific Aspects</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>DB-HV-1969</aspecttable>
@@ -55,26 +65,36 @@
     <appearance>
       <aspectname>Vr0</aspectname>
       <show>red</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Vr1</aspectname>
       <show>green</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Vr2</aspectname>
       <show>yellow</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
     </appearance>
 
   </appearances>
+
+  <specificappearances><!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Vr0</aspect>
+    </danger>
+    <held>
+      <aspect>Vr0</aspect>
+    </held>
+  </specificappearances><!-- End of Specific Appearances list -->
+
 </appearancetable>  

@@ -1,13 +1,10 @@
 package jmri.util.table;
 
 // This was adapted from Core Swing Advanced Programming, Prentice Hall
-
 // Changes: Remove DataWithIcon reference.  Change package.
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -17,13 +14,18 @@ import javax.swing.table.TableCellRenderer;
 
 // A holder for data and an associated icon
 public class ButtonRenderer extends JButton
-    implements TableCellRenderer {
+        implements TableCellRenderer {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6223067451048990925L;
 
     public ButtonRenderer() {
         this.border = getBorder();
         this.setOpaque(true);
-        putClientProperty("JComponent.sizeVariant","small");
-        putClientProperty("JButton.buttonType","square");
+        putClientProperty("JComponent.sizeVariant", "small");
+        putClientProperty("JButton.buttonType", "square");
     }
 
     public void setForeground(Color foreground) {
@@ -42,13 +44,13 @@ public class ButtonRenderer extends JButton
     }
 
     public Component getTableCellRendererComponent(JTable table,
-                                                   Object value, boolean isSelected,
-                                                   boolean hasFocus,
-                                                   int row, int column) {
+            Object value, boolean isSelected,
+            boolean hasFocus,
+            int row, int column) {
         Color cellForeground = foreground != null ? foreground
-            : table.getForeground();
+                : table.getForeground();
         Color cellBackground = background != null ? background
-            : table.getBackground();
+                : table.getBackground();
 
         setFont(font != null ? font : table.getFont());
 
@@ -78,7 +80,7 @@ public class ButtonRenderer extends JButton
             setEnabled(false);
         } else if (value instanceof Icon) {
             setText("");
-            setIcon((Icon)value);
+            setIcon((Icon) value);
             setEnabled(true);
         } else {
             setText(value.toString());

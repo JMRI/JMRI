@@ -1,11 +1,25 @@
-// RosterFrame.java
 package jmri.jmrit.roster.swing;
 
 import apps.AppsBase;
 import apps.gui3.Apps3;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Transferable;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -19,6 +33,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultRowSorter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -34,16 +49,21 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SortOrder;
 import javax.swing.Timer;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
+import jmri.AddressedProgrammerManager;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
+import jmri.ProgrammerManager;
+import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -58,7 +78,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.jmrit.symbolicprog.ProgDefault;
+import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
@@ -67,8 +87,12 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
+import jmri.profile.ProfileManager;
 import jmri.progdebugger.ProgDebugger;
+import jmri.swing.RowSorterUtil;
+import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.WindowMenu;
 import jmri.util.datatransfer.RosterEntrySelection;
@@ -90,20 +114,15 @@ import org.slf4j.LoggerFactory;
  * included How do you pick a programmer file? (hardcoded) Initialization needs
  * partial deferal, too for 1st pane to appear
  *
- * This class can be extended to allow the Window title to be branded. For an
- * example, see {@link apps.gui3.dp3.DecoderPro3Window}.
- *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
- * @author Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010, 2016
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2012
- * @version $Revision: 20027 $
  */
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
-    static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
-    static ArrayList<RosterFrame> frameInstances = new ArrayList<RosterFrame>();
+    static ArrayList<RosterFrame> frameInstances = new ArrayList<>();
     protected boolean allowQuit = true;
     protected String baseTitle = "Roster";
     protected JmriAbstractAction newWindowAction;
@@ -124,6 +143,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         this.setBaseTitle(name);
         this.buildWindow();
     }
+
     int clickDelay = 0;
     JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("Edit"));
     JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingOnMain"));
@@ -151,13 +171,16 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     JRadioButton ops = new JRadioButton(Bundle.getMessage("ProgrammingOnMain"));
     ConnectionConfig opsModeProCon = null;
     JTextPane owner = new JTextPane();
-    UserPreferencesManager p;
+    UserPreferencesManager prefsMgr;
     JButton prog1Button = new JButton(Bundle.getMessage("Program"));
     JButton prog2Button = new JButton(Bundle.getMessage("BasicProgrammer"));
     ActionListener programModeListener;
-    ProgDebugger programmer = new ProgDebugger();
-    String programmer1 = Bundle.getMessage("Comprehensive");
-    String programmer2 = Bundle.getMessage("Basic");
+    ProgDebugger progDebugger = new ProgDebugger();
+
+    // These are the names of the programmer _files_, not what should be displayed to the user
+    String programmer1 = "Comprehensive"; // NOI18N
+    String programmer2 = "Basic"; // NOI18N
+
     java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
     //current selected loco
     RosterEntry re;
@@ -191,12 +214,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * closed.
      */
     protected void allowQuit(boolean quitAllowed) {
-        if(allowQuit!=quitAllowed){
+        if (allowQuit != quitAllowed) {
             newWindowAction = null;
             allowQuit = quitAllowed;
             groups.setNewWindowMenuAction(this.getNewWindowAction());
         }
-        
+
         firePropertyChange("quit", "setEnabled", allowQuit);
         //if we are not allowing quit, ie opened from JMRI classic
         //then we must at least allow the window to be closed
@@ -227,11 +250,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         progModePanel.add(service);
         progModePanel.add(ops);
         progModePanel.add(edit);
-        programModeListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateProgMode();
-            }
+        programModeListener = (ActionEvent e) -> {
+            updateProgMode();
         };
         service.addActionListener(programModeListener);
         ops.addActionListener(programModeListener);
@@ -267,52 +287,45 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         //buttonHolder.add(throttleLaunch);
         panel.add(buttonHolder);
         prog1Button.setEnabled(false);
-        prog1Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Open programmer pressed");
-                }
-                startProgrammer(null, re, programmer1);
+        prog1Button.addActionListener((ActionEvent e) -> {
+            if (log.isDebugEnabled()) {
+                log.debug("Open programmer pressed");
             }
+            startProgrammer(null, re, programmer1);
         });
         /*
          * prog2Button.setEnabled(false); prog2Button.addActionListener( new
          * ActionListener() { public void
          * actionPerformed(java.awt.event.ActionEvent e) { if
-         * (log.isDebugEnabled()) log.debug("Open programmer pressed");
+         * (log.isDebugEnabled()) log.debug("Open progDebugger pressed");
          * startProgrammer(null, re, programmer2); } });
          */
-        /*
+ /*
          * throttleLabels.setEnabled(false); throttleLabels.addActionListener(
          * new ActionListener() { public void
          * actionPerformed(java.awt.event.ActionEvent e) { if
-         * (log.isDebugEnabled()) log.debug("Open programmer pressed");
+         * (log.isDebugEnabled()) log.debug("Open progDebugger pressed");
          * editMediaButton(); } });
          */
         rosterMedia.setEnabled(false);
-        rosterMedia.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Open programmer pressed");
-                }
-                edit.setSelected(true);
-                startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
+        rosterMedia.addActionListener((ActionEvent e) -> {
+            if (log.isDebugEnabled()) {
+                log.debug("Open programmer pressed");
             }
+            edit.setSelected(true);
+            startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
         });
         throttleLaunch.setEnabled(false);
-        throttleLaunch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Launch Throttle pressed");
-                }
-                if (!checkIfEntrySelected()) return;
-                ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
-                tf.toFront();
-                tf.getAddressPanel().setRosterEntry(re);
+        throttleLaunch.addActionListener((ActionEvent e) -> {
+            if (log.isDebugEnabled()) {
+                log.debug("Launch Throttle pressed");
             }
+            if (!checkIfEntrySelected()) {
+                return;
+            }
+            ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+            tf.toFront();
+            tf.getAddressPanel().setRosterEntry(re);
         });
         return panel;
     }
@@ -321,63 +334,55 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         //Additions to the toolbar need to be added first otherwise when trying to hide bits up during the initialisation they remain on screen
         additionsToToolBar();
         frameInstances.add(this);
-        p = InstanceManager.getDefault(UserPreferencesManager.class);
+        prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
         getTop().add(createTop());
         getBottom().setMinimumSize(summaryPaneDim);
         getBottom().add(createBottom());
         statusBar();
         systemsMenu();
         helpMenu(getMenu(), this);
-        if ((!p.getSimplePreferenceState(this.getClass().getName() + ".hideGroups")) && !Roster.instance().getRosterGroupList().isEmpty()) {
+        if ((!prefsMgr.getSimplePreferenceState(this.getClass().getName() + ".hideGroups")) && !Roster.instance().getRosterGroupList().isEmpty()) {
             hideGroupsPane(false);
         } else {
             hideGroupsPane(true);
         }
-        if (p.getSimplePreferenceState(this.getClass().getName() + ".hideSummary")) {
+        if (prefsMgr.getSimplePreferenceState(this.getClass().getName() + ".hideSummary")) {
             //We have to set it to display first, then we can hide it.
             hideBottomPane(false);
             hideBottomPane(true);
         }
-        PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent changeEvent) {
-                JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
-                String propertyName = changeEvent.getPropertyName();
-                if (propertyName.equals(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY)) {
-                    int current = sourceSplitPane.getDividerLocation() + sourceSplitPane.getDividerSize();
-                    int panesize = (int) (sourceSplitPane.getSize().getHeight());
-                    if (panesize - current <= 1) {
-                        hideBottomPane = true;
-                    } else {
-                        hideBottomPane = false;
-                        //p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
-                    }
-                }
+        PropertyChangeListener propertyChangeListener = (PropertyChangeEvent changeEvent) -> {
+            JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
+            String propertyName = changeEvent.getPropertyName();
+            if (propertyName.equals(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY)) {
+                int current = sourceSplitPane.getDividerLocation() + sourceSplitPane.getDividerSize();
+                int panesize = (int) (sourceSplitPane.getSize().getHeight());
+                hideBottomPane = panesize - current <= 1;
+                //p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
             }
         };
         updateProgrammerStatus();
-        ConnectionStatus.instance().addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
-                    updateProgrammerStatus();
-                }
+        ConnectionStatus.instance().addPropertyChangeListener((PropertyChangeEvent e) -> {
+            if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
+                updateProgrammerStatus();
             }
         });
-        InstanceManager.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("programmermanager")) {
-                    updateProgrammerStatus();
-                }
+        InstanceManager.addPropertyChangeListener((PropertyChangeEvent e) -> {
+            if (e.getPropertyName().equals("programmermanager")) {
+                updateProgrammerStatus();
             }
         });
         getSplitPane().addPropertyChangeListener(propertyChangeListener);
-        if (ProgDefault.getDefaultProgFile() != null) {
-            programmer1 = ProgDefault.getDefaultProgFile();
+        if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+            programmer1 = this.getProgrammerConfigManager().getDefaultFile();
         }
+        this.getProgrammerConfigManager().addPropertyChangeListener(ProgrammerConfigManager.DEFAULT_FILE, (PropertyChangeEvent evt) -> {
+            if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+                programmer1 = this.getProgrammerConfigManager().getDefaultFile();
+            }
+        });
 
-        String lastProg = (String) p.getProperty(getWindowFrameRef(), "selectedProgrammer");
+        String lastProg = (String) prefsMgr.getProperty(getWindowFrameRef(), "selectedProgrammer");
         if (lastProg != null) {
             if (lastProg.equals("service") && service.isEnabled()) {
                 service.setSelected(true);
@@ -399,8 +404,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     boolean checkIfEntrySelected() {
-        if (re == null) {
-            JOptionPane.showMessageDialog(null, "Please select a loco from the roster first");
+        return this.checkIfEntrySelected(false);
+    }
+
+    boolean checkIfEntrySelected(boolean allowMultiple) {
+        if ((re == null && !allowMultiple) || (this.getSelectedRosterEntries().length < 1)) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoSelection"));
             return false;
         }
         return true;
@@ -410,8 +419,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     void closeWindow(WindowEvent e) {
         saveWindowDetails();
         //Save any changes made in the roster entry details
-        Roster.writeRosterFile();
-        if (allowQuit && frameInstances.size() == 1) {
+        Roster.getDefault().writeRoster();
+        if (allowQuit && frameInstances.size() == 1 && !InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
             handleQuit(e);
         } else {
             //As we are not the last window open or we are not allowed to quit the application then we will just close the current window
@@ -438,21 +447,18 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rosterDetailPanel.add(locoImage, BorderLayout.WEST);
         rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
         rosterDetailPanel.add(bottomRight(), BorderLayout.EAST);
-        if (p.getSimplePreferenceState(this.getClass().getName() + ".hideRosterImage")) {
+        if (prefsMgr.getSimplePreferenceState(this.getClass().getName() + ".hideRosterImage")) {
             locoImage.setVisible(false);
             hideRosterImage = true;
         }
-        rosterEntryUpdateListener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                updateDetails();
-            }
+        rosterEntryUpdateListener = (PropertyChangeEvent e) -> {
+            updateDetails();
         };
         return rosterDetailPanel;
     }
 
     JComponent createTop() {
-        Object selectedRosterGroup = p.getProperty(getWindowFrameRef(), "selectedRosterGroup");
+        Object selectedRosterGroup = prefsMgr.getProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP);
         groups = new RosterGroupsPanel((selectedRosterGroup != null) ? selectedRosterGroup.toString() : null);
         groups.setNewWindowMenuAction(this.getNewWindowAction());
         setTitle(groups.getSelectedRosterGroup());
@@ -464,17 +470,15 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rtable.setRosterGroupSource(groups);
         rosters.add(rtable, BorderLayout.CENTER);
         // add selection listener
-        rtable.getTable().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    if (rtable.getSelectedRosterEntries().length == 1 && rtable.getTable().getSelectedRow() >= 0) {
-                        log.debug("Selected row ", rtable.getTable().getSelectedRow());
-                        locoSelected(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).toString());
-                    } else if (rtable.getSelectedRosterEntries().length > 1 || rtable.getTable().getSelectedRow() < 0) {
-                        locoSelected(null);
-                    } // leave last selected item visible if no selection
-                }
+        rtable.getTable().getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            JTable table = rtable.getTable();
+            if (!e.getValueIsAdjusting()) {
+                if (rtable.getSelectedRosterEntries().length == 1 && table.getSelectedRow() >= 0) {
+                    log.debug("Selected row ", table.getSelectedRow());
+                    locoSelected(rtable.getModel().getValueAt(table.getRowSorter().convertRowIndexToModel(table.getSelectedRow()), RosterTableModel.IDCOL).toString());
+                } else if (rtable.getSelectedRosterEntries().length > 1 || table.getSelectedRow() < 0) {
+                    locoSelected(null);
+                } // leave last selected item visible if no selection
             }
         });
 
@@ -483,7 +487,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
         //Reorder the columns first
         for (int i = 0; i < rtable.getTable().getColumnCount(); i++) {
-            String columnName = p.getTableColumnAtNum(rostertableref, i);
+            String columnName = prefsMgr.getTableColumnAtNum(rostertableref, i);
             if (columnName != null) {
                 int originalLocation = -1;
                 for (int j = 0; j < rtable.getTable().getColumnCount(); j++) {
@@ -504,23 +508,26 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         while (en.hasMoreElements()) {
             TableColumn tc = en.nextElement();
             String columnName = (String) tc.getHeaderValue();
-            if (p.getTableColumnWidth(rostertableref, columnName) != -1) {
-                int width = p.getTableColumnWidth(rostertableref, columnName);
+            if (prefsMgr.getTableColumnWidth(rostertableref, columnName) != -1) {
+                int width = prefsMgr.getTableColumnWidth(rostertableref, columnName);
                 tc.setPreferredWidth(width);
             }
-            int sort = p.getTableColumnSort(rostertableref, columnName);
-            rtable.getModel().setSortingStatus(tc.getModelIndex(), sort);
-
-            if (p.getTableColumnHidden(rostertableref, columnName)) {
+            SortOrder sort = prefsMgr.getTableColumnSort(rostertableref, columnName);
+            if (!sort.equals(SortOrder.UNSORTED)) {
+                RowSorterUtil.setSortOrder(rtable.getTable().getRowSorter(), tc.getModelIndex(), sort);
+            }
+            if (prefsMgr.getTableColumnHidden(rostertableref, columnName)) {
                 tcm.setColumnVisible(tc, false);
-            } else if (p.getTableColumnOrder(rostertableref, columnName) != -1) {
+            } else if (prefsMgr.getTableColumnOrder(rostertableref, columnName) != -1) {
                 //Use Column order to determine if the column has previously been saved.
                 tcm.setColumnVisible(tc, true);
             }
         }
 
+        ((DefaultRowSorter<?, ?>) rtable.getTable().getRowSorter()).sort();
         rtable.getTable().setDragEnabled(true);
         rtable.getTable().setTransferHandler(new TransferHandler() {
+
             @Override
             public int getSourceActions(JComponent c) {
                 return TransferHandler.COPY;
@@ -528,9 +535,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
             @Override
             public Transferable createTransferable(JComponent c) {
-                ArrayList<String> Ids = new ArrayList<String>(rtable.getTable().getSelectedRowCount());
-                for (int i = 0; i < rtable.getTable().getSelectedRowCount(); i++) {
-                    Ids.add(rtable.getModel().getValueAt(rtable.getTable().getSelectedRows()[i], RosterTableModel.IDCOL).toString());
+                JTable table = rtable.getTable();
+                ArrayList<String> Ids = new ArrayList<>(table.getSelectedRowCount());
+                for (int i = 0; i < table.getSelectedRowCount(); i++) {
+                    Ids.add(rtable.getModel().getValueAt(table.getRowSorter().convertRowIndexToModel(table.getSelectedRows()[i]), RosterTableModel.IDCOL).toString());
                 }
                 return new RosterEntrySelection(Ids);
             }
@@ -543,11 +551,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         MouseListener rosterMouseListener = new rosterPopupListener();
         rtable.getTable().addMouseListener(rosterMouseListener);
         try {
-            clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval")).intValue();
-        } catch (Exception e) {
+            clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
+        } catch (RuntimeException e) {
             try {
-                clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time")).intValue();
-            } catch (Exception ex) {
+                clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time"));
+            } catch (RuntimeException ex) {
                 clickDelay = 500;
                 log.error("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
             }
@@ -558,66 +566,56 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rosterGroupSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
         rosterGroupSplitPane.setOneTouchExpandable(true);
         rosterGroupSplitPane.setResizeWeight(0); // emphasis rosters
-        Object w = p.getProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation");
+        Object w = prefsMgr.getProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation");
         if (w != null) {
             groupSplitPaneLocation = (Integer) w;
             rosterGroupSplitPane.setDividerLocation(groupSplitPaneLocation);
         }
         if (!Roster.instance().getRosterGroupList().isEmpty()) {
-            if (p.getSimplePreferenceState(this.getClass().getName() + ".hideGroups")) {
+            if (prefsMgr.getSimplePreferenceState(this.getClass().getName() + ".hideGroups")) {
                 hideGroupsPane(true);
             }
         } else {
             enableRosterGroupMenuItems(false);
         }
-        PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent changeEvent) {
-                JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
-                String propertyName = changeEvent.getPropertyName();
-                if (propertyName.equals(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY)) {
-                    int current = sourceSplitPane.getDividerLocation();
-                    if (current <= 1) {
-                        hideGroups = true;
-                    } else {
-                        hideGroups = false;
-                    }
-                    Integer last = (Integer) changeEvent.getNewValue();
-                    if (current >= 2) {
-                        groupSplitPaneLocation = current;
-                    } else if (last >= 2) {
-                        groupSplitPaneLocation = last;
-                    }
+        PropertyChangeListener propertyChangeListener = (PropertyChangeEvent changeEvent) -> {
+            JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
+            String propertyName = changeEvent.getPropertyName();
+            if (propertyName.equals(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY)) {
+                int current = sourceSplitPane.getDividerLocation();
+                hideGroups = current <= 1;
+                Integer last = (Integer) changeEvent.getNewValue();
+                if (current >= 2) {
+                    groupSplitPaneLocation = current;
+                } else if (last >= 2) {
+                    groupSplitPaneLocation = last;
                 }
             }
         };
-        groups.addPropertyChangeListener("selectedRosterGroup", new PropertyChangeListener() {
+        groups.addPropertyChangeListener(SELECTED_ROSTER_GROUP, new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                p.setProperty(this.getClass().getName(), "selectedRosterGroup", pce.getNewValue());
+                prefsMgr.setProperty(this.getClass().getName(), SELECTED_ROSTER_GROUP, pce.getNewValue());
                 setTitle((String) pce.getNewValue());
             }
         });
         rosterGroupSplitPane.addPropertyChangeListener(propertyChangeListener);
-        Roster.instance().addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("RosterGroupAdded") && Roster.instance().getRosterGroupList().size() == 1) {
-                    // if the pane is hidden, show it when 1st group is created
-                    hideGroupsPane(false);
-                    enableRosterGroupMenuItems(true);
-                } else if (!rtable.isVisible() && (e.getPropertyName().equals("saved"))) {
-                    if (firstHelpLabel != null) {
-                        firstHelpLabel.setVisible(false);
-                    }
-                    rtable.setVisible(true);
-                    rtable.resetColumnWidths();
+        Roster.instance().addPropertyChangeListener((PropertyChangeEvent e) -> {
+            if (e.getPropertyName().equals("RosterGroupAdded") && Roster.instance().getRosterGroupList().size() == 1) {
+                // if the pane is hidden, show it when 1st group is created
+                hideGroupsPane(false);
+                enableRosterGroupMenuItems(true);
+            } else if (!rtable.isVisible() && (e.getPropertyName().equals("saved"))) {
+                if (firstHelpLabel != null) {
+                    firstHelpLabel.setVisible(false);
                 }
+                rtable.setVisible(true);
+                rtable.resetColumnWidths();
             }
         });
         if (Roster.instance().numEntries() == 0) {
             try {
-                BufferedImage myPicture = ImageIO.read(new File("resources/dp3first.gif"));
+                BufferedImage myPicture = ImageIO.read(FileUtil.findURL(("resources/" + Bundle.getMessage("ThrottleFirstUseImage")), FileUtil.Location.INSTALLED));
                 //rosters.add(new JLabel(new ImageIcon( myPicture )), BorderLayout.CENTER);
                 firstHelpLabel = new JLabel(new ImageIcon(myPicture));
                 rtable.setVisible(false);
@@ -703,8 +701,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * @return the newWindowAction
      */
     protected JmriAbstractAction getNewWindowAction() {
-        if(newWindowAction==null)
+        if (newWindowAction == null) {
             newWindowAction = new RosterFrameAction("newWindow", this, allowQuit);
+        }
         return newWindowAction;
     }
 
@@ -732,9 +731,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     @Override
     public Object getProperty(String key) {
-        if (key.toString().equalsIgnoreCase("selectedRosterGroup")) {
+        if (key.equalsIgnoreCase(SELECTED_ROSTER_GROUP)) {
             return getSelectedRosterGroup();
-        } else if (key.toString().equalsIgnoreCase("hideSummary")) {
+        } else if (key.equalsIgnoreCase("hideSummary")) {
             return hideBottomPane;
         }
         // call parent getProperty method to return any properties defined
@@ -749,8 +748,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     // cache selectedRosterEntries so that multiple calls to this
     // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP",
-    justification = "Want to give access to mutable, original roster objects")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
+            justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
         return rtable.getSelectedRosterEntries();
     }
@@ -760,10 +759,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return groups.getSelectedRosterGroup();
     }
 
+    protected ProgrammerConfigManager getProgrammerConfigManager() {
+        return InstanceManager.getDefault(ProgrammerConfigManager.class);
+    }
+
     void handleQuit(WindowEvent e) {
         if (e != null && frameInstances.size() == 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeDP3prompt";
-            if (!p.getSimplePreferenceState(rememberWindowClose)) {
+            if (!prefsMgr.getSimplePreferenceState(rememberWindowClose)) {
                 JPanel message = new JPanel();
                 JLabel question = new JLabel(rb.getString("MessageLongCloseWarning"));
                 final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
@@ -776,7 +779,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                         rb.getString("MessageShortCloseWarning"),
                         JOptionPane.YES_NO_OPTION);
                 if (remember.isSelected()) {
-                    p.setSimplePreferenceState(rememberWindowClose, true);
+                    prefsMgr.setSimplePreferenceState(rememberWindowClose, true);
                 }
                 if (result == JOptionPane.YES_OPTION) {
                     AppsBase.handleQuit();
@@ -784,9 +787,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             } else {
                 AppsBase.handleQuit();
             }
-        } else if (frameInstances.size() >1){
+        } else if (frameInstances.size() > 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeMultipleDP3prompt";
-            if (!p.getSimplePreferenceState(rememberWindowClose)) {
+            if (!prefsMgr.getSimplePreferenceState(rememberWindowClose)) {
                 JPanel message = new JPanel();
                 JLabel question = new JLabel(rb.getString("MessageLongMultipleCloseWarning"));
                 final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
@@ -799,7 +802,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                         rb.getString("MessageShortCloseWarning"),
                         JOptionPane.YES_NO_OPTION);
                 if (remember.isSelected()) {
-                    p.setSimplePreferenceState(rememberWindowClose, true);
+                    prefsMgr.setSimplePreferenceState(rememberWindowClose, true);
                 }
                 if (result == JOptionPane.YES_OPTION) {
                     AppsBase.handleQuit();
@@ -904,71 +907,93 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         pre.printPanes(boo);
     }
 
-    //Matches the first argument in the array against a locally know method
+    //Matches the first argument in the array against a locally-known method
     @Override
     public void remoteCalls(String[] args) {
         args[0] = args[0].toLowerCase();
-        if (args[0].equals("identifyloco")) {
-            startIdentifyLoco();
-        } else if (args[0].equals("printloco")) {
-            if (checkIfEntrySelected()) {
-                printLoco(false);
-            }
-        } else if (args[0].equals("printpreviewloco")) {
-            if (checkIfEntrySelected()) {
-                printLoco(true);
-            }
-        } else if (args[0].equals("exportloco")) {
-            if (checkIfEntrySelected()) {
-                exportLoco();
-            }
-        } else if (args[0].equals("basicprogrammer")) {
-            if (checkIfEntrySelected()) {
-                startProgrammer(null, re, programmer2);
-            }
-        } else if (args[0].equals("comprehensiveprogrammer")) {
-            if (checkIfEntrySelected()) {
-                startProgrammer(null, re, programmer1);
-            }
-        } else if (args[0].equals("editthrottlelabels")) {
-            if (checkIfEntrySelected()) {
-                startProgrammer(null, re, "dp3" + File.separator + "ThrottleLabels");
-            }
-        } else if (args[0].equals("editrostermedia")) {
-            if (checkIfEntrySelected()) {
-                startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
-            }
-        } else if (args[0].equals("hiderosterimage")) {
-            hideRosterImage();
-        } else if (args[0].equals("summarypane")) {
-            hideSummary();
-        } else if (args[0].equals("copyloco")) {
-            if (checkIfEntrySelected()) {
-                copyLoco();
-            }
-        } else if (args[0].equals("deleteloco")) {
-            if (checkIfEntrySelected()) {
-                deleteLoco();
-            }
-        } else if (args[0].equals("setprogservice")) {
-            service.setSelected(true);
-        } else if (args[0].equals("setprogops")) {
-            ops.setSelected(true);
-        } else if (args[0].equals("setprogedit")) {
-            edit.setSelected(true);
-        } else if (args[0].equals("groupspane")) {
-            hideGroups();
-        } else if (args[0].equals("quit")) {
-            saveWindowDetails();
-            handleQuit(new WindowEvent(this, frameInstances.size()));
-        } else if (args[0].equals("closewindow")) {
-            closeWindow(null);
-        } else if (args[0].equals("newwindow")) {
-            newWindow();
-        } else if (args[0].equals("resettablecolumns")) {
-            rtable.resetColumnWidths();
-        } else {
-            log.error("method " + args[0] + " not found");
+        switch (args[0]) {
+            case "identifyloco":
+                startIdentifyLoco();
+                break;
+            case "printloco":
+                if (checkIfEntrySelected()) {
+                    printLoco(false);
+                }
+                break;
+            case "printpreviewloco":
+                if (checkIfEntrySelected()) {
+                    printLoco(true);
+                }
+                break;
+            case "exportloco":
+                if (checkIfEntrySelected()) {
+                    exportLoco();
+                }
+                break;
+            case "basicprogrammer":
+                if (checkIfEntrySelected()) {
+                    startProgrammer(null, re, programmer2);
+                }
+                break;
+            case "comprehensiveprogrammer":
+                if (checkIfEntrySelected()) {
+                    startProgrammer(null, re, programmer1);
+                }
+                break;
+            case "editthrottlelabels":
+                if (checkIfEntrySelected()) {
+                    startProgrammer(null, re, "dp3" + File.separator + "ThrottleLabels");
+                }
+                break;
+            case "editrostermedia":
+                if (checkIfEntrySelected()) {
+                    startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
+                }
+                break;
+            case "hiderosterimage":
+                hideRosterImage();
+                break;
+            case "summarypane":
+                hideSummary();
+                break;
+            case "copyloco":
+                if (checkIfEntrySelected()) {
+                    copyLoco();
+                }
+                break;
+            case "deleteloco":
+                if (checkIfEntrySelected(true)) {
+                    deleteLoco();
+                }
+                break;
+            case "setprogservice":
+                service.setSelected(true);
+                break;
+            case "setprogops":
+                ops.setSelected(true);
+                break;
+            case "setprogedit":
+                edit.setSelected(true);
+                break;
+            case "groupspane":
+                hideGroups();
+                break;
+            case "quit":
+                saveWindowDetails();
+                handleQuit(new WindowEvent(this, frameInstances.size()));
+                break;
+            case "closewindow":
+                closeWindow(null);
+                break;
+            case "newwindow":
+                newWindow();
+                break;
+            case "resettablecolumns":
+                rtable.resetColumnWidths();
+                break;
+            default:
+                log.error("method " + args[0] + " not found");
+                break;
         }
     }
 
@@ -1099,10 +1124,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     void saveWindowDetails() {
-        p.setSimplePreferenceState(this.getClass().getName() + ".hideSummary", hideBottomPane);
-        p.setSimplePreferenceState(this.getClass().getName() + ".hideGroups", hideGroups);
-        p.setSimplePreferenceState(this.getClass().getName() + ".hideRosterImage", hideRosterImage);
-        p.setProperty(getWindowFrameRef(), "selectedRosterGroup", groups.getSelectedRosterGroup());
+        prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideSummary", hideBottomPane);
+        prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideGroups", hideGroups);
+        prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideRosterImage", hideRosterImage);
+        prefsMgr.setProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP, groups.getSelectedRosterGroup());
         String selectedProgMode = "edit";
         if (service.isSelected()) {
             selectedProgMode = "service";
@@ -1110,7 +1135,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (ops.isSelected()) {
             selectedProgMode = "ops";
         }
-        p.setProperty(getWindowFrameRef(), "selectedProgrammer", selectedProgMode);
+        prefsMgr.setProperty(getWindowFrameRef(), "selectedProgrammer", selectedProgMode);
         //Method to save table sort, width and column order status
         String rostertableref = getWindowFrameRef() + ":roster";
 
@@ -1122,23 +1147,21 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             try {
                 String columnName = (String) tc.getHeaderValue();
                 int index = tcm.getColumnIndex(tc.getIdentifier(), false);
-                p.setTableColumnPreferences(rostertableref, columnName, index, tc.getPreferredWidth(), rtable.getModel().getSortingStatus(tc.getModelIndex()), !tcm.isColumnVisible(tc));
-            } catch (Exception e) {
+                prefsMgr.setTableColumnPreferences(rostertableref, columnName, index, tc.getPreferredWidth(), RowSorterUtil.getSortOrder(rtable.getTable().getRowSorter(), tc.getModelIndex()), !tcm.isColumnVisible(tc));
+            } catch (RuntimeException e) {
                 log.warn("unable to store settings for table column " + tc.getHeaderValue(), e);
             }
         }
         if (rosterGroupSplitPane.getDividerLocation() > 2) {
-            p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupSplitPane.getDividerLocation());
+            prefsMgr.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupSplitPane.getDividerLocation());
         } else if (groupSplitPaneLocation > 2) {
-            p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", groupSplitPaneLocation);
+            prefsMgr.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", groupSplitPaneLocation);
         }
     }
 
     /**
      * Identify locomotive complete, act on it by setting the GUI. This will
      * fire "GUI changed" events which will reset the decoder GUI.
-     *
-     * @param dccAddress
      */
     protected void selectLoco(int dccAddress, boolean isLong, int mfgId, int modelId) {
         // raise the button again
@@ -1156,7 +1179,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (l.size() > 0) {
             if (l.size() > 1) {
                 //More than one possible loco, so check long flag
-                List<RosterEntry> l2 = new ArrayList<RosterEntry>();
+                List<RosterEntry> l2 = new ArrayList<>();
                 for (RosterEntry _re : l) {
                     if (_re.isLongAddress() == isLong) {
                         l2.add(_re);
@@ -1169,9 +1192,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                         l2 = l;
                     }
                     //Still more than one possible loco, so check against the decoder family
-                    List<RosterEntry> l3 = new ArrayList<RosterEntry>();
+                    List<RosterEntry> l3 = new ArrayList<>();
                     List<DecoderFile> temp = DecoderIndexFile.instance().matchingDecoderList(null, null, "" + mfgId, "" + modelId, null, null);
-                    ArrayList<String> decoderFam = new ArrayList<String>();
+                    ArrayList<String> decoderFam = new ArrayList<>();
                     for (DecoderFile f : temp) {
                         if (!decoderFam.contains(f.getModel())) {
                             decoderFam.add(f.getModel());
@@ -1204,7 +1227,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
-     * Simple method to change over the programmer buttons, this should be
+     * Simple method to change over the progDebugger buttons, this should be
      * implemented button with the buttons in their own class etc, but this will
      * work for now. Basic button is button Id 1, comprehensive button is button
      * id 2
@@ -1224,19 +1247,16 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     protected void showPopup(MouseEvent e) {
-        int row = rtable.getTable().rowAtPoint( e.getPoint() );
+        int row = rtable.getTable().rowAtPoint(e.getPoint());
         if (!rtable.getTable().isRowSelected(row)) {
             rtable.getTable().changeSelection(row, 0, false, false);
         }
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem("Program");
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startProgrammer(null, re, programmer1);
-            }
+        menuItem.addActionListener((ActionEvent e1) -> {
+            startProgrammer(null, re, programmer1);
         });
-        if(re==null){
+        if (re == null) {
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
@@ -1245,28 +1265,19 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         group.add(contextOps);
         group.add(contextEdit);
         JMenu progMenu = new JMenu("Programmer type");
-        contextService.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                service.setSelected(true);
-                updateProgMode();
-            }
+        contextService.addActionListener((ActionEvent e1) -> {
+            service.setSelected(true);
+            updateProgMode();
         });
         progMenu.add(contextService);
-        contextOps.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ops.setSelected(true);
-                updateProgMode();
-            }
+        contextOps.addActionListener((ActionEvent e1) -> {
+            ops.setSelected(true);
+            updateProgMode();
         });
         progMenu.add(contextOps);
-        contextEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                edit.setSelected(true);
-                updateProgMode();
-            }
+        contextEdit.addActionListener((ActionEvent e1) -> {
+            edit.setSelected(true);
+            updateProgMode();
         });
         if (service.isSelected()) {
             contextService.setSelected(true);
@@ -1279,53 +1290,39 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         popupMenu.add(progMenu);
         popupMenu.addSeparator();
         menuItem = new JMenuItem("Labels and Media");
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                editMediaButton();
-            }
+        menuItem.addActionListener((ActionEvent e1) -> {
+            editMediaButton();
         });
-        if(re==null){
+        if (re == null) {
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
         menuItem = new JMenuItem("Throttle");
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
-                tf.toFront();
-                tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(getSelectedRosterGroup());
-                tf.getAddressPanel().setRosterEntry(re);
-            }
+        menuItem.addActionListener((ActionEvent e1) -> {
+            ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+            tf.toFront();
+            tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(getSelectedRosterGroup());
+            tf.getAddressPanel().setRosterEntry(re);
         });
-        if(re==null){
+        if (re == null) {
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
         popupMenu.addSeparator();
         menuItem = new JMenuItem("Duplicate");
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                copyLoco();
-            }
+        menuItem.addActionListener((ActionEvent e1) -> {
+            copyLoco();
         });
-        if(re==null){
+        if (re == null) {
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
-        menuItem = new JMenuItem("Delete");
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                deleteLoco();
-            }
+        menuItem = new JMenuItem(this.getSelectedRosterGroup() != null ? Bundle.getMessage("DeleteFromGroup") : Bundle.getMessage("DeleteFromRoster")); // NOI18N
+        menuItem.addActionListener((ActionEvent e1) -> {
+            deleteLoco();
         });
         popupMenu.add(menuItem);
-        if(re==null){
-            menuItem.setEnabled(false);
-        }
+        menuItem.setEnabled(this.getSelectedRosterEntries().length > 0);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
@@ -1336,25 +1333,53 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
-        if (InstanceManager.programmerManagerInstance() == null || !InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
-            log.error("Identify loco called when no service mode programmer is available");
+        final RosterFrame me = this;
+        Programmer programmer = null;
+        if (modePanel.isSelected()) {
+            programmer = modePanel.getProgrammer();
+        }
+        if (programmer == null) {
+            GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+            if (gpm != null) {
+                programmer = gpm.getGlobalProgrammer();
+                log.warn("Selector did not provide a programmer, attempt to use GlobalProgrammerManager default: {}", programmer);
+            } else {
+                ProgrammerManager dpm = InstanceManager.programmerManagerInstance();
+                if (dpm != null) {
+                    programmer = dpm.getGlobalProgrammer();
+                    log.warn("Selector did not provide a programmer, attempt to use InstanceManager default: {}", programmer);
+                } else {
+                    log.warn("Selector did not provide a programmer, and no ProgramManager found in InstanceManager");
+                }
+            }
+        }
+
+        // if failed to get programmer, tell user and stop
+        if (programmer == null) {
+            log.error("Identify loco called when no service mode programmer is available; button should have been disabled");
             JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
             return;
         }
-        // start identifying a loco
-        final RosterFrame me = this;
-        IdentifyLoco ident = new IdentifyLoco() {
-            private RosterFrame who = me;
+
+        // and now do the work
+        IdentifyLoco ident = new IdentifyLoco(programmer) {
+            private final RosterFrame who = me;
 
             @Override
             protected void done(int dccAddress) {
                 // if Done, updated the selected decoder
-                who.selectLoco(dccAddress, !shortAddr, cv8val, cv7val);
+                // on the GUI thread, right now
+                jmri.util.ThreadingUtil.runOnGUI(()->{
+                    who.selectLoco(dccAddress, !shortAddr, cv8val, cv7val);
+                });
             }
 
             @Override
             protected void message(String m) {
-                statusField.setText(m);
+                // on the GUI thread, right now
+                jmri.util.ThreadingUtil.runOnGUI(()->{
+                    statusField.setText(m);
+                });
             }
 
             @Override
@@ -1371,7 +1396,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             log.debug("Call to start programmer has been called twice when the first call hasn't opened");
             return;
         }
-        if (!checkIfEntrySelected()) return;
+        if (!checkIfEntrySelected()) {
+            return;
+        }
         try {
             setCursor(new Cursor(Cursor.WAIT_CURSOR));
             inStartProgrammer = true;
@@ -1385,12 +1412,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     }
                 };
             } else if (service.isSelected()) {
-                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {
-                };
+                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {};
             } else if (ops.isSelected()) {
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = re.isLongAddress();
-                Programmer pProg = InstanceManager.programmerManagerInstance().getAddressedProgrammer(longAddr, address);
+                Programmer pProg = InstanceManager.getDefault(AddressedProgrammerManager.class).getAddressedProgrammer(longAddr, address);
                 progFrame = new PaneOpsProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", pProg);
             }
             if (progFrame == null) {
@@ -1413,6 +1439,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         JLabel programmerStatusLabel = new JLabel(Bundle.getMessage("ProgrammerStatus"));
         statusField.setText(Bundle.getMessage("Idle"));
         addToStatusBox(programmerStatusLabel, statusField);
+        addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())), null);
     }
 
     protected void systemsMenu() {
@@ -1434,7 +1461,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             mfg.setText(value);
             model.setText(value);
             owner.setText(value);
-            locoImage.setImagePath(value);
+            locoImage.setImagePath(null);
         } else {
             filename.setText(re.getFileName());
             dateUpdated.setText(re.getDateUpdated());
@@ -1475,42 +1502,37 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /*
-     * this handles setting up and updating the GUI for the types of programmer
+     * this handles setting up and updating the GUI for the types of progDebugger
      * available.
      */
     protected void updateProgrammerStatus() {
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;
-        if (InstanceManager.programmerManagerInstance() != null) {
-            if (InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
-                String serviceModeProgrammer = InstanceManager.programmerManagerInstance().getUserName();
-                ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-                if (connList != null) {
-                    for (int x = 0; x < connList.size(); x++) {
-                        ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                        if (conn.getConnectionName() != null && conn.getConnectionName().equals(serviceModeProgrammer)) {
-                            serModeProCon = conn;
-                        }
-                    }
-                }
-            }
-            if (InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
-                //Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
-                //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-                String opsModeProgrammer = InstanceManager.programmerManagerInstance().getUserName();
-                ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-                if (connList != null) {
-                    for (int x = 0; x < connList.size(); x++) {
-                        ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                        if (conn.getConnectionName() != null && conn.getConnectionName().equals(opsModeProgrammer)) {
-                            opsModeProCon = conn;
-                        }
-                    }
+
+        // Find the connection that goes with the global programmer
+        GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        if (gpm != null) {
+            String serviceModeProgrammerName = gpm.getUserName();
+            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
+                    serModeProCon = connection;
                 }
             }
         }
-        if (serModeProCon != null) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
+
+        // Find the connection that goes with the addressed programmer
+        AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        if (apm != null) {
+            String opsModeProgrammerName = apm.getUserName();
+            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
+                    opsModeProCon = connection;
+                }
+            }
+        }
+
+        if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())) {
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1527,6 +1549,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
         } else {
+            // No service programmer available, disable interface sections not available
             serviceModeProgrammerLabel.setText(Bundle.getMessage("NoServiceProgrammerAvailable"));
             serviceModeProgrammerLabel.setForeground(Color.red);
             if (oldServMode != null) {
@@ -1536,9 +1559,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 service.setVisible(false);
                 firePropertyChange("setprogservice", "setEnabled", false);
             }
+            // Disable Identify in toolBar
+            // This relies on it being the 2nd item in the tool bar, as defined in xml//config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
+            // Because of I18N, we don't look for a particular Action name here
+            getToolBar().getComponents()[1].setEnabled(false);
         }
-        if (opsModeProCon != null) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
+
+        if (opsModeProCon != null && apm.isAddressedModePossible()) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo())) {
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1616,11 +1644,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 return;
             }
             if (clickTimer == null) {
-                clickTimer = new Timer(clickDelay, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        //Single click item is handled else where.
-                    }
+                clickTimer = new Timer(clickDelay, (ActionEvent e1) -> {
+                    //Single click item is handled else where.
                 });
                 clickTimer.setRepeats(false);
             }
@@ -1647,7 +1672,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     static class CopyRosterItem extends CopyRosterItemAction {
-
         CopyRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
             setExistingEntry(re);
@@ -1658,4 +1682,5 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             return true;
         }
     }
+    private final static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
 }

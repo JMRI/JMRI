@@ -48,7 +48,7 @@
     </revision>
  </revhistory>
 
-  <aspecttable>AAR-2</aspecttable>
+  <aspecttable>AAR 1946</aspecttable>
   <name>Triple searchlight high signal</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
   <description>Appearances for a three-searchlight signal head without other badging</description>
@@ -183,6 +183,15 @@
     </appearance>
 
     <appearance>
+      <aspectname>Slow Approach</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 48 A</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-3-high/rule-288.gif</imagelink>
+    </appearance>
+
+    <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>red</show>
@@ -258,6 +267,7 @@
 
     <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Approach Slow</ourAspect>
     </aspectMapping>
 
@@ -279,6 +289,7 @@
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Advance Approach</ourAspect>
       <ourAspect>Medium Advance Approach</ourAspect>
     </aspectMapping>
 

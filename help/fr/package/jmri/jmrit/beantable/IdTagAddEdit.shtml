@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: IdTagAddEdit.shtml,v 1.1 2011/04/10 18:29:38 matthewharris Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/03-->
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
 
 <html lang="fr">
 <head>
  <title>
       JMRI: Adding/Editing Id Tags
  </title>
-    <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta content="Matthew Harris" name=Author>
     <meta name="keywords" content="JMRI help Id Tag Add Edit">
 
 <!-- Style -->
-  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -25,24 +25,24 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Ajout/Modification d'Étiquettes ID</h1>
+<h1>Ajout/Modification d'&#233;tiquettes ID</h1>
 
-Pour créer une étiquette d'identification, cliquez sur le bouton
+Pour cr&#233;er une &#233;tiquette d'identification, cliquez sur le bouton
 "Ajouter ..." sur la
 <a href="IdTagTable.shtml"> Table ID Tag</a>.
-Cela ouvrira une petite fenêtre avec un espace pour entrer 
-un nom système et un nom utilisateur pour la nouvelle étiquette d'identification , plus
+Cela ouvrira une petite fen&#234;tre avec un espace pour entrer 
+un nom syst&#232;me et un nom utilisateur pour la nouvelle &#233;tiquette d'identification , plus
 une bouton "Ajouter".
 <p>
-Vous devez entrer un nom système unique. Les Noms système des étiquettes ID doivent avoir
-le modèle suivant. Ils devraient commencer par «ID» pour «identité interne»,
-suivi par le numéro de l'étiquette elle-même.
+Vous devez entrer un nom syst&#232;me unique. Les Noms syst&#232;me des &#233;tiquettes ID doivent avoir
+le mod&#232;le suivant. Ils devraient commencer par "ID" pour "identit&#233; interne",
+suivi par le num&#233;ro de l'&#233;tiquette elle-m&#234;me.
 
 <p>
-Le nom utilisateur est facultatif, mais si on leur en donne un, il doit être unique.
+Le nom utilisateur est facultatif, mais si on leur en donne un, il doit &#234;tre unique.
 
 <p>
-L'étiquette ID  indiquée dans le tableau est déterminée à partir du nom  système.
+L'&#233;tiquette ID  indiqu&#233;e dans le tableau est d&#233;termin&#233;e &#224; partir du nom  syst&#232;me.
 
 
 <!--#include virtual="/Footer" -->

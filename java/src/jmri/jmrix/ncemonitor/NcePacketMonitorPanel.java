@@ -1,215 +1,231 @@
-// NcePacketMonitorFrame.java
-
 package jmri.jmrix.ncemonitor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.DataInputStream;
-
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.swing.NcePanelInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple GUI for access to an NCE monitor card
  * <P>
- * When opened, the user must first select a serial port and click "Start".
- * The rest of the GUI then appears.
+ * When opened, the user must first select a serial port and click "Start". The
+ * rest of the GUI then appears.
  *
- * @author			Ken Cameron Copyright (C) 2010
- * derived from - 
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision$
+ * @author	Ken Cameron Copyright (C) 2010 derived from -
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC", justification="serialStream is access from separate thread, and this class isn't used much")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
-	
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8995209813681779828L;
 
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8995209813681779828L;
+
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     NceSystemConnectionMemo memo = null;
-    
+
     JToggleButton checkButton = new JToggleButton("Info");
     JRadioButton locoSpeedButton = new JRadioButton("Hide loco packets");
     JCheckBox truncateCheckBox = new JCheckBox("+ on");
 
     public NcePacketMonitorPanel() {
-    	super();
+        super();
     }
 
-    public void init() {}
-    
+    public void init() {
+    }
+
     public void initContext(Object context) throws Exception {
-        if (context instanceof NceSystemConnectionMemo ) {
+        if (context instanceof NceSystemConnectionMemo) {
             try {
-				initComponents((NceSystemConnectionMemo) context);
-			} catch (Exception e) {
-				//log.error("BoosterProg initContext failed");
-			}
+                initComponents((NceSystemConnectionMemo) context);
+            } catch (Exception e) {
+                //log.error("BoosterProg initContext failed");
+            }
         }
     }
 
-    public String getHelpTarget() { return "package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame"; }
-    
-    public String getTitle() { 
-    	StringBuilder x = new StringBuilder();
-    	if (memo != null) {
-    		x.append(memo.getUserName());
-    	} else {
-    		x.append("NCE_");
-    	}
-		x.append(": ");
-    	x.append(rb.getString("Title"));
-        return x.toString(); 
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame";
     }
-    
+
+    public String getTitle() {
+        StringBuilder x = new StringBuilder();
+        if (memo != null) {
+            x.append(memo.getUserName());
+        } else {
+            x.append("NCE_");
+        }
+        x.append(": ");
+        x.append(rb.getString("Title"));
+        return x.toString();
+    }
+
     public void initComponents(NceSystemConnectionMemo m) throws Exception {
-    	this.memo = m;
-        
+        this.memo = m;
+
         // populate the GUI, invoked as part of startup
-    	
         // load the port selection part
         portBox.setToolTipText("Select the port to use");
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         Vector<String> v = getPortNames();
-        for (int i=0; i<v.size(); i++)
+        for (int i = 0; i < v.size(); i++) {
             portBox.addItem(v.elementAt(i));
+        }
         openPortButton.setText("Open");
         openPortButton.setToolTipText("Configure program to use selected port");
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
-                //} catch (jmri.jmrix.SerialConfigException ex) {
-                //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
+                    //} catch (jmri.jmrix.SerialConfigException ex) {
+                    //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
+                } catch (java.lang.UnsatisfiedLinkError ex) {
+                    log.error("Error while opening port.  Did you select the right one?\n" + ex);
                 }
-                catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n"+ex);
-                    }
-                }
-            });
-        add(new JSeparator());
+            }
+        });
+        {
+            JSeparator js = new JSeparator();
+            js.setMaximumSize(new Dimension(10000, 10));
+            add(js);
+        }
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
         p1.add(new JLabel("Serial port: "));
         p1.add(portBox);
         p1.add(openPortButton);
+        p1.setMaximumSize(p1.getPreferredSize());
         add(p1);
 
         // add user part of GUI
-        add(new JSeparator());
+        {
+            JSeparator js = new JSeparator();
+            js.setMaximumSize(new Dimension(10000, 10));
+            add(js);
+        }
         JPanel p2 = new JPanel();
         {
-        JPanel p = new JPanel();
-			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-			checkButton.setToolTipText("?");
-			checkButton.setEnabled(false); 
-			p.add(checkButton);
-			checkButton.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent evt) {
-					if ( checkButton.isSelected() ) { 
-						sendBytes(new byte[] { (byte) '?'});
-						checkButton.setText("Res.");
-						checkButton.setToolTipText("Resume packet monitoring");
-					} else {
-						sendBytes(new byte[] { (byte) ' '});
-						checkButton.setText("Info");
-						checkButton.setToolTipText("?");
-					}
-				}
-			});
-			truncateCheckBox
-					.setToolTipText("Check this box to suppress identical packets");
-			p.add(truncateCheckBox);
-			p2.add(p);
-		}
-        
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            checkButton.setToolTipText("?");
+            checkButton.setEnabled(false);
+            p.add(checkButton);
+            checkButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    if (checkButton.isSelected()) {
+                        sendBytes(new byte[]{(byte) '?'});
+                        checkButton.setText("Res.");
+                        checkButton.setToolTipText("Resume packet monitoring");
+                    } else {
+                        sendBytes(new byte[]{(byte) ' '});
+                        checkButton.setText("Info");
+                        checkButton.setToolTipText("?");
+                    }
+                }
+            });
+            truncateCheckBox
+                    .setToolTipText("Check this box to suppress identical packets");
+            p.add(truncateCheckBox);
+            p2.add(p);
+        }
+
         {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
-            b= new JRadioButton("Verbose");
+            b = new JRadioButton("Verbose");
             b.setToolTipText("V");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'V'});
+                    sendBytes(new byte[]{(byte) 'V'});
                 }
             });
-            b= new JRadioButton("Hex with preamble symbol");
+            b = new JRadioButton("Hex with preamble symbol");
             b.setToolTipText("H0");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'H',(byte)'0'});
+                    sendBytes(new byte[]{(byte) 'H', (byte) '0'});
                 }
             });
             p2.add(p);
-            b= new JRadioButton("(as above with spaces)");
+            b = new JRadioButton("(as above with spaces)");
             b.setToolTipText("H1");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'H',(byte)'1'});
+                    sendBytes(new byte[]{(byte) 'H', (byte) '1'});
                 }
             });
             p2.add(p);
-            b= new JRadioButton("Hex without preamble symbol");
+            b = new JRadioButton("Hex without preamble symbol");
             b.setToolTipText("H2");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'H',(byte)'2'});
+                    sendBytes(new byte[]{(byte) 'H', (byte) '2'});
                 }
             });
             p2.add(p);
-            b= new JRadioButton("(as above with spaces)");
+            b = new JRadioButton("(as above with spaces)");
             b.setToolTipText("H3");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'H',(byte)'3'});
+                    sendBytes(new byte[]{(byte) 'H', (byte) '3'});
                 }
             });
             p2.add(p);
-            b= new JRadioButton("Hex with preamble count in hex");
+            b = new JRadioButton("Hex with preamble count in hex");
             b.setToolTipText("H4");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'H',(byte)'4'});
+                    sendBytes(new byte[]{(byte) 'H', (byte) '4'});
                 }
             });
             p2.add(p);
-            b= new JRadioButton("(as above with spaces)");
+            b = new JRadioButton("(as above with spaces)");
             b.setToolTipText("H5");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'H',(byte)'5'});
+                    sendBytes(new byte[]{(byte) 'H', (byte) '5'});
                 }
             });
             p2.add(p);
@@ -220,53 +236,53 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
-            b= new JRadioButton("Hide acc packets");
+            b = new JRadioButton("Hide acc packets");
             b.setToolTipText("A-");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'A',(byte)'-'});
+                    sendBytes(new byte[]{(byte) 'A', (byte) '-'});
                 }
             });
-            b= new JRadioButton("Show acc packets");
+            b = new JRadioButton("Show acc packets");
             b.setToolTipText("A+");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'A',(byte)'+'});
+                    sendBytes(new byte[]{(byte) 'A', (byte) '+'});
                 }
             });
             p2.add(p);
         }  // end acc off/on
-        
+
         {	// start idle off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
-            b= new JRadioButton("Hide idle packets");
+            b = new JRadioButton("Hide idle packets");
             b.setToolTipText("I-");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'I',(byte)'-'});
+                    sendBytes(new byte[]{(byte) 'I', (byte) '-'});
                 }
             });
-            b= new JRadioButton("Show idle packets");
+            b = new JRadioButton("Show idle packets");
             b.setToolTipText("I+");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'I',(byte)'+'});
+                    sendBytes(new byte[]{(byte) 'I', (byte) '+'});
                 }
             });
             p2.add(p);
         }  // end idle off/on
-        
+
         {	// start loco off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -277,16 +293,16 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p.add(locoSpeedButton);
             locoSpeedButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'L',(byte)'-'});
+                    sendBytes(new byte[]{(byte) 'L', (byte) '-'});
                 }
             });
-            b= new JRadioButton("Show loco packets");
+            b = new JRadioButton("Show loco packets");
             b.setToolTipText("L+");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'L',(byte)'+'});
+                    sendBytes(new byte[]{(byte) 'L', (byte) '+'});
                 }
             });
             p2.add(p);
@@ -297,53 +313,53 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
-            b= new JRadioButton("Hide reset packets");
+            b = new JRadioButton("Hide reset packets");
             b.setToolTipText("R-");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'R',(byte)'-'});
+                    sendBytes(new byte[]{(byte) 'R', (byte) '-'});
                 }
             });
-            b= new JRadioButton("Show reset packets");
+            b = new JRadioButton("Show reset packets");
             b.setToolTipText("R+");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'R',(byte)'+'});
+                    sendBytes(new byte[]{(byte) 'R', (byte) '+'});
                 }
             });
             p2.add(p);
         }  // end reset off/on
- 
+
         {	// start signal on/off
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
-            b= new JRadioButton("Hide signal packets");
+            b = new JRadioButton("Hide signal packets");
             b.setToolTipText("S-");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'S',(byte)'-'});
+                    sendBytes(new byte[]{(byte) 'S', (byte) '-'});
                 }
             });
-            b= new JRadioButton("Show signal packets");
+            b = new JRadioButton("Show signal packets");
             b.setToolTipText("S+");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'S',(byte)'+'});
+                    sendBytes(new byte[]{(byte) 'S', (byte) '+'});
                 }
             });
             p2.add(p);
         }  // end signal off/on
-        
+
         {	// Monitor command acc single/double
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -351,69 +367,72 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p.add(t);
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
-            b= new JRadioButton("Acc addresses single");
+            b = new JRadioButton("Acc addresses single");
             b.setToolTipText("AS");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'A',(byte)'S'});
+                    sendBytes(new byte[]{(byte) 'A', (byte) 'S'});
                 }
             });
-            b= new JRadioButton("Acc addresses paired");
+            b = new JRadioButton("Acc addresses paired");
             b.setToolTipText("AP");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'A',(byte)'P'});
+                    sendBytes(new byte[]{(byte) 'A', (byte) 'P'});
                 }
             });
             p2.add(p);
         }  // end acc single/double
 
-
-        add(p2);
+        p2.setMaximumSize(p2.getPreferredSize());
+        JScrollPane ps = new JScrollPane(p2);
+        ps.setMaximumSize(ps.getPreferredSize());
+        ps.setVisible(true);
+        add(ps);
     }
 
     /**
      * Sends stream of bytes to the command station
+     *
      * @param bytes - array of bytes to send
      */
     synchronized void sendBytes(byte[] bytes) {
         try {
-			// only attempt to send data if output stream is not null (i.e. it
-			// was opened successfully)
-			if (ostream == null) {
-				throw new IOException(
-						"Unable to send data to command station: output stream is null");
-			} 
-			else {
-				for (int i = 0; i < bytes.length; i++) {
-					ostream.write(bytes[i]);
-					wait(3);
-				}
-				final byte endbyte = 13;
-				ostream.write(endbyte);
-			}
-		} catch (IOException e) {
-			log.error("Exception on output: " + e);
-		} catch (InterruptedException e) {
-		    Thread.currentThread().interrupt(); // retain if needed later
-			log.error("Interrupted output: " + e);
-		}
+            // only attempt to send data if output stream is not null (i.e. it
+            // was opened successfully)
+            if (ostream == null) {
+                throw new IOException(
+                        "Unable to send data to command station: output stream is null");
+            } else {
+                for (int i = 0; i < bytes.length; i++) {
+                    ostream.write(bytes[i]);
+                    wait(3);
+                }
+                final byte endbyte = 13;
+                ostream.write(endbyte);
+            }
+        } catch (IOException e) {
+            log.error("Exception on output: " + e);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // retain if needed later
+            log.error("Interrupted output: " + e);
+        }
     }
 
     /**
-	 * Open button has been pushed, create the actual display connection
-	 */
+     * Open button has been pushed, create the actual display connection
+     */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
         // can't change this anymore
         openPortButton.setEnabled(false);
         portBox.setEnabled(false);
         // Open the port
-        openPort((String)portBox.getSelectedItem(), "JMRI");
+        openPort((String) portBox.getSelectedItem(), "JMRI");
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
@@ -424,7 +443,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     Thread readerThread;
 
-    protected javax.swing.JComboBox portBox = new javax.swing.JComboBox();
+    protected JComboBox<String> portBox = new javax.swing.JComboBox<String>();
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
     // use deprecated stop method to stop thread,
@@ -436,10 +455,14 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     public synchronized void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
-        if (readerThread!=null) stopThread(readerThread);
+        if (readerThread != null) {
+            stopThread(readerThread);
+        }
 
         // release port
-        if (activeSerialPort != null) activeSerialPort.close();
+        if (activeSerialPort != null) {
+            activeSerialPort.close();
+        }
         serialStream = null;
         ostream = null;
         activeSerialPort = null;
@@ -450,7 +473,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     }
 
     @SuppressWarnings("unchecked")
-	public Vector<String> getPortNames() {
+    public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
@@ -458,24 +481,24 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
-            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL )
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
+            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
+            {
+                portNameVector.addElement(id.getName());
+            }
         }
         return portNameVector;
     }
 
-    public synchronized String openPort(String portName, String appName)  {
+    public synchronized String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
                 activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            }
-            catch (PortInUseException p) {
+            } catch (PortInUseException p) {
                 handlePortBusy(p, portName);
-                return "Port "+p+" in use already";
+                return "Port " + p + " in use already";
             }
 
             // try to set it for communication via SerialDriver
@@ -483,8 +506,8 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 // Doc says 7 bits, but 8 seems needed
                 activeSerialPort.setSerialPortParams(38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
-                return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
+                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set RTS high, DTR high
@@ -495,68 +518,68 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             activeSerialPort.setFlowControlMode(0);
 
             // set timeout
-            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
             ostream = activeSerialPort.getOutputStream();
 
             // make less verbose
-            sendBytes(new byte[]{(byte)'L',(byte)'-',10,13});
+            sendBytes(new byte[]{(byte) 'L', (byte) '-', 10, 13});
             // purge contents, if any
             int count = serialStream.available();
-            log.debug("input stream shows "+count+" bytes available");
-            while ( count > 0) {
+            log.debug("input stream shows " + count + " bytes available");
+            while (count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
             }
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName+" port opened at "
-                         +activeSerialPort.getBaudRate()+" baud, sees "
-                         +" DTR: "+activeSerialPort.isDTR()
-                         +" RTS: "+activeSerialPort.isRTS()
-                         +" DSR: "+activeSerialPort.isDSR()
-                         +" CTS: "+activeSerialPort.isCTS()
-                         +"  CD: "+activeSerialPort.isCD()
-                         );
+                log.info(portName + " port opened at "
+                        + activeSerialPort.getBaudRate() + " baud, sees "
+                        + " DTR: " + activeSerialPort.isDTR()
+                        + " RTS: " + activeSerialPort.isRTS()
+                        + " DSR: " + activeSerialPort.isDSR()
+                        + " CTS: " + activeSerialPort.isCTS()
+                        + "  CD: " + activeSerialPort.isCD()
+                );
             }
 
-
         } catch (java.io.IOException ex) {
-            log.error("IO error while opening port "+portName, ex);
-            return "IO error while opening port "+portName+": "+ex;
+            log.error("IO error while opening port " + portName, ex);
+            return "IO error while opening port " + portName + ": " + ex;
         } catch (gnu.io.UnsupportedCommOperationException ex) {
-            log.error("Unsupported communications operation while opening port "+portName, ex);
-            return "Unsupported communications operation while opening port "+portName+": "+ex;
+            log.error("Unsupported communications operation while opening port " + portName, ex);
+            return "Unsupported communications operation while opening port " + portName + ": " + ex;
         } catch (gnu.io.NoSuchPortException ex) {
-            log.error("No such port: "+portName, ex);
-            return "No such port: "+portName+": "+ex;
+            log.error("No such port: " + portName, ex);
+            return "No such port: " + portName + ": " + ex;
         }
         return null; // indicates OK return
     }
 
-    void handlePortBusy(gnu.io.PortInUseException p, String port ) {
-        log.error("Port "+p+" in use, cannot open");
+    void handlePortBusy(gnu.io.PortInUseException p, String port) {
+        log.error("Port " + p + " in use, cannot open");
     }
 
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class.getName());
 
     /**
      * Internal class to handle the separate character-receive thread
      *
      */
-     class Reader implements Runnable {
+    class Reader implements Runnable {
+
         /**
-         * Handle incoming characters.  This is a permanent loop,
-         * looking for input messages in character form on the
-         * stream connected to the PortController via <code>connectPort</code>.
-         * Terminates with the input stream breaking out of the try block.
+         * Handle incoming characters. This is a permanent loop, looking for
+         * input messages in character form on the stream connected to the
+         * PortController via <code>connectPort</code>. Terminates with the
+         * input stream breaking out of the try block.
          */
         public void run() {
             // have to limit verbosity!
@@ -564,9 +587,8 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             while (true) {   // loop permanently, stream close will exit via exception
                 try {
                     handleIncomingData();
-                }
-                catch (java.io.IOException e) {
-                    log.warn("run: Exception: "+e.toString());
+                } catch (java.io.IOException e) {
+                    log.warn("run: Exception: " + e.toString());
                 }
             }
         }
@@ -575,7 +597,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         StringBuffer msg;
         StringBuffer duplicates = new StringBuffer(maxMsg);
         String msgString;
-        String matchString ="";
+        String matchString = "";
 
         void handleIncomingData() throws java.io.IOException {
             // we sit in this until the message is complete, relying on
@@ -588,7 +610,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             for (i = 0; i < maxMsg; i++) {
                 char char1 = (char) serialStream.readByte();
                 if (char1 == 13) {  // 13 is the CR at the end; done this
-                                    // way to be coding-independent
+                    // way to be coding-independent
                     break;
                 }
                 msg.append(char1);
@@ -598,7 +620,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             msgString = msg.toString();
 
             // is this a duplicate?
-            if (msgString.equals(matchString)&& truncateCheckBox.isSelected()) {
+            if (msgString.equals(matchString) && truncateCheckBox.isSelected()) {
                 // yes, suppress and represent with a '+'
                 duplicates.append('+');
             } else {
@@ -606,11 +628,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
                 // prepend the duplicate info
                 matchString = msgString;
-                if (duplicates.length()!=0) {
+                if (duplicates.length() != 0) {
                     duplicates.append('\n');
-                    msgString = " "+(new String(duplicates))+(msgString);
+                    msgString = " " + (new String(duplicates)) + (msgString);
                 } else {
-                    msgString = "\n"+msgString;
+                    msgString = "\n" + msgString;
                 }
                 duplicates.setLength(0);
 
@@ -620,6 +642,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
                     // retain a copy of the message at startup
                     String msgForLater = msgString;
+
                     public void run() {
                         nextLine(msgForLater, "");
                     }
@@ -628,6 +651,20 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             }
         }
 
-     } // end class Reader
+    } // end class Reader
 
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
+
+        private static final long serialVersionUID = -8552495867322154829L;
+
+        public Default() {
+            super("Open NCE DCC Packet Analyzer",
+                    new jmri.util.swing.sdi.JmriJFrameInterface(),
+                    NcePacketMonitorPanel.class.getName(),
+                    jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
+        }
+    }
 }

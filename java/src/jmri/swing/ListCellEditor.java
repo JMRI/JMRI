@@ -12,9 +12,11 @@ import javax.swing.JList;
  *
  * @author rhwood
  */
-public interface ListCellEditor extends CellEditor {
+public interface ListCellEditor<E> extends CellEditor {
 
-    Component getListCellEditorComponent(JList list, Object value,
+    Component getListCellEditorComponent(JList<E> list, E value,
             boolean isSelected,
             int index);
+
+    public E getCellEditorValue();
 }

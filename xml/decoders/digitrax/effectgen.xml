@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: effectgen.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,7 +17,7 @@
 <!-- differs from 0NMRA.xml version only in default values -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2010</year>
+    <year>2014</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -29,6 +29,12 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2014-04-25</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>New effect for Digitrax Series 6 only (Pulse)</revremark>
+    </revision>
     <revision>
       <revnumber>1</revnumber>
       <date>2010-05-12</date>
@@ -84,15 +90,15 @@
   </enumChoice>
   <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
     <choice>Right ditch light; when F2 on, flashes alternately</choice>
-    <choice xml:lang="it">Luce di destra, quando F2=on, lampeggia</choice>
+    <choice xml:lang="it">Luce di destra ditch, quando F2=on, lampeggia</choice>
   </enumChoice>
   <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
     <choice>Left ditch light; when F2 on, flashes alternately</choice>
-    <choice xml:lang="it">Luce di sinistra, quando F2=on, lampeggia</choice>
+    <choice xml:lang="it">Luce di sinistra ditch, quando F2=on, lampeggia</choice>
   </enumChoice>
-  <enumChoice choice="Reserved (0x0C)">
-    <choice>Reserved (0x0C)</choice>
-    <choice xml:lang="it">Riservata (0x0C)</choice>
+  <enumChoice choice="Pulse function (Series 6 only)">
+    <choice>Pulse function (Series 6 only)</choice>
+    <choice xml:lang="it">Impulsiva (solo series 6)</choice>
   </enumChoice>
   <enumChoice choice="Reserved (0x0D)">
     <choice>Reserved (0x0D)</choice>

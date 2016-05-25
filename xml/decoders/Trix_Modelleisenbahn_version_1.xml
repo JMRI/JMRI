@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: Trix_Modelleisenbahn_version_1.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -23,84 +23,49 @@
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>
     <variables>
-      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="03" comment="Range 1-127">
-        <shortAddressVal/>
-        <label>Primary Address (1-127)</label>
-        <comment>Range 1-127</comment>
-      </variable>
-      <variable label="Acceleration Momentum (0-255)" CV="3" item="Accel" default="6" comment="Range 0-255">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="3" item="Accel" default="6" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Acceleration Momentum (0-255)</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Deceleration (Brake) Momentum (0-255)" CV="4" item="Decel" default="5" comment="Range 0-255">
+      <variable CV="4" item="Decel" default="5" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Deceleration (Brake) Momentum (0-255)</label>
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Max Volts (0-255)" CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
+      <variable CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
         <decVal min="0" max="255"/>
         <label>Max Volts (0-255)</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Sets the maximum voltage at full throttle</comment>
       </variable>
-      <variable label="Decoder Version No: " CV="7" readOnly="yes" item="Decoder Version" default="65">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="65">
         <decVal/>
         <label>Decoder Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer" default="131">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="131">
         <decVal/>
         <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Extended Address (0-9999)" CV="17" item="Long Address" default="100" comment="4 digit address (Range 0-9999)">
-        <longAddressVal/>
-        <label>Extended Address (0-9999)</label>
-        <comment>4 digit address (Range 0-9999)</comment>
-      </variable>
-      <variable label="Locomotive Direction in Forward" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction in Forward</label>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable label="Loco can operate on conventional DC" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco can operate on conventional DC</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
-      <variable label="Pulse Width for Motor Control" CV="49" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-3">
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="49" mask="XXXXVVVV" item="Motor Option 1" default="0" comment="Range 0-3">
         <enumVal>
           <enumChoice choice="0 ">
             <choice>0 </choice>
@@ -118,7 +83,7 @@
         <label>Pulse Width for Motor Control</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-3">
+      <variable CV="50" mask="XXXXVVVV" item="Motor Option 2" default="0" comment="Range 0-3">
         <enumVal>
           <enumChoice choice="0 ">
             <choice>0 </choice>
@@ -136,46 +101,30 @@
         <label>Motor Type(0-5)</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Motor Polarity Reversal" CV="51" mask="XXXXXXXV" item="Motor Polarity Reversal" default="0">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="51" mask="XXXXXXXV" item="Motor Polarity Reversal" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Motor Polarity Reversal</label>
       </variable>
-      <variable label="Lighting Polarity Reversal" CV="51" mask="XXXXXXVX" item="Lighting Polarity Reversal" default="0">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="51" mask="XXXXXXVX" item="Lighting Polarity Reversal" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Lighting Polarity Reversal</label>
       </variable>
-      <variable label="Track Polarity Reversal" CV="51" mask="XXXXXVXX" item="Track Polarity Reversal" default="0">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="51" mask="XXXXXVXX" item="Track Polarity Reversal" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Track Polarity Reversal</label>
       </variable>
-      <variable label="Decoder Software Version (read only): " CV="128" readOnly="yes" item="Decoder Software Version" default="1">
+      <variable CV="128" readOnly="yes" item="Decoder Software Version" default="1">
         <decVal/>
         <label>Decoder Software Version (read only): </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
 </decoder-config>

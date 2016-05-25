@@ -5,6 +5,8 @@
 # 
 #  Copyright (c) 2011 by Nigel Cliffe,  23rd August 2011
 
+import jmri
+
 def locoNetCabSigMesg(loco, mast, vertical, diagonal, horizontal, blink):
 		# Message variables are Loco = Decimal loco address,  others are binary 1 or 0 
 		#  mast = 1 means show mast,  mast = 0 means hide mast.

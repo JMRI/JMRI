@@ -1,45 +1,51 @@
-// KnownLocoSelPane.java
-
 package jmri.jmrit.symbolicprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.IdentifyLoco;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide GUI controls to select a known loco via the Roster.
  * <P>
  * When the "open programmer" button is pushed, i.e. the user is ready to
- * continue, the startProgrammer method is invoked.  This should be
- * overridden (e.g. in a local anonymous class) to create the programmer frame
- * you're interested in.
+ * continue, the startProgrammer method is invoked. This should be overridden
+ * (e.g. in a local anonymous class) to create the programmer frame you're
+ * interested in.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class KnownLocoSelPane extends LocoSelPane  {
+public class KnownLocoSelPane extends LocoSelPane {
 
-    public KnownLocoSelPane(JLabel s, boolean ident) {
+    public KnownLocoSelPane(JLabel s, boolean ident, ProgModeSelector selector) {
         mCanIdent = ident;
         mStatusLabel = s;
+        this.selector = selector;
         init();
     }
 
     public KnownLocoSelPane(boolean ident) {
-        this(null, ident);
+        this(null, ident, null);
     }
 
     boolean mCanIdent;
 
-    JComboBox programmerBox;
+    JComboBox<String> programmerBox;
+    ProgModeSelector selector;
 
     protected void init() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -49,9 +55,11 @@ public class KnownLocoSelPane extends LocoSelPane  {
 
         if (mCanIdent) {
             JButton idloco = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("ReadAndSelect"));
-            idloco.addActionListener( new ActionListener() {
+            idloco.addActionListener(new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isDebugEnabled()) log.debug("Identify locomotive pressed");
+                    if (log.isDebugEnabled()) {
+                        log.debug("Identify locomotive pressed");
+                    }
                     startIdentify();
                 }
             });
@@ -67,14 +75,16 @@ public class KnownLocoSelPane extends LocoSelPane  {
         addProgrammerBox();
 
         JButton go2 = new JButton(Bundle.getMessage("OpenProgrammer"));
-        go2.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isDebugEnabled()) log.debug("Open programmer pressed");
-                    openButton();
+        go2.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Open programmer pressed");
                 }
-            });
+                openButton();
+            }
+        });
         add(go2);
-        setBorder(new EmptyBorder(6,6,6,6));
+        setBorder(new EmptyBorder(6, 6, 6, 6));
     }
 
     /**
@@ -86,9 +96,11 @@ public class KnownLocoSelPane extends LocoSelPane  {
         pane3a.add(new JLabel(Bundle.getMessage("ProgrammerFormat")));
 
         // create the programmer box
-        programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
+        programmerBox = new JComboBox<String>(ProgDefault.findListOfProgFiles());
         programmerBox.setSelectedIndex(0);
-        if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
+        if (ProgDefault.getDefaultProgFile() != null) {
+            programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
+        }
         pane3a.add(programmerBox);
         // pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         add(pane3a);
@@ -99,29 +111,45 @@ public class KnownLocoSelPane extends LocoSelPane  {
     private void startIdentify() {
         // start identifying a loco
         final KnownLocoSelPane me = this;
-        IdentifyLoco id = new IdentifyLoco() {
-                private KnownLocoSelPane who = me;
-                protected void done(int dccAddress) {
-				// if Done, updated the selected decoder
-                    who.selectLoco(dccAddress);
+        Programmer p = null;
+        if (selector != null && selector.isSelected()) p = selector.getProgrammer();
+        if (p == null) {
+            log.warn("Selector did not provide a programmer, use default");
+            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        }
+        IdentifyLoco id = new IdentifyLoco(p) {
+            private KnownLocoSelPane who = me;
+
+            protected void done(int dccAddress) {
+                // if Done, updated the selected decoder
+                who.selectLoco(dccAddress);
+            }
+
+            protected void message(String m) {
+                if (mStatusLabel != null) {
+                    mStatusLabel.setText(m);
                 }
-                protected void message(String m) {
-                    if (mStatusLabel != null) mStatusLabel.setText(m);
-                }
-                public void error() {}
-            };
+            }
+
+            public void error() {
+            }
+        };
         id.start();
     }
 
     protected void selectLoco(int dccAddress) {
         // locate that loco
         List<RosterEntry> l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
-                                                null, null, null, null);
-        if (log.isDebugEnabled()) log.debug("selectLoco found "+l.size()+" matches");
+                null, null, null, null);
+        if (log.isDebugEnabled()) {
+            log.debug("selectLoco found " + l.size() + " matches");
+        }
         if (l.size() > 0) {
             RosterEntry r = l.get(0);
             String id = r.getId();
-            if (log.isDebugEnabled()) log.debug("Loco id is "+id);
+            if (log.isDebugEnabled()) {
+                log.debug("Loco id is " + id);
+            }
             String group = locoBox.getSelectedRosterGroup();
             if (group != null && !group.equals(Roster.ALLENTRIES)) {
                 List<RosterEntry> entries = Roster.instance().getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes");
@@ -134,32 +162,37 @@ public class KnownLocoSelPane extends LocoSelPane  {
                 locoBox.setSelectedRosterEntry(r);
             }
         } else {
-            log.warn("Read address "+dccAddress+", but no such loco in roster");
+            log.warn("Read address " + dccAddress + ", but no such loco in roster");
         }
     }
 
     private RosterEntrySelectorPanel locoBox = null;
 
-    /** handle pushing the open programmer button by finding names, then calling a template method */
+    /**
+     * handle pushing the open programmer button by finding names, then calling
+     * a template method
+     */
     protected void openButton() {
 
         if (locoBox.getSelectedRosterEntries().length != 0) {
             RosterEntry re = locoBox.getSelectedRosterEntries()[0];
-            startProgrammer(null, re, (String)programmerBox.getSelectedItem());
+            startProgrammer(null, re, (String) programmerBox.getSelectedItem());
         } else {
-            JOptionPane.showMessageDialog(this, 
-                    Bundle.getMessage("LocoMustSelected"), 
-                    Bundle.getMessage("NoSelection"), 
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("LocoMustSelected"),
+                    Bundle.getMessage("NoSelection"),
                     JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    /** meant to be overridden to start the desired type of programmer */
+    /**
+     * meant to be overridden to start the desired type of programmer
+     */
     protected void startProgrammer(DecoderFile decoderFile, RosterEntry r,
-                                    String programmerName) {
+            String programmerName) {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    static Logger log = LoggerFactory.getLogger(KnownLocoSelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(KnownLocoSelPane.class.getName());
 
 }

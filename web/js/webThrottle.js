@@ -4,9 +4,9 @@
 * 
 * This script defines the web throttle behaviour.
 * 
-* >>> This file version: 1.2 - by Oscar Moutinho (oscar.moutinho@gmail.com)
+* >>> This file version: 2.4 - by Oscar Moutinho (oscar.moutinho@gmail.com)
 * 
-* This script relies on 'jquery.jmriConnect.js' (read its header for dependencies).
+* This script relies on 'jquery.jmriConnect.js v2.1' (read its header for dependencies).
 * 
 * URL parameters: (roster/panels list if no parameters)
 * - 'loconame' (to open a throttle for a loco)
@@ -74,24 +74,14 @@ var $speedStep = 0.10;
 var $speedFeedback = true;
 var $speedAux = 0;
 var $hasTouch = ('ontouchstart' in window);
-var $hasMovement = (window.orientation != null) && $hasTouch;
+var $hasMovement = (window.orientation !== null) && $hasTouch;
 var $orientation = null;
 var $movementTilt = null;
-var $movementActive = $hasMovement;
+var $movementActive = false;
 var $movementOn = false;
 var $movementCtrl = 0;
-var $locoAddress = -1;
-var $throttleError = false;
+var $locoAddress = "none";
 var $help = [];
-var $retrySelectThrottle = function() {
-	setTimeout(function() {
-		if ($('body').attr('locoReady') != 'true' && !$throttleError) {
-			$jmri.selectThrottle($locoAddress);
-			$retrySelectThrottle();
-		}
-	}, $resizeCheckInterval * 5);
-};
-
 
 //----------------------------------------- Generic onError
 window.onerror = function(errMsg, errUrl, errLineNumber) {
@@ -104,7 +94,7 @@ window.onerror = function(errMsg, errUrl, errLineNumber) {
 		clearInterval($speedTimer);
 		$speedTimer = null;
 	}
-	if (errMsg.indexOf('private�') >= 0) alert(errMsg.split('�')[1]);
+	if (errMsg.indexOf('private~') >= 0) alert(errMsg.split('~')[1]);
 	else {
 		if (errMsg == 'Uncaught ReferenceError: stopme is not defined') location.reload(true);	// I don't know what this is !?!?!? Just reload.
 		else alert('\nError running javascript:\n' + errMsg + '\n\nURL:\n' + errUrl + '\n\nLine Number: ' + errLineNumber);
@@ -113,9 +103,16 @@ window.onerror = function(errMsg, errUrl, errLineNumber) {
 	return true;
 };
 
-//----------------------------------------- Page exit cleanup
+//----------------------------------------- Page exit cleanup 1
+window.onbeforeunload = function() {
+};
+
+//----------------------------------------- Page exit cleanup 2
 window.onunload = function() {
-	if ($jmri) $jmri.closeSocket();
+	if ($jmri) {
+		if ($('body').attr('locoReady') == 'true') $jmri.setJMRI('throttle', $locoAddress, {"release":null});
+		$jmri.closeSocket();
+	}
 	if ($resizeCheckTimer) {
 		clearInterval($resizeCheckTimer);
 		$resizeCheckTimer = null;
@@ -131,17 +128,17 @@ String.prototype.trim = function () {return this.replace(/^\s+|\s+$/g,'');};
 
 //----------------------------------------- Immediate execution
 try {
-	if (jQuery === undefined) throw new Error('private�jQuery not loaded.\nHTML5 and WebSockets needed.\nCheck browser compatibility.');
+	if (jQuery === undefined) throw new Error('private~jQuery not loaded.\nHTML5 and WebSockets needed.\nCheck browser compatibility.');
 } catch(error) {
-	throw new Error('private�jQuery not loaded.\nHTML5 and WebSockets needed.\nCheck browser compatibility.');
+	throw new Error('private~jQuery not loaded.\nHTML5 and WebSockets needed.\nCheck browser compatibility.');
 }
 
 try {
 	localStorage['webThrottle.test'] = '1';
 	localStorage.removeItem('webThrottle.test');
 } catch(error) {
-	if (error.code === DOMException.QUOTA_EXCEEDED_ERR && localStorage.length === 0) throw new Error('private�Turn off Private Browsing.');
-	else throw new Error('private�Local Storage not available.\nHTML5 and WebSockets needed.\nCheck browser compatibility.');
+	if (error.code === DOMException.QUOTA_EXCEEDED_ERR && localStorage.length === 0) throw new Error('private~Turn off Private Browsing.');
+	else throw new Error('private~Local Storage not available.\nHTML5 and WebSockets needed.\nCheck browser compatibility.');
 }
 
 //----------------------------------------- Run at start up
@@ -184,6 +181,7 @@ $(document).ready(function() {
 	* $jmri.setJMRI(type, name, args)
 	* . Possible values for string 'type' (set): light, reporter, sensor, turnout, signalHead, signalMast, route, memory, power
 	* Special case for 'type' = 'power' > string 'name' should be null
+	* Possible 'args' for 'throttle': {"throttle":throttleName,"address":dccAddress,"speed":speed,"forward":forward,"Fn":active} (0 <= n <= 28)
 	* Possible 'args' for 'light': {"userName":userName,"comment":comment,"state":state}
 	* Possible 'args' for 'reporter': {"userName":userName,"state":state,"comment":comment,"report":report,"lastReport":lastReport}
 	* Possible 'args' for 'sensor': {"userName":userName,"comment":comment,"inverted":inverted,"state":state}
@@ -194,13 +192,6 @@ $(document).ready(function() {
 	* Possible 'args' for 'memory': {"userName":userName,"comment":comment,"value":value}
 	* Possible 'args' for 'power': {"state":state}
 	* >>> Other values for 'type' and new 'args' may be available
-    * $jmri.selectThrottle(address)
-    * $jmri.getThrottleSpeed(address)
-    * $jmri.setThrottleSpeed(address, speed)
-    * $jmri.getThrottleDirection(address)
-    * $jmri.setThrottleForward(address, forward)
-    * $jmri.getThrottleFunctionState(address, functionNumber)
-    * $jmri.setThrottleFunction(address, functionNumber, active)
 	********************************************/
 	var debug = loadLocalInfo('webThrottle.debug');
 	if (debug == 'true' || debug == 'false') $debug = (debug == 'true'); else saveLocalInfo('webThrottle.debug', $debug = false);
@@ -341,11 +332,17 @@ var startJMRI = function() {
 		//*** Callback Functions available in '$jmri' object
 		toSend: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONtoSend: ' + data);},	//Nothing to do
 		fullData: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONreceived: ' + data);},	//Nothing to do
-		error: function(code, message) {if (code == 0) throw new Error('private�' + message); else smoothAlert('Error: ' + code + ' - ' + message);},
-		end: function() {throw new Error('private�The JMRI WebSocket service was turned off.\nSolve the problem and refresh web page.');},
-		refresh: function() {location.reload(true);},	//Reload page from server
-//		refresh: function() {$('body').html = ''; $jmri = null; startJMRI();},	//Restart JMRI and rebuild page (doesn't work reliably)
+                error: function (code, message) {
+                    if (code === 0)
+                        jmriLostComm(message);
+                    else if (code === 200)
+                        smoothAlert(message, 10);
+                    else
+                        smoothAlert('Error: ' + code + ' - ' + message);
+                },
+		end: function() {jmriLostComm('The JMRI WebSocket service was turned off.\nSolve the problem and refresh web page.');},
 		ready: function(jsonVersion, jmriVersion, railroadName) {jmriReady(jsonVersion, jmriVersion, railroadName);},	//When WebSocket connection established - continue next steps
+		throttle: function(name, address, speed, forward, fs) {throttleState(name, address, speed, forward, fs);},
 		light: function(name, userName, comment, state) {},	//Nothing to do
 		reporter: function(name, userName, state, comment, report, lastReport) {},	//Nothing to do
 		sensor: function(name, userName, comment, inverted, state) {},	//Nothing to do
@@ -355,17 +352,25 @@ var startJMRI = function() {
 		route: function(name, userName, comment, state) {layoutRouteState(name, userName, comment, state);},
         memory: function(name, userName, comment, value) {},	//Nothing to do
         power: function(state) {layoutPowerState(state);},
-		throttleError: function(message) {$throttleError = true; smoothAlert(message);},
-        throttleAddress: function(address) {lastSelectedThrottle(address);},
-        throttleSpeed: function(address, speed) {throttleSpeed(address, speed);},
-        throttleDirection: function(address, forward) {throttleDirection(address, forward);},
-        throttleFunctionState: function(address, functionNumber, active) {throttleFunctionState(address, functionNumber, active);}
     });
-	if (!$jmri) throw new Error('private�Could not open JMRI WebSocket.');
-}
+	if (!$jmri) throw new Error('private~Could not open JMRI WebSocket.');
+};
+
+//----------------------------------------- Lost communication with JMRI
+var jmriLostComm = function(message) {
+	var timer = loadLocalInfo('webThrottle.timerReload');
+	if (timer && !isNaN(timer) && Number(timer) >= 0 && Number(timer) == Math.abs(timer)) timer = Number(timer); else saveLocalInfo('webThrottle.timerReload', timer = new Date().getTime());	// Miliseconds
+	if (new Date().getTime() - timer < 30000) {	// Reload if less than 30s after communication lost
+		smoothAlert('Communication lost.\nRestarting ...');
+		location.reload(true);
+	} else {
+		throw new Error('private~' + message);
+	}
+};
 
 //----------------------------------------- JMRI ready
 var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
+	removeLocalInfo('webThrottle.timerReload');	// Communication OK -> Restart count for communication lost
 	var body = $('body');
 	var bodyFrameOuter = $('<div>');
 	bodyFrameOuter.attr('id', 'bodyFrameOuter');
@@ -656,9 +661,8 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 					};
 					img.attr('src', '/roster/' + encodeURIComponent(loco.id) + '/' + (icon ? 'icon' : 'image') + '?maxHeight=' + $cellHeightRef);
 				}
-				$locoAddress = loco.dccAddress;
-				$jmri.selectThrottle($locoAddress);
-				$retrySelectThrottle();
+				$locoAddress = '' + loco.dccAddress;
+				$jmri.setJMRI('throttle', $locoAddress, {"address":loco.dccAddress});
 			} else smoothAlert('Loco \'' + $paramLocoName + '\' doesn\'t exist.\nReopen the web page with a valid loco name.');
 			break;
 		case 'turnouts':
@@ -684,15 +688,32 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 			break;
 		case 'panel':
 			$help.push(
-				'This uses \'showPanel.html\'' +
-				'\ninside an iframe.' +
+				'This shows an' +
+				'\ninteractive panel.' +
 				''
 			);
 			document.title+= ' (panel: ' + $paramPanelName + ')';
-			var panel = $('<iframe>').attr('src', 'showPanel.html?name=' + $paramPanelName).addClass('panel');
-			panel.load(function() {	// Force resize some miliseconds after loading
-				setTimeout(function() {$panelLoaded = true; $viewportHeight = 0;}, $resizeCheckInterval * 5);
+			var iframeAux = $('<div>').attr('id', 'iframeAux');
+			var panel = $('<iframe>').attr('src', '/panel?name=' + $paramPanelName).addClass('panel');
+			panel.load(function() {
+				var bodyFrameOuter = $('#bodyFrameOuter');
+				var bodyFrameInner = $('#bodyFrameInner');
+				var panel = $('.panel');
+				var panelBody = panel.contents().find('body');
+				bodyFrameInner.css('top', 0).css('left', 0);
+				panel.css('top', 0).css('left', 0);
+				panelBody.css('padding-top', 0).css('padding-bottom', 0);
+				panelBody.children('footer').remove();
+				panelBody.children('#wrap').children('#panel-area').appendTo(panelBody);
+				panelBody.children('#wrap').remove();
+				panelBody.children('#panel-area').css('border', 'none').css('position', 'absolute');
+				panelBody.css('background-color', $('#iframeAux').css('background-color'))
+				setTimeout(function() {$panelLoaded = true; $viewportHeight = 0;}, $resizeCheckInterval * 5);	// Force resize some miliseconds after loading
 			});
+			iframeAux.css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+199');
+			iframeAux.css('top', 0).css('left', 0);
+			bodyFrameInner.append(iframeAux);
+			panel.css('z-index', '+200');
 			bodyFrameInner.append(panel);
 			break;
 	}
@@ -866,6 +887,10 @@ var resizeRosterLayout = function() {
 	var w = $(window).width();
 	var bodyFrameOuter = $('#bodyFrameOuter');
 	var bodyFrameInner = $('#bodyFrameInner');
+	var cellWidthCtrl;
+	var horizontalCells;
+	var cellWidth;
+	var cellHeight;
 	bodyFrameOuter.css('top', 0).css('left', 0);
 	setOuterHeight(bodyFrameOuter, h, true);
 	setOuterWidth(bodyFrameOuter, w, true);
@@ -908,11 +933,10 @@ var resizeRosterLayout = function() {
 	var l = 0;
 	if ($isRoster) {	// Roster
 		var rosterCell = $('.rosterCell');
-		var cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef;
-		var horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl);
-		var cellWidth = (horizontalCells == 0) ? bodyFrameInner.width() : bodyFrameInner.width() / horizontalCells;
+		cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef;
+		horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl);
+		cellWidth = (horizontalCells == 0) ? bodyFrameInner.width() : bodyFrameInner.width() / horizontalCells;
 		var cellHeightIni = $sizeCtrlPercent * $cellHeightRef;
-		var cellHeight;
 		rosterCell.each(function(index) {
 			var o = $(this);
 			var locoImageContainer = o.children('.imageContainer');
@@ -975,10 +999,10 @@ var resizeRosterLayout = function() {
 		});
 	} else {	// Panels
 		var panelCell = $('.panelCell');
-		var cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef * 2;
-		var horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl) + 1;
-		var cellWidth = bodyFrameInner.width() / horizontalCells;
-		var cellHeight = $sizeCtrlPercent * $cellHeightRef * 0.5;
+		cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef * 2;
+		horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl) + 1;
+		cellWidth = bodyFrameInner.width() / horizontalCells;
+		cellHeight = $sizeCtrlPercent * $cellHeightRef * 0.5;
 		cellHeight*= 4;
 		panelCell.each(function(index) {
 			var o = $(this);
@@ -1205,106 +1229,38 @@ var resizeTurnoutsRoutesLayout = function() {
 
 //----------------------------------------- [from 'checkLayoutSizeChange()'] Panel layout resize when screen or font changes size
 var resizePanelLayout = function() {
-	if (!$panelLoaded) return;	// If loading not complete, give up ! (onload event will force resize)
+	if (!$panelLoaded) return;	// If loading not complete, give up! (onload event will force resize)
 	$nextBlockTop-= $('#header').outerHeight(true);
 	var h = $(window).height();
 	var w = $(window).width();
 	var bodyFrameOuter = $('#bodyFrameOuter');
 	var bodyFrameInner = $('#bodyFrameInner');
-	bodyFrameOuter.css('top', 0).css('left', 0);
+	var iframeAux = $('#iframeAux');
+	var panel = $('.panel');
+	var panelBody = panel.contents().find('body');
+	var panelArea = panelBody.children('#panel-area');
+	var offsetV = 0;
+	var scrollbarV = 0;
+	var offsetH = 0;
+	var scrollbarH = 0;
 	setOuterHeight(bodyFrameOuter, h, true);
 	setOuterWidth(bodyFrameOuter, w, true);
-	bodyFrameInner.css('top', 0).css('left', 0);
 	setOuterHeight(bodyFrameInner, bodyFrameOuter.height(), true);
 	setOuterWidth(bodyFrameInner, bodyFrameOuter.width(), true);
-	var panel = $('.panel');
-	var realPanel = panel.contents().find('#panelArea');
-	var realCanvas = panel.contents().find('#panelCanvas');
-	var original = (panel.contents().find('.wtInside').length == 0);
-	if (original) {
-		realPanel.attr('originalHeight', realPanel.height());
-		realPanel.attr('originalWidth', realPanel.width());
-		realCanvas.attr('originalHeight', realCanvas.height());
-		realCanvas.attr('originalWidth', realCanvas.width());
-		panel.contents().find('html').css('overflow', 'hidden');
-		realPanel.css('position', 'absolute');
-		var divA = $('<div>').attr('id', 'wtDivA').addClass('wtInside').addClass('wtCoverObjects').css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+200');
-		panel.contents().find('body').append(divA);
-		var divB = $('<div>').attr('id', 'wtDivB').addClass('wtInside').addClass('wtCoverObjects').css('position', 'absolute').css('background-color', $('body').css('background-color')).css('z-index', '+200');
-		panel.contents().find('body').append(divB);
-	} else {
-		var divA = panel.contents().find('#wtDivA');
-		var divB = panel.contents().find('#wtDivB');
+	setOuterHeight(iframeAux, bodyFrameInner.height(), true);
+	setOuterWidth(iframeAux, bodyFrameInner.width(), true);
+	setOuterHeight(panel, bodyFrameInner.height(), true);
+	setOuterWidth(panel, bodyFrameInner.width(), true);
+	if (panel.height() >= panelArea.height()) offsetV = (panel.height() - panelArea.height()) / 2;
+	else scrollbarV = $vScrollbarWidth;
+	if (panel.width() >= panelArea.width()) offsetH = (panel.width() - panelArea.width()) / 2;
+	else scrollbarH = $vScrollbarWidth;
+	if (scrollbarV > 0 && scrollbarH > 0) {
+		scrollbarV = 0;
+		scrollbarH = 0;
 	}
-	var outerHeight = bodyFrameInner.height() - $nextBlockTop;
-	var outerWidth = bodyFrameInner.width();
-	setOuterHeight(panel, outerHeight, true);
-	setOuterWidth(panel, outerWidth, true);
-	setTopFromParentContent(panel, $nextBlockTop);
-	setLeftFromParentContent(panel, 0);
-	var outerRatio = outerHeight / outerWidth;
-	var innerRatio = realPanel.attr('originalHeight') / realPanel.attr('originalWidth');
-	var contentHeight;
-	var contentWidth;
-	if (outerRatio > innerRatio) {
-		contentWidth = outerWidth;
-		contentHeight = contentWidth * innerRatio;
-		var aux1 = (outerHeight - contentHeight) / 2;
-		realPanel.css('top', aux1);
-		realPanel.css('left', 0);
-		realCanvas.css('top', aux1);
-		realCanvas.css('left', 0);
-		divA.css('top', 0);
-		divA.css('left', 0);
-		divA.height(aux1);
-		divA.width(contentWidth);
-		divB.css('top', aux1 + contentHeight);
-		divB.css('left', 0);
-		divB.height(aux1);
-		divB.width(contentWidth);
-	} else {
-		contentHeight = outerHeight;
-		contentWidth = contentHeight / innerRatio;
-		var aux1 = (outerWidth - contentWidth) / 2;
-		realPanel.css('top', 0);
-		realPanel.css('left', aux1);
-		realCanvas.css('top', 0);
-		realCanvas.css('left', aux1);
-		divA.css('top', 0);
-		divA.css('left', 0);
-		divA.height(contentHeight);
-		divA.width(aux1);
-		divB.css('top', 0);
-		divB.css('left', aux1 + contentWidth);
-		divB.height(contentHeight);
-		divB.width(aux1);
-	}
-	realPanel.height(contentHeight);
-	realPanel.width(contentWidth);
-	realCanvas.height(contentHeight);
-	realCanvas.width(contentWidth);
-	var contentHeightFactor = contentHeight / realPanel.attr('originalHeight');
-	var contentWidthFactor = contentWidth / realPanel.attr('originalWidth');
-	realPanel.find('*').each(function(index) {
-		var o = $(this);
-		if (original) {
-			o.attr('originalFontSize', o.css('font-size').split('px')[0]);
-			o.attr('originalTop', o.css('top').split('px')[0]);
-			o.attr('originalLeft', o.css('left').split('px')[0]);
-			o.attr('originalHeight', o.height());
-			o.attr('originalWidth', o.width());
-		}
-		var oFS = o.attr('originalFontSize');
-		var oT = o.attr('originalTop');
-		var oL = o.attr('originalLeft');
-		var oH = o.attr('originalHeight');
-		var oW = o.attr('originalWidth');
-		o.css('font-size', oFS * contentHeightFactor);
-		o.css('top', oT * contentHeightFactor);
-		o.css('left', oL * contentWidthFactor);
-		o.height(Math.ceil(oH * contentHeightFactor));
-		o.width(Math.ceil(oW * contentWidthFactor));
-	});
+	panelArea.css('top', offsetV + scrollbarH);
+	panelArea.css('left', offsetH + scrollbarV);
 };
 
 //----------------------------------------- [from 'checkLayoutSizeChange()' and 'selectionList'] Selection list layout resize when screen or font changes size
@@ -1466,25 +1422,22 @@ var layoutPowerState = function(state) {
 };
 
 //----------------------------------------- [from server] Last selected throttle address
-var lastSelectedThrottle = function(address) {
-	if (address != $locoAddress) return;
+var throttleState = function(name, address, speed, forward, fs) {
+	if (name != $locoAddress) return;
 	$('body').attr('locoReady', 'true');
-	$jmri.getThrottleDirection(address);
-	$jmri.getThrottleSpeed(address);
-	for (var i = 0; i < 29; i++) {
-		var func = $('#locoFunction' + i);
-		if (func.length) $jmri.getThrottleFunctionState(address, i);
-	}
+	if (forward != undefined) throttleDirection(name, forward);
+	if (speed != undefined) throttleSpeed(name, speed);
+	for (var i = 0; i < 29; i++) if (fs[i] != undefined) throttleFunctionState(name, i, fs[i]);
 };
 
-//----------------------------------------- [from server] Throttle direction
-var throttleDirection = function(address, forward) {
-	if (address != $locoAddress) return;
+//----------------------------------------- Throttle direction
+var throttleDirection = function(name, forward) {
+	if (name != $locoAddress) return;
 	var _reverse = $('#reverse');
 	var _forward = $('#forward');
 	_reverse.removeClass('directionActive directionInactive');
 	_forward.removeClass('directionActive directionInactive');
-	if (forward == $jmri.YES) {
+	if (forward == $jmri.TRUE) {
 		_reverse.addClass('directionInactive');
 		_forward.addClass('directionActive');
 	} else {
@@ -1493,24 +1446,26 @@ var throttleDirection = function(address, forward) {
 	}
 };
 
-//----------------------------------------- [from server] Throttle speed
-var throttleSpeed = function(address, speed) {
-	if (address != $locoAddress) return;
+//----------------------------------------- Throttle speed
+var throttleSpeed = function(name, speed) {
+	if (name != $locoAddress) return;
 	$speedAux = speed;
 	if (!$speedFeedback) return;
 	$('.speed').attr('speed', speed);
 	showSpeed();
 };
 
-//----------------------------------------- [from server] Throttle function state
-var throttleFunctionState = function(address, functionNumber, active) {
-	if (address != $locoAddress) return;
+//----------------------------------------- Throttle function state
+var throttleFunctionState = function(name, functionNumber, active) {
+	if (name != $locoAddress) return;
 	var func = $('#locoFunction' + functionNumber);
-	func.attr('state', active);
-	var funcState = func.children('.funcState');
-	funcState.removeClass('funcOff funcOn');
-	if (active == $jmri.YES) funcState.addClass('funcOn');
-	else funcState.addClass('funcOff');
+	if (func.length) {
+		func.attr('state', active);
+		var funcState = func.children('.funcState');
+		funcState.removeClass('funcOff funcOn');
+		if (active == $jmri.TRUE) funcState.addClass('funcOn');
+		else funcState.addClass('funcOff');
+	}
 };
 
 //----------------------------------------- [from server] Layout turnout state
@@ -1685,7 +1640,7 @@ var fontSizeChange = function(e, increment) {
 	if (fontSize < $fontSizeMin) fontSize = $fontSizeMin;
 	if (fontSize > $fontSizeMax) fontSize = $fontSizeMax;
 	saveLocalInfo('webThrottle.fontSize', fontSize);
-	smoothAlert('text size: ' + fontSize + 'px', 2)
+	smoothAlert('text size: ' + fontSize + 'px', 2);
 };
 
 //----------------------------------------- Show help - Click (mouse and touch with simulation)
@@ -1756,7 +1711,7 @@ var trChangeStatus = function(e, type, name) {
 	if (!isLeftButton(e)) return;
 	e.preventDefault();
 	e.stopImmediatePropagation();
-	var lastState = Number($('#' + name).attr('state'));
+	var lastState = Number($('#' + encodeId(name)).attr('state'));
 	if (type == 'turnout') {	// 0(undefined) 1(unknown) 2(Closed) 4(Thrown)
 		switch (lastState) {
 			case $jmri.turnoutTHROWN:
@@ -1769,8 +1724,8 @@ var trChangeStatus = function(e, type, name) {
 				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED});
 				break;
 		}
-	} else {	// 0(disable - cannot change) 1(undefined) 2(Active) 4(Inactive) - Can only activate
-		if (lastState == $jmri.routeUNDEFINED || lastState == $jmri.routeINACTIVE) $jmri.setJMRI('route', name, {"state":$jmri.routeACTIVE});
+	} else {	// 0(unknown) 2(Active) 4(Inactive) 8(inconsistent) - Can only activate
+		$jmri.setJMRI('route', name, {"state":$jmri.routeACTIVE});
 	}
 };
 
@@ -1930,7 +1885,7 @@ var immediateStop = function(e) {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	if ($('body').attr('locoReady') != 'true') return;
-	$jmri.setThrottleSpeed($locoAddress, $jmri.EMERGENCY_STOP);
+	$jmri.setJMRI('throttle', $locoAddress, {"speed":$jmri.EMERGENCY_STOP});
 };
 
 //----------------------------------------- Select another loco - Click (mouse and touch with simulation)
@@ -1963,7 +1918,7 @@ var setDirection = function(e, forward) {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	if ($('body').attr('locoReady') != 'true') return;
-	if (forward) $jmri.setThrottleForward($locoAddress, $jmri.YES); else $jmri.setThrottleForward($locoAddress, $jmri.NO);
+	$jmri.setJMRI('throttle', $locoAddress, {"forward": forward ? $jmri.TRUE : $jmri.FALSE});
 };
 
 //----------------------------------------- Manage tilt to control speed or not - Click (mouse and touch with simulation)
@@ -2030,14 +1985,14 @@ var deviceOrientation = function(e) {
 				m = -e.beta;
 				break;
 		}
-		m = Math.round(m / 9);	// Do something only if change >= 10% of 90 degrees (90 degrees = 10)
+		m = Math.round(m * $speedStep * 2);	// Sensitivity (for $speedStep=10%): 5º
 		if ($movementTilt != m) {
 			if ($movementTilt != null) {
 				$movementCtrl = m - $movementTilt;
 				var speed = $('.speed');
 				var speedValue = Number(speed.attr('speed'));
 				if (speedValue < 0) speedValue = 0;
-				speedValue+= ($movementCtrl * $speedStep);
+				speedValue+= ($movementCtrl * $speedStep / 2);	// 100º <=> full cursor displacement
 				if (speedValue < 0) speedValue = 0;
 				if (speedValue > 1) speedValue = 1;
 				speed.attr('speed', speedValue);
@@ -2045,7 +2000,7 @@ var deviceOrientation = function(e) {
 				var speedValueFormated = '' + speedValue;
 				if (speedValue == 0) speedValueFormated = $jmri.STOP;
 				if (speedValue == 1) speedValueFormated = $jmri.FULL_SPEED;
-				$jmri.setThrottleSpeed($locoAddress, speedValueFormated);
+				$jmri.setJMRI('throttle', $locoAddress, {"speed":speedValueFormated});
 			}
 			$movementTilt = m;
 		}
@@ -2106,7 +2061,7 @@ var functionForSpeedCtrl = function() {
 	var speedValueFormated = '' + speedValue;
 	if (speedValue == 0) speedValueFormated = $jmri.STOP;
 	if (speedValue == 1) speedValueFormated = $jmri.FULL_SPEED;
-	$jmri.setThrottleSpeed($locoAddress, speedValueFormated);
+	$jmri.setJMRI('throttle', $locoAddress, {"speed":speedValueFormated});
 };
 
 //----------------------------------------- Speed zone moving (touch)
@@ -2153,8 +2108,10 @@ var functionClick = function(e) {
 	if ($('body').attr('locoReady') != 'true') return;
 	var o = $(e.currentTarget);
 	var lastState = o.attr('state');
-	if (lastState == $jmri.YES) $jmri.setThrottleFunction($locoAddress, o.attr('id').substr(12), $jmri.NO);	// id=locoFunction<n>
-	else $jmri.setThrottleFunction($locoAddress, o.attr('id').substr(12), $jmri.YES);	// id=locoFunction<n>
+	var propName = 'F' + o.attr('id').substr(12);	// id=locoFunction<n>
+	var obj  = {};
+	obj[propName] = (lastState == '' + $jmri.TRUE) ? $jmri.FALSE : $jmri.TRUE;
+	$jmri.setJMRI('throttle', $locoAddress, obj);
 };
 
 //----------------------------------------- Function button pressed (touch)
@@ -2168,7 +2125,10 @@ var functionPressed = function(e, o) {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	if ($('body').attr('locoReady') != 'true') return;
-	$jmri.setThrottleFunction($locoAddress, o.attr('id').substr(12), $jmri.YES);	// id=locoFunction<n>
+	var propName = 'F' + o.attr('id').substr(12);	// id=locoFunction<n>
+	var obj  = {};
+	obj[propName] = $jmri.TRUE;
+	$jmri.setJMRI('throttle', $locoAddress, obj);
 };
 
 //----------------------------------------- Function button released (touch)
@@ -2182,7 +2142,10 @@ var functionReleased = function(e, o) {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	if ($('body').attr('locoReady') != 'true') return;
-	$jmri.setThrottleFunction($locoAddress, o.attr('id').substr(12), $jmri.NO);	// id=locoFunction<n>
+	var propName = 'F' + o.attr('id').substr(12);	// id=locoFunction<n>
+	var obj  = {};
+	obj[propName] = $jmri.FALSE;
+	$jmri.setJMRI('throttle', $locoAddress, obj);
 };
 
 //----------------------------------------- Function button released or canceled (mouse)
@@ -2199,7 +2162,10 @@ var functionCanceledMouse = function(e) {
 	var oRight = oLeft + o.outerWidth(false);
 	if (mouseY > oTop && mouseY < oBottom && mouseX > oLeft && mouseX < oRight) return;
 	if ($('body').attr('locoReady') != 'true') return;
-	$jmri.setThrottleFunction($locoAddress, o.attr('id').substr(12), $jmri.NO);	// id=locoFunction<n>
+	var propName = 'F' + o.attr('id').substr(12);	// id=locoFunction<n>
+	var obj  = {};
+	obj[propName] = $jmri.FALSE;
+	$jmri.setJMRI('throttle', $locoAddress, obj);
 };
 
 //===================================================================================== Generic functions =============================

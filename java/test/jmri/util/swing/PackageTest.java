@@ -1,17 +1,16 @@
-// PackageTest.java
-
 package jmri.util.swing;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Invokes complete set of tests in the jmri.util.swing tree
  *
- * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright 2003
  */
 public class PackageTest extends TestCase {
-    
+
     // from here down is testing infrastructure
     public PackageTest(String s) {
         super(s);
@@ -32,6 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.swing.multipane.PackageTest.suite());
         suite.addTest(jmri.util.swing.sdi.PackageTest.suite());
         suite.addTest(jmri.util.swing.mdi.PackageTest.suite());
+        suite.addTest(jmri.util.swing.JCBHandleTest.suite());
         suite.addTest(jmri.util.swing.FontComboUtilTest.suite());
         suite.addTest(jmri.util.swing.GuiUtilBaseTest.suite());
 
@@ -39,7 +39,12 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

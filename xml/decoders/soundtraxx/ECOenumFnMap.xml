@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice>
+    <choice>F0</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F4</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F5</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F6</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F7</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F8</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F9</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F10</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F11</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F12</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F13</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F14</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F15</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F16</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F17</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F18</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F19</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F20</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F21</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F22</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F23</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F24</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F25</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F26</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F27</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F28</choice>
+  </enumChoice>
+  <enumChoice value="255">
+	<choice>Disable</choice>
+	<choice xml:lang="fr">Désactivé</choice>
+	<choice xml:lang="it">Disabilitato</choice>
+	<choice xml:lang="de">Deaktiviert</choice>
+  </enumChoice>
+</enumVal>

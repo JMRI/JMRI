@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
+<!-- $Id$ -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.                                       -->
+<!-- See the GNU General Public License for more details.                    -->
+<!--                                                                         -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="3.1" lastUpdated="20150501"/>
+  <version author="Alain Le Marchand" version="3" lastUpdated="20150427"/>
+  <version author="Peter Ulvestad" version="2" lastUpdated="20131030"/>
+  <version author="Peter Ulvestad" version="1" lastUpdated="20131013"/>
+  <!-- version 1 - Created from Synch Diesel Sound (16-bit) 1957 - N Scale KATO F Series ver. 1 by John Sebastian-->
+  <!-- version 2 - Switch to includes for common vars-->
+  <!-- version 3 - New family for all MRC N scale: "Sound Decoders - N scale"     -->
+  <!--             File MRC_soundbrilliance1952.xml renamed MRC_sound1952.xml     -->
+  <!-- version 3.1 Bell Ring Rate (CV54) on Sound pane                            -->
+  <decoder>
+    <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1952 - N Scale - Kato GG1" numOuts="2" numFns="28" maxTotalCurrent="0.75A"  extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In, 16-bit">
+        <size length="66" width="14" height="3.5" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+      <variable CV="2" item="Vstart" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" default="0">
+        <decVal max="32"/>
+        <label>Start Voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+      </variable>
+      <variable CV="3" item="Accel" tooltip="sets the acceleration rate (delay)  [range 0-32]" default="0">
+        <decVal max="32"/>
+        <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-32)</label>
+        <label xml:lang="fr">Accelération (0-32)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-32)</label>
+      </variable>
+      <variable CV="4" item="Decel" tooltip="sets the deceleration rate (delay) [range 0-32]" default="0">
+        <decVal max="32"/>
+        <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-32)</label>
+        <label xml:lang="fr">Décélération (1-32)</label>
+        <label xml:lang="de">Bremszeit (1-32)</label>
+      </variable>
+      <variable CV="5" item="Vhigh" tooltip="sets the motor voltage at top Speed Step [range 0-32]," default="32">
+        <decVal max="32"/>
+        <label>Top Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-32):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <variable CV="6" item="Speed Table Selection" default="0" tooltip="sets the motor voltage increase curve with Speed Steps, range 0(default)-2">
+        <enumVal>
+          <enumChoice choice="Linear">
+            <choice>Linear</choice>
+          </enumChoice>
+          <enumChoice choice="Slow increase at slow speed">
+            <choice>Slow increase at slow speed</choice>
+          </enumChoice>
+          <enumChoice choice="Fast increase at slow speed">
+            <choice>Fast increase at slow speed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Select Speed Curve</label>
+      </variable>
+      <variable CV="19" item="Consist Address" mask="XVVVVVVV" tooltip="set the Advanced Consist address, range 0-127" default="0">
+        <decVal max="127"/>
+        <label>Advanced Consist address</label>
+      </variable>
+      <variable CV="21" item="Functions Respond To" mask="XXXXXXXV" tooltip="selects the address that functions will respond to, 0=own address, 1=consist address" default="0">
+        <enumVal>
+          <enumChoice choice="Functions respond to Locomotive Address Only">
+            <choice>Functions respond to Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Functions respond to Consist Address Only">
+            <choice>Functions respond to Consist Address Only</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Function</label>
+      </variable>
+      <variable CV="49" item="Sound Setting 1" tooltip="odd number sound on, even sound off" default="1">
+        <decVal max="1"/>
+        <label>Master sound control</label>
+      </variable>
+      <variable CV="50" item="Sound Option 1" tooltip="selects the Horn Type [range 0-22]" default="6">
+        <decVal max="22"/>
+        <label>Horn Type</label>
+      </variable>
+      <variable CV="51" item="Sound Setting 2" tooltip="selects the Horn Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Horn Volume</label>
+      </variable>
+      <variable CV="52" item="Sound Option 2" tooltip="selects the Bell Type [range 0-7]" default="3">
+        <decVal max="7"/>
+        <label>Bell Type</label>
+      </variable>
+      <variable CV="53" item="Sound Setting 3" tooltip="selects the Bell Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Bell Volume</label>
+      </variable>
+      <variable CV="54" item="Sound Group 3 Option 2" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
+        <decVal max="50"/>
+        <label>Bell Ring Rate</label>
+      </variable>
+      <variable CV="55" item="Sound Setting 5" tooltip="sets the Diesel Rumble Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Traction Motor volume</label>
+      </variable>
+      <variable CV="56" item="Sound Setting 6" tooltip="sets the Brake Squeal Volume [range 0-15]" default="7">
+        <decVal max="15"/>
+        <label>Brake squeal volume</label>
+      </variable>
+      <variable CV="57" item="Sound Setting 7" tooltip="sets the Dynamic Brake Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Dynamic brake volume</label>
+      </variable>
+      <variable CV="58" item="Sound Setting 8" tooltip="sets the Air Release Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Air Release Volume</label>
+      </variable>
+      <variable CV="59" item="Sound Setting 9" tooltip="sets the Air Pump Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Air Pump Volume</label>
+      </variable>
+      <variable CV="60" item="Sound Setting 10" tooltip="sets the Safety Pop Valve Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Safety pop valve volume</label>
+      </variable>
+      <variable CV="61" item="Sound Setting 11" tooltip="sets the Engine Cooling Fan Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Engine Cooling Fan Volume</label>
+      </variable>
+      <variable CV="62" item="Sound Setting 12" tooltip="sets the Coupling Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Coupling Volume</label>
+      </variable>
+      <variable CV="63" item="Sound Setting 13" tooltip="sets the Coupling Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Coupling Volume</label>
+      </variable>
+      <variable CV="64" item="Sound Setting 14" tooltip="sets the Rail Clack Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Rail clack volume</label>
+      </variable>
+      <variable CV="65" item="Kick Start" tooltip="sets the Kick Start Voltage [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Kick Start Voltage</label>
+        <label xml:lang="it">Forza Avviamento (volt)</label>
+        <label xml:lang="fr">Impuls. de démarrage (kick start)</label>
+        <label xml:lang="de">Kick Start</label>
+      </variable>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+      <variable CV="112" item="Sound Setting 15" tooltip="sets the Sand Dropping Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Sand dropping volume</label>
+      </variable>
+      <variable CV="113" item="Sound Setting 16" tooltip="sets the Coupling fire volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Coupling fire volume</label>
+      </variable>
+      <variable CV="114" item="Sound Setting 17" tooltip="sets the Brake release volume [range 0-15" default="0">
+        <decVal max="15"/>
+        <label>Brake release volume</label>
+      </variable>
+      <variable CV="115" item="Sound Option 3" tooltip="sets the Auto Brake Squeal [1=Enable/0=Disable]" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <label>Auto Brake squeal</label>
+      </variable>
+      <variable CV="116" item="Sound Setting 18" tooltip="sets the Flange squeal Volume [range 0-15]" default="12">
+        <decVal max="15"/>
+        <label>Flange squeal volume</label>
+      </variable>
+      <variable CV="117" item="Brightness Setting" tooltip="sets the Light Mode [range 0-2]" default="0">
+        <enumVal>
+          <enumChoice choice="Normal headlight" value="0">
+            <choice>Normal headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Off, dim, bright cycle" value="1">
+            <choice>Off, dim, bright cycle</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17" value="2">
+            <choice>Rule 17</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Light Mode</label>
+      </variable>
+      <variable CV="123" item="Sound Option 5" tooltip="selects the Traction Motor sound on/off [Range 0-1]" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On" value="1">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Traction Motor sound</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="125" default="1">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane>
+    <column>
+      <label>
+        <text>MRC NOTE: Some DCC systems do not have enough power on the program track for programming</text>
+      </label>
+      <label>
+        <text>sound decoders. If your system is one of these, There are Program Track Boosters available</text>
+      </label>
+      <label>
+        <text>from aftermarket DCC suppliers.</text>
+      </label>
+      <label>
+        <text/>
+      </label>
+    </column>
+    <name>MRC</name>
+  </pane>
+</decoder-config>

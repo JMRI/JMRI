@@ -33,12 +33,11 @@ The JMRI "Debug" menu contains the following items:
 <ul>
   <li>Import Decoder File</li>
   <li>Import Decoder URL</li>
-  <li>Recreate Decoder Indes</li>
-  <li>Recreate Roster Index</li>
+  <li>Recreate Decoder Index</li>
+  <li>Rebuild Roster</li>
 </ul>
 <hr>
 <ul>
-  <li>Check XML file</li>
   <li>Validate XML file</li>
   <li>Check Decoder Names </li>
   <li>Check Programmer Names 

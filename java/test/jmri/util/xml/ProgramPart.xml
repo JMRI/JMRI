@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer SYSTEM "xml/DTD/programmer-config.dtd">
 <programmer 
-            decoderFilePanes="yes" showEmptyPanes="default"
-            showFnLanelPane="no" showRosterMediaPane="no">
+    decoderFilePanes="yes" showEmptyPanes="default"
+    showFnLanelPane="no" showRosterMediaPane="no">
 </programmer>

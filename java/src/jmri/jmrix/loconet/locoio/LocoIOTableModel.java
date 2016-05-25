@@ -1,99 +1,98 @@
 // LocoIOTableModel.java
-
 package jmri.jmrix.loconet.locoio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.LnConstants;
-
+import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import java.beans.*;
+import jmri.jmrix.loconet.LnConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Basic Configurer for LocoIO hardware.
  * <P>
- * This code derves the SV values from the user-selected mode and address;
- * this is different from earlier versions where the user was expected to
- * do the derivation manually.  This derivation is complicated by the fact
- * that the "mode" SV[port.0] in the LocoIO doesn't fully specify the operation
- * being done - additional bits in "v2" SV[port.2] are also used.
- * For example, 0x80 is both turnout closed and turnout high.
- * We read and write the mode SV _last_ to handle this.
+ * This code derves the SV values from the user-selected mode and address; this
+ * is different from earlier versions where the user was expected to do the
+ * derivation manually. This derivation is complicated by the fact that the
+ * "mode" SV[port.0] in the LocoIO doesn't fully specify the operation being
+ * done - additional bits in "v2" SV[port.2] are also used. For example, 0x80 is
+ * both turnout closed and turnout high. We read and write the mode SV _last_ to
+ * handle this.
  * <P>
  * The "addr" field is constructed from (or causes the construction of,
- * depending on whether we are reading or writing...) value1 and value2.
- * In particular, value2 requires knowledge of the mode being set.
- * When "capturing" a turnout address (where we don't have a mode setting)
- * we presume that the address seen in the OPC_SW_REQ packet is for
- * a fixed contact, and interpret the bits in that context.
+ * depending on whether we are reading or writing...) value1 and value2. In
+ * particular, value2 requires knowledge of the mode being set. When "capturing"
+ * a turnout address (where we don't have a mode setting) we presume that the
+ * address seen in the OPC_SW_REQ packet is for a fixed contact, and interpret
+ * the bits in that context.
  * <P>
  * The timeout code is modelled after that in jmri,jmrix.AbstractProgrammer,
  * though there are significant modifications.
  * <P>
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version	$Revision$
  */
-
 public class LocoIOTableModel
         extends javax.swing.table.AbstractTableModel
-        implements java.beans.PropertyChangeListener
-{
+        implements java.beans.PropertyChangeListener {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 145067099477782903L;
     private LocoIOData liodata;
     private boolean inHex;
     //private String maxSizeMode = "";
 
     /**
-     * Define the number of rows in the table, which is also
-     * the number of "channels" in a signel LocoIO unit
+     * Define the number of rows in the table, which is also the number of
+     * "channels" in a signel LocoIO unit
      */
     private int _numRows = 16;
 
     /**
      * Define the contents of the individual columns
      */
-    public static final int PINCOLUMN   	= 0;  // pin number
-    public static final int MODECOLUMN          = 1;  // what makes this happen?
-    public static final int ADDRCOLUMN          = 2;  // what address is involved?
-    public static final int SV0COLUMN           = 3;  //  SV config code
-    public static final int SV1COLUMN           = 4;  //  SV Value1
-    public static final int SV2COLUMN           = 5;  //  SV Value2
-    public static final int CAPTURECOLUMN 	= 6;  // "capture" button
-    public static final int READCOLUMN  	= 7;  // "read" button
-    public static final int WRITECOLUMN 	= 8;  // "write" button
-    public static final int HIGHESTCOLUMN 	= WRITECOLUMN+1;
+    public static final int PINCOLUMN = 0;  // pin number
+    public static final int MODECOLUMN = 1;  // what makes this happen?
+    public static final int ADDRCOLUMN = 2;  // what address is involved?
+    public static final int SV0COLUMN = 3;  //  SV config code
+    public static final int SV1COLUMN = 4;  //  SV Value1
+    public static final int SV2COLUMN = 5;  //  SV Value2
+    public static final int CAPTURECOLUMN = 6;  // "capture" button
+    public static final int READCOLUMN = 7;  // "read" button
+    public static final int WRITECOLUMN = 8;  // "write" button
+    public static final int HIGHESTCOLUMN = WRITECOLUMN + 1;
 
-    private String[] msg  = new String[_numRows];
+    private String[] msg = new String[_numRows];
 
     /**
      * Reference to the JTextField which should receive status info
      */
-    private JTextField status   = null;
+    private JTextField status = null;
+
     /**
      * Reference to JLabel for firmware version
      */
     //private JLabel     firmware = null;
     //private JLabel     locobuffer = null;
-
-
     /**
-     * Primary constructor.  Initializes all the arrays.
+     * Primary constructor. Initializes all the arrays.
      */
     public LocoIOTableModel(LocoIOData ldata) {
         super();
 
-        inHex          = true;
+        inHex = true;
         // references to external resources
-        liodata        = ldata;
+        liodata = ldata;
         ldata.addPropertyChangeListener(this);
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
         // String s = "LocoIOTableModel: " + evt.getPropertyName() + " := " + evt.getNewValue() + " from " + evt.getSource();
         if (evt.getPropertyName().equals("PortChange")) {
-            Integer i = (Integer)evt.getNewValue();
+            Integer i = (Integer) evt.getNewValue();
             int v = i.intValue();
             // System.out.println(s + " ROW = " + v);
             fireTableRowsUpdated(v, v);
@@ -103,107 +102,170 @@ public class LocoIOTableModel
     }
 
     // basic methods for AbstractTableModel implementation
-    public int getRowCount() { return _numRows; }
+    public int getRowCount() {
+        return _numRows;
+    }
 
-    public int getColumnCount( ){ return HIGHESTCOLUMN;}
+    public int getColumnCount() {
+        return HIGHESTCOLUMN;
+    }
+
     public String getColumnName(int col) {
         switch (col) {
-            case PINCOLUMN:     return "Port";
-            case MODECOLUMN:    return "Action";
-            case ADDRCOLUMN:    return "Address";
-            case SV0COLUMN:     return "SV";
-            case SV1COLUMN:     return "Value1";
-            case SV2COLUMN:     return "Value2";
-            case CAPTURECOLUMN: return "";
-            case READCOLUMN:    return "";
-            case WRITECOLUMN:   return "";
-            default:            return "unknown";
+            case PINCOLUMN:
+                return "Port";
+            case MODECOLUMN:
+                return "Action";
+            case ADDRCOLUMN:
+                return "Address";
+            case SV0COLUMN:
+                return "SV";
+            case SV1COLUMN:
+                return "Value1";
+            case SV2COLUMN:
+                return "Value2";
+            case CAPTURECOLUMN:
+                return "";
+            case READCOLUMN:
+                return "";
+            case WRITECOLUMN:
+                return "";
+            default:
+                return "unknown";
         }
     }
+
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case PINCOLUMN:     return String.class;
-            case MODECOLUMN:    return String.class;
-            case ADDRCOLUMN:    return String.class;
-            case SV0COLUMN:     return String.class;
-            case SV1COLUMN:     return String.class;
-            case SV2COLUMN:     return String.class;
-            case CAPTURECOLUMN: return JButton.class;
-            case READCOLUMN:    return JButton.class;
-            case WRITECOLUMN:   return JButton.class;
-            default:            return null;
+            case PINCOLUMN:
+                return String.class;
+            case MODECOLUMN:
+                return String.class;
+            case ADDRCOLUMN:
+                return String.class;
+            case SV0COLUMN:
+                return String.class;
+            case SV1COLUMN:
+                return String.class;
+            case SV2COLUMN:
+                return String.class;
+            case CAPTURECOLUMN:
+                return JButton.class;
+            case READCOLUMN:
+                return JButton.class;
+            case WRITECOLUMN:
+                return JButton.class;
+            default:
+                return null;
         }
     }
+
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-            case PINCOLUMN:     return false;
-            case MODECOLUMN:    return true;
-            case ADDRCOLUMN:    return true;
-            case SV0COLUMN:     return false;
-            case SV1COLUMN:     return false;
-            case SV2COLUMN:     return false;
-            case CAPTURECOLUMN: return true;
-            case READCOLUMN:    return true;
-            case WRITECOLUMN:   return true;
-            default:            return false;
+            case PINCOLUMN:
+                return false;
+            case MODECOLUMN:
+                return true;
+            case ADDRCOLUMN:
+                return true;
+            case SV0COLUMN:
+                return false;
+            case SV1COLUMN:
+                return false;
+            case SV2COLUMN:
+                return false;
+            case CAPTURECOLUMN:
+                return true;
+            case READCOLUMN:
+                return true;
+            case WRITECOLUMN:
+                return true;
+            default:
+                return false;
         }
     }
+
     public Object getValueAt(int row, int col) {
         switch (col) {
-            case PINCOLUMN:         return Integer.toString(row+1);  // Ports 1 to 16
-            case MODECOLUMN:        return liodata.getMode(row);
-            case ADDRCOLUMN:        return (liodata.getAddr(row) == 0 ? "<none>" : Integer.toString(liodata.getAddr(row)));
-            case SV0COLUMN:         return (inHex) ? "0x" + Integer.toHexString(liodata.getSV(row)) : "" + liodata.getSV(row);
-            case SV1COLUMN:         return (inHex) ? "0x" + Integer.toHexString(liodata.getV1(row)) : "" + liodata.getV1(row);
-            case SV2COLUMN:         return (inHex) ? "0x" + Integer.toHexString(liodata.getV2(row)) : "" + liodata.getV2(row);
-            case CAPTURECOLUMN:     return "Capture";
-            case READCOLUMN:        return "Read";
-            case WRITECOLUMN:       return "Write";
-            default:                return "unknown";
+            case PINCOLUMN:
+                return Integer.toString(row + 1);  // Ports 1 to 16
+            case MODECOLUMN:
+                return liodata.getMode(row);
+            case ADDRCOLUMN:
+                return (liodata.getAddr(row) == 0 ? "<none>" : Integer.toString(liodata.getAddr(row)));
+            case SV0COLUMN:
+                return (inHex) ? "0x" + Integer.toHexString(liodata.getSV(row)) : "" + liodata.getSV(row);
+            case SV1COLUMN:
+                return (inHex) ? "0x" + Integer.toHexString(liodata.getV1(row)) : "" + liodata.getV1(row);
+            case SV2COLUMN:
+                return (inHex) ? "0x" + Integer.toHexString(liodata.getV2(row)) : "" + liodata.getV2(row);
+            case CAPTURECOLUMN:
+                return "Capture";
+            case READCOLUMN:
+                return "Read";
+            case WRITECOLUMN:
+                return "Write";
+            default:
+                return "unknown";
         }
     }
+
     public int getPreferredWidth(int col) {
         switch (col) {
-            case PINCOLUMN:         return new JLabel(" 16 ").getPreferredSize().width;
-            case MODECOLUMN:        return new JLabel("1234567890123456789012345678901234567890").getPreferredSize().width;
-            case ADDRCOLUMN:        return new JLabel(getColumnName(ADDRCOLUMN)).getPreferredSize().width;
+            case PINCOLUMN:
+                return new JLabel(" 16 ").getPreferredSize().width;
+            case MODECOLUMN:
+                return new JLabel("1234567890123456789012345678901234567890").getPreferredSize().width;
+            case ADDRCOLUMN:
+                return new JLabel(getColumnName(ADDRCOLUMN)).getPreferredSize().width;
             case SV0COLUMN:
             case SV1COLUMN:
-            case SV2COLUMN:         return new JLabel(" 0xFF ").getPreferredSize().width;
-            case CAPTURECOLUMN:     return new JButton(" Capture ").getPreferredSize().width;
-            case READCOLUMN:        return new JButton(" Read ").getPreferredSize().width;
-            case WRITECOLUMN:       return new JButton(" Write ").getPreferredSize().width;
-            default:                return new JLabel(" <unknown> ").getPreferredSize().width;
+            case SV2COLUMN:
+                return new JLabel(" 0xFF ").getPreferredSize().width;
+            case CAPTURECOLUMN:
+                return new JButton(" Capture ").getPreferredSize().width;
+            case READCOLUMN:
+                return new JButton(" Read ").getPreferredSize().width;
+            case WRITECOLUMN:
+                return new JButton(" Write ").getPreferredSize().width;
+            default:
+                return new JLabel(" <unknown> ").getPreferredSize().width;
         }
     }
 
     public void setValueAt(Object value, int row, int col) {
         if (col == MODECOLUMN) {
             if (liodata.getLocoIOModeList().isValidModeValue(value)) {
-                liodata.setMode(row, (String)value);
-                liodata.setLIM(row, (String)value);
+                liodata.setMode(row, (String) value);
+                liodata.setLIM(row, (String) value);
                 LocoIOMode l = liodata.getLIM(row);
-                if ( l != null) {
+                if (l != null) {
                     liodata.setSV(row, l.getSV());
                     liodata.setV1(row, l, liodata.getAddr(row));
                     liodata.setV2(row, l, liodata.getAddr(row));
 
-                    msg[row] = "Packet: " + LnConstants.OPC_NAME(l.getOpcode())+ " " +
-                                            Integer.toHexString(liodata.getV1(row)) + " " +
-                                            Integer.toHexString(liodata.getV2(row)) + " <CHK>";
-                    if (status!=null) status.setText(msg[row]);
-                    fireTableRowsUpdated(row,row);
+                    msg[row] = "Packet: " + LnConstants.OPC_NAME(l.getOpcode()) + " "
+                            + Integer.toHexString(liodata.getV1(row)) + " "
+                            + Integer.toHexString(liodata.getV2(row)) + " <CHK>";
+                    if (status != null) {
+                        status.setText(msg[row]);
+                    }
+                    fireTableRowsUpdated(row, row);
                 }
             }
         } else if (col == ADDRCOLUMN) {
             int a;
-            if ( ((String)(value)).startsWith("0x") ) {
-                a = Integer.valueOf( ((String)value).substring(2), 16).intValue();
+            if (((String) (value)).startsWith("0x")) {
+                a = Integer.valueOf(((String) value).substring(2), 16).intValue();
             } else {
-                a = Integer.valueOf((String)value, 10).intValue();
+                a = Integer.valueOf((String) value, 10).intValue();
             }
-            if (a < 1)    { a = 1; }
-            if (a > 0xFFF) { a = 0xFFF; }
+            if (a < 1) {
+                a = 1;
+            }
+            if (a > 0xFFF) {
+                a = 0xFFF;
+            }
             liodata.setAddr(row, a);
             if (!("<none>".equals(liodata.getMode(row)))) {
                 LocoIOMode l = liodata.getLIM(row);
@@ -211,14 +273,16 @@ public class LocoIOTableModel
                 liodata.setV2(row, l, a);
 
                 int opcode = (l == null) ? 0 : l.getOpcode();
-                msg[row] = "Packet: " + LnConstants.OPC_NAME(opcode) +
-                           " "        + Integer.toHexString(liodata.getV1(row)) +
-                           " "        + Integer.toHexString(liodata.getV2(row)) +
-                           " <CHK>";
+                msg[row] = "Packet: " + LnConstants.OPC_NAME(opcode)
+                        + " " + Integer.toHexString(liodata.getV1(row))
+                        + " " + Integer.toHexString(liodata.getV2(row))
+                        + " <CHK>";
 
-                if (status!=null) status.setText(msg[row]);
+                if (status != null) {
+                    status.setText(msg[row]);
+                }
             }
-            fireTableRowsUpdated(row,row);
+            fireTableRowsUpdated(row, row);
         } else if (col == CAPTURECOLUMN) {
             // start a capture operation
             liodata.captureValues(row);
@@ -233,10 +297,11 @@ public class LocoIOTableModel
     }
 
     // public static String[] getValidOnModes() { return validmodes.getValidModes(); }
-
     public void dispose() {
-        if (log.isDebugEnabled()) log.debug("dispose");
+        if (log.isDebugEnabled()) {
+            log.debug("dispose");
+        }
     }
 
-    static final Logger log = LoggerFactory.getLogger(LocoIOTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIOTableModel.class.getName());
 }

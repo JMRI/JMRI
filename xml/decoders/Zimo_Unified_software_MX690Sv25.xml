@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
-<!-- $Id: Zimo_MX640_v26.xml,v 1.0 2010/05/10 03:38:52 jacobsen Exp $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -45,21 +45,25 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
-      <variable label="Decoder ID 1" CV="250" default="208" readOnly="yes">
+      <variable item="Decoder ID 1" CV="250" default="208" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
       </variable>
-      <variable label="Decoder ID 2" CV="251" readOnly="yes">
+      <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
+        <label xml:lang="it">ID 2 Decoder: </label>
       </variable>
-      <variable label="Decoder ID 3" CV="252" readOnly="yes">
+      <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
+        <label xml:lang="it">ID 3 Decoder: </label>
       </variable>
-      <variable label="Decoder ID 4" CV="253" readOnly="yes">
+      <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
+        <label xml:lang="it">ID 4 Decoder: </label>
       </variable>
       <!-- Begin sound-only variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound.xml"/>

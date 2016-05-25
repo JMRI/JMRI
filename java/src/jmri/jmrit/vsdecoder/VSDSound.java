@@ -18,14 +18,13 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
-import org.jdom.Element;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import jmri.util.PhysicalLocation;
+import org.jdom2.Element;
 
 abstract public class VSDSound {
-    
+
     public final static String SrcSysNamePrefix = "IAS$VSD:";
     public final static String BufSysNamePrefix = "IAB$VSD:";
     public final static String SrcUserNamePrefix = "IVSDS_";
@@ -45,38 +44,45 @@ abstract public class VSDSound {
     PhysicalLocation myposition;
 
     public VSDSound(String name) {
-	this.name = name;
-	gain = default_gain;
+        this.name = name;
+        gain = default_gain;
     }
-    
 
     public boolean isPlaying() {
-	return(is_playing);
+        return (is_playing);
     }
 
     protected Timer newTimer(int time, boolean repeat, ActionListener al) {
-	time = Math.max(1, time);  // make sure the time is > zero
-	t = new Timer(time, al);
-	t.setInitialDelay(time);
-	t.setRepeats(repeat);
-	return(t);
+        time = Math.max(1, time);  // make sure the time is > zero
+        t = new Timer(time, al);
+        t.setInitialDelay(time);
+        t.setRepeats(repeat);
+        return (t);
     }
 
     // Required methods - abstract because all subclasses MUST implement
     abstract public void play();
+
     abstract public void loop();
+
     abstract public void stop();
+
     abstract public void fadeIn();
+
     abstract public void fadeOut();
+
     abstract public void mute(boolean m);
+
     abstract public void setVolume(float g);
+
     abstract public void shutdown(); // called on window close.  Cease playing immediately.
 
     public void setPosition(PhysicalLocation p) {
-	myposition = p;
+        myposition = p;
     }
+
     public PhysicalLocation getPosition() {
-	return(myposition);
+        return (myposition);
     }
 
     // Optional methods - overridden in subclasses where needed.  Do nothing otherwise
@@ -85,35 +91,34 @@ abstract public class VSDSound {
 
     public void changeThrottle(float t) {
     }
-    
+
     public void setName(String n) {
-	name = n;
+        name = n;
     }
 
     public String getName() {
-	return(name);
+        return (name);
     }
 
     public float getGain() {
-	return(gain);
+        return (gain);
     }
 
-    public void setGain (float g) {
-	gain = g;
+    public void setGain(float g) {
+        gain = g;
     }
 
     public Element getXml() {
-	Element me = new Element("Sound");
-	
-	me.setAttribute("name", name);
-	me.setAttribute("type", "empty");
-	return(me);
+        Element me = new Element("Sound");
+
+        me.setAttribute("name", name);
+        me.setAttribute("type", "empty");
+        return (me);
     }
 
     public void setXml(Element e) {
-	// Default: do nothing
-    } 
+        // Default: do nothing
+    }
 
     //private static final Logger log = LoggerFactory.getLogger(VSDSound.class.getName());
-
 }

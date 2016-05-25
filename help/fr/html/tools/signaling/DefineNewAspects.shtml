@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: DefineNewAspects.shtml,v 1.8 2011/06/24 14:40:57 kevin-dickerson Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-27-->
+<!--  $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; le 2013-09-29-->
 <title>JMRI: Defining Your Own Signaling System</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -22,68 +22,55 @@
 <div id="mainContent">
 
 
-<H1>JMRI: Définir Votre Propre Système de Signalisation </H1>
+<H1>JMRI: D&#233;finir Votre Propre Syst&#232;me de Signalisation </H1>
 
-Cette page décrit comment définir un nouveau système de signalisation
+Cette page d&#233;crit comment d&#233;finir un nouveau syst&#232;me de signalisation
 de JMRI.
 <p>
-Nous passons par la création à partir de zéro, mais
+Nous passons par la cr&#233;ation &#224; partir de z&#233;ro, mais
 il est souvent plus facile de copier et de modifier l'un des existants,
-ceux du répertoire
+ceux du r&#233;pertoire
 <a href="http://jmri.org/xml/signals"> xml/signaux </a>
 .
 
-<h2> Créer un Nouveau Sstème de Signalisation </h2>
+<h2> Cr&#233;er un Nouveau Syst&#232;me de Signalisation </h2>
 
-Pour l'instant, vous avez besoin de créer manuellement un nouveau répertoire sous
-le répertoire "xml/signaux" pour votre définition nouveau signal.
-Par convention, le nom de ce répertoire (par exemple «de base» ou
-"AAR-1946») fournit le nom du système pour votre défintion du signal.
-Pensez à l'avance un petit peu: ce qu'il y aura de variable dans cette
-definiton suivants les époques différentes ou de divisions différentes? Si
-oui, elles comprennent une année, ou l'emplacement dans le nom, pour  rendre facile
-la création des versions modifiées.
+Pour l'instant, vous avez besoin de cr&#233;er manuellement un nouveau r&#233;pertoire sous
+le r&#233;pertoire "xml/signaux" pour votre d&#233;finition nouveau signal.
+Par convention, le nom de ce r&#233;pertoire (par exemple "de base" ou
+"AAR-1946") fournit le nom du syst&#232;me pour votre d&#233;fintion du signal.
+Pensez &#224; l'avance un petit peu: ce qu'il y aura de variable dans cette
+d&#233;finiton suivants les &#233;poques diff&#233;rentes ou de divisions diff&#233;rentes? Si
+oui, elles comprennent une ann&#233;e, ou l'emplacement dans le nom, pour rendre facile
+la cr&#233;ation des versions modifi&#233;es.
 
 <p>
-Ensuite, offrir à ces fichiers:
+Ensuite, offrir &#224; ces fichiers:
 <ul>
-<li> index.shtml - forme libre description du système de signalisation
-<li> aspects.xml - Définir l'ensemble des aspects disponibles
-<li> apparence *. xml - Un dossier pour chaque type de SignalMast, définissant
+<li> index.shtml - forme libre de description du syst&#232;me de signalisation
+<li> aspects.xml - D&#233;finir l'ensemble des aspects disponibles
+<li> apparence *. xml - Un dossier pour chaque type de M&#226;t signal, d&#233;finissant
          comment afficher chaque aspect.
 </ul>
 
-<h3>Créez un nouveau fichier index.shtml </h3>
+<h3>Cr&#233;ez un nouveau fichier index.shtml </h3>
 
-Ceci est seulement une description, mais c'est important de le faire en premier
-de sorte que vous enregistrez les détails de ce que vous avez fait.
-<p>
-Si vous capturez un système prototype,
-enregistrer ce que vous savez à ce sujet: Le chemin de fer, de la région/du district, l'année,
-où vous avez trouvé l'information, etc
-<p>
-Si vous faites votre propre système, le décrire dans certains
-détails afin que vous puissiez y revenir plus tard et
- vous rappelez ce que vous aviez en tête.
-
-<h3> Créer un fichier nouveaux aspects.xml </h3>
-
-Le "nom" élément au sommet de ce fichier donne le nom utilisateur pour votre
-système de signalisation, qui figure en bonne place dans l'interface utilisateur.
-Il peut&lt; être un peu plus prolixe que le nom du répertoire, mais devrait
-être suffisamment similaires pour que l'utilisateur puisse les associer en cas de besoin.
+L'&#233;l&#233;ment "name" dans la partie sup&#233;rieure de ce fichier contient le nom utilisateur pour votre
+syst&#232;me de signalisation, qui figure en bonne place dans l'interface utilisateur.
+Il peut &#234;tre un peu plus prolixe que le nom du r&#233;pertoire, mais devrait
+&#234;tre assez semblable pour que l'utilisateur puisse les associer en cas de besoin.
 
 <p>
-Cet élément «aspects» dans ce dossier
-listes <em> tous </em> les aspects qui peuvent apparaître dans
-ce système de signalisatioFilen. (La plupart des Chemins de fer modèles représente un seul modèle de
-chemin de fer, il n'y a donc qu'un seul système actuel, mais il est possible
-d'utiliser plus d'un). Vous pouvez revenir et ajouter plus tard
-si nécessaire, mais c'est mieux de tout entrer au début
-parce que les noms seront plus cohérentes, etc
+Cet &#233;l&#233;ment "aspects" dans ce fichier
+listes <EM>tous</em> les aspects qui peuvent appara&#238;tre dans
+ce syst&#232;me de signalisation.(La plupart des Chemins de fer mod&#232;les repr&#233;sente un seul mod&#232;le de
+chemin de fer, il n'y a donc qu'un seul syst&#232;me actuel, mais il est possible
+d'utiliser plus d'un) . Vous pouvez revenir et ajouter plus tard
+si n&#233;cessaire, mais il est pr&#233;f&#233;rable de saisir tout au d&#233;but
+parce que les noms seront plus coh&#233;rentes, etc
 
-<p>File
-La plupart des fichiers sont des blocs qui ressemblent à ceci:
+<p>
+La plupart des fichiers sont des blocs qui ressemblent &#224; ceci:
 <pre>
      &lt;aspect&gt;
       &lt;name&gt;&lt;/name&gt;
@@ -99,31 +86,42 @@ La plupart des fichiers sont des blocs qui ressemblent à ceci:
     &lt;/aspect&gt; 
 </pre> 
 
-Vous devez remplir l'élément nom, mais les autres sont facultatifs.
-Le titre et les éléments indications ne peuvent être inclus qu'une fois.
-Les éléments de description, de référence et commentaires peuvent être inclus
+Vous devez remplir l'&#233;l&#233;ment nom, mais les autres sont facultatifs.
+Le titre et les &#233;l&#233;ments indications ne peuvent &#234;tre inclus qu'une fois.
+Les &#233;l&#233;ments de description, de r&#233;f&#233;rence et commentaires peuvent &#234;tre inclus
 autant de fois que vous le souhaitez.  
 <p>
-L'élément imagelink, s'il est présent, doit pointer
-un fichier image (. gif,. png ou. jpg) montrant ce à quoi la famille des
+L'&#233;l&#233;ment imagelink, s'il est pr&#233;sent, doit pointer
+un fichier image (. gif,. png ou. jpg) montrant ce &#224; quoi la famille des
 apparences ressemble. Si vous fournissez des images individuelles
-dans les fichiers de l'apparence (voir ci-dessous), elles vont également être affichées
+dans les fichiers de l'apparence (voir ci-dessous), elles vont &#233;galement &#234;tre affich&#233;es
 ici. Les Images individuelles sont une meilleure solution, mais c'est aussi
 plus de travail.
 <p>
-L'élément de vitesse, s'il est présent, doit être soit une valeur numérique ou une chaîne
-valeur qui a été défini dans le fichier signalSpeeds.xml. L'élément de vitesse
-rapporte à la vitesse maximale à laquelle un train peut passer à l'aspect. La logique signalmast
-utilise cette vitesse pour aider à déterminer quel aspect doit être affiché ou s'il
+L'&#233;l&#233;ment de vitesse, s'il est pr&#233;sent, doit &#234;tre soit une valeur num&#233;rique ou une cha&#238;ne
+valeur qui a &#233;t&#233; d&#233;fini dans le fichier signalSpeeds.xml. L'&#233;l&#233;ment de vitesse
+rapporte &#224; la vitesse maximale &#224; laquelle un train peut passer &#224; l'aspect. La logique signalmast
+utilise cette vitesse pour aider &#224; d&#233;terminer quel aspect doit &#234;tre affich&#233; ou s'il
 y a de multiples aspects possibles.
 <p>
-L'élément  itinéraire, s'il est présent, devrait être inscrit  simplement comme «Dévié», «Direct»
-ou «Autre». Si l'élément est omis ou laissé vide alors il est pris comme étant «Normal».
-L'élément d'itinéraire indique que cet aspect spécifique est utilisé quand un
-aiguillage a été dévié vers le chemin à venir. La logique signalmast utilise cet élément
-pour aider à déterminer quel aspect doit être affiché là où il y a plusieurs
+L'&#233;l&#233;ment  itin&#233;raire, s'il est pr&#233;sent, devrait &#234;tre inscrit  simplement comme "D&#233;vi&#233;", "Droit"
+ou "Autre". Si l'&#233;l&#233;ment est omis ou laiss&#233; vide alors il est pris comme &#233;tant "Normal".
+L'&#233;l&#233;ment d'itin&#233;raire indique que cet aspect sp&#233;cifique est utilis&#233; quand un
+aiguillage a &#233;t&#233; d&#233;vi&#233; vers le chemin &#224; venir. La logique signalmast utilise cet &#233;l&#233;ment
+pour aider &#224; d&#233;terminer quel aspect doit &#234;tre affich&#233; l&#224; o&#249; il y a plusieurs
  aspects possibles.
 <p>
+L'&#233;l&#233;ment dccAspect, s'il est pr&#233;sent, est l'Identifiant du d&#233;codeur DCC accessoire signal par d&#233;faut pour cet aspect,
+Ces valeurs sont ensuite utilis&#233;es pour remplir les identifiants d'aspect quand un pilote de signal DCC ou LNCP est utilis&#233;.
+Les valeurs peuvent &#234;tre &#233;cras&#233;es par l'utilisateur lors de la cr&#233;ation ou de la modification du signalmast.
+<p>
+L'&#233;l&#233;ment de temporisation s'il est pr&#233;sent, permet &#224; une temporisation d'&#234;tre configur&#233;e entre l'&#233;volution de l'aspect sur chaque t&#234;te de signal o&#249; plusieurs t&#234;tes sont configur&#233;s sur un m&#226;t. <br>
+Ceci est id&#233;alement utilis&#233; dans le prototype o&#249; un signal &#224; commande manuelle (par exemple s&#233;maphore)
+devrait &#234;tre fix&#233; par le signaleur, donc seul la t&#234;te du signal (ou bras) pourrait
+&#234;tre d&#233;finie &#224; n'importe quel moment.
+<p>
+
+
 Ci-dessous les blocs d'aspect, il y a un bloc qui nomme tous les fichiers d'apparence valide
 , par exemple:
 <pre>
@@ -133,66 +131,74 @@ Ci-dessous les blocs d'aspect, il y a un bloc qui nomme tous les fichiers d'appa
       &lt;appearancefile href="appearance-SL-1-low.xml"/&gt;
     &lt;/appearancefiles&gt;
 </pre> 
-File
-Créer cette partie quand vous créez les fichiers apparence (voir ci-dessous),
-pour que le programme puisse localiser chacun d'eux et les afficher à l'utilisateur.
 
- <h3>Créer les fichiers apparence -*. xml </h3>
+Cr&#233;er cette partie quand vous cr&#233;ez les fichiers apparence (voir ci-dessous),
+pour que le programme puisse localiser chacun d'eux et les afficher pour l'utilisateur.
 
-Pour chaque type de signal sur le réseau (un projecteur,
-deux projecteurs, nain, sémaphore, etc), vous avez besoin de 
-créer un fichier apparence.
-File
-<p> chaque aspect ne doit pas être défini dans chaque fichier, comme
+ <h3>Cr&#233;er les fichiers apparence -*. xml </h3>
+
+Pour chaque type de signal sur le r&#233;seau (un projecteur,
+deux projecteurs, nain, s&#233;maphore, etc), vous avez besoin de 
+cr&#233;er un fichier apparence.
+
+<p> chaque aspect ne doit pas &#234;tre d&#233;fini dans chaque fichier,car
 chaque type de signal ne peut pas montrer tous les aspects.<p>
 
 <p>
-Chaque aspect que le signal peut montrer a besoin d'être
-décrit avec&lt;&lt;&lt; un bloc comme ceci:
-<<<<<<< DefineNewAspects.shtml
-<code><pre>
-    &lt;appearance&gt;<br>
-=======
+Chaque aspect que le signal peut montrer a besoin d'&#234;tre
+d&#233;crit avec un bloc comme ceci:
+
 <PRE>
     &lt;appearance&gt;<br>File
->>>>>>> 
       &lt;aspectname&gt;Clear&lt;/aspectname&gt;
       &lt;show&gt;green&lt;/show&gt;
       &lt;show&gt;red&lt;/show&gt;
       &lt;reference&gt;&lt;/reference&gt;
       &lt;imagelink&gt;&lt;/imagelink&gt;File
-<<<<<<< DefineNewAspects.shtml
-    &lt;/appearance&gt;<br>
-</pre></code>
-=======
-    &lt;/appearance&gt;<br>
-</PRE>
->>>>>>> 
+
+</pre>
 
 
-Le "aspectname" doit être au début, suivi par zéro ou plus
-d'éléments "show" .
+
+L'"aspectname" doit &#234;tre au d&#233;but, suivi par z&#233;ro ou plus
+d'&#233;l&#233;ments "show" .
 
 <p>
-L'élément "show" (s) sera utilisé pour définir les tête de signal, qui
-composent le signal; qui affichera  correctement cet aspect. Il peut y avoir zéro ou plus
+L'&#233;l&#233;ment "show" (s) sera utilis&#233; pour d&#233;finir les t&#234;tes de signal, qui
+composent le signal; qui affichera  correctement cet aspect. Il peut y avoir z&#233;ro ou plus
 , contenant "red", "flash red", "yellow", "flash yellow", "green", "flash green", "lunar", "flash lunar" or "dark".
 
 <p>
-Vous pouvez avoir autant d'éléments "référence" que vous le souhaitez, ils sont
+Vous pouvez avoir autant d'&#233;l&#233;ments "r&#233;f&#233;rence" que vous le souhaitez, ils sont
 lisible par l'utilisateur pour la documentation.
 
 <p>
-L'élément imagelink, s'il est présent, doit pointer
-un fichier image (. gif,. png ou. jpg) montrant ce à quoi ressemble cette apparence.
+L'&#233;l&#233;ment imagelink, s'il est pr&#233;sent, doit pointer
+un fichier image (. gif,. png ou. jpg) montrant ce &#224; quoi ressemble cette apparence.<br>
+Si vous cr&#233;ez ou utilisez des images personnalis&#233;es celles-ci doivent &#234;tre plac&#233;s dans un
+sous-r&#233;pertoire &#224; l'int&#233;rieur de la zone de pr&#233;f&#233;rence utilisateur, le lien de l'image doit ensuite
+&#234;tre pr&#233;fix&#233; par "pr&#233;f&#233;rence:" suivi par le reste du chemin.
+Tant que vous travaillez localement, utiliser pr&#233;f&#233;rence: ressources/chemins etc.
+Si tous les aspects de votre nouvelle d&#233;finition du signal travaillent sur votre panneau/r&#233;seau
+et vous envisagez de pr&#233;senter votre nouveau syst&#232;me de signalisation comme un patch pour JMRI,
+utiliser les chemins d'URL compl&#232;tes comme http://jmri.org/resources/icons/etc dans les fichiers XML
+de sorte qu'ils vont travailler &#224; la fois avec le programme JMRI local et pour les
+personnes qui vont les consult&#233; leur sur le site web JMRI.
 
-<h4> Apparences Spécifiques </h4>
-Comme les noms d'apparence sont tous définis par l'utilisateur et peut être dans n'importe quelle langue,
-il est nécessaire d'identifier certains aspects spécifiquement utilisé que diverses
-parties de JMRI vont demander spécifiquement. <br>
-Chaque aspect spécifique peut être donnée une image alternative à l'utilisation autre que celle donnée
-dans la définition apparence principale. <br>
-Cette information peut être entrée après l'information d'apparence sous la forme suivante.
+<h4> Apparences Sp&#233;cifiques </h4>
+Il y a quatre apparences sp&#233;cifiques auquelles JMRI doit et peut se r&#233;f&#233;rer, comme les noms d'apparence
+sont tous d&#233;finis par l'utilisateur et peut &#234;tre dans n'importe quelle langue Toutes sont optionnelles et d&#233;pendent du signalmast<br>
+<b>danger</b> C'est l'aspect le plus restrictif que le m&#226;t du signal peut montrer.
+Lorsque le chemin &#224; parcourir n'est pas d&#233;finie ou effac&#233; la logique de m&#226;t de signalisation fixera le m&#226;t de signal &#224; cette apparence. <br>
+<b>permissive</b> (Call-On) cette apparence est affich&#233; si le canton suivant est occup&#233;,
+mais qu'un autre train est autoris&#233; &#224; entrer. <br>
+<b>held</b> est utilis&#233; pour fournir une autre image sur le panneau pour indiquer que
+le signal a &#233;t&#233; maintenu &#224; Danger. <br>
+<b>Dark</b> est utilis&#233; pour fournir une autre image sur le panneau pour indiquer que
+le signal n'est pas allum&#233;. <br>
+Chaque aspect sp&#233;cifique peut  donn&#233;e une image alternative &#224; une utilisation autre que celle donn&#233;e
+dans la d&#233;finition principale de l'apparence. <br>
+Cette information peut &#234;tre entr&#233;e apr&#232;s l'information d'apparence sous la forme suivante.
 <PRE>
   &lt;specificappearances&gt;
     &lt;danger&gt;
@@ -209,28 +215,25 @@ Cette information peut être entrée après l'information d'apparence sous la fo
         &lt;aspect&gt;Not Lit&lt;/aspect&gt;
         &lt;imagelink&gt;notlit.gif&lt;/imagelink&lt;
     &lt;/dark&gt;
-  &lt;/specificap</pre>
-Les apparences spécifiques entrées dedans doivent correspondre aux apparences qui sont valables
-pour le mât, si un mât ne supporte pas l'apparence, alors il n'est pas nécessaire de l'inclure.
+  &lt;/specificapappearance&gt;</pre>
+Pour chaque aspect sp&#233;cifique entr&#233;, l'entr&#233;e correspondante <Aspect>
+doit &#234;tre un <aspectname> valides qui se produit dans les d&#233;finitions d'apparence
+pour le m&#226;t
+
  <h4>Cartographie Aspect</h4>
-La cartographie aspect est utilisé pour aider à déterminer la progression des apparences de signalisation.
-Le but de la carte est de définir quelles apparences potentielles sont valables selon
-l'apparence qui est affichée sur le mât du signal qui est devant nous.
-  Cette cartographie peut être un simple un à un, Ex. Mât de signal avancé est montrant l'Approche, nous devrions montrer Claire.
-  Ou un système plus complexe un-à-plusieurs panneau où il pourrait y avoir de multiples apparences que l'on pourrait afficher,
-<<<<<<< DefineNewAspects.shtml
- Exemple: signal Avancé montre Arrêt, mais nous voudrions pouvoir afficher soit l'Approche soit l'Approche Divergente dépendantes d'autres conditions.
-=======
- Exemple: signal Avancé montre Arrêt, mais nous voudrions pouvoir afficher soit l'Approche soit l'Approche Divergente dépendantes d'autres conditions.
- <p>
-La valeur de l'Aspect Avancé peut être n'importe quoi de défini dans le tableau Aspect pour ce système de signalisation. <br> 
- La valeur de notre aspect, doit être celui qui est défini et soutenu par la définition
+La cartographie aspect est utilis&#233; pour aider &#224; d&#233;terminer la progression des apparences de signalisation.
+Le but de la carte est de d&#233;finir quelles apparences potentielles sont valables selon
+l'apparence qui est affich&#233;e sur le m&#226;t du signal qui est devant nous.
+  Cette cartographie peut &#234;tre un simple un &#224; un, Ex. M&#226;t de signal avanc&#233; montre l'Approche, nous devrions montrer Claire.
+  Ou un syst&#232;me plus complexe un-&#224;-plusieurs panneau o&#249; il pourrait y avoir de multiples apparences que l'on pourrait afficher,
+<p>
+La valeur de l'Aspect Avanc&#233; peut &#234;tre n'importe quoi de d&#233;fini dans le tableau Aspect pour ce syst&#232;me de signalisation. <br> 
+ La valeur de notre aspect, doit &#234;tre celui qui est d&#233;fini et soutenu par la d&#233;finition
   dans le fichier apparence.
->>>>>>> 
 <p>
 Tous les mappings, sont contenues dans les balises <aspectMappings>, au sein de leurs propres balises <aspectMapping>
-<<<<<<< DefineNewAspects.shtml
-<code><pre>
+
+<pre>
 &lt;aspectMappings&gt;
     &lt;aspectMapping&gt;
         &lt;advancedAspect&gt;Approach&lt;/advancedAspect&gt;
@@ -243,33 +246,47 @@ Tous les mappings, sont contenues dans les balises <aspectMappings>, au sein de 
         &lt;ourAspect&gt;Diverging Approach&lt;/ourAspect&gt;
     &lt;/aspectMapping&gt;
 &lt;/aspectMappings&gt;
-</pre></code>
-=======
-<PRE>
-&lt;aspectMappings&gt;
-    &lt;aspectMapping&gt;
-        &lt;advancedAspect&gt;Approach&lt;/advancedAspect&gt;
-        &lt;ourAspect&gt;Clear&lt;/ourAspect&gt;
-    &lt;/aspectMapping&gt;
-    &lt;aspectMapping&gt;
-        &lt;advancedAspect&gt;Stop&lt;/advancedAspect&gt;
-        &lt;ourAspect&gt;Approach&lt;/ourAspect&gt;       
-        &lt;ourAspect&gt;Diverging Approach&lt;/ourAspect&gt;
-    &lt;/aspectMapping&gt;
-&lt;/aspectMappings&gt;
+
 </PRE>
->>>>>>> 
+
 <p>
 
-<h3> Vérifiez votre travail </h3>
+<h3> V&#233;rifiez votre travail </h3>
 
-Vous pouvez utiliser les outils " Vérifier le fichier XML" et "Valider le fichier XML"
- sous la fenêtre JMRI "Debug" fenêtre pour vérifier vos fichiers.
-Le premier vérifie le format de base: que tous les caractères  < et >
+Vous pouvez utiliser les outils " V&#233;rifier le fichier XML" et "Valider le fichier XML"
+ sous la fen&#234;tre JMRI "Debug" fen&#234;tre pour v&#233;rifier vos fichiers.
+Le premier v&#233;rifie le format de base: que tous les caract&#232;res  < et >
  soient au bon endroit? Etc. Le second permet de s'assurer que
-les éléments de droite sont dans les bons endroits, et il est un peu plus intensif.
+les &#233;l&#233;ments de droite sont dans les bons endroits, et il est un peu plus intensif.
+
+<h3>Modifications apport&#233;es &#224; un syst&#232;me de signalisation existant </h3>
+
+Il ya un certain nombre de d&#233;finitions de signalisation d&#233;j&#224; fournis dans JMRI qui sont
+situ&#233; dans le r&#233;pertoire "xml/signal", certains d'entre eux peuvent g&#233;n&#233;ralement r&#233;pondre &#224; votre 
+exigences mais certains peuvent n&#233;cessiter des modifications pour s'adapter au mat&#233;riel que vous utilisez,
+ou il ya des variations locales dans les op&#233;rations, ou tout simplement que vous n'avez pas la possibilit&#233; de
+travailler &#224; un ensemble enti&#232;rement prototypique de signaux.
+Dans ce cas, il est possible de modifier et de cr&#233;er vos propres fichiers d'apparence qui sera
+l'emporter sur les JMRI celles fournies. Vous devrez d'abord cr&#233;er un sous-r&#233;pertoire dans
+le r&#233;pertoire de ressources situ&#233; dans la z&#244;ne de pr&#233;f&#233;rences de l'utilisateur appel&#233; "signals", vous
+aurez alors besoin de cr&#233;er un sous-r&#233;pertoire dans lequel il a exactement le m&#234;me nom que le nom
+JMRI fourni. De l&#224;, tous les fichiers d'apparence que vous cr&#233;ez ou copiez soit seront 
+ajouter &#224; la liste de m&#226;t pour ce syst&#232;me de signalisation soit &#233;craseront le m&#226;t signal JMRI pr&#233;d&#233;finie
+<p>
+L'avantage de placer les fichiers (nouveaux  et modifi&#233;s) de l'apparence du m&#226;t de signalisation ici est que lorsque
+JMRI est mis &#224; jour, ces fichiers ne seront pas &#233;cras&#233;es et perdues!.
+<li>
+<li>
+Lexique:
+<li>* SignalMast = M&#226;t de Signalisation
+<li>* SignalHead = T&#234;te de signal (1 lampe)
+<li>* Aspect= couleur du feu
+<li>* Apparence (du M&#226;t)= ce qu'il signifie ex: Rappel de ralentissement
+
+</div>
+
 
 <!--#include virtual="/Footer" -->
 </body>
-</html>
+</html>signal
 

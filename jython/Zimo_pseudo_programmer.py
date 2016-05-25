@@ -25,8 +25,6 @@
 #
 # Components based on Bob Jacobsen's scripts in JMRI distribution. 
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import java
 import javax.swing
@@ -392,7 +390,7 @@ class LocoZimoPseudoProg(jmri.jmrit.automat.AbstractAutomaton) :
 # CV 300 = 129 for direction-change sound
 # CV 300 = 130 for the brake squeal
 # CV 300 = 131 thyristor-control sound (electric engine)
-# CV 300 = 132 for the “start” whistle
+# CV 300 = 132 for the start whistle
 # CV 300 = 133 for blow-off sound =cylinder valves (STEAM only)
 # NOTE: the blow-off sound selected here is also used as the blow-off sound actuated with a func-
 # tion key (see CV #312). 

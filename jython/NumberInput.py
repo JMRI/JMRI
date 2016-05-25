@@ -4,9 +4,9 @@
 # Author: Bob Jacobsen, copyright 2008
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
+import jmri
+import java
 
 # Define a listener which appends a single character (from its
 # local 'digit' variable) to a memory (in its local 'memory' variable)

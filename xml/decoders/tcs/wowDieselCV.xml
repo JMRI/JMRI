@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for WoW Diesel -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<variable CV="3" item="Accel" default="20" tooltip="Sets the acceleration rate (delay or momentum), 1(default)" comment="Range 0-255">
+		<decVal max="255"/>
+		<label>Accel 1 Rate</label>
+		<label xml:lang="it">Grado Accell.1</label>
+		<comment xml:lang="it">Valori 0-255</comment>
+		<tooltip xml:lang="it">Progr. grado accellerazione (ritardo o inerzia), valori 0(default)-255</tooltip>
+	</variable>
+	<variable CV="4" item="Decel" default="60" tooltip="Sets the deceleration rate (delay or momentum), 1(default)" comment="Range 0-255">
+		<decVal max="255"/>
+		<label>Decel 1 Rate</label>
+		<label xml:lang="it">Grado Decell.1</label>
+		<comment xml:lang="it">Valori 0-255</comment>
+		<tooltip xml:lang="it">Progr. grado decellerazione (ritardo o inerzia), valori 0-255</tooltip>
+	</variable>
+	<variable item="Advanced Group 2 Option 4" CV="182" mask="XXXXVXXX" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Motor Delay</label>
+	</variable>
+	<variable item="Dynamic Lowest Speed Step" CV="189" default="10" tooltip="Lowest speed step (128 SS mode) the loco can go with dynamic brakes turned on">
+		<decVal max="126"/>
+	</variable>
+	<variable item="Dynamic Decel Rate" CV="190" default="50" tooltip="Decel Rate when Dynamic brakes are on">
+		<decVal/>
+	</variable>
+	<variable item="Dynamic Speed Step Decrease" CV="191" default="5" tooltip="Number of speed steps the loco will slow down per press of the dynamic brake Function">
+		<decVal max="126"/>
+	</variable>
+	<!-- Manual 4 CV programming -->
+	<variable CV="201" item="CV201" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable CV="202" item="CV202" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable CV="203" item="CV203" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable CV="204" item="CV204" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable item="Sound Setting 21" CV="T2CV.4.2" default="200" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
+		<decVal max="255"/>
+		<label>Random Sound 1 frequency level</label>
+	</variable>
+	<variable item="Sound Setting 22" CV="T2CV.4.3" default="200" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
+		<decVal max="255"/>
+		<label>Random Sound 2 frequency level</label>
+	</variable>
+	<variable item="Sound Setting 23" CV="T2CV.4.4" default="64" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
+		<decVal max="255"/>
+		<label>Random Sound 3 frequency level</label>
+	</variable>
+	<variable item="Sound Setting 24" CV="T2CV.4.5" default="16" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
+		<decVal max="255"/>
+		<label>Random Sound 4 frequency level</label>
+	</variable>
+	<variable item="Sound Setting 25" CV="T2CV.4.6" default="768" tooltip="2560 is about 1 second between times through random sound routine" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+		<label>Random Sound Overall Timer</label>
+	</variable>
+	<variable item="Sound Setting 26" CV="T2CV.4.7" default="15" tooltip="The speed at which Random sounds will stop playing (speed of zero stops random sounds from playing)">
+		<decVal max="126"/>
+		<label>Random Sound Cutout Speed Step</label>
+	</variable>
+	<variable item="Sound Option 4" CV="T2CV.4.9" default="1">
+		<enumVal>
+			<enumChoice choice="Traditional throttle"/>
+			<enumChoice choice="Prototype throttle"/>
+			<enumChoice choice="Manual notch mode"/>
+		</enumVal>
+		<label>Throttle Type</label>
+	</variable>
+	<variable item="Sound Setting 1" CV="T2CV.4.10" default="100" >
+		<decVal max="100"/>
+		<label>Global volume</label>
+	</variable>
+	<variable item="Sound Group 5 Checkbox 1" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXXXXXV">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Crew Alert enable</label>
+	</variable>
+	<variable item="Sound Group 5 Checkbox 5" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXVXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Forward sound enable</label>
+	</variable>
+	<variable item="Sound Group 5 Checkbox 6" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXVXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Reverse sound enable</label>
+	</variable>
+	<variable item="Sound Group 5 Checkbox 7" CV="T2CV.4.12" default="0" mask="XXXXXXXXXVXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Stop sound enable</label>
+	</variable>
+	<variable item="Sound Group 5 Checkbox 8" CV="T2CV.4.12" default="1" mask="XXXXXXXXVXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Direction change sound enable</label>
+	</variable>
+	<variable item="Sound Group 6 Checkbox 1" CV="T2CV.4.12" default="1" mask="XXXXXXXVXXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Random Sound 1 enable</label>
+	</variable> 
+	<variable item="Sound Group 6 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXVXXXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Random Sound 2 enable</label>
+	</variable> 
+	<variable item="Sound Group 6 Checkbox 3" CV="T2CV.4.12" default="0" mask="XXXXXVXXXXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Random Sound 3 enable</label>
+	</variable> 
+	<variable item="Sound Group 6 Checkbox 4" CV="T2CV.4.12" default="0" mask="XXXXVXXXXXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Random Sound 4 enable</label>
+	</variable> 
+	<variable item="Brake grinding noise start speed" CV="T2CV.4.13" default="15" >
+		<decVal max="126"/>
+	</variable>
+	<variable label="Dual function F0F" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXXV" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F0R" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXVX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F1" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXXXVXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F2" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXXVXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F3" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXVXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F4" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXVXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F5" CV="T2CV.4.14" default="0" mask="XXXXXXXXXVXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F6" CV="T2CV.4.14" default="0" mask="XXXXXXXXVXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F7" CV="T2CV.4.14" default="0" mask="XXXXXXXVXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F8" CV="T2CV.4.14" default="1" mask="XXXXXXVXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F9" CV="T2CV.4.14" default="0" mask="XXXXXVXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F10" CV="T2CV.4.14" default="0" mask="XXXXVXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F11" CV="T2CV.4.14" default="0" mask="XXXVXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F12" CV="T2CV.4.14" default="0" mask="XXVXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F13" CV="T2CV.4.14" default="0" mask="XVXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable item="Dynamic brake notch setting" CV="T2CV.4.15" default="3"  tooltip="controls what notch the prime mover goes into when the Dynamic brakes are turned on">
+		<enumVal>
+			<enumChoice choice="Idle"/>
+			<enumChoice choice="Notch 1"/>
+			<enumChoice choice="Notch 2"/>
+			<enumChoice choice="Notch 3"/>
+			<enumChoice choice="Notch 4"/>
+			<enumChoice choice="Notch 5"/> 
+			<enumChoice choice="Notch 6"/>
+			<enumChoice choice="Notch 7"/>
+			<enumChoice choice="Notch 8"/>
+			<enumChoice choice="Notch determined by throttle setting"/>
+		</enumVal>
+	</variable>
+	<variable item="Sound Setting 3" CV="T2CV.4.17" default="10" tooltip="at approx this bemf value the decoder should be in notch 1, the decoder assigns this CV during the calibration process but it can be manually overwritten. A value of 0 means the motor is moving with no friction, a value of 255 means the motor is stalled, This is used only in prototype mode">
+		<decVal max="255"/>
+		<label>BEMF calibration low</label>
+	</variable>
+	<variable item="Sound Setting 4" CV="T2CV.4.18" default="40" tooltip="at approx this bemf value the decoder should be in notch 8, the decoder assigns this CV during the calibration process but it can be manually overwritten. A value of 0 means the motor is moving with no friction, a value of 255 means the motor is stalled, This is used only in prototype mode">
+		<decVal max="255"/>
+		<label>BEMF calibration high</label>
+	</variable>
+	<variable item="Sound Group 7 Checkbox 1" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXXXXV">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Manual notching feedback/relay sound</label>
+	</variable>
+	<variable item="Auto notch down prime mover when brakes are on" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXXXVX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable item="Sound Group 7 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXVXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Mute on Start up</label>
+	</variable>
+	<variable item="Sound Group 7 Checkbox 4" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXVXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Switch/Mainline Mode Audio Feedback</label>
+	</variable>
+	<variable item="Sound Group 7 Checkbox 5" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXVXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Rotate Horn/Bell Audio Feedback</label>
+	</variable>
+	<variable item="Sound Group 7 Checkbox 6" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXVXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Light Mode/Sound Mode Audio Feedback</label>
+	</variable>
+	<variable item="Sound Group 7 Checkbox 7" CV="T2CV.4.19" default="0" mask="XXXXXXXXXVXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Audio Auto Shut-off Timer</label>
+	</variable>
+	<variable item="Sound Group 7 Checkbox 8" CV="T2CV.4.19" default="1" mask="XXXXXXXXVXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function 2 Toggle in Audio Assist</label>
+		<tooltip>Digitrax bit: set simulates button 2 as toggle while in Audio Assist mode</tooltip>
+	</variable>
+	<variable item="Sound Group 8 Checkbox 1" CV="T2CV.4.19" default="0" mask="XXXXXXXVXXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Dual Prime Movers</label>
+	</variable>
+	<variable item="Increase in Dynamic Brake power increases throttle notch" CV="T2CV.4.19" default="1" mask="XXXXXXVXXXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<tooltip>When the dynamic brakes are on the prime mover goes to notch x, if you increase the db braking power the prime mover notches to x+1, press the DB again and it goes to x+2 </tooltip>
+	</variable>
+	<variable item="Sound Group 8 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXVXXXXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Reverse Directional Horns</label>
+		<tooltip>If set the directional horns (if enabled) are played in opposite direction from normal, use along with Normal Direction Of Motion setting</tooltip>
+	</variable>
+	<variable item="Sound Setting 2" CV="T2CV.4.21" default="256" mask="VVVVVVVVVVVVVVVV" tooltip="a value of 256 is about 3 minutes">
+		<decVal max="65535"/>
+		<label>Audio Auto Shut-off Time</label>
+	</variable>
+	<variable item="Sound Setting 5" CV="T2CV.4.22" default="5" mask="VVVVVVVVVVVVVVVV" tooltip="Time delay when the two prime movers notch up, Delay Time in Seconds = Value/2">
+		<decVal max="9"/>
+		<label>Dual Prime Mover Delay</label>
+	</variable>
+	<variable item="Sound Setting 6" CV="T2CV.4.25" default="9" mask="VVVVVVVVVVVVVVVV" tooltip="controls how loco speed effects current notch The higher the value the higher the notch will be (in prototype mode)">
+		<decVal max="255"/>
+		<label>Prototype mode Speed to Notch ratio adjustment</label>
+	</variable>
+	<variable item="Sound Setting 7" CV="T2CV.4.26" default="8" mask="VVVVVVVVVVVVVVVV" tooltip="adjusts how drastic notch changes are from accelerating/decelerating Higher values means larger notch changes from accel/decel (in prototype mode)">
+		<decVal max="255"/>
+		<label>Prototype mode momentum effect</label>
+	</variable>
+	<variable item="Sound Setting 8" CV="T2CV.4.27" default="50" mask="VVVVVVVVVVVVVVVV" tooltip="Controls how BEMF effects prototype mode, this is auto calculated when the user calibrates the engine, but can be manually over written. The higher the value the more effect BEMF has on notching. (in prototype mode)">
+		<decVal max="255"/>
+		<label>Prototype mode Load (BEMF) adjustment</label>
+	</variable>
+	<variable item="Sound Setting 9" CV="T2CV.4.28" default="80" mask="VVVVVVVVVVVVVVVV" tooltip="Controls how big of a change is needed in order for the engine to change notches in prototype mode. The higher the value the bigger the change required to make the decoder change notch (in prototype mode)">
+		<decVal max="255"/>
+		<label>Hysteresis </label>
+	</variable>
+	<variable item="Sound Setting 10" CV="T2CV.4.29" default="43" mask="VVVVVVVVVVVVVVVV" tooltip="Controls how long the engineer must be idle for the crew alert alarm to sound">
+		<decVal max="65535"/>
+		<label>Crew Alert Timer Reset</label>
+	</variable>
+	<variable item="Sound Option 8" CV="T2CV.4.30" default="13" mask="VVVVVVVVVVVVVVVV" tooltip="Determines which light function turns on when the crew alert alarm sounds. Valid Values are 0-12. (Use a value of 13+ to disable the light feature)">
+		<enumVal>
+			<enumChoice choice="Function 0"/>
+			<enumChoice choice="Function 1"/>
+			<enumChoice choice="Function 2"/>
+			<enumChoice choice="Function 3"/>
+			<enumChoice choice="Function 4"/>
+			<enumChoice choice="Function 5"/>
+			<enumChoice choice="Function 6"/>
+			<enumChoice choice="Function 7"/>
+			<enumChoice choice="Function 8"/>
+			<enumChoice choice="Function 9"/>
+			<enumChoice choice="Function 10"/>
+			<enumChoice choice="Function 11"/>
+			<enumChoice choice="Function 12"/>
+			<enumChoice choice="Disabled"/>
+		</enumVal>
+		<label>Crew Alert light function</label>
+	</variable>
+	<variable item="Sound Setting 13" CV="T2CV.4.31" default="1" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 1 in traditional throttle mode">
+		<decVal max="126"/>
+		<label>Notch 1 transition speed step </label>
+	</variable>
+	<variable item="Sound Setting 14" CV="T2CV.4.32" default="6" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 2 in traditional throttle mode">
+		<decVal max="126"/>
+		<label>Notch 2 transition speed step </label>
+	</variable>
+	<variable item="Sound Setting 15" CV="T2CV.4.33" default="13" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 3 in traditional throttle mode">
+		<decVal max="126"/>
+		<label>Notch 3 transition speed step </label>
+	</variable>
+	<variable item="Sound Setting 16" CV="T2CV.4.34" default="20" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 4 in traditional throttle mode">
+		<decVal max="126"/>
+		<label>Notch 4 transition speed step </label>
+	</variable>
+	<variable item="Sound Setting 17" CV="T2CV.4.35" default="27" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 5 in traditional throttle mode">
+		<decVal max="126"/>
+		<label>Notch 5 transition speed step </label>
+	</variable>
+	<variable item="Sound Setting 18" CV="T2CV.4.36" default="34" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 6 in traditional throttle mode">
+		<decVal max="126"/>
+		<label>Notch 6 transition speed step </label>
+	</variable>
+	<variable item="Sound Setting 19" CV="T2CV.4.37" default="41" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 7 in traditional throttle mode">
+		<decVal max="126"/>
+		<label>Notch 7 transition speed step </label>
+	</variable>
+	<variable item="Sound Setting 20" CV="T2CV.4.38" default="48" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 8 in traditional throttle mode">
+		<decVal max="126"/>
+		<label>Notch 8 transition speed step </label>
+	</variable>
+	<variable item="Switch mode acceleration" CV="T2CV.4.50" default="5" mask="VVVVVVVVVVVVVVVV" tooltip="The value loaded into CV3 when switch mode is enabled">
+		<decVal max="255"/>
+	</variable>
+	<variable item="Switch mode deceleration" CV="T2CV.4.51" default="5" mask="VVVVVVVVVVVVVVVV" tooltip="The value loaded into CV4 when switch mode is enabled">
+		<decVal max="255"/>
+	</variable>
+	<variable item="Main line mode acceleration" CV="T2CV.4.52" default="20" mask="VVVVVVVVVVVVVVVV" tooltip="The value loaded into CV3 when main line mode is enabled">
+		<decVal max="255"/>
+	</variable>
+	<variable item="Main line mode deceleration" CV="T2CV.4.53" default="60" mask="VVVVVVVVVVVVVVVV" tooltip="The value loaded into CV4 when main line mode is enabled">
+		<decVal max="255"/>
+	</variable>
+	<!-- Volume groups -->
+	<variable item="Volume Group 1" CV="T3CV.6.0.1" default="15">
+		<decVal max="100"/>
+		<label>Air Compressor</label>
+	</variable>
+	<variable item="Volume Group 2" CV="T3CV.6.0.2" default="15">
+		<decVal max="100"/>
+		<label>Air Spitter</label>
+	</variable>
+	<variable item="Volume Group 3" CV="T3CV.6.0.3" default="16">
+		<decVal max="100"/>
+		<label>Bell</label>
+	</variable>
+	<variable item="Volume Group 4" CV="T3CV.6.0.4" default="10">
+		<decVal max="100"/>
+		<label>Brake Release</label>
+	</variable>
+	<variable item="Volume Group 5" CV="T3CV.6.0.5" default="10">
+		<decVal max="100"/>
+		<label>Brake Squeal</label>
+	</variable>
+	<variable item="Volume Group 6" CV="T3CV.6.0.6" default="15">
+		<decVal max="100"/>
+		<label>Coupler Clank</label>
+	</variable>
+	<variable item="Volume Group 7" CV="T3CV.6.0.7" default="15">
+		<decVal max="100"/>
+		<label>Crew Alert</label>
+	</variable>
+	<variable item="Volume Group 8" CV="T3CV.6.0.8" default="15">
+		<decVal max="100"/>
+		<label>Direction Change</label>
+	</variable>
+	<variable item="Volume Group 9" CV="T3CV.6.0.9" default="45">
+		<decVal max="100"/>
+		<label>Dynamic Brake</label>
+	</variable>
+	<variable item="Volume Group 10" CV="T3CV.6.0.10" default="10">
+		<decVal max="100"/>
+		<label>Exhaust Fan</label>
+	</variable>
+	<variable item="Volume Group 11" CV="T3CV.6.0.11" default="100">
+		<decVal max="100"/>
+		<label>Forward Sound</label>
+	</variable>
+	<variable item="Volume Group 12" CV="T3CV.6.0.12" default="100">
+		<decVal max="100"/>
+		<label>Horn long</label>
+	</variable>
+	<variable item="Volume Group 13" CV="T3CV.6.0.13" default="100">
+		<decVal max="100"/>
+		<label>Horn quill</label>
+	</variable>
+	<variable item="Volume Group 14" CV="T3CV.6.0.14" default="100">
+		<decVal max="100"/>
+		<label>Horn Short</label>
+	</variable>
+	<variable item="Volume Group 15" CV="T3CV.6.0.15" default="10">
+		<decVal max="100"/>
+		<label>Manual Notch Down</label>
+	</variable>
+	<variable item="Volume Group 16" CV="T3CV.6.0.16" default="10">
+		<decVal max="100"/>
+		<label>Manual Notch Up</label>
+	</variable>
+	<variable item="Volume Group 17" CV="T3CV.6.0.17" default="50">
+		<decVal max="100"/>
+		<label>Momentum</label>
+	</variable>
+	<variable item="Volume Group 18" CV="T3CV.6.0.18" default="40">
+		<decVal max="100"/>
+		<label>Mute</label>
+	</variable>
+	<variable item="Volume Group 19" CV="T3CV.6.0.19" default="100">
+		<decVal max="100"/>
+		<label>Prime mover</label>
+	</variable>
+	<variable item="Volume Group 20" CV="T3CV.6.0.20" default="100">
+		<decVal max="100"/>
+		<label>Prime Mover Ignition</label>
+	</variable>
+	<variable item="Volume Group 21" CV="T3CV.6.0.21" default="100">
+		<decVal max="100"/>
+		<label>Reverse Sound</label>
+	</variable>
+	<variable item="Volume Group 22" CV="T3CV.6.0.22" default="60">
+		<decVal max="100"/>
+		<label>Rotate Whistle</label>
+	</variable>
+	<variable item="Volume Group 23" CV="T3CV.6.0.23" default="100">
+		<decVal max="100"/>
+		<label>Sanding Valve</label>
+	</variable>
+	<variable item="Volume Group 24" CV="T3CV.6.0.24" default="100">
+		<decVal max="100"/>
+		<label>Stop Sound</label>
+	</variable>
+	<variable item="Volume Group 25" CV="T3CV.6.0.25" default="15">
+		<decVal max="100"/>
+		<label>WindShield Wipers</label>
+	</variable>
+</variables>

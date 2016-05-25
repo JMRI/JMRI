@@ -102,6 +102,9 @@ running your Mac from within JMRI.
 And, of course, a 
 <a href="http://www.google.com/search?client=safari&rls=en-us&q=applescript&ie=UTF-8&oe=UTF-8">Google search</a>
 will turn up lots of interesting resources.    
+
 <!--#include virtual="/Footer" -->
-</body>
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  </body>
 </html>

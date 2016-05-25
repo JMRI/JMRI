@@ -1,5 +1,3 @@
-// StatusFrameTest.java
-
 package jmri.jmrix.pricom.pockettester;
 
 import junit.framework.Test;
@@ -8,8 +6,9 @@ import junit.framework.TestSuite;
 
 /**
  * JUnit tests for the StatusFrame class
- * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2005
+ * @version	$Revision$
  */
 public class StatusFrameTest extends TestCase {
 
@@ -22,8 +21,10 @@ public class StatusFrameTest extends TestCase {
         StatusFrame f = new StatusFrame();
         f.initComponents();
         f.setVisible(true);
-        f.setSource(new DataSource(){
-            void sendBytes(byte[] bytes) {}
+        f.setSource(new DataSource() {
+
+            void sendBytes(byte[] bytes) {
+            }
         });
         f.asciiFormattedMessage(PocketTesterTest.version);
         f.asciiFormattedMessage(PocketTesterTest.speed0003A);
@@ -33,7 +34,7 @@ public class StatusFrameTest extends TestCase {
         f.asciiFormattedMessage(PocketTesterTest.status3);
         f.asciiFormattedMessage(PocketTesterTest.status4);
         f.asciiFormattedMessage(PocketTesterTest.status5);
-        
+
         f.dispose();
     }
 
@@ -42,17 +43,19 @@ public class StatusFrameTest extends TestCase {
         StatusFrame f = new StatusFrame();
         f.initComponents();
         f.setVisible(true);
-        f.setSource(new DataSource(){
-            void sendBytes(byte[] bytes) {}
+        f.setSource(new DataSource() {
+            void sendBytes(byte[] bytes) {
+            }
         });
         f.asciiFormattedMessage(PocketTesterTest.version);
         f.asciiFormattedMessage(PocketTesterTest.speed0003A);
         f.asciiFormattedMessage(PocketTesterTest.idlePacket);
         f.asciiFormattedMessage(PocketTesterTest.status6);
         f.asciiFormattedMessage(PocketTesterTest.status2);
-        
+
         f.dispose();
     }
+
     // from here down is testing infrastructure
     public StatusFrameTest(String s) {
         super(s);
@@ -71,4 +74,3 @@ public class StatusFrameTest extends TestCase {
     }
 
 }
-

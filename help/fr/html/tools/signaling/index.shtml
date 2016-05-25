@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-	<!-- $Id: index.shtml,v 1.10 2010/04/27 04:37:28 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-09-27-->
+<!-- $Id$ -->
+<!-- Translated by Blorec Herv&#233; le 2013-09-30-->
 <title>JMRI: Signaling</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -28,399 +28,394 @@ JMRI: Signalisation
 </H2>
 
 
-La Modélisation de la signalisation  ferroviaire sur un réseau peut être fait de différentes façons,
-allant de "feux rouges" pour terminer par l'émulation d'un prototype particulier de signalisation logique.
+La Mod&#233;lisation de la signalisation  ferroviaire sur un r&#233;seau peut &#234;tre fait de diff&#233;rentes fa&#231;ons,
+allant de "feux rouges" pour terminer par l'&#233;mulation d'un prototype particulier de signalisation logique.
 
 <p>
-Elmer McKay a fourni une très belle
-<a  href="IntroToSignalingYourMRR.html"> discussion sur la façon de démarré </a>
-avec les signaux de votre réseau.
+Elmer McKay a fourni une tr&#232;s belle
+<a  href="IntroToSignalingYourMRR.html"> discussion sur la fa&#231;on de d&#233;marrer </a>
+avec les signaux de votre r&#233;seau.
 
 <P>
-JMRI fournit plusieurs choses différentes qui peuvent aider avec ceci:
+JMRI fournit plusieurs choses diff&#233;rentes qui peuvent aider avec ceci:
 <OL>
 <LI> L'outil JMRI
-<A HREF="#table">  "Tableau Tête de Signal" </A>
- vous permet de contrôler l'apparence
-des têtes de signa individuelles sur votre réseau. Ceci peut être utile pour le
-débogage, par exemple.
+<A HREF="#Tableau">  "Tableau T&#234;te de Signal" </A>
+ vous permet de contr&#244;ler l'apparence
+des t&#234;tes de signaux individuelles sur votre r&#233;seau. Ceci peut &#234;tre utile pour le
+d&#233;bogage, par exemple.
 L'outil JMRI
-<A HREF="#logic"> «Logique simple signal" </A>
+<A HREF="#logic"> "Logique simple signal" </A>
  peut fournir des versions simples
-de canton de verrouillage et de signalisation.
+de canton, de verrouillage et de signalisation.
 Des outils JMRI
-<A HREF="#logix"> «Logix» </a>
- sont à la base des blocs de construction logiques pour
- contrôle de parties du réseau.
-Ils peuvent être utilisés
+<A HREF="#logix"> "Logix" </a>
+ sont &#224; la base logique de construction des cantons pour le
+ contr&#244;le de parties du r&#233;seau.
+Ils peuvent &#234;tre utilis&#233;s
 pour configurer des logiques de signalisation
-en remplissant des formulaires, sans écrire de code.
+en remplissant des formulaires, sans &#233;crire de code.
 <P>
 <LI> Les 
-     <a href="../scripting/index.shtml"> scripts </a>
-    JMRI offrent une capacité de programmation complète
+   <a href="../scripting/index.shtml"> scripts </a>
+    JMRI offrent une capacit&#233; de programmation compl&#232;te
      pour les signaux de commande exactement comme vous le souhaitez.
 Avec les <A HREF="#automat"> Classes automatisation </A> de JMRI
-il est facile de coder votre propre signal
-logique dans le programme. C'est ainsi que la  signalisation du Cornwall Railroad de Nick Kulp
-a été réalisée.
+il est facile de coder votre propre logique signal dans le programme. C'est ainsi que la  signalisation du Cornwall Railroad de Nick Kulp
+a &#233;t&#233; r&#233;alis&#233;e.
 JMRI fournit une
-<A HREF="#widgets">  boite à outils complète </A>
-pour vous faire réaliser facilement
-toute sorte d'automatisation de votre réseau par l'écriture de votre propre programme.
+<A HREF="#widgets">  boite &#224; outils compl&#232;te </A>
+pour vous faire r&#233;aliser facilement
+toute sorte d'automatisation de votre r&#233;seau par l'&#233;criture de votre propre programme.
 </OL>
 <BR>
 Il y a plus d'informations sur chacun de ceux-ci ci-dessous.
-Quand vous descendez dans cette liste, la tâche devient de plus en plus technique,
-mais vous avez plus de liberté pour le modèle que vous voulez exactement.
+Quand vous descendez dans cette liste, la t&#226;che devient de plus en plus technique,
+mais vous avez plus de libert&#233; pour le mod&#232;le que vous voulez exactement.
 
 <P>
-De plus, il y a des gens qui travaillent sur une signalisation aux capacités plus avancées
+De plus, il y a des gens qui travaillent sur une signalisation aux capacit&#233;s plus avanc&#233;es
  au sein du projet JMRI.
-Bien qu'il soit trop tôt pour en parler
-dans le détail, l'idée est de fournir des moyens de conduite et de
-<a  href="AspectSignaling.shtml"> signalisation prototype basée sur des aspects et des apparences </a>
-ainsi que le dispatching CTC  et de verrouillage,
-sans que l'utilisateur ait besoin d'écrire tout un script ou du code Java.
+Bien qu'il soit trop t&#244;t pour en parler
+dans le d&#233;tail, l'id&#233;e est de fournir des moyens de conduire
+<a  href="AspectSignaling.shtml"> une signalisation prototype bas&#233;e sur des aspects et des apparences </a>
+ainsi que le dispatching CTC  et le verrouillage,
+sans que l'utilisateur ait besoin d'&#233;crire tout un script ou du code Java.
 Le
-<a href="http://groups.yahoo.com/group/jmriusers/"> groupe de discussions jmriusers  </A>
+<a href="http://groups.yahoo.com/group/jmriusers/"> groupe de discussions jmriusers</A>
 aura plus d'info sur ce qui sera disponible.
 
 <P>
 <a name="contents"><h3>Contenus</h3></a>
 
 
-	<p> La documentation ci-dessous décrit la signalisation avec JMRI, et discute de la configuration
-des situations de signal de base. La documentation est divisée en sections; cliquez ci-dessous pour
-un accès facile à une section cotée. Si vous préférez essayer avant de lire beaucoup,
-lire l'<a href="#intro">'introduction à SSL </a>,
+	<p> La documentation ci-dessous d&#233;crit la signalisation avec JMRI, et discute de la configuration
+des situations du signal de base. La documentation est divis&#233;e en sections; cliquez ci-dessous pour
+un acc&#232;s facile &#224; une section cot&#233;e. Si vous pr&#233;f&#233;rez essayer avant de lire beaucoup,
+lire l'<a href="#intro">'introduction &#224; SSL </a>,
 puis cliquez sur<a href="#start"> Mise en route </a>
 et suivez ces instructions. Revenez ici pour lire ce que vous avez fait.
-</p> <ul>
-<li> <a href="#terms"> Vocabulaire de base </a> </li>
-<li> <a href="#table"> La Table Tête de Signal (Head Signal) </a> </li>
-<li><a href="#intro"> Introduction à des outils logique simple de signal  </a></li>
-<li><a href="#start"> Débuter avec Logic simple signal </a></li>
-<li><a href="#logix"> Introduction à l'utilisation Logix </a></li>
-<li><a href="#variable"> Variables d'état disponible dans Logix </a></li>
+</p><ul>
+<li><a href="#terms"> Vocabulaire de base </a></li>
+<li><a href="#Tableau"> La Tableau T&#234;te de Signal (Head Signal) </a></li>
+<li><a href="#intro"> Introduction &#224; des outils logique simple de signal</a></li>
+<li><a href="#start"> D&#233;buter avec Logic simple signal </a></li>
+<li><a href="#logix"> Introduction &#224; l'utilisation Logix </a></li>
+<li><a href="#variable"> Variables d'&#233;tat disponible dans Logix </a></li>
 <li><a href="#action"> Actions disponible dans Logix </a></li>
 <li><a href="#automat"> Les classes d'automatisation </a></li></ul>
 
 <a name="terms"><h3>Vocabulaire</h3></a></dt>
 
-<p><b>certains termes signal de base:</b><br>
+<p><b>certains termes du signal de base:</b><br>
 <ul>
-<li><b>bras de signal</b> ou <b>Tête de Signal</b> Chaque unité de signal individuel.</li>
-<li><b>Aspect</b> L'indication de la vitesse ou l'itinéraire donné par une ou plusieurs têtes de signal ou des bras.<br>
+<li><b>bras de signal</b> ou <b>T&#234;te de Signal</b> Chaque unit&#233; de signal individuel.</li>
+<li><b>Aspect</b> L'indication de la vitesse ou l'itin&#233;raire donn&#233; par une ou plusieurs t&#234;tes de signal ou des bras.<br>
 </li>
-<li><b>Marqueurs</b> Une tête de signal ou un bras qui ne change pas de couleur ou de position.</li>
+<li><b>Marqueurs</b> Une t&#234;te de signal ou un bras qui ne change pas de couleur ou de position.</li>
 <li>
-<b>Lumières</b> La lampe individuelle dans un signal. Une lumière peut indiquer les multiples aspects
-si elle change de couleur comme en un signal projecteur, ou elle peut prendre plusieurs lumières
+<b>Lumi&#232;res</b> La lampe individuelle dans un signal. Une lumi&#232;re peut indiquer les multiples aspects
+si elle change de couleur comme en un signal projecteur, ou elle peut prendre plusieurs lumi&#232;res
 pour indiquer un seul aspect, par exemple dans la position des signaux lumineux.</li>
 <li>
-<b>Mâts</b>
-Le poteau sur lequel se monte un ou plusieurs bras de signal qui (habituellement)  contrôlent chaque voie
-individuelle, également utilisé pour désigner un signal entièrement constitué d'une ou plusieurs têtes.</li>
-<li><b> Signal Distant</b> Le signal que vous commandez montre le même ou
-un aspect plus restrictif que le prochain signal dans la direction et itinéraire du voyage.</li></ul>
+<b>M&#226;ts</b>
+Le poteau sur lequel se monte un ou plusieurs bras de signal qui (habituellement)  contr&#244;lent chaque voie
+individuellement, &#233;galement utilis&#233; pour d&#233;signer un signal enti&#232;rement constitu&#233; d'une ou plusieurs t&#234;tes.</li>
+<li><b>Signal Distant</b> Le signal que vous commandez montre le m&#234;me ou
+un aspect plus restrictif que le prochain signal dans la direction et itin&#233;raire du voyage.</li></ul>
 	
-<p><b>Certains SSL JMRI spécifiques et  conditions de signalisations:</b><br>
-<ul><li><b>Tableau Tête de Signal</b> la liste des têtes de signal dans JMRI.
-Les Têtes de signal doivent d'abord être ajoutées dans
-la Table Tête de Signal avant qu'elles puissent être inclues dans une entrée de SSL ou Logix.</li>
+<p><b>Certains SSL JMRI sp&#233;cifiques et  conditions de signalisations:</b><br>
+<ul><li><b>Tableau T&#234;te de Signal</b> la liste des t&#234;tes de signal dans JMRI.
+Les T&#234;tes de signal doivent d'abord &#234;tre ajout&#233;es dans
+le Tableau T&#234;te de Signal avant qu'elles puissent &#234;tre inclues dans une entr&#233;e de SSL ou Logix.</li>
 <li>
-<b>Tête Sorties Triple</b> Une tête de signal qui a chaque aspect du signal directement entraîné
-à partir d'une ligne de sortie individuelle.
-Les lignes de sortie sont commandées par différents aiguillages logiques JMRI, et sont contrôlées via la
-Table Aiguillage.
-Chaque changement d'aspect nécessite que trois commandes d'aiguillage soient envoyées. </Li>
+<b>T&#234;te Sortie Triple</b> Une t&#234;te de signal qui a chaque aspect du signal directement entra&#238;n&#233;
+&#224; partir d'une ligne de sortie individuelle.
+Les lignes de sortie sont command&#233;es par diff&#233;rents aiguillages logiques JMRI, et sont contr&#244;l&#233;es via le
+Tableau Aiguillage.
+Chaque changement d'aspect n&#233;cessite que trois commandes d'aiguillage soient envoy&#233;es. </Li>
 <li>
-<b>Tête Sortie Double </b> Une tête de signal qui utilise seulement deux lignes de sortie pour indiquer 4 aspects de signal.
-Habituellement, ces aspects seront Libre, Approche, Stop, et Sombre.(Clear, Approach, Stop, and Dark)
-Les lignes de sortie sont commandées par des aiguillages logiques JMRI, et sont contrôlées via la
-Table Aiguillage.
-Le codage de sortie est telle qu'un aiguillage dévié(on) commande l'Arrêt et l'autre aiguillage dévié(off) commande le voie Libre.
-Les deux sorties déviées (le) commande l'approche, et tous deux directs(off) sont Sombres.
-Chaque changement d'aspect nécessite que deux commandes d'aiguillages soient envoyées. </Li>
+<b>T&#234;te Sortie Double</b> Une t&#234;te de signal qui utilise seulement deux lignes de sortie pour indiquer 4 aspects de signal.
+Habituellement, ces aspects seront Libre, Approche, Stop, et &#201;teint.
+Les lignes de sortie sont command&#233;es par des aiguillages logiques JMRI, et sont contr&#244;l&#233;es via le
+Tableau Aiguillage.
+Le codage de sortie est telle qu'un aiguillage d&#233;vi&#233;(on) commande l'Arr&#234;t et l'autre aiguillage d&#233;vi&#233;(off) commande le voie Libre.
+Les deux sorties d&#233;vi&#233;es (le) commande l'approche, et tous deux droits (off) sont &#201;teints.
+Chaque changement d'aspect n&#233;cessite que deux commandes d'aiguillages soient envoy&#233;es. </Li>
 <li>
-<b>Tête Sortie unique </b> Une tête de signal qui utilise une seule ligne de sortie pour indiquer jusqu'à trois apparitions (y compris les clignotants).
-Les apparences sont disponibles pour configurer Sombre, Rouge, Jaune, Vert et Lunaire (Dark, Red, Yellow, Green and Lunar).
-Les lignes de sortie sont commandées par un aiguillage logique JMRI, et sont commandés via la
-Table Aiguillages.
+<b>T&#234;te Sortie unique</b> Une t&#234;te de signal qui utilise une seule ligne de sortie pour indiquer jusqu'&#224; trois apparitions (y compris les clignotants).
+Les apparences sont disponibles pour configurer &#201;teint, Rouge, Jaune, Vert et Lunaire.
+Les lignes de sortie sont command&#233;es par un aiguillage logique JMRI, et sont command&#233;s via le
+Tableau Aiguillages.
 Le codage de sortie est tel qu'
-avec l'aiguillage dévié(on)  il commande une apparence et l'aiguillage direct (off), contrôle l'autre.
-Le Clignotant permet une troisième apparition, qui se met à clignoter entre les deux apparitions configurées.
+avec l'aiguillage d&#233;vi&#233;(on) il commande une apparence et l'aiguillage direct (off), contr&#244;le l'autre.
+Le Clignotant permet une troisi&#232;me apparition, qui se met &#224; clignoter entre les deux apparences configur&#233;es.
 </li>
 <li>
-<b> SE8c </b> Une tête de signal contrôlée par une commande d'aiguillage unique pour le changement d'aspect. Une commande de changement entre l'aiguillage
-arrêter et libre, et la seconde commande de changement d'aiguillage entre l'approche et l'extinction. </li>
-<li> <b> Virtuel </b>Les signaux  virtuels sont des signaux internes à JMRI sans matériel réel rattaché.
-Avant l'avènement de Logix,
-les signaux virtuels ont été nécessaires pour résoudre des opérations plus complexes que ce qui peut être fait avec une seule SSL. </Li>
-<li> <b> Capteur Protégé </b> Le prochain capteur/s canton  suivant le signal que vous contrôlez dans la
-la direction et l'itinéraire du voyage. La «protection» est d'empêcher un train d'entrer dans un
-canton occupé sans avertissement. </li>
-<li> <b>Signal Protégés</b> Le prochain signal après celui que vous contrôlez dans la
-la direction et l'itinéraire du voyage. La «protection» est d'empêcher un train de s'adresser à un signal d'arrêt, sans avertissement suffisant pour lui permettre d'être arrêté avant d'atteindre le signal "protégé". </Li>
+<b>SE8c</b> Une t&#234;te de signal contr&#244;l&#233;e par une commande d'aiguillage unique pour le changement d'aspect. Une commande de changement entre l'aiguillage
+arr&#234;ter et libre, et la seconde commande de changement d'aiguillage entre l'approche et l'extinction. </li>
+<li><b>Virtuel</b>Les signaux  virtuels sont des signaux internes &#224; JMRI sans mat&#233;riel r&#233;el rattach&#233;.
+Avant l'av&#232;nement de Logix,
+les signaux virtuels ont &#233;t&#233; n&#233;cessaires pour r&#233;soudre des op&#233;rations plus complexes que ce qui peut &#234;tre fait avec une seule SSL. </Li>
+<li><b>Capteur Prot&#233;g&#233;</b> Le prochain capteur/s canton  suivant le signal que vous contr&#244;lez dans la
+la direction et l'itin&#233;raire du voyage. La "protection" est d'emp&#234;cher un train d'entrer dans un
+canton occup&#233; sans avertissement. </li>
+<li><b>Signal Prot&#233;g&#233;</b> Le prochain signal apr&#232;s celui que vous contr&#244;lez dans la
+la direction et l'itin&#233;raire du voyage. La "protection" est d'emp&#234;cher un train de s'adresser &#224; un signal d'arr&#234;t, sans avertissement suffisant pour lui permettre d'&#234;tre arr&#234;t&#233; avant d'atteindre le signal "prot&#233;g&#233;". </Li>
 </li>
-<li><b>Nom  Système </b> La représentation interne dans JMRI du matériel réel utilisé
-pour commander le signal. Cela varie en fonction de votre matériel, et doit correspondre à votre système.
+<li><b>Nom  Syst&#232;me</b> La repr&#233;sentation interne dans JMRI du mat&#233;riel r&#233;el utilis&#233;
+pour commander le signal. Cela varie en fonction de votre mat&#233;riel, et doit correspondre &#224; votre syst&#232;me.
 </ul>
 
-<A name="table">
-<h3>Table Tête de Signal</h3></a>
+<A name="Tableau">
+<h3>Tableau T&#234;te de Signal</h3></a>
 
-<A href="../../../images/SigTable.gif"><IMG SRC="../../../images/SigTable.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
-Toutes les têtes de signal que JMRI connaît peuvent être référencées
-en utilisant l'outil "Table de Tête de Signal( Head Signal)" dans le menu Outils de la plupart des programmes JMRI.
-Il ya cinq colonnes dans la table:
+<A href="../../../images/SigTableau.gif"><IMG SRC="../../../images/SigTableau.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
+Toutes les t&#234;tes de signal que JMRI conna&#238;t peuvent &#234;tre r&#233;f&#233;renc&#233;es
+en utilisant l'outil "Tableau de T&#234;te de Signal" dans le menu Outils de la plupart des programmes JMRI.
+Il ya cinq colonnes dans la Tableau:
 <UL>
-<LI> <b>Le nom système </b> est assigné à la tête du signal lors de sa création,
-et ne peut pas être changé.
-<LI> Si vous êtes intéressés par avoir un nom "lisible" pour vos têtes signal , vous pouvez cliquer dans la colonne  <b> nom d'utilisateur </b> et changerl'information pour mettre la votre.
-<LI> Comme les tête de signal changent, pour une raison quelconque, 
-l'apparence courante s'affichera  dans la colonne <b>État(State) </b> de la table. Vous pouvez également cliquer sur le
-bouton d'apparence pour faire défiler les apparences disponibles:
-rouge, jaune, vert, rouge clignotant, clignotant jaune, vert clignotant, et sombre. Certaines têtes de signal peuvent aussi donner lunaire et clignotant lunaire 
-Le matériel du système suivra ces changements.
+<LI>Le <b>nom syst&#232;me</b> est assign&#233; &#224; la t&#234;te du signal lors de sa cr&#233;ation,
+et ne peut pas &#234;tre chang&#233;.
+<LI> Si vous &#234;tes int&#233;ress&#233;s par avoir un nom "lisible" pour vos t&#234;tes signal , vous pouvez cliquer dans la colonne <b>nom utilisateur</b> et changerl'information pour mettre la votre.
+<LI> Comme les t&#234;te de signal changent, pour une raison quelconque, 
+l'apparence courante s'affichera  dans la colonne <b>&#201;tat(State)</b> du Tableau. Vous pouvez &#233;galement cliquer sur le
+bouton apparence pour faire d&#233;filer les apparences disponibles:
+rouge, jaune, vert, rouge clignotant, clignotant jaune, vert clignotant, et &#233;teint. Certaines t&#234;tes de signal peuvent aussi donner lunaire et clignotant lunaire 
+Le mat&#233;riel du syst&#232;me suivra ces changements.
 
-<LI> La case à cocher dans la colonne <b> Allumé (Lit) </b> vous permet de voir si 
-la tête du signal sur le réseau est allumée (cochée) ou reste sombre (non cochée). Cela peut
-également être contrôlé automatiquement avec le protocole SSL option d'éclairage «approche» ou
-à partir de Logix. <i> Remarque: </i> Cela affecte uniquement le matériel du réseau actuel et non pas toutes les
-indications du panneau, ni l'état logique du signal.
-<LI> La case à cocher dans la colonne <b> Tenu </b> indique le "lieu" propriétaire du
-signal, et vous permet de le changer. Cette propriété peut être utilisée par la CTC
-logique de la machine ou de Logix pour dire "Ne changez pas cette tête signal du rouge, même si il
-serait prudent de le faire, parce que je veux arrêter un train ici ».<UL>
+<LI> La case &#224; cocher dans la colonne <b>Allum&#233; (Lit)</b> vous permet de voir si 
+la t&#234;te du signal sur le r&#233;seau est allum&#233;e (coch&#233;e) ou reste &#233;teinte (non coch&#233;e). Cela peut
+&#233;galement &#234;tre contr&#244;l&#233; automatiquement avec l'option d'&#233;clairage "approche" SSL ou
+&#224; partir de Logix. <i> Remarque: </i> Cela affecte uniquement le mat&#233;riel du r&#233;seau actuel et non pas toutes les
+indications du panneau, ni l'&#233;tat logique du signal.
+<LI> La case &#224; cocher dans la colonne <b>Maintenu</b> indique les propri&#233;t&#233;s "maintenu" du
+signal, et vous permet de le changer. Cette propri&#233;t&#233; peut &#234;tre utilis&#233;e par la logique de la machine CTC
+ ou de Logix pour dire "Ne changez pas cette t&#234;te signal du rouge, m&#234;me si il
+serait prudent de le faire, parce que je veux arr&#234;ter un train ici ".<UL>
 
 </UL>
 <A href="../../../images/SigAdd.gif"><IMG SRC="../../../images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-<P>Pour définir une nouvelle tête de signal, cliquez sur le bouton
-<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"> <b> Ajouter Nouvelle Tête de Signal </b> </a>
-b Il vous invite pour le type de tête de signal (contrôlé par les sorties des aiguillages; SE8c; etc), et
-toutes les informations de configuration nécessaire pour votre choix.
-<P> Ces informations sont enregistrées avec la configuration dans un fichier XML, ainsi que
-l'installation du panneau de commande, Logix, des itinéraires et les choses similaires. Pour plus d'informations
-sur la création et l'affichage des panneaux, y compris la façon de montrer les têtes de signal
-sur vos panneaux, s'il vous plaît voir le
-Panneaux<A  HREF="../../apps/PanelPro/Panels.shtml"> page d'aide </a>
+<P>Pour d&#233;finir une nouvelle t&#234;te de signal, cliquez sur le bouton
+<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"><b>Ajouter Nouvelle T&#234;te de Signal</b></a>
+b Il vous invite pour le type de t&#234;te de signal (contr&#244;l&#233; par les sorties des aiguillages; SE8c; etc), et
+toutes les informations de configuration sont n&#233;cessaires pour votre choix.
+<P> Ces informations sont enregistr&#233;es avec la configuration dans un fichier XML, ainsi que
+l'installation du panneau de commande, Logix, Itin&#233;raires et les choses similaires. Pour plus d'informations
+sur la cr&#233;ation et l'affichage des panneaux, y compris la fa&#231;on de montrer les t&#234;tes de signal
+sur vos panneaux, s'il vous pla&#238;t voir le
+<A  HREF="../../apps/PanelPro/Panels.shtml"> page d'aide Panneaux</a>
 et les pages web sur le
-<A HREF="http://jmri.sourceforge.net/community/examples/Panels-Cornwall/Cornwall.html">  panneau de contrôle de chemin de fer Cornwall </a>.
+<A HREF="http://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">  panneau de commande de chemin de fer Cornwall </a>.
 <A name="logic"> 
-<a name="intro"> <h3> Introduction à la logique simple signal </h3> </a> </a> </dt>
+<a name="intro"><h3> Introduction &#224; la simple logique signal </h3></a></a></dt>
 
-Simple Signal Logique (SSL)
+Simple Logique Signal (SSL)
 est un outil JMRI pour permettre l'installation rapide de la signalisation de base de style ABS.
-L'interface utilisateur SSL est conçu pour être conviviale pour
-tous les utilisateurs avec une familiarité de base avec JMRI. SSL fournit un moyen
-pour la mise en place de signalisation de base de manière intuitive, sans que 
-l'utilisateur ait à se familiariser avec toute la logique nécessaire pour
-rendre compte des aspects différents.
-Pour les opérations plus complexes au-delà des capacités de SSL se référer à la section sur les
+L'interface utilisateur SSL est con&#231;u pour &#234;tre conviviale pour
+tous les utilisateurs avec une familiarit&#233; de base avec JMRI. SSL fournit un moyen
+pour la mise en place de signalisation de base de mani&#232;re intuitive, sans que 
+l'utilisateur ait &#224; se familiariser avec toute la logique n&#233;cessaire pour
+rendre compte des aspects diff&#233;rents.
+Pour les op&#233;rations plus complexes au-del&#224; des capacit&#233;s de SSL se r&#233;f&#233;rer &#224; la section sur les
 <A HREF="../Logix.shtml"> Logix </a>.
 
 <A href="../../../images/SSLLogic.gif"><IMG SRC="../../../images/SSLLogic.gif" ALIGN=RIGHT WIDTH="354" HEIGHT="364" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
-Une grande partie de la signalisation basique ABS  peut se résumer à "une tête de signal passe au rouge quand un train
-ne peut pas entrer sans risque dans le canton qu'il protège, il passe au jaune lorsque le canton suivant
-le canton protégé n'est pas accessible ". Bien que ce soit une simplification, elle peut servir
-comme point de départ pour comprendre la puissante logique de signalisation.
+Une grande partie de la signalisation basique ABS  peut se r&#233;sumer &#224; "une t&#234;te de signal passe au rouge quand un train
+ne peut pas entrer sans risque dans le canton que le signal prot&#232;ge, il passe au jaune lorsque le canton suivant
+le canton prot&#233;g&#233; n'est pas accessible ". Bien que ce soit une simplification, elle peut servir
+comme point de d&#233;part pour comprendre la puissante logique de signalisation.
 <P>
 
-L'outil Simple Signal Logique vous permet de configurer JMRI pour
-utiliser ce type basique de logique ABS pour définir l'apparence d'une tête de signal.
+L'outil Simple Logique Signal  vous permet de configurer JMRI pour
+utiliser ce type basique de logique ABS pour d&#233;finir l'apparence d'une t&#234;te de signal.
 Utilisant le panneau, vous entrez des informations sur:
 <P>
 <UL>
-<li><b> Tête de Signal Nommé: </b> Le HLit signal étant piloté. </li>
-<li> <b> Capteur(s) protègé: </b> Les capteurs (détecteurs d'occupation) couvrent le canton
-immédiatement après le signal. Lorsque l'un de ces capteurs se montrent «actif» la 
-tête de signal sera mis au rouge. </li>
-<li> <b> Rouge Quand Aiguillage: </b> Si le canton contient un aiguillage,
-configurer le nom de l'aiguillage et utiliser le bouton de sélection pour choisir si vous entrez sur la voie
-direct(off) ou déviée (on) La tête de signal sera mis au rouge
-chaque fois que l'aiguillage  est fixée contre cette voie. </li>
-<li> <b> Signal Protègé:  </b> La prochaine tête de signal où le train arrive;
-cette tête de signal sera mis en jaune si la prochaine tête de signal est
+<li><b>T&#234;te de Signal Nomm&#233;:</b> La t&#234;te de signal &#233;tant pilot&#233;. </li>
+<li><b>Capteur(s) prot&#232;g&#233;:</b> Les capteurs (d&#233;tecteurs d'occupation) couvrent le canton
+imm&#233;diatement apr&#232;s le signal. Lorsque l'un de ces capteurs se montrent "actif" la 
+t&#234;te de signal sera mis au rouge. </li>
+<li><b>Rouge Quand Aiguillage:</b> Si le canton contient un aiguillage,
+configurer le nom de l'aiguillage et utiliser le bouton de s&#233;lection pour choisir si vous entrez sur la voie
+droite(off) ou d&#233;vi&#233;e (on) La t&#234;te de signal sera mis au rouge
+chaque fois que l'aiguillage  est fix&#233;e contre cette voie. </li>
+<li><b>Signal Prot&#232;g&#233;:</b> La prochaine t&#234;te de signal o&#249; le train arrive;
+cette t&#234;te de signal sera mis en jaune si la prochaine t&#234;te de signal est
 rouge. </li> 
 
-<b> <li> Avec Clignotant Jaune: </b> Si la case est cochée, la tête de signal sera fixée
-jaune clignotant (JMRI alterne entre noir et jaune) si la prochaine tête de signal protégée est jaune, ce qui donne quatre cantons de signalisation. </li>
-<li> <b> Vitesse limitée: </b> Si la case est cochée, cette tête de signal sera fixée
+<b><li>Avec Clignotant Jaune:</b> Si la case est coch&#233;e, la t&#234;te de signal sera fix&#233;e
+jaune clignotant (JMRI alterne entre &#233;teint et jaune) si la prochaine t&#234;te de signal prot&#233;g&#233;e est jaune, ce qui donne quatre cantons de signalisation. </li>
+<li><b>Vitesse limit&#233;e:</b> Si la case est coch&#233;e, cette t&#234;te de signal sera r&#233;gl&#233;e
 au jaune comme l'aspect le moins restrictif. </li>
-<li> <b>Signal Est Eloigné: </b> Si la case est cochée, ce signal sera fixé
-à l'aspect le plus restrictif de cette tête de signal ou de la prochaine tête de signal protégé. </li>
-<li><b>Capteur Éclairage d'approche: </b> Le capteur contrôle l'éclairage de cette tête de signal. Seule la
- tête de signal matériel s'éteint. Les indicateurs du panneau montrera l'aspect du signal normal.
-Laissez ce champ d'entrée vide  pour toujours afficher allumé. </Li>
-<li> <b> Aiguillage en pointe: </b> La tête de signal est située sur la ligne à voie unique,
-face à un choix de deux ou plusieurs pistes dans le sens du déplacement. </li>
-<li> <b>Aiguillage en Talon: </b> La tête de signal est située sur la ligne à double voie,
-face à une seule piste dans le sens du déplacement. </li> </ul>
-<li><b>Avec Jaune Clignotant:</b> Si la case est cochée,  la tête de signal sera fixée au jaune
-Clignotant (JMRI alternera entre le Sombre et le Jaune) si la prochaine 
-tête de signal est jaune, donnant ainsi quatre cantons de signalisation.</li>
-<li> <b>Signal Est Eloigné: </b> Si la case est cochée, ce signal sera fixé
-à l'aspect le plus restrictif de cette tête de signal ou de la prochaine tête de signal protégée. </li>
+<li><b>Signal Est Eloign&#233;:</b> Si la case est coch&#233;e, ce signal sera fix&#233;
+&#224; l'aspect le plus restrictif de cette t&#234;te de signal ou de la prochaine t&#234;te de signal prot&#233;g&#233;. </li>
+<li><b>Capteur &#201;clairage d'approche:</b>Le capteur contr&#244;le l'&#233;clairage de cette t&#234;te de signal. Seule la
+ t&#234;te de signal mat&#233;riel s'&#233;teint. Les indicateurs du panneau montreront l'aspect du signal normal.
+Laissez ce champ d'entr&#233;e vide  pour toujours afficher allum&#233;. </Li>
+<li><b>Aiguillage en pointe:</b> La t&#234;te de signal est situ&#233;e sur la ligne &#224; voie unique,
+face &#224; un choix de deux ou plusieurs pistes dans le sens du d&#233;placement. </li>
+<li><b>Aiguillage en Talon:</b> La t&#234;te de signal est situ&#233;e sur la ligne &#224; double voie,
+face &#224; une seule piste dans le sens du d&#233;placement. </li></ul>
+
 <p>
-Le cas d'un aiguillage en pointe conduit à deux «Tête de signal protégées"
-est également couvert bien que la figure ci-dessus ne le montre pas.
-Si une seule tête signal est utilisé pour contrôler les deux branches,  choisissez "Aiguillage en pointe ". Si une tête différente va contrôler chaque itinéraire, puis sélectionnez simplement voie "Directe "
+Le cas d'un aiguillage en pointe  qui m&#233;ne &#224; deux "T&#234;te de Signal Prot&#233;g&#233;es"
+est &#233;galement couvert bien que la figure ci-dessus ne le montre pas.
+Si une seule t&#234;te signal est utilis&#233; pour contr&#244;ler les deux branches,  choisissez "Aiguillage en pointe ". Si une t&#234;te diff&#233;rente va contr&#244;ler chaque itin&#233;raire, alors s&#233;lectionnez simplement voie "Directe "
 ou "Divergente" , tel que requis pour chacune d'elles.
 
- <p> Posé votre souris sur n'importe quelle entrée ou un élément dans la fenêtre de création SSL pour une brève "bulle d'aide" 
+ <p> Pos&#233; votre souris sur n'importe quelle entr&#233;e ou un &#233;l&#233;ment dans la fen&#234;tre de cr&#233;ation SSL pour une br&#232;ve "bulle d'aide" 
 de rappel. </p>
 
-<p> Il est clair que que ne seront pas couvert les enclenchements compliqués qui
+<p> Il est clair que ne seront pas couvert les enclenchements compliqu&#233;s qui
 couvrent la signalisation de vitesse vu sur quelques prototypes. Pour ces situations utiliser un
-combinaison de Logix et d'Itinéraires. Logix couvrent les conditions et les Itinéraires contrôlent les actions
-à prendre. </p>
+combinaison de Logix et d'Itin&#233;raires. Logix couvrent les conditions et les Itin&#233;raires contr&#244;lent les actions
+&#224; prendre. </p>
 
 <P>
-Toutefois, lorsqu'ils sont combinés avec les capacités logiques des JMRI, 
-les <A HREF="../Routes.shtml">Itinéraires </a>
-et les  unités
+Toutefois, lorsqu'ils sont combin&#233;s avec les capacit&#233;s logiques des JMRI, 
+les <A HREF="../Routes.shtml">Itin&#233;raires </a>
+et les  unit&#233;s
 <A HREF="../Logix.shtml"> Logix </a> ,
-SSL peuvent être utilisées
-pour créer un panneau de la CTC, comme Bob Bucklew le montre sur
+SSL peuvent &#234;tre utilis&#233;es
+pour cr&#233;er un panneau de la CTC, comme Bob Bucklew le montre sur
 <A HREF="http://www.quaker-valley.com/CTC/QV_CTCnew.html"> son site web </a>.
 
-<A name="start"><h3> Débuter avec Simple Signal Logique </h3> </a>
+<A name="start"><h3> D&#233;buter avec Simple Logique Signal</h3></a>
 
-<p> Suivez les étapes suivantes pour créer un signal et se familiariser
-avec la façon dont l'interface utilisateur SSL fonctionne.
-</p> <ol>
-<li> Sélectionnez <b> Table Aiguillage </b> dans le menu <b> Outils </b>.
-</li> <li> Vérifiez pour être sûr que les lignes de sortie (aiguillages) qui vont contrôler votre signal sont dans la table. Si non, cliquez sur le bouton <b> Ajouter </b> situé au bas de la Table Aiguillage.
-</li> <li> Dans la fenêtre Ajouter Nouvel Aiguillage qui s'affiche, saisissez un nom de système (par exemple, LT1)
-et "test" comme nom d'utilisateur, puis cliquez sur OK <b> </b>. <i> Remarque: </i>Les noms Système  doivent commencer
-avec CT, IT, LT, NT, XT, etc, et être suivis par le numéro du matériel réel du réseau.
-</li> <li> Cliquez sur les entrées correctes <b>  Direct/Dévié </b> dans la Table Aiguillage devraient maintenant provoquer un signal pour le changement.
-</li> <li> Ensuite, sélectionnez <b>Table Tête de Signal </b> dans le menu <b> Outils </b>..
-		</li> <li> Dans la fenêtre Table de Têtes de signal qui apparaît, cliquez sur <b> Ajouter </b> pour commencer à définir une nouvelle  tête de signal.
-</Li> <li> Dans la fenêtre Ajouter Nouvelle Tête de Signal qui apparaît choisissez le type de tête de signal correcte pour correspondre à
- votre matériel. Les éléments boîtes élément requis apparaissent.
-</Li> <li> Entrez un nom de système. Par exemple LH152. <i> Remarque: </i> les noms Système doivent commencer
-avec CH, IH, LH, NH, XH, etc, et être suivie par le numéro de cette tête.
-</Li> <li> Ensuite, entrez un ou plusieurs numéros d'aiguillages qui vont contrôler ce signal. <i> Remarque: </i> Dans le cas de
-Signaux de style SE8c il suffit d'entrer le numéro du premier aiguillage de chaque paire. Le second est automatiquement appelé.
-</Li> <li> Cliquez <b> OK </b> pour entrer dans cette tête de signal dans la table de Tête de signal.
-</Li> <li> Entrez toutes les têtes de signal que vous allez utiliser pour ce test.
-Maintenant, sélectionnez <li> <b>Simple Signal Logique </b> dans le menu <b> Outils </b>.
+<p> Suivez les &#233;tapes suivantes pour cr&#233;er un signal et se familiariser
+avec la fa&#231;on dont l'interface utilisateur SSL fonctionne.
+</p><ol>
+<li> S&#233;lectionnez <b>Tableau Aiguillage</b> dans le menu <b>Outils</b>.
+</li><li> V&#233;rifiez pour &#234;tre s&#251;r que les lignes de sortie (aiguillages) qui vont contr&#244;ler votre signal sont dans la Tableau. Si non, cliquez sur le bouton <b>Ajouter</b> situ&#233; au bas du Tableau Aiguillage.
+</li><li> Dans la fen&#234;tre Ajouter Nouvel Aiguillage qui s'affiche, saisissez un nom de syst&#232;me (par exemple, LT1)
+et "test" comme nom utilisateur, puis cliquez sur <b>OK</b>. <i>Remarque:</i>Les noms Syst&#232;me  doivent commencer
+avec CT, IT, LT, NT, XT, etc, et &#234;tre suivis par le num&#233;ro du mat&#233;riel r&#233;el du r&#233;seau.
+</li><li> Cliquez sur les entr&#233;es correctes <b> Droit/D&#233;vi&#233;</b> dans le Tableau Aiguillage devrait maintenant provoquer un changement pour le signal .
+</li><li> Ensuite, s&#233;lectionnez <b>Tableau T&#234;te Signal</b> dans le menu <b>Outils</b>..
+		</li><li> Dans la fen&#234;tre Tableau T&#234;te Signal qui appara&#238;t, cliquez sur <b>Ajouter</b> pour commencer &#224; d&#233;finir une nouvelle t&#234;te de signal.
+</Li><li> Dans la fen&#234;tre Ajouter Nouvelle T&#234;te Signal qui appara&#238;t choisissez le type de t&#234;te de signal correcte pour correspondre &#224;
+ votre mat&#233;riel. Les &#233;l&#233;ments requis apparaissent.
+</Li><li> Entrez un nom de syst&#232;me. Par exemple LH152. <i>Remarque:</i> les noms Syst&#232;me doivent commencer
+avec CH, IH, LH, NH, XH, etc, et &#234;tre suivie par le num&#233;ro de cette t&#234;te.
+</Li><li> Ensuite, entrez un ou plusieurs num&#233;ros d'aiguillages qui vont contr&#244;ler ce signal. <i>Remarque:</i> Dans le cas de
+Signaux de style SE8c il suffit d'entrer le num&#233;ro du premier aiguillage de chaque paire. Le second est automatiquement appel&#233;.
+</Li><li> Cliquez <b>OK</b> pour entrer cette t&#234;te signal dans le Tableau de T&#234;te Signal.
+</Li><li> Entrez toutes les t&#234;tes de signal que vous allez utiliser pour ce test.
+Maintenant, s&#233;lectionnez <li><b>Simple Logique Signal</b> dans le menu <b>Outils</b>.
 </Li>
-<li> Remplissez les différentes rubriques pour répondre à vos exigences de signaux
-déjà montrées dans la section <a href="#intro"> SSL </a>.
-</Li> <li> Cliquez <b> Appliquer </b> pour rendre cette entrée active. </Li>
+<li> Remplissez les diff&#233;rentes rubriques pour r&#233;pondre &#224; vos exigences de signaux
+d&#233;j&#224; montr&#233;es dans la section <a href="#intro"> SSL </a>.
+</Li><li> Cliquez <b>Appliquer</b> pour rendre cette entr&#233;e active. </Li>
 <li> N'oubliez pas de sauvegarder votre travail.
 </Ol>
-    <p> Vous venez de créer une entrée SSL pour contrôler une tête de signal. C'est aussi
+  <p> Vous venez de cr&#233;er une entr&#233;e SSL pour contr&#244;ler une t&#234;te de signal. C'est aussi
 simple que cela. Il vous a fallu
-   plus de temps pour lire ce tutoriel que pour créer l'entrée SSL. </p></li>  
+   plus de temps pour lire ce tutoriel que pour cr&#233;er l'entr&#233;e SSL. </p></li>  
 <P>
 Un
 <A HREF="SimpleSignalExample.shtml"> exemple de mise au point </a>
-est également disponible.
+est &#233;galement disponible.
 
-<A Name="logix"> <h3> Support de Signal dans Logix </h3> </a>
+<A Name="logix"><h3> Support de Signal dans Logix </h3></a>
 
 Un <A HREF="../Logix.shtml"> Logix </a> JMRI
-fournit des capacités de logique et de contrôle pour les objets JMRI, y compris les
-signaux. Un utilisateur définit la «condition» de la logique et les "Actions"
-qui ont lieu en fonction de l'état de la logique.
-Les sous-sections suivantesvont parler de la façon dont Logix
-peut examiner et contrôler les signaux.
+fournit des capacit&#233;s de logique et de contr&#244;le pour les objets JMRI, y compris les
+signaux. Un utilisateur d&#233;finit la "condition" de la logique et les "Actions"
+qui ont lieu en fonction de l'&#233;tat de la logique.
+Les sous-sections suivantes vont parler de la fa&#231;on dont Logix
+peut examiner et contr&#244;ler les signaux.
 
-<a name="variable"> <h3> Variables d'État Disponibles du Signal dans Logix </h3> </a> </dt>
+<a name="variable"><h3> Variables d'&#201;tat Disponibles du Signal dans Logix </h3></a></dt>
 
-<p>Les variables d'état liés à des signaux qui sont actuellement disponibles pour une utilisation
-dans les conditionnels Logix
-sont énumérées ci-dessous, avec des informations sur chacunes. Les variables d'état
-doivent toujours évaluer soit vrai(true) ou faux(false. L'état résultant en
-vrai est donné pour chacun. Si la condition n'est pas remplie, la variable d'état
-est évaluée à faux (false). Quand un Logix est actif, les états d'entités (capteur,
-participation, le signal rouge, etc) spécifiés dans les variables d'état dans son conditionnel sont
-surveillés. Un calcul de tous les conditionnels dans la Logix est déclenché
-lorsque des modifications d'états surveillés comme indiqué ci-dessous (s'il n'est pas évident). <i> Remarque: </i>
-toutes les conditionnels possibles de Logix ne sont pas listés ici.
-	    </p><ul>
-		</Li> <li> <b> signal rouge </b>: la valeur vraie(true) si l'apparition de la
-tête de signal spécifiée est rouge. Le calcul est
-déclenché lorsque l'apparence change du ou vers le rouge.
-</Li> <li> <b> signal jaune </b>: la valeur vraie(true) si l'apparition de la
-tête de signal spécifiée est jaune. Le calcul est
-déclenchée lorsque l'apparence change du ou vers le jaune.
-</Li> <li> <b> signal vert </b>: la valeur vraie(true) si l'apparition de la
-tête de signal spécifiée est vert. Le calcul est
-déclenchée lorsque l'apparence change du ou vers le vert.
-</Li> <li> <b> signal foncé </b>: la valeur vraie(true) si l'apparition de la
-tête de signal spécifiée est sombre. Le calcul est
-déclenchée lorsque l'apparence change du ou vers l'obscurité.
-</Li> <li> <b> signal clignotant rouge </b>: la valeur vraie(true) si l'apparition de
-la tête de signal spécifiée est rouge clignotant. Le calcul
-est déclenché lorsque l'apparence change change du ou vers le clignotement rouge.
-</Li> <li>  <b> signal jaune clignotant </b>: la valeur vraie(true) si l'apparition de
-la tête de signal spécifiée est jaune clignotant.Le calcul
-est déclenché lorsque l'apparence  change du ou vers le jaune clignotant.
-</Li> <li> <b> signal clignotant vert </b>: la valeur vraie(true) si l'apparition de
-la tête de signal spécifiée est vert clignotant. Le calcul
-est déclenché lorsque l'apparence change du ou vers le vert clignotant.
-</Li> <li> <b> signal Allumé </b>: la valeur vraie(true) si la tête de signal spécifiée est
-allumée.
-</Li> <li> <b> signal Tenu </b>: la valeur vraie(true) si la tête de signal spécifiée
-est détenue.
+<p>Les variables d'&#233;tat li&#233;s &#224; des signaux qui sont actuellement disponibles pour une utilisation
+dans les conditions Logix
+sont &#233;num&#233;r&#233;es ci-dessous, avec des informations sur chacunes. Les variables d'&#233;tat
+doivent toujours &#233;valuer soit vrai(true) ou faux(false). L'&#233;tat r&#233;sultant en
+vrai est donn&#233; pour chacun. Si la condition n'est pas remplie, la variable d'&#233;tat
+est &#233;valu&#233;e &#224; faux (false). Quand un Logix est actif, les &#233;tats des entit&#233;s (capteur,
+aiguillage, le signal rouge, etc) sp&#233;cifi&#233;s dans les variables d'&#233;tat dans sa condition sont
+surveill&#233;s. Un calcul de toutes les conditions dans la Logix est d&#233;clench&#233;
+lorsque survient des modifications d'&#233;tats surveill&#233;s comme indiqu&#233; ci-dessous (s'il n'est pas &#233;vident). <i> Remarque:</i>
+toutes les conditions possibles de Logix ne sont pas list&#233;s ici.
+	  </p><ul>
+		</Li><li><b>signal rouge</b>: la valeur vraie(true) si l'apparition de la
+t&#234;te de signal sp&#233;cifi&#233;e est rouge. Le calcul est
+d&#233;clench&#233; lorsque l'apparence change du ou vers le rouge.
+</Li><li><b>signal jaune</b>: la valeur vraie(true) si l'apparition de la
+t&#234;te de signal sp&#233;cifi&#233;e est jaune. Le calcul est
+d&#233;clench&#233;e lorsque l'apparence change du ou vers le jaune.
+</Li><li><b>signal vert</b>: la valeur vraie(true) si l'apparition de la
+t&#234;te de signal sp&#233;cifi&#233;e est vert. Le calcul est
+d&#233;clench&#233;e lorsque l'apparence change du ou vers le vert.
+</Li><li><b>signal &#233;teint</b>: la valeur vraie(true) si l'apparition de la
+t&#234;te de signal sp&#233;cifi&#233;e est &#233;teint. Le calcul est
+d&#233;clench&#233;e lorsque l'apparence change du ou vers l'obscurit&#233;.
+</Li><li><b>signal clignotant rouge</b>: la valeur vraie(true) si l'apparition de
+la t&#234;te de signal sp&#233;cifi&#233;e est rouge clignotant. Le calcul
+est d&#233;clench&#233; lorsque l'apparence change change du ou vers le clignotement rouge.
+</Li><li><b>signal jaune clignotant</b>: la valeur vraie(true) si l'apparition de
+la t&#234;te de signal sp&#233;cifi&#233;e est jaune clignotant.Le calcul
+est d&#233;clench&#233; lorsque l'apparence change du ou vers le jaune clignotant.
+</Li><li><b>signal clignotant vert</b>: la valeur vraie(true) si l'apparition de
+la t&#234;te de signal sp&#233;cifi&#233;e est vert clignotant. Le calcul
+est d&#233;clench&#233; lorsque l'apparence change du ou vers le vert clignotant.
+</Li><li><b>signal Allum&#233;</b>: la valeur vraie(true) si la t&#234;te de signal sp&#233;cifi&#233;e est
+allum&#233;e.
+</Li><li><b>signal Maintenu</b>: la valeur vraie(true) si la t&#234;te de signal sp&#233;cifi&#233;e
+est maintenue.
        	</li></ul>  
 
-<a name="action">  <h4> Actions Signaux Disponibles dans Logix </h4> </a> </dt>    
+<a name="action"><h4> Actions Signaux Disponibles dans Logix </h4></a></dt>    
 	
-<p >Les actions liées à des signaux qui sont actuellement disponibles pour une utilisation dans les conditionnels Logix sont répertoriées
-ci-dessous avec des informations sur chacune d'elles. <i> Remarque: </i>
+<p >Les actions li&#233;es &#224; des signaux qui sont actuellement disponibles pour une utilisation dans les conditions Logix sont r&#233;pertori&#233;es
+ci-dessous avec des informations sur chacune d'elles. <i>Remarque:</i>
 Toutes les actions possibles Logix ne sont pas incluse ici.
-</p> <ul>
-</li> <li> <b> Réglez Apparence Signal  </b>: Définit la tête signal spécifiée pour 
-l'apparence choisie. Précisez la tête de signal à régler en saisissant son
-nom système ou nom utilisateur. Spécifier l'apparence à mettre en choisissant
+</p><ul>
+</li><li><b>D&#233;finir Apparence Signal</b>: D&#233;finit la t&#234;te signal sp&#233;cifi&#233;e pour 
+l'apparence choisie. Pr&#233;cisez la t&#234;te de signal &#224; r&#233;gler en saisissant son
+nom syst&#232;me ou nom utilisateur. Sp&#233;cifier l'apparence &#224; mettre en choisissant
 dans le menu contextuel.
-  </li> <li> <b> Réglez Signal Tenu </b>: Définit la tête signal spécifiée à tenir.
-Précisez la tête de signal à tenir en entrant son nom  système ou nom utilisateur.
-   </li> <li> <b> Signal Tenu libre </b>: Efface la cale sur la tête de signal spécifiée
-    Précisez la tête du signal en entrant son nom système ou nom utilisateur.
-   </Li> <li> <b> Réglez Signal foncé </b>: Définit la tête de signal spécifiée à ne pas allumer.
-Précisez la tête du signal en entrant son nom  système ou nom utilisateur.
-   </li> <li> <b> Réglez Signal Allumé </b>: Définit la tête signal spécifiée et reste allumée.
-Précisez la tête du signal en entrant son nom système ou nom utilisateur.
-</li> <li> <b> Joue Fichier Son </b>: Joue le fichier son spécifié. (pour
+</li><li><b>D&#233;finir Signal Maintenu</b>: D&#233;finit la t&#234;te signal sp&#233;cifi&#233;e &#224; maintenir.
+Pr&#233;cisez la t&#234;te de signal &#224; Maintenir en entrant son nom  syst&#232;me ou nom utilisateur.
+ </li><li><b>Effacer Signal Maintenu</b>: Efface le maintien de la t&#234;te de signal sp&#233;cifi&#233;e
+    Pr&#233;cisez la t&#234;te du signal en entrant son nom syst&#232;me ou nom utilisateur.
+ </Li><li><b>D&#233;finir Signal &#233;teint</b>: D&#233;finit la t&#234;te de signal sp&#233;cifi&#233;e &#224; ne pas allumer.
+Pr&#233;cisez la t&#234;te du signal en entrant son nom  syst&#232;me ou nom utilisateur.
+ </li><li><b>D&#233;finir Signal Allum&#233;</b>: D&#233;finit la t&#234;te signal sp&#233;cifi&#233;e et reste allum&#233;e.
+Pr&#233;cisez la t&#234;te du signal en entrant son nom syst&#232;me ou nom utilisateur.
+</li><li><b>Joue Fichier Son</b>: Joue le fichier son sp&#233;cifi&#233;. (pour
 par exemple des clics relais de la CTC)
-   </li> <li> <b> Exécuter le script </b>: Démarre le script spécifié.
+ </li><li><b>Ex&#233;cuter le script</b>: D&#233;marre le script sp&#233;cifi&#233;.
 
-<A Les classes name="automat"><h3> Classe d'Automatisation  </h3> </a>
+<A Les classes name="automat"><h3> Classe d'Automatisation</h3></a>
 
-JMRI fournit des classes pour vous aider à écrire du code Java pour contrôler
-votre réseau. Les plus puissants d'entre eux sont destinés
-à l'automatisation en général; voir la
-<A HREF="../automation/viaJava.shtml"> page web automatisation  </a>.
+JMRI fournit des classes pour vous aider &#224; &#233;crire du code Java pour contr&#244;ler
+votre r&#233;seau. Les plus puissants d'entre eux sont destin&#233;s
+&#224; l'automatisation en g&#233;n&#233;ral; voir la
+<A HREF="../automation/viaJava.shtml"> page web automatisation</a>.
 La
-<A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> classe "Siglet«  </A>
-et c'est "kin" sont censés rendre
-facile l'écriture de la logique du signal; une variante de ceux-ci a été utilisée
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> classe "Siglet"</A>
+et s'est "kin" sont cens&#233;s rendre
+facile l'&#233;criture de la logique du signal; une variante de ceux-ci a &#233;t&#233; utilis&#233;e
 pour le chemin de fer de Cornwall.
 <P>
-Bien que ceux-ci nécessitent l'écriture de code, au lieu de simplement remplir
-un formulaire de GUI, le programme gère tous les détails de la lecture
-les changements d'état du réseau, l'écriture des modifications d'aspect désiré.
-Retour au réseau, et même les détails de "quelle sortie dois-je
+Bien que ceux-ci n&#233;cessitent l'&#233;criture de code, au lieu de simplement remplir
+un formulaire de GUI, le programme g&#232;re tous les d&#233;tails de la lecture,
+les changements d'&#233;tat du r&#233;seau, l'&#233;criture des modifications d'aspect d&#233;sir&#233;.
+Retour au r&#233;seau, et m&#234;me les d&#233;tails de "quelle sortie dois-je
 mettre pour obtenir que le signal de l'Evitement Apple Est soit montrer jaune? ". Vous pouvez
-vous concentrer uniquement sur la logique du signal dans le code que vous écrivez.
+vous concentrer uniquement sur la logique du signal dans le code que vous &#233;crivez.
 
-<A name="widgets"><h3>Boite à Outils</h3></a>
+<A name="widgets"><h3>Boite &#224; Outils</h3></a>
 
 L'ensemble de la
-<A HREF="../../doc/Technical/index.shtml"> boite à Outils JMRI  </A>
+<A HREF="../../doc/Technical/index.shtml"> boite &#224; Outils JMRI</A>
 est disponible pour une utilisation si vous voulez vraiment faire quelque chose
-dans le détail. JMRI permet de contrôler la plupart des systèmes DCC et C/MRI,
-avec des outils utiles pour la manipulation des aiguillages, les capteurs, les signaux, les locomotives,
-etc.Ainsi que des outils puissants pour travailler sur l'écran de l'utilisateur.
+dans le d&#233;tail. JMRI permet de contr&#244;ler la plupart des syst&#232;mes DCC et C/MRI,
+avec des outils utiles pour la manipulation des aiguillages, des capteurs, des signaux, des locomotives,
+etc.Ainsi que des outils puissants pour travailler sur l'&#233;cran de l'utilisateur.
 
 <h2> Pour plus d'Informations sur la Signalisation </h2>
 
@@ -432,18 +427,25 @@ Le livre de John Armstrong "Le chemin de fer: Ce qu'il est, ce qu'il fait"
 <li>
 Le Manuel Utilisateur C/MRI rev 3.0 Dr Bruce Chubba des informations de signalisation
 au chapitre 12.
-Voir en particulier les 11-12 à la page 27-12.
+Voir en particulier les 11-12 &#224; la page 12-27.
 
 </ul>
 
-Pour plus d'informations sur les spécificités de la technologie:
+Pour plus d'informations sur les sp&#233;cificit&#233;s de la technologie:
 <ul>
 <li>
-<a href="http://www.docstoc.com/docs/25141693/Recommended-Circuit-Nomenclature/"> AREMA section du manuel sur le circuit de nomenclature </a>
+<a href="http://www.docstoc.com/docs/25141693/Recommended-Circuit-Nomenclature/"> AREMA section du manuel sur la nomenclature des circuit </a>
 
 <li>
-<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf"> AAR règles article 2 </a>
-
+<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf"> AAR r&#232;gles section 2 </a>
+<li>
+<li>
+Lexique:
+<li>
+* ABS = Block Automatique Lumineux
+<li>
+* Maintenu= signal maintenu au rouge m&#234;me si la voie est libre, pour obtenir l'arr&#234;t d'un train
+<li>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

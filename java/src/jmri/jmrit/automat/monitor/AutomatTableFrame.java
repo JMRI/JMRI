@@ -1,39 +1,40 @@
 // AutomatTableFrame.java
-
 package jmri.jmrit.automat.monitor;
 
 import java.util.ResourceBundle;
-
 import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.*;
-
+import javax.swing.JTable;
 import jmri.util.JTableUtil;
 
 /**
  * Frame providing a table of Automat instances
  *
- * @author	Bob Jacobsen   Copyright (C) 2004
+ * @author	Bob Jacobsen Copyright (C) 2004
  * @version	$Revision$
  */
 public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
-    AutomatTableDataModel	dataModel;
-    JTable			dataTable;
-    JScrollPane 		dataScroll;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6052436715378143786L;
+    AutomatTableDataModel dataModel;
+    JTable dataTable;
+    JScrollPane dataScroll;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.automat.monitor.AutomatTableBundle");
 
     public AutomatTableFrame(AutomatTableDataModel model) {
 
         super();
-        dataModel 	= model;
+        dataModel = model;
 
-        dataTable	= JTableUtil.sortableDataModel(dataModel);
-        dataScroll	= new JScrollPane(dataTable);
+        dataTable = JTableUtil.sortableDataModel(dataModel);
+        dataScroll = new JScrollPane(dataTable);
 
         // configure items for GUI
-
         dataModel.configureTable(dataTable);
 
         // general GUI config
@@ -45,7 +46,7 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
         pack();
         pane1.setMaximumSize(pane1.getSize());
 
-		setTitle(rb.getString("TitleAutomatTable"));
+        setTitle(rb.getString("TitleAutomatTable"));
 
         addHelpMenu("package.jmri.jmrit.automat.monitor.AutomatTableFrame", true);
 

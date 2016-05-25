@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
     <head>
-        <!-- Copyright 2012 -->
-        <!-- $Id: JsonServlet.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
-        <title>JMRI: Json Servlet</title>
+        <!-- Copyright 2015 -->
+        <!-- $Id$ -->
+        <title>JMRI JSON Protocol</title>
 
         <!-- Style -->
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
         <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
         <link rel="home" title="Home" href="/">
-        <STYLE type="text/css">
+        <style type="text/css">
             table#jsonResponses {
                 border-collapse:collapse;
             }
@@ -19,10 +19,14 @@
                 border: 1px solid grey;
                 width: 33%;
             }
+            table.data {
+                margin: initial;
+                margin-left: 2em;
+            }
             code {
                 white-space: normal;
             }
-        </STYLE>
+        </style>
         <!-- /Style -->
     </head>
 
@@ -32,27 +36,149 @@
         <!--#include virtual="Sidebar" -->
         <div id="mainContent">
 
-            <h1>
-                JMRI: Json Servlet
-            </h1>
-            <p>The <b>JMRI Json Servlet</b> provides web access to lists and values for numerous JMRI-defined entities, in the modern
-                <a href='http://en.wikipedia.org/wiki/JSON' target=_new>JSON format</a>.  It also provides a
-                <a href='http://en.wikipedia.org/wiki/WebSocket' target=_new>WebSocket</a> interface for
+            <h1>JMRI JSON Protocol</h1>
+            <p>The JMRI JSON Protocol provides access for a number of JMRI-defined entities, and is accessible through multiple methods:</p>
+            <ul>
+                <li><strong>The JMRI JSON servlet</strong>, providing both HTTP and WebSocket access</li>
+                <li><strong>The JMRI JSON server</strong>, providing a standard network socket for streamed access</li>
+                <li><strong>jquery.jmri</strong>, A jQuery-based JavaScript library that chooses the best method to communicate with a JMRI server using the JMRI JSON protocol</li>
+            </ul>
+            
+            <h2>JMRI JSON Servlet</h2>
+            <p>The <b>JMRI JSON Servlet</b> provides web access to lists and values for numerous JMRI-defined entities, in the modern
+                <a href="https://en.wikipedia.org/wiki/JSON">JSON format</a>.  It also provides a
+                <a href="https://en.wikipedia.org/wiki/WebSocket">WebSocket</a> interface for
                 making changes to the state of those entities, and listening for external changes.</p>
-
-            The <b>HTTP GET</b> feature of the servlet responds to the following URL patterns:
+            <h2>Setting up the JSON Servlet</h2>
+            <p>The JMRI JSON Servlet is a feature that is part of the Web Server. In order to use this service, you'll need to do the following:</p>
             <ul>
-                <li>/json/cars</li>
-                <li>/json/car/&lt;ID&gt;</li>
-                <li>/json/sensors</li>
-                <li>/json/sensor/&lt;name&gt;</li>
-            </ul>Currently, the servlet supports cars, engines, lights, locations, memories, metadata, panels, power, railroad, reporters, roster, routes, sensors, signalHeads, signalMasts, trains, and turnouts.
+                <li>Ensure the web server's port is unique:</li>
+                <ul>
+                    <li>Click <b>Edit</b> and then <b>Preferences</b> to open the Preferences dialog</li>
+                    <li>Click <b>Web Server</b> on the left side</li>
+                    <li>Ensure the port number is unique (for example 12080). Other ports are used by WiThrottle, JSON Server, etc.</li>
+                    <li>Click Save</li>
+                </ul>
+                <li>Click <b>Actions</b> and <b>Start Web Server</b> to ensure the web server is running</li>
+                <li>If you want the web server to run each time you start JMRI:</li>
+                <ul>
+                    <li>Open the <b>Preferences</b> dialog</li>
+                    <li>Select <b>Start Up</b></li>
+                    <li>Click <b>Add &#x25BE;</b></li>
+                    <li>Select <b>Perform action...</b></li>
+                    <li>Select <b>Start Web Server</b></li>
+                    <li>Click <b>OK</b></li>
+                </ul>
+            </ul>
 
-            The WebSocket feature of this servlet
-            currently handles JSON strings in four different forms:
+            <h2>Using HTTP JSON</h2>
+            <p>The <b>HTTP</b> feature of the servlet responds to the following URL patterns:
             <ul>
-                <li>list requests in the form: <code>{"type":"list","list":"trains"}</code>
-                    that are passed to the JsonLister for handling.</li>
+                <li>/json/<i>&lt;listName&gt;</i> -- used with HTTP GET to retrieve a list from JMRI, or with PUT to add an item to a list</li>
+                <li>/json/&lt;<i>typeName</i>&gt;/<i>&lt;itemName&gt;</i> -- used with HTTP GET to retrieve a single item from a list, or with POST to udpate an existing item</li>
+            </ul>
+            <p>There are a number of lists, and not all operations are supported on these lists and/or items within each list. Check the sections below for the
+            operations that are currently supported.</p>
+            <h3>List Names</h3>
+            <p>Currently the servlet supports the following list names (not all of these are actually lists) used for GET operations to return lists. 
+                These lists are roughly grouped according to the module that uses them.</p>
+            <table class="data">
+                <tr><th>Name</th>             <th>GET</th> <th>PUT</th> <th>POST</th> <th>Module</th></tr>
+                <tr><td>cars</td>             <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>consits</td>          <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>engines</td>          <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>hello</td>            <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>lights</td>           <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>locations</td>        <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>panels</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
+                <tr><td>memories</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>metadata</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>networkServices</td>  <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>node</td>             <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>power</td>            <td>*</td>   <td>*</td>   <td>*</td>    <td>DecoderPro</td></tr>
+                <tr><td>railroad</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>roster</td>           <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>rosterGroups</td>     <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>routes</td>           <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>systemConnections</td><td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>time</td>             <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>trains</td>           <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>reporters</td>        <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>routes</td>           <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>signalHeads</td>      <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>signalMasts</td>      <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>sensors</td>          <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>turnouts</td>         <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+            </table>
+
+            <p>Note that these names are case sensitive, so you must supply them as shown above. As an example, let's say you issued the following GET command:</p>
+            <pre>    myjmri:12080/json/power</pre>
+            <p>The would return JSON that looks something like this:</p>
+            <pre>    {"type":"power","data":{"state":2}}</pre>
+            <p>The returned data consists of two parts:</p>
+            <ul>
+                <li><b>Type:</b> The type of item returned, which in this case is "power"</li>
+                <li><b>Data:</b> Data that is specific to the type of object returned. For example, in this case the state of track power</li>
+            </ul>
+            <p>In order to understand all of the details on the data for different types, the best solution is to look at the source code. There are two
+            files you can start with that will help a lot:</p>
+            <ul>
+                <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/web/servlet/json/JsonServlet.java">JsonServlet.java</a> contains the code that
+                handles the HTTP and Websocket requests</li>
+                <li><a href="https://github.com/JMRI/JMRI/blob/04a935d0c410174fbfa0cc6a2c34a818940b6b37/java/src/jmri/jmris/json/JsonUtil.java">JsonUtil.java</a> that
+                is used by JsonServlet to return the data for different lists</li>
+            </ul>
+            <p>Continuing with the power example above, the JsonServlet code calls JsonUtil.getPower to get the reply. Looking this up in JsonUtil, the result
+            is set to one of three values: OFF, ON, or UNKNOWN. These values, in turn, are defined as static imports. These names are too generic to be able to
+            find easily with Github's search box for searching the repository. However, as UKNOWN is defined like this: </p>
+            <pre>    import static jmri.jmris.json.JSON.UNKNOWN;</pre>
+            <p>it makes sence to browse the source tree for for a file called JSON.java under jmri/jmris/json. Sure enough, the file exists and contains definitions for
+            these three values:</p>
+            <pre>
+    public static final int UNKNOWN = 0x00;
+    public static final int ON = 0x02;
+    public static final int OFF = 0x04;</pre>
+            <p>Therefore, the JSON returned above for power incicates that the power is currently on (state is set to 2).</p>
+            <p>As you can see, given the number of lists and types, it's best to do some searching through the source for all of the details, as well as
+            experimenting with a tool like Postman in Google's Chrome browser.</p>
+            <h3>Type Names</h3>
+            <p>Here are the different type names supported for the second pattern, along with which HTTP operations are supported:</p>
+
+            <table class="data">
+                <tr><th>Name</th>        <th>GET</th>   <th>PUT</th>    <th>POST</th>   <th>DELETE</th</th><th>Module</th></tr>
+                <tr><td>car</td>         <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
+                <tr><td>consit</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td>*</td><td>DecoderPro</td></tr>
+                <tr><td>engine</td>      <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
+                <tr><td>light</td>       <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>location</td>    <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
+                <tr><td>memory</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>DecoderPro</td></tr>
+                <tr><td>metadata</td>    <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
+                <tr><td>reporter</td>    <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>roster</td>      <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
+                <tr><td>rosterEntry</td> <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
+                <tr><td>rosterGroup</td> <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
+                <tr><td>route</td>       <td>*</td>     <td></td>       <td>*</td>      <td></td><td>OperationsPro</td></tr>
+                <tr><td>sensor</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>signalHead</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>signalMast</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>train</td>       <td>*</td>     <td></td>       <td>*</td>      <td></td><td>OperationsPro</td></tr>
+                <tr><td>turnout</td>     <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+            </table>
+
+            <h2>Using HTTP JSON POST/PUT/DELETE</h2>
+            <p>You can also insert, update, or delete items in the lists above using the HTTP POST, PUT, and DELETE methods. Not all combinations are
+            supported.</p>
+
+            <p>You can use these type names to set values. Continuing with the power example above, you can turn the power on by posting to a URL like this:</p>
+            <pre>    myjmri:12080/json/power</pre>
+            <p>With this as the body</p>
+            <pre>    {"state":2}</pre>
+
+            <h2>WebSocket</h2>
+            <p>The <b>WebSocket</b> feature of this servlet currently handles JSON strings in four different forms:
+            <ul>
+                <li>list requests in the form: <code>{"list":"trains"}</code> or <code>{"type":"list","list":"trains"}</code>
+                    that return an array of items, or an empty array (<code>[]</code>).</li>
                 <li>individual item state requests in the form: <code>{"type":"turnout","data":{"name":"LT14"}}</code>
                     that are passed to type-specific handlers. These requests will initiate "listeners", which will send
                     updated responses every time the item's state changes.
@@ -68,8 +194,9 @@
                     gets no response, while the JSON heartbeat causes a <code>{"type":"pong"}</code> response.</li>
                 <li>a signoff in the form: <code>{"type":"goodbye"}</code> to which an identical response
                     is sent before the connection gets closed.</li>
-            </ul>
-            The <b>WebSocket</b> feature of the servlet can be seen
+            </ul></p>
+            
+            <p>The <b>WebSocket</b> feature of the servlet can be seen
             by browsing to the <b>/json/</b> url, where a <b>JSON console</b> is providing for testing.<br>
             Example commands and responses:
             <table id="jsonResponses"><tr><th>command</th><th>response</th><th>notes</th></tr>
@@ -77,15 +204,38 @@
                 <tr><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td>set sensor IS2 to InActive (4)</td></tr>
                 <tr><td><code>{"type":"turnout","data":{"name":"IT99","state":0}}</code></td><td><code>{"type":"turnout","data":{"name":"IT99","state":4}}</code></td><td>sending state=0 is also treated as request for current state</td></tr>
                 <tr><td><code>{"type":"power","data":{}}</code></td><td><code>{"type":"power","data":{"state":2}}</code></td><td>power does not need a name</td></tr>
+                <tr><td><code>{"type":"memory","data":{"name":"IMCURRENTTIME"}}</code></td><td><code>{"type":"memory","data":{"name":"IMCURRENTTIME","userName":null,"comment":null,"value":"2:53 PM"}}</code></td><td>get (fast)clock time, resent each minute</td></tr>
                 <tr><td><code>{"type":"ping"}</code></td><td><code>{"type":"pong"}</code></td><td>ping request and response</td></tr>
-                <tr><td><code>{"type":"list","list":"panels"}</code></td><td><code>{"type":"list","list":[{"name":"Panel/Panel",
-                            "URL":"/panel/Panel/Panel?format=json","userName":"Panel","type":"Panel"},
-                            {"name":"Layout/Waccamaw%20Coast%20Line",
-                            "URL":"/panel/Layout/Waccamaw%20Coast%20Line?format=json",
-                            "userName":"Waccamaw Coast Line","type":"Layout"}]}</code></td><td>request a list of panels, respond with array of two panels' details</td></tr>
-
+                <tr><td><code>{"list":"panels"}</code></td><td><code>[{"type":"panel","data":{"name":"ControlPanel/R&amp;R","URL":"/panel/ControlPanel/R&amp;R?format=xml","userName":"R&amp;R","type":"Control Panel"}},{"type":"panel","data":{"name":"Layout/Waccamaw%20Coast%20Line","URL":"/panel/Layout/Waccamaw%20Coast%20Line?format=xml","userName":"Waccamaw Coast Line","type":"Layout"}}]</code></td>
+                    <td>request a list of panels, respond with array, example shows two panels</td></tr>
+                <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","address":754}}</code></td>
+                    <td><code>{"type":"throttle","data":{"address":754,"speed":0.0,"forward":true, "F0":false,"F1":false,"F2":false,"F3":false,"F4":false,"F5":false,"F6":false,"F7":false, "F8":false,"F9":false,"F10":false,"F11":false,"F12":false,"F13":false,"F14":false, "F15":false,"F16":false,"F17":false,"F18":false,"F19":false,"F20":false,"F21":false, "F22":false,"F23":false,"F24":false,"F25":false,"F26":false,"F27":false,"F28":false, "throttle":"CSX754"}}</code></td>
+                    <td>request throttle for address 754, refer to it as "CSX754"</td></tr>
+                <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","speed":0.25}}</code></td><td><code>{"type":"throttle","data":{"speed":0.25,"throttle":"CSX754"}}</code></td><td>request speed of throttle "CSX754" to 25%</td></tr>
+                <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","release":null}}</code></td><td><code>{"type":"throttle","data":{"release":null,"throttle":"CSX754"}}</code></td><td>release the throttle "CSX754"</td></tr>
+                <tr><td><code>{"list":"trains"}</code></td><td><em>If list is empty:</em><code>[]</code></td><td>Example showing list response if there are no objects of that type.</td></tr>
             </table>
-        </div>
-        <!--#include virtual="/Footer" -->
-    </body>
+            
+        <h2>JMRI JSON Server</h2>
+        <p>The JMRI JSON server is functionally identical to the JSON WebSocket, but running over a standard network socket.</p>
+        
+        <h2>jquery.jmri</h2>
+        <p><em>jquery.jmri</em> is a JavaScript library that ships with JMRI and
+            makes the JSON protocol support just work on most current browsers.</p>
+        <p>Examples of use of the jquery.jmri JavaScript library that ships with JMRI include (all links assume you are reading this on your JMRI web server):</p>
+        <ul>
+            <li><a href="/operations">Operations Conductor</a> (implemented in <a href="/js/operations.js">/js/operations.js</a></li>
+            <li><a href="/panel">Panel</a> (implemented in <a href="/js/panel.js">/js/panel.js</a></li>
+            <!-- the webThrottle does not use jquery-json, but instead uses its own implementation, so do not include it in this list
+            <li><a href="/web/webThrottle.html">webThrottle</a> (implemented in <a href="/js/webThrottle.js">/js/webThrottle.js</a></li>
+            -->
+            <li><a href="/json">JSON Console</a> (implemented in <a href="/js/json-console.js">/js/json-console.js</a></li>
+            <li><a href="/web/power.html">Power Demonstration</a> (view the page source for the implementation)</li>
+        </ul>
+        
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+
+</body>
 </html>

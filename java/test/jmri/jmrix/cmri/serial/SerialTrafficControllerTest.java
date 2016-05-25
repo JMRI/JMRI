@@ -1,101 +1,121 @@
-// SerialTrafficControllerTest.java
-
 package jmri.jmrix.cmri.serial;
 
-import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-
-import junit.framework.Test;
+import java.util.Vector;
+import jmri.util.JUnitAppender;
 import junit.framework.Assert;
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.Vector;
-
-import jmri.util.JUnitAppender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Description:	    JUnit tests for the SerialTrafficController class
- * @author			Bob Jacobsen Copyright 2006
- * @version $Revision$
+ * Description:	JUnit tests for the SerialTrafficController class
+ *
+ * @author	Bob Jacobsen Copyright 2006
  */
 public class SerialTrafficControllerTest extends TestCase {
 
     public void testCreate() {
         SerialTrafficController m = new SerialTrafficController();
-        Assert.assertNotNull("exists", m );
+        Assert.assertNotNull("exists", m);
     }
-    
+
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = new SerialTrafficController();
-        SerialNode b = new SerialNode(1,SerialNode.USIC_SUSIC);
-        SerialNode f = new SerialNode(3,SerialNode.SMINI);
-        SerialNode d = new SerialNode(2,SerialNode.SMINI);
-        SerialNode e = new SerialNode(6,SerialNode.USIC_SUSIC);
-        Assert.assertEquals("1st Node", b, c.getNode(0) );
-        Assert.assertEquals("2nd Node", f, c.getNode(1) );
-        Assert.assertEquals("3rd Node", d, c.getNode(2) );
-        Assert.assertEquals("4th Node", e, c.getNode(3) );
-        Assert.assertEquals("no more Nodes", null, c.getNode(4) );
-        Assert.assertEquals("1st Node Again", b, c.getNode(0) );
-        Assert.assertEquals("2nd Node Again", f, c.getNode(1) );
-        Assert.assertEquals("node with address 6", e, c.getNodeFromAddress(6) );
-        Assert.assertEquals("3rd Node again", d, c.getNode(2) );
-        Assert.assertEquals("no node with address 0", null, c.getNodeFromAddress(0) );
+        SerialNode b = new SerialNode(1, SerialNode.USIC_SUSIC);
+        SerialNode f = new SerialNode(3, SerialNode.SMINI);
+        SerialNode d = new SerialNode(2, SerialNode.SMINI);
+        SerialNode e = new SerialNode(6, SerialNode.USIC_SUSIC);
+        Assert.assertEquals("1st Node", b, c.getNode(0));
+        Assert.assertEquals("2nd Node", f, c.getNode(1));
+        Assert.assertEquals("3rd Node", d, c.getNode(2));
+        Assert.assertEquals("4th Node", e, c.getNode(3));
+        Assert.assertEquals("no more Nodes", null, c.getNode(4));
+        Assert.assertEquals("1st Node Again", b, c.getNode(0));
+        Assert.assertEquals("2nd Node Again", f, c.getNode(1));
+        Assert.assertEquals("node with address 6", e, c.getNodeFromAddress(6));
+        Assert.assertEquals("3rd Node again", d, c.getNode(2));
+        Assert.assertEquals("no node with address 0", null, c.getNodeFromAddress(0));
 
         c.deleteNode(6);
 
-        Assert.assertEquals("1st Node after del", b, c.getNode(0) );
-        Assert.assertEquals("2nd Node after del", f, c.getNode(1) );
-        Assert.assertEquals("3rd Node after del", d, c.getNode(2) );
-        Assert.assertEquals("no more Nodes after del", null, c.getNode(3) );
+        Assert.assertEquals("1st Node after del", b, c.getNode(0));
+        Assert.assertEquals("2nd Node after del", f, c.getNode(1));
+        Assert.assertEquals("3rd Node after del", d, c.getNode(2));
+        Assert.assertEquals("no more Nodes after del", null, c.getNode(3));
 
         c.deleteNode(1);
         JUnitAppender.assertWarnMessage("Deleting the serial node active in the polling loop");
 
-        Assert.assertEquals("1st Node after del2", f, c.getNode(0) );
-        Assert.assertEquals("2nd Node after del2", d, c.getNode(1) );
-        Assert.assertEquals("no more Nodes after del2", null, c.getNode(2) );        
+        Assert.assertEquals("1st Node after del2", f, c.getNode(0));
+        Assert.assertEquals("2nd Node after del2", d, c.getNode(1));
+        Assert.assertEquals("no more Nodes after del2", null, c.getNode(2));
     }
 
     @SuppressWarnings("unused")
-	private boolean waitForReply() {
+    private boolean waitForReply() {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
-        while ( rcvdReply == null && i++ < 100  )  {
+        while (rcvdReply == null && i++ < 100) {
             try {
                 Thread.sleep(10);
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i
-                                            +" reply="+rcvdReply);
-        if (i==0) log.warn("waitForReply saw an immediate return; is threading right?");
-        return i<100;
+        if (log.isDebugEnabled()) {
+            log.debug("past loop, i=" + i
+                    + " reply=" + rcvdReply);
+        }
+        if (i == 0) {
+            log.warn("waitForReply saw an immediate return; is threading right?");
+        }
+        return i < 100;
     }
 
     // internal class to simulate a Listener
     class SerialListenerScaffold implements jmri.jmrix.cmri.serial.SerialListener {
+
         public SerialListenerScaffold() {
             rcvdReply = null;
             rcvdMsg = null;
         }
-        public void message(SerialMessage m) {rcvdMsg = m;}
-        public void reply(SerialReply r) {rcvdReply = r;}
+
+        public void message(SerialMessage m) {
+            rcvdMsg = m;
+        }
+
+        public void reply(SerialReply r) {
+            rcvdReply = r;
+        }
     }
     SerialReply rcvdReply;
     SerialMessage rcvdMsg;
 
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
-            public Vector<String> getPortNames() { return null; }
-	    public String openPort(String portName, String appName) { return null; }
-	    public void configure() {}
-	    public String[] validBaudRates() { return null; }
+
+        public Vector<String> getPortNames() {
+            return null;
+        }
+
+        public String openPort(String portName, String appName) {
+            return null;
+        }
+
+        public void configure() {
+        }
+
+        public String[] validBaudRates() {
+            return null;
+        }
+
         protected SerialPortControllerScaffold() throws Exception {
+            super(null);
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
             tostream = new DataInputStream(tempPipe);
@@ -106,22 +126,28 @@ public class SerialTrafficControllerTest extends TestCase {
         }
 
         // returns the InputStream from the port
-        public DataInputStream getInputStream() { return istream; }
+        public DataInputStream getInputStream() {
+            return istream;
+        }
 
         // returns the outputStream to the port
-        public DataOutputStream getOutputStream() { return ostream; }
+        public DataOutputStream getOutputStream() {
+            return ostream;
+        }
 
         // check that this object is ready to operate
-        public boolean status() { return true; }
+        public boolean status() {
+            return true;
+        }
+
     }
     static DataOutputStream ostream;  // Traffic controller writes to this
-    static DataInputStream  tostream; // so we can read it from this
+    static DataInputStream tostream; // so we can read it from this
 
     static DataOutputStream tistream; // tests write to this
-    static DataInputStream  istream;  // so the traffic controller can read from this
+    static DataInputStream istream;  // so the traffic controller can read from this
 
     // from here down is testing infrastructure
-
     public SerialTrafficControllerTest(String s) {
         super(s);
     }
@@ -139,9 +165,14 @@ public class SerialTrafficControllerTest extends TestCase {
     }
 
     // The minimal setup for log4J
-	public void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
 
-    static Logger log = Logger.getLogger(SerialTrafficControllerTest.class.getName());
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
 
 }

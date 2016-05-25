@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,12 +12,12 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file for QSi V8 files -->
 <!-- Diesel air pump selections -->
-<ienumVal>
-  <ienumChoice choice="Native Pump" value="1"/>
-  <ienumChoice choice="ALCo/Baldwin Pump"/>
-  <ienumChoice choice="Centurion Pump"/>
-  <ienumChoice choice="EMD Pump"/>
-  <ienumChoice choice="Fairbanks Morse Pump"/>
-  <ienumChoice choice="GE Rotary Pump"/>
-  <ienumChoice choice="GE Standard Pump"/>
-</ienumVal>
+<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Native Pump" value="1"/>
+  <enumChoice choice="ALCo/Baldwin Pump"/>
+  <enumChoice choice="Centurion Pump"/>
+  <enumChoice choice="EMD Pump"/>
+  <enumChoice choice="Fairbanks Morse Pump"/>
+  <enumChoice choice="GE Rotary Pump"/>
+  <enumChoice choice="GE Standard Pump"/>
+</enumVal>

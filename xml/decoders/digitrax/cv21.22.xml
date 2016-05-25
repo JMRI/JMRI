@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: cv21.22.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -39,67 +39,71 @@
       <revremark>Revision in original Digitrax_01x3.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Advanced Consist Function 1 Override" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0">
+  <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Advanced Consist Function 1 Override</label>
     <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F1</label>
   </variable>
-  <variable label="Advanced Consist Function 2 Override" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0">
+  <variable CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Advanced Consist Function 2 Override</label>
     <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F2</label>
   </variable>
-  <variable label="Advanced Consist Function 3 Override" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0">
+  <variable CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Advanced Consist Function 3 Override</label>
     <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F3</label>
   </variable>
-  <variable label="Advanced Consist Function 4 Override" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0">
+  <variable CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Advanced Consist Function 4 Override</label>
     <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F4</label>
   </variable>
-  <variable label="Advanced Consist Function 5 Override" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0">
+  <variable CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Advanced Consist Function 5 Override</label>
     <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F5</label>
   </variable>
-  <variable label="Advanced Consist Function 6 Override" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0">
+  <variable CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Advanced Consist Function 6 Override</label>
     <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F6</label>
   </variable>
-  <variable label="Advanced Consist Function 7 Override" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0">
+  <variable CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Advanced Consist Function 7 Override</label>
     <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F7</label>
   </variable>
-  <variable label="Advanced Consist Function 8 Override" CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0">
+  <variable CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Advanced Consist Function 8 Override</label>
     <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F8</label>
   </variable>
-  <variable label="Advanced Consist Function 0 Override" CV="22" mask="XXXXXXXV" item="Consist Address Active For F0" default="0">
+  <variable CV="22" mask="XXXXXXXV" item="Consist Address Active For F0" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Advanced Consist Function 0 Override</label>
-    <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F9</label>
+    <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F0</label>
   </variable>
   <!--
 	  <variable label="Advanced Consist Function 9 Override" CV="22" mask="XXXVXXXX" item="Consist Address Active For F9" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Advanced Consist Function 9 Override</label>
+        <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F9</label>
 	  </variable>
 	  <variable label="Advanced Consist Function 10 Override" CV="22" mask="XXVXXXXX" item="Consist Address Active For F10" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Advanced Consist Function 10 Override</label>
+        <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F10</label>
 	  </variable>
 	  <variable label="Advanced Consist Function 11 Override" CV="22" mask="XVXXXXXX" item="Consist Address Active For F11" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Advanced Consist Function 11 Override</label>
+        <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F11</label>
 	  </variable>
 	  <variable label="Advanced Consist Function 12 Override" CV="22" mask="VXXXXXXX" item="Consist Address Active For F12" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Advanced Consist Function 12 Override</label>
+        <label xml:lang="it">Consist Avanzati - Ind.Consist Attivo con F12</label>
 	  </variable>
 -->
 </variables>

@@ -15,13 +15,7 @@
     <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
     <!-- or change them to reflect your alternative logo -->
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style" -->
 </head>
 
 <!--#include virtual="/Header" -->
@@ -31,9 +25,9 @@
 
 <H1>JMRI: XML DTD Usage</H1>
 
-This page describes the usage of XML DTDs in JMRI
+<b>This page describes the usage of XML DTDs in JMRI
 before version 2.9.4.  These DTDs were replaced
-with XML schema in JMRI 2.9.4.
+with XML schema in JMRI 2.9.4.</b>
 <P>
 In the JMRI distributions, the DTDs are stored in the 
 <a href="/xml/DTD">xml/DTD</a> 
@@ -62,7 +56,7 @@ In practice, this allows two forms for the DOCTYPE line:
 Early XML files used both; the program itself could generate
 either depending on the circumstances.
 <li>JMRI 1.9.2 and later provide a more powerful DTD search procedure using the 
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">jmri.util.JmriLocalEntityResolver</a>
+<a href="http://jmri.org/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">jmri.util.JmriLocalEntityResolver</a>
 class. It parses the
 reference in the DOCTYPE and handles it in several ways:
     <ul>
@@ -89,10 +83,10 @@ reference in the DOCTYPE and handles it in several ways:
     an Internet connection, it allows us to eventually move forward.
 </ul>
 
-Starting with JMRI 2.9.4, JMRI uses 
+<b>Starting with JMRI 2.9.4, JMRI uses 
 <a href="XmlSchema.shtml">XML schema</a>
 instead of DTDs, 
-and this process is different.
+and this process is different.</b>
 
 <!--#include virtual="/Footer" -->
 

@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ReporterAddEdit.shtml,v 1.3 2008/11/01 16:40:03 jacobsen Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/06-->
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Adding/Editing Reporters
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Reporter Add Edit">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -25,9 +25,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Reporters</H1>
+<H1>Ajout/Modification de Rapports</H1>
     
-Ceci est la page d'aide help/en/package/jmri/jmrit/beantable/ReporterAddEdit.shtml
+Ceci est la page d'aide help/fr/package/jmri/jmrit/beantable/ReporterAddEdit.shtml
 <!--#include virtual="/Footer" -->
 </body>
 </html>

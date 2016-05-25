@@ -63,8 +63,12 @@
 # 2.40 - Fixed thread race condition when stopping trains
 # 2.41 - Set default minimum interval between speed commands (maxIdle) to 60 seconds
 # 2.42 - Adapted to refactoring occurred in JMRI 3.32 (different access to default directory)
+# 2.43 - timeout and retry on acquisition failure, handle new syntax of LayoutEditor class
 
 # JAVA imports
+
+import java
+import jmri
 
 from java.beans import PropertyChangeListener
 
@@ -166,7 +170,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
 
 # CONSTANTS ==========================
 
-    version = "2.42"
+    version = "2.43"
     
     
     # Retrieve DOUBLE_XOVER constant, depending on JMRI Version
@@ -561,7 +565,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         for i in range(windowsList.size()) :
             window = windowsList.get(i)
             windowClass = str(window.getClass())
-            if(windowClass.endswith(".LayoutEditor")) :
+            if(windowClass.find(".LayoutEditor") > 0) :
                 self.layoutEditor =  window
                 break
         if self.layoutEditor == None :
@@ -1975,12 +1979,10 @@ class ADsection (PropertyChangeListener) :
             layoutBlock = None
             blockName = newBlock.getUserName()
             if blockName != None and blockName.strip() != "" :
-                layoutBlock = InstanceManager.layoutBlockManagerInstance(
-                  ).getLayoutBlock(blockName)
+                layoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getLayoutBlock(blockName)
             if layoutBlock == None :
                 blockName = newBlock.getSystemName()
-                layoutBlock = InstanceManager.layoutBlockManagerInstance(
-                  ).getLayoutBlock(blockName)
+                layoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getLayoutBlock(blockName)
             if layoutBlock == None :
                 AutoDispatcher.log("No LayoutBlock for Block " + blockName
                   + " found: block skipped!")
@@ -4960,16 +4962,18 @@ class ADlocomotive :
             long = True
         else :
             long = False
-        self.throttle = AutoDispatcher.instance.getThrottle(self.address, long)
+        # request address, timeout set to 5 seconds
+        self.throttle = AutoDispatcher.instance.getThrottle(self.address, long, 5)
         if (self.throttle == None) :
             AutoDispatcher.chimeLog(ADsettings.ATTENTION_SOUND,
               "Couldn't assign throttle " + str(self.address) + "!")
+            self.throttleAssigned = False
         else :
             if self.leadLoco != 0 :
                 AutoDispatcher.message("Acquired throttle for consist "
                   + self.name + " (" + str(self.address) + ")")
                 self.leadThrottle = AutoDispatcher.instance.getThrottle(
-                  self.leadLoco, long)
+                  self.leadLoco, long, 5)
                 if (self.leadThrottle != None) :
                     AutoDispatcher.message("Acquired throttle for consist "
                       + self.name + " (" + str(self.leadLoco) + ")")
@@ -4977,6 +4981,7 @@ class ADlocomotive :
                     AutoDispatcher.chimeLog(ADsettings.ATTENTION_SOUND,
                      "Couldn't assign throttle" + 
                     str(self.leadLoco)+ " for consist " + self.name + "!")
+                    self.throttleAssigned = False
             else :
                 AutoDispatcher.message("Acquired throttle for locomotive "
                   + self.name + " (" + str(self.address) + ")")

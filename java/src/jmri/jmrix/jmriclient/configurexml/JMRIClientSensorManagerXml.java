@@ -1,15 +1,16 @@
 package jmri.jmrix.jmriclient.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
 
 /**
- * Provides load and store functionality for
- * configuring JMRIClientSensorManagers.
+ * Provides load and store functionality for configuring
+ * JMRIClientSensorManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
  * @version $Revision$
@@ -21,18 +22,19 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class","jmri.jmrix.jmriclient.configurexml.JMRIClientSensorManagerXml");
+        sensors.setAttribute("class", "jmri.jmrix.jmriclient.configurexml.JMRIClientSensorManagerXml");
     }
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // load individual sensors 
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
-	// initialize logging
-    static Logger log = LoggerFactory.getLogger(JMRIClientSensorManagerXml.class.getName());
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientSensorManagerXml.class.getName());
 }

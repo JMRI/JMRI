@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+
+    <name>JUnit Test Signals</name>
+    <reference>Dummy definition for JUnit testing</reference>
+
+    <aspects>
+
+    </aspects>
+    <appearancefiles>
+    </appearancefiles>
+
+</aspecttable>
+  

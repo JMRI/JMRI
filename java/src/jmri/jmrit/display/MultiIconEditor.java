@@ -1,31 +1,28 @@
 package jmri.jmrit.display;
 
-import jmri.jmrit.catalog.CatalogPane;
-import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.NamedIcon;
 
 /**
- * Provides a simple editor for selecting N NamedIcons, perhaps
- * for use in creating a panel icon.
- * <P>See {@link SensorIcon} for an item
- * that might want to have that type of information, and
- * {@link jmri.jmrit.display.panelEditor.PanelEditor}
- * for an example of how to use this.
+ * Provides a simple editor for selecting N NamedIcons, perhaps for use in
+ * creating a panel icon.
+ * <P>
+ * See {@link SensorIcon} for an item that might want to have that type of
+ * information, and {@link jmri.jmrit.display.panelEditor.PanelEditor} for an
+ * example of how to use this.
  *
- * @author Bob Jacobsen  Copyright (c) 2003
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (c) 2003
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.panelEditor.PanelEditor
  * @see jmri.jmrit.catalog
  */
-
 public class MultiIconEditor extends JPanel {
 
     JButton[] buttonList;
@@ -57,6 +54,7 @@ public class MultiIconEditor extends JPanel {
 
     /**
      * Returns a new NamedIcon object for your own use.
+     *
      * @param iconNum 0 to n-1
      * @return Unique object
      */
@@ -69,17 +67,17 @@ public class MultiIconEditor extends JPanel {
         this.add(catalog);
     }
 
-
     private class IconButton extends JButton {
+
         IconButton(int index, Icon init) {  // init icon passed to avoid ref before ctor complete
             super(init);
             savedIndex = index;
-            addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        pickIcon();
-                    }
+            addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    pickIcon();
                 }
-                                        );
+            }
+            );
         }
 
         int savedIndex;

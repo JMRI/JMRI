@@ -1,36 +1,40 @@
 // SpecificLight.java
-
 package jmri.jmrix.powerline.cp290;
 
+import jmri.jmrix.powerline.SerialTrafficController;
+import jmri.jmrix.powerline.X10Sequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.powerline.*;
 
 /**
  * Implementation of the Light Object for X10 for CP290 interfaces.
  * <P>
- * Uses X10 dimming commands to set intensity unless
- * the value is 0.0 or 1.0, in which case it uses on/off commands only.
+ * Uses X10 dimming commands to set intensity unless the value is 0.0 or 1.0, in
+ * which case it uses on/off commands only.
  * <p>
- * Since the dim/bright step of the hardware is unknown then the Light
- * object is first created, the first time the intensity (not state)
- * is set to other than 0.0 or 1.0, 
- * the output is run to it's maximum dim or bright step so
- * that we know the count is right.
+ * Since the dim/bright step of the hardware is unknown then the Light object is
+ * first created, the first time the intensity (not state) is set to other than
+ * 0.0 or 1.0, the output is run to it's maximum dim or bright step so that we
+ * know the count is right.
  * <p>
- * Keeps track of the controller's "dim count", and if 
- * not certain forces it to zero to be sure.
+ * Keeps track of the controller's "dim count", and if not certain forces it to
+ * zero to be sure.
  * <p>
- * 
  *
  *
- * @author      Dave Duchamp Copyright (C) 2004
- * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
- * Converted to multiple connection
+ *
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010 Converted to
+ * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version     $Revision$
+ * @version $Revision$
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4123284768492494792L;
 
     /**
      * Create a Light object, with only system name.
@@ -42,6 +46,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
         this.tc = tc;
         maxDimStep = tc.getNumberOfIntensitySteps();
     }
+
     /**
      * Create a Light object, with both system and user names.
      * <P>
@@ -53,8 +58,8 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
         maxDimStep = tc.getNumberOfIntensitySteps();
     }
 
-	SerialTrafficController tc = null;
-	
+    SerialTrafficController tc = null;
+
     /**
      * Optionally, force control to a known "dim count".
      * <p>
@@ -64,9 +69,8 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
         maxDimStep = tc.getNumberOfIntensitySteps();
 
         // Set initial state
-            
         // see if going to stabilize at on or off
-        if (intensity<= 0.5) {
+        if (intensity <= 0.5) {
             // create output sequence
             X10Sequence out = new X10Sequence();
             // going to low, first set off
@@ -78,9 +82,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
             tc.sendX10Sequence(out, null);
 
             lastOutputStep = 0;
-            
+
             if (log.isDebugEnabled()) {
-            	log.debug("initIntensity: sent dim reset");
+                log.debug("initIntensity: sent dim reset");
             }
         } else {
             // create output sequence
@@ -92,17 +96,16 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
             out.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
             // send
             tc.sendX10Sequence(out, null);
-            
+
             lastOutputStep = maxDimStep;
-            
+
             if (log.isDebugEnabled()) {
-            	log.debug("initIntensity: sent bright reset");
+                log.debug("initIntensity: sent bright reset");
             }
         }
     }
-           
 
-    static Logger log = LoggerFactory.getLogger(SpecificLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificLight.class.getName());
 }
 
 /* @(#)SpecificLight.java */

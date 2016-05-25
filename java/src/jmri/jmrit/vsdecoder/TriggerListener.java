@@ -18,12 +18,13 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
 // Interface for creating anonymous objects for having VSDSounds listen to Triggers...
-
 public interface TriggerListener {
+
     public void takeAction();
+
     public void takeAction(int i);
+
     public void takeAction(float f);
 
 }

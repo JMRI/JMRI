@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
@@ -13,14 +13,17 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for LNCP files -->
 <!-- Panes to show Masts -->
-<pane name="Detectors">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Detectors</name>
   <column>
     <row>
       <column>
-        <label label="Control Point Block Occupancy Detector Configuration settings. All numbers are entered as">
-          </label>
-        <label label="their actual event numbers. For example LS9 is entered as event number 9.">
-          </label>
+        <label>
+          <text>Control Point Block Occupancy Detector Configuration settings. All numbers are entered as</text>
+        </label>
+        <label>
+          <text>their actual event numbers. For example LS9 is entered as event number 9.</text>
+        </label>
       </column>
     </row>
     <separator/>

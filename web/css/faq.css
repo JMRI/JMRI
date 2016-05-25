@@ -1,0 +1,64 @@
+/*
+    Turns a DL list into a folded FAQ
+
+    How:
+      By surrounding the dt with a link, an empty i element is also added for an icon if required.
+      The dd is moved off screen until the dt link is clicked.
+      Adding a class="on" to a dt will show the related dd(s).
+
+    Parameters (optional):
+      faqClass : "faq",   // class of the dl's to apply folding too, default "faq".
+      onClass : "on",     // class applied to show the dd, default "on", also used to switch the dt icon state.
+      linkClass : ""      // class added to the dt show/hide link. Default none.
+
+    It is recomended to leave the first question open to provide a hint to the user about the functionality presented.
+    Please ensure the link colours used are different to standard links.
+
+    Author: mike foskett mike.foskett@websemantics.co.uk
+    http://websemantics.co.uk/resources/simple_faq/
+*/
+
+/* FAQ styles */
+.faq dt {margin:2em 0 0.5em 0; font-weight:bold;}
+.faq dd {margin-top:0.5em; margin-bottom:1em;}
+
+/* if JavaScript is available move the DDs off screen */
+.hasJS .faq dd {position:absolute; top:0; left:-200em; width:58em}
+
+/* When .on is applied to the DD move it back on screen */
+.hasJS .faq dd.on {position:static; left:0; width:auto}
+
+/* Make sure the DT activating links look different to the pages normal links */
+.faq dt a,
+.faq dt a:visited {color:#737373; text-decoration:none}
+.faq dt a:hover,
+.faq dt a:focus,
+.faq dt a:active {color:#000;}
+
+
+/* An empty <i> tag is used to hold the icon.
+Note Base64 embedded image is used with a back-ip png for IEv6 & 7.
+An empty <b> tag is used if the DT has no sibling DDs. */
+.faq dt i,
+.faq dt b {
+	margin-right:1em; float:left; width: 16px; height: 17px; overflow:hidden; background-repeat: no-repeat;
+
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAiBAMAAACkb0T0AAAAMFBMVEX///+kpKT4+Ph7e3vMzMyUlJTu7u68vLyEhIRzc3Pf39+NjY2ZmZnExMTU1NTq6uqVHy7CAAAAAXRSTlMAQObYZgAAAJRJREFUeF49kLENQjEQQ60I8RFSdohgikxCwQSMkA7RUaFfIOEtaCgoKRmBDViBjrvL/3b15OQS+yAtX6XDiieDVLDlzazvEQualeoIfMxK9QpksxzCQsBA7s4OaCQDcp0A74D1/vEMOJAM+AWMPu26ANi4ikBHuqxxPagvHDI7KIaCtSnqMIdvvY4KzpXvWoLWIv0BoKJU4+j6VIYAAAAASUVORK5CYII=);
+	*background-image:url(arrows.grey.png);
+}
+.faq .on i {background-position:bottom;}
+.faq dt b {background:none;}
+
+
+/* Let's try some of that fancy CSS3 then. This just fades in the DD */
+.hasJS .faq dd {
+	opacity:0;
+	-moz-transition: opacity 0.5s ease-in;
+	-o-transition: opacity 0.25s ease-in;
+	-webkit-transition: opacity 0.25s ease-in;
+	transition: opacity 0.25s ease-in;
+}
+.hasJS .faq dd.on {
+	opacity: 1;
+}
+

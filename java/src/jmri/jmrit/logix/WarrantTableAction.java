@@ -1,11 +1,8 @@
 package jmri.jmrit.logix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 //import java.util.EventObject;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +11,8 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JDialog;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -25,11 +22,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Path;
+import jmri.ShutDownTask;
+import jmri.implementation.swing.SwingShutDownTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A WarrantAction contains the operating permissions and directives needed for
@@ -51,47 +51,47 @@ import jmri.Path;
  * for more details.
  * <P>
  *
- * @author	Pete Cressman  Copyright (C) 2009, 2010
+ * @author  Pete Cressman  Copyright (C) 2009, 2010
  */
 public class WarrantTableAction extends AbstractAction {
 
     static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
     private static WarrantTableAction _instance;
-    private static HashMap <String, WarrantFrame> _frameMap = new HashMap <String, WarrantFrame> ();
-    private static WarrantTableFrame _tableFrame;
+    private static HashMap <String, Warrant> _warrantMap = new HashMap <String, Warrant> ();
+    protected static TrackerTableAction _trackerTable;
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
+    protected static WarrantFrame _openFrame;
+    protected static NXFrame _nxFrame;
+    private static OpSessionLog _log;
+    private static boolean _edit;
+    static ShutDownTask     _shutDownTask;
 
-    public WarrantTableAction(String menuOption) {
-	    super(Bundle.getMessage(menuOption));
+    protected WarrantTableAction(String menuOption) {
+        super(Bundle.getMessage(menuOption));
+        _trackerTable = TrackerTableAction.getInstance();
     }
     
     static WarrantTableAction getInstance() {
-    	if (_instance==null) {
-    		_instance = new WarrantTableAction("ShowWarrants");
-    	}
-    	return _instance;
+        if (_instance==null) {
+            _instance = new WarrantTableAction("ShowWarrants");
+        }
+        return _instance;
     }
 
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if (Bundle.getMessage("ShowWarrants").equals(command)){
-            if (_tableFrame==null) {
-                _tableFrame = new WarrantTableFrame();
-                try {
-                    _tableFrame.initComponents();
-                } catch (Exception ex ) {/*bogus*/ }
-            } else {
-                _tableFrame.setVisible(true);
-                _tableFrame.pack();
-            }
+            WarrantTableFrame.getInstance();
         } else if (Bundle.getMessage("CreateWarrant").equals(command)){
             CreateWarrantFrame f = new CreateWarrantFrame();
             try {
                 f.initComponents();
-            } catch (Exception ex ) {/*bogus*/ }
+            } catch (Exception ex ) {
+                log.error("During initComponents", ex);
+            }
             f.setVisible(true);
         }
         initPathPortalCheck();
@@ -101,23 +101,25 @@ public class WarrantTableAction extends AbstractAction {
             OBlock block = manager.getBySystemName(sysNames[i]);
             checkPathPortals(block);
         }
-        showPathPortalErrors();
+        if (_edit) {
+            showPathPortalErrors();            
+        }
     }
     
     /**
     *  Note: _warrantMenu is static
     */
-    synchronized public static JMenu makeWarrantMenu() {
-        _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
-        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
-            updateWarrantMenu();
-        } else {
-        	return null;
-        }
-        return _warrantMenu;
+    synchronized public static JMenu makeWarrantMenu(boolean edit) {
+         if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
+             _edit = edit;
+             _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
+             updateWarrantMenu();
+             return _warrantMenu;
+         }
+         return null;
     }
 
-    synchronized public static void updateWarrantMenu() {
+    synchronized protected static void updateWarrantMenu() {
         _warrantMenu.removeAll();
         _warrantMenu.add(getInstance());
         JMenu editWarrantMenu = new JMenu(Bundle.getMessage("EditWarrantMenu"));
@@ -140,44 +142,155 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         _warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
+        _warrantMenu.add(_trackerTable);
+        _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
+
+            public void actionPerformed(ActionEvent e) {
+                WarrantTableFrame.nxAction();
+            }           
+        });
+        _warrantMenu.add(makeLogMenu());
+        
         if (log.isDebugEnabled()) log.debug("updateMenu to "+sysNames.length+" warrants.");
     }
-
-    synchronized public static void closeWarrantFrame(String key) {
-        _frameMap.remove(key);
-    }
-
-    synchronized public static void openWarrantFrame(String key) {
-        WarrantFrame frame = _frameMap.get(key);
-        if (frame==null) {
-            frame = new WarrantFrame(key);
-            _frameMap.put(key, frame);
+    
+    protected static JMenuItem makeLogMenu() {
+        JMenuItem mi;
+        if (_log==null) {
+            mi = new JMenuItem(Bundle.getMessage("startLog"));          
+            mi.addActionListener( new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent e) {
+                        _log = OpSessionLog.getInstance();
+                        if (!_log.showFileChooser(WarrantTableFrame.getInstance())) {
+                            _log = null;
+                            return;
+                        }
+                        if (_shutDownTask == null) {
+                            _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
+                                    null, null, null)
+                            {
+                                public boolean checkPromptNeeded() {
+                                    _log.close();
+                                    _log = null;
+                                    return true;
+                                }
+                            };
+                            jmri.InstanceManager.shutDownManagerInstance().register(_shutDownTask);
+                        }
+                        updateWarrantMenu();
+                    }
+                });
+        } else {
+            mi = new JMenuItem(Bundle.getMessage("stopLog"));           
+            mi.addActionListener( new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent e) {
+                        _log.close();
+                        jmri.InstanceManager.shutDownManagerInstance().deregister(_shutDownTask);
+                        _shutDownTask = null;
+                        _log = null;
+                        updateWarrantMenu();
+                    }
+                });
         }
-        if (log.isDebugEnabled()) log.debug("openWarrantFrame for "+key+", size= "+_frameMap.size());
-        frame.setVisible(true);
-        frame.toFront();
-    }
-
-    synchronized public static void openWarrantFrame(Warrant w) {
-    	String key = w.getDisplayName();
-        WarrantFrame frame = _frameMap.get(key);
-        if (frame==null) {
-            frame = new WarrantFrame(w);
-            _frameMap.put(key, frame);
-        }
-        if (log.isDebugEnabled()) log.debug("openWarrantFrame for "+key+", size= "+_frameMap.size());
-        frame.setVisible(true);
-        frame.toFront();
-    }
-
-    synchronized public static WarrantFrame getOpenWarrantFrame(String key) {
-        return _frameMap.get(key);
+        return mi;
     }
     
+    synchronized protected static void writetoLog(String text) {
+        if (_log!=null) {
+            _log.writeLn(text);
+        }       
+    }
+    
+    synchronized protected static void closeWarrantFrame(WarrantFrame frame) {
+        if (frame!=null) {
+            if  (frame.equals(_openFrame)) {
+                _openFrame = null;                      
+            }
+            frame.dispose();
+        }
+    }
+    synchronized protected static void newWarrantFrame(WarrantFrame frame) {
+        closeWarrantFrame(_openFrame);
+        _openFrame = frame;
+    }
+
+    synchronized protected static void openWarrantFrame(String key) {
+        if (_openFrame!=null) {
+            _openFrame.dispose();
+        }
+        Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(key);
+        if (w!=null) {
+            _warrantMap.put(key, w);
+            _openFrame = new WarrantFrame(w);
+        }
+        if (log.isDebugEnabled()) log.debug("openWarrantFrame for "+key+", size= "+_warrantMap.size());
+        if (_openFrame!=null) {
+            _openFrame.setVisible(true);
+            _openFrame.toFront();           
+        }
+    }
+    
+    synchronized protected static void portalNameChange(String oldName, String newName) {
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        List <String> systemNameList = manager.getSystemNameList();
+        Iterator <String> iter = systemNameList.iterator();
+        while (iter.hasNext()) {
+            Warrant w =manager.getBySystemName(iter.next());
+            List <BlockOrder> orders = w.getBlockOrders();
+            Iterator <BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+                BlockOrder bo = it.next();
+                if (oldName.equals(bo.getEntryName())) {
+                    bo.setEntryName(newName);
+                }
+                if (oldName.equals(bo.getExitName())) {
+                    bo.setExitName(newName);
+                }
+            }
+        }
+    }
+
+    synchronized protected static void pathNameChange(OBlock block, String oldName, String newName) {
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+        List <String> systemNameList = manager.getSystemNameList();
+        Iterator <String> iter = systemNameList.iterator();
+        while (iter.hasNext()) {
+            Warrant w =manager.getBySystemName(iter.next());
+            List <BlockOrder> orders = w.getBlockOrders();
+            Iterator <BlockOrder> it = orders.iterator();
+            while (it.hasNext()) {
+                BlockOrder bo = it.next();
+                if (bo.getBlock().equals(block) && bo.getPathName().equals(oldName)) {
+                    bo.setPathName(newName);
+                }
+            }
+        }
+    }
+
+/*    synchronized public static WarrantFrame getWarrantFrame(String key) {
+        return _frameMap.get(key);
+    }*/
+    
     synchronized static public void mouseClickedOnBlock(OBlock block) {
-    	if (_tableFrame!=null) {
-    		_tableFrame.mouseClickedOnBlock(block);
-    	}
+        if (block==null) {
+            return;
+        }
+        
+        NXFrame nxFrame = NXFrame.getInstance();
+        if (nxFrame.isVisible()) {
+            nxFrame.mouseClickedOnBlock(block);
+            return;
+        }
+           
+        if (_trackerTable!=null && TrackerTableAction.mouseClickedOnBlock(block)) {
+            return;
+        }
+        if (_openFrame!=null) {
+            _openFrame.mouseClickedOnBlock(block);
+            return;
+        }
     }
     
     /******************** Error checking ************************/
@@ -195,7 +308,7 @@ public class WarrantTableAction extends AbstractAction {
     * are written.
     */
     public static void checkPathPortals(OBlock b) {
-    	if (log.isDebugEnabled()) log.debug("checkPathPortals for "+b.getDisplayName());
+        if (log.isDebugEnabled()) log.debug("checkPathPortals for "+b.getDisplayName());
         // warn user of incomplete blocks and portals
         if (_textArea==null) {
             _textArea = new javax.swing.JTextArea(10, 50);
@@ -261,7 +374,7 @@ public class WarrantTableAction extends AbstractAction {
                  portalNameList.remove(toPortal.getName());
                  if (fromPortal!=null && fromPortal.equals(toPortal)) {
                      _textArea.append(Bundle.getMessage("PathWithDuplicatePortal",
-                    		 path.getName(), b.getDisplayName()));
+                             path.getName(), b.getDisplayName()));
                      _textArea.append("\n");
                  }
             }
@@ -271,35 +384,35 @@ public class WarrantTableAction extends AbstractAction {
                 _hasErrors = true;
             } else if (!hasPortal) {
                 _textArea.append(Bundle.getMessage("PathNeedsPortal", 
-                		path.getName(), b.getDisplayName()));
+                        path.getName(), b.getDisplayName()));
                 _textArea.append("\n");
                 _hasErrors = true;
             }
             // check that the path's portals have the path in their lists
             boolean validPath;
             if (toPortal!=null) {
-            	if (fromPortal!=null) {
-            		validPath = toPortal.isValidPath(path) && fromPortal.isValidPath(path);
-            	} else {
-            		validPath = toPortal.isValidPath(path);
-            	}
+                if (fromPortal!=null) {
+                    validPath = toPortal.isValidPath(path) && fromPortal.isValidPath(path);
+                } else {
+                    validPath = toPortal.isValidPath(path);
+                }
             }else {
-            	if (fromPortal!=null) {
-            		validPath = fromPortal.isValidPath(path);
-            	} else {
-            		validPath = false;
-            	}            	
+                if (fromPortal!=null) {
+                    validPath = fromPortal.isValidPath(path);
+                } else {
+                    validPath = false;
+                }               
             }
-            if (!validPath) {            	
+            if (!validPath) {               
                 _textArea.append(Bundle.getMessage("PathNotConnectedToPortal", 
-                		path.getName(), b.getDisplayName()));
+                        path.getName(), b.getDisplayName()));
                 _textArea.append("\n");
                 _hasErrors =true;
             }
         }
         for (int i=0; i<portalNameList.size(); i++) {
             _textArea.append(Bundle.getMessage("BlockPortalNoPath", 
-            		portalNameList.get(i), b.getDisplayName()));
+                    portalNameList.get(i), b.getDisplayName()));
             _textArea.append("\n");
             _hasErrors = true;
         }
@@ -308,7 +421,7 @@ public class WarrantTableAction extends AbstractAction {
     }
     
     public static boolean checkSharedTurnouts(OBlock block) {
-    	boolean hasShared = false;
+        boolean hasShared = false;
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         List <Path> pathList = block.getPaths();
@@ -316,17 +429,17 @@ public class WarrantTableAction extends AbstractAction {
         while (iter.hasNext()) {
             OPath path = (OPath)iter.next();
             for (int i=0; i < sysNames.length; i++) {
-            	if (block.getSystemName().equals(sysNames[i])) {
-            		continue;
-            	}
+                if (block.getSystemName().equals(sysNames[i])) {
+                    continue;
+                }
                 OBlock b = manager.getBySystemName(sysNames[i]);
                 Iterator <Path> it = b.getPaths().iterator();
                 while (it.hasNext()) {
                     boolean shared = sharedTO(path, (OPath)it.next());
-                	if (shared) {
-                		hasShared =true;
+                    if (shared) {
+                        hasShared =true;
                         break;
-                	}
+                    }
                 }
             }
         }
@@ -334,37 +447,37 @@ public class WarrantTableAction extends AbstractAction {
     }
     private static boolean sharedTO(OPath myPath, OPath path) {
         List<BeanSetting> myTOs = myPath.getSettings();
-    	Iterator <BeanSetting> iter = myTOs.iterator();
+        Iterator <BeanSetting> iter = myTOs.iterator();
         List<BeanSetting> tos = path.getSettings();
         boolean ret = false;
-    	while (iter.hasNext()) {
-    		BeanSetting mySet = iter.next();
-    		NamedBean myTO = mySet.getBean();
-			int myState = mySet.getSetting();
-    		Iterator <BeanSetting> it = tos.iterator();
-    		while (it.hasNext()) {
-    			BeanSetting set = it.next();
-    			NamedBean to = set.getBean();
-    			if(myTO.equals(to)) {
-    				// turnouts are equal.  check if settings are compatible.
-    				OBlock myBlock = (OBlock)myPath.getBlock();
-    				int state = set.getSetting();
-    				OBlock block = (OBlock)path.getBlock();
-//    				String note = "WARNING: ";
-    				if (myState!=state) {
+        while (iter.hasNext()) {
+            BeanSetting mySet = iter.next();
+            NamedBean myTO = mySet.getBean();
+            int myState = mySet.getSetting();
+            Iterator <BeanSetting> it = tos.iterator();
+            while (it.hasNext()) {
+                BeanSetting set = it.next();
+                NamedBean to = set.getBean();
+                if(myTO.equals(to)) {
+                    // turnouts are equal.  check if settings are compatible.
+                    OBlock myBlock = (OBlock)myPath.getBlock();
+                    int state = set.getSetting();
+                    OBlock block = (OBlock)path.getBlock();
+//                  String note = "WARNING: ";
+                    if (myState!=state) {
                        ret = myBlock.addSharedTurnout(myPath, block, path);
 /*                       _textArea.append(note+Bundle.getMessage("sharedTurnout", myPath.getName(), myBlock.getDisplayName(), 
-                       		 myTO.getDisplayName(), (myState==jmri.Turnout.CLOSED ? "Closed":"Thrown"),
-                       		 path.getName(), block.getDisplayName(), to.getDisplayName(), 
-                       		 (state==jmri.Turnout.CLOSED ? "Closed":"Thrown")));
+                             myTO.getDisplayName(), (myState==jmri.Turnout.CLOSED ? "Closed":"Thrown"),
+                             path.getName(), block.getDisplayName(), to.getDisplayName(), 
+                             (state==jmri.Turnout.CLOSED ? "Closed":"Thrown")));
                       _textArea.append("\n");
-    				} else {
-    					note = "Note: "; */
-    				}  					
-    			}
-    		}
-    	}
-    	return ret;
+                    } else {
+                        note = "Note: "; */
+                    }                   
+                }
+            }
+        }
+        return ret;
     }
     
     public static boolean showPathPortalErrors() {
@@ -418,8 +531,8 @@ public class WarrantTableAction extends AbstractAction {
         JTextField _sysNameBox;
         JTextField _userNameBox;
 
-        Warrant _startW;
-        Warrant _endW;
+        private Warrant _startW;
+        private Warrant _endW;
 
         public CreateWarrantFrame() {
             setTitle(Bundle.getMessage("TitleCreateWarrant"));
@@ -435,13 +548,13 @@ public class WarrantTableAction extends AbstractAction {
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             JPanel p = new JPanel();
-            p.add(new JLabel(Bundle.getMessage("SystemName")));
+            p.add(new JLabel(Bundle.getMessage("LabelSystemName")));
             _sysNameBox = new JTextField(15);
             p.add(_sysNameBox);
             panel.add(p);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             p = new JPanel();
-            p.add(new JLabel(Bundle.getMessage("UserName")));
+            p.add(new JLabel(Bundle.getMessage("LabelUserName")));
             _userNameBox = new JTextField(15);
             p.add(_userNameBox);
             panel.add(p);
@@ -467,17 +580,24 @@ public class WarrantTableAction extends AbstractAction {
             pack();
         }
 
-        void concatenate(Warrant startW, Warrant endW) {
+        protected void concatenate(Warrant startW, Warrant endW) {
             _startW = startW;
             _endW = endW;
         }
-        void doConcatenate(Warrant w) {
+        /**
+         * Does 3 cases: create new warrant, copy a warrant, concatenate two warrants
+         * warrant w is unregistered
+         * */
+        private void doConcatenate(Warrant w) {
             if (_startW!=null) {
                 List <BlockOrder> orders = _startW.getOrders();
                 int limit = orders.size()-1;
                 for (int i=0; i<limit; i++) {
                     w.addBlockOrder(new BlockOrder(orders.get(i)));
                 }
+                w.setViaOrder(_startW.getViaOrder());
+                w.setAvoidOrder(_startW.getAvoidOrder());
+                if (log.isDebugEnabled()) log.debug("doConcatenate: limit= "+limit+",  orders.size()= "+ orders.size());
                 BlockOrder bo = new BlockOrder(orders.get(limit));
                 if (_endW!=null) {
                     orders = _endW.getOrders();
@@ -485,9 +605,17 @@ public class WarrantTableAction extends AbstractAction {
                     w.addBlockOrder(bo);
                     for (int i=1; i<orders.size(); i++) {
                         w.addBlockOrder(new BlockOrder(orders.get(i)));
-                    }                	
+                    }
+                    BlockOrder boo = w.getViaOrder();
+                    if (boo==null) {
+                        w.setViaOrder(_endW.getViaOrder());                     
+                    }
+                    boo = w.getAvoidOrder();
+                    if (boo==null) {
+                        w.setAvoidOrder(_endW.getAvoidOrder()); 
+                    }                       
                 } else {
-                    w.addBlockOrder(bo);		// copy only               	
+                    w.addBlockOrder(bo);        // copy only                
                 }
                 List <ThrottleSetting> commands = _startW.getThrottleCommands();
                 for (int i=0; i<commands.size(); i++) {
@@ -497,22 +625,24 @@ public class WarrantTableAction extends AbstractAction {
                     commands = _endW.getThrottleCommands();
                     for (int i=0; i<commands.size(); i++) {
                         w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
-                    }                	
+                    }                   
                 }
-                _frameMap.put(w.getDisplayName(), new WarrantFrame(w, false));
+                _warrantMap.put(w.getDisplayName(), w);
+                newWarrantFrame(new WarrantFrame(w, false)); // copy/concat warrant/s
             } else {
-            	new WarrantFrame(w, true);
+                newWarrantFrame(new WarrantFrame(w, true));  // create new warrant
             }
+            _startW = null;
+            _endW =null;
             dispose();
-       	
         }
 
-        void makeWarrant() {
+        private void makeWarrant() {
             String sysName = _sysNameBox.getText().trim();
             String userName = _userNameBox.getText().trim();
             sysName = sysName.toUpperCase();
             if (!sysName.startsWith("IW")) {
-            	sysName = "IW"+sysName;
+                sysName = "IW"+sysName;
             }
             _sysNameBox.setText(sysName);
             if (sysName.length()<3) {
@@ -533,21 +663,17 @@ public class WarrantTableAction extends AbstractAction {
                     failed = true;
                 } else {
                     // register warrant if user saves this instance
-                	w = new Warrant(sysName, userName);
-                	doConcatenate(w);
+                    w = new Warrant(sysName, userName);
+                    doConcatenate(w);
                 }
-            }            	
+            }               
             if (failed) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("WarrantExists", 
-                			userName, sysName), Bundle.getMessage("WarningTitle"),
-                			JOptionPane.ERROR_MESSAGE);
+                            userName, sysName), Bundle.getMessage("WarningTitle"),
+                            JOptionPane.ERROR_MESSAGE);
             }
         }
-
     }
 
-    
-    
-
-    static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
 }

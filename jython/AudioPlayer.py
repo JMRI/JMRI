@@ -2,9 +2,8 @@
 #
 # Author: Matthew Harris, copyright 2010
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 from java.awt import FlowLayout
 from java.awt.event import ItemEvent
@@ -169,10 +168,7 @@ class AudioPlayerFrame (JmriJFrame):
         # Now populate
         self.sourceCombo.addItem(self.SELECT)
         # Retrieve system name list of AudioSources
-        for source in audio.getSystemNameList(ord(Audio.SOURCE)):
-        # Due to an API error, which is fixed in JMRI 2.11.1,
-        # we have to do it this way as opposed to the more obvious:
-        # for source in audio.getSystemNameList(Audio.SOURCE):
+        for source in audio.getSystemNameList(Audio.SOURCE):
             # Add available sources to the list
             self.sourceCombo.addItem(source)
 

@@ -1,34 +1,32 @@
 // SimDriverAdapter.java
-
 package jmri.jmrix.cmri.serial.sim;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import jmri.jmrix.cmri.serial.SerialSensorManager;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Extends the serialdriver.SimDriverAdapter class to
- * act as simulated connection.
+ * Extends the serialdriver.SimDriverAdapter class to act as simulated
+ * connection.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2008, 2011
- * @version			$Revision: 20923 $
+ * @author	Bob Jacobsen Copyright (C) 2002, 2008, 2011
+ * @version	$Revision$
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                                                  justification="Access to 'self' OK until multiple instance pattern installed")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+        justification = "Access to 'self' OK until multiple instance pattern installed")
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
-    public String openPort(String portName, String appName)  {
+    public String openPort(String portName, String appName) {
             // don't even try to get port
 
-            // get and save stream
-            serialStream = null;
+        // get and save stream
+        serialStream = null;
 
-            opened = true;
+        opened = true;
 
         return null; // normal operation
     }
@@ -41,23 +39,26 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     }
 
     /**
-     * set up all of the other objects to operate
-     * connected to this port
+     * set up all of the other objects to operate connected to this port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                                                        justification="Access to 'self' OK until multiple instance pattern installed")
-                                                        
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "Access to 'self' OK until multiple instance pattern installed")
+
     public void configure() {
         // install a traffic controller that doesn't time out
-        new SerialTrafficController(){
+        new SerialTrafficController() {
             // timeout doesn't do anything
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                                                    justification="only until multi-connect update done")
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage m,jmri.jmrix.AbstractMRListener l) {}
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification = "only until multi-connect update done")
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener l) {
+            }
+
             // and make this the instance
-            { self = this;}
+            {
+                self = this;
+            }
         };
-        
+
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
 
@@ -74,7 +75,9 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     public DataInputStream getInputStream() {
         try {
             return new DataInputStream(new java.io.PipedInputStream(new java.io.PipedOutputStream()));
-        } catch (Exception e ) { return null; }
+        } catch (Exception e) {
+            return null;
+        }
         //return new DataInputStream(serialStream);
     }
 
@@ -85,7 +88,9 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
         });
     }
 
-    public boolean status() {return opened;}
+    public boolean status() {
+        return opened;
+    }
 
     /**
      * Local method to do specific port configuration
@@ -96,7 +101,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -105,21 +110,23 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
      * Set the baud rate.
      */
     public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: "+rate);
+        log.debug("configureBaudRate: " + rate);
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }
-    
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
 
     static public jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SimDriverAdapter();
+        if (mInstance == null) {
+            mInstance = new SimDriverAdapter();
+        }
         return mInstance;
     }
     static SimDriverAdapter mInstance;
-    
-    static Logger log = LoggerFactory.getLogger(SimDriverAdapter.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(SimDriverAdapter.class.getName());
 
 }

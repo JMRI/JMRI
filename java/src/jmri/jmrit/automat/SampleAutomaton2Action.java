@@ -1,20 +1,18 @@
-// SampleAutomaton2Action.java
-
 package jmri.jmrit.automat;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a
- * SampleAutomaton2 object
+ * Swing action to create and register a SampleAutomaton2 object
  *
- * @author	    Bob Jacobsen    Copyright (C) 2003
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003
  */
 public class SampleAutomaton2Action extends AbstractAction {
 
-    public SampleAutomaton2Action(String s) { super(s);}
+    public SampleAutomaton2Action(String s) {
+        super(s);
+    }
 
     public void actionPerformed(ActionEvent e) {
         // create a SampleAutomaton2
@@ -22,5 +20,3 @@ public class SampleAutomaton2Action extends AbstractAction {
         f.start();
     }
 }
-
-/* @(#)SampleAutomaton2Action.java */

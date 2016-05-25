@@ -1,19 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Uhlenbrock.shtml,v 1.3 2008/07/01 04:18:05 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-14-->
 <html lang="fr">
 <head>
  <TITLE>
  JMRI Install Guide: Uhlenbrock Intellibox via Serial Port
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Michael Beck" name=Author>
     <META content="John Plocher" name=Author>
     <META name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
 
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -29,34 +29,51 @@
     <div id="mainContent">
 
       <H1> 
-      Guide Installation JMRI: Uhlenbrock Intellibox via Port Série
+      Guide Installation JMRI: Uhlenbrock Intellibox via Port S&#233;rie
       </H1>
 
 
 <P>DecoderPro peut communiquer avec une
 <a href="http://www.uhlenbrock.de/3/index.htm"> Uhlenbrock Intellibox </a>
-via le port série intégré et le protocole LocoNet.
+via le port s&#233;rie int&#233;gr&#233; et le protocole LocoNet&reg;.
 
 <p>
-Configurer les options de votre Intellibox Uhlenbrock à:
+Configurer les options de votre Intellibox Uhlenbrock &#224;:
 <UL>
-<LI> SO 2 de valeur 4 (Sélectionner LocoNet protocole dans l'interface)
-<LI> SO 5 valeur 1 (Utilisation 1 bit d'arrêt sur le port série)
-<LI> SO 6 valeur 255 (CTS jamais mis erreurs dues à un appui sur un bouton d'arrêt)
+<LI> SO 2 de valeur 4 (S&#233;lectionner LocoNet protocole dans l'interface)
+<LI> SO 5 valeur 1 (Utilisation 1 bit d'arr&#234;t sur le port s&#233;rie)
+<LI> SO 6 valeur 255 (CTS jamais mis erreurs dues &#224; un appui sur un bouton d'arr&#234;t)
 
 
 <LI>Vitesse de transmission: 19200
 </UL>
 
-Ensuite, démarrez le programme JMRI et le configurer pour:
+Ensuite, d&#233;marrez le programme JMRI et le configurer pour:
 
 <UL>
 <LI> protocole "LocoNet Intellibox Serial Port"
-<LI> Sélectionnez le port série approprié sur votre ordinateur
-<LI> Sélectionnez 19200 bauds
-<LI> Sélectionnez matériels Handshaking 
+<LI> S&#233;lectionnez le port s&#233;rie appropri&#233; sur votre ordinateur
+<LI> S&#233;lectionnez 19200 bauds
+<LI> S&#233;lectionnez mat&#233;riels Handshaking 
 </UL>
+<H1>
+       JMRI Guide d'installation: Uhlenbrock Intellibox II et IB-COM via l'interface USB
+       </H1>
+<P> JMRI peut communiquer avec une centrale Intellibox II Uhlenbrock et IB-COM
+via l'interface int&#233;gr&#233;e USB en utilisant le protocole LocoNet.
 
+<p>
+<UL>
+<LI>D&#233;marrer JMRI ou un autre programme et le configurer pour:
+<UL>
+<LI> <b> Fabricant: </b> Uhlenbrock,
+<li> <b> Syst&#232;me: </b> Uhlenbrock LocoNet Implementation
+<LI> Choisissez votre port
+</ Ul>
+</ Ul>
+<p> LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com"> Digitrax, Inc. </ a> </ p>
+     </ div>
+   </ div>
 
 <!--#include virtual="/Footer" -->
 </body>

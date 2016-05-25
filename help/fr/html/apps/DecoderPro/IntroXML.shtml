@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: IntroXML.shtml,v 1.1 2008/02/16 19:06:09 jacobsen Exp $ -->
-<!--Translated by Hervé Blorec le 2011/10/01 -->
+<!-- <!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+<!--Translated by Herv&#233; Blorec le 2013-09-25 -->
 <title>JMRI: Intro to XML</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -24,26 +24,26 @@
 <!-- Page Body -->
 
 <div class="list">
-<H1>Guide Utilisateur DecoderPro - Introduction à XML</H1>
-<p>Tous les fichiers de configuration JMRI utilisent le format XML. Cette section est une brève explication de ce format pour le rendre un peu plus facile à comprendre.</p>
+<H1>Guide Utilisateur DecoderPro - Introduction &#224; XML</H1>
+<p>Tous les fichiers de configuration JMRI utilisent le format XML. Cette section est une br&#232;ve explication de ce format pour le rendre un peu plus facile &#224; comprendre.</p>
 
-<h3>Éléments et Balises</h3>
+<h3>&#201;l&#233;ments et Balises</h3>
 
-<p>Les fichier XML sont faits d'"éléments", qui sont délimités par des étiquettes.  C'est un peu comme le HTML, si vous êtes familier avec lui.
-Une étiquette est enfermée dans les crochets, pour par exemple &lt;decoder&gt;. Un élément peut soit commencer et finir avec un tag:
+<p>Les fichier XML sont faits d'"&#233;l&#233;ments", qui sont d&#233;limit&#233;s par des &#233;tiquettes.  C'est un peu comme le HTML, si vous &#234;tes familier avec lui.
+Une &#233;tiquette est enferm&#233;e dans les crochets, pour par exemple &lt;decoder&gt;. Un &#233;l&#233;ment peut soit commencer et finir avec un tag:
 
 <p class=example>
 &lt;decoder&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;d'autres trucs ici<BR>
 &lt;/decoder&gt;<BR>
 </p>
-ou avoir au début et à la fin des étiquettes combinées:
+ou avoir au d&#233;but et &#224; la fin des &#233;tiquettes combin&#233;es:
 <p class=example>
 &lt;decoder/&gt;
 </p>
 
-<p>Notez le caractère anti-slash. Il marque la fin de l'élément.
-La balise de départ d'un élément peut également effectuer des attributs:</p>
+<p>Notez le caract&#232;re anti-slash. Il marque la fin de l'&#233;l&#233;ment.
+La balise de d&#233;part d'un &#233;l&#233;ment peut &#233;galement effectuer des attributs:</p>
 
 <p class=example>
 &lt;decoder name="foo"&gt;<BR>
@@ -51,32 +51,32 @@ La balise de départ d'un élément peut également effectuer des attributs:</p>
 &lt;/decoder&gt;<BR>
 </p>
 
-<p>Cet exemple montre l'attribut "nom" "fixé à la valeur de "foo".
+<p>Cet exemple montre l'attribut "name" fix&#233; &#224; la valeur de "foo".
  Certains attributs sont obligatoires, et certains sont optionnels. Notez les guillemets autour de l'attribut valeur. Ils sont obligatoires.</p>
 
 <h3>Sauts de ligne et Indentation</h3>
 
-<p>Enfin, un mot sur le saut de ligne et l'indentation. Les étiquettes,
+<p>Enfin, un mot sur le saut de ligne et l'indentation. Les &#233;tiquettes,
 les espaces et les coupures de lignes ne signifient rien dans des fichiers XML
 sauf dans les guillemets d'une valeur d'attribut. Pour faciliter
 la lecture du fichier original, nous utilisons souvent l'indentation pour montrer quels
-éléments sont à l'intérieur de l'autre. Chaque fois que nous commençons un nouvel élément,
+&#233;l&#233;ments sont &#224; l'int&#233;rieur de l'autre. Chaque fois que nous commen&#231;ons un nouvel &#233;l&#233;ment,
 bous indentons son contenu par quatre espaces. Un exemple pourrait
-être:
+&#234;tre:
 <p class=example>
 &lt;decoder&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;variable&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;le truc est dans la 1iere variable élément<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;le truc est dans la 1iere variable &#233;l&#233;ment<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/variable&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;variable&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;le truc est dans la 2ieme variable élément<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;le truc est dans la 2ieme variable &#233;l&#233;ment<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/variable&gt;<BR>
 &lt;/decoder&gt;
 </p>
 
 
-Vous pouvez rompre le contenu d'un élément sur une ligne, si celle-ci
- est plus facile à lire:</p>
+Vous pouvez rompre le contenu d'un &#233;l&#233;ment sur une ligne, si celle-ci
+ est plus facile &#224; lire:</p>
 <p class=example>
 &lt;tagWithLotsOfAttributes<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;firstAttribute="foo"<BR>

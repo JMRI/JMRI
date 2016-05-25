@@ -1,18 +1,22 @@
 // MapleMenu.java
-
 package jmri.jmrix.maple;
 
 import java.util.ResourceBundle;
-
 import javax.swing.JMenu;
 
 /**
  * Create a "Systems" menu containing the Jmri Maple-specific tools
  *
- * @author	Bob Jacobsen   Copyright 2008
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2008
+ * @version $Revision$
  */
 public class MapleMenu extends JMenu {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5496558545288767910L;
+
     public MapleMenu(String name) {
         this();
         setText(name);
@@ -35,5 +39,3 @@ public class MapleMenu extends JMenu {
     }
 
 }
-
-

@@ -1,52 +1,71 @@
-// LoadStoreBaseAction.java
-
 package jmri.configurexml;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import jmri.InstanceManager;
+import jmri.implementation.JmriConfigurationManager;
+import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
 
 /**
  * Base implementation for the load and store actions.
  * <P>
- * Primarily provides file checking services to the 
- * specific subclasses that load/store particular types of data.
+ * Primarily provides file checking services to the specific subclasses that
+ * load/store particular types of data.
  * <P>
- * Also used to
- * hold common information, specifically common instances of
- * the JFileChooser. These bring the user back to the same
- * place in the file system each time an action is invoked.
+ * Also used to hold common information, specifically common instances of the
+ * JFileChooser. These bring the user back to the same place in the file system
+ * each time an action is invoked.
  *
- * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision$
- * @see         jmri.jmrit.XmlFile
+ * @author	Bob Jacobsen Copyright (C) 2004
+ * @see jmri.jmrit.XmlFile
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {
 
     public LoadStoreBaseAction(String s) {
         super(s);
         // ensure that an XML config manager exists
-        if (InstanceManager.configureManagerInstance()==null)
-            InstanceManager.setConfigureManager(new ConfigXmlManager());
+        if (InstanceManager.configureManagerInstance() == null) {
+            InstanceManager.setConfigureManager(new JmriConfigurationManager());
+        }
     }
 
-    static JFileChooser allFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-    static JFileChooser configFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-    static JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    /*
+     * These JFileChoosers are retained so that multiple actions can all open
+     * the JFileChoosers at the last used location for the context that the
+     * action supports.
+     */
+    static private JFileChooser allFileChooser = null;
+    static private JFileChooser configFileChooser = null;
+    static private JFileChooser userFileChooser = null;
 
-    static {  // static class initialization
-        jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("XML files");
-        filt.addExtension("xml");
-        allFileChooser.setFileFilter(filt);
-        configFileChooser.setFileFilter(filt);
-        userFileChooser.setFileFilter(filt);
+    static private JFileChooser getXmlFileChooser(String path) {
+        FileChooserFilter xmlFilter = new FileChooserFilter("XML files");
+        xmlFilter.addExtension("xml"); // NOI18N
+        JFileChooser chooser = new JFileChooser(path);
+        chooser.setFileFilter(xmlFilter);
+        return chooser;
     }
-    
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(LoadStoreBaseAction.class.getName());
+
+    static protected JFileChooser getAllFileChooser() {
+        if (allFileChooser == null) {
+            allFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
+        }
+        return allFileChooser;
+    }
+
+    static protected JFileChooser getConfigFileChooser() {
+        if (configFileChooser == null) {
+            configFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
+        }
+        return configFileChooser;
+    }
+
+    static protected JFileChooser getUserFileChooser() {
+        if (userFileChooser == null) {
+            userFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
+        }
+        return userFileChooser;
+    }
 
 }

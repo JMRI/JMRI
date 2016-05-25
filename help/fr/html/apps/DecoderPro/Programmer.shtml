@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Programmer.shtml,v 1.4 2009/03/12 22:59:03 matthewharris Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!--  $Id$ -->
+<!-- UpDated by Blorec Herv&#233;  2013-08-31-->
 <title>JMRI: Create a Custom DecoderPro Programmer</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8851-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -21,100 +21,100 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>Guide Utilisateur DecoderPro - Créer un Programmateur Personnalisé</H1>
+<H1>Guide Utilisateur DecoderPro - Cr&#233;er un Programmateur Personnalis&#233;</H1>
 
-<p>Comment puis-je créer mon propre programmateur personnalisé?</p>
+<p>Comment puis-je cr&#233;er mon propre programmateur personnalis&#233;?</p>
 
-<p>La réponse commence par la création d'un fichier xml dans le sous-répertoire 
-«programmateurs» de la distribution JMRI. Le
-contenu du fichier est décrit ci-dessous.</p>
+<p>La r&#233;ponse commence par la cr&#233;ation d'un fichier xml dans le sous-r&#233;pertoire 
+"programmers" de la distribution JMRI. Le
+contenu du fichier est d&#233;crit ci-dessous.</p>
 
 <dl>
-<dt class=left>Spécifier les éléments à afficher</dt>
+<dt class=left>Sp&#233;cifier les &#233;l&#233;ments &#224; afficher</dt>
 <dd class=first>
-<p>L'élément de base d'un volet de programmation est un "affichage". Cela signifie que
- le programmateur ne présente qu'une seule variable. Les attributs sont:
+<p>L'&#233;l&#233;ment de base d'un volet de programmation est un "affichage". Cela signifie que
+ le programmateur ne pr&#233;sente qu'une seule variable. Les attributs sont:
 <ul>
-<li><dfn>name</dfn> - (Nécessaire)
-C'est le "nom standard" de la variable qui sera présenté.
+<li><dfn>name</dfn> - (N&#233;cessaire)
+C'est le "nom standard" de la variable qui sera pr&#233;sent&#233;.
 <li><dfn>label</dfn> -
-S'il est présent, il va être utilisé pour marquer la variable sur le volet au lieu du nom ou du nom 
+S'il est pr&#233;sent, il va &#234;tre utilis&#233; pour marquer la variable sur le volet au lieu du nom ou du nom 
 standard de la variable.
 <li><dfn>Layout</dfn> -
-Où trouver l'étiquette en ce qui concerne le domaine éditable,
-par exemple, la zône de texte. Les valeurs possibles sont "gauche", "au-dessus»,
-«en dessous», «droit» , par défaut "droit .
+O&#249; trouver l'&#233;tiquette en ce qui concerne le domaine &#233;ditable,
+par exemple, la z&#244;ne de texte. Les valeurs possibles sont "gauche", "au-dessus",
+"en dessous", "droit" , par d&#233;faut "droit" .
 <li><dfn>format</dfn> -
-<p>Comment la variable doit être présentée. Les variables numériques peuvent être présentées comme <ul>
-<li> un champ de texte éditable, qui est la valeur par défaut si rien n'est spécifié
+<p>Comment la variable devra &#234;tre pr&#233;sent&#233;e. Les variables num&#233;riques peuvent &#234;tre pr&#233;sent&#233;es comme <ul>
+<li> un champ de texte &#233;ditable, qui est la valeur par d&#233;faut si rien n'est sp&#233;cifi&#233;
 <li><dfn>hslider</dfn> - un curseur horizontal
 <li><dfn>vslider</dfn> - un curseur vertical
 </ul></p>
-<p>Enum variables peuvent être présentées comme
+<p>Enum variables peuvent &#234;tre pr&#233;sent&#233;es comme
 <ul>
-<li> une zône de sélection, qui est la valeur par défaut si rien n'est
-spécifié
-<li><dfn>radiobuttons</dfn> - Chaque valeur possible est présentée comme un bouton individuel
-<li><dfn>checkbox</dfn> - Une liste avec seulement deux états peut également
-être présentée comme une case à cocher
-<li><dfn>offradiobutton</dfn> - Un seul bouton qui donne le choix 0 pour la variable lorsqu'il est sélectionné
-<li><dfn>onradiobutton</dfn> - Un seul bouton qui donne le choix 1 pour la variable lorsqu'il est sélectionné
+<li> une z&#244;ne de s&#233;lection, qui est la valeur par d&#233;faut si rien n'est
+sp&#233;cifi&#233;
+<li><dfn>radiobuttons</dfn> - Chaque valeur possible est pr&#233;sent&#233;e comme un bouton individuel
+<li><dfn>checkbox</dfn> - Une liste avec seulement deux &#233;tats peut &#233;galement
+&#234;tre pr&#233;sent&#233;e comme une case &#224; cocher
+<li><dfn>offradiobutton</dfn> - Un seul bouton qui donne le choix 0 pour la variable lorsqu'il est s&#233;lectionn&#233;
+<li><dfn>onradiobutton</dfn> - Un seul bouton qui donne le choix 1 pour la variable lorsqu'il est s&#233;lectionn&#233;
 </ul></p>
-<p>Ces deux derniers peuvent être utiles pour indiquer quelles parties d'une configuration sont actives, voir 
-le volet  "Tableau de vitesse"de Comprehensive.xml comme exemple.</p>
+<p>Ces deux derniers peuvent &#234;tre utiles pour indiquer quelles parties d'une configuration sont actives, voir 
+le volet  "Speed Table" de Comprehensive.xml comme exemple.</p>
 <li><dfn>tooltip</dfn> -
-Vous permet de spécifier une info-bulle qui sera présentée lorsque le curseur sera à gauche sur la variable.
- S'il n'est pas présent,  l'encadré d'aide défini dans le fichier décodeur est utilisé. (Note: Ce n'est pas
- encore complètement implémenté,  mais vous devez les inclure dans vos définitions de programmateur car 
-ils travailleront bientôt)
+Vous permet de sp&#233;cifier une info-bulle qui sera pr&#233;sent&#233;e lorsque le curseur sera &#224; gauche sur la variable.
+ S'il n'est pas pr&#233;sent,  l'info-bulle d&#233;fini dans le fichier d&#233;codeur est utilis&#233;. (Note: Ce n'est pas
+ encore compl&#232;tement impl&#233;ment&#233;,  mais vous devez les inclure dans vos d&#233;finitions de programmateur car 
+ils travailleront bient&#244;t)
 </ul>
 
 <A name="display">
-<p> Quel nom à afficher est commandé par le volet de l'attribut «NAMEFMT  et l'attribut 'label' sur 
-chaque élément d'affichage (variable)
+<p> Quel nom &#224; afficher est command&#233; par le volet de l'attribut "nameFmt  et l'attribut 'label' sur 
+chaque &#233;l&#233;ment d'affichage (variable)
 .</p></a>
 
 <p>Les choix sont:
-<ul><li>Si une étiquette est spécifiée, elle sera utilisée. Utilisez une étiquette si
- vous souhaitez un contrôle absolu sur qu'elle variable doit être appelée, quel que soit 
-le fichier décodeur qui l'appelle, et que vous n'aimez pas le nom standard.
-<li>Le volet  attribut NAMEFMT est "item ", auquel cas le nom de l'élément sera utilisé 
-indépendamment de ce que le fichier décodeur appelle la variable. Utilisez ce que vous
- voulez est un aspect uniforme pour le volet pour tous les décodeurs. Mais soyez conscient
- que certains noms standard sont vraiment tellement générique qu'ils sont inutiles.
-<li> Si le volet attribut NAMEFMT est autorisé par défaut, ou contient "mfg", le nom du fichier
- de définition de décodeur sera utilisé. Il s'agit de la forme normale, car il permet au fabricant
- d'indiquer en détail ce qu'une variable définit.
+<ul><li>Si une &#233;tiquette est sp&#233;cifi&#233;e, elle sera utilis&#233;e. Utilisez une &#233;tiquette si
+ vous souhaitez un contr&#244;le absolu sur qu'une variable doit &#234;tre appel&#233;e, quel que soit 
+le fichier d&#233;codeur qui l'appelle, et que vous n'aimez pas le nom standard.
+<li>Le volet  attribut nameFmt est "&#233;l&#233;ment ", auquel cas le nom de l'&#233;l&#233;ment sera utilis&#233; 
+ind&#233;pendamment de ce que le fichier d&#233;codeur appelle la variable. Utilisez ceci si vous
+ voulez un aspect uniforme pour le volet pour tous les d&#233;codeurs. Mais soyez conscient
+ que certains noms standard sont vraiment tellement g&#233;n&#233;rique qu'ils sont inutiles.
+<li> Si le volet attribut nnameFmt est autoris&#233; par d&#233;faut, ou contient "mfg", le nom du fichier
+ de d&#233;finition de d&#233;codeur sera utilis&#233;. Il s'agit de la forme normale, car il permet au fabricant
+ d'indiquer en d&#233;tail ce qu'une variable d&#233;finit.
 </ul></p>
 </dd>
 
 <dt class=left>Formatage</dt>
 <dd>
-<p>Chaque volet du programmateur se compose de lignes et/ou des colonnes (imbriquées) .
-Les colonnes exposent les variables de haut en bas. Les rangées exposent les variables 
-de gauche à droite. Vous pouvez les imbriquer  pour obtenir des effets différents; pour 
-un exemple, voir le «Tableau de vitesse" volet du dossier Comprehensive.xml.
-Il a deux colonnes, celle de gauche de chacune utilise une ligne pour mettre des curseurs
- de gauche à droite .
+<p>Chaque volet du programmateur se compose de lignes et/ou des colonnes (imbriqu&#233;es) .
+Les colonnes exposent les variables de haut en bas. Les rang&#233;es exposent les variables 
+de gauche &#224; droite. Vous pouvez les imbriquer  pour obtenir des effets diff&#233;rents; pour 
+un exemple, voir le volet "Speed Table" du dossier Comprehensive.xml.
+Il a deux colonnes, la gauche de chacune utilise une ligne pour mettre des curseurs
+ de gauche &#224; droite .
 </p>
 </dd>
 
-<dt class=left>Éléments spéciaux</dt>
+<dt class=left>&#201;l&#233;ments sp&#233;ciaux</dt>
 <dd>
-Il y a un certain nombre d'éléments que vous pouvez utiliser pour obtenir le programmateur
- formaté exactement comme vous le souhaitez:
+Il y a un certain nombre d'&#233;l&#233;ments que vous pouvez utiliser pour obtenir le programmateur
+ format&#233; exactement comme vous le souhaitez:
 <ul>
 <li><dfn>label</dfn> - Ajouter du texte au volet.
-<li><dfn>separator</dfn> - Ajouter une ligne de séparation à un volet. S'il est inclus dans une colonne,
- ce sera une ligne de séparation horizontale. S'il est inclus dans une ligne, ce sera une ligne verticale.
-<li><dfn>cvtable</dfn> - Insérer un tableau des valeurs de CV sur le volet.
+<li><dfn>separator</dfn> - Ajouter une ligne de s&#233;paration &#224; un volet. S'il est inclus dans une colonne,
+ ce sera une ligne de s&#233;paration horizontale. S'il est inclus dans une ligne, ce sera une ligne verticale.
+<li><dfn>cvtable</dfn> - Ins&#233;rer un tableau des valeurs de CV sur le volet.
 Pour obtenir le droit d'espacement, etc, vous devriez probablement ne pas combiner
-cela avec d'autres variables sur le même volet.
-<li><dfn>fnmapping</dfn> -Afficher une grille fonction de Cartographie .Cela nécessite des variables avec
- des noms spécifiques, qui sont décrites sur un <A HREF="FnMapping.shtml"> page séparée </a>
-<li><dfn>dccaddress</dfn> - Afficher une variable combinée pour l'adresse DCC. Il s'agit d'une case à 
-cocher qui permet de sélectionner l'utilisation de l'adresse courte par rapport à une longue, et un 
-champ de texte simple pour entrer l'adresse. Selon la façon dont la case est activée, le champ de texte
+cela avec d'autres variables sur le m&#234;me volet.
+<li><dfn>fnmapping</dfn> -Afficher une grille fonction de Mapping .Cela n&#233;cessite des variables avec
+ des noms sp&#233;cifiques, qui sont d&#233;crites sur une <A HREF="FnMapping.shtml"> page s&#233;par&#233;e </a>
+<li><dfn>dccaddress</dfn> - Afficher une variable combin&#233;e pour l'adresse DCC. Il s'agit d'une case &#224; 
+cocher qui permet de s&#233;lectionner l'utilisation de l'adresse courte par rapport &#224; une longue, et un 
+champ de texte simple pour entrer l'adresse. Selon la façon dont la case est activ&#233;e, le champ de texte
  permet de configurer l'adresse courte dans CV 1  ou adresse longue dans CV 17/18.
 </ul>
 </dd>
@@ -122,48 +122,48 @@ champ de texte simple pour entrer l'adresse. Selon la façon dont la case est ac
 <dt class=left>Installation de votre nouveau programmateur</dt>
 <dd>
 <p>
-Tous les fichiers .xml dans le sous-répertoire «programmateurs»  apparaîtront dans la boîte de sélection
- lorsque vous créerez un nouveau programmateur dans DecoderPro. Pour utiliser votre nouveau fichier, il
- suffit de mettre dans le sous-répertoire "programmateurs"  du répertoire "prefs"  et de le sélectionnez.
- Vous n'avez pas à redémarrer le programme, la liste est refaite à chaque fois que vous
- ouvrez une fenêtre de nouveau programmateur.
+Tous les fichiers .xml dans le sous-r&#233;pertoire "programmers"  appara&#238;tront dans la bo&#238;te de s&#233;lection
+ lorsque vous cr&#233;erez un nouveau programmateur dans DecoderPro. Pour utiliser votre nouveau fichier, il
+ suffit de mettre dans le sous-r&#233;pertoire "programmers"  du r&#233;pertoire "prefs"  et de le s&#233;lectionnez.
+ Vous n'avez pas &#224; red&#233;marrer le programme, la liste est refaite &#224; chaque fois que vous
+ ouvrez une nouvelle fen&#234;tre programmateur.
 
-<p> Il ya une option pour présenter/masquer les volets du dossier décodeur. Si vous écrivez
- un programmateur de base, vous pouvez les cacher.</p>
+<p> Il ya une option pour pr&#233;senter/masquer les voletsdepuis le fichier d&#233;codeur. Si vous &#233;crivez
+ un programmateur t&#232;s basique, vous pouvez les cacher.</p>
 </dd>
 
 </dl>
 
 <A name="id">
-<h3>Comment les variables dans un fichier décodeur correspondent avec le fichier programmateur</h3></a>
+<h3>Comment les variables dans un fichier d&#233;codeur correspondent avec le fichier programmateur</h3></a>
 
-Chaque fichier décodeur définit
-<A HREF="CreateDecoder.shtml#variable"> les variables </a> qui décrivent des contrôles spécifiques dans
- le décodeur. Le fichier programmateur décrit ensuite comment les placer sur ces panneaux, de telle sorte
+Chaque fichier d&#233;codeur d&#233;finit
+<A HREF="CreateDecoder.shtml#variable"> les variables </a> qui d&#233;crivent des contr&#244;les sp&#233;cifiques dans
+ le d&#233;codeur. Le fichier programmateur d&#233;crit ensuite comment les placer sur ces panneaux, de telle sorte
  que l'utilisateur puisse les trouver et les manipuler
 <P>
-Chaque élément "affichage" dans le fichier programmateur définit une chose à montrer.
-Mais lequel? C'est contrôlé par l'attribut "name" de l'élément "display" . DecoderPro ne prend que «name »
- et regarde à travers la définition décodeur pour un élément "variable" qui a soit le même "objet"ou le 
-même attribut "label.
+Chaque &#233;l&#233;ment "affichage" dans le fichier programmer d&#233;finit une chose &#224; montrer.
+Mais laquel? C'est contr&#244;l&#233; par l'attribut "name" de l'&#233;l&#233;ment "display" . DecoderPro ne prend que "name "
+ et regarde &#224; travers la d&#233;finition d&#233;codeur pour un &#233;l&#233;ment "variable" qui a soit le m&#234;me "&#233;l&#233;ment" ou le 
+m&#234;me attribut "label".
 <P>
-Cela a des effets très intéressants:
+Cela a des effets tr&#232;s int&#233;ressants:
 <OL>
-<LI>Le "nom" dans l'élément "display"  est effectivement un "nom standard", qui peut être utilisé dans
- les fichiers de définition décodeur provenant de différents constructeurs. Comme il est distinct du "label"
- sur la variable décodeur, il est possible d'avoir un fichier programmateur générique qui fonctionne pour de
- nombreux types de décodeurs différents, tout en affichant les noms des variables spécifiques. Pour en savoir 
-plus, s'il vous plaît <A HREF="#display"> voir ci-dessus </a>.
+<LI>Le "nom" dans l'&#233;l&#233;ment "display"  est effectivement un "nom standard", qui peut &#234;tre utilis&#233; dans
+ les fichiers de d&#233;finition d&#233;codeur provenant de diff&#233;rents constructeurs. Comme il est distinct du "label"
+ sur la variable d&#233;codeur, il est possible d'avoir un fichier programmateur g&#233;n&#233;rique qui fonctionne pour de
+ nombreux types de d&#233;codeurs diff&#233;rents, tout en affichant les noms des variables sp&#233;cifiques. Pour en savoir 
+plus, s'il vous pla&#238;t <A HREF="#display"> voir ci-dessus </a>.
 <LI>
-Il vous permet d'utiliser des noms très génériques pour contrôler où vont des choses un peu différentes. Par
- exemple, différents décodeurs sonores donnent différents contrôles. On pourrait avoir "pompe à air", tandis
+Il vous permet d'utiliser des noms tr&#232;s g&#233;n&#233;riques pour contr&#244;ler o&#249; vont des choses un peu diff&#233;rentes. Par
+ exemple, diff&#233;rents d&#233;codeurs sonores donnent diff&#233;rents contr&#244;les. On pourrait avoir "pompe &#224; air", tandis
  qu'un autre n'a pas du tout ceci, et a au lieu "Crissement de frein". Nous ne voulons pas avoir les fichiers
- programmateur contenant des milliards d'éléments "display" à maîtriser avec toutes les toutes les options possibles.
- Au lieu de cela, nous utilisons des éléments avec des noms plus génériques, comme "Option 1 Sound", pour le nom d'affichage.
+ programmateur contenant des milliards d'&#233;l&#233;ments "display" &#224; ma&#238;triser avec toutes les options possibles.
+ Au lieu de cela, nous utilisons des &#233;l&#233;ments avec des noms plus g&#233;n&#233;riques, comme "Option 1 Sound", pour le nom d'affichage.
 <P>
-La définition décodeur dispose alors d'un «label»de «pompe à air" ou que ce soit, et
-un «objet» de «l'option 1 Sound". Tout correspond correctement, et
-"pompe à air" apparaît sur l'écran de l'ordinateur.
+La d&#233;finition d&#233;codeur dispose alors d'un "label" de "Airpump" ou que ce soit, et
+un "&#233;l&#233;ment" de "l'option 1 Sound". Tout correspond correctement, et
+Airpump" appara&#238;t sur l'&#233;cran de l'ordinateur.
 </OL>
 <P>
 

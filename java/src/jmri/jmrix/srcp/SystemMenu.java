@@ -1,18 +1,20 @@
-// SystemMenu.java
-
 package jmri.jmrix.srcp;
 
 import java.util.ResourceBundle;
-
 import javax.swing.JMenu;
 
 /**
  * Create a "Systems" menu containing the system-specific tools
  *
- * @author	Bob Jacobsen   Copyright 2008
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2008
  */
 public class SystemMenu extends JMenu {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6889528034410639602L;
+
     public SystemMenu(String name) {
         this();
         setText(name);
@@ -33,5 +35,3 @@ public class SystemMenu extends JMenu {
     }
 
 }
-
-

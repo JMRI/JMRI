@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NodeConfigFrame.shtml,v 1.3 2008/11/01 17:33:00 jacobsen Exp $ -->
+<!-- $Id$ -->
 <!-- Translated  by Blorec Hervé le 2011-11-2--> 
 
 <html lang="fr">
@@ -84,7 +84,7 @@ Il va ressembler à (à noter la seconde ligne "port de connexion"):
 <p>
 &lt?xml version="1.0" encoding="UTF-8"?>
 <p>
-&lt?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+&lt?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?>
 <p>
 &lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
 <p>
@@ -98,7 +98,7 @@ Il va ressembler à (à noter la seconde ligne "port de connexion"):
 <p>
   &lt connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
 <p>
-  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id: NodeConfigFrame.shtml,v 1.3 2008/11/01 17:33:00 jacobsen Exp $-->
+  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$-->
 <p>
 &lt/layout-config>
 <h3>Laissez JMRI découvrir votre configuration réseau CTI Acela
@@ -121,7 +121,7 @@ Il ressemblera à (notez les lignes après le second "port de connexion" ligne):
 <p>
 &lt?xml version="1.0" encoding="UTF-8"?>
 <p>
-&lt?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+&lt?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?>
 <p>
 &lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
 <p>
@@ -281,7 +281,7 @@ Il ressemblera à (notez les lignes après le second "port de connexion" ligne):
 <p>
   &lt/connection>
 <p>
-  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id: NodeConfigFrame.shtml,v 1.3 2008/11/01 17:33:00 jacobsen Exp $-->
+  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$-->
 <p>
 &lt/layout-config>
 <p>

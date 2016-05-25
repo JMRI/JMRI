@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Displaying JMRI Panel Files</title>
 
 <!-- Style -->
@@ -21,8 +20,8 @@
 <div id="mainContent">
 
 
-<H1>JMRI: Displaying JMRI Panel Files</H1>
-
+<h1>JMRI: Displaying JMRI Panel Files</h1>
+<p>
 JMRI panel and configuration information is stored in XML files.
 These are text files that people can directly read, but the format and
 structure information take a lot of space.  
@@ -34,9 +33,9 @@ read it, print it, copy and paste into a file of another form, etc.
 
 <p>
 A large example of this is available as a 
-<a href="http://jmri.sourceforge.net/community/examples/SPShastaConfigFile.pdf">PDF file</a>.  This is the configuration information, including
+<a href="http://jmri.org/community/examples/SPShastaConfigFile.pdf">PDF file</a>.  This is the configuration information, including
 routes, Logix, etc, for the 
-<a href="http://jmri.sourceforge.net/community/examples/SPShasta.shtml">SP Shasta Route</a>
+<a href="http://jmri.org/community/examples/SPShasta.shtml">SP Shasta Route</a>
 layout.
 <p>
 To view your own panel file, just open it with a web browser.
@@ -54,35 +53,37 @@ This location is in the 2nd line of your panel file.
 Unfortunately, we can't give precise rules, as different web browsers
 have different requirements.  But there are two things you can try:
 
-<ul>
-<li>
-Tell the browser to pick it up from a JMRI web server.
-<p>
-To do this, change the second line of the file to:
-<code><pre>
-&lt;?xml-stylesheet href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl" type="text/xsl"?&gt;
-</pre></code>
-<li>
-Put the stylesheet file in the same place as your panel file, and
-tell the browser to use it.
-<p>
-To do this, first find the "xml/XSLT/panelfile.xsl" file
-in your JMRI distribution directory, or 
-get the most recent version from JMRI by downloading
-<a href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl">this link</a>.
-Put a copy of that file in the same directory as the panel file
-you want to display.
-Then change the second line of your panel file to:
-<code><pre>
-&lt;?xml-stylesheet href="panelfile.xsl" type="text/xsl"?&gt;
-</pre></code>
-</ul>
+	<ul>
+	<li>
+	Tell the browser to pick it up from a JMRI web server.
+	<p>
+	To do this, change the second line of the file to:
+	<code><pre>
+	&lt;?xml-stylesheet href="http://jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?&gt;
+	</pre></code>
+	<li>
+	Put the stylesheet file in the same place as your panel file, and
+	tell the browser to use it.
+	<p>
+	To do this, first find the "xml/XSLT/panelfile.xsl" file
+	in your JMRI distribution directory, or 
+	get the most recent version from JMRI by downloading
+	<a href="http://jmri.org/xml/XSLT/panelfile.xsl">this link</a>.
+	Put a copy of that file in the same directory as the panel file
+	you want to display.
+	Then change the second line of your panel file to:
+	<code><pre>
+	&lt;?xml-stylesheet href="panelfile.xsl" type="text/xsl"?&gt;
+	</pre></code>
+	</ul>
 <p>
 Don't change the first line!
 <p>
 For technical information on this, see the
-<a href="../../doc/Technical/XmlUsage.shtml#xslt">JMRI XML page</a>.
+<a href="../../doc/Technical/XmlUsage.shtml">JMRI XML page</a>.
    
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

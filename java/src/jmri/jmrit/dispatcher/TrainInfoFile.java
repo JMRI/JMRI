@@ -1,31 +1,34 @@
 // TrainInfoFile.java
 package jmri.jmrit.dispatcher;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
-
 import java.util.ResourceBundle;
 import jmri.util.FileUtil;
-
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handles reading and writing of TrainInfo files to disk as an XML file to/from
- * the dispatcher/traininfo/ directory in the user's preferences area <p> This
- * class manipulates the files conforming to the dispatcher-traininfo DTD <p>
+ * the dispatcher/traininfo/ directory in the user's preferences area
+ * <p>
+ * This class manipulates the files conforming to the dispatcher-traininfo DTD
+ * <p>
  * The file is written when the user requests that train information be saved. A
  * TrainInfo file is read when the user request it in the Activate New Train
  * window
  *
- * <P> This file is part of JMRI. <P> JMRI is open source software; you can
- * redistribute it and/or modify it under the terms of version 2 of the GNU
- * General Public License as published by the Free Software Foundation. See the
- * "COPYING" file for a copy of this license. <P> JMRI is distributed in the
- * hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
- * the GNU General Public License for more details.
+ * <P>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is open source software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published by the
+ * Free Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2009
  * @version	$Revision$
@@ -53,7 +56,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
      *  If the file containing Dispatcher TrainInfo does not exist this routine returns quietly.
      *  "name" is assumed to have the .xml or .XML extension already included
      */
-    public TrainInfo readTrainInfo(String name) throws org.jdom.JDOMException, java.io.IOException {
+    public TrainInfo readTrainInfo(String name) throws org.jdom2.JDOMException, java.io.IOException {
         log.debug("entered readTrainInfo");
         TrainInfo tInfo = null;
         // check if file exists
@@ -131,17 +134,17 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         if (traininfo.getAttribute("resetwhendone").getValue().equals("no")) {
                             tInfo.setResetWhenDone(false);
                         }
-                        if(traininfo.getAttribute("delayedrestart") !=null){
-                            if(traininfo.getAttribute("delayedrestart").getValue().equals("no")){
+                        if (traininfo.getAttribute("delayedrestart") != null) {
+                            if (traininfo.getAttribute("delayedrestart").getValue().equals("no")) {
                                 tInfo.setDelayedRestart(ActiveTrain.NODELAY);
-                            } else if(traininfo.getAttribute("delayedrestart").getValue().equals("sensor")){
+                            } else if (traininfo.getAttribute("delayedrestart").getValue().equals("sensor")) {
                                 tInfo.setDelayedRestart(ActiveTrain.SENSORDELAY);
-                                if(traininfo.getAttribute("delayedrestartsensor")!=null){
+                                if (traininfo.getAttribute("delayedrestartsensor") != null) {
                                     tInfo.setRestartDelaySensor(traininfo.getAttribute("delayedrestartsensor").getValue());
                                 }
-                            } else if(traininfo.getAttribute("delayedrestart").getValue().equals("timed")){
+                            } else if (traininfo.getAttribute("delayedrestart").getValue().equals("timed")) {
                                 tInfo.setDelayedRestart(ActiveTrain.TIMEDDELAY);
-                                if(traininfo.getAttribute("delayedrestarttime")!=null){
+                                if (traininfo.getAttribute("delayedrestarttime") != null) {
                                     tInfo.setRestartDelayTime(traininfo.getAttribute("delayedrestarttime").getValue());
                                 }
                             }
@@ -211,7 +214,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("maxtrainlength") != null) {
                         tInfo.setMaxTrainLength(traininfo.getAttribute("maxtrainlength").getValue());
                     }
-                    if(traininfo.getAttribute("terminatewhendone") !=null){
+                    if (traininfo.getAttribute("terminatewhendone") != null) {
                         tInfo.setTerminateWhenDone(false);
                         if (traininfo.getAttribute("terminatewhendone").getValue().equals("yes")) {
                             tInfo.setTerminateWhenDone(true);
@@ -235,7 +238,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         java.util.Map<String, String> m = new java.util.HashMap<String, String>();
         m.put("type", "text/xsl");
         m.put("href", xsltLocation + "dispatcher-traininfo.xsl");
-        org.jdom.ProcessingInstruction p = new org.jdom.ProcessingInstruction("xml-stylesheet", m);
+        org.jdom2.ProcessingInstruction p = new org.jdom2.ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0, p);
 
         // save Dispatcher TrainInfo in xml format
@@ -251,24 +254,26 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("trainfromuser", "" + (tf.getTrainFromUser() ? "yes" : "no"));
         traininfo.setAttribute("priority", tf.getPriority());
         traininfo.setAttribute("resetwhendone", "" + (tf.getResetWhenDone() ? "yes" : "no"));
-        if(tf.getDelayedRestart()==ActiveTrain.SENSORDELAY){
+        if (tf.getDelayedRestart() == ActiveTrain.SENSORDELAY) {
             traininfo.setAttribute("delayedrestart", "sensor");
             traininfo.setAttribute("delayedrestartsensor", tf.getRestartDelaySensor());
-        } else if (tf.getDelayedStart()==ActiveTrain.TIMEDDELAY) {
+        } else if (tf.getDelayedRestart() == ActiveTrain.TIMEDDELAY) {
             traininfo.setAttribute("delayedrestart", "timed");
             traininfo.setAttribute("delayedrestarttime", tf.getRestartDelayTime());
+        } else {
+            traininfo.setAttribute("delayedrestart", "no");
         }
-        
+
         traininfo.setAttribute("reverseatend", "" + (tf.getReverseAtEnd() ? "yes" : "no"));
-        if(tf.getDelayedStart()==ActiveTrain.TIMEDDELAY){
+        if (tf.getDelayedStart() == ActiveTrain.TIMEDDELAY) {
             traininfo.setAttribute("delayedstart", "timed");
-        } else if (tf.getDelayedStart()==ActiveTrain.SENSORDELAY){
+        } else if (tf.getDelayedStart() == ActiveTrain.SENSORDELAY) {
             traininfo.setAttribute("delayedstart", "sensor");
-            if(tf.getDelaySensor()!=null){
-                traininfo.setAttribute("delayedSensor",tf.getDelaySensor());
+            if (tf.getDelaySensor() != null) {
+                traininfo.setAttribute("delayedSensor", tf.getDelaySensor());
             }
         }
-        
+
         traininfo.setAttribute("terminatewhendone", (tf.getTerminateWhenDone() ? "yes" : "no"));
         traininfo.setAttribute("departuretimehr", tf.getDepartureTimeHr());
         traininfo.setAttribute("departuretimemin", tf.getDepartureTimeMin());
@@ -361,7 +366,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             log.error("failed to delete TrainInfo file - " + name);
         }
     }
-    static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
 }
 
 /* @(#)TrainInfoFile.java */

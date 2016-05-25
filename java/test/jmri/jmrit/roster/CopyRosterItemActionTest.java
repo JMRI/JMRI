@@ -1,30 +1,33 @@
 package jmri.jmrit.roster;
 
+import jmri.InstanceManager;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
- * @author	Bob Jacobsen     Copyright (C) 2001, 2002
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @version	$Revision$
  */
 public class CopyRosterItemActionTest extends TestCase {
 
     /**
-     * Really just checks that the thing can init; doesn't really copy
-     * the file, etc.  Should do that some day!
+     * Really just checks that the thing can init; doesn't really copy the file,
+     * etc. Should do that some day!
+     *
      * @throws IOException
      */
-    public void testCopy(){ //throws java.io.IOException, java.io.FileNotFoundException
+    public void testCopy() { //throws java.io.IOException, java.io.FileNotFoundException
         // create a special roster
         //Roster r = RosterTest.createTestRoster();
         // make that the default; not that test roster uses special name
-        Roster.resetInstance();
-        Roster.instance();
+        InstanceManager.reset(Roster.class);
+        InstanceManager.setDefault(Roster.class, new Roster(null));
 
         // copy the item
-        CopyRosterItemAction a = new CopyRosterItemAction("copy", new javax.swing.JFrame()){
+        CopyRosterItemAction a = new CopyRosterItemAction("copy", new javax.swing.JFrame()) {
             protected boolean selectFrom() {
                 return false;  // aborts operation
             }
@@ -33,7 +36,6 @@ public class CopyRosterItemActionTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public CopyRosterItemActionTest(String s) {
         super(s);
     }
@@ -51,7 +53,12 @@ public class CopyRosterItemActionTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

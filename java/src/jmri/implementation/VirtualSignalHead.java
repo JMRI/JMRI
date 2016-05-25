@@ -1,9 +1,6 @@
 // VirtualSignalHead.java
-
 package jmri.implementation;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A signal head that exists only within the program.
@@ -22,19 +19,21 @@ public class VirtualSignalHead extends DefaultSignalHead {
     public VirtualSignalHead(String sys) {
         super(sys);
     }
-	
-	protected void updateOutput() {
-	}
-	
+
+    protected void updateOutput() {
+    }
+
+    boolean isTurnoutUsed(jmri.Turnout t) {
+        return false;
+    }
+
     /**
-     * Remove references to and from this object, so that it can
-     * eventually be garbage-collected.
+     * Remove references to and from this object, so that it can eventually be
+     * garbage-collected.
      */
     public void dispose() {
         super.dispose();
     }
-
-    static Logger log = LoggerFactory.getLogger(VirtualSignalHead.class.getName());
 }
 
 /* @(#)VirtualSignalHead.java */

@@ -1,44 +1,44 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        Provide GUI tools for editing an SDF file in memory.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <p>
+            The text for each of the editor panels comes from the
+            "Explanations" properties set (see the Explanations.properties file 
+            in this package and its 
+            translations).  The editors themselves are coded as subclasses
+            of {@link jmri.jmrix.loconet.sdfeditor.SdfMacroEditor}, one per instruction type.
+        <p>
+            The line in the tree (left-side window) is from the
+            toString method of the 
+            {@link jmri.jmrix.loconet.sdf.SdfMacro} object.
 
-  Copyright 2003
+        <p>
+            Note that the editor is "live"; changing an option on an editor
+            window changes the memory version of the instruction, including the 
+            disassembled version.
 
--->
-</head>
-<body bgcolor="white">
+        <h2>Related Documentation</h2>
 
-Provide GUI tools for editing an SDF file in memory.
+        <!-- Put @see and @since tags down here. -->
 
-<p>
-The text for each of the editor panels comes from the
-"Explanations" properties set (see the Explanations.properties file 
-in this package and its 
-translations).  The editors themselves are coded as subclasses
-of {@link jmri.jmrix.loconet.sdfeditor.SdfMacroEditor}, one per instruction type.
-<p>
-The line in the tree (left-side window) is from the
-toString method of the 
-{@link jmri.jmrix.loconet.sdf.SdfMacro} object.
+        The SDF information is manipulated using the 
+        {@link jmri.jmrix.loconet.sdf}
+        package.
 
-<p>
-Note that the editor is "live"; changing an option on an editor
-window changes the memory version of the instruction, including the 
-disassembled version.
-
-<h2>Related Documentation</h2>
-
-<!-- Put @see and @since tags down here. -->
-
-The SDF information is manipulated using the 
-{@link jmri.jmrix.loconet.sdf}
-package.
-
-</body>
+    </body>
 </html>

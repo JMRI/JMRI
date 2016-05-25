@@ -1,79 +1,78 @@
-// UncaughtExceptionHandlerTest.java
-
 package jmri.util.exceptionhandler;
 
-import org.apache.log4j.Logger;
-import junit.framework.*;
-
-import jmri.util.*;
+import jmri.util.JUnitAppender;
+import jmri.util.SwingTestCase;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
- * @author	Bob Jacobsen  Copyright 2010
- * @version	$Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2010
  */
 public class UncaughtExceptionHandlerTest extends SwingTestCase {
 
+    private boolean caught = false;
+    private Thread.UncaughtExceptionHandler defaultExceptionHandler;
+
     public void testThread() throws Exception {
-        Thread t = new Thread(){
-            public void run() {
-                deref(null);
-            }
-            void deref(Object o) { o.toString(); }
-        };
-        //log.warn("before pauseAWT");
-        pauseAWT();  // can't sleep unless you've paused
-        //log.warn("before t.start");
+        Thread t = new Thread(() -> {
+            // null.toString(); will not compile
+            // ((Object) null).toString(); raises unnessesary cast warnings
+            Object o = null;
+            o.toString();
+        });
+
         t.start();
-        //log.warn("before sleep");
-        sleep(100);
-        //log.warn("before assertErrorMessage");
-        JUnitAppender.assertErrorMessage("Unhandled Exception: java.lang.NullPointerException");
+        jmri.util.JUnitUtil.releaseThread(this);
+        JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
     }
 
     public void testSwing() throws Exception {
-        boolean caught = false;
-        Runnable r = new Runnable(){
-            public void run() {
-                deref(null);
-            }
-            void deref(Object o) { o.toString(); }
-        };
         try {
-            javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (java.lang.reflect.InvocationTargetException e) { caught = true;}
-        flushAWT();
-        Assert.assertTrue("threw exception", caught);
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                // null.toString(); will not compile
+                // ((Object) null).toString(); raises unnessesary cast warnings
+                Object o = null;
+                o.toString();
+            });
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            caught = true;
+        }
+        jmri.util.JUnitUtil.waitFor(()->{return caught;}, "threw exception");
+        // emits no logging, as the UncaughtExceptionHandlerTest handler isn't invoked
     }
-        
-	// from here down is testing infrastructure
 
-	public UncaughtExceptionHandlerTest(String s) {
-		super(s);
-	}
+    // from here down is testing infrastructure
+    public UncaughtExceptionHandlerTest(String s) {
+        super(s);
+    }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {UncaughtExceptionHandlerTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {UncaughtExceptionHandlerTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(UncaughtExceptionHandlerTest.class);
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(UncaughtExceptionHandlerTest.class);
+        return suite;
+    }
 
     // The minimal setup for log4J
-    protected void setUp() throws Exception { 
-        apps.tests.Log4JFixture.setUp(); 
+    @Override
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
+        this.defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
         super.setUp();
     }
-    protected void tearDown() throws Exception { 
+
+    @Override
+    protected void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
+        Thread.setDefaultUncaughtExceptionHandler(this.defaultExceptionHandler);
+        apps.tests.Log4JFixture.tearDown();
     }
-
-	static Logger log = Logger.getLogger(UncaughtExceptionHandlerTest.class.getName());
-
 }

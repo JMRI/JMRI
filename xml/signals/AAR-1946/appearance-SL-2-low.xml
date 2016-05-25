@@ -41,7 +41,7 @@
      </revision>    
   </revhistory>
 
-  <aspecttable>AAR-2</aspecttable>
+  <aspecttable>AAR 1946</aspecttable>
   <name>Double head dwarf signal</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
   <description>Appearances for a two-searchlight dwarf signal head without other badging</description>
@@ -53,7 +53,7 @@
       <show>green</show>
       <show>green</show>
       <reference>Page 42 F</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-287.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -187,6 +187,11 @@
 
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+<aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Slow Approach</ourAspect>
     </aspectMapping>
 

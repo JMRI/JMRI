@@ -1,19 +1,24 @@
 // SimpleServerFrame.java
-
 package jmri.jmris.simpleserver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 /**
  * Frame displaying start/stop buttons for the JMRI server.
  *
- * @author			Paul Bender  Copyright (C) 2009
- * @version			$Revision$
+ * @author	Paul Bender Copyright (C) 2009
+ * @version	$Revision$
  */
 public class SimpleServerFrame extends jmri.util.JmriJFrame {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8501305524191992037L;
 
     public SimpleServerFrame() {
         this("Jmri Simple Server Starter");
@@ -21,8 +26,8 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
 
     public SimpleServerFrame(String FrameName) {
         super(FrameName);
-        getContentPane().setLayout(new BoxLayout(getContentPane(), 
-				   BoxLayout.Y_AXIS));
+        getContentPane().setLayout(new BoxLayout(getContentPane(),
+                BoxLayout.Y_AXIS));
 
         JPanel pane0 = new JPanel();
         pane0.add(startButton);
@@ -34,28 +39,28 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
         pack();
 
         // install start button handler
-        startButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-			startSimpleServer();
-                }
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                startSimpleServer();
             }
+        }
         );
 
         // install stop button handler
-        stopButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-			stopSimpleServer();
-                }
+        stopButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                stopSimpleServer();
             }
+        }
         );
 
         // install close button handler
-        closeButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                	setVisible(false);
-        		dispose();
-                }
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                setVisible(false);
+                dispose();
             }
+        }
         );
 
     }
@@ -76,13 +81,11 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startSimpleServer() {
-	SimpleServer.instance().start();
+        SimpleServer.instance().start();
     }
 
     public void stopSimpleServer() {
-	SimpleServer.instance().stop();
+        SimpleServer.instance().stop();
     }
-
-    static Logger log = LoggerFactory.getLogger(SimpleServerFrame.class.getName());
 
 }

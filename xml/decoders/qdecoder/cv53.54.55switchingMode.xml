@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-20</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	  <variable item="HiLo Switch For F1" CV="53" mask="XXXXXXXV" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">High/Low gemeinsam param. für F1</label>
+    <label>High/Low Switch For F1</label>
+    <tooltip>This bit defines whether function output A1 will be configured to switch between mass and power supply with the same CVs</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob am Funktionsausgang A1 die Schalter zu Masse und zur Versorgung mit den Gleichen CVs konfiguriert werden</tooltip>
+  </variable>
+  <variable item="HiLo Switch For F2" CV="53" mask="XXXXXXVX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">High/Low gemeinsam param. für F2</label>
+    <label>High/Low Switch For F2</label>
+    <tooltip>This bit defines whether function output A2 will be configured to switch between mass and power supply with the same CVs</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob am Funktionsausgang A2 die Schalter zu Masse und zur Versorgung mit den Gleichen CVs konfiguriert werden</tooltip>
+  </variable>
+  <variable item="HiLo Switch For F3" CV="53" mask="XXXXXVXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">High/Low gemeinsam param. für F3</label>
+    <label>High/Low Switch For F3</label>
+    <tooltip>This bit defines whether function output A3 will be configured to switch between mass and power supply with the same CVs</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob am Funktionsausgang A3 die Schalter zu Masse und zur Versorgung mit den Gleichen CVs konfiguriert werden</tooltip>
+  </variable>
+  <variable item="HiLo Switch For F4" CV="53" mask="XXXXVXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">High/Low gemeinsam param. für F4</label>
+    <label>High/Low Switch For F4</label>
+    <tooltip>This bit defines whether function output A4 will be configured to switch between mass and power supply with the same CVs</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob am Funktionsausgang A4 die Schalter zu Masse und zur Versorgung mit den Gleichen CVs konfiguriert werden</tooltip>
+  </variable>
+  <variable item="HiLo Switch For F5" CV="53" mask="XXXVXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">High/Low gemeinsam param. für F5</label>
+    <label>High/Low Switch For F5</label>
+    <tooltip>This bit defines whether function output A5 will be configured to switch between mass and power supply with the same CVs</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob am Funktionsausgang A5 die Schalter zu Masse und zur Versorgung mit den Gleichen CVs konfiguriert werden</tooltip>
+  </variable>
+  <variable item="HiLo Switch For F6" CV="53" mask="XXVXXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">High/Low gemeinsam param. für F6</label>
+    <label>High/Low Switch For F6</label>
+    <tooltip>This bit defines whether function output A6 will be configured to switch between mass and power supply with the same CVs</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob am Funktionsausgang A6 die Schalter zu Masse und zur Versorgung mit den Gleichen CVs konfiguriert werden</tooltip>
+  </variable>
+  <variable item="HiLo Switch For F7" CV="53" mask="XVXXXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">High/Low gemeinsam param. für F7</label>
+    <label>High/Low Switch For F7</label>
+    <tooltip>This bit defines whether function output A7 will be configured to switch between mass and power supply with the same CVs</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob am Funktionsausgang A7 die Schalter zu Masse und zur Versorgung mit den Gleichen CVs konfiguriert werden</tooltip>
+  </variable>
+  <variable item="HiLo Switch For F8" CV="53" mask="VXXXXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">High/Low gemeinsam param. für F8</label>
+    <label>High/Low Switch For F8</label>
+    <tooltip>This bit defines whether function output A8 will be configured to switch between mass and power supply with the same CVs</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob am Funktionsausgang A8 die Schalter zu Masse und zur Versorgung mit den Gleichen CVs konfiguriert werden</tooltip>
+  </variable>
+
+  <variable item="Switching mode Z1 For F1" CV="54" mask="XXXXXXXV" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante Z1/Z2 für F1</label>
+    <label>Switching mode Z1/Z2 For F1</label>
+    <tooltip>This bit defines whether function output A1 will switch as Z1 (defined bit) or as Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A1 als Z1 (Bit gesetzt) order als Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode Z1 For F2" CV="54" mask="XXXXXXVX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante Z1/Z2 für F2</label>
+    <label>Switching mode Z1/Z2 For F2</label>
+    <tooltip>This bit defines whether function output A2 will switch as Z1 (defined bit) or as Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A2 als Z1 (Bit gesetzt) order als Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode Z1 For F3" CV="54" mask="XXXXXVXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante Z1/Z2 für F3</label>
+    <label>Switching mode Z1/Z2 For F3</label>
+    <tooltip>This bit defines whether function output A3 will switch as Z1 (defined bit) or as Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A3 als Z1 (Bit gesetzt) order als Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode Z1 For F4" CV="54" mask="XXXXVXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante Z1/Z2 für F4</label>
+    <label>Switching mode Z1/Z2 For F4</label>
+    <tooltip>This bit defines whether function output A4 will switch as Z1 (defined bit) or as Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A4 als Z1 (Bit gesetzt) order als Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode Z1 For F5" CV="54" mask="XXXVXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante Z1/Z2 für F5</label>
+    <label>Switching mode Z1/Z2 For F5</label>
+    <tooltip>This bit defines whether function output A5 will switch as Z1 (defined bit) or as Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A5 als Z1 (Bit gesetzt) order als Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode Z1 For F6" CV="54" mask="XXVXXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante Z1/Z2 für F6</label>
+    <label>Switching mode Z1/Z2 For F6</label>
+    <tooltip>This bit defines whether function output A6 will switch as Z1 (defined bit) or as Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A6 als Z1 (Bit gesetzt) order als Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode Z1 For F7" CV="54" mask="XVXXXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante Z1/Z2 für F7</label>
+    <label>Switching mode Z1/Z2 For F7</label>
+    <tooltip>This bit defines whether function output A7 will switch as Z1 (defined bit) or as Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A7 als Z1 (Bit gesetzt) order als Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode Z1 For F8" CV="54" mask="VXXXXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante Z1/Z2 für F8</label>
+    <label>Switching mode Z1/Z2 For F8</label>
+    <tooltip>This bit defines whether function output A8 will switch as Z1 (defined bit) or as Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A8 als Z1 (Bit gesetzt) order als Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+
+  <variable item="Switching mode ZH1 For F1" CV="55" mask="XXXXXXXV" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante ZH1/Z2+ für F1</label>
+    <label>Switching mode ZH1/Z2+ For F1</label>
+    <tooltip>This bit defines whether function output A1 will switch as ZH1/Z2+ (defined bit) or as Z1/Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A1 als ZH1/Z2+ (Bit gesetzt) order als Z1/Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode ZH1 For F2" CV="55" mask="XXXXXXVX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante ZH1/Z2+ für F2</label>
+    <label>Switching mode ZH1/Z2+ For F2</label>
+    <tooltip>This bit defines whether function output A2 will switch as ZH1/Z2+ (defined bit) or as Z1/Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A2 als ZH1/Z2+ (Bit gesetzt) order als Z1/Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode ZH1 For F3" CV="55" mask="XXXXXVXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante ZH1/Z2+ für F3</label>
+    <label>Switching mode ZH1/Z2+ For F3</label>
+    <tooltip>This bit defines whether function output A3 will switch as ZH1/Z2+ (defined bit) or as Z1/Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A3 als ZH1/Z2+ (Bit gesetzt) order als Z1/Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode ZH1 For F4" CV="55" mask="XXXXVXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante ZH1/Z2+ für F4</label>
+    <label>Switching mode ZH1/Z2+ For F4</label>
+    <tooltip>This bit defines whether function output A4 will switch as ZH1/Z2+ (defined bit) or as Z1/Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A4 als ZH1/Z2+ (Bit gesetzt) order als Z1/Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode ZH1 For F5" CV="55" mask="XXXVXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante ZH1/Z2+ für F5</label>
+    <label>Switching mode ZH1/Z2+ For F5</label>
+    <tooltip>This bit defines whether function output A5 will switch as ZH1/Z2+ (defined bit) or as Z1/Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A5 als ZH1/Z2+ (Bit gesetzt) order als Z1/Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode ZH1 For F6" CV="55" mask="XXVXXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante ZH1/Z2+ für F6</label>
+    <label>Switching mode ZH1/Z2+ For F6</label>
+    <tooltip>This bit defines whether function output A6 will switch as ZH1/Z2+ (defined bit) or as Z1/Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A6 als ZH1/Z2+ (Bit gesetzt) order als Z1/Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode ZH1 For F7" CV="55" mask="XVXXXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante ZH1/Z2+ für F7</label>
+    <label>Switching mode ZH1/Z2+ For F7</label>
+    <tooltip>This bit defines whether function output A7 will switch as ZH1/Z2+ (defined bit) or as Z1/Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A7 als ZH1/Z2+ (Bit gesetzt) order als Z1/Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+  <variable item="Switching mode ZH1 For F8" CV="55" mask="VXXXXXXX" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="de">Schaltvariante ZH1/Z2+ für F8</label>
+    <label>Switching mode ZH1/Z2+ For F8</label>
+    <tooltip>This bit defines whether function output A8 will switch as ZH1/Z2+ (defined bit) or as Z1/Z2 (not defined bit)</tooltip>
+    <tooltip xml:lang="de">Dieses Bit gibt an, ob der Funktionsausgang A8 als ZH1/Z2+ (Bit gesetzt) order als Z1/Z2 (Bit nicht gesetzt) geschaltet wird</tooltip>
+  </variable>
+</variables>

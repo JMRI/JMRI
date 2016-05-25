@@ -8,9 +8,6 @@
 #
 # Author: Paul Bender, copyright 2007-2011
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import jarray
 import jmri

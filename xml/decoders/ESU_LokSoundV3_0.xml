@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: ESU_LokSoundV3_0.xml 22155 2012-12-31 03:16:18Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,59 +16,184 @@
   <version author="nac@erwbant.freeserve.co.uk" version="1" lastUpdated="20050118"/>
   <!-- ver2 changed mask for CV's to accept 16 in Sound Slot -->
   <version author="wsthompson@earthlink.net" version="2" lastUpdated="20080324"/>
+  <!-- ver3 refactored to use standard Function Map and eliminate three custom panes -->
+  <version author="Dave Heap" version="3" lastUpdated="20160419"/>
   <decoder>
     <family name="ESU LokSound V3.0 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59">
-      <model model="ESU_LokSound3" numOuts="8" numFns="12">
-        <output name="1" label="Front lights"/>
-        <output name="2" label="Rear lights"/>
-        <output name="3" label="AUX 1"/>
-        <output name="4" label="AUX 2"/>
-        <output name="5" label="AUX 3"/>
-        <output name="6" label="AUX 4"/>
-        <output name="7" label="AUX 5"/>
-        <output name="8" label="AUX 6"/>
+      <model model="ESU_LokSound3" numOuts="6">
+        <output name="1" label="Front|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|avant</label>
+          <label xml:lang="it">Luci|Frontali</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|arrière</label>
+          <label xml:lang="it">Luci|Posteriori</label>
+        </output>
+        <output name="3" label="Aux|1" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|1</label>
+          <label xml:lang="it">Ausil|1</label>
+        </output>
+        <output name="4" label="Aux|2" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|2</label>
+          <label xml:lang="it">Ausil|2</label>
+        </output>
+        <output name="5" label="Aux|3" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|3</label>
+          <label xml:lang="it">Ausil|3</label>
+        </output>
+        <output name="6" label="Aux|4" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|4</label>
+          <label xml:lang="it">Ausil|4</label>
+        </output>
+        <output name="7" label="|"/>
+        <output name="8" label="|"/>
+        <output name="9" label="Momentum|off">
+          <label xml:lang="fr">Inertie|désactivée</label>
+          <label xml:lang="it">Inerzia|off</label>
+        </output>
+        <output name="10" label="Shunt|mode">
+          <label xml:lang="fr">Mode|manœuvre</label>
+          <label xml:lang="it">Velocità|Manovra</label>
+        </output>
+        <output name="11" label="Sound|on">
+          <label xml:lang="fr">Son|allumé</label>
+          <label xml:lang="it">Suono|on</label>
+        </output>
+        <output name="12" label="Shift|mode">
+          <label xml:lang="fr">Changement|mode</label>
+          <label xml:lang="it">Modo|Modifica</label>
+        </output>
+        <output name="13" label="Fan|sound">
+          <label xml:lang="fr">Son|ventilateur</label>
+          <label xml:lang="it">Suono|Ventole</label>
+        </output>
+        <output name="14" label="|"/>
+        <output name="15" label="|"/>
+        <output name="16" label="|"/>
+        <output name="17" label="Sound|slot">
+          <label xml:lang="fr">Créneau|Son</label>
+          <label xml:lang="it">Slot| Suono</label>
+        </output>
+        <size length="31" width="15.5" height="6.5" units="mm"/>
+        </model>
+      <model model="LokSoundXL Version 3.0" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
+        <output name="1" label="Front|Light" maxcurrent="600mA">
+          <label xml:lang="fr">Feux|avant</label>
+          <label xml:lang="it">Luci|Frontali</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="600mA">
+          <label xml:lang="fr">Feux|arrière</label>
+          <label xml:lang="it">Luci|Posteriori</label>
+        </output>
+        <output name="3" label="Aux|1" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|1</label>
+          <label xml:lang="it">Ausil|1</label>
+        </output>
+        <output name="4" label="Aux|2" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|2</label>
+          <label xml:lang="it">Ausil|2</label>
+        </output>
+        <output name="5" label="Aux|3" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|3</label>
+          <label xml:lang="it">Ausil|3</label>
+        </output>
+        <output name="6" label="Aux|4" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|4</label>
+          <label xml:lang="it">Ausil|4</label>
+        </output>
+        <output name="7" label="Aux|5" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|5</label>
+          <label xml:lang="it">Ausil|5</label>
+        </output>
+        <output name="8" label="Aux|6" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|6</label>
+          <label xml:lang="it">Ausil|6</label>
+        </output>
+        <output name="9" label="Momentum|off">
+          <label xml:lang="fr">Inertie|désactivée</label>
+          <label xml:lang="it">Inerzia|off</label>
+        </output>
+        <output name="10" label="Shunt|mode">
+          <label xml:lang="fr">Mode|manœuvre</label>
+          <label xml:lang="it">Velocità|Manovra</label>
+        </output>
+        <output name="11" label="Sound|on">
+          <label xml:lang="fr">Son|allumé</label>
+          <label xml:lang="it">Suono|on</label>
+        </output>
+        <output name="12" label="Shift|mode">
+          <label xml:lang="fr">Changement|mode</label>
+          <label xml:lang="it">Modo|Modifica</label>
+        </output>
+        <output name="13" label="Fan|sound">
+          <label xml:lang="fr">Son|ventilateur</label>
+          <label xml:lang="it">Suono|Ventole</label>
+        </output>
+        <output name="14" label="|"/>
+        <output name="15" label="|"/>
+        <output name="16" label="|"/>
+        <output name="17" label="Sound|slot">
+          <label xml:lang="fr">Créneau|Son</label>
+          <label xml:lang="it">Slot| Suono</label>
+        </output>
+        <size length="51" width="40" height="14" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
       </model>
-    </family>
+     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Vstart" CV="2" default="3" comment="A value of 255 corresponds to 100%">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable item="Vstart" CV="2" default="3" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
-      <variable label="Acceleration" CV="3" default="4" item="Accel">
+      <variable CV="3" default="4" item="Accel">
         <decVal max="63"/>
         <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-63)</label>
+        <label xml:lang="fr">Accelération (0-63)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-63)</label>
       </variable>
-      <variable label="Deceleration" CV="4" default="3" item="Decel">
+      <variable CV="4" default="3" item="Decel">
         <decVal max="63"/>
         <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-63)</label>
+        <label xml:lang="fr">Décélération (1-63)</label>
+        <label xml:lang="de">Bremszeit (1-63)</label>
       </variable>
-      <variable label="Vhigh" CV="5" default="64" comment="Range 0-255">
+      <variable item="Vhigh" CV="5" default="64" comment="Range 0-255">
         <decVal/>
         <label>Vhigh</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Vmid" CV="6" default="22" comment="Range 0-255">
+      <variable item="Vmid" CV="6" default="22" comment="Range 0-255">
         <decVal/>
         <label>Vmid</label>
         <comment>Range 0-255</comment>
       </variable>
       <!-- CV7 and CV must be left as readonly = no otherwise will not display -->
-      <variable label="Decoder Version " CV="7" readOnly="no" item="Decoder Version">
+      <variable CV="7" readOnly="no" item="Decoder Version">
         <decVal/>
         <label>Decoder Version </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="no" item="Manufacturer">
+      <variable CV="8" readOnly="no" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
+      <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -79,7 +204,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F1</label>
       </variable>
-      <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX">
+      <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -90,7 +215,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F2</label>
       </variable>
-      <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX">
+      <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -101,7 +226,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F3</label>
       </variable>
-      <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX">
+      <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -112,7 +237,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F4</label>
       </variable>
-      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX">
+      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -123,7 +248,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX">
+      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -134,7 +259,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F6</label>
       </variable>
-      <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX">
+      <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -145,7 +270,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F7</label>
       </variable>
-      <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX">
+      <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -156,7 +281,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F8</label>
       </variable>
-      <variable label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
+      <variable item="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -167,7 +292,7 @@
         </enumVal>
         <label>Analog Mode Function Status - FL(f)</label>
       </variable>
-      <variable label="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
+      <variable item="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -178,7 +303,7 @@
         </enumVal>
         <label>Analog Mode Function Status - FL(r)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F9(f)" CV="14" mask="XXXXXVXX" item="Analog F9(f)">
+      <variable CV="14" mask="XXXXXVXX" item="Analog F9(f)">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -189,7 +314,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F9(f)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F10(f)" CV="14" item="Analog F10(f)" mask="XXXXVXXX">
+      <variable CV="14" item="Analog F10(f)" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -200,7 +325,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F10(f)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F11" CV="14" item="Analog F11" mask="XXXVXXXX">
+      <variable CV="14" item="Analog F11" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -211,7 +336,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F11</label>
       </variable>
-      <variable label="Analog Mode Function Status - F12" CV="14" item="Analog F12" mask="XXVXXXXX">
+      <variable CV="14" item="Analog F12" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -222,7 +347,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F12</label>
       </variable>
-      <variable label="Analog Mode Function Status - F9(r)" CV="14" item="Analog F9(r)" mask="XVXXXXXX">
+      <variable CV="14" item="Analog F9(r)" mask="XVXXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -233,7 +358,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F9(r)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F10(r)" CV="14" item="Analog F10(r)" mask="VXXXXXXX">
+      <variable CV="14" item="Analog F10(r)" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -244,81 +369,14 @@
         </enumVal>
         <label>Analog Mode Function Status - F10(r)</label>
       </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-      </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-      </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh (CV29, bit 4)">
-            <choice>Use Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
-          </enumChoice>
-          <enumChoice choice="Use Table (CV's 67-94)">
-            <choice>Use Table (CV's 67-94)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
-      <variable label="BEMF Active" CV="49" mask="XXXXXXXV" default="1">
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable item="BEMF Active" CV="49" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="OFF">
             <choice>OFF</choice>
@@ -329,7 +387,7 @@
         </enumVal>
         <label>BEMF Active</label>
       </variable>
-      <variable label="Total PWM Period" CV="49" mask="XXXXXXVX" default="1">
+      <variable item="Total PWM Period" CV="49" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="15kHz">
             <choice>15kHz</choice>
@@ -340,7 +398,7 @@
         </enumVal>
         <label>Total PWM Period</label>
       </variable>
-      <variable label="Marklin delta Mode" CV="49" mask="XXXXXVXX" default="0">
+      <variable item="Marklin delta Mode" CV="49" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="OFF">
             <choice>OFF</choice>
@@ -351,7 +409,7 @@
         </enumVal>
         <label>Marklin delta Mode</label>
       </variable>
-      <variable label="Marklin second address" CV="49" mask="XXXXVXXX" default="0">
+      <variable item="Marklin second address" CV="49" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="OFF">
             <choice>OFF</choice>
@@ -362,7 +420,7 @@
         </enumVal>
         <label>Marklin second address</label>
       </variable>
-      <variable label="Automatic Speed Step Detection" CV="49" mask="XXXVXXXX" default="1">
+      <variable item="Automatic Speed Step Detection" CV="49" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="OFF">
             <choice>OFF</choice>
@@ -373,7 +431,7 @@
         </enumVal>
         <label>Automatic Speed Step Detection</label>
       </variable>
-      <variable label="LGB function button mode" CV="49" mask="XXVXXXXX" default="0">
+      <variable item="LGB function button mode" CV="49" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="OFF">
             <choice>OFF</choice>
@@ -384,7 +442,7 @@
         </enumVal>
         <label>LGB function button mode</label>
       </variable>
-      <variable label="Zimo manual function" CV="49" mask="XVXXXXXX" default="0">
+      <variable item="Zimo manual function" CV="49" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="OFF">
             <choice>OFF</choice>
@@ -395,7 +453,7 @@
         </enumVal>
         <label>Zimo manual function</label>
       </variable>
-      <variable label="Analogue Mode" CV="50" mask="XXXXXXVV" item="Analoguemode">
+      <variable CV="50" mask="XXXXXXVV" item="Analoguemode">
         <enumVal>
           <enumChoice choice="AC and  DC Mode off">
             <choice>AC and  DC Mode off</choice>
@@ -409,7 +467,7 @@
         </enumVal>
         <label>Analogue Mode</label>
       </variable>
-      <variable label="Brake Mode" CV="51" mask="XXXXXVVV" item="Brakemode">
+      <variable CV="51" mask="XXXXXVVV" item="Brakemode">
         <enumVal>
           <enumChoice choice="All Modes off">
             <choice>All Modes off</choice>
@@ -426,75 +484,75 @@
         </enumVal>
         <label>Brake Mode</label>
       </variable>
-      <variable label="Control Reference (BEMF volts at maximum speed){0-80}" CV="53" default="50" item="Controlref">
+      <variable CV="53" default="50" item="Controlref">
         <decVal max="80"/>
         <label>Control Reference (BEMF volts at maximum speed){0-80}</label>
       </variable>
-      <variable label="Load Control Parameter 'K' {0-80}" CV="54" default="32" item="ParaK">
+      <variable CV="54" default="32" item="ParaK">
         <decVal max="80"/>
         <label>Load Control Parameter 'K' {0-80}</label>
       </variable>
-      <variable label="Load Control Parameter 'I' {0-80}" CV="55" default="24" item="ParaI">
+      <variable CV="55" default="24" item="ParaI">
         <decVal max="80"/>
         <label>Load Control Parameter 'I' {0-80}</label>
       </variable>
-      <variable label="Operating Range of Load Controll'" CV="56" default="64" item="Range">
+      <variable CV="56" default="64" item="Range">
         <decVal max="64"/>
-        <label>Operating Range of Load Controll'</label>
+        <label>Operating Range of Load Control'</label>
       </variable>
-      <variable label="Time between 2 chuffs @ speed step 1 (Range 0 - 127)" CV="57" default="0" item="Sound Group 1 Control">
+      <variable CV="57" default="0" item="Sound Group 1 Control">
         <decVal max="127"/>
         <label>Time between 2 chuffs @ speed step 1 (Range 0 - 127)</label>
       </variable>
-      <variable label="Rate of decrease in time between 2 chuffs (Range 0 -127)" CV="58" default="0" item="Sound Group 1 Option 1">
+      <variable CV="58" default="0" item="Sound Group 1 Option 1">
         <decVal max="127"/>
         <label>Rate of decrease in time between 2 chuffs (Range 0 -127)</label>
       </variable>
-      <variable label="Slow speed sound factor (Range 0- 64)" CV="59" default="32" item="Sound Group 1 Option 2">
+      <variable CV="59" default="32" item="Sound Group 1 Option 2">
         <decVal max="64"/>
         <label>Slow speed sound factor (Range 0- 64)</label>
       </variable>
-      <variable label="High speed sound factor (Range 0 - 64)" CV="60" default="55" item="Sound Group 1 Option 3">
+      <variable CV="60" default="55" item="Sound Group 1 Option 3">
         <decVal max="64"/>
         <label>High speed sound factor (Range 0 - 64)</label>
       </variable>
-      <variable label="Random Sound - Shortest Interval (Range 0 - 64" CV="61" default="30" item="Sound Group 2 Option 1" comment="Range 0-64">
+      <variable CV="61" default="30" item="Sound Group 2 Option 1" comment="Range 0-64">
         <decVal/>
         <label>Random Sound - Shortest Interval (Range 0 - 64</label>
         <comment>Range 0-64</comment>
       </variable>
-      <variable label="Random Sound - Longest Interva (Range 0 - 64)" CV="62" default="50" item="Sound Group 2 Option 2" comment="Range 0-64">
+      <variable CV="62" default="50" item="Sound Group 2 Option 2" comment="Range 0-64">
         <decVal/>
         <label>Random Sound - Longest Interva (Range 0 - 64)</label>
         <comment>Range 0-64</comment>
       </variable>
-      <variable label="Sound Volume Range 0 Quiet - 64 Loudest" CV="63" default="64" item="Sound Group 2 Control" comment="Range 0-64">
+      <variable CV="63" default="64" item="Sound Group 2 Control" comment="Range 0-64">
         <decVal/>
         <label>Sound Volume Range 0 Quiet - 64 Loudest</label>
         <comment>Range 0-64</comment>
       </variable>
-      <variable label="Braking Sound threshold (Range 0 - 64)" CV="64" default="7" item="Sound Group 2 Option 3" comment="Range 0-64">
+      <variable CV="64" default="7" item="Sound Group 2 Option 3" comment="Range 0-64">
         <decVal/>
         <label>Braking Sound threshold (Range 0 - 64)</label>
         <comment>Range 0-64</comment>
       </variable>
-      <variable label="Forward Trim" CV="66" default="0" comment="Range 0-255">
+      <variable item="Forward Trim" CV="66" default="0" comment="Range 0-255">
         <decVal/>
         <label>Forward Trim</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable label="Blinking Rate (4-64)" CV="112" default="33" comment="Controls Blink Interval">
+      <variable item="Blinking Rate (4-64)" CV="112" default="33" comment="Controls Blink Interval">
         <decVal/>
         <label>Blinking Rate (4-64)</label>
         <comment>Controls Blink Interval</comment>
       </variable>
-      <variable label="Forward light F0F effect generated" CV="113" mask="VVVVXXXX" minOut="1" item="Function F0F effect generated">
+      <variable CV="113" mask="VVVVXXXX" minOut="1" item="Function F0F effect generated">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
@@ -532,11 +590,11 @@
         </enumVal>
         <label>Forward light F0F effect generated</label>
       </variable>
-      <variable label="FL(f) " CV="113" default="15" mask="XXXXVVVV" minOut="1" item="F0(f) Bright">
+      <variable CV="113" default="15" mask="XXXXVVVV" minOut="1" item="F0(f) Bright">
         <decVal/>
         <label>FL(f) </label>
       </variable>
-      <variable label="Reverse light F0R effect generated" CV="114" mask="VVVVXXXX" minOut="2" item="Function F0R effect generated">
+      <variable CV="114" mask="VVVVXXXX" minOut="2" item="Function F0R effect generated">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
@@ -574,11 +632,11 @@
         </enumVal>
         <label>Reverse light F0R effect generated</label>
       </variable>
-      <variable label=" FL(r) " CV="114" default="15" mask="XXXXVVVV" minOut="2" item="F0(r) Bright">
+      <variable CV="114" default="15" mask="XXXXVVVV" minOut="2" item="F0(r) Bright">
         <decVal/>
         <label> FL(r) </label>
       </variable>
-      <variable label="Function 1 effect generated" CV="115" mask="VVVVXXXX" minOut="3">
+      <variable item="Function 1 effect generated" CV="115" mask="VVVVXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
@@ -616,11 +674,11 @@
         </enumVal>
         <label>Function 1 effect generated</label>
       </variable>
-      <variable label="Aux F1 " CV="115" default="15" mask="XXXXVVVV" minOut="3" item="F1 Bright">
+      <variable CV="115" default="15" mask="XXXXVVVV" minOut="3" item="F1 Bright">
         <decVal/>
         <label>Aux F1 </label>
       </variable>
-      <variable label="Function 2 effect generated" CV="116" mask="VVVVXXXX" minOut="4">
+      <variable item="Function 2 effect generated" CV="116" mask="VVVVXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
@@ -658,11 +716,11 @@
         </enumVal>
         <label>Function 2 effect generated</label>
       </variable>
-      <variable label="Aux F2 " CV="116" default="15" mask="XXXXVVVV" minOut="4" item="F2 Bright">
+      <variable CV="116" default="15" mask="XXXXVVVV" minOut="4" item="F2 Bright">
         <decVal/>
         <label>Aux F2 </label>
       </variable>
-      <variable label="Function 3 effect generated" CV="117" mask="VVVVXXXX" minOut="5">
+      <variable item="Function 3 effect generated" CV="117" mask="VVVVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
@@ -700,11 +758,11 @@
         </enumVal>
         <label>Function 3 effect generated</label>
       </variable>
-      <variable label="Aux F3 " CV="117" default="15" mask="XXXXVVVV" minOut="5" item="F3 Bright">
+      <variable CV="117" default="15" mask="XXXXVVVV" minOut="5" item="F3 Bright">
         <decVal/>
         <label>Aux F3 </label>
       </variable>
-      <variable label="Function 4 effect generated" CV="118" mask="VVVVXXXX" minOut="6">
+      <variable item="Function 4 effect generated" CV="118" mask="VVVVXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
@@ -742,11 +800,11 @@
         </enumVal>
         <label>Function 4 effect generated</label>
       </variable>
-      <variable label="Aux F4 " CV="118" default="15" mask="XXXXVVVV" minOut="6" item="F4 Bright">
+      <variable CV="118" default="15" mask="XXXXVVVV" minOut="6" item="F4 Bright">
         <decVal/>
         <label>Aux F4 </label>
       </variable>
-      <variable label="Function 5 effect generated" CV="119" mask="VVVVXXXX" minOut="7">
+      <variable item="Function 5 effect generated" CV="119" mask="VVVVXXXX" minOut="7">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
@@ -784,11 +842,11 @@
         </enumVal>
         <label>Function 5 effect generated</label>
       </variable>
-      <variable label="Aux F5 " CV="119" default="15" mask="XXXXVVVV" minOut="7" item="F5 Bright">
+      <variable CV="119" default="15" mask="XXXXVVVV" minOut="7" item="F5 Bright">
         <decVal/>
         <label>Aux F5 </label>
       </variable>
-      <variable label="Function 6 effect generated" CV="120" mask="VVVVXXXX" minOut="8">
+      <variable item="Function 6 effect generated" CV="120" mask="VVVVXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
@@ -826,3845 +884,35 @@
         </enumVal>
         <label>Function 6 effect generated</label>
       </variable>
-      <variable label="Aux F6 " CV="120" default="15" mask="XXXXVVVV" minOut="8" item="F6 Bright">
+      <variable CV="120" default="15" mask="XXXXVVVV" minOut="8" item="F6 Bright">
         <decVal/>
         <label>Aux F6 </label>
       </variable>
-      <variable label="Start Volts in DC mode" CV="125" mask="XVVVVVVV" default="110" item="DCstart">
+      <variable CV="125" mask="XVVVVVVV" default="110" item="DCstart">
         <decVal/>
         <label>Start Volts in DC mode</label>
       </variable>
-      <variable label="Maximum Speed in DC mode" CV="126" mask="XVVVVVVV" default="127" item="DCmax">
+      <variable CV="126" mask="XVVVVVVV" default="127" item="DCmax">
         <decVal/>
         <label>Maximum Speed in DC mode</label>
       </variable>
-      <variable label="Start Volts in AC mode" CV="127" mask="XVVVVVVV" default="50" item="ACstart">
+      <variable CV="127" mask="XVVVVVVV" default="50" item="ACstart">
         <decVal/>
         <label>Start Volts in AC mode</label>
       </variable>
-      <variable label="Maximum Speed in AC mode" CV="128" mask="XVVVVVVV" default="127" item="ACmax">
+      <variable CV="128" mask="XVVVVVVV" default="127" item="ACmax">
         <decVal/>
         <label>Maximum Speed in AC mode</label>
       </variable>
-      <variable label="Stop Fwd" CV="131" mask="XXXVVVVV" item="Soundkey1">
-        <decVal max="16"/>
-        <label>Stop Fwd</label>
-      </variable>
-      <variable label="Stop Rev" CV="134" mask="XXXVVVVV" item="Soundkey2">
-        <decVal max="16"/>
-        <label>Stop Rev</label>
-      </variable>
-      <variable label="Run Fwd" CV="137" mask="XXXVVVVV" item="Soundkey3">
-        <decVal max="16"/>
-        <label>Run Fwd</label>
-      </variable>
-      <variable label="Run Rev" CV="140" mask="XXXVVVVV" item="Soundkey4">
-        <decVal max="16"/>
-        <label>Run Rev</label>
-      </variable>
-      <variable label="F0 Fwd" CV="143" mask="XXXVVVVV" item="Soundkey5">
-        <decVal max="16"/>
-        <label>F0 Fwd</label>
-      </variable>
-      <variable label="F0 Rev" CV="146" mask="XXXVVVVV" item="Soundkey6">
-        <decVal max="16"/>
-        <label>F0 Rev</label>
-      </variable>
-      <variable label="F1 Fwd" CV="149" mask="XXXVVVVV" item="Soundkey7">
-        <decVal max="16"/>
-        <label>F1 Fwd</label>
-      </variable>
-      <variable label="F1 Rev" CV="152" mask="XXXVVVVV" item="Soundkey8">
-        <decVal max="16"/>
-        <label>F1 Rev</label>
-      </variable>
-      <variable label="F2 Fwd" CV="155" mask="XXXVVVVV" item="Soundkey9">
-        <decVal max="16"/>
-        <label>F2 Fwd</label>
-      </variable>
-      <variable label="F2 Rev" CV="158" mask="XXXVVVVV" item="Soundkey10">
-        <decVal max="16"/>
-        <label>F2 Rev</label>
-      </variable>
-      <variable label="F3 Fwd" CV="161" mask="XXXVVVVV" item="Soundkey11">
-        <decVal max="16"/>
-        <label>F3 Fwd</label>
-      </variable>
-      <variable label="F3 Rev" CV="164" mask="XXXVVVVV" item="Soundkey12">
-        <decVal max="16"/>
-        <label>F3 Rev</label>
-      </variable>
-      <variable label="F4 Fwd" CV="167" mask="XXXVVVVV" item="Soundkey13">
-        <decVal max="16"/>
-        <label>F4 Fwd</label>
-      </variable>
-      <variable label="F4 Rev" CV="170" mask="XXXVVVVV" item="Soundkey14">
-        <decVal max="16"/>
-        <label>F4 Rev</label>
-      </variable>
-      <variable label="F5 Fwd" CV="173" mask="XXXVVVVV" item="Soundkey15">
-        <decVal max="16"/>
-        <label>F5 Fwd</label>
-      </variable>
-      <variable label="F5 Rev" CV="176" mask="XXXVVVVV" item="Soundkey16">
-        <decVal max="16"/>
-        <label>F5 Rev</label>
-      </variable>
-      <variable label="F6 Fwd" CV="179" mask="XXXVVVVV" item="Soundkey17">
-        <decVal max="16"/>
-        <label>F6 Fwd</label>
-      </variable>
-      <variable label="F6 Rev" CV="182" mask="XXXVVVVV" item="Soundkey18">
-        <decVal max="16"/>
-        <label>F6 Rev</label>
-      </variable>
-      <variable label="F7 Fwd" CV="185" mask="XXXVVVVV" item="Soundkey19">
-        <decVal max="16"/>
-        <label>F7 Fwd</label>
-      </variable>
-      <variable label="F7 Rev" CV="188" mask="XXXVVVVV" item="Soundkey20">
-        <decVal max="16"/>
-        <label>F7 Rev</label>
-      </variable>
-      <variable label="F8 Fwd" CV="191" mask="XXXVVVVV" item="Soundkey21">
-        <decVal max="16"/>
-        <label>F8 Fwd</label>
-      </variable>
-      <variable label="F8 Rev" CV="194" mask="XXXVVVVV" item="Soundkey22">
-        <decVal max="16"/>
-        <label>F8 Rev</label>
-      </variable>
-      <variable label="F9 Fwd" CV="197" mask="XXXVVVVV" item="Soundkey23">
-        <decVal max="16"/>
-        <label>F9 Fwd</label>
-      </variable>
-      <variable label="F9 Rev" CV="200" mask="XXXVVVVV" item="Soundkey24">
-        <decVal max="16"/>
-        <label>F9 Rev</label>
-      </variable>
-      <variable label="F10 Fwd" CV="203" mask="XXXVVVVV" item="Soundkey25">
-        <decVal max="16"/>
-        <label>F10 Fwd</label>
-      </variable>
-      <variable label="F10 Rev" CV="206" mask="XXXVVVVV" item="Soundkey26">
-        <decVal max="16"/>
-        <label>F10 Rev</label>
-      </variable>
-      <variable label="F11 Fwd" CV="209" mask="XXXVVVVV" item="Soundkey27">
-        <decVal max="16"/>
-        <label>F11 Fwd</label>
-      </variable>
-      <variable label="F11 Rev" CV="212" mask="XXXVVVVV" item="Soundkey28">
-        <decVal max="16"/>
-        <label>F11 Rev</label>
-      </variable>
-      <variable label="F12 Fwd" CV="215" mask="XXXVVVVV" item="Soundkey29">
-        <decVal max="16"/>
-        <label>F12 Fwd</label>
-      </variable>
-      <variable label="F12 Rev" CV="218" mask="XXXVVVVV" item="Soundkey30">
-        <decVal max="16"/>
-        <label>F12 Rev</label>
-      </variable>
-      <variable label="Sensor1 Fwd" CV="221" mask="XXXVVVVV" item="Soundkey31">
-        <decVal max="16"/>
-        <label>Sensor1 Fwd</label>
-      </variable>
-      <variable label="Sensor1 Rev" CV="224" mask="XXXVVVVV" item="Soundkey32">
-        <decVal max="16"/>
-        <label>Sensor1 Rev</label>
-      </variable>
-      <variable label="Sensor2 Fwd" CV="227" mask="XXXVVVVV" item="Soundkey33">
-        <decVal max="16"/>
-        <label>Sensor2 Fwd</label>
-      </variable>
-      <variable label="Sensor2 Rev" CV="230" mask="XXXVVVVV" item="Soundkey34">
-        <decVal max="16"/>
-        <label>Sensor2 Rev</label>
-      </variable>
-      <!-- Definitions for A mapping -->
-      <variable label="Stop(f)1" CV="129" mask="XXXXXXXV" minOut="1" item="Stop(f)1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(f)1</label>
-      </variable>
-      <variable label="Stop(f)2" CV="129" mask="XXXXXXVX" minOut="2" item="Stop(f)2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(f)2</label>
-      </variable>
-      <variable label="Stop(f)3" CV="129" mask="XXXXXVXX" minOut="3" item="Stop(f)3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(f)3</label>
-      </variable>
-      <variable label="Stop(f)4" CV="129" mask="XXXXVXXX" minOut="4" item="Stop(f)4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(f)4</label>
-      </variable>
-      <variable label="Stop(f)5" CV="129" mask="XXXVXXXX" minOut="5" item="Stop(f)5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(f)5</label>
-      </variable>
-      <variable label="Stop(f)6" CV="129" mask="XXVXXXXX" minOut="6" item="Stop(f)6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(f)6</label>
-      </variable>
-      <variable label="Stop(f)7" CV="129" mask="XVXXXXXX" minOut="7" item="Stop(f)7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(f)7</label>
-      </variable>
-      <variable label="Stop(f)8" CV="129" mask="VXXXXXXX" minOut="8" item="Stop(f)8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(f)8</label>
-      </variable>
-      <variable label="Stop(r)1" CV="132" mask="XXXXXXXV" minOut="1" item="Stop(r)1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(r)1</label>
-      </variable>
-      <variable label="Stop(r)2" CV="132" mask="XXXXXXVX" item="Stop(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(r)2</label>
-      </variable>
-      <variable label="Stop(r)3" CV="132" mask="XXXXXVXX" item="Stop(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(r)3</label>
-      </variable>
-      <variable label="Stop(r)4" CV="132" mask="XXXXVXXX" item="Stop(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(r)4</label>
-      </variable>
-      <variable label="Stop(r)5" CV="132" mask="XXXVXXXX" item="Stop(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(r)5</label>
-      </variable>
-      <variable label="Stop(r)6" CV="132" mask="XXVXXXXX" item="Stop(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(r)6</label>
-      </variable>
-      <variable label="Stop(r)7" CV="132" mask="XVXXXXXX" item="Stop(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(r)7</label>
-      </variable>
-      <variable label="Stop(r)8" CV="132" mask="VXXXXXXX" item="Stop(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Stop(r)8</label>
-      </variable>
-      <variable label="Run(f)1" CV="135" mask="XXXXXXXV" item="Run(f)1" minOut="1" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(f)1</label>
-      </variable>
-      <variable label="Run(f)2" CV="135" mask="XXXXXXVX" item="Run(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(f)2</label>
-      </variable>
-      <variable label="Run(f)3" CV="135" mask="XXXXXVXX" item="Run(f)3" minOut="3" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(f)3</label>
-      </variable>
-      <variable label="Run(f)4" CV="135" mask="XXXXVXXX" item="Run(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(f)4</label>
-      </variable>
-      <variable label="Run(f)5" CV="135" mask="XXXVXXXX" item="Run(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(f)5</label>
-      </variable>
-      <variable label="Run(f)6" CV="135" mask="XXVXXXXX" item="Run(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(f)6</label>
-      </variable>
-      <variable label="Run(f)7" CV="135" mask="XVXXXXXX" item="Run(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(f)7</label>
-      </variable>
-      <variable label="Run(f)8" CV="135" mask="VXXXXXXX" item="Run(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(f)8</label>
-      </variable>
-      <variable label="Run(r)1" CV="138" mask="XXXXXXXV" item="Run(r)1" minOut="1" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(r)1</label>
-      </variable>
-      <variable label="Run(r)2" CV="138" mask="XXXXXXVX" item="Run(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(r)2</label>
-      </variable>
-      <variable label="Run(r)3" CV="138" mask="XXXXXVXX" item="Run(r)3" minOut="3" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(r)3</label>
-      </variable>
-      <variable label="Run(r)4" CV="138" mask="XXXXVXXX" item="Run(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(r)4</label>
-      </variable>
-      <variable label="Run(r)5" CV="138" mask="XXXVXXXX" item="Run(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(r)5</label>
-      </variable>
-      <variable label="Run(r)6" CV="138" mask="XXVXXXXX" item="Run(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(r)6</label>
-      </variable>
-      <variable label="Run(r)7" CV="138" mask="XVXXXXXX" item="Run(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(r)7</label>
-      </variable>
-      <variable label="Run(r)8" CV="138" mask="VXXXXXXX" item="Run(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Run(r)8</label>
-      </variable>
-      <variable label="FL(f)1" CV="141" mask="XXXXXXXV" item="FL(f)1" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(f)1</label>
-      </variable>
-      <variable label="FL(f)2" CV="141" mask="XXXXXXVX" item="FL(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(f)2</label>
-      </variable>
-      <variable label="FL(f)3" CV="141" mask="XXXXXVXX" item="FL(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(f)3</label>
-      </variable>
-      <variable label="FL(f)4" CV="141" mask="XXXXVXXX" item="FL(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(f)4</label>
-      </variable>
-      <variable label="FL(f)5" CV="141" mask="XXXVXXXX" item="FL(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(f)5</label>
-      </variable>
-      <variable label="FL(f)6" CV="141" mask="XXVXXXXX" item="FL(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(f)6</label>
-      </variable>
-      <variable label="FL(f)7" CV="141" mask="XVXXXXXX" item="FL(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(f)7</label>
-      </variable>
-      <variable label="FL(f)8" CV="141" mask="VXXXXXXX" item="FL(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(f)8</label>
-      </variable>
-      <variable label="FL(r)1" CV="144" mask="XXXXXXXV" item="FL(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(r)1</label>
-      </variable>
-      <variable label="FL(r)2" CV="144" mask="XXXXXXVX" item="FL(r)2" minOut="2" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(r)2</label>
-      </variable>
-      <variable label="FL(r)3" CV="144" mask="XXXXXVXX" item="FL(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(r)3</label>
-      </variable>
-      <variable label="FL(r)4" CV="144" mask="XXXXVXXX" item="FL(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(r)4</label>
-      </variable>
-      <variable label="FL(r)5" CV="144" mask="XXXVXXXX" item="FL(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(r)5</label>
-      </variable>
-      <variable label="FL(r)6" CV="144" mask="XXVXXXXX" item="FL(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(r)6</label>
-      </variable>
-      <variable label="FL(r)7" CV="144" mask="XVXXXXXX" item="FL(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(r)7</label>
-      </variable>
-      <variable label="FL(r)8" CV="144" mask="VXXXXXXX" item="FL(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL(r)8</label>
-      </variable>
-      <variable label="F1(f)1" CV="147" mask="XXXXXXXV" item="F1(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(f)1</label>
-      </variable>
-      <variable label="F1(f)2" CV="147" mask="XXXXXXVX" item="F1(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(f)2</label>
-      </variable>
-      <variable label="F1(f)3" CV="147" mask="XXXXXVXX" item="F1(f)3" minOut="3" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(f)3</label>
-      </variable>
-      <variable label="F1(f)4" CV="147" mask="XXXXVXXX" item="F1(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(f)4</label>
-      </variable>
-      <variable label="F1(f)5" CV="147" mask="XXXVXXXX" item="F1(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(f)5</label>
-      </variable>
-      <variable label="F1(f)6" CV="147" mask="XXVXXXXX" item="F1(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(f)6</label>
-      </variable>
-      <variable label="F1(f)7" CV="147" mask="XVXXXXXX" item="F1(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(f)7</label>
-      </variable>
-      <variable label="F1(f)8" CV="147" mask="VXXXXXXX" item="F1(f)8" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(f)8</label>
-      </variable>
-      <variable label="F1(r)1" CV="150" mask="XXXXXXXV" item="F1(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(r)1</label>
-      </variable>
-      <variable label="F1(r)2" CV="150" mask="XXXXXXVX" item="F1(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(r)2</label>
-      </variable>
-      <variable label="F1(r)3" CV="150" mask="XXXXXVXX" item="F1(r)3" minOut="3" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(r)3</label>
-      </variable>
-      <variable label="F1(r)4" CV="150" mask="XXXXVXXX" item="F1(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(r)4</label>
-      </variable>
-      <variable label="F1(r)5" CV="150" mask="XXXVXXXX" item="F1(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(r)5</label>
-      </variable>
-      <variable label="F1(r)6" CV="150" mask="XXVXXXXX" item="F1(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(r)6</label>
-      </variable>
-      <variable label="F1(r)7" CV="150" mask="XVXXXXXX" item="F1(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(r)7</label>
-      </variable>
-      <variable label="F1(r)8" CV="150" mask="VXXXXXXX" item="F1(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F1(r)8</label>
-      </variable>
-      <variable label="F2(f)1" CV="153" mask="XXXXXXXV" item="F2(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(f)1</label>
-      </variable>
-      <variable label="F2(f)2" CV="153" mask="XXXXXXVX" item="F2(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(f)2</label>
-      </variable>
-      <variable label="F2(f)3" CV="153" mask="XXXXXVXX" item="F2(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(f)3</label>
-      </variable>
-      <variable label="F2(f)4" CV="153" mask="XXXXVXXX" item="F2(f)4" minOut="4" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(f)4</label>
-      </variable>
-      <variable label="F2(f)5" CV="153" mask="XXXVXXXX" item="F2(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(f)5</label>
-      </variable>
-      <variable label="F2(f)6" CV="153" mask="XXVXXXXX" item="F2(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(f)6</label>
-      </variable>
-      <variable label="F2(f)7" CV="153" mask="XVXXXXXX" item="F2(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(f)7</label>
-      </variable>
-      <variable label="F2(f)8" CV="153" mask="VXXXXXXX" item="F2(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(f)8</label>
-      </variable>
-      <variable label="F2(r)1" CV="156" mask="XXXXXXXV" item="F2(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(r)1</label>
-      </variable>
-      <variable label="F2(r)2" CV="156" mask="XXXXXXVX" item="F2(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(r)2</label>
-      </variable>
-      <variable label="F2(r)3" CV="156" mask="XXXXXVXX" item="F2(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(r)3</label>
-      </variable>
-      <variable label="F2(r)4" CV="156" mask="XXXXVXXX" item="F2(r)4" minOut="4" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(r)4</label>
-      </variable>
-      <variable label="F2(r)5" CV="156" mask="XXXVXXXX" item="F2(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(r)5</label>
-      </variable>
-      <variable label="F2(r)6" CV="156" mask="XXVXXXXX" item="F2(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(r)6</label>
-      </variable>
-      <variable label="F2(r)7" CV="156" mask="XVXXXXXX" item="F2(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(r)7</label>
-      </variable>
-      <variable label="F2(r)8" CV="156" mask="VXXXXXXX" item="F2(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F2(r)8</label>
-      </variable>
-      <variable label="F3(f)1" CV="159" mask="XXXXXXXV" item="F3(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(f)1</label>
-      </variable>
-      <variable label="F3(f)2" CV="159" mask="XXXXXXVX" item="F3(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(f)2</label>
-      </variable>
-      <variable label="F3(f)3" CV="159" mask="XXXXXVXX" item="F3(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(f)3</label>
-      </variable>
-      <variable label="F3(f)4" CV="159" mask="XXXXVXXX" item="F3(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(f)4</label>
-      </variable>
-      <variable label="F3(f)5" CV="159" mask="XXXVXXXX" item="F3(f)5" minOut="5" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(f)5</label>
-      </variable>
-      <variable label="F3(f)6" CV="159" mask="XXVXXXXX" item="F3(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(f)6</label>
-      </variable>
-      <variable label="F3(f)7" CV="159" mask="XVXXXXXX" item="F3(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(f)7</label>
-      </variable>
-      <variable label="F3(f)8" CV="159" mask="VXXXXXXX" item="F3(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(f)8</label>
-      </variable>
-      <variable label="F3(r)1" CV="162" mask="XXXXXXXV" item="F3(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(r)1</label>
-      </variable>
-      <variable label="F3(r)2" CV="162" mask="XXXXXXVX" item="F3(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(r)2</label>
-      </variable>
-      <variable label="F3(r)3" CV="162" mask="XXXXXVXX" item="F3(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(r)3</label>
-      </variable>
-      <variable label="F3(r)4" CV="162" mask="XXXXVXXX" item="F3(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(r)4</label>
-      </variable>
-      <variable label="F3(r)5" CV="162" mask="XXXVXXXX" item="F3(r)5" minOut="5" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(r)5</label>
-      </variable>
-      <variable label="F3(r)6" CV="162" mask="XXVXXXXX" item="F3(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(r)6</label>
-      </variable>
-      <variable label="F3(r)7" CV="162" mask="XVXXXXXX" item="F3(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(r)7</label>
-      </variable>
-      <variable label="F3(r)8" CV="162" mask="VXXXXXXX" item="F3(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F3(r)8</label>
-      </variable>
-      <variable label="F4(f)1" CV="165" mask="XXXXXXXV" item="F4(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(f)1</label>
-      </variable>
-      <variable label="F4(f)2" CV="165" mask="XXXXXXVX" item="F4(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(f)2</label>
-      </variable>
-      <variable label="F4(f)3" CV="165" mask="XXXXXVXX" item="F4(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(f)3</label>
-      </variable>
-      <variable label="F4(f)4" CV="165" mask="XXXXVXXX" item="F4(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(f)4</label>
-      </variable>
-      <variable label="F4(f)5" CV="165" mask="XXXVXXXX" item="F4(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(f)5</label>
-      </variable>
-      <variable label="F4(f)6" CV="165" mask="XXVXXXXX" item="F4(f)6" minOut="6" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(f)6</label>
-      </variable>
-      <variable label="F4(f)7" CV="165" mask="XVXXXXXX" item="F4(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(f)7</label>
-      </variable>
-      <variable label="F4(f)8" CV="165" mask="VXXXXXXX" item="F4(f)" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(f)8</label>
-      </variable>
-      <variable label="F4(r)1" CV="168" mask="XXXXXXXV" item="F4(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(r)1</label>
-      </variable>
-      <variable label="F4(r)2" CV="168" mask="XXXXXXVX" item="F4(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(r)2</label>
-      </variable>
-      <variable label="F4(r)3" CV="168" mask="XXXXXVXX" item="F4(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(r)3</label>
-      </variable>
-      <variable label="F4(r)4" CV="168" mask="XXXXVXXX" item="F4(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(r)4</label>
-      </variable>
-      <variable label="F4(r)5" CV="168" mask="XXXVXXXX" item="F4(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(r)5</label>
-      </variable>
-      <variable label="F4(r)6" CV="168" mask="XXVXXXXX" item="F4(r)6" minOut="6" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(r)6</label>
-      </variable>
-      <variable label="F4(r)7" CV="168" mask="XVXXXXXX" item="F4(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(r)7</label>
-      </variable>
-      <variable label="F4(r)8" CV="168" mask="VXXXXXXX" item="F4(r)7" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F4(r)8</label>
-      </variable>
-      <variable label="F5(f)1" CV="171" mask="XXXXXXXV" item="F5(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(f)1</label>
-      </variable>
-      <variable label="F5(f)2" CV="171" mask="XXXXXXVX" item="F5(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(f)2</label>
-      </variable>
-      <variable label="F5(f)3" CV="171" mask="XXXXXVXX" item="F5(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(f)3</label>
-      </variable>
-      <variable label="F5(f)4" CV="171" mask="XXXXVXXX" item="F5(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(f)4</label>
-      </variable>
-      <variable label="F5(f)5" CV="171" mask="XXXVXXXX" item="F5(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(f)5</label>
-      </variable>
-      <variable label="F5(f)6" CV="171" mask="XXVXXXXX" item="F5(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(f)6</label>
-      </variable>
-      <variable label="F5(f)7" CV="171" mask="XVXXXXXX" item="F5(f)7" minOut="7" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(f)7</label>
-      </variable>
-      <variable label="F5(f)8" CV="171" mask="VXXXXXXX" item="F5(f)8" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(f)8</label>
-      </variable>
-      <variable label="F5(r)1" CV="174" mask="XXXXXXXV" item="F5(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(r)1</label>
-      </variable>
-      <variable label="F5(r)2" CV="174" mask="XXXXXXVX" item="F5(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(r)2</label>
-      </variable>
-      <variable label="F5(r)3" CV="174" mask="XXXXXVXX" item="F5(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(r)3</label>
-      </variable>
-      <variable label="F5(r)4" CV="174" mask="XXXXVXXX" item="F5(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(r)4</label>
-      </variable>
-      <variable label="F5(r)5" CV="174" mask="XXXVXXXX" item="F5(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(r)5</label>
-      </variable>
-      <variable label="F5(r)6" CV="174" mask="XXVXXXXX" item="F5(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(r)6</label>
-      </variable>
-      <variable label="F5(r)7" CV="174" mask="XVXXXXXX" item="F5(r)7" minOut="7" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(r)7</label>
-      </variable>
-      <variable label="F5(r)8" CV="174" mask="VXXXXXXX" item="F5(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F5(r)8</label>
-      </variable>
-      <variable label="F6(f)1" CV="177" mask="XXXXXXXV" item="F6(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(f)1</label>
-      </variable>
-      <variable label="F6(f)2" CV="177" mask="XXXXXXVX" item="F6(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(f)2</label>
-      </variable>
-      <variable label="F6(f)3" CV="177" mask="XXXXXVXX" item="F6(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(f)3</label>
-      </variable>
-      <variable label="F6(f)4" CV="177" mask="XXXXVXXX" item="F6(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(f)4</label>
-      </variable>
-      <variable label="F6(f)5" CV="177" mask="XXXVXXXX" item="F6(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(f)5</label>
-      </variable>
-      <variable label="F6(f)6" CV="177" mask="XXVXXXXX" item="F6(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(f)6</label>
-      </variable>
-      <variable label="F6(f)7" CV="177" mask="XVXXXXXX" item="F6(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(f)7</label>
-      </variable>
-      <variable label="F6(f)8" CV="177" mask="VXXXXXXX" item="F6(f)8" minOut="8" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(f)8</label>
-      </variable>
-      <variable label="F6(r)1" CV="180" mask="XXXXXXXV" item="F6(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(r)1</label>
-      </variable>
-      <variable label="F6(r)2" CV="180" mask="XXXXXXVX" item="F6(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(r)2</label>
-      </variable>
-      <variable label="F6(r)3" CV="180" mask="XXXXXVXX" item="F6(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(r)3</label>
-      </variable>
-      <variable label="F6(r)4" CV="180" mask="XXXXVXXX" item="F6(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(r)4</label>
-      </variable>
-      <variable label="F6(r)5" CV="180" mask="XXXVXXXX" item="F6(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(r)5</label>
-      </variable>
-      <variable label="F6(r)6" CV="180" mask="XXVXXXXX" item="F6(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(r)6</label>
-      </variable>
-      <variable label="F6(r)7" CV="180" mask="XVXXXXXX" item="F6(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(r)7</label>
-      </variable>
-      <variable label="F6(r)8" CV="180" mask="VXXXXXXX" item="F6(r)8" minOut="8" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F6(r)8</label>
-      </variable>
-      <variable label="F7(f)1" CV="183" mask="XXXXXXXV" item="F7(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(f)1</label>
-      </variable>
-      <variable label="F7(f)2" CV="183" mask="XXXXXXVX" item="F7(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(f)2</label>
-      </variable>
-      <variable label="F7(f)3" CV="183" mask="XXXXXVXX" item="F7(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(f)3</label>
-      </variable>
-      <variable label="F7(f)4" CV="183" mask="XXXXVXXX" item="F7(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(f)4</label>
-      </variable>
-      <variable label="F7(f)5" CV="183" mask="XXXVXXXX" item="F7(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(f)5</label>
-      </variable>
-      <variable label="F7(f)6" CV="183" mask="XXVXXXXX" item="F7(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(f)6</label>
-      </variable>
-      <variable label="F7(f)7" CV="183" mask="XVXXXXXX" item="F7(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(f)7</label>
-      </variable>
-      <variable label="F7(f)8" CV="183" mask="VXXXXXXX" item="F7(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(f)8</label>
-      </variable>
-      <variable label="F7(r)1" CV="186" mask="XXXXXXXV" item="F7(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(r)1</label>
-      </variable>
-      <variable label="F7(r)2" CV="186" mask="XXXXXXVX" item="F7(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(r)2</label>
-      </variable>
-      <variable label="F7(r)3" CV="186" mask="XXXXXVXX" item="F7(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(r)3</label>
-      </variable>
-      <variable label="F7(r)4" CV="186" mask="XXXXVXXX" item="F7(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(r)4</label>
-      </variable>
-      <variable label="F7(r)5" CV="186" mask="XXXVXXXX" item="F7(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(r)5</label>
-      </variable>
-      <variable label="F7(r)6" CV="186" mask="XXVXXXXX" item="F7(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(r)6</label>
-      </variable>
-      <variable label="F7(r)7" CV="186" mask="XVXXXXXX" item="F7(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(r)7</label>
-      </variable>
-      <variable label="F7(r)8" CV="186" mask="VXXXXXXX" item="F7(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F7(r)8</label>
-      </variable>
-      <variable label="F8(f)1" CV="189" mask="XXXXXXXV" item="F8(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(f)1</label>
-      </variable>
-      <variable label="F8(f)2" CV="189" mask="XXXXXXVX" item="F8(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(f)2</label>
-      </variable>
-      <variable label="F8(f)3" CV="189" mask="XXXXXVXX" item="F8(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(f)3</label>
-      </variable>
-      <variable label="F8(f)4" CV="189" mask="XXXXVXXX" item="F8(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(f)4</label>
-      </variable>
-      <variable label="F8(f)5" CV="189" mask="XXXVXXXX" item="F8(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(f)5</label>
-      </variable>
-      <variable label="F8(f)6" CV="189" mask="XXVXXXXX" item="F8(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(f)6</label>
-      </variable>
-      <variable label="F8(f)7" CV="189" mask="XVXXXXXX" item="F8(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(f)7</label>
-      </variable>
-      <variable label="F8(f)8" CV="189" mask="VXXXXXXX" item="F8(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(f)8</label>
-      </variable>
-      <variable label="F8(r)1" CV="192" mask="XXXXXXXV" item="F8(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(r)1</label>
-      </variable>
-      <variable label="F8(r)2" CV="192" mask="XXXXXXVX" item="F8(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(r)2</label>
-      </variable>
-      <variable label="F8(r)3" CV="192" mask="XXXXXVXX" item="F8(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(r)3</label>
-      </variable>
-      <variable label="F8(r)4" CV="192" mask="XXXXVXXX" item="F8(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(r)4</label>
-      </variable>
-      <variable label="F8(r)5" CV="192" mask="XXXVXXXX" item="F8(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(r)5</label>
-      </variable>
-      <variable label="F8(r)6" CV="192" mask="XXVXXXXX" item="F8(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(r)6</label>
-      </variable>
-      <variable label="F8(r)7" CV="192" mask="XVXXXXXX" item="F8(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(r)7</label>
-      </variable>
-      <variable label="F8(r)8" CV="192" mask="VXXXXXXX" item="F8(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F8(r)8</label>
-      </variable>
-      <variable label="F9(f)1" CV="195" mask="XXXXXXXV" item="F9(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(f)1</label>
-      </variable>
-      <variable label="F9(f)2" CV="195" mask="XXXXXXVX" item="F9(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(f)2</label>
-      </variable>
-      <variable label="F9(f)3" CV="195" mask="XXXXXVXX" item="F9(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(f)3</label>
-      </variable>
-      <variable label="F9(f)4" CV="195" mask="XXXXVXXX" item="F9(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(f)4</label>
-      </variable>
-      <variable label="F9(f)5" CV="195" mask="XXXVXXXX" item="F9(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(f)5</label>
-      </variable>
-      <variable label="F9(f)6" CV="195" mask="XXVXXXXX" item="F9(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(f)6</label>
-      </variable>
-      <variable label="F9(f)7" CV="195" mask="XVXXXXXX" item="F9(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(f)7</label>
-      </variable>
-      <variable label="F9(f)8" CV="195" mask="VXXXXXXX" item="F9(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(f)8</label>
-      </variable>
-      <variable label="F9(r)1" CV="198" mask="XXXXXXXV" item="F9(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(r)1</label>
-      </variable>
-      <variable label="F9(r)2" CV="198" mask="XXXXXXVX" item="F9(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(r)2</label>
-      </variable>
-      <variable label="F9(r)3" CV="198" mask="XXXXXVXX" item="F9(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(r)3</label>
-      </variable>
-      <variable label="F9(r)4" CV="198" mask="XXXXVXXX" item="F9(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(r)4</label>
-      </variable>
-      <variable label="F9(r)5" CV="198" mask="XXXVXXXX" item="F9(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(r)5</label>
-      </variable>
-      <variable label="F9(r)6" CV="198" mask="XXVXXXXX" item="F9(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(r)6</label>
-      </variable>
-      <variable label="F9(r)7" CV="198" mask="XVXXXXXX" item="F9(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(r)7</label>
-      </variable>
-      <variable label="F9(r)8" CV="198" mask="VXXXXXXX" item="F9(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F9(r)8</label>
-      </variable>
-      <variable label="F10(f)1" CV="201" mask="XXXXXXXV" item="F10(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(f)1</label>
-      </variable>
-      <variable label="F10(f)2" CV="201" mask="XXXXXXVX" item="F10(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(f)2</label>
-      </variable>
-      <variable label="F10(f)3" CV="201" mask="XXXXXVXX" item="F10(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(f)3</label>
-      </variable>
-      <variable label="F10(f)4" CV="201" mask="XXXXVXXX" item="F10(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(f)4</label>
-      </variable>
-      <variable label="F10(f)5" CV="201" mask="XXXVXXXX" item="F10(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(f)5</label>
-      </variable>
-      <variable label="F10(f)6" CV="201" mask="XXVXXXXX" item="F10(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(f)6</label>
-      </variable>
-      <variable label="F10(f)7" CV="201" mask="XVXXXXXX" item="F10(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(f)7</label>
-      </variable>
-      <variable label="F10(f)8" CV="201" mask="VXXXXXXX" item="F10(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(f)8</label>
-      </variable>
-      <variable label="F10(r)1" CV="204" mask="XXXXXXXV" item="F10(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(r)1</label>
-      </variable>
-      <variable label="F10(r)2" CV="204" mask="XXXXXXVX" item="F10(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(r)2</label>
-      </variable>
-      <variable label="F10(r)3" CV="204" mask="XXXXXVXX" item="F10(r)2" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(r)3</label>
-      </variable>
-      <variable label="F10(r)4" CV="204" mask="XXXXVXXX" item="F10(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(r)4</label>
-      </variable>
-      <variable label="F10(r)5" CV="204" mask="XXXVXXXX" item="F10(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(r)5</label>
-      </variable>
-      <variable label="F10(r)6" CV="204" mask="XXVXXXXX" item="F10(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(r)6</label>
-      </variable>
-      <variable label="F10(r)7" CV="204" mask="XVXXXXXX" item="F10(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(r)7</label>
-      </variable>
-      <variable label="F10(r)8" CV="204" mask="VXXXXXXX" item="F10(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F10(r)8</label>
-      </variable>
-      <variable label="F11(f)1" CV="207" mask="XXXXXXXV" item="F11(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(f)1</label>
-      </variable>
-      <variable label="F11(f)2" CV="207" mask="XXXXXXVX" item="F11(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(f)2</label>
-      </variable>
-      <variable label="F11(f)3" CV="207" mask="XXXXXVXX" item="F11(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(f)3</label>
-      </variable>
-      <variable label="F11(f)4" CV="207" mask="XXXXVXXX" item="F11(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(f)4</label>
-      </variable>
-      <variable label="F11(f)5" CV="207" mask="XXXVXXXX" item="F11(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(f)5</label>
-      </variable>
-      <variable label="F11(f)6" CV="207" mask="XXVXXXXX" item="F11(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(f)6</label>
-      </variable>
-      <variable label="F11(f)7" CV="207" mask="XVXXXXXX" item="F11(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(f)7</label>
-      </variable>
-      <variable label="F11(f)8" CV="207" mask="VXXXXXXX" item="F11(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(f)8</label>
-      </variable>
-      <variable label="F11(r)1" CV="210" mask="XXXXXXXV" item="F11(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(r)1</label>
-      </variable>
-      <variable label="F11(r)2" CV="210" mask="XXXXXXVX" item="F11(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(r)2</label>
-      </variable>
-      <variable label="F11(r)3" CV="210" mask="XXXXXVXX" item="F11(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(r)3</label>
-      </variable>
-      <variable label="F11(r)4" CV="210" mask="XXXXVXXX" item="F11(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(r)4</label>
-      </variable>
-      <variable label="F11(r)5" CV="210" mask="XXXVXXXX" item="F11(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(r)5</label>
-      </variable>
-      <variable label="F11(r)6" CV="210" mask="XXVXXXXX" item="F11(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(r)6</label>
-      </variable>
-      <variable label="F11(r)7" CV="210" mask="XVXXXXXX" item="F11(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(r)7</label>
-      </variable>
-      <variable label="F11(r)8" CV="210" mask="VXXXXXXX" item="F11(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F11(r)8</label>
-      </variable>
-      <variable label="F12(f)1" CV="213" mask="XXXXXXXV" item="F12(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(f)1</label>
-      </variable>
-      <variable label="F12(f)2" CV="213" mask="XXXXXXVX" item="F12(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(f)2</label>
-      </variable>
-      <variable label="F12(f)3" CV="213" mask="XXXXXVXX" item="F12(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(f)3</label>
-      </variable>
-      <variable label="F12(f)4" CV="213" mask="XXXXVXXX" item="F12(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(f)4</label>
-      </variable>
-      <variable label="F12(f)5" CV="213" mask="XXXVXXXX" item="F12(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(f)5</label>
-      </variable>
-      <variable label="F12(f)6" CV="213" mask="XXVXXXXX" item="F12(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(f)6</label>
-      </variable>
-      <variable label="F12(f)7" CV="213" mask="XVXXXXXX" item="F12(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(f)7</label>
-      </variable>
-      <variable label="F12(f)8" CV="213" mask="VXXXXXXX" item="F12(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(f)8</label>
-      </variable>
-      <variable label="F12(r)1" CV="216" mask="XXXXXXXV" item="F12(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(r)1</label>
-      </variable>
-      <variable label="F12(r)2" CV="216" mask="XXXXXXVX" item="F12(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(r)2</label>
-      </variable>
-      <variable label="F12(r)3" CV="216" mask="XXXXXVXX" item="F12(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(r)3</label>
-      </variable>
-      <variable label="F12(r)4" CV="216" mask="XXXXVXXX" item="F12(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(r)4</label>
-      </variable>
-      <variable label="F12(r)5" CV="216" mask="XXXVXXXX" item="F12(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(r)5</label>
-      </variable>
-      <variable label="F12(r)6" CV="216" mask="XXVXXXXX" item="F12(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(r)6</label>
-      </variable>
-      <variable label="F12(r)7" CV="216" mask="XVXXXXXX" item="F12(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(r)7</label>
-      </variable>
-      <variable label="F12(r)8" CV="216" mask="VXXXXXXX" item="F12(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>F12(r)8</label>
-      </variable>
-      <variable label="sensor1(f)1" CV="219" mask="XXXXXXXV" item="Sensor1(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(f)1</label>
-      </variable>
-      <variable label="sensor1(f)2" CV="219" mask="XXXXXXVX" item="Sensor1(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(f)2</label>
-      </variable>
-      <variable label="sensor1(f)3" CV="219" mask="XXXXXVXX" item="Sensor1(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(f)3</label>
-      </variable>
-      <variable label="sensor1(f)4" CV="219" mask="XXXXVXXX" item="Sensor1(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(f)4</label>
-      </variable>
-      <variable label="sensor1(f)5" CV="219" mask="XXXVXXXX" item="Sensor1(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(f)5</label>
-      </variable>
-      <variable label="sensor1(f)6" CV="219" mask="XXVXXXXX" item="Sensor1(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(f)6</label>
-      </variable>
-      <variable label="sensor1(f)7" CV="219" mask="XVXXXXXX" item="Sensor1(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(f)7</label>
-      </variable>
-      <variable label="sensor1(f)8" CV="219" mask="VXXXXXXX" item="Sensor1(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(f)8</label>
-      </variable>
-      <variable label="sensor1(r)1" CV="222" mask="XXXXXXXV" item="Sensor1(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(r)1</label>
-      </variable>
-      <variable label="sensor1(r)2" CV="222" mask="XXXXXXVX" item="Sensor1(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(r)2</label>
-      </variable>
-      <variable label="sensor1(r)3" CV="222" mask="XXXXXVXX" item="Sensor1(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(r)3</label>
-      </variable>
-      <variable label="sensor1(r)4" CV="222" mask="XXXXVXXX" item="Sensor1(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(r)4</label>
-      </variable>
-      <variable label="sensor1(r)5" CV="222" mask="XXXVXXXX" item="Sensor1(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(r)5</label>
-      </variable>
-      <variable label="sensor1(r)6" CV="222" mask="XXVXXXXX" item="Sensor1(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(r)6</label>
-      </variable>
-      <variable label="sensor1(r)7" CV="222" mask="XVXXXXXX" item="Sensor1(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(r)7</label>
-      </variable>
-      <variable label="sensor1(r)8" CV="222" mask="VXXXXXXX" item="Sensor1(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor1(r)8</label>
-      </variable>
-      <variable label="sensor2(f)1" CV="225" mask="XXXXXXXV" item="Sensor2(f)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(f)1</label>
-      </variable>
-      <variable label="sensor2(f)2" CV="225" mask="XXXXXXVX" item="Sensor2(f)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(f)2</label>
-      </variable>
-      <variable label="sensor2(f)3" CV="225" mask="XXXXXVXX" item="Sensor2(f)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(f)3</label>
-      </variable>
-      <variable label="sensor2(f)4" CV="225" mask="XXXXVXXX" item="Sensor2(f)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(f)4</label>
-      </variable>
-      <variable label="sensor2(f)5" CV="225" mask="XXXVXXXX" item="Sensor2(f)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(f)5</label>
-      </variable>
-      <variable label="sensor2(f)6" CV="225" mask="XXVXXXXX" item="Sensor2(f)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(f)6</label>
-      </variable>
-      <variable label="sensor2(f)7" CV="225" mask="XVXXXXXX" item="Sensor2(f)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(f)7</label>
-      </variable>
-      <variable label="sensor2(f)8" CV="225" mask="VXXXXXXX" item="Sensor2(f)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(f)8</label>
-      </variable>
-      <variable label="sensor2(r)1" CV="228" mask="XXXXXXXV" item="Sensor2(r)1" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(r)1</label>
-      </variable>
-      <variable label="sensor2(r)2" CV="228" mask="XXXXXXVX" item="Sensor2(r)2" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(r)2</label>
-      </variable>
-      <variable label="sensor2(r)3" CV="228" mask="XXXXXVXX" item="Sensor2(r)3" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(r)3</label>
-      </variable>
-      <variable label="sensor2(r)4" CV="228" mask="XXXXVXXX" item="Sensor2(r)4" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(r)4</label>
-      </variable>
-      <variable label="sensor2(r)5" CV="228" mask="XXXVXXXX" item="Sensor2(r)5" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(r)5</label>
-      </variable>
-      <variable label="sensor2(r)6" CV="228" mask="XXVXXXXX" item="Sensor2(r)6" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(r)6</label>
-      </variable>
-      <variable label="sensor2(r)7" CV="228" mask="XVXXXXXX" item="Sensor2(r)7" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(r)7</label>
-      </variable>
-      <variable label="sensor2(r)8" CV="228" mask="VXXXXXXX" item="Sensor2(r)8" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>sensor2(r)8</label>
-      </variable>
-      <!-- This is start of variable definition for Button Behavior -->
-      <variable label="Stop Forward Button" CV="130" mask="XXXXXXXV" item="Stop forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-      </variable>
-      <variable label="Stop Forward Button" CV="130" mask="XXXXXXVX" item="Stop (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-      </variable>
-      <variable label="Stop Forward Button" CV="130" mask="XXXXXVXX" item="Stop (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-      </variable>
-      <variable label="Stop Forward Button" CV="130" mask="XXXXVXXX" item="Stop (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-      </variable>
-      <variable label="Stop Forward Button" CV="130" mask="XXXVXXXX" item="Stop (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-      </variable>
-      <variable label="Stop reverse Button" CV="133" mask="XXXXXXXV" item="Stop (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-      </variable>
-      <variable label="Stop reverse Button" CV="133" mask="XXXXXXVX" item="Stop (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-      </variable>
-      <variable label="Stop reverse Button" CV="133" mask="XXXXXVXX" item="Stop (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-      </variable>
-      <variable label="Stop reverse Button" CV="133" mask="XXXXVXXX" item="Stop (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-      </variable>
-      <variable label="Stop reverse Button" CV="133" mask="XXXVXXXX" item="Stop (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-      </variable>
-      <variable label="Running Forward Button" CV="136" mask="XXXXXXXV" item="Running forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-      </variable>
-      <variable label="Running Forward Button" CV="136" mask="XXXXXXVX" item="Running (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-      </variable>
-      <variable label="Running Forward Button" CV="136" mask="XXXXXVXX" item="Running (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-      </variable>
-      <variable label="Running Forward Button" CV="136" mask="XXXXVXXX" item="Running (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-      </variable>
-      <variable label="Running Forward Button" CV="136" mask="XXXVXXXX" item="Running (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-      </variable>
-      <variable label="Running reverse Button" CV="139" mask="XXXXXXXV" item="Running (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-      </variable>
-      <variable label="Running reverse Button" CV="139" mask="XXXXXXVX" item="Running (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-      </variable>
-      <variable label="Running reverse Button" CV="139" mask="XXXXXVXX" item="Running (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-      </variable>
-      <variable label="Running reverse Button" CV="139" mask="XXXXVXXX" item="Running (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-      </variable>
-      <variable label="Running reverse Button" CV="139" mask="XXXVXXXX" item="Running (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-      </variable>
-      <variable label="F0 Forward Button" CV="142" mask="XXXXXXXV" item="F0 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-      </variable>
-      <variable label="F0 Forward Button" CV="142" mask="XXXXXXVX" item="F0 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-      </variable>
-      <variable label="F0 Forward Button" CV="142" mask="XXXXXVXX" item="F0 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-      </variable>
-      <variable label="F0 Forward Button" CV="142" mask="XXXXVXXX" item="F0 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-      </variable>
-      <variable label="F0 Forward Button" CV="142" mask="XXXVXXXX" item="F0 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-      </variable>
-      <variable label="F0 reverse Button" CV="145" mask="XXXXXXXV" item="F0 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-      </variable>
-      <variable label="F0 reverse Button" CV="145" mask="XXXXXXVX" item="F0 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-      </variable>
-      <variable label="F0 reverse Button" CV="145" mask="XXXXXVXX" item="F0 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-      </variable>
-      <variable label="F0 reverse Button" CV="145" mask="XXXXVXXX" item="F0 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-      </variable>
-      <variable label="F0 reverse Button" CV="145" mask="XXXVXXXX" item="F0 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-      </variable>
-      <variable label="F1 Forward Button" CV="148" mask="XXXXXXXV" item="F1 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-      </variable>
-      <variable label="F1 Forward Button" CV="148" mask="XXXXXXVX" item="F1 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-      </variable>
-      <variable label="F1 Forward Button" CV="148" mask="XXXXXVXX" item="F1 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-      </variable>
-      <variable label="F1 Forward Button" CV="148" mask="XXXXVXXX" item="F1 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-      </variable>
-      <variable label="F1 Forward Button" CV="148" mask="XXXVXXXX" item="F1 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-      </variable>
-      <variable label="F1 reverse Button" CV="151" mask="XXXXXXXV" item="F1 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-      </variable>
-      <variable label="F1 reverse Button" CV="151" mask="XXXXXXVX" item="F1 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-      </variable>
-      <variable label="F1 reverse Button" CV="151" mask="XXXXXVXX" item="F1 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-      </variable>
-      <variable label="F1 reverse Button" CV="151" mask="XXXXVXXX" item="F1 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-      </variable>
-      <variable label="F1 reverse Button" CV="151" mask="XXXVXXXX" item="F1 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-      </variable>
-      <variable label="F2 Forward Button" CV="154" mask="XXXXXXXV" item="F2 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-      </variable>
-      <variable label="F2 Forward Button" CV="154" mask="XXXXXXVX" item="F2 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-      </variable>
-      <variable label="F2 Forward Button" CV="154" mask="XXXXXVXX" item="F2 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-      </variable>
-      <variable label="F2 Forward Button" CV="154" mask="XXXXVXXX" item="F2 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-      </variable>
-      <variable label="F2 Forward Button" CV="154" mask="XXXVXXXX" item="F2 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-      </variable>
-      <variable label="F2 reverse Button" CV="157" mask="XXXXXXXV" item="F2 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-      </variable>
-      <variable label="F2 reverse Button" CV="157" mask="XXXXXXVX" item="F2 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-      </variable>
-      <variable label="F2 reverse Button" CV="157" mask="XXXXXVXX" item="F2 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-      </variable>
-      <variable label="F2 reverse Button" CV="157" mask="XXXXVXXX" item="F2 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-      </variable>
-      <variable label="F2 reverse Button" CV="157" mask="XXXVXXXX" item="F2 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-      </variable>
-      <variable label="F3 Forward Button" CV="160" mask="XXXXXXXV" item="F3 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-      </variable>
-      <variable label="F3 Forward Button" CV="160" mask="XXXXXXVX" item="F3 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-      </variable>
-      <variable label="F3 Forward Button" CV="160" mask="XXXXXVXX" item="F3 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-      </variable>
-      <variable label="F3 Forward Button" CV="160" mask="XXXXVXXX" item="F3 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-      </variable>
-      <variable label="F3 Forward Button" CV="160" mask="XXXVXXXX" item="F3 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-      </variable>
-      <variable label="F3 reverse Button" CV="163" mask="XXXXXXXV" item="F3 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-      </variable>
-      <variable label="F3 reverse Button" CV="163" mask="XXXXXXVX" item="F3 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-      </variable>
-      <variable label="F3 reverse Button" CV="163" mask="XXXXXVXX" item="F3 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-      </variable>
-      <variable label="F3 reverse Button" CV="163" mask="XXXXVXXX" item="F3 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-      </variable>
-      <variable label="F3 reverse Button" CV="163" mask="XXXVXXXX" item="F3 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-      </variable>
-      <variable label="F4 Forward Button" CV="166" mask="XXXXXXXV" item="F4 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-      </variable>
-      <variable label="F4 Forward Button" CV="166" mask="XXXXXXVX" item="F4 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-      </variable>
-      <variable label="F4 Forward Button" CV="166" mask="XXXXXVXX" item="F4 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-      </variable>
-      <variable label="F4 Forward Button" CV="166" mask="XXXXVXXX" item="F4 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-      </variable>
-      <variable label="F4 Forward Button" CV="166" mask="XXXVXXXX" item="F4 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-      </variable>
-      <variable label="F4 reverse Button" CV="169" mask="XXXXXXXV" item="F4 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-      </variable>
-      <variable label="F4 reverse Button" CV="169" mask="XXXXXXVX" item="F4 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-      </variable>
-      <variable label="F4 reverse Button" CV="169" mask="XXXXXVXX" item="F4 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-      </variable>
-      <variable label="F4 reverse Button" CV="169" mask="XXXXVXXX" item="F4 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-      </variable>
-      <variable label="F4 reverse Button" CV="169" mask="XXXVXXXX" item="F4 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-      </variable>
-      <variable label="F5 Forward Button" CV="172" mask="XXXXXXXV" item="F5 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-      </variable>
-      <variable label="F5 Forward Button" CV="172" mask="XXXXXXVX" item="F5 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-      </variable>
-      <variable label="F5 Forward Button" CV="172" mask="XXXXXVXX" item="F5 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-      </variable>
-      <variable label="F5 Forward Button" CV="172" mask="XXXXVXXX" item="F5 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-      </variable>
-      <variable label="F5 Forward Button" CV="172" mask="XXXVXXXX" item="F5 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-      </variable>
-      <variable label="F5 reverse Button" CV="175" mask="XXXXXXXV" item="F5 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-      </variable>
-      <variable label="F5 reverse Button" CV="175" mask="XXXXXXVX" item="F5 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-      </variable>
-      <variable label="F5 reverse Button" CV="175" mask="XXXXXVXX" item="F5 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-      </variable>
-      <variable label="F5 reverse Button" CV="175" mask="XXXXVXXX" item="F5 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-      </variable>
-      <variable label="F5 reverse Button" CV="175" mask="XXXVXXXX" item="F5 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-      </variable>
-      <variable label="F6 Forward Button" CV="178" mask="XXXXXXXV" item="F6 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-      </variable>
-      <variable label="F6 Forward Button" CV="178" mask="XXXXXXVX" item="F6 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-      </variable>
-      <variable label="F6 Forward Button" CV="178" mask="XXXXXVXX" item="F6 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-      </variable>
-      <variable label="F6 Forward Button" CV="178" mask="XXXXVXXX" item="F6 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-      </variable>
-      <variable label="F6 Forward Button" CV="178" mask="XXXVXXXX" item="F6 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-      </variable>
-      <variable label="F6 reverse Button" CV="181" mask="XXXXXXXV" item="F6 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-      </variable>
-      <variable label="F6 reverse Button" CV="181" mask="XXXXXXVX" item="F6 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-      </variable>
-      <variable label="F6 reverse Button" CV="181" mask="XXXXXVXX" item="F6 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-      </variable>
-      <variable label="F6 reverse Button" CV="181" mask="XXXXVXXX" item="F6 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-      </variable>
-      <variable label="F6 reverse Button" CV="181" mask="XXXVXXXX" item="F6 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-      </variable>
-      <variable label="F7 Forward Button" CV="184" mask="XXXXXXXV" item="F7 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-      </variable>
-      <variable label="F7 Forward Button" CV="184" mask="XXXXXXVX" item="F7 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-      </variable>
-      <variable label="F7 Forward Button" CV="184" mask="XXXXXVXX" item="F7 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-      </variable>
-      <variable label="F7 Forward Button" CV="184" mask="XXXXVXXX" item="F7 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-      </variable>
-      <variable label="F7 Forward Button" CV="184" mask="XXXVXXXX" item="F7 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-      </variable>
-      <variable label="F7 reverse Button" CV="187" mask="XXXXXXXV" item="F7 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-      </variable>
-      <variable label="F7 reverse Button" CV="187" mask="XXXXXXVX" item="F7 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-      </variable>
-      <variable label="F7 reverse Button" CV="187" mask="XXXXXVXX" item="F7 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-      </variable>
-      <variable label="F7 reverse Button" CV="187" mask="XXXXVXXX" item="F7 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-      </variable>
-      <variable label="F7 reverse Button" CV="187" mask="XXXVXXXX" item="F7 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-      </variable>
-      <variable label="F8 Forward Button" CV="190" mask="XXXXXXXV" item="F8 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-      </variable>
-      <variable label="F8 Forward Button" CV="190" mask="XXXXXXVX" item="F8 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-      </variable>
-      <variable label="F8 Forward Button" CV="190" mask="XXXXXVXX" item="F8 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-      </variable>
-      <variable label="F8 Forward Button" CV="190" mask="XXXXVXXX" item="F8 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-      </variable>
-      <variable label="F8 Forward Button" CV="190" mask="XXXVXXXX" item="F8 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-      </variable>
-      <variable label="F8 reverse Button" CV="193" mask="XXXXXXXV" item="F8 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-      </variable>
-      <variable label="F8 reverse Button" CV="193" mask="XXXXXXVX" item="F8 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-      </variable>
-      <variable label="F8 reverse Button" CV="193" mask="XXXXXVXX" item="F8 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-      </variable>
-      <variable label="F8 reverse Button" CV="193" mask="XXXXVXXX" item="F8 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-      </variable>
-      <variable label="F8 reverse Button" CV="193" mask="XXXVXXXX" item="F8 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-      </variable>
-      <variable label="F9 Forward Button" CV="196" mask="XXXXXXXV" item="F9 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-      </variable>
-      <variable label="F9 Forward Button" CV="196" mask="XXXXXXVX" item="F9 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-      </variable>
-      <variable label="F9 Forward Button" CV="196" mask="XXXXXVXX" item="F9 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-      </variable>
-      <variable label="F9 Forward Button" CV="196" mask="XXXXVXXX" item="F9 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-      </variable>
-      <variable label="F9 Forward Button" CV="196" mask="XXXVXXXX" item="F9 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-      </variable>
-      <variable label="F9 reverse Button" CV="199" mask="XXXXXXXV" item="F9 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-      </variable>
-      <variable label="F9 reverse Button" CV="199" mask="XXXXXXVX" item="F9 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-      </variable>
-      <variable label="F9 reverse Button" CV="199" mask="XXXXXVXX" item="F9 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-      </variable>
-      <variable label="F9 reverse Button" CV="199" mask="XXXXVXXX" item="F9 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-      </variable>
-      <variable label="F9 reverse Button" CV="199" mask="XXXVXXXX" item="F9 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-      </variable>
-      <variable label="F10 Forward Button" CV="202" mask="XXXXXXXV" item="F10 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-      </variable>
-      <variable label="F10 Forward Button" CV="202" mask="XXXXXXVX" item="F10 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-      </variable>
-      <variable label="F10 Forward Button" CV="202" mask="XXXXXVXX" item="F10 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-      </variable>
-      <variable label="F10 Forward Button" CV="202" mask="XXXXVXXX" item="F10 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-      </variable>
-      <variable label="F10 Forward Button" CV="202" mask="XXXVXXXX" item="F10 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-      </variable>
-      <variable label="F10 reverse Button" CV="205" mask="XXXXXXXV" item="F10 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-      </variable>
-      <variable label="F10 reverse Button" CV="205" mask="XXXXXXVX" item="F10 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-      </variable>
-      <variable label="F10 reverse Button" CV="205" mask="XXXXXVXX" item="F10 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-      </variable>
-      <variable label="F10 reverse Button" CV="205" mask="XXXXVXXX" item="F10 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-      </variable>
-      <variable label="F10 reverse Button" CV="205" mask="XXXVXXXX" item="F10 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-      </variable>
-      <variable label="F11 Forward Button" CV="208" mask="XXXXXXXV" item="F11 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-      </variable>
-      <variable label="F11 Forward Button" CV="208" mask="XXXXXXVX" item="F11 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-      </variable>
-      <variable label="F11 Forward Button" CV="208" mask="XXXXXVXX" item="F11 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-      </variable>
-      <variable label="F11 Forward Button" CV="208" mask="XXXXVXXX" item="F11 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-      </variable>
-      <variable label="F11 Forward Button" CV="208" mask="XXXVXXXX" item="F11 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-      </variable>
-      <variable label="F11 reverse Button" CV="211" mask="XXXXXXXV" item="F11 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-      </variable>
-      <variable label="F11 reverse Button" CV="211" mask="XXXXXXVX" item="F11 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-      </variable>
-      <variable label="F11 reverse Button" CV="211" mask="XXXXXVXX" item="F11 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-      </variable>
-      <variable label="F11 reverse Button" CV="211" mask="XXXXVXXX" item="F11 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-      </variable>
-      <variable label="F11 reverse Button" CV="211" mask="XXXVXXXX" item="F11 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-      </variable>
-      <variable label="F12 Forward Button" CV="214" mask="XXXXXXXV" item="F12 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-      </variable>
-      <variable label="F12 Forward Button" CV="214" mask="XXXXXXVX" item="F12 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-      </variable>
-      <variable label="F12 Forward Button" CV="214" mask="XXXXXVXX" item="F12 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-      </variable>
-      <variable label="F12 Forward Button" CV="214" mask="XXXXVXXX" item="F12 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-      </variable>
-      <variable label="F12 Forward Button" CV="214" mask="XXXVXXXX" item="F12 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-      </variable>
-      <variable label="F12 reverse Button" CV="217" mask="XXXXXXXV" item="F12 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-      </variable>
-      <variable label="F12 reverse Button" CV="217" mask="XXXXXXVX" item="F12 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-      </variable>
-      <variable label="F12 reverse Button" CV="217" mask="XXXXXVXX" item="F12 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-      </variable>
-      <variable label="F12 reverse Button" CV="217" mask="XXXXVXXX" item="F12 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-      </variable>
-      <variable label="F12 reverse Button" CV="217" mask="XXXVXXXX" item="F12 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-      </variable>
-      <variable label="Sensor 1 forward" CV="220" mask="XXXXXXXV" item="Sensor1 fwd1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-      </variable>
-      <variable label="Sensor 1 forward" CV="220" mask="XXXXXXVX" item="Sensor1 fwd2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-      </variable>
-      <variable label="Sensor 1 forward" CV="220" mask="XXXXXVXX" item="Sensor1 fwd3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-      </variable>
-      <variable label="Sensor 1 forward" CV="220" mask="XXXXVXXX" item="Sensor1 fwd4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-      </variable>
-      <variable label="Sensor 1 forward" CV="220" mask="XXXVXXXX" item="Sensor1 fwd5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-      </variable>
-      <variable label="Sensor 1 reverse" CV="223" mask="XXXXXXXV" item="Sensor1 rev1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-      </variable>
-      <variable label="Sensor 1 reverse" CV="223" mask="XXXXXXVX" item="Sensor1 rev2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-      </variable>
-      <variable label="Sensor 1 reverse" CV="223" mask="XXXXXXVXX" item="Sensor1 rev3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-      </variable>
-      <variable label="Sensor 1 reverse" CV="223" mask="XXXXXVXXX" item="Sensor1 rev4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-      </variable>
-      <variable label="Sensor 1 reverse" CV="223" mask="XXXVXXXX" item="Sensor1 rev5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-      </variable>
-      <variable label="Sensor 2 forward" CV="226" mask="XXXXXXXV" item="Sensor2 fwd1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-      </variable>
-      <variable label="Sensor 2 forward" CV="226" mask="XXXXXXVX" item="Sensor2 fwd2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-      </variable>
-      <variable label="Sensor 2 forward" CV="226" mask="XXXXXVXX" item="Sensor2 fwd3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-      </variable>
-      <variable label="Sensor 2 forward" CV="226" mask="XXXXVXXX" item="Sensor2 fwd4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-      </variable>
-      <variable label="Sensor 2 forward" CV="226" mask="XXXVXXXX" item="Sensor2 fwd5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-      </variable>
-      <variable label="Sensor 2 reverse" CV="229" mask="XXXXXXXV" item="Sensor2 rev1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-      </variable>
-      <variable label="Sensor 2 reverse" CV="229" mask="XXXXXXVX" item="Sensor2 rev2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-      </variable>
-      <variable label="Sensor 2 reverse" CV="229" mask="XXXXXVXX" item="Sensor2 rev3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-      </variable>
-      <variable label="Sensor 2 reverse" CV="229" mask="XXXXVXXX" item="Sensor2 rev4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-      </variable>
-      <variable label="Sensor 2 reverse" CV="229" mask="XXXVXXXX" item="Sensor2 rev5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v3fnMapCVs.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v3buttonPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v3soundPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v3extraPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v3bemfPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v3effectsPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v3brightnessPane.xml"/>
 </decoder-config>

@@ -1,21 +1,20 @@
 // CbusConstants.java
-
 package jmri.jmrix.can.cbus;
 
 /**
  * CbusConstants.java
  *
- * Description:		Constants to represent CBUS protocol
+ * Description:	Constants to represent CBUS protocol
  *
- * @author		Andrew Crosland   Copyright (C) 2008
+ * @author	Andrew Crosland Copyright (C) 2008
  * @version $Revision$
  */
 public final class CbusConstants {
+
     /**
      * Handle used by service mode programmer
      */
     public static final int SERVICE_HANDLE = 255;
-    
 
     public static final int DEFAULT_STANDARD_ID = 0x7a;
     public static final int DEFAULT_EXTENDED_ID = 0x7a;
@@ -43,7 +42,6 @@ public final class CbusConstants {
     public static final int CBUS_RQMN = 0x11;
 
     // Opcodes with 1 data
-    public static final int CBUS_STAT = 0x20;
     public static final int CBUS_KLOC = 0x21;
     public static final int CBUS_QLOC = 0x22;
     public static final int CBUS_DKEEP = 0x23;
@@ -77,6 +75,7 @@ public final class CbusConstants {
     public static final int CBUS_RQDAT = 0x5A;
     public static final int CBUS_RQDDS = 0x5B;
     public static final int CBUS_BOOTM = 0x5C;
+    public static final int CBUS_ENUM = 0x5D;
 
     public static final int CBUS_EXTC1 = 0x5F;
 
@@ -92,6 +91,7 @@ public final class CbusConstants {
     public static final int CBUS_NENRD = 0x72;
     public static final int CBUS_RQNPN = 0x73;
     public static final int CBUS_NUMEV = 0x74;
+    public static final int CBUS_CANID = 0x75;
 
     public static final int CBUS_EXTC2 = 0x7F;
 
@@ -160,6 +160,7 @@ public final class CbusConstants {
     public static final int CBUS_RDCC6 = 0xE0;
     public static final int CBUS_PLOC = 0xE1;
     public static final int CBUS_NAME = 0xE2;
+    public static final int CBUS_STAT = 0xE3;
 
     public static final int CBUS_PARAMS = 0xEF;
 
@@ -217,13 +218,13 @@ public final class CbusConstants {
     public static final int EVENT_ON = 0;
     public static final int EVENT_OFF = 1;
     public static final int EVENT_EITHER = 2;
-    
+
     /**
      * CBUS Priorities
      */
     public static final int DEFAULT_DYNAMIC_PRIORITY = 2;
     public static final int DEFAULT_MINOR_PRIORITY = 3;
-    
+
     /**
      * Event Table
      */
@@ -285,7 +286,7 @@ public final class CbusConstants {
     public static final int CBUS_SS_14 = 1;
     public static final int CBUS_SS_28_INTERLEAVE = 2;
     public static final int CBUS_SS_28 = 3;
-    
+
     /**
      * Number of slots supported by the command station
      */

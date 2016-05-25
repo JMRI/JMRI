@@ -33,6 +33,11 @@
 This is a list of Frequently Asked Questions for CVS, particularly regarding how
 we use it with JMRI.
 
+<p>
+<em>Note: JMRI code is not maintained in CVS any more.  
+To get the current code, please see the pages on the 
+<a href="getgitcode.shtml">accessing the code via the Git repository</em>.
+
 <P>
 See also the 
 <A HREF="index.shtml">Technical index</a>
@@ -68,9 +73,6 @@ If you're using a GUI-based client like WinCVS, pull down the "admin"
 menu and select "command line" to get a place to type these commands.
 On other computers, you can type them directly on the command line.
 
-<P>
-For more information, see the page on 
-<A HREF="getcode.shtml">getting your own copy of the source code</a>.
 
 <A name="update">
 <h3>How can I bring my copy of the JMRI code up to date?</h3></a>

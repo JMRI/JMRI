@@ -195,11 +195,7 @@ div#frame_image_wrapper:hover {
 /*body*/
 #mainContent {
 	background: #fff;
-	line-height: 1.2; /* value other than 'normal' needed for WinIE */
-	/*	margin-left: 206px;  */
 	padding: 20px 30px;
-	voice-family: "\"}\"";
-	voice-family: inherit; /* Tantek's hack */
 }
 
 /* navigation */

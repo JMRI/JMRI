@@ -10,9 +10,9 @@ import javax.swing.ListModel;
  *
  * @author rhwood
  */
-public interface EditableListModel extends ListModel {
+public interface EditableListModel<E> extends ListModel<E> {
 
     public boolean isCellEditable(int index);
 
-    public void setValueAt(Object value, int index);
+    public void setValueAt(E value, int index);
 }

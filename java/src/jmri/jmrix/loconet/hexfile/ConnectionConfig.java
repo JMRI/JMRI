@@ -1,23 +1,23 @@
 // ConnectionConfig.java
-
 package jmri.jmrix.loconet.hexfile;
 
 /**
- * Definition of objects to handle configuring a layout connection
- * via a LocoNet hexfile emulator
+ * Definition of objects to handle configuring a layout connection via a LocoNet
+ * hexfile emulator
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @version	$Revision$
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
+
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
@@ -25,18 +25,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
         super();
     }
 
-    public String name() { return "LocoNet Simulator"; }
+    public String name() {
+        return "LocoNet Simulator";
+    }
 
     protected void setInstance() {
-        if (adapter == null){
+        if (adapter == null) {
             adapter = new LnHexFilePort();
         }
     }
-    
-    public void dispose() {
-        if (adapter != null)
-            adapter.dispose();
-        super.dispose();
-    }
 }
-

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: Suzie _Tall $) 2013 -->
+<!-- $Id: index.shtml 18924 2011-10-20 16:51:30Z ken_c $ -->
+<title>JMRI: LMS Mirfield speed signals</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: LMS New Lines and Mirfield speed signals 1932-1988
+</h1>
+
+This signal system contains signalling definitions for the LMS speed signalling systems installed at Mirfield in Yorkshire and on the 'New Lines' in London, England in 1932 and later modified in 1937 and 1959 before being replaced with conventional signalling in 1959 (Bow-Upminster), 1970 (Mirfield) and 1988 (Camden-Watford).
+<p>
+The 1937 change involved extinguishing the lower red 'marker' lamp when the signal was not showing stop implementing 1933 ministry of transport recommendations to standardise signalling and the 1959 change removed the yellow over green advance caution aspect changing it to an additional yellow over yellow bringing the aspects in to line with the rest of BR.
+<p>
+Some extra aspect definitions have been provided for the signals that were not provided on the prototype but might have been needed had the Mirfield system been extended or more widely adopted. 
+<p>
+References can be seen at <a href="http://www.signalbox.org/signals/lmsspeed.htm">LMS Mirfield Speed Signalling</a> and 
+<a href="http://www.davros.org/rail/signalling/lmsr/newlines.html">LMS New Lines Signalling</a>
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions 1932-:
+<ul>
+<li><a href="appearance-New.xml">3-aspect Stop signal</a>
+<li><a href="appearance-Repeater.xml">3-aspect repeater signal</a>
+<li><a href="appearance-Stop.xml">5-aspect Stop signal</a>
+<li><a href="appearance-Junction.xml">5-aspect Junction signal</a>
+<li><a href="appearance-Split-Junction.xml">3-aspect Splitting junction signal</a>
+<li><a href="appearance-Split-Distant.xml">5-aspect Splitting distant signal</a>
+</ul>
+Signal Mast definitions 1937-:
+<ul>
+<li><a href="appearance-New-1937.xml">3-aspect Stop signal</a>
+<li><a href="appearance-Repeater-1937.xml">3-aspect repeater signal</a>
+<li><a href="appearance-Stop-1937.xml">5-aspect Stop signal</a>
+<li><a href="appearance-Split-Junction-1937.xml">3-aspect Splitting junction signal</a>
+</ul>
+Signal Mast definitions 1959-:
+<ul>
+<li><a href="appearance-Stop-1959.xml">4-aspect Stop signal</a>
+<li><a href="appearance-Junction-1959.xml">4-aspect Junction signal</a>
+<li><a href="appearance-Split-Distant-1959.xml">4-aspect Splitting distant signal</a>
+</ul>
+
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

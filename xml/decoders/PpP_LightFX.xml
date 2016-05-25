@@ -1,6 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- $Id: PpP_LightFX.xml 19243 2012-11-29 23:10:10Z fmco $ -->
+<!-- $Id$ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="http://www.ppp-digital.es" version="1" lastUpdated="20121212"/>
   <decoder>
@@ -9,118 +9,149 @@
     </family>
     <programming direct="yes" paged="yes" register="no" ops="yes"/>
     <variables>
-      <variable label="Address" CV="1" mask="XXVVVVVV" default="1" comment="Decoder address">
+      <variable item="Address" CV="1" mask="XXVVVVVV" default="1" comment="Decoder address">
         <decVal min="0" max="63"/>
+        <label>Address</label>
       </variable>
-      <variable label="Decoder Version" CV="7" readOnly="yes" default="10">
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="10">
         <decVal min="0" max="255"/>
+        <label>Decoder Version</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer" CV="8" readOnly="yes" default="74">
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="74">
         <decVal min="0" max="255"/>
+        <label>Manufacturer</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="High Address" CV="9" mask="XXXXXVVV" default="0" comment="Decoder address high part">
+      <variable item="High Address" CV="9" mask="XXXXXVVV" default="0" comment="Decoder address high part">
         <decVal min="0" max="7"/>
+        <label>High Address</label>
       </variable>
-      <variable label="Turnout Address of Output 1 (1-2033)" CV="1" mask="XXVVVVVV" default="1" item="Short Address" tooltip="Range 1-2033">
+      <variable CV="1" mask="XXVVVVVV" default="1" item="Short Address" tooltip="Range 1-2033">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3"/>
+        <label>Turnout Address of Output 1 (1-2033)</label>
       </variable>
-      <variable label="Decoder Address (1-509)" CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-509" item="Long Address">
+      <variable CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-509" item="Long Address">
         <splitVal highCV="9" upperMask="XXXXXVVV"/>
+        <label>Decoder Address (1-509)</label>
       </variable>
-      <variable label="Extended Address" CV="17" default="9999" comment="4 digit address (Range 0-9999)">
+      <variable item="Extended Address" CV="17" default="9999" comment="Long address (Range 0-9999)">
         <longAddressVal/>
+        <label>Extended Address</label>
       </variable>
-      <variable label="Extended Address PoM (0-9999)" CV="17" default="9999" comment="4 digit address (Range 100-9999)" item="PoM address">
+      <variable CV="17" default="9999" comment="Long address (Range 100-9999)" item="PoM address">
         <longAddressVal/>
+        <label>Extended Address PoM (0-9999)</label>
       </variable>
-      <variable label="Configuration" CV="29" readOnly="yes" default="128">
+      <variable item="Configuration" CV="29" readOnly="yes" default="128">
         <decVal min="0" max="255"/>
+        <label>Configuration</label>
       </variable>
-      <variable label="Group 1-6. Output 1" CV="33" mask="XXXXXXXV" default="0" item="pCV33_1">
+      <variable CV="33" mask="XXXXXXXV" default="0" item="pCV33_1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 1-6. Output 1</label>
       </variable>
-      <variable label="Group 1-6. Output 2" CV="33" mask="XXXXXXVX" default="0" item="pCV33_2">
+      <variable CV="33" mask="XXXXXXVX" default="0" item="pCV33_2">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 1-6. Output 2</label>
       </variable>
-      <variable label="Group 1-6. Output 3" CV="33" mask="XXXXXVXX" default="0" item="pCV33_3">
+      <variable CV="33" mask="XXXXXVXX" default="0" item="pCV33_3">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 1-6. Output 3</label>
       </variable>
-      <variable label="Group 1-6. Output 4" CV="33" mask="XXXXVXXX" default="0" item="pCV33_4">
+      <variable CV="33" mask="XXXXVXXX" default="0" item="pCV33_4">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 1-6. Output 4</label>
       </variable>
-      <variable label="Group 1-6. Output 5" CV="33" mask="XXXVXXXX" default="0" item="pCV33_5">
+      <variable CV="33" mask="XXXVXXXX" default="0" item="pCV33_5">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 1-6. Output 5</label>
       </variable>
-      <variable label="Group 1-6. Output 6" CV="33" mask="XXVXXXXX" default="0" item="pCV33_6">
+      <variable CV="33" mask="XXVXXXXX" default="0" item="pCV33_6">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 1-6. Output 6</label>
       </variable>
-      <variable label="Group 7-12. Output 7" CV="34" mask="XXXXXXXV" default="0" item="pCV34_1">
+      <variable CV="34" mask="XXXXXXXV" default="0" item="pCV34_1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 7-12. Output 7</label>
       </variable>
-      <variable label="Group 7-12. Output 8" CV="34" mask="XXXXXXVX" default="0" item="pCV34_2">
+      <variable CV="34" mask="XXXXXXVX" default="0" item="pCV34_2">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 7-12. Output 8</label>
       </variable>
-      <variable label="Group 7-12. Output 9" CV="34" mask="XXXXXVXX" default="0" item="pCV34_3">
+      <variable CV="34" mask="XXXXXVXX" default="0" item="pCV34_3">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 7-12. Output 9</label>
       </variable>
-      <variable label="Group 7-12. Output 10" CV="34" mask="XXXXVXXX" default="0" item="pCV34_4">
+      <variable CV="34" mask="XXXXVXXX" default="0" item="pCV34_4">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 7-12. Output 10</label>
       </variable>
-      <variable label="Group 7-12. Output 11" CV="34" mask="XXXVXXXX" default="0" item="pCV34_5">
+      <variable CV="34" mask="XXXVXXXX" default="0" item="pCV34_5">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 7-12. Output 11</label>
       </variable>
-      <variable label="Group 7-12. Output 12" CV="34" mask="XXVXXXXX" default="0" item="pCV34_6">
+      <variable CV="34" mask="XXVXXXXX" default="0" item="pCV34_6">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Group 7-12. Output 12</label>
       </variable>
-      <variable label="Flash A (period in 8ms)" CV="35" item="pCV35" default="32" comment="Flash A">
+      <variable CV="35" item="pCV35" default="32" comment="Flash A">
         <decVal min="0" max="255"/>
+        <label>Flash A (period in 8ms)</label>
       </variable>
-      <variable label="Flash B (period in 128ms)" CV="36" item="pCV36" default="8" comment="Flash B">
+      <variable CV="36" item="pCV36" default="8" comment="Flash B">
         <decVal min="0" max="255"/>
+        <label>Flash B (period in 128ms)</label>
       </variable>
-      <variable label="Semaphore time (period in 128ms)" CV="37" item="pCV37" default="117" comment="Semaphore time">
+      <variable CV="37" item="pCV37" default="117" comment="Semaphore time">
         <decVal min="0" max="255"/>
+        <label>Semaphore time (period in 128ms)</label>
       </variable>
-      <variable label="Automatic sequence duration. Day (in minutes x 2)" CV="38" item="pCV38" default="30" comment="Automatic sequence duration">
+      <variable CV="38" item="pCV38" default="30" comment="Automatic sequence duration">
         <decVal min="0" max="255"/>
+        <label>Automatic sequence duration. Day (in minutes x 2)</label>
       </variable>
-      <variable label="Output 1: Effect " CV="41" item="pCV41" default="0" comment="Output 1: Effect ">
+      <variable CV="41" item="pCV41" default="0" comment="Output 1: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -165,8 +196,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 1: Effect </label>
       </variable>
-      <variable label="Output 2: Effect " CV="42" item="pCV42" default="0" comment="Output 2: Effect ">
+      <variable CV="42" item="pCV42" default="0" comment="Output 2: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -211,8 +243,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 2: Effect </label>
       </variable>
-      <variable label="Output 3: Effect " CV="43" item="pCV43" default="0" comment="Output 3: Effect ">
+      <variable CV="43" item="pCV43" default="0" comment="Output 3: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -257,8 +290,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 3: Effect </label>
       </variable>
-      <variable label="Output 4: Effect " CV="44" item="pCV44" default="0" comment="Output 4: Effect ">
+      <variable CV="44" item="pCV44" default="0" comment="Output 4: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -303,8 +337,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 4: Effect </label>
       </variable>
-      <variable label="Output 5: Effect " CV="45" item="pCV45" default="0" comment="Output 5: Effect ">
+      <variable CV="45" item="pCV45" default="0" comment="Output 5: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -349,8 +384,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 5: Effect </label>
       </variable>
-      <variable label="Output 6: Effect " CV="46" item="pCV46" default="0" comment="Output 6: Effect ">
+      <variable CV="46" item="pCV46" default="0" comment="Output 6: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -395,8 +431,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 6: Effect </label>
       </variable>
-      <variable label="Output 7: Effect " CV="47" item="pCV47" default="0" comment="Output 7: Effect ">
+      <variable CV="47" item="pCV47" default="0" comment="Output 7: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -441,8 +478,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 7: Effect </label>
       </variable>
-      <variable label="Output 8: Effect " CV="48" item="pCV48" default="0" comment="Output 8: Effect ">
+      <variable CV="48" item="pCV48" default="0" comment="Output 8: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -487,8 +525,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 8: Effect </label>
       </variable>
-      <variable label="Output 9: Effect " CV="49" item="pCV49" default="0" comment="Output 9: Effect ">
+      <variable CV="49" item="pCV49" default="0" comment="Output 9: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -533,8 +572,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 9: Effect </label>
       </variable>
-      <variable label="Output 10: Effect " CV="50" item="pCV50" default="0" comment="Output 10: Effect ">
+      <variable CV="50" item="pCV50" default="0" comment="Output 10: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -579,8 +619,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 10: Effect </label>
       </variable>
-      <variable label="Output 11: Effect " CV="51" item="pCV51" default="0" comment="Output 11: Effect ">
+      <variable CV="51" item="pCV51" default="0" comment="Output 11: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -625,8 +666,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 11: Effect </label>
       </variable>
-      <variable label="Output 12: Effect " CV="52" item="pCV52" default="0" comment="Output 12: Effect ">
+      <variable CV="52" item="pCV52" default="0" comment="Output 12: Effect ">
         <enumVal>
           <enumChoice choice="0 - Incandescent"/>
           <enumChoice choice="1 - Fire"/>
@@ -671,8 +713,9 @@
           <enumChoice choice="40 - SemaphPed2Green"/>
           <enumChoice choice="41 - Fusee"/>
         </enumVal>
+        <label>Output 12: Effect </label>
       </variable>
-      <variable label="Sequence " CV="61" item="pCV61s" mask="XXXXVVVV">
+      <variable CV="61" item="pCV61s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -691,8 +734,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="61" item="pCV61d" mask="VVVVXXXX">
+      <variable CV="61" item="pCV61d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -712,8 +756,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="62" item="pCV62s" mask="XXXXVVVV">
+      <variable CV="62" item="pCV62s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -732,8 +777,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="62" item="pCV62d" mask="VVVVXXXX">
+      <variable CV="62" item="pCV62d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -753,8 +799,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="63" item="pCV63s" mask="XXXXVVVV">
+      <variable CV="63" item="pCV63s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -773,8 +820,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="63" item="pCV63d" mask="VVVVXXXX">
+      <variable CV="63" item="pCV63d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -794,8 +842,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="64" item="pCV64s" mask="XXXXVVVV">
+      <variable CV="64" item="pCV64s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -814,8 +863,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="64" item="pCV64d" mask="VVVVXXXX">
+      <variable CV="64" item="pCV64d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -835,8 +885,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="65" item="pCV65s" mask="XXXXVVVV">
+      <variable CV="65" item="pCV65s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -855,8 +906,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="65" item="pCV65d" mask="VVVVXXXX">
+      <variable CV="65" item="pCV65d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -876,8 +928,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="66" item="pCV66s" mask="XXXXVVVV">
+      <variable CV="66" item="pCV66s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -896,8 +949,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="66" item="pCV66d" mask="VVVVXXXX">
+      <variable CV="66" item="pCV66d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -917,8 +971,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="67" item="pCV67s" mask="XXXXVVVV">
+      <variable CV="67" item="pCV67s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -937,8 +992,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="67" item="pCV67d" mask="VVVVXXXX">
+      <variable CV="67" item="pCV67d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -958,8 +1014,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="68" item="pCV68s" mask="XXXXVVVV">
+      <variable CV="68" item="pCV68s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -978,8 +1035,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="68" item="pCV68d" mask="VVVVXXXX">
+      <variable CV="68" item="pCV68d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -999,8 +1057,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="69" item="pCV69s" mask="XXXXVVVV">
+      <variable CV="69" item="pCV69s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -1019,8 +1078,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="69" item="pCV69d" mask="VVVVXXXX">
+      <variable CV="69" item="pCV69d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -1040,8 +1100,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="70" item="pCV70s" mask="XXXXVVVV">
+      <variable CV="70" item="pCV70s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -1060,8 +1121,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="70" item="pCV70d" mask="VVVVXXXX">
+      <variable CV="70" item="pCV70d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -1081,8 +1143,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="71" item="pCV71s" mask="XXXXVVVV">
+      <variable CV="71" item="pCV71s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -1101,8 +1164,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="71" item="pCV71d" mask="VVVVXXXX">
+      <variable CV="71" item="pCV71d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -1122,8 +1186,9 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
-      <variable label="Sequence " CV="72" item="pCV72s" mask="XXXXVVVV">
+      <variable CV="72" item="pCV72s" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Manual"/>
           <enumChoice choice="Sequence 1"/>
@@ -1142,8 +1207,9 @@
           <enumChoice choice="Sequence 14"/>
           <enumChoice choice="Sequence 15"/>
         </enumVal>
+        <label>Sequence </label>
       </variable>
-      <variable label="Delay " CV="72" item="pCV72d" mask="VVVVXXXX">
+      <variable CV="72" item="pCV72d" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="None"/>
           <enumChoice choice="5 scale minutes "/>
@@ -1163,29 +1229,46 @@
           <enumChoice choice="75 scale minutes "/>
           <enumChoice choice="80 scale minutes "/>
         </enumVal>
+        <label>Delay </label>
       </variable>
     </variables>
   </decoder>
-  <pane name="PpP">
+  <pane>
     <column>
-      <label label="Address"/>
+      <label>
+        <text>Address</text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Long Address" label="Decoder Address (1-509)"/>
       <display item="Short Address" label="Output 1, address in blocks of 4 (1-2033)"/>
       <display item="PoM address" label="Loco address for PoM (100-9999) "/>
-      <label label=" "/>
-      <label label="Time"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Time</text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="pCV35"/>
       <display item="pCV36"/>
       <display item="pCV37"/>
       <display item="pCV38"/>
-      <label label=" "/>
-      <label label="Group 1-6."/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Group 1-6.</text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="pCV33_1" format="checkbox" label="1"/>
@@ -1206,10 +1289,16 @@
           <display item="pCV33_6" format="checkbox" label="6"/>
         </column>
       </row>
-      <label label=" "/>
-      <label label="Group 7-12."/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Group 7-12.</text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="pCV34_1" format="checkbox" label="7"/>
@@ -1233,27 +1322,39 @@
     </column>
     <name>PpP Panel</name>
   </pane>
-  <pane name="PpP Effects">
+  <pane>
     <column>
       <row>
         <column>
-          <label label="                            "/>
+          <label>
+            <text>                            </text>
+          </label>
         </column>
         <column>
-          <label label="Effect                      "/>
+          <label>
+            <text>Effect                      </text>
+          </label>
         </column>
         <column>
-          <label label="Sequence                    "/>
+          <label>
+            <text>Sequence                    </text>
+          </label>
         </column>
         <column>
-          <label label="Delay                       "/>
+          <label>
+            <text>Delay                       </text>
+          </label>
         </column>
       </row>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
-          <label label="Output 1 "/>
+          <label>
+            <text>Output 1 </text>
+          </label>
         </column>
         <column>
           <display item="pCV41" label=" "/>
@@ -1267,7 +1368,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 2 "/>
+          <label>
+            <text>Output 2 </text>
+          </label>
         </column>
         <column>
           <display item="pCV42" label=" "/>
@@ -1281,7 +1384,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 3 "/>
+          <label>
+            <text>Output 3 </text>
+          </label>
         </column>
         <column>
           <display item="pCV43" label=" "/>
@@ -1295,7 +1400,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 4 "/>
+          <label>
+            <text>Output 4 </text>
+          </label>
         </column>
         <column>
           <display item="pCV44" label=" "/>
@@ -1309,7 +1416,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 5 "/>
+          <label>
+            <text>Output 5 </text>
+          </label>
         </column>
         <column>
           <display item="pCV45" label=" "/>
@@ -1323,7 +1432,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 6 "/>
+          <label>
+            <text>Output 6 </text>
+          </label>
         </column>
         <column>
           <display item="pCV46" label=" "/>
@@ -1337,7 +1448,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 7 "/>
+          <label>
+            <text>Output 7 </text>
+          </label>
         </column>
         <column>
           <display item="pCV47" label=" "/>
@@ -1351,7 +1464,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 8 "/>
+          <label>
+            <text>Output 8 </text>
+          </label>
         </column>
         <column>
           <display item="pCV48" label=" "/>
@@ -1365,7 +1480,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 9 "/>
+          <label>
+            <text>Output 9 </text>
+          </label>
         </column>
         <column>
           <display item="pCV49" label=" "/>
@@ -1379,7 +1496,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 10"/>
+          <label>
+            <text>Output 10</text>
+          </label>
         </column>
         <column>
           <display item="pCV50" label=" "/>
@@ -1393,7 +1512,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 11"/>
+          <label>
+            <text>Output 11</text>
+          </label>
         </column>
         <column>
           <display item="pCV51" label=" "/>
@@ -1407,7 +1528,9 @@
       </row>
       <row>
         <column>
-          <label label="Output 12"/>
+          <label>
+            <text>Output 12</text>
+          </label>
         </column>
         <column>
           <display item="pCV52" label=" "/>

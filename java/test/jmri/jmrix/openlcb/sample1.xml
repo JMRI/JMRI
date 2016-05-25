@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="XSLT/decoder.xsl"?>
+<cdi>
+
+    <identification>
+        <manufacturer>Spacely Sprockets</manufacturer>
+        <model>Model 123 Uniblab</model>
+        <hardwareVersion>EC 415</hardwareVersion>
+        <softwareVersion>1.2.3.4</softwareVersion>
+        <map>
+            <relation>
+                <property>Size</property>
+                <value>8 cm by 12 cm</value>
+            </relation>
+        </map>
+    </identification>
+
+    <segment origin="0" space="0">
+        <group offset="0" replication="2">
+            <name>Produced Events</name>
+            <description>The EventIDs for the producers</description>
+            <eventid/>
+            <eventid/>
+        </group>
+        <group replication="2">
+            <name>Consumed Events</name>
+            <description>The EventIDs for the consumers</description>
+            <eventid/>
+            <eventid/>
+        </group>
+        <bit>
+            <name>Sample bit variable</name>
+            <description>Doesn't do anything</description>
+        </bit>
+        <int size="2">
+            <name>Sample integer variable</name>
+            <description>Doesn't do anything</description>
+            <min>1</min>
+            <max>999</max>
+            <default>12</default>
+        </int>
+    </segment>
+
+    <segment origin="128" space="1">
+        <int size="1">
+            <name>Reset</name>
+            <description>Controls reloading and clearing node memory. Board must be restarted for this to take effect.</description>
+            <map>
+                <relation>
+                    <property>85</property>
+                    <value>(No reset)</value>
+                </relation>
+                <relation>
+                    <property>0</property>
+                    <value>Reset all to defaults</value>
+                </relation>
+                <relation>
+                    <property>170</property>
+                    <value>Reset just EventIDs to defaults</value>
+                </relation>
+            </map>
+        </int>
+    </segment>
+
+</cdi>

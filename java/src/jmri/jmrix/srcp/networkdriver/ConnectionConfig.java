@@ -1,23 +1,23 @@
 // ConnectionConfig.java
-
 package jmri.jmrix.srcp.networkdriver;
 
 /**
- * Definition of objects to handle configuring an EasyDCC layout connection
- * via a NetworkDriverAdapter object.
+ * Definition of objects to handle configuring an EasyDCC layout connection via
+ * a NetworkDriverAdapter object.
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @version	$Revision$
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
     }
+
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
@@ -25,14 +25,19 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
         super();
     }
 
-    public String name() { return "Network Connection"; }
-
-    protected void setInstance() {
-        adapter = NetworkDriverAdapter.instance();
-        adapter.setPort(12345);
+    public String name() {
+        return "SRCP Network Connection";
     }
 
-    public boolean isPortAdvanced() {return false;}
-    
-}
+    protected void setInstance() {
+        if (adapter == null) {
+            adapter = new NetworkDriverAdapter();
+            adapter.setPort(4303); // 4303 is assigned to SRCP by IANA
+        }
+    }
 
+    public boolean isPortAdvanced() {
+        return false;
+    }
+
+}

@@ -1,22 +1,26 @@
 // LnLight.java
-
 package jmri.jmrix.loconet;
 
+import jmri.implementation.AbstractLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.implementation.AbstractLight;
 
 /**
  * LnLight.java
  *
  * Implementation of the Light Object for Loconet
  * <P>
- *  Based in part on SerialLight.java
+ * Based in part on SerialLight.java
  *
- * @author      Dave Duchamp Copyright (C) 2006
- * @version     $Revision$
+ * @author Dave Duchamp Copyright (C) 2006
+ * @version $Revision$
  */
 public class LnLight extends AbstractLight {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2993413165048057836L;
 
     /**
      * Create a Light object, with only system name.
@@ -30,6 +34,7 @@ public class LnLight extends AbstractLight {
         // Initialize the Light
         initializeLight(systemName);
     }
+
     /**
      * Create a Light object, with both system and user names.
      * <P>
@@ -41,47 +46,45 @@ public class LnLight extends AbstractLight {
         this.mgr = mgr;
         initializeLight(systemName);
     }
-        
+
     LnTrafficController tc;
     LnLightManager mgr;
-    
+
     private void initializeLight(String systemName) {
         // Extract the Bit from the name
         mBit = mgr.getBitFromSystemName(systemName);
         // Set initial state
-        setState( OFF );
+        setState(OFF);
     }
 
     int mBit = 0;                // address bit
 
     /**
-     *  Set the current state of this Light
-     *     This routine requests the hardware to change.
+     * Set the current state of this Light This routine requests the hardware to
+     * change.
      */
-	protected void doNewState(int oldState, int newState) {
-		LocoNetMessage l = new LocoNetMessage(4);
-		l.setOpCode(LnConstants.OPC_SW_REQ);
-		// compute address fields
-		int hiadr = (mBit-1)/128;
-		int loadr = (mBit-1)-hiadr*128;
-		// set bits for ON/OFF
-		if (newState==ON) {
-			hiadr |= 0x30;
-		}
-		else if (newState==OFF) {
-			hiadr |= 0x10;
-		}
-		else {
-			log.warn("illegal state requested for Light: "+getSystemName());
-			hiadr |= 0x10;
+    protected void doNewState(int oldState, int newState) {
+        LocoNetMessage l = new LocoNetMessage(4);
+        l.setOpCode(LnConstants.OPC_SW_REQ);
+        // compute address fields
+        int hiadr = (mBit - 1) / 128;
+        int loadr = (mBit - 1) - hiadr * 128;
+        // set bits for ON/OFF
+        if (newState == ON) {
+            hiadr |= 0x30;
+        } else if (newState == OFF) {
+            hiadr |= 0x10;
+        } else {
+            log.warn("illegal state requested for Light: " + getSystemName());
+            hiadr |= 0x10;
         }
-		// store and send
-		l.setElement(1,loadr);
-		l.setElement(2,hiadr);
-		tc.sendLocoNetMessage(l);
+        // store and send
+        l.setElement(1, loadr);
+        l.setElement(2, hiadr);
+        tc.sendLocoNetMessage(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(LnLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnLight.class.getName());
 }
 
 /* @(#)LnLight.java */

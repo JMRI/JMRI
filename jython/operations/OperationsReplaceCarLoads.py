@@ -99,9 +99,8 @@ class loadCars(jmri.jmrit.automat.AbstractAutomaton):
     # index through new car loads
     i = 0
     
-    for carId in carList:
+    for car in carList:
       if (self.number > 0):
-        car = cm.getById(carId)
         if (car.getTypeName() == self.carTypeName):
           if (car.getLocationName() == self.locationName):
             for replaceLoadName in self.carReplaceLoads:

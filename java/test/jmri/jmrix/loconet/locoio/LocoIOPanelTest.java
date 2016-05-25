@@ -1,11 +1,8 @@
-// LocoIOPanelTest.java
-
 package jmri.jmrix.loconet.locoio;
 
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -13,15 +10,15 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
- * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2002
  */
 public class LocoIOPanelTest extends TestCase {
 
     public void testFrameCreate() {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         new LocoIOPanel();
-        Assert.assertNotNull("exists", lnis );
+        Assert.assertNotNull("exists", lnis);
     }
 
     public void testReadAll() {
@@ -32,7 +29,7 @@ public class LocoIOPanelTest extends TestCase {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
         f.initComponents(memo);
-        
+
         // click button
         f.readAllButton.doClick();
 
@@ -80,13 +77,15 @@ public class LocoIOPanelTest extends TestCase {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
         // skip the warning dialog box
-        LocoIOPanel f = new LocoIOPanel(){
-            protected int cautionAddrSet() { return 1;}
+        LocoIOPanel f = new LocoIOPanel() {
+            protected int cautionAddrSet() {
+                return 1;
+            }
         };
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
         f.initComponents(memo);
-        
+
         f.addrField.setText("0134");
 
         // click button
@@ -104,7 +103,6 @@ public class LocoIOPanelTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public LocoIOPanelTest(String s) {
         super(s);
     }
@@ -122,7 +120,12 @@ public class LocoIOPanelTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

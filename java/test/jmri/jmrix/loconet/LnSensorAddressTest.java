@@ -1,17 +1,16 @@
-// LnSensorAddressTest.java
-
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
+ *
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision$
  */
 public class LnSensorAddressTest extends TestCase {
 
@@ -20,22 +19,23 @@ public class LnSensorAddressTest extends TestCase {
         LnSensorAddress a2 = new LnSensorAddress("LS001A", "L");
         LnSensorAddress a3 = new LnSensorAddress("LS001C3", "L");
         LnSensorAddress a4 = new LnSensorAddress(0x15, 0x60, "L"); // LS043
-        Assert.assertNotNull("exists", a1 );
-        Assert.assertNotNull("exists", a2 );
-        Assert.assertNotNull("exists", a3 );
-        Assert.assertNotNull("exists", a4 );
+        Assert.assertNotNull("exists", a1);
+        Assert.assertNotNull("exists", a2);
+        Assert.assertNotNull("exists", a3);
+        Assert.assertNotNull("exists", a4);
     }
 
     public void testLnSensorInvalid() {
         LnSensorAddress a;
-        a = new LnSensorAddress("foo", "L"){
-            void reportParseError(String s) {}
+        a = new LnSensorAddress("foo", "L") {
+            void reportParseError(String s) {
+            }
         };
         assertTrue(!a.isValid());
     }
 
     public void testLnSensorAddressASmode() {
-    	LnSensorAddress a;
+        LnSensorAddress a;
 
         a = new LnSensorAddress("LS130A", "L");
         assertTrue(a.getLowBits() == 2);
@@ -60,7 +60,7 @@ public class LnSensorAddressTest extends TestCase {
         assertTrue(a.getASBit() == 0x00);
         assertTrue(a.isValid());
 
-        a = new LnSensorAddress("LS257D3","L");  // 0x101F
+        a = new LnSensorAddress("LS257D3", "L");  // 0x101F
         Assert.assertTrue(a.getLowBits() == 15);
         Assert.assertTrue(a.getHighBits() == 32);
         assertEquals("AS bit from LS257D3", 0x20, a.getASBit());
@@ -69,7 +69,7 @@ public class LnSensorAddressTest extends TestCase {
     }
 
     public void testLnSensorAddressBDL16Mode() {
-    	LnSensorAddress a;
+        LnSensorAddress a;
 
         a = new LnSensorAddress("LS131", "L");
         Assert.assertTrue(a.getLowBits() == 65);
@@ -86,11 +86,11 @@ public class LnSensorAddressTest extends TestCase {
     }
 
     public void testLnSensorAddressFromPacket() {
-    	LnSensorAddress a;
+        LnSensorAddress a;
 
         a = new LnSensorAddress(0x15, 0x60, "L"); // LS044
-        log.debug("0x15, 0x60 shows as "+a.getNumericAddress()+" "+
-                            a.getDS54Address()+" "+a.getBDL16Address());
+        log.debug("0x15, 0x60 shows as " + a.getNumericAddress() + " "
+                + a.getDS54Address() + " " + a.getBDL16Address());
         Assert.assertTrue(a.getNumericAddress().equals("LS44"));
         Assert.assertTrue(a.getDS54Address().equals("LS21A"));
         Assert.assertTrue(a.getBDL16Address().equals("LS2C3"));
@@ -98,15 +98,14 @@ public class LnSensorAddressTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public LnSensorAddressTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-    	String[] testCaseName = {LnSensorAddressTest.class.getName()};
-    	junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {LnSensorAddressTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -115,9 +114,15 @@ public class LnSensorAddressTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(LnSensorAddressTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensorAddressTest.class.getName());
+
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

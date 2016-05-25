@@ -1,85 +1,101 @@
-        <ienumVal>
-          <ienumChoice choice="Standard on off">
-            <choice>Standard on off</choice>
-            <choice xml:lang="it">Standard 0n-Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-            <choice xml:lang="it">Luce di testa regolabile</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-            <choice xml:lang="it">Luce di testa regolabile (sfumata in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-            <choice xml:lang="it">Fuoco Caldaia</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-            <choice xml:lang="it">Caldaia intelligente</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-            <choice xml:lang="it">Singolo Strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-            <choice xml:lang="it">Doppio Strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-            <choice xml:lang="it">Lampeggiante rotante</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-            <choice xml:lang="it">Luce Strato</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-            <choice xml:lang="it">Luce Ditch tipo 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-            <choice xml:lang="it">Luce Ditch tipo 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Oscillating headlight">
-            <choice>Oscillating headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light">
-            <choice>Flash light</choice>
-            <choice xml:lang="it">Luce a Flash</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-            <choice xml:lang="it">Luce Mars</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-            <choice xml:lang="it">Luce rotante Gyra</choice>
-          </ienumChoice>
-          <ienumChoice choice="End of train flasher">
-            <choice>End of train flasher</choice>
-            <choice xml:lang="it">lampeggiante Fine Treno (FRED)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flourescent light">
-            <choice>Flourescent light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Energy saving light">
-            <choice>Energy saving light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Sound controlled smoke unit" value="22">
-          </ienumChoice>
-          <ienumChoice choice="Fan control" value="23">
-          </ienumChoice>
-          <ienumChoice choice="Seuthe smoke unit" value="24">
-          </ienumChoice>
-          <ienumChoice choice="Trigger smoke chuff" value="25">
-          </ienumChoice>
-          <ienumChoice choice="Coupler function" value="28">
-            <choice>Coupler function</choice> <!-- not in LokSoundSelect? -->
-            <choice xml:lang="it">Funzione Gancio</choice>
-          </ienumChoice>
-          <ienumChoice choice="Roco coupler" value="29">
-          </ienumChoice>
-        </ienumVal>
+<?xml version="1.0" encoding="utf-8"?>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="(Disabled)">
+    <choice>Disabled</choice>
+    <choice xml:lang="it">Disabile</choice>
+  </enumChoice>
+  <enumChoice choice="Dimmable headlight">
+    <choice>Dimmable headlight</choice>
+    <choice xml:lang="it">Luce di testa regolabile</choice>
+  </enumChoice>
+  <enumChoice choice="Dimmable headlight (fade in/out)">
+    <choice>Dimmable headlight (fade in/out)</choice>
+    <choice xml:lang="it">Luce di testa regolabile (sfumata in/out)</choice>
+  </enumChoice>
+  <enumChoice choice="Fire box">
+    <choice>Fire box</choice>
+    <choice xml:lang="it">Fuoco Caldaia</choice>
+  </enumChoice>
+  <enumChoice choice="Intelligent fire box">
+    <choice>Intelligent fire box</choice>
+    <choice xml:lang="it">Caldaia intelligente</choice>
+  </enumChoice>
+  <enumChoice choice="Single strobe">
+    <choice>Single strobe</choice>
+    <choice xml:lang="it">Singolo Strobe</choice>
+  </enumChoice>
+  <enumChoice choice="Double strobe">
+    <choice>Double strobe</choice>
+    <choice xml:lang="it">Doppio Strobe</choice>
+  </enumChoice>
+  <enumChoice choice="Rotary beacon">
+    <choice>Rotary beacon</choice>
+    <choice xml:lang="it">Lampeggiante rotante</choice>
+  </enumChoice>
+  <enumChoice choice="Strato light">
+    <choice>Strato light</choice>
+    <choice xml:lang="it">Luce Strato</choice>
+  </enumChoice>
+  <enumChoice choice="Ditch light type 1">
+    <choice>Ditch light type 1</choice>
+    <choice xml:lang="it">Luce Ditch tipo 1</choice>
+  </enumChoice>
+  <enumChoice choice="Ditch light type 2">
+    <choice>Ditch light type 2</choice>
+    <choice xml:lang="it">Luce Ditch tipo 2</choice>
+  </enumChoice>
+  <enumChoice choice="Oscillating headlight">
+    <choice>Oscillating headlight</choice>
+    <choice xml:lang="it">Luce di testa Oscillante</choice>
+  </enumChoice>
+  <enumChoice choice="Flash light">
+    <choice>Flash light</choice>
+    <choice xml:lang="it">Luce a Flash</choice>
+  </enumChoice>
+  <enumChoice choice="Mars light">
+    <choice>Mars light</choice>
+    <choice xml:lang="it">Luce Mars</choice>
+  </enumChoice>
+  <enumChoice choice="Gyra light">
+    <choice>Gyra light</choice>
+    <choice xml:lang="it">Gyra light rotante</choice>
+  </enumChoice>
+  <enumChoice choice="End of train flasher">
+    <choice>End of train flasher</choice>
+    <choice xml:lang="it">Lampeggiante Fine Treno (FRED)</choice>
+  </enumChoice>
+  <enumChoice choice="Flourescent light">
+    <choice>Flourescent light</choice>
+    <choice xml:lang="it">Luce Fluorescente</choice>
+  </enumChoice>
+  <enumChoice choice="Energy saving light">
+    <choice>Energy saving light</choice>
+    <choice xml:lang="it">Luce a risparmio Energetico</choice>
+  </enumChoice>
+  <enumChoice choice="Single strobe random">
+    <choice>Single strobe random</choice>
+  </enumChoice>
+  <enumChoice choice="Sound controlled smoke unit" value="22">
+    <choice xml:lang="it">Gener.Fumo sonoro</choice>
+  </enumChoice>
+  <enumChoice choice="Fan control" value="23">
+    <choice xml:lang="it">Controllo Ventole</choice>
+  </enumChoice>
+  <enumChoice choice="Seuthe smoke unit" value="24">
+    <choice xml:lang="it">Gener.Fumo Seuthe</choice>
+  </enumChoice>
+  <enumChoice choice="Trigger smoke chuff" value="25">
+    <choice xml:lang="it">Chuff fumo Trigger</choice>
+  </enumChoice>
+  <enumChoice choice="Servo" value="27">
+    <choice xml:lang="it">Servo</choice>
+  </enumChoice>
+  <enumChoice choice="Coupler" value="28">
+    <choice xml:lang="it">Gancio</choice>
+    <choice>Coupler</choice>
+    <choice xml:lang="it">Gancio</choice>
+  </enumChoice>
+  <enumChoice choice="Roco coupler" value="29">
+    <choice xml:lang="it">Gancio Roco</choice>
+  </enumChoice>
+</enumVal>

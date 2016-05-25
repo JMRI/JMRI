@@ -64,9 +64,13 @@ In the rest of this page, we provide links to the various examples of those two 
         This uses Java RMI to provides access to the LocoNet message stream via the 
         <a href="http://loconetovertcp.sourceforge.net/">LbServer protocol</a>.
     </ul>
+<li>C/MRI
+    <ul>
+    <li>This exchanges the C/MRI poll/response protocol via a <a href="../../hardware/TerminalServer.shtml">terminal server<a/>
+    </ul>
 <li>EasyDCC
     <ul>
-    <li><a href="../../hardware/TerminalServer.shtml">Via terminal server<a/>
+    <li>This exchanges the EasyDCC ASCII command station protocol via a <a href="../../hardware/TerminalServer.shtml">terminal server<a/>
     </ul>
 <li>JMRIClient
     <ul>
@@ -74,7 +78,7 @@ In the rest of this page, we provide links to the various examples of those two 
     </ul>
 <li>NCE
     <ul>
-    <li><a href="../../hardware/TerminalServer.shtml">Via terminal server<a/>
+    <li>This exchanges the NCE command station protocol via a <a href="../../hardware/TerminalServer.shtml">terminal server<a/>
     </ul>
 <li>SRCP
     <ul>
@@ -88,6 +92,7 @@ In the rest of this page, we provide links to the various examples of those two 
     <ul>
     <li><a href="../../hardware/XPressNet/index.shtml">Via network connection to an XnTcp adapter<a/>
     <li><a href="../../hardware/XPressNet/index.shtml">Via network connection to the Lenz LIUSB Server (Windows only)<a/>
+    </ul>
 </ul>
 
 <h2>Upstream (networked JMRI operations) connections</h2>

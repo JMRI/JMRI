@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppStructure.shtml,v 1.2 2009/04/26 18:53:55 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-03-06-->
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233;  2013-09-03-->
  <html lang="fr">
 <head>
     <TITLE>
@@ -32,28 +32,28 @@
 
 <H1>JMRI: Structure de l'Application</H1>
 
-Le programme JmriDemo est juste un exemple, mais il est censé être un bon.
+Le programme JmriDemo est juste un exemple, mais il est cens&#233; &#234;tre un bon.
 <P>
 La source de la classe principale est actuellement dans apps/JmriDemo/JMRIdemo.java,
-qui définit la classe principale apps.JmriDemo.JMRIdemo.
+qui d&#233;finit la classe principale apps.JmriDemo.JMRIdemo.
 <P>
-La démo principale crée juste la barre de menus, et la remplit avec les menus
-et les éléments  désirés. Chaque élément a comme une classe objet "Action" qui lui est associée qui fera l'
-initialisation nécessaire en cas de besoin.
+La d&#233;mo principale cr&#233;e juste la barre de menus, et la remplit avec les menus
+et les &#233;l&#233;ments  d&#233;sir&#233;s. Chaque &#233;l&#233;ment a comme une classe objet "Action" qui lui est associ&#233;e qui fera l'
+initialisation n&#233;cessaire en cas de besoin.
 <P>
-Parce que nous nous attendons à avoir des interfaces différentes dans le paquet jmrix, les outils JMRI
-ne pas créent directement les objets d'interface dont ils ont besoin. Plutôt, ils demandent des exemples
-d'interfaces. Pour les interfaces dans le package jmri, qui pourraient être mises en œuvre par
-beaucoup de types de mise en page différentes, jmri.InstanceManager répond à ces demandes.
+Parce que nous nous attendons &#224; avoir des interfaces diff&#233;rentes dans le paquet jmrix, les outils JMRI
+ne cr&#233;ent pas directement les objets d'interface dont ils ont besoin. Plut&#244;t, ils demandent des exemples
+d'interfaces. Pour les interfaces dans le package jmri, qui pourraient &#234;tre mises en œuvre par
+beaucoup de types de r&#233;seau diff&#233;rents, jmri.InstanceManager r&#233;pond &#224; ces demandes.
 
 <P>
-Plus d'informations sur la façon dont les choses (par exemple des objets représentant les éléments sur le schéma)
-sont nommés
-<A HREF="Names.shtml"> sont disponibles sur une page séparée </a>.
+Plus d'informations sur la fa&#231;on dont les choses (par exemple des objets repr&#233;sentant les &#233;l&#233;ments sur le sch&#233;ma)
+sont nomm&#233;s
+<A HREF="Names.shtml"> sont disponibles sur une page s&#233;par&#233;e </a>.
 
 <p>
 Voir aussi la page sur
-<a href="IntroStructure.shtml"> Structure de la bibliothèque JMRI</a>.
+<a href="IntroStructure.shtml"> Structure de la biblioth&#232;que JMRI</a>.
 
 <!--#include virtual="/Footer" -->
 

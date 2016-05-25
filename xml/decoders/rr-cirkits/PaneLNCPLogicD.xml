@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,1152 +11,1297 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file includes for LNCP files -->
-
 <!-- Panes to show Logic -->
-
-     <pane name="Logic D">
-    <column>
-      <row>
-        <column>
-          <label label="Each 'Logic Block' contains one or more Conditionals. Each Conditional contains">
-          </label> 
-          <label label="one or two Variables and may perform a single action when 'True'.  Each Logic">
-          </label>
-          <label label="Block is evaluated top down from one Conditional to the next until a Conditional">
-          </label>
-          <label label="is evaluated as 'True', or an 'End Logic Block' is encountered. If 'True', then its">
-          </label>
-          <label label="'Action' is performed, and further evaluation of that block ceases.  Conditionals">
-          </label>
-          <label label="must be assigned in descending order from the most restrictive to the least">
-          </label>
-          <label label="restrictive aspect. Logic blocks are delineated by selecting the 'End Logic Block'">
-          </label>
-        </column>
-        <column>
-          <label label="       "/>
-        </column>
-        <column>
-          <label label="check box in the last Conditional of each block. For each Variable and Action">
-          </label>
-          <label label="entry you may select either a 'LN' (Serial - Closed/Thrown) OR a 'DCC' (A mast">
-          </label>
-          <label label="Address plus its Aspect) command. Any Variable with 'True' selected always">
-          </label>
-          <label label="evaluates as 'True'. All commands are entered as their actual Serial or DCC ">
-          </label>
-          <label label="address numbers. Eg. to send LT9 Closed enter 'Switch Request' '9' 'C'.">
-          </label>
-          <label label="   ">
-          </label>
-          <label label="Logic Blocks continue from this DecoderPro display 'Pane' to Logic E.">
-          </label>
-        </column>
-      </row>
-      <row> 
-        <column>
-          <label label="       "/>
-        </column>
-      </row>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Logic D</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>Each 'Logic Block' contains one or more Conditionals. Each Conditional contains</text>
+        </label>
+        <label>
+          <text>one or two Variables and may perform a single action when 'True'.  Each Logic</text>
+        </label>
+        <label>
+          <text>Block is evaluated top down from one Conditional to the next until a Conditional</text>
+        </label>
+        <label>
+          <text>is evaluated as 'True', or an 'End Logic Block' is encountered. If 'True', then its</text>
+        </label>
+        <label>
+          <text>'Action' is performed, and further evaluation of that block ceases.  Conditionals</text>
+        </label>
+        <label>
+          <text>must be assigned in descending order from the most restrictive to the least</text>
+        </label>
+        <label>
+          <text>restrictive aspect. Logic blocks are delineated by selecting the 'End Logic Block'</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>       </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>check box in the last Conditional of each block. For each Variable and Action</text>
+        </label>
+        <label>
+          <text>entry you may select either a 'LN' (Serial - Closed/Thrown) OR a 'DCC' (A mast</text>
+        </label>
+        <label>
+          <text>Address plus its Aspect) command. Any Variable with 'True' selected always</text>
+        </label>
+        <label>
+          <text>evaluates as 'True'. All commands are entered as their actual Serial or DCC </text>
+        </label>
+        <label>
+          <text>address numbers. Eg. to send LT9 Closed enter 'Switch Request' '9' 'C'.</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Logic Blocks continue from this DecoderPro display 'Pane' to Logic E.</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text>       </text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text>Conditional: 25 </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 25 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT25 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT25 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT25 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT25 Var1 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT25 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT25 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT25 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT25 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT25 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT25 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT25 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT25 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT25 Var2 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT25 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT25 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT25 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT25 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT25 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT25 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT25 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT25 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT25 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT25 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT25 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT25 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT25 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT25 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT25 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT25 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT25 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label>
+          <text>  V1:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT25 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT25 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT25 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT25 Var1 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT25 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT25 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT25 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT25 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <display item="LT25 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 26 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT26 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT26 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT26 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT26 Var1 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT26 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT26 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT26 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT26 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT26 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT26 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT26 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT26 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT26 Var2 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT26 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT26 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT26 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT26 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT26 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT26 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT26 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT26 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT26 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT26 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT26 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT26 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT26 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT26 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT26 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT26 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT26 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label>
+          <text> V2:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT25 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT25 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT25 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT25 Var2 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT25 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT25 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT25 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT25 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT25 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT25 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT25 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT25 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <label>
+          <text>     Action: </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-
-      <row>
-        <column>
-          <label label="Conditional: 27 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT27 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT27 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT27 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT27 Var1 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT27 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT27 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT27 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT27 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT27 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT27 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT27 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT27 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT27 Var2 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT27 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT27 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT27 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT27 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT27 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT27 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT27 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT27 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT27 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT27 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT27 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT27 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT27 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT27 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT27 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT27 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT27 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <display item="LT25 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT25 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT25 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT25 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT25 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT25 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT25 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT25 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT25 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text>Conditional: 26 </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <label>
+          <text>  V1:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT26 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT26 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT26 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT26 Var1 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT26 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT26 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT26 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT26 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 28 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT28 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT28 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT28 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT28 Var1 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT28 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT28 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT28 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT28 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT28 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT28 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT28 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT28 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT28 Var2 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT28 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT28 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT28 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT28 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT28 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT28 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT28 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT28 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT28 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT28 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT28 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT28 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT28 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT28 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT28 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT28 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT28 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <display item="LT26 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <label>
+          <text> V2:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT26 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT26 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT26 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT26 Var2 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT26 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT26 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT26 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT26 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT26 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT26 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT26 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT26 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 29 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT29 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT29 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT29 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT29 Var1 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT29 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT29 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT29 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT29 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT29 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT29 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT29 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT29 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT29 Var2 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT29 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT29 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT29 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT29 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT29 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT29 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT29 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT29 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT29 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT29 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT29 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT29 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT29 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT29 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT29 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT29 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT29 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label>
+          <text>     Action: </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <display item="LT26 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT26 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT26 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT26 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT26 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT26 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT26 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT26 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT26 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text>Conditional: 27 </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 30 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT30 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT30 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT30 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT30 Var1 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT30 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT30 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT30 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT30 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT30 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT30 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT30 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT30 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT30 Var2 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT30 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT30 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT30 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT30 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT30 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT30 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT30 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT30 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT30 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT30 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT30 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT30 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT30 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT30 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT30 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT30 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT30 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label>
+          <text>  V1:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT27 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT27 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT27 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT27 Var1 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT27 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT27 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT27 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT27 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <display item="LT27 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-
-      <row>
-        <column>
-          <label label="Conditional: 31 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT31 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT31 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT31 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT31 Var1 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT31 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT31 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT31 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT31 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT31 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT31 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT31 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT31 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT31 Var2 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT31 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT31 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT31 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT31 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT31 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT31 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT31 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT31 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT31 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT31 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT31 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT31 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT31 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT31 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT31 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT31 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT31 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <label>
+          <text> V2:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT27 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT27 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT27 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT27 Var2 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT27 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT27 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT27 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT27 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT27 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT27 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT27 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT27 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
       <separator/>
       <separator/>
-        <row>
-          <label label=" "/>
-        </row>
+      <column>
+        <label>
+          <text>     Action: </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-      <row>
-        <column>
-          <label label="Conditional: 32 "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="  V1:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT32 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT32 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT32 Var1 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT32 Var1 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT32 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT32 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT32 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-        <column>
-          <display item="LT32 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-        <column>
-          <label label="  "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT32 Function" tooltip="Select Logic Function" label=""/>
-        </column>
-        <column>
-          <label label=" "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label=" V2:"/>
-        </column>
-        <column>
-          <label label=""/>
-        </column>
-        <column>
-          <display item="LT32 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT32 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT32 Var2 Type" tooltip="Select Message Type" label=" Type"/>
-        </column>
-        <column>
-          <display item="LT32 Var2 Address" tooltip="Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT32 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT32 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
-        </column>
-        <column>
-          <display item="LT32 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
-        </column>
-
-        <column>
-          <display item="LT32 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="LT32 Opcode" tooltip="Action on change" label="When"/>
-        </column>
-        <column>
-          <display item="LT32 Interval" tooltip="Select time delay intervals" label="Delay"/>
-        </column>
-        <column>
-          <display item="LT32 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
-        </column>
-        <column>
-          <display item="LT32 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <label label="     Action: "/>
-        </column>
-        <separator/>
-        <separator/>
-        <column>
-          <display item="LT32 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
-        </column>
-        <column>
-          <display item="LT32 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
-        </column>
-        <column>
-          <display item="LT32 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
-        </column>
-        <column>
-          <display item="LT32 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
-        </column>
-        <column>
-          <display item="LT32 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
-        </column>
-        <column>
-          <display item="LT32 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
-        </column>
-        <column>
-          <display item="LT32 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
-        </column>
-        <column>
-          <display item="LT32 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
-        </column>
-        <column>
-          <display item="LT32 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
-        </column>
-      </row>
+      <column>
+        <display item="LT27 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT27 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT27 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT27 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT27 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT27 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT27 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT27 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT27 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text>Conditional: 28 </text>
+        </label>
+      </column>
       <separator/>
       <separator/>
-    </column>
-  </pane>
- 
- 	  	 
+      <column>
+        <label>
+          <text>  V1:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT28 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT28 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT28 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT28 Var1 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT28 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT28 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT28 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT28 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT28 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text> V2:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT28 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT28 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT28 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT28 Var2 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT28 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT28 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT28 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT28 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT28 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT28 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT28 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT28 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text>     Action: </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT28 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT28 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT28 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT28 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT28 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT28 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT28 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT28 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT28 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text>Conditional: 29 </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text>  V1:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT29 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT29 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT29 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT29 Var1 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT29 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT29 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT29 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT29 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT29 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text> V2:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT29 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT29 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT29 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT29 Var2 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT29 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT29 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT29 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT29 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT29 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT29 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT29 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT29 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text>     Action: </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT29 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT29 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT29 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT29 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT29 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT29 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT29 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT29 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT29 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text>Conditional: 30 </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text>  V1:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT30 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT30 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT30 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT30 Var1 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT30 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT30 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT30 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT30 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT30 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text> V2:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT30 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT30 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT30 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT30 Var2 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT30 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT30 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT30 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT30 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT30 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT30 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT30 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT30 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text>     Action: </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT30 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT30 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT30 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT30 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT30 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT30 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT30 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT30 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT30 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text>Conditional: 31 </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text>  V1:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT31 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT31 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT31 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT31 Var1 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT31 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT31 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT31 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT31 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT31 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text> V2:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT31 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT31 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT31 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT31 Var2 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT31 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT31 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT31 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT31 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT31 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT31 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT31 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT31 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text>     Action: </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT31 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT31 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT31 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT31 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT31 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT31 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT31 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT31 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT31 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text>Conditional: 32 </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text>  V1:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT32 Var1 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT32 Var1 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT32 Var1 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT32 Var1 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT32 Var1 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT32 Var1 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT32 Var1 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT32 Var1 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT32 Function" tooltip="Select Logic Function" label=""/>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text> V2:</text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text/>
+        </label>
+      </column>
+      <column>
+        <display item="LT32 Var2 Mode" format="offradiobutton" tooltip="Select message encoding format Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT32 Var2 Mode" format="onradiobutton" tooltip="Select message encoding format DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT32 Var2 Type" tooltip="Select Message Type" label=" Type"/>
+      </column>
+      <column>
+        <display item="LT32 Var2 Address" tooltip="Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT32 Var2 CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT32 Var2 Mast" tooltip="Enter mast number" label=" Mast Number"/>
+      </column>
+      <column>
+        <display item="LT32 Var2 Aspect" tooltip="Select desired aspect" label=" Indicated Aspect"/>
+      </column>
+      <column>
+        <display item="LT32 Var2 Evaluate" tooltip="Evaluate this Variable" label=""/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="LT32 Opcode" tooltip="Action on change" label="When"/>
+      </column>
+      <column>
+        <display item="LT32 Interval" tooltip="Select time delay intervals" label="Delay"/>
+      </column>
+      <column>
+        <display item="LT32 Multiplier" tooltip="Select time delay multiplier" label="Mult"/>
+      </column>
+      <column>
+        <display item="LT32 Re-trigger" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <label>
+          <text>     Action: </text>
+        </label>
+      </column>
+      <separator/>
+      <separator/>
+      <column>
+        <display item="LT32 Output Mode" format="offradiobutton" tooltip="Select message encoding format to Serial messages" label=""/>
+      </column>
+      <column>
+        <display item="LT32 Output Mode" format="onradiobutton" tooltip="Select message encoding format to DCC mast/aspect messages" label=""/>
+      </column>
+      <column>
+        <display item="LT32 Output Type" tooltip="Select Serial Message Type" label=" Send"/>
+      </column>
+      <column>
+        <display item="LT32 Output Address" tooltip="Enter Serial Address" label=" Addr"/>
+      </column>
+      <column>
+        <display item="LT32 Output CT" label=" C/T" tooltip="Input Command Closed/Thrown"/>
+      </column>
+      <column>
+        <display item="LT32 Output Mast" tooltip="Enter mast number" label="Mast Number"/>
+      </column>
+      <column>
+        <display item="LT32 Output Aspect" tooltip="Select desired aspect" label="Set Aspect"/>
+      </column>
+      <column>
+        <display item="LT32 Statement Enable" format="checkbox" tooltip="Enable this statement" label=" Enable"/>
+      </column>
+      <column>
+        <display item="LT32 Block End" format="checkbox" tooltip="End this logic block" label=" End Logic Block"/>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+  </column>
+</pane>

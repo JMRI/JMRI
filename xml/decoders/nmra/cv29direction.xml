@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: cv29direction.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -33,7 +33,7 @@
       <revremark>Added German</revremark>
     </revision>
     <revision>
-	  <revnumber>6</revnumber>
+      <revnumber>6</revnumber>
       <date>2012-12-26</date>
       <authorinitials>BJ</authorinitials>
       <revremark>Initial release as separate file</revremark>
@@ -45,10 +45,13 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Locomotive Direction" item="Locomotive Direction" CV="29" mask="XXXXXXXV">
+  <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV" tooltip="Sets the relative direction of the loco when told to move forward">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-    <label xml:lang="it">Direzione di Marcia Normale</label>
+    <label xml:lang="it">Direzione Normale di Marcia</label>
     <label xml:lang="fr">Sens normal de marche</label>
-	<label xml:lang="de">Fahrtrichtung Standard</label>
-  </variable>
+    <label xml:lang="de">Fahrtrichtung Standard</label>
+    <label>Locomotive Direction</label>
+    <tooltip>Sets the relative direction of the loco when told to move forward</tooltip>
+    <tooltip xml:lang="it">Stabilisce la direzione di marcia relativa quando la loco è in marcia avanti</tooltip>
+    </variable>
 </variables>

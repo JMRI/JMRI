@@ -32,17 +32,44 @@ October 1989 Burlington Northern Railroad Southern Region, Nebraska Division Tim
 Per Burlington Northern General Signal Instructions, Dwarf signals display the same aspects and indications as high signals.
 
 <p>
+Signal aspects can be referenced in the 1991 timetable here:-
+<p>
+<a href="http://www.fobnr.org/timetables/phase4/Galesburg/ttsi/GALESBURG-04-040791.pdf">Timetable 1991</a>.
+
+Note that the double head searchlight with Lunar is the only mast able to display all of the aspects.
+
+Not all of the possible masts have been defined but there is a varied selection here that should cover most requirements. Due to the nature of this being a simplified prototype system it is not easy to display all the possible variations of the same aspect on a mast and this should not be necessary. Where a mast can display different variations of an aspect (e.g. Diverging Clear) where possible the Restricted Proceed aspect is shown for the alternative diverging route.  
+
+<p>
 See the 
 <a href="aspects.xml">Aspects page</a>.
 
 <p>
 Signal Mast definitions:
 <ul>
-<li><a href="appearance-SL-1.xml">Single searchlight signal</a>
+<li><a href="appearance-SL-1N.xml">Single head searchlight signal</a>
 
-<li><a href="appearance-SL-2.xml">Double searchlight signal</a>
+<li><a href="appearance-SL-1L.xml">Single head searchlight signal with Lunar</a>
 
-<li><a href="appearance-SL-3.xml">Triple searchlight signal</a>
+<li><a href="appearance-SL-1R.xml">Single head searchlight permissive signal</a>
+
+<li><a href="appearance-SL-1S.xml">Single arm semaphore signal</a>
+
+<li><a href="appearance-SL-2N.xml">Double head searchlight signal</a>
+
+<li><a href="appearance-SL-2L.xml">Double head searchlight signal with Lunar</a>
+
+<li><a href="appearance-SL-2R.xml">Double head permissive searchlight signal</a>
+
+<li><a href="appearance-SL-2S.xml">Double arm semaphore signal</a>
+
+<li><a href="appearance-SL-3N.xml">Triple head searchlight signal</a>
+
+<li><a href="appearance-SL-3L1.xml">Triple head searchlight signal with central Lunar</a>
+
+<li><a href="appearance-SL-3L2.xml">Triple head searchlight signal with bottom Lunar</a>
+
+<li><a href="appearance-SL-3S.xml">Triple arm semaphore signal</a>
 
 </ul>
 

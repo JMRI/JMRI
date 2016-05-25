@@ -1,408 +1,440 @@
 // SchedulesTableModel.java
-
 package jmri.jmrit.operations.locations;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.beans.*;
-
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.MessageFormat;
+import java.util.Hashtable;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
-
-import java.text.MessageFormat;
-import java.util.List;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import java.util.Hashtable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of schedules used by operations
- * 
+ *
  * @author Daniel Boudreau Copyright (C) 2009, 2011, 2013
  * @version $Revision$
  */
-public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements
-		PropertyChangeListener {
+public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-	ScheduleManager scheduleManager; // There is only one manager
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7373278452466866383L;
 
-	// Defines the columns
-	private static final int ID_COLUMN = 0;
-	private static final int NAME_COLUMN = ID_COLUMN + 1;
-	private static final int SCHEDULE_STATUS_COLUMN = NAME_COLUMN + 1;
-	private static final int SPUR_NUMBER_COLUMN = SCHEDULE_STATUS_COLUMN + 1;
-	private static final int SPUR_COLUMN = SPUR_NUMBER_COLUMN + 1;
-	private static final int STATUS_COLUMN = SPUR_COLUMN + 1;
-	private static final int MODE_COLUMN = STATUS_COLUMN + 1;
-	private static final int EDIT_COLUMN = MODE_COLUMN + 1;
-	private static final int DELETE_COLUMN = EDIT_COLUMN + 1;
+    ScheduleManager scheduleManager; // There is only one manager
 
-	private static final int HIGHEST_COLUMN = DELETE_COLUMN + 1;
+    // Defines the columns
+    private static final int ID_COLUMN = 0;
+    private static final int NAME_COLUMN = ID_COLUMN + 1;
+    private static final int SCHEDULE_STATUS_COLUMN = NAME_COLUMN + 1;
+    private static final int SPUR_NUMBER_COLUMN = SCHEDULE_STATUS_COLUMN + 1;
+    private static final int SPUR_COLUMN = SPUR_NUMBER_COLUMN + 1;
+    private static final int STATUS_COLUMN = SPUR_COLUMN + 1;
+    private static final int MODE_COLUMN = STATUS_COLUMN + 1;
+    private static final int EDIT_COLUMN = MODE_COLUMN + 1;
+    private static final int DELETE_COLUMN = EDIT_COLUMN + 1;
 
-	public SchedulesTableModel() {
-		super();
-		scheduleManager = ScheduleManager.instance();
-		scheduleManager.addPropertyChangeListener(this);
-		updateList();
-	}
+    private static final int HIGHEST_COLUMN = DELETE_COLUMN + 1;
 
-	public final int SORTBYNAME = 1;
-	public final int SORTBYID = 2;
+    public SchedulesTableModel() {
+        super();
+        scheduleManager = ScheduleManager.instance();
+        scheduleManager.addPropertyChangeListener(this);
+        updateList();
+    }
 
-	private int _sort = SORTBYNAME;
+    public final int SORTBYNAME = 1;
+    public final int SORTBYID = 2;
 
-	public void setSort(int sort) {
-		synchronized (this) {
-			_sort = sort;
-		}
-		updateList();
-		fireTableDataChanged();
-	}
+    private int _sort = SORTBYNAME;
 
-	synchronized void updateList() {
-		// first, remove listeners from the individual objects
-		removePropertyChangeSchedules();
-		removePropertyChangeTracks();
+    public void setSort(int sort) {
+        synchronized (this) {
+            _sort = sort;
+        }
+        updateList();
+        fireTableDataChanged();
+    }
 
-		if (_sort == SORTBYID)
-			sysList = scheduleManager.getSchedulesByIdList();
-		else
-			sysList = scheduleManager.getSchedulesByNameList();
-		// and add them back in
-		for (int i = 0; i < sysList.size(); i++) {
-			// log.debug("schedule ids: " + (String) sysList.get(i));
-			scheduleManager.getScheduleById(sysList.get(i)).addPropertyChangeListener(this);
-		}
-		addPropertyChangeTracks();
-	}
+    synchronized void updateList() {
+        // first, remove listeners from the individual objects
+        removePropertyChangeSchedules();
+        removePropertyChangeTracks();
 
-	List<String> sysList = null;
+        if (_sort == SORTBYID) {
+            sysList = scheduleManager.getSchedulesByIdList();
+        } else {
+            sysList = scheduleManager.getSchedulesByNameList();
+        }
+        // and add them back in
+        for (Schedule sch : sysList) {
+            sch.addPropertyChangeListener(this);
+        }
+        addPropertyChangeTracks();
+    }
 
-	void initTable(SchedulesTableFrame frame, JTable table) {
-		// Install the button handlers
-		TableColumnModel tcm = table.getColumnModel();
-		ButtonRenderer buttonRenderer = new ButtonRenderer();
-		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
-		tcm.getColumn(EDIT_COLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
-		tcm.getColumn(DELETE_COLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(DELETE_COLUMN).setCellEditor(buttonEditor);
-		table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-		table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+    List<Schedule> sysList = null;
+    JTable table;
 
-		setPreferredWidths(frame, table);
+    void initTable(SchedulesTableFrame frame, JTable table) {
+        this.table = table;
+        // Install the button handlers
+        TableColumnModel tcm = table.getColumnModel();
+        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
+        tcm.getColumn(EDIT_COLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
+        tcm.getColumn(DELETE_COLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(DELETE_COLUMN).setCellEditor(buttonEditor);
+        table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+        table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-		// set row height
-		table.setRowHeight(new JComboBox().getPreferredSize().height);
-		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	}
+        setPreferredWidths(frame, table);
 
-	private void setPreferredWidths(SchedulesTableFrame frame, JTable table) {
-		if (frame.loadTableDetails(table))
-			return; // done
-		log.debug("Setting preferred widths");
-		// set column preferred widths
-		table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
-		table.getColumnModel().getColumn(SCHEDULE_STATUS_COLUMN).setPreferredWidth(80);
-		table.getColumnModel().getColumn(SPUR_NUMBER_COLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(SPUR_COLUMN).setPreferredWidth(350);
-		table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(150);
-		table.getColumnModel().getColumn(MODE_COLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
-	}
+        // set row height
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
+        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    }
 
-	public int getRowCount() {
-		return sysList.size();
-	}
+    private void setPreferredWidths(SchedulesTableFrame frame, JTable table) {
+        if (frame.loadTableDetails(table)) {
+            return; // done
+        }
+        log.debug("Setting preferred widths");
+        // set column preferred widths
+        table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
+        table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
+        table.getColumnModel().getColumn(SCHEDULE_STATUS_COLUMN).setPreferredWidth(80);
+        table.getColumnModel().getColumn(SPUR_NUMBER_COLUMN).setPreferredWidth(40);
+        table.getColumnModel().getColumn(SPUR_COLUMN).setPreferredWidth(350);
+        table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(150);
+        table.getColumnModel().getColumn(MODE_COLUMN).setPreferredWidth(70);
+        table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
+        table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
+    }
 
-	public int getColumnCount() {
-		return HIGHEST_COLUMN;
-	}
+    @Override
+    public int getRowCount() {
+        return sysList.size();
+    }
 
-	public String getColumnName(int col) {
-		switch (col) {
-		case ID_COLUMN:
-			return Bundle.getMessage("Id");
-		case NAME_COLUMN:
-			return Bundle.getMessage("Name");
-		case SCHEDULE_STATUS_COLUMN:
-			return Bundle.getMessage("Status");
-		case SPUR_NUMBER_COLUMN:
-			return Bundle.getMessage("Number");
-		case SPUR_COLUMN:
-			return Bundle.getMessage("Spurs");
-		case STATUS_COLUMN:
-			return Bundle.getMessage("StatusSpur");
-		case MODE_COLUMN:
-			return Bundle.getMessage("ScheduleMode");
-		case EDIT_COLUMN:
-			return Bundle.getMessage("Edit");
-		case DELETE_COLUMN:
-			return Bundle.getMessage("Delete");
-		default:
-			return "unknown"; // NOI18N
-		}
-	}
+    @Override
+    public int getColumnCount() {
+        return HIGHEST_COLUMN;
+    }
 
-	public Class<?> getColumnClass(int col) {
-		switch (col) {
-		case ID_COLUMN:
-			return String.class;
-		case NAME_COLUMN:
-			return String.class;
-		case SCHEDULE_STATUS_COLUMN:
-			return String.class;
-		case SPUR_NUMBER_COLUMN:
-			return String.class;
-		case SPUR_COLUMN:
-			return JComboBox.class;
-		case STATUS_COLUMN:
-			return String.class;
-		case MODE_COLUMN:
-			return String.class;
-		case EDIT_COLUMN:
-			return JButton.class;
-		case DELETE_COLUMN:
-			return JButton.class;
-		default:
-			return null;
-		}
-	}
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case ID_COLUMN:
+                return Bundle.getMessage("Id");
+            case NAME_COLUMN:
+                return Bundle.getMessage("Name");
+            case SCHEDULE_STATUS_COLUMN:
+                return Bundle.getMessage("Status");
+            case SPUR_NUMBER_COLUMN:
+                return Bundle.getMessage("Number");
+            case SPUR_COLUMN:
+                return Bundle.getMessage("Spurs");
+            case STATUS_COLUMN:
+                return Bundle.getMessage("StatusSpur");
+            case MODE_COLUMN:
+                return Bundle.getMessage("ScheduleMode");
+            case EDIT_COLUMN:
+                return Bundle.getMessage("Edit");
+            case DELETE_COLUMN:
+                return Bundle.getMessage("Delete");
+            default:
+                return "unknown"; // NOI18N
+        }
+    }
 
-	public boolean isCellEditable(int row, int col) {
-		switch (col) {
-		case EDIT_COLUMN:
-		case DELETE_COLUMN:
-		case SPUR_COLUMN:
-			return true;
-		default:
-			return false;
-		}
-	}
+    @Override
+    public Class<?> getColumnClass(int col) {
+        switch (col) {
+            case ID_COLUMN:
+                return String.class;
+            case NAME_COLUMN:
+                return String.class;
+            case SCHEDULE_STATUS_COLUMN:
+                return String.class;
+            case SPUR_NUMBER_COLUMN:
+                return String.class;
+            case SPUR_COLUMN:
+                return JComboBox.class;
+            case STATUS_COLUMN:
+                return String.class;
+            case MODE_COLUMN:
+                return String.class;
+            case EDIT_COLUMN:
+                return JButton.class;
+            case DELETE_COLUMN:
+                return JButton.class;
+            default:
+                return null;
+        }
+    }
 
-	public Object getValueAt(int row, int col) {
-		// Funky code to put the sef frame in focus after the edit table buttons is used.
-		// The button editor for the table does a repaint of the button cells after the setValueAt code
-		// is called which then returns the focus back onto the table. We need the edit frame
-		// in focus.
-		if (focusSef) {
-			focusSef = false;
-			sef.requestFocus();
-		}
-		if (row >= sysList.size())
-			return "ERROR row " + row; // NOI18N
-		String id = sysList.get(row);
-		Schedule s = scheduleManager.getScheduleById(id);
-		if (s == null)
-			return "ERROR schedule unknown " + row; // NOI18N
-		switch (col) {
-		case ID_COLUMN:
-			return s.getId();
-		case NAME_COLUMN:
-			return s.getName();
-		case SCHEDULE_STATUS_COLUMN:
-			return getScheduleStatus(row);
-		case SPUR_NUMBER_COLUMN:
-			return scheduleManager.getSpursByScheduleComboBox(s).getItemCount();
-		case SPUR_COLUMN: {
-			JComboBox box = scheduleManager.getSpursByScheduleComboBox(s);
-			String index = comboSelect.get(sysList.get(row));
-			if (index != null && box.getItemCount() > Integer.parseInt(index)) {
-				box.setSelectedIndex(Integer.parseInt(index));
-			}
-			return box;
-		}
-		case STATUS_COLUMN:
-			return getSpurStatus(row);
-		case MODE_COLUMN:
-			return getSpurMode(row);
-		case EDIT_COLUMN:
-			return Bundle.getMessage("Edit");
-		case DELETE_COLUMN:
-			return Bundle.getMessage("Delete");
-		default:
-			return "unknown " + col; // NOI18N
-		}
-	}
+    @Override
+    public boolean isCellEditable(int row, int col) {
+        switch (col) {
+            case EDIT_COLUMN:
+            case DELETE_COLUMN:
+            case SPUR_COLUMN:
+                return true;
+            default:
+                return false;
+        }
+    }
 
-	public void setValueAt(Object value, int row, int col) {
-		switch (col) {
-		case EDIT_COLUMN:
-			editSchedule(row);
-			break;
-		case DELETE_COLUMN:
-			deleteSchedule(row);
-			break;
-		case SPUR_COLUMN:
-			selectJComboBox(value, row);
-			break;
-		default:
-			break;
-		}
-	}
+    @Override
+    public Object getValueAt(int row, int col) {
+        if (row >= sysList.size()) {
+            return "ERROR row " + row; // NOI18N
+        }
+        Schedule schedule = sysList.get(row);
+        if (schedule == null) {
+            return "ERROR schedule unknown " + row; // NOI18N
+        }
+        switch (col) {
+            case ID_COLUMN:
+                return schedule.getId();
+            case NAME_COLUMN:
+                return schedule.getName();
+            case SCHEDULE_STATUS_COLUMN:
+                return getScheduleStatus(row);
+            case SPUR_NUMBER_COLUMN:
+                return scheduleManager.getSpursByScheduleComboBox(schedule).getItemCount();
+            case SPUR_COLUMN: {
+                return getComboBox(row, schedule);
+            }
+            case STATUS_COLUMN:
+                return getSpurStatus(row);
+            case MODE_COLUMN:
+                return getSpurMode(row);
+            case EDIT_COLUMN:
+                return Bundle.getMessage("Edit");
+            case DELETE_COLUMN:
+                return Bundle.getMessage("Delete");
+            default:
+                return "unknown " + col; // NOI18N
+        }
+    }
 
-	boolean focusSef = false;
-	ScheduleEditFrame sef = null;
+    @Override
+    public void setValueAt(Object value, int row, int col) {
+        switch (col) {
+            case EDIT_COLUMN:
+                editSchedule(row);
+                break;
+            case DELETE_COLUMN:
+                deleteSchedule(row);
+                break;
+            case SPUR_COLUMN:
+                selectJComboBox(value, row);
+                break;
+            default:
+                break;
+        }
+    }
 
-	private void editSchedule(int row) {
-		log.debug("Edit schedule");
-		if (sef != null)
-			sef.dispose();
-		Schedule s = scheduleManager.getScheduleById(sysList.get(row));
-		LocationTrackPair ltp = getLocationTrackPair(row);
-		if (ltp == null) {
-			log.debug("Need location track pair");
-			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("AssignSchedule"),
-					new Object[] { s.getName() }), MessageFormat.format(Bundle.getMessage("CanNotSchedule"),
-					new Object[] { Bundle.getMessage("Edit") }), JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		sef = new ScheduleEditFrame();
-		sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"), new Object[] { ltp
-				.getTrack().getName() }));
-		sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
-		focusSef = true;
-	}
+    ScheduleEditFrame sef = null;
 
-	private void deleteSchedule(int row) {
-		log.debug("Delete schedule");
-		Schedule s = scheduleManager.getScheduleById(sysList.get(row));
-		if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-				.getMessage("DoYouWantToDeleteSchedule"), new Object[] { s.getName() }), Bundle
-				.getMessage("DeleteSchedule?"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			scheduleManager.deregister(s);
-			OperationsXml.save();
-		}
-	}
+    private void editSchedule(int row) {
+        log.debug("Edit schedule");
+        if (sef != null) {
+            sef.dispose();
+        }
+        Schedule sch = sysList.get(row);
+        LocationTrackPair ltp = getLocationTrackPair(row);
+        if (ltp == null) {
+            log.debug("Need location track pair");
+            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("AssignSchedule"),
+                    new Object[]{sch.getName()}), MessageFormat.format(Bundle.getMessage("CanNotSchedule"),
+                            new Object[]{Bundle.getMessage("Edit")}), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // use invokeLater so new window appears on top
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                sef = new ScheduleEditFrame(sch, ltp.getTrack());
+            }
+        });
+    }
 
-	protected Hashtable<String, String> comboSelect = new Hashtable<String, String>();
+    private void deleteSchedule(int row) {
+        log.debug("Delete schedule");
+        Schedule s = sysList.get(row);
+        if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteSchedule"),
+                new Object[]{s.getName()}), Bundle.getMessage("DeleteSchedule?"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            scheduleManager.deregister(s);
+            OperationsXml.save();
+        }
+    }
 
-	private void selectJComboBox(Object value, int row) {
-		String id = sysList.get(row);
-		JComboBox box = (JComboBox) value;
-		comboSelect.put(id, Integer.toString(box.getSelectedIndex()));
-		fireTableRowsUpdated(row, row);
-	}
+    protected Hashtable<Schedule, String> comboSelect = new Hashtable<Schedule, String>();
 
-	private LocationTrackPair getLocationTrackPair(int row) {
-		Schedule s = scheduleManager.getScheduleById(sysList.get(row));
-		JComboBox box = scheduleManager.getSpursByScheduleComboBox(s);
-		String index = comboSelect.get(sysList.get(row));
-		LocationTrackPair ltp;
-		if (index != null) {
-			ltp = (LocationTrackPair) box.getItemAt(Integer.parseInt(index));
-		} else {
-			ltp = (LocationTrackPair) box.getItemAt(0);
-		}
-		return ltp;
-	}
+    private void selectJComboBox(Object value, int row) {
+        Schedule schedule = sysList.get(row);
+        JComboBox<?> box = (JComboBox<?>) value;
+        if (box.getSelectedIndex() >= 0) {
+            comboSelect.put(schedule, Integer.toString(box.getSelectedIndex()));
+        }
+        fireTableRowsUpdated(row, row);
+    }
 
-	private String getScheduleStatus(int row) {
-		Schedule sch = scheduleManager.getScheduleById(sysList.get(row));
-		JComboBox box = scheduleManager.getSpursByScheduleComboBox(sch);
-		for (int i = 0; i < box.getItemCount(); i++) {
-			LocationTrackPair ltp = (LocationTrackPair) box.getItemAt(i);
-			String status = ltp.getTrack().checkScheduleValid();
-			if (!status.equals(""))
-				return Bundle.getMessage("Error");
-		}
-		return Bundle.getMessage("Okay");
-	}
+    private LocationTrackPair getLocationTrackPair(int row) {
+        Schedule s = sysList.get(row);
+        JComboBox<LocationTrackPair> box = scheduleManager.getSpursByScheduleComboBox(s);
+        String index = comboSelect.get(sysList.get(row));
+        LocationTrackPair ltp;
+        if (index != null) {
+            ltp = box.getItemAt(Integer.parseInt(index));
+        } else {
+            ltp = box.getItemAt(0);
+        }
+        return ltp;
+    }
 
-	private String getSpurStatus(int row) {
-		LocationTrackPair ltp = getLocationTrackPair(row);
-		if (ltp == null)
-			return "";
-		String status = ltp.getTrack().checkScheduleValid();
-		if (!status.equals(""))
-			return status;
-		return Bundle.getMessage("Okay");
-	}
+    private String getScheduleStatus(int row) {
+        Schedule sch = sysList.get(row);
+        JComboBox<?> box = scheduleManager.getSpursByScheduleComboBox(sch);
+        for (int i = 0; i < box.getItemCount(); i++) {
+            LocationTrackPair ltp = (LocationTrackPair) box.getItemAt(i);
+            String status = ltp.getTrack().checkScheduleValid();
+            if (!status.equals(Track.SCHEDULE_OKAY)) {
+                return Bundle.getMessage("Error");
+            }
+        }
+        return Bundle.getMessage("Okay");
+    }
 
-	private String getSpurMode(int row) {
-		LocationTrackPair ltp = getLocationTrackPair(row);
-		if (ltp == null)
-			return "";
-		String mode = Bundle.getMessage("Sequential");
-		if (ltp.getTrack().getScheduleMode() == Track.MATCH)
-			mode = Bundle.getMessage("Match");
-		return mode;
-	}
+    private JComboBox<LocationTrackPair> getComboBox(int row, Schedule schedule) {
+        JComboBox<LocationTrackPair> box = scheduleManager.getSpursByScheduleComboBox(schedule);
+        String index = comboSelect.get(sysList.get(row));
+        if (index != null && box.getItemCount() > Integer.parseInt(index)) {
+            box.setSelectedIndex(Integer.parseInt(index));
+        }
+        box.addActionListener((ActionEvent e) -> {
+            comboBoxActionPerformed(e);
+        });
+        return box;
+    }
 
-	private void removePropertyChangeSchedules() {
-		if (sysList != null) {
-			for (int i = 0; i < sysList.size(); i++) {
-				// if object has been deleted, it's not here; ignore it
-				Schedule sch = scheduleManager.getScheduleById(sysList.get(i));
-				if (sch != null)
-					sch.removePropertyChangeListener(this);
-			}
-		}
-	}
-	
-	private void addPropertyChangeTracks() {
-		// only spurs have schedules
-		List<Track> tracks = LocationManager.instance().getTracks(Track.SPUR);
-		for (int i=0; i<tracks.size(); i++) {
-			Track track = tracks.get(i);
-			track.addPropertyChangeListener(this);
-		}
-	}
-	
-	private void removePropertyChangeTracks() {
-		List<Track> tracks = LocationManager.instance().getTracks(Track.SPUR);
-		for (int i=0; i<tracks.size(); i++) {
-			Track track = tracks.get(i);
-			track.removePropertyChangeListener(this);
-		}
-	}
+    protected void comboBoxActionPerformed(ActionEvent ae) {
+        log.debug("combobox action");
+        if (table.isEditing()) {
+            table.getCellEditor().stopCellEditing(); // Allows the table contents to update
+        }
+    }
 
-	public void dispose() {
-		if (log.isDebugEnabled())
-			log.debug("dispose");
-		if (sef != null)
-			sef.dispose();
-		scheduleManager.removePropertyChangeListener(this);
-		removePropertyChangeSchedules();
-		removePropertyChangeTracks();
-	}
+    private String getSpurStatus(int row) {
+        LocationTrackPair ltp = getLocationTrackPair(row);
+        if (ltp == null) {
+            return "";
+        }
+        String status = ltp.getTrack().checkScheduleValid();
+        if (!status.equals(Track.SCHEDULE_OKAY)) {
+            return status;
+        }
+        return Bundle.getMessage("Okay");
+    }
 
-	// check for change in number of schedules, or a change in a schedule
-	public void propertyChange(PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue());
-		if (e.getPropertyName().equals(ScheduleManager.LISTLENGTH_CHANGED_PROPERTY)) {
-			updateList();
-			fireTableDataChanged();
-		} else if (e.getSource().getClass().equals(Schedule.class)) {
-			String id = ((Schedule) e.getSource()).getId();
-			int row = sysList.indexOf(id);
-			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update schedule table row: " + row + " id: " + id);
-			if (row >= 0)
-				fireTableRowsUpdated(row, row);
-		}
-		if (e.getPropertyName().equals(Track.SCHEDULE_MODE_CHANGED_PROPERTY)) {
-			Track track = (Track) e.getSource();
-			String id = track.getScheduleId();
-			int row = sysList.indexOf(id);
-			if (row >= 0)
-				fireTableRowsUpdated(row, row);
-			else
-				fireTableDataChanged();
-		}
-		
-		if (e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
-			fireTableDataChanged();
-		}
-	}
+    private String getSpurMode(int row) {
+        LocationTrackPair ltp = getLocationTrackPair(row);
+        if (ltp == null) {
+            return "";
+        }
+        String mode = Bundle.getMessage("Sequential");
+        if (ltp.getTrack().getScheduleMode() == Track.MATCH) {
+            mode = Bundle.getMessage("Match");
+        }
+        return mode;
+    }
 
-	static Logger log = LoggerFactory.getLogger(SchedulesTableModel.class.getName());
+    private void removePropertyChangeSchedules() {
+        if (sysList != null) {
+            for (Schedule sch : sysList) {
+                sch.removePropertyChangeListener(this);
+            }
+        }
+    }
+
+    private void addPropertyChangeTracks() {
+        // only spurs have schedules
+        for (Track track : LocationManager.instance().getTracks(Track.SPUR)) {
+            track.addPropertyChangeListener(this);
+        }
+    }
+
+    private void removePropertyChangeTracks() {
+        for (Track track : LocationManager.instance().getTracks(Track.SPUR)) {
+            track.removePropertyChangeListener(this);
+        }
+    }
+
+    public void dispose() {
+        if (log.isDebugEnabled()) {
+            log.debug("dispose");
+        }
+        if (sef != null) {
+            sef.dispose();
+        }
+        scheduleManager.removePropertyChangeListener(this);
+        removePropertyChangeSchedules();
+        removePropertyChangeTracks();
+    }
+
+    // check for change in number of schedules, or a change in a schedule
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                    .getNewValue());
+        }
+        if (e.getPropertyName().equals(ScheduleManager.LISTLENGTH_CHANGED_PROPERTY)) {
+            updateList();
+            fireTableDataChanged();
+        } else if (e.getSource().getClass().equals(Schedule.class)) {
+            Schedule schedule = (Schedule) e.getSource();
+            int row = sysList.indexOf(schedule);
+            if (Control.SHOW_PROPERTY) {
+                log.debug("Update schedule table row: {} name: {}", row, schedule.getName());
+            }
+            if (row >= 0) {
+                fireTableRowsUpdated(row, row);
+            }
+        }
+        if (e.getSource().getClass().equals(Track.class)) {
+            Track track = (Track) e.getSource();
+            Schedule schedule = track.getSchedule();
+            int row = sysList.indexOf(schedule);
+            if (row >= 0) {
+                fireTableRowsUpdated(row, row);
+            } else {
+                fireTableDataChanged();
+            }
+        }
+
+        if (e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
+            fireTableDataChanged();
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SchedulesTableModel.class.getName());
 }

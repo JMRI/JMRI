@@ -1,5 +1,9 @@
 # Log4J configuration file for running JMRI JUnit tests
 
+# #############################################################
+#  Log4J configuration
+# #############################################################
+
 # Output is sent to system.err, generally a console window.
 # The output info consists of relative time, 
 # category (usually name of the class doing the logging), 
@@ -9,7 +13,7 @@
 # For the general syntax of property based configuration files see the
 # documenation of org.apache.log4j.PropertyConfigurator.
 
-# Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
+# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
 
 # The root category uses the appender called A1, which is set to log 
 # priority WARN and above. This is what's expected by the default
@@ -25,7 +29,7 @@ log4j.rootCategory= WARN, A1
 
 # A1 is set to be a jmri.util.JUnitAppender which outputs to System.err. 
 # The JUnitAppender provides hooks used to test whether a given
-# log message is expected or not.
+# log message is expected or not, and whether ERROR messages have been logged.
 log4j.appender.A1=jmri.util.JUnitAppender
 
 # A1 writes to system.err to synchronize with e.g. exception traces
@@ -63,15 +67,32 @@ log4j.appender.R.File=example.log
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
 log4j.appender.R.layout.ConversionPattern=%-5p - %m [%t] %c{2}.%M()%n
 
+# Default Jetty server to only logging WARN since it can be verbose at points
+log4j.category.org.eclipse.jetty=WARN
+log4j.category.org.eclipse.jetty.server.handler=WARN
+
+# Turning off logging for Java Xerces; emits WARNING messages during routine use
+log4j.category.org.jdom2.transform=SEVERE
+
+# Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l too routinely
+log4j.category.com.strangeberry=OFF
+log4j.category.javax.jmdns=OFF
+
+# Needed for Jenkins I18N testing
+log4j.category.jmri.util.I18NTest=DEBUG
+
+# Needed for jmri.util.Log4JUtilTest
+log4j.category.jmri.util.Log4JUtilTest = WARN
+
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog=DEBUG
+# log4j.category.jmri.implementation=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.jmrix.nce=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
-log4j.category.jmri.util.I18NTest=DEBUG
+
 

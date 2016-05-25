@@ -3,7 +3,6 @@ package jmri.jmrit.throttle;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,12 +13,14 @@ import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
 import jmri.Throttle;
 import jmri.jmrit.roster.RosterIconFactory;
+import jmri.util.FileUtil;
 
 public class ThrottlesTableCellRenderer implements TableCellRenderer {
-    private static final ImageIcon fwdIcon = new ImageIcon("resources/icons/throttles/up-green.png");
-    private static final ImageIcon bckIcon = new ImageIcon("resources/icons/throttles/down-green.png");
-    private static final ImageIcon estopIcon = new ImageIcon("resources/icons/throttles/estop24.png");
-    private static final RosterIconFactory iconFactory =  new RosterIconFactory(32);
+
+    private static final ImageIcon fwdIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/up-green.png"));
+    private static final ImageIcon bckIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/down-green.png"));
+    private static final ImageIcon estopIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop24.png"));
+    private static final RosterIconFactory iconFactory = new RosterIconFactory(32);
     final static int height = 42;
 
     public Component getTableCellRendererComponent(JTable jtable, Object value, boolean bln, boolean bln1, int i, int i1) {
@@ -57,7 +58,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
         locoID.setText(text);
         retPanel.add(locoID, BorderLayout.CENTER);
 
-        if (tf.getAddressPanel().getThrottle()!=null) {
+        if (tf.getAddressPanel().getThrottle() != null) {
             JPanel ctrlPanel = new JPanel();
             ctrlPanel.setLayout(new BorderLayout());
             Throttle thr = tf.getAddressPanel().getThrottle();
@@ -80,7 +81,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             ctrlPanel.add(dir, BorderLayout.WEST);
             if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
                     && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
-                if (thr.getSpeedSetting()==-1) {
+                if (thr.getSpeedSetting() == -1) {
                     JLabel estop = new JLabel();
                     estop.setPreferredSize(new Dimension(64, height - 8));
                     estop.setHorizontalAlignment(JLabel.CENTER);
@@ -96,10 +97,10 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
                 }
             } else {
                 JLabel speedLabel = new JLabel("");
-                if (thr.getSpeedSetting()==-1) {
-                     speedLabel.setText(" "+Bundle.getMessage("ButtonEStop")+" ");
+                if (thr.getSpeedSetting() == -1) {
+                    speedLabel.setText(" " + Bundle.getMessage("ButtonEStop") + " ");
                 } else {
-                    speedLabel.setText(" "+(int)(thr.getSpeedSetting() * 100f)+"% ");
+                    speedLabel.setText(" " + (int) (thr.getSpeedSetting() * 100f) + "% ");
                 }
                 ctrlPanel.add(speedLabel, BorderLayout.CENTER);
             }

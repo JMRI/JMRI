@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Debug.shtml,v 1.2 2009/03/12 22:59:03 matthewharris Exp $ -->
- <!--Translated by Hervé Blorec le 2011/10/01 -->
+<!--  $Id: Debug.shtml 21896 2012-12-19 12:12:05Z rhwood  -->
+ <!--Translated by Herv&#233; Blorec le 2013-08-30 -->
 <title>JMRI: DecoderPro User Guide - Debugging</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -21,42 +21,42 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>Guide Utilisateur DecoderPro - Débogage</H1>
+<H1>Guide Utilisateur DecoderPro - D&#233;bogage</H1>
 
 <DL>
-<dt class=left>Pendant que le programme s'exécute</dt>
+<dt class=left>Pendant que le programme s'ex&#233;cute</dt>
 <dd class=first>
-<p>Pendant que le programme s'exécute,
-l'information de débogage est imprimée sur une "sortie standard", qui est à différent endroits suivant le système d'exploitation que vous utilisez et comment vous démarrez le programme. Sur un Macintosh classique, Elle apparait dans une fenêtre qui est créée avec le premier message d'erreur. Avec Mac OS X, elle peut apparaitre dans une nouvelle fenêtre, ou vous pouvez devoir lancer l'application  "Console" pour la voir. Sur Windows, Vous devez exécuter des fichiers batch  "Debug" pour voir les messages d'erreur; regardez les dans le répertoire applications.</p>
+<p>Pendant que le programme s'ex&#233;cute,
+l'information de d&#233;bogage est imprim&#233;e sur une "sortie standard", qui est &#225; diff&#233;rent endroits suivant le syst&#232;me d'exploitation que vous utilisez et comment vous d&#233;marrez le programme. Sur un Macintosh classique, Elle apparait dans une fen&#234;tre qui est cr&#233;&#233;e avec le premier message d'erreur. Avec Mac OS X, elle peut apparaitre dans une nouvelle fen&#234;tre, ou vous pouvez devoir lancer l'application  "Console" pour la voir. Sur Windows, Vous devez ex&#233;cuter des fichiers batch  "Debug" pour voir les messages d'erreur; regardez les dans le r&#233;pertoire applications.</p>
 
-<p>L'erreur de connexion est contrôler par le fichier"default.lcf". Il y a un lots de commentaires sur ce que signifient les termes variés. Si vous n'aimez pas les messages reliés à un fichier, changer la ligne.</p>
+<p>L'erreur de connexion est contr&#244;ler par le fichier"default.lcf". Il y a un lots de commentaires sur ce que signifient les termes vari&#233;s. Si vous n'aimez pas les messages reli&#233;s &#225; un fichier, changer la ligne.</p>
 
 <p class=example>
 log4j.rootCategory= WARN, A1
 </p>
-<p>Pour inclure la destination enregistrement supplémentaire "R":
+<p>Pour inclure la destination enregistrement suppl&#233;mentaire "R":
 <p class=example>
 log4j.rootCategory= WARN, A1,R
 </p>
-<p>R est défini plus tard dans default.lcf comme connexion pour le fichier "example.log" .
-Vous pouvez aussi obtenir beaucoup d'informations additionnelles sur ce que fait le programme en réglant le niveau de connexion soit à INFO ou DEBUG par exemple. </p>
+<p>R est d&#233;fini plus tard dans default.lcf comme connexion pour le fichier "example.log" .
+Vous pouvez aussi obtenir beaucoup d'informations additionnelles sur ce que fait le programme en r&#233;glant le niveau de connexion soit &#225; INFO ou DEBUG par exemple. </p>
 
 <p class=example>
 log4j.rootCategory= INFO, A1
 </p>
 
-<p>Notez que le niveau DEBUG sortira beaucoup d'informations,et ralentira significativement l'exécution du programme. Il est possible aussi de requérir plus d'informations juste sur des parties du programme, mais dans l'optique que cela vous soit utile vous devrez passer du temps à apprendre au sujet des parties internes.</p>
+<p>Notez que le niveau DEBUG sortira beaucoup d'informations,et ralentira significativement l'ex&#233;cution du programme. Il est possible aussi de requ&#233;rir plus d'informations juste sur des parties du programme, mais dans l'optique que cela vous soit utile vous devrez passer du temps &#225; apprendre au sujet des parties internes.</p>
 </dd>
 
-<dt class=left>Débogage des problèmes avec les fichiers XML</dt>
+<dt class=left>D&#233;bogage des probl&#232;mes avec les fichiers XML</dt>
 <dd>
-<p>Quand un fichier XML ne peut pas être analyser, vous obtiendrez des messages d'erreur difficiles à comprendre. La partie la plus importante de ceci est le numéro de ligne. Utilisez le pour commencer à voir le problème. 
+<p>Quand un fichier XML ne peut pas &#234;tre analyser, vous obtiendrez des messages d'erreur difficiles &#225; comprendre. La partie la plus importante de ceci est le num&#233;ro de ligne. Utilisez le pour commencer &#225; voir le probl&#232;me. 
 
 
-<p>Vous pourriez être capable d'obtenir de meilleures informations en essayant d'ouvrir le fichier avec Internet Explorer. Les informations de débogage qu'il fournit sont généralement plus détaillées que celles fournit par les routines XML dans les librairies JDOM utilisées par JMRI et DecoderPRo.</p>
+<p>Vous pourriez &#234;tre capable d'obtenir de meilleures informations en essayant d'ouvrir le fichier avec Internet Explorer. Les informations de d&#233;bogage qu'il fournit sont g&#233;n&#233;ralement plus d&#233;taill&#233;es que celles fournit par les routines XML dans les librairies JDOM utilis&#233;es par JMRI et DecoderPRo.</p>
 
-<p>Notez que Explorer à besoin de voir le fichier .xml et en plus des informations de définitions dans le fichier .dtd. Si vous obtenez un message comme
-"error in system resource", vous avez besoin de mettre une copie du fichier .dtd (exemple decoder-config.dtd) dans le répertoire avec votre nouveau fichier. DTD peut être trouvé dans le sous-répertoire dtd du répertoire xml.
+<p>Notez que Explorer &#225; besoin de voir le fichier .xml et en plus des informations de d&#233;finitions dans le fichier .dtd. Si vous obtenez un message comme
+"error in system resource", vous avez besoin de mettre une copie du fichier .dtd (exemple decoder-config.dtd) dans le r&#233;pertoire avec votre nouveau fichier. DTD peut &#234;tre trouv&#233; dans le sous-r&#233;pertoire dtd du r&#233;pertoire xml.
 </p>
 
 </dd>

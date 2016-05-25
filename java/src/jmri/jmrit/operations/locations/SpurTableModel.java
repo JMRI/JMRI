@@ -1,69 +1,82 @@
 //SpurTableModel.java
-
 package jmri.jmrit.operations.locations;
 
+import java.beans.PropertyChangeEvent;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.beans.*;
-import javax.swing.*;
-import jmri.jmrit.operations.setup.Control;
 
 /**
  * Table Model for edit of spurs used by operations
- * 
+ *
  * @author Daniel Boudreau Copyright (C) 2008
  * @version $Revision$
  */
 public class SpurTableModel extends TrackTableModel {
 
-	public SpurTableModel() {
-		super();
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8498399811366483939L;
 
-	public void initTable(JTable table, Location location) {
-		super.initTable(table, location, Track.SPUR);
-	}
+    public SpurTableModel() {
+        super();
+    }
 
-	public String getColumnName(int col) {
-		switch (col) {
-		case NAME_COLUMN:
-			return Bundle.getMessage("SpurName");
-		}
-		return super.getColumnName(col);
-	}
+    public void initTable(JTable table, Location location) {
+        super.initTable(table, location, Track.SPUR);
+    }
 
-	protected void editTrack(int row) {
-		log.debug("Edit spur");
-		if (tef != null) {
-			tef.dispose();
-		}
-		tef = new SpurEditFrame();
-		String spurId = tracksList.get(row);
-		Track spur = _location.getTrackById(spurId);
-		tef.initComponents(_location, spur);
-		tef.setTitle(Bundle.getMessage("EditSpur"));
-		focusEditFrame = true;
-	}
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("SpurName");
+        }
+        return super.getColumnName(col);
+    }
 
-	// this table listens for changes to a location and it's spurs
-	public void propertyChange(PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());	// NOI18N
-		super.propertyChange(e);
-		if (e.getSource().getClass().equals(Track.class)) {
-			String type = ((Track) e.getSource()).getTrackType();
-			if (type.equals(Track.SPUR)) {
-				String spurId = ((Track) e.getSource()).getId();
-				int row = tracksList.indexOf(spurId);
-				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update spur table row: " + row + " id: " + spurId);
-				if (row >= 0)
-					fireTableRowsUpdated(row, row);
-			}
-		}
-	}
+    @Override
+    protected void editTrack(int row) {
+        log.debug("Edit spur");
+        if (tef != null) {
+            tef.dispose();
+        }
+        // use invokeLater so new window appears on top
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                tef = new SpurEditFrame();
+                Track spur = tracksList.get(row);
+                tef.initComponents(_location, spur);
+                tef.setTitle(Bundle.getMessage("EditSpur"));
+            }
+        });
+    }
 
-	static Logger log = LoggerFactory.getLogger(SpurTableModel.class
-			.getName());
+    // this table listens for changes to a location and it's spurs
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                    .getNewValue());
+        }
+        super.propertyChange(e);
+        if (e.getSource().getClass().equals(Track.class)) {
+            Track track = ((Track) e.getSource());
+            if (track.getTrackType().equals(Track.SPUR)) {
+                int row = tracksList.indexOf(track);
+                if (Control.SHOW_PROPERTY) {
+                    log.debug("Update spur table row: {} track: {}", row, track.getName());
+                }
+                if (row >= 0) {
+                    fireTableRowsUpdated(row, row);
+                }
+            }
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SpurTableModel.class.getName());
 }

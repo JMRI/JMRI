@@ -18,20 +18,20 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
-import javax.swing.*;
-import java.awt.*;
-import jmri.util.swing.*;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.Train;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.swing.JmriPanel;
 
 @SuppressWarnings("serial")
 public class VSDOptionPanel extends JmriPanel {
 
-    private javax.swing.JComboBox hornOptionComboBox;
-    private javax.swing.JComboBox opsTrainComboBox;
+    private javax.swing.JComboBox<Object> hornOptionComboBox;
+    private javax.swing.JComboBox<Train> opsTrainComboBox;
 
     private Train selected_train;
 
@@ -39,67 +39,66 @@ public class VSDOptionPanel extends JmriPanel {
     VSDecoderPane main_frame;
 
     public VSDOptionPanel() {
-	this(null, null);
+        this(null, null);
     }
 
     public VSDOptionPanel(String dec, VSDecoderPane dad) {
-	super();
-	decoder_id = dec;
-	main_frame = dad;
-	selected_train = null;
-	initComponents();
+        super();
+        decoder_id = dec;
+        main_frame = dad;
+        selected_train = null;
+        initComponents();
     }
 
-    public void init() {}
+    public void init() {
+    }
 
     public void initContext(Object context) {
-	initComponents();
+        initComponents();
     }
 
     public void initComponents() {
 
-	// Below is mostly just "filler" stuff until we implement the real thing
+        // Below is mostly just "filler" stuff until we implement the real thing
+        this.setLayout(new GridLayout(0, 2));
 
-	this.setLayout(new GridLayout(0,2));
+        JLabel x = new JLabel();
+        x.setText("Operations Train: ");
+        this.add(x);
+        opsTrainComboBox = TrainManager.instance().getTrainComboBox();
+        this.add(opsTrainComboBox);
+        opsTrainComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                opsTrainSelectAction(e);
+            }
+        });
 
-	JLabel x = new JLabel();
-	x.setText("Operations Train: ");
-	this.add(x);
-	opsTrainComboBox = TrainManager.instance().getComboBox();
-	this.add(opsTrainComboBox);
-	opsTrainComboBox.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		    opsTrainSelectAction(e);
-		}
-	    });
-
-	hornOptionComboBox = new javax.swing.JComboBox();
-	hornOptionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3-Chime Leslie", "5-Chime Leslie", "4-Chime Nathan" }));
-	x = new JLabel();
-	x.setText("Horn Option: ");
-	this.add(x);
-	this.add(hornOptionComboBox);
-	x = new JLabel();
-	x.setText("Engine Option: ");
-	this.add(x);
-	JComboBox y = new javax.swing.JComboBox();
-	y.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Non-Turbo", "Turbo" }));
-	this.add(y);
+        hornOptionComboBox = new javax.swing.JComboBox<Object>();
+        hornOptionComboBox.setModel(new javax.swing.DefaultComboBoxModel<Object>(new String[]{"3-Chime Leslie", "5-Chime Leslie", "4-Chime Nathan"}));
+        x = new JLabel();
+        x.setText("Horn Option: ");
+        this.add(x);
+        this.add(hornOptionComboBox);
+        x = new JLabel();
+        x.setText("Engine Option: ");
+        this.add(x);
+        JComboBox<Object> y = new javax.swing.JComboBox<Object>();
+        y.setModel(new javax.swing.DefaultComboBoxModel<Object>(new String[]{"Non-Turbo", "Turbo"}));
+        this.add(y);
     }
 
     public void opsTrainSelectAction(ActionEvent e) {
-	if (opsTrainComboBox.getSelectedItem() != null) {
-	    if (selected_train != null) {
-		selected_train.removePropertyChangeListener(main_frame.getDecoder());
-	    }
-	    String opsTrain = opsTrainComboBox.getSelectedItem().toString();
-	    if ((selected_train = TrainManager.instance().getTrainByName(opsTrain)) != null)
-		selected_train.addPropertyChangeListener(main_frame.getDecoder());
-	}
+        if (opsTrainComboBox.getSelectedItem() != null) {
+            if (selected_train != null) {
+                selected_train.removePropertyChangeListener(main_frame.getDecoder());
+            }
+            String opsTrain = opsTrainComboBox.getSelectedItem().toString();
+            if ((selected_train = TrainManager.instance().getTrainByName(opsTrain)) != null) {
+                selected_train.addPropertyChangeListener(main_frame.getDecoder());
+            }
+        }
     }
 
     // Unused as yet.  Commented out to hide the compiler warning.
     //private static final Logger log = LoggerFactory.getLogger(VSDOptionPanel.class.getName());
-
-    
 }

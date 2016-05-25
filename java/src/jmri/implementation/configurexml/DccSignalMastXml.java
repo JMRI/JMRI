@@ -1,12 +1,12 @@
 package jmri.implementation.configurexml;
 
+import java.util.List;
+import jmri.InstanceManager;
+import jmri.SignalAppearanceMap;
+import jmri.implementation.DccSignalMast;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.implementation.DccSignalMast;
-import jmri.SignalAppearanceMap;
-import java.util.List;
-import org.jdom.Element;
 
 /**
  * Handle XML configuration for a DefaultSignalMastManager objects.
@@ -14,26 +14,28 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
  * @version $Revision: 18102 $
  */
-public class DccSignalMastXml 
-            extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class DccSignalMastXml
+        extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public DccSignalMastXml() {}
+    public DccSignalMastXml() {
+    }
 
     /**
      * Default implementation for storing the contents of a
      * DefaultSignalMastManager
+     *
      * @param o Object to store, of type TripleDccSignalHead
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        DccSignalMast p = (DccSignalMast)o;
+        DccSignalMast p = (DccSignalMast) o;
         Element e = new Element("dccsignalmast");
         e.setAttribute("class", this.getClass().getName());
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, e);
         Element unlit = new Element("unlit");
-        if(p.allowUnLit()){
+        if (p.allowUnLit()) {
             unlit.setAttribute("allowed", "yes");
             unlit.addContent(new Element("aspect").addContent(Integer.toString(p.getUnlitId())));
         } else {
@@ -41,9 +43,9 @@ public class DccSignalMastXml
         }
         e.addContent(unlit);
         SignalAppearanceMap appMap = p.getAppearanceMap();
-        if(appMap!=null){
+        if (appMap != null) {
             java.util.Enumeration<String> aspects = appMap.getAspects();
-            while(aspects.hasMoreElements()){
+            while (aspects.hasMoreElements()) {
                 String key = aspects.nextElement();
                 Element el = new Element("aspect");
                 el.setAttribute("defines", key);
@@ -52,42 +54,39 @@ public class DccSignalMastXml
             }
         }
         List<String> disabledAspects = p.getDisabledAspects();
-        if(disabledAspects!=null){
+        if (disabledAspects != null) {
             Element el = new Element("disabledAspects");
-            for(String aspect: disabledAspects){
+            for (String aspect : disabledAspects) {
                 Element ele = new Element("disabledAspect");
                 ele.addContent(aspect);
                 el.addContent(ele);
             }
-            if(disabledAspects.size()!=0)
+            if (disabledAspects.size() != 0) {
                 e.addContent(el);
+            }
         }
         return e;
     }
 
-    /**
-     * Create a DefaultSignalMastManager
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         DccSignalMast m;
-        String sys = getSystemName(element);
+        String sys = getSystemName(shared);
         m = new jmri.implementation.DccSignalMast(sys);
-        
-        if (getUserName(element) != null)
-            m.setUserName(getUserName(element));
-        
-        return loadCommonDCCMast(m, element);
+
+        if (getUserName(shared) != null) {
+            m.setUserName(getUserName(shared));
+        }
+
+        return loadCommonDCCMast(m, shared);
     }
-    
-    @SuppressWarnings("unchecked")
-    protected boolean loadCommonDCCMast(DccSignalMast m, Element element){
+
+    protected boolean loadCommonDCCMast(DccSignalMast m, Element element) {
         loadCommon(m, element);
-        if(element.getChild("unlit")!=null){
+        if (element.getChild("unlit") != null) {
             Element unlit = element.getChild("unlit");
-            if(unlit.getAttribute("allowed")!=null){
-                if(unlit.getAttribute("allowed").getValue().equals("no")){
+            if (unlit.getAttribute("allowed") != null) {
+                if (unlit.getAttribute("allowed").getValue().equals("no")) {
                     m.setAllowUnLit(false);
                 } else {
                     m.setAllowUnLit(true);
@@ -110,22 +109,22 @@ public class DccSignalMastXml
             m.setOutputForAppearance(aspect, number);
         }
         Element e = element.getChild("disabledAspects");
-        if(e!=null){
+        if (e != null) {
             list = e.getChildren("disabledAspect");
-            for(Element aspect: list){
+            for (Element aspect : list) {
                 m.setAspectDisabled(aspect.getText());
             }
         }
-        
+
         InstanceManager.signalMastManagerInstance()
-            .register(m);
+                .register(m);
         return true;
-    
+
     }
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
-    
-    static Logger log = LoggerFactory.getLogger(DccSignalMastXml.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(DccSignalMastXml.class.getName());
 }

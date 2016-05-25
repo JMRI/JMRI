@@ -59,7 +59,7 @@
     </revision>
   </revhistory>
 
-  <aspecttable>AAR-2</aspecttable>
+  <aspecttable>AAR 1946</aspecttable>
   <name>Double searchlight high absolute signal</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
   <description>Appearances for a two-searchlight signal head without other badging</description>
@@ -121,6 +121,14 @@
       <show>red</show>
       <reference>Page 47 B</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-285.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 47 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-286.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -216,7 +224,6 @@
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
       <ourAspect>Approach Medium</ourAspect>
-      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -228,6 +235,11 @@
 
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 

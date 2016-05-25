@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author: kevin-dickerson $) 2008 -->
-<!-- $Id: index.shtml,v 1.6 2010/02/04 16:54:12 kevin-dickerson Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-14-06--> 
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-10--> 
 <title>JMRI: ESU ECoS Support</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -25,77 +25,78 @@
 <h1> 
 JMRI:Support ESU ECoS
 </h1>
-JMRI peut se connecter à une centrale de commande ESU ECoS
+JMRI peut se connecter &#224; une centrale de commande ESU ECoS
 via une connexion Internet.
 
 <p>
 Pour configurer la connexion:
 <ul>
-<li> Ouvrez le JMRI "Préférences" sous le menu "Edition",
-<li> Sélectionnez "ESU ECoS" comme type de connexion,
+<li> Ouvrez  "Pr&#233;f&#233;rences" JMRI  sous le menu "Modification",
+<li> S&#233;lectionnez "ESU ECoS" comme type de connexion,
 <li> Entrez l'adresse IP de votre appareil ECoS,
-<li> Laissez le numéro de port à 15471,
+<li> Laissez le num&#233;ro de port &#224; 15471,
 <li> Cliquez sur "Enregistrer".
 </ul>
 
 <p>
-Aiguillage, Capteur,un régulateur basique et un support puissance sont disponibles pour connecté JMRI à une Ecos
+Aiguillage, Capteur,un r&#233;gulateur basique et un support puissance sont disponibles pour connect&#233; JMRI &#224; une Ecos
 <p>
 
-<H2>Régulateurs</H2>
-Seul le modèle de base le régulateur via l'Ecos est pris en charge. Quand une entrée dans la Liste , ou une adresse DCC est directement
-entrée dans le champ d'adresse, JMRI va vérifier la liste existante des locomotives ECoS pour trouver une correspondance avec la première adresse DCC qu'il rencontre.
-Si aucune correspondance n'est trouvée, le régulateur va créer une entrée dans l'Ecos qui sera répertoriée comme "Créé par JMRI" avec une valeur par défaut de 128 crans de vitesse. <br>
-Depuis la version 2.9.4 lorsque vous fermez JMRI, vous serez invité à supprimer ou conserver les entrées dans l' ECoS. <br>
-<b> Le couplage n'est pas supporté </b>
+<H2>R&#233;gulateurs</H2>
+Seul le mod&#232;le de base pour les r&#233;gulateur via l'Ecos est pris en charge. Quand une entr&#233;e dans la Liste , ou une adresse DCC est directement
+entr&#233;e dans le champ d'adresse, JMRI va v&#233;rifier la liste existante des locomotives ECoS pour trouver une correspondance avec la premi&#232;re adresse DCC qu'il rencontre.
+Si aucune correspondance n'est trouv&#233;e, le r&#233;gulateur va cr&#233;er une entr&#233;e dans l'Ecos qui sera r&#233;pertori&#233;e comme "Cr&#233;&#233; par JMRI" avec une valeur par d&#233;faut de 128 crans de vitesse. <br>
+Depuis la version 2.9.4 lorsque vous fermez JMRI, vous serez invit&#233; &#224; supprimer ou conserver les entr&#233;es dans l'ECoS.<br>
+<b> Le couplage n'est pas support&#233; </b>
 
  <H2>Capteurs </H2>
-Les Capteur ECOS connectés sur le bus s88 ont des noms comme "US100: 01", où "U" est le nom du système pour ecos Esu
-"S" des moyens de détection, "100" est l'adresse s88 immatriculée dans l'Ecos, et "01"est le port de cette carte.
+Les Capteur ECOS connect&#233;s sur le bus s88 ont des noms comme "US100: 01", o&#249; "U" est le nom du syst&#232;me pour ecos Esu
+"S" des moyens de d&#233;tection, "100" est l'adresse s88 immatricul&#233;e dans l'Ecos, et "01"est le port de cette carte.
 <p>
  <H2>Aiguillages </H2>
-Les aiguillages ECOS connectés ont des noms comme "UT123", où "U"
-est le nom du système pour ecos Esu, «T» désigne Turnout (aiguillage), et
-«123» est l'adresse.
+Les aiguillages ECOS connect&#233;s ont des noms comme "UT123", o&#249; "U"
+est le nom du syst&#232;me pour ecos Esu, "T" d&#233;signe Turnout (aiguillage), et
+"123" est l'adresse.
 <p>
 
 <H2> Initialisation Ecos </H2>
-Lorsque JMRI commence, d'abord il lit L'information des aiguillages, des capteurs depuis l'ECoS, ce qui peut prendre quelques secondes. Les aiguillages et les capteurs sont automatiquement ajoutés dans les tableaux JMRI, ceci est nécessaire pour qu'un lien puisse être établi entre les capteurs et aiguillages configurés dans l'Ecos et l'adresse accessoire que JMRI utilise . <br>
-Tout en recueillant les informations de la loco depuis l' Ecos, JMRI va vérifier s'il existe déjà une entrée de liste associée à la loco.Si la vérification échoue, le système vous demandera si vous souhaitez ajouter l'importation de la Loco à la liste.
+Lorsque JMRI commence, d'abord il lit L'information des aiguillages, des capteurs depuis l'ECoS, ce qui peut prendre quelques secondes. Les aiguillages et les capteurs sont automatiquement ajout&#233;s dans les tableaux JMRI, ceci est n&#233;cessaire pour qu'un lien puisse &#234;tre &#233;tabli entre les capteurs et aiguillages configur&#233;s dans l'Ecos et l'adresse accessoire que JMRI utilise. <br>
+Tout en recueillant les informations de la loco depuis l' Ecos, JMRI va v&#233;rifier s'il existe d&#233;j&#224; une entr&#233;e de liste associ&#233;e &#224; la loco. Si la v&#233;rification &#233;choue, le syst&#232;me vous demandera si vous souhaitez ajouter l'importation de la Loco &#224; la liste.
 <p>
 
- <H2>Ecos Base de Données Loco </H2>
-La base de données Loco Ecos vous permet de visualiser toutes les locomotives qui sont configurés dans l'Ecos, d'assigner une entrée de fichier JMRI à la locomotive ou de l'importer dans le fichier JMRI.
+ <H2>Ecos Base de Donn&#233;es Loco </H2>
+La base de donn&#233;es Loco Ecos vous permet de visualiser toutes les locomotives qui sont configur&#233;s dans l'Ecos, d'assigner une entr&#233;e de fichier JMRI &#224; la locomotive ou de l'importer dans le fichier JMRI.
 <p>
 
 <H2> Importation Locos de Ecos </H2>
-Lors de l'importation de la locomotive dans JMRI, actuellement, il crée seulement un enregistrement squelette, qui contient le nom  de la loco avec le
-type de décodeur en cas de sélection et l'adresse loco. Ce processus actuellement n'importe pas les valeurs de CV stockées sur l'Ecos dans JMRI.
+Lors de l'importation de la locomotive dans JMRI, il cr&#233;e actuellement seulement un enregistrement squelette, qui contient le nom  de la loco avec le
+type de d&#233;codeur en cas de s&#233;lection et l'adresse loco. Ce processus actuellement n'importe pas les valeurs de CV stock&#233;es sur l'Ecos dans JMRI.
 
 <p>
 
 <H2> Exportation Locos dans Ecos </H2>
-Quand un nouveau fichier d'entrée est créée dans JMRI, il vous sera demandé si vous souhaitez ajouter l'entrée de fichier dans la base de données Ecos. L'entrée Ecos utilise l'ID du fichier comme nom de la loco, définit la vitesse de 128 pas, et règle l'adresse de la locomotive. Le nombre de crans de vitesses peut être modifié dans le Menu Préférences Ecos .
+Quand un nouveau fichier d'entr&#233;e est cr&#233;&#233; dans JMRI, il vous sera demand&#233; si vous souhaitez ajouter l'entr&#233;e de fichier dans la base de donn&#233;es Ecos. L'entr&#233;e Ecos utilise l'ID du fichier comme nom de la loco, d&#233;finit la vitesse de 128 pas, et r&#232;gle l'adresse de la locomotive. Le nombre de crans de vitesses peut &#234;tre modifi&#233; dans le Menu Pr&#233;f&#233;rences Ecos .
 
 <H2>Programmation</H2>
 Ce n'est actuellement pas pris en charge par l'Ecos.
 <p>
-Des renseignements supplémentaires sur l'ECoS peuvent être trouvés
+Des renseignements suppl&#233;mentaires sur l'ECoS peuvent &#234;tre trouv&#233;s
 sur le
 <a href="http://www.loksound.de/us/index.php?showId=205"> site web ESU </a>.
 
 <p>
-Le Support pour ecos a d'abord été disponible en
-<a href="http://jmri.sf.net/releasenotes/jmri2.3.3.shtml"> JMRI 2.3.3 </a>.
+Le Support pour ecos a d'abord &#233;t&#233; disponible en
+<a href="http://jmri.org/releasenotes/jmri2.3.3.shtml"> JMRI 2.3.3 </a>.
 
-Le support du régulateur ECoS a d'abord été disponible en
-<a href="http://jmri.sf.net/releasenotes/jmri2.7.4.shtml"> JMRI 2.7.4 </a>.
+Le support du r&#233;gulateur ECoS a d'abord &#233;t&#233; disponible en
+<a href="http://jmri.org/releasenotes/jmri2.7.4.shtml"> JMRI 2.7.4 </a>.
 
-Support pour la Rétro-signalisation S88 des capteurs ECoa d'abord été disponible en
-<a href="http://jmri.sf.net/releasenotes/jmri2.7.9.shtml"> JMRI 2.7.9 </a>. .
+LeSupport pour la R&#233;tro-signalisation S88 des capteurs ECos d'abord &#233;t&#233; disponible en
+<a href="http://jmri.org/releasenotes/jmri2.7.9.shtml"> JMRI 2.7.9 </a>. .
 <p>
 
-.
+Le Support for Les informations Railcom Ecos &#233;tait d'abord disponible sur <br>
+<a href="http://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI 2.99.7</a>.<br>   
     
 <!--#include virtual="/Footer" -->
 </body>

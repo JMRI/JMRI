@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
       JMRI: Dispatcher Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Dave Duchamp" name=Author>
+    <META content="Dave Duchamp" name="Author">
     <META name="keywords" content="JMRI help Dispatcher">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Dispatcher</H1>
+<h1>Dispatcher</h1>
 
 <a name="contents"></a><h2>Contents</h2>
 
@@ -36,9 +34,9 @@ Underlined items are links to sections of this document or to other help files.<
 	<li><a href="#glossary">Glossary of Terms</a></li>
 	<li><a href="#transits">Using Transits and Sections in Dispatching Active Trains</a></li>
 	<li><a href="#window">The Dispatcher Window</a></li>
-	<li><a href="#atrains">The Active Trains Table</a></li>
-	<li><a href="#arequests">The Requested Allocations Table</a></li>
-	<li><a href="#allocated">The Allocated Sections Table</a></li>
+	<li><a href="#atrains">The Active Train Table</a></li>
+	<li><a href="#arequests">The Requested Allocation Table</a></li>
+	<li><a href="#allocated">The Allocated Section Table</a></li>
 	<li><a href="#automatic">Running Trains Automatically</a></li>
 	<li><a href="#require">Requirements for Automatic Running</a></li>
 </ul>
@@ -101,7 +99,7 @@ along with status information about the Active Train. The Dispatcher Window
 also contains a table of pending <b>Allocation Requests</b>, a table of currently  
 <b>Allocated Sections</b>, and buttons that allow the dispatcher to easily 
 allocate Sections, create new Active Trains, and terminate Active Trains. Allocated 
-Sections are released using buttons in the Allocated Sections table, or automatically 
+Sections are released using buttons in the Allocated Section Table, or automatically 
 if the <b>Auto Release</b> option is selected. The 
 <b><a href="#window">Dispatcher Window</a></b> is discussed in detail below.</p>
 <p><b>Note:</b> The current version of Dispatcher contains the first version of 
@@ -153,7 +151,7 @@ information and options. The Train describes what is traveling, and the Transit
 describes where it is going. Details are filled in by other information and options
 selected when the Active Train is created. Active Trains are central to Dispatcher. 
 How Active Trains are used is described in detail <a href="#transits">below</a>. 
-The <b><a href="#atrains">Active Trains Table</a></b> section below provides more 
+The <b><a href="#atrains">Active Train Table</a></b> section below provides more 
 details. Active Trains are created and terminated from the Dispatcher window.</p>
 <p><b>Auto Active Train</b> - An Active Train that is run automatically by a 
 <i>virtual engineer</i> instead of manually by a human engineer. An Auto Active 
@@ -174,7 +172,7 @@ option.</p>
 are alternate Sections following the Allocated Section, the dispatcher must 
 choose the next Section from the alternate Sections contained in the Transit. 
 A table listing all Allocated Sections is displayed in the Dispatcher window. The 
-Allocated Sections table is where Sections are released, either manually by the 
+Allocated Section Table is where Sections are released, either manually by the 
 dispatcher, or automatically if using the <b>Auto Release</b> option.</p>
 <p><b>Alternate Section</b> - An <i>alternate</i>  <b>Section</b> connecting two 
 Sections in a <b>Transit</b>. In user-specified areas of a Transit, <i>alternate</i> 
@@ -214,7 +212,7 @@ Sections, one by one, to the Active Train, and holding the Active Train in a
 Section when its needs conflict with the needs of other Active Trains. 
 The actual allocation may be done by the dispatcher by manually clicking 
 buttons in the Dispatcher Window, or the dispatcher may request <b>Auto Allocate</b> 
-by checking <b>Auto Allocate</b> above the Allocated Sections table or by selecting 
+by checking <b>Auto Allocate</b> above the Allocated Section Table or by selecting 
 it in the <b><a href="Options.shtml">Options</a></b> menu of the Dispatcher window, 
 and allow the computer do some of the routine work. If a requested Section is 
 currently in use, an Allocation Request is placed in the Requested Allocations 
@@ -230,12 +228,15 @@ created or edited in the
 <H2>The Dispatcher Window</H2>
 
 <p>The <b>Dispatcher</b> window is opened when <b>Dispatcher...</b> is selected 
-in the JMRI <b>Tools</b> menu. It displays a table of <b>Active Trains</b> and 
+in the JMRI <b>Tools</b> menu. It is also accessible from the LocoTools "Dispatcher" menu:<br>
+<img src="images/DispatcherMenu413.png" height="76" width="609"></p>
+<p>
+It displays a table of <b>Active Trains</b> and 
 their status, and a table of pending <b>Allocation Requests</b>. It provides 
 buttons that allow the dispatcher to easily allocate Sections, create new Active 
 Trains, terminate Active trains, and display a table of all 
 <b><a href="AllocatedSections.shtml">Allocated Sections</a></b>. Allocated Sections 
-are <i>released</i> using buttons in the Allocated Sections table. Dispatcher 
+are <i>released</i> using buttons in the Allocated Section Table. Dispatcher 
 window buttons are discussed below. The 
 <b><a href="#atrains">Active Trains</a></b> table and the Allocation Request 
 table are discussed in the following sections.</p>
@@ -250,12 +251,12 @@ mode (manual throttle). The third Active Train, Amtrak 139, is scheduled to star
 at 8:35 on the fast clock, and will run in AUTOMATIC mode. Allocation Requests 
 have been entered for the next Sections needed by two of the Active Trains. The 
 requested Sections are FREE and UNOCCUPIED, so the dispatcher could allocate either 
-of them by clicking the <b>Allocate</b> button in the Requested Allocations table 
-or the <b>Allocate Next</b> button in the Active Trains table. Allocating a Section 
+of them by clicking the <b>Allocate</b> button in the Requested Allocation Table 
+or the <b>Allocate Next</b> button in the Active Train Table. Allocating a Section 
 to Amtrak 139 would require the dispatcher override its scheduled start time. 
 The Sections currently allocated to the three trains are shown in the Allocated 
-Sections table.</p>
-<p> The four buttons below the Active Trains table are described below:
+Section Table.</p>
+<p> The four buttons below the Active Train Table are described below:
 <ul>
 <li><p><b>New Train...</b> - Click this button to bring up an <b>Activate New 
 Train</b> window that allows the dispatcher to create an Active Train. The 
@@ -302,7 +303,7 @@ available in the Options window, and of the Options menu, are contained
 in the <b><a href="Options.shtml">Options</a></b> help file.</p>
 
 <a name="atrains"></a>
-<H2>The Active Trains Table</H2>
+<H2>The Active Train Table</H2>
 <p>The Active Train Table from the above example Dispatcher window is shown below.</p>
 <img src="ActiveTrainsTable.jpg" height="118" width="802">
 <p>Each row of <b>Active Trains</b> table corresponds to one Active Train. The 
@@ -397,8 +398,8 @@ Section is appropriate, so the dispatcher is not queried.
 </ul>
 
 <a name="arequests"></a>
-<H2>The Requested Allocations Table</H2>
-<p>The Requested Allocations Table from the above example Dispatcher window is shown below.</p>
+<H2>The Requested Allocation Table</H2>
+<p>The Requested Allocation Table from the above example Dispatcher window is shown below.</p>
 <img src="RequestedAllocationsTable.jpg" height="101" width="802">
 
 <p>This table, headed <b>Requested Allocations waiting for Dispatch</b>, 
@@ -489,7 +490,7 @@ Request without allocating the requested Section.
 </ul>
 
  <a name="allocated"></a>
-<H2>The Allocated Sections Table</H2>
+<H2>The Allocated Section Table</H2>
 <p>The <b>Allocated Sections</b> table displays all Sections 
 currently allocated to Active Trains. This table serves two purposes.  It 
 shows which Allocated Sections are allocated to which Active Trains, and it 
@@ -551,7 +552,7 @@ table, is used to switch on (checked) or off (unchecked) the automated allocatio
 option. If <b>Auto Allocate</b> is off, the dispatcher is responsible for allocating
 all <b>Sections</b> using the <b>Allocate</b> button of the <b>Allocation Request</b> 
 in the Allocation Request Table or the <b>Allocate Next</b> button of the <b>Active 
-Train</b> in the Active Trains Table (see above). </p>
+Train</b> in the Active Train Table (see above). </p>
 <p>The <b>Auto Allocate</b> option works cautiously. It will never allocate an 
 <b>OCCUPIED</b> Section. It will never override a fast clock start time. It will 
 attempt to avoid gridlock by looking ahead to see if a requested Section will be 
@@ -698,7 +699,7 @@ acts as a connectivity data base, supplying connectivity information as needed t
 Dispatcher or the Auto Active Train's <i>virtual engineer</i>.</p>
 </li>
 <li><p>Hardware signals on the layout need not be present, but signals and signal 
-logic (Either SignalHeads & SSL or SignalMasts & SML) must be configured in the 
+logic (Either SignalHeads &amp; SSL or SignalMasts &amp; SML) must be configured in the 
 Layout Editor panel. Auto Active Trains follow signals, requiring signals on the 
 Layout Editor panel.</p>
 </li>
@@ -709,7 +710,7 @@ up.</p>
 </li>
 <li><p>All entry points and exit points from Sections in the Transit must have 
 signals on the Layout Editor panel. If Using Signal Heads/SSL then boundaries between 
-Blocks in Sections should be signalled on the Layout Editor panel. 
+Blocks in Sections should be signaled on the Layout Editor panel. 
 Portions of the layout that are not in Sections in Transits only need those 
 signals that are necessary to allow setup of signal logic, either SSL (Simple Signal Logic) 
 or SML (Signal Mast Logic) for signals in Sections of the Transit. 
@@ -753,7 +754,8 @@ at slower speeds. Derailing problems must have been solved.
 <b>A train should run flawlessly in manual mode, before automatic running 
 is attempted.</b></p>
 
-
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

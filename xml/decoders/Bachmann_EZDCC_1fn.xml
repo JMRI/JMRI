@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/decoder.xsl"?>
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: Bachmann_EZDCC_1fn.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -24,127 +24,52 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Start Volts" CV="2" item="Vstart" default="10" comment="Range 0-31">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="10" comment="Range 0-31">
         <decVal min="0" max="31"/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable label="Acceleration momentum" CV="3" default="1" comment="Range 1-255">
+      <variable item="Acceleration momentum" CV="3" default="1" comment="Range 1-255">
         <decVal min="1" max="255"/>
         <label>Acceleration momentum</label>
         <comment>Range 1-255</comment>
       </variable>
-      <variable label="Deceleration momentum" CV="4" default="1" comment="Range 1-255">
+      <variable item="Deceleration momentum" CV="4" default="1" comment="Range 1-255">
         <decVal min="1" max="255"/>
         <label>Deceleration momentum</label>
         <comment>Range 1-255</comment>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Version ID</label>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-        <longAddressVal/>
-        <label>Long Address</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
-      </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable label="Analog Mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
-      <variable label="Brake Momentum on DC" CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block">
-        <enumVal>
-          <enumChoice choice="Loco runs under DC analog voltage control">
-            <choice>Loco runs under DC analog voltage control</choice>
-          </enumChoice>
-          <enumChoice choice="Loco brakes to a stop using Deceleration momentum (CV4)">
-            <choice>Loco brakes to a stop using Deceleration momentum (CV4)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Brake Momentum on DC</label>
-        <comment>Governs how loco acts in DC track block</comment>
-      </variable>
-      <variable label="Headlight Dimming intensity" CV="52" default="255" comment="Controls how much headlights dim (0-dark to 255-max bright)" item="Function F0F behavior">
+      <!-- CV=19 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
+      <variable CV="52" default="255" comment="Controls how much headlights dim (0-dark to 255-max bright)" item="Function F0F behavior">
         <decVal min="0" max="255"/>
         <label>Headlight Dimming intensity</label>
         <comment>Controls how much headlights dim (0-dark to 255-max bright)</comment>
       </variable>
       <!-- User private ID CV's are not documented by Bachamann, but appear to work -->
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
+      <variable CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
       </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
+      <variable CV="106" item="User Id #2">
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
 </decoder-config>

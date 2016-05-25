@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: XML.shtml,v 1.1 2008/02/16 19:06:09 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!--  $Id$ -->
+<!-- Updated by Blorec Herv&#233; le 2013-09-01-->
 <title>JMRI: Decoder Information</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -22,50 +22,50 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H1>JMRI: Information Décodeur </H1>
+<H1>JMRI: Information D&#233;codeur </H1>
 
-Le projet JMRI a rassemblé une grande quantité d'informations sur les
-Décodeurs DCC, il les met à la disposition du public de plusieurs façons. Elles
-sont décrites sur cette page.
+Le projet JMRI a rassembl&#233; une grande quantit&#233; d'informations sur les
+D&#233;codeurs DCC, il les met &#224; la disposition du public de plusieurs fa&#231;ons. Elles
+sont d&#233;crites sur cette page.
 
-<h2>Accès à l'information via le web</h2>
+<h2>Acc&#232;s &#224; l'information via le web</h2>
 
-Les pages Web sont automatiquement créées à partir des fichiers de configuration DecoderPro
-dans le cadre de chaque version. Ceux-ci contiennent:
+Les pages Web sont automatiquement cr&#233;&#233;es &#224; partir des fichiers de configuration DecoderPro
+dans le cadre de chaque version. Celles-ci contiennent:
 <UL>
 <LI>
-<A HREF="../../xml/XSLT/pages/DecoderId.html"> Identification des valeurs des CV du  Décodeur  </a>
-utilisée par DecoderPro pour identifier le fabricant et le
-type d'un décodeur inconnu.
+<A HREF="../../xml/XSLT/pages/DecoderId.html"> Identification des valeurs des CV du D&#233;codeur  </a>
+utilis&#233;e par DecoderPro pour identifier le fabricant et le
+type d'un d&#233;codeur inconnu.
 <LI>
-<A HREF="../../xml/XSLT/pages/decoderIndex.html">Index des pages individuelles décodeur </a>,
-énumérées par le fabricant. Cela fournit un résumé des pages des caractéristiques
-CV et le contenu des décodeurs.
-<LI>La sélection des guides annonce
-<A HREF="../../xml/XSLT/pages/SelectionGuide.html#size"> la taille décodeur </a>, et par
-<A HREF="../../xml/XSLT/pages/SelectionGuide.html#electrical"> Caractéristiques électriques des décodeurs </a>.
-<LI> <A HREF="../../xml/XSLT/pages/CVSummary.html"> Résumé combiné des CV pour tous les décodeurs </a>.
- Notez que c'est une <I>très </i> grande page!
+<A HREF="../../xml/XSLT/pages/decoderIndex.html">Index des pages individuelles d&#233;codeur </a>,
+&#233;num&#233;r&#233;es par le fabricant. Cela fournit une page sommaire des caract&#233;ristiques
+et CV contenu des d&#233;codeurs.
+<LI>La s&#233;lection des listes de guides
+<A HREF="../../xml/XSLT/pages/SelectionGuide.html#size"> la taille d&#233;codeur </a>, et par
+<A HREF="../../xml/XSLT/pages/SelectionGuide.html#electrical"> Caract&#233;ristiques &#233;lectriques des d&#233;codeurs </a>.
+<LI> <A HREF="../../xml/XSLT/pages/CVSummary.html"> R&#233;sum&#233; combin&#233; des CV pour tous les d&#233;codeurs </a>.
+ Notez que c'est une <I>tr&#232;s </i> grande page!
 </UL>
 
-<h2>Informations dans un format variable séparée par une virgule (CVS)</h2>
+<h2>Informations dans un format variable s&#233;par&#233;e par une virgule (CVS)</h2>
 
-Pour rendre ces infos plus facile à importer dans un tableur ou un autre programme, elles sont
-également disponibles sous forme de fichiers Comma-Separated Variable (CSV). Fichiers avec données séparées par des virgules
+Pour rendre ces infos plus facile &#224; importer dans un tableur ou un autre programme, elles sont
+&#233;galement disponibles sous forme de fichiers Comma-Separated Variable (CSV). Fichiers avec donn&#233;es s&#233;par&#233;es par des virgules
 
 <UL>
-<LI> <A HREF="../../xml/XSLT/pages/decodersizes.csv">la taille physique de chaque décodeur défini
- </a> <LI> <A HREF="../../xml/XSLT/pages/cvsummary.csv">CVs présent dans chaque décodeur </a> 
-<LI> <A HREF="../../xml/XSLT/pages/decoderpower.csv">limites de puissance et connecteur par décodeur
+<LI> <A HREF="../../xml/XSLT/pages/decodersizes.csv">la taille physique de chaque d&#233;codeur d&#233;fini
+ </a> <LI> <A HREF="../../xml/XSLT/pages/cvsummary.csv">CVs pr&#233;sent dans chaque d&#233;codeur </a> 
+<LI> <A HREF="../../xml/XSLT/pages/decoderpower.csv">limites de puissance et connecteur par d&#233;codeur
  </a> 
 </UL>
 
 
 <h2>Fichierss XML</h2>
 
-La version définitive des données est dans des fichiers XML. Ceux-ci peuvent être obtenus auprès de
-toute distribution jmri, ou via le Web à l'adresse
-<A HREF="http://jmri.sf.net/xml"> http://jmri.sf.net/xml</a>.
+La version d&#233;finitive des donn&#233;es est dans des fichiers XML. Ceux-ci peuvent &#234;tre obtenus aupr&#232;s de
+toute distribution jmri, ou via le Web &#224; l'adresse
+<A HREF="http://jmri.org/xml"> http://jmri.org/xml</a>.
     
 <!--#include virtual="/Footer" -->
 </body>

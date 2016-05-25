@@ -21,13 +21,13 @@
            xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
            xsi:schemaLocation="
                 http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
-                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
             "
         >
     <xs:complexType name="SignalMastManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SignalMastManager implementation.
+          Define the XML structure for storing the contents of a SignalMastManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalMastManagerXml</jmri:usingclass>
@@ -46,7 +46,7 @@
     <xs:complexType name="SignalMastType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of one SignalMast implementation.
+          Define the XML structure for storing the contents of one SignalMast implementation.
           Generally dealt with by the manager implemenation
         </xs:documentation>
         <xs:appinfo>
@@ -57,10 +57,17 @@
 
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="properties" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="property" type="SignalMastPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
         <xs:element name="unlit" minOccurs="0" maxOccurs="1" >
           <xs:complexType>
-            <xs:attribute name="allowed"  use="required">
+            <xs:attribute name="allowed" use="required">
                 <xs:annotation><xs:documentation>Specifies if the signal can go unlit</xs:documentation></xs:annotation>
             </xs:attribute>
           </xs:complexType>
@@ -83,10 +90,45 @@
       <xs:attribute name="class" type="classType" />
     </xs:complexType>
     
+    <xs:complexType name="SignalMastPropertyType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a single property within a signalmast element's properties element.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalMastManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="key" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="class" type="classType" use="required">
+                  <xs:annotation><xs:documentation>Specifies the implementing Java class</xs:documentation></xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="value" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="class" type="classType" use="required">
+                  <xs:annotation><xs:documentation>Specifies the implementing Java class</xs:documentation></xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="TurnoutSignalMastType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of one Turnout Based Signal Mast implementation.
+          Define the XML structure for storing the contents of one Turnout Based Signal Mast implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.implementation.configurexml.TurnoutSignalMastXml</jmri:usingclass>
@@ -96,6 +138,13 @@
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="properties" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="property" type="SignalMastPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="unlit" minOccurs="0" maxOccurs="1" >
           <xs:complexType>
             <xs:sequence>

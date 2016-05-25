@@ -1,31 +1,32 @@
 // LoadModifierEditor.java
-
 package jmri.jmrix.loconet.sdfeditor;
 
-import jmri.jmrix.loconet.sdf.SdfMacro;
 import javax.swing.JLabel;
+import jmri.jmrix.loconet.sdf.SdfMacro;
 
 /**
- * Editor panel for the LOAD_MODIFIER macro from the Digitrax sound definition language
+ * Editor panel for the LOAD_MODIFIER macro from the Digitrax sound definition
+ * language
  *
- * Arg1:
- *      Upper 4 bits - math modifiers FMATH_LODE et al
- * Arg2:
- * Arg3:
+ * Arg1: Upper 4 bits - math modifiers FMATH_LODE et al Arg2: Arg3:
  *
  *
- * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2007
+ * @version $Revision$
  */
-
 class LoadModifierEditor extends SdfMacroEditor {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8107914840589271502L;
 
     public LoadModifierEditor(SdfMacro inst) {
         super(inst);
 
         // remove default message from SdfMacroEditor
         this.removeAll();
-        
+
         // and set up our own
         add(new JLabel("No editor defined for this instruction yet."));
     }

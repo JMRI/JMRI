@@ -26,9 +26,9 @@
 Although JMRI itself is constructed to "run anywhere",
 starting a JMRI application requires commands that are
 specific to the particular type of computer used.
-With each JMRI distribution, we provide 
+With each JMRI distribution, we provide
 scripts, application bundles or batch files that
-handle the details for you. 
+handle the details for you.
 Of course, you can modify these or create your own.
 <p>
 This page provides information on the tools provided with
@@ -39,13 +39,20 @@ JMRI distributions on:
 <li><a href="#windows">Windows</a>
 </ul>
 
-If you update any of these, please consider either 
+If you update any of these, please consider either
 making your change on the other machines (and testing it!)
 or at least putting a comment in the others
 to describe how they now differ.
 
+<p>
+During startup, JMRI gets additional information from several sources:
+<ul>
+<li>If present, a "python.properties" file configures the Jython interpreter environment
+<li>JMRI's own <a href="../../profiles.shtml">profiles and configuration information</a>.
+</ul>
+
 <a name="linux">
-<h2>Linux</h2></a>
+<h2 id="linux">Linux</h2></a>
 
 JMRI distributions for Linux contain shell (bash) scripts
 for each of the main applications:  DecoderPro, PanelPro, etc.
@@ -79,15 +86,15 @@ is located.
 <dt>Library Files
 <dd>
 The RXTX Serial library requires some platform specific native libraries
-in order to interface to the serial port drivers.  JMRI applications need 
+in order to interface to the serial port drivers.  JMRI applications need
 to use the version of the library that is correct for the operating system
-and the CPU architecture.  
+and the CPU architecture.
 <p>
 The two most common architectures at this time are <tt>i386</tt> and <tt>x86_64</tt>,
-respectively the 32 bit Intel and the 64 bit AMD/Intel systems.   
+respectively the 32 bit Intel and the 64 bit AMD/Intel systems.
 <p>
 The startup scripts will use some common applications (<tt>arch</tt>, <tt>uname</tt>)
-to determine the current operating system and architecture, and then set up the 
+to determine the current operating system and architecture, and then set up the
 correct library paths for Java to find the right shared library files.
 
 <dt>Classpath
@@ -103,8 +110,8 @@ in order:
 <li>all jar files in the lib subdirectory of the current directory
 </ul>
 <p>
-This allows you to drop jar files into the 
-JMRI install directory for the 
+This allows you to drop jar files into the
+JMRI install directory for the
 <a href="plugins.shtml">JMRI plug-in mechanism</a>.
 
 <dt>Configuration File
@@ -113,11 +120,11 @@ If there's an argument to the script, it will be used as the name of the prefere
 file used to configure the program at startup.  If the user saves the preferences
 from the program, they'll go to this file too.
 <p>
-If no argument is provided, the configuration file name is made 
+If no argument is provided, the configuration file name is made
 from the name of the script, followed by "Config2.xml".  For example,
 the DecoderPro script uses DecoderProConfig2.xml as a preferences file.
-If a copy of that script is named MyJmriApp, it will use a preferences 
-file named MyJmriAppConfig2.xml. 
+If a copy of that script is named MyJmriApp, it will use a preferences
+file named MyJmriAppConfig2.xml.
 <p>
 This lets you create as many specialized configurations you'd like by just
 copying and renaming a startup script.
@@ -134,7 +141,7 @@ RXTX does not know about certain names for serial ports connected
 via USB.  This section looks for a few known names and adds them
 to the program if present.  If you have a device file name that JMRI
 cannot find, you can set the environment variable <tt>JMRI_SERIAL_PORTS</tt>
-to be comma-separated list of the names. 
+to be comma-separated list of the names.
 
 <dt>Java command
 <dd>Finally, the script puts all this together into a java command, which it executes.
@@ -153,78 +160,22 @@ from the distributed disk image onto the user's disk drive.
 
 <h3>Bundle Details</h3>
 
-JMRI has registered five application signatures: 
+JMRI has registered five application signatures:
 <dl>
 <dt>JMRD<dd>DecoderPro
 <dt>JMRP<dd>PanelPro
 <dt>JMRI<dd>(generic JMRI, was JMRIdemo)
 <dt>JMRL<dd>LocoTools (no longer used)
-<dt>JMRC<dd>Cornwall demo
+<dt>JMRC<dd>Cornwall demo (no longer used)
 </dl>
 
 <h3>Script Details</h3>
 
-Each bundle as a startup shell (Bash) script in the Contents/MacOSX
+Each bundle has a startup shell (Bash) script in the Contents/MacOSX
 directory what does the actual startup.
-In this section, we briefly describe what each section of that script does.
-<dl>
-<dt>CLASSNAME
-<dd>To make the script easier to maintain, the name of the main
-class is defined near the beginning.
-
-<dt>Debug setting
-<dd>
-If the DEBUG symbol is set to anything, the script will produce
-debugging output after each section.
-
-<dt>Directory
-<dd>
-To run, JMRI needs to be able to find things in the current directory.
-This step attempts to set that directory automatically.
-<p>
-If the JMRI_HOME environment variable is defined
-and pointing to a directory that contains a jmri.jar file,
-change the current directory to there.
-<p>
-Otherwise, change the current directory to where the application bundle
-is located.
-
-<dt>Classpath
-<dd>
-The script builds the Java classpath automatically to contain,
-in order:
-<ul>
-<li>class files in the current directory
-<li>class files in the class subdirectory of the current directory
-<li>class files in the java/class subdirectory of the current directory
-<li>all jar files in the current directory, except jmri.jar
-<li>jmri.jar in the current directory
-<li>all jar files in the lib subdirectory of the current directory
-</ul>
-<p>
-This allows you to drop jar files into the 
-JMRI install directory for the 
-<a href="plugins.shtml">JMRI plug-in mechanism</a>.
-
-<dt>Configuration File
-<dd>
-The configuration file name is made 
-from the name of the application bundle, followed by "Config2.xml".  For example,
-the DecoderPro application uses DecoderProConfig2.xml as a preferences file.
-If a copy of that application is named MyJmriApp, it will use a preferences 
-file named MyJmriAppConfig2.xml. 
-<p>
-This lets you create as many specialized configurations you'd like by just
-copying and renaming an application.
-
-<dt>Java options
-<dd>
-The program sets a number of options for the JVM.  This includes
-the necessary program settings, setting memory limits, various
-symbols to control operation, and some options specific to Mac OS X.
-
-<dt>Java command
-<dd>Finally, the script puts all this together into a java command, which it executes.
+This is the same script as used for Linux,
+see please see <a href="#linux">that section</a>
+for details.
 
 </dl>
 
@@ -232,7 +183,7 @@ symbols to control operation, and some options specific to Mac OS X.
 <a name="windows">
 <h2>Windows</h2></a>
 
-Upto and including JMRI version 2.3.2, the Windows .bat files just create a fixed java command and executed it. 
+Upto and including JMRI version 2.3.2, the Windows .bat files just create a fixed java command and executed it.
 <p>From JMRI version 2.3.3, the individual Windows .bat files now call a small launcher application, LaunchJMRI.exe.
 
 <h3>Command-line details</h3>
@@ -247,6 +198,8 @@ In this section, we briefly describe the launcher application command-line optio
 <dt>/32bit (Optional - from JMRI 2.99.4)
 <dd>If this option is set on the command line, the launcher will force the use of a 32-bit Java Runtime Environment on 64-bit machines.
     This option has no effect on 32-bit machines.
+<dt>/profile &lt;profileID&gt; (Optional - from JMRI 3.7.1)
+<dd>If this option is set on the command line, the launcher will use profile &lt;profileID&gt; as the <a href="/help/en/html/profiles.shtml">JMRI configuration profile</a> to use instead of the default one.
 <dt>Class Parameter
 <dd>The first parameter of LaunchJMRI.exe, after any of the above options, is the name of the main class to execute.
 <dd>An example to launch DecoderPro would be "apps.DecoderPro.DecoderPro"
@@ -255,7 +208,7 @@ In this section, we briefly describe the launcher application command-line optio
 <dd>
 If there's a second argument to the launcher, it will be used as the name of the preferences file used to configure the program at startup.  If the user saves the preferences from the program, they'll go to this file too.
 <br>
-If no argument is provided, the configuration file name is defaulted in the application.  For example, the DecoderPro application uses DecoderProConfig2.xml as a preferences file.  If the launcher is called by 'LaunchJMRI.exe apps.DecoderPro.DecoderPro MyJmriAppConfig2.xml', it will use a preferences file named MyJmriAppConfig2.xml. 
+If no argument is provided, the configuration file name is defaulted in the application.  For example, the DecoderPro application uses DecoderProConfig2.xml as a preferences file.  If the launcher is called by 'LaunchJMRI.exe apps.DecoderPro.DecoderPro MyJmriAppConfig2.xml', it will use a preferences file named MyJmriAppConfig2.xml.
 <br>
 This allows you to create as many specialized configurations you'd like by creating a new Start Menu and/or Desktop shortcut to 'LaunchJMRI.exe' file and adding the preferences file as a parameter.
 </dl>
@@ -311,7 +264,7 @@ This allows you to drop jar files into the JMRI install directory for the <a hre
 In a default JMRI installation, a number of shortcuts are created in the Start Menu, along with Desktop Icons for DecoderPro and PanelPro.
 <h4>Start Menu shortcuts</h4>
 All JMRI Start Menu shortcuts are placed in the "JMRI" start menu folder (or sub-folders) in the following structure:
-<ul> <!-- id="side"> <!-- use sidebar css style -->
+<ul>
  <li>JMRI
  <ul>
   <li>DecoderPro - launch DecoderPro application
@@ -328,6 +281,7 @@ All JMRI Start Menu shortcuts are placed in the "JMRI" start menu folder (or sub
 Additional icons may be placed within this structure depending on the options chosen during installation and the version of JMRI being installed.
 <p>
 Start Menu shortcut example for DecoderPro (assuming JMRI is installed in the default location "C:\Program Files\JMRI"):
+<p><i>Important note: in the following, replace "C:\Program Files\JMRI" by "C:\Program Files (x86)\JMRI" if your Windows is a 64bits version.</i></p>
 <dl>
  <dt>Shortcut name
  <dd>'All Users' on Windows 2000 and XP - C:\Documents and Settings\All Users\Start Menu\Programs\JMRI\DecoderPro.lnk
@@ -335,7 +289,8 @@ Start Menu shortcut example for DecoderPro (assuming JMRI is installed in the de
  <dd>'Current User' on Windows 2000 and XP - C:\Documents and Settings\[username]\Start Menu\Programs\JMRI\DecoderPro.lnk
  <dd>'Current User' on Windows Vista and 7 - C:\Users\[username]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\JMRI\DecoderPro.lnk
  <dt>Target
- <dd>"C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro
+ <dd>"C:\Program Files\JMRI\LaunchJMRI.exe" apps.gui3.dp3.DecoderPro3
+ <dd><i>(up to version 3.11.x was: "C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro)</i>
  <dt>Start In
  <dd>"C:\Program Files\JMRI"
  <dt>Shortcut Key
@@ -358,7 +313,8 @@ The structure of Desktop Icon creation is similar to that of the Start Menu shor
  <dd>'Current User' on Windows 2000 and XP - C:\Documents and Settings\[username]\Desktop\DecoderPro.lnk
  <dd>'Current User' on Windows Vista and 7 - C:\Users\[username]\Desktop\DecoderPro.lnk
  <dt>Target
- <dd>"C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro
+ <dd>"C:\Program Files\JMRI\LaunchJMRI.exe" apps.gui3.dp3.DecoderPro3
+ <dd><i>(up to version 3.11.x was: "C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro)</i>
  <dt>Start In
  <dd>"C:\Program Files\JMRI"
  <dt>Shortcut Key
@@ -370,10 +326,35 @@ The structure of Desktop Icon creation is similar to that of the Start Menu shor
  <dt>Icon
  <dd>"C:\Program Files\JMRI\decpro5.ico"
 </dl>
-<!-- <p>
-(This section needs information on how icons and shortcuts work.
-The InstallerVISE installer does something to associate an icon
-and to put two shortcuts on the desktop) -->
+
+<a name="old_DecoderPro">
+<h4>Retrieving "legacy" DecoderPro from versions prior to 4.0.x</h4>
+
+<p>The "legacy" DecoderPro that was existing prior to version 4.0.x has been removed from the distribution package and the former "DecoderPro 3" has been promoted to be the only available DecoderPro version.</p>
+<p>If you absolutely cannot use the new DecoderPro user interface (roster view), we suggest one of the following methods:</p>
+<ol>
+<li><b>Using PanelPro with script</b>: With the exception of a different icon and different fixed buttons on the main window, PanelPro has an identical user interface to the legacy DecoderPro.</li>
+	<ul>
+		<li>You can add the 3 fixed buttons (Open Roster, Service Mode, Operations Mode) that used to be on the legacy DecoderPro by adding a script at start-up.</li>
+		<li>Go to Edit > Preferences > Start-up > Scripts > Add Script. Select file "C:\Program Files\JMRI\jython\jython/MakeOriginalDecoderPro.py"</li>
+		<li>Then, save and restart.</li>
+	</ul>
+<li><b>Using PanelPro with buttons</b>:</li>
+	<ul>
+		<li>You can add several fixed buttons of your choice on the PanelPro interface.</li>
+		<li>Go to Edit > Preferences > Start-up > Buttons > Add Button. Select the action of your choice. Repeat for as many buttons as you wish.</li>
+		<li>For same buttons as on legacy DecoderPro, select "Open Roster", "DecoderPro service programmer" and "DecoderPro ops-mode programmer" </li>
+		<li>Then, save and restart.</li>
+	</ul>
+<li><b>Adding a custom shortcut to legacy DecoderPro</b>:</li>
+	<ul>
+		<li>Copy and Paste the "DecoderPro" shortcut (on your desktop or in the start menu)</li>
+		<li>Rename the copy to "DecoderPro legacy" <i>(or anything else of your choice, but <b>not</b> "DecoderPro")</i></li>
+		<li>On the new shortcut, right-click > Properties</li>
+		<li>In target, replace existing one by: "C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro</li>
+		<li>This will launch the legacy DecoderPro interface.</li>
+	</ul>
+</ol>
 
 
 <!--#include virtual="/Footer" -->

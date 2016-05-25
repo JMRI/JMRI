@@ -3,9 +3,9 @@
 # ATTENTION: Special version for HidRawEnvironmentPlugin of JInput
 # ATTENTION: Currently works in Windows only
 #
-# See <http://jmri.sf.net/help/en/html/hardware/raildriver/index.shtml>
+# See <http://jmri.org/help/en/html/hardware/raildriver/index.shtml>
 #
-# Author: Joan Carrancà, 2010
+# Author: Joan Carranc, 2010
 # - Based on the original RailDriver.py, Bob Jacobsen, copyright 2008
 # - Throttle window management and roster selection based on xboxThrottle.py, Andrew Berridge, copyright 2010
 # Part of the JMRI distribution
@@ -37,9 +37,9 @@
 # 1. Make sure you calibrate and set a "Dead zone" for each of the analogue levers in the
 # Calibration window! If you don't there will be too many events triggered 
 # and everything will slow right down....
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import java
+import jmri
 
 #
 # Set the name of the controller you're using

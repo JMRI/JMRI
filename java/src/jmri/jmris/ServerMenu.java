@@ -1,22 +1,25 @@
 /**
  * ServerMenu.java
  */
-
 package jmri.jmris;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.*;
-import java.util.*;
+import java.util.ResourceBundle;
+import javax.swing.JMenu;
 
 /**
- * Create a "Server" menu containing the Server interface to the JMRI 
+ * Create a "Server" menu containing the Server interface to the JMRI
  * system-independent tools
  *
- * @author	Paul Bender   Copyright 2010
- * @version     $Revision$
+ * @author	Paul Bender Copyright 2010
+ * @version $Revision$
  */
 public class ServerMenu extends JMenu {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7699901823839772206L;
+
     public ServerMenu(String name) {
         this();
         setText(name);
@@ -31,15 +34,9 @@ public class ServerMenu extends JMenu {
         setText(rb.getString("MenuServer"));
         // This first menu item is for connection testing only.  
         // It provides no parsing.
-	//add(new jmri.jmris.JmriServerAction(rb.getString("MenuItemStartServer")));
+        //add(new jmri.jmris.JmriServerAction(rb.getString("MenuItemStartServer")));
         add(new jmri.jmris.simpleserver.SimpleServerMenu());
         add(new jmri.jmris.srcp.JmriSRCPServerMenu());
 
-
-
     }
-
-    static Logger log = LoggerFactory.getLogger(ServerMenu.class.getName());
 }
-
-

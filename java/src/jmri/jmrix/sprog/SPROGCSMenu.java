@@ -1,20 +1,24 @@
 /**
  * SPROGCSMenu.java
  */
-
 package jmri.jmrix.sprog;
 
 import java.util.ResourceBundle;
-
 import javax.swing.JMenu;
 
 /**
  * Create a "Systems" menu containing the Jmri SPROG-specific tools
  *
- * @author	Andrew Crosland   Copyright 2006
- * @version     $Revision$
+ * @author	Andrew Crosland Copyright 2006
+ * @version $Revision$
  */
 public class SPROGCSMenu extends JMenu {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6206995194993926789L;
+
     public SPROGCSMenu(SprogSystemConnectionMemo memo) {
         this();
         setText(memo.getUserName());
@@ -42,5 +46,4 @@ public class SPROGCSMenu extends JMenu {
 
 }
 
-  /* @(#)SprogCSMenu.java */
-
+/* @(#)SprogCSMenu.java */

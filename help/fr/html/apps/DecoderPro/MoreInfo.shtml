@@ -1,13 +1,13 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+&#201;<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: MoreInfo.shtml,v 1.3 2009/03/12 22:59:03 matthewharris Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!-- $Id$ -->
+<!-- Translated by Blorec Herv&#233; le 2013-09-25-->
 <title>JMRI: DecoderPro In Depth</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -22,9 +22,9 @@
 <div id="mainContent">
 
 
-<H1>DecoderPro - Détails</H1>
+<H1>DecoderPro - D&#233;tails</H1>
 
-<p>Cette page fournit des renseignements sur la façon dont le programmateur DecoderPro symbolique fonctionne. Pour plus de détails internes sur JMRI, s'il vous plaît voir les pages techniques, qui sont encore en cours d'élaboration.</p>
+<p>Cette page fournit des renseignements sur la fa&#231;on dont le programmateur DecoderPro symbolique fonctionne. Pour plus de d&#233;tails internes sur JMRI, s'il vous pla&#238;t voir les pages techniques, qui sont encore en cours d'&#233;laboration.</p>
 
 <dl>
 <dt class=left>Fichiers de Configuration</dt>
@@ -32,71 +32,71 @@
 <p>
 Il existe deux types de fichiers de configuration:
 <ul>
-<li> Fichiers de Configuration Décodeur - Ceux-ci portent la description d'un type particulier de décodeur, et contrôlent le programmateur qui affiche les informations des variables.
-<li> Fichiers de Configuration Locomotive - Ceux-ci portent les informations spécifiques sur une seule locomotive.
+<li> Fichiers de Configuration D&#233;codeur - Ceux-ci portent la description d'un type particulier de d&#233;codeur, et contr&#241;lent le programmateur qui affiche les informations des variables.
+<li> Fichiers de Configuration Locomotive - Ceux-ci portent les informations sp&#233;cifiques sur une seule locomotive.
 </ul>
 </p>
 
 <p>
-Le programmeur peut lire n'importe quel type de fichier. Si vous sélectionnez un fichier décodeur après avoir cliqué sur Lire le fichier, le programmateur sera mis en place avec les variables, options, etc pour ce type. Les valeurs seront vides, parce que que le programmateur ne sait rien sur ce qui a été programmé dans un décodeur spécifique.</p>
+Le programmeur peut lire n'importe quel type de fichier. Si vous s&#233;lectionnez un fichier d&#233;codeur apr&#232;s avoir cliqu&#233; sur Lire le fichier, le programmateur sera mis en place avec les variables, options, etc pour ce type. Les valeurs seront vides, parce que que le programmateur ne sait rien sur ce qui a &#233;t&#233; programm&#233; dans un d&#233;codeur sp&#233;cifique.</p>
 
-<p>Si vous sélectionnez un fichier locomotive après avoir cliqué sur Lire le fichier, des informations sur la configuration à la fois du décodeur et des paramètres spécifiques à cette locomotive seront affichées. Cela vous montre comment la locomotive est déjà configurée, vous permettant de faire de petits changements avec moins de chance de confusion.</p>
+<p>Si vous s&#233;lectionnez un fichier locomotive apr&#232;s avoir cliqu&#233; sur Lire le fichier, des informations sur la configuration &#224; la fois du d&#233;codeur et des param&#232;tres sp&#233;cifiques &#224; cette locomotive seront affich&#233;es. Cela vous montre comment la locomotive est d&#233;j&#224; configur&#233;e, vous permettant de faire de petits changements avec moins de chance de confusion.</p>
 
-<p>Vous pouvez également écrire des fichiers locomotive avec le bouton Écrire dans un fichier. Ceci va archiver le contenu connu du décodeur, vous permettant d'y revenir à plus tard. </p>
+<p>Vous pouvez &#233;galement &#233;crire des fichiers locomotive avec le bouton &#201;crire dans un fichier. Ceci va archiver le contenu connu du d&#233;codeur, vous permettant d'y revenir &#224; plus tard. </p>
 
-<p> Les fichiers de configuration sont stockés au format XML. Il s'agit d'un formulaire standard pour les données structurées. XML est largement utilisé pour standardiser l'échange de données entre les différents fabricants dans de nombreux domaines, peut-être un jour les fabricants de décodeurs DCC fourniront une description XML de chaque décodeur qu'ils font. Dans l'intervalle, les fichiers de configuration sont créés par des bénévoles. S'il n'existe pas pour un décodeur spécifique, vous pouvez
- <a href="CreateDecoder.shtml"> créer vos propres </a> fichiers.
-Vous pouvez également modifier un fichier si vous préférez des noms différents, un regroupement de différentes options, ou si vous ne voulez voir que certaines options que vous n'utilisez pas. Un simple éditeur de texte peut créer ces fichiers facilement, comme le format n'a pas de champs de longueur fixe, de caractères spéciaux, etc Il y a aussi de puissants outils de XML dans le domaine public qui font qu'il est très facile de gérer un grand nombre de fichiers décodeur.</p>
+<p> Les fichiers de configuration sont stock&#233;s au format XML. Il s'agit d'un formulaire standard pour les donn&#233;es structur&#233;es. XML est largement utilis&#233; pour standardiser l'&#233;change de donn&#233;es entre les diff&#233;rents fabricants dans de nombreux domaines, peut-&#234;tre un jour les fabricants de d&#233;codeurs DCC fourniront une description XML de chaque d&#233;codeur qu'ils font. Dans l'intervalle, les fichiers de configuration sont cr&#233;&#233;s par des b&#233;n&#233;voles. S'il n'existe pas pour un d&#233;codeur sp&#233;cifique, vous pouvez
+ <a href="CreateDecoder.shtml"> cr&#233;er vos propres </a> fichiers.
+Vous pouvez &#233;galement modifier un fichier si vous pr&#233;f&#233;rez des noms diff&#233;rents, un regroupement de diff&#233;rentes options, ou si vous ne voulez voir que certaines options que vous n'utilisez pas. Un simple &#233;diteur de texte peut cr&#233;er ces fichiers facilement, comme le format n'a pas de champs de longueur fixe, de caract&#232;res sp&#233;ciaux, etc Il y a aussi de puissants outils de XML dans le domaine public qui font qu'il est tr&#232;s facile de g&#233;rer un grand nombre de fichiers d&#233;codeur.</p>
 </dd>
 
 <dt class=left>Variables</dt>
 <dd>
-<p>Une "variable" définit la valeur qui sera chargée dans tout ou partie d'un
-CV. Par exemple, une variable peut être définie qui définit la valeur des trois
-bits les plus significatifs de la CV 47. Si il y a plusieurs options configurées dans
-un seul CV, ces informations sont assurées par des variables distinctes.
+<p>Une "variable" d&#233;finit la valeur qui sera charg&#233;e dans tout ou partie d'un
+CV. Par exemple, une variable peut &#234;tre d&#233;finie qui d&#233;finit la valeur des trois
+bits les plus significatifs de la CV 47. Si il y a plusieurs options configur&#233;es dans
+un seul CV, ces informations sont assur&#233;es par des variables distinctes.
 Actuellement, il existe plusieurs types de variables:
 <ul>
-<LI> Decimal - nombres entrés dans la notation habituelle décimale. Ce sont les adresses courtes, les tensions de démarrage, etc.
-<LI> Enum (énuméré) - choisir parmi un ensemble d'options. Elles peuvent être utilisées
+<LI> Decimal - nombres entr&#233;s dans la notation habituelle d&#233;cimale. Ce sont les adresses courtes, les tensions de d&#233;marrage, etc.
+<LI> Enum (&#233;num&#233;r&#233;) - choisir parmi un ensemble d'options. Elles peuvent &#234;tre utilis&#233;es
 pour un simple choix on/off, oui/non, ou plusieurs ensembles complexes comme les FX
-par exemple l'éclairage ci-dessus. La configuration contient un nom pour chaque
-possibilité.
-<LI> Long adresse - comme une valeur décimale, sauf que les contraintes sur une adresse 
+par exemple l'&#233;clairage ci-dessus. La configuration contient un nom pour chaque
+possibilit&#233;.
+<LI> Long adresse - comme une valeur d&#233;cimale, sauf que les contraintes sur une adresse 
 longue valide qui sont prise en compte.
-<LI> Hex - Ce n'est pas tellement nécessaire, car les options multiples dans un
-seul CV peuvent être manipulées par des variables multiples. Mais si elle est nécessaire pour certaines
-raisons, la possibilité est présente.
+<LI> Hex - Ce n'est pas tellement n&#233;cessaire, car les options multiples dans un
+seul CV peuvent &#234;tre manipul&#233;es par des variables multiples. Mais si elle est n&#233;cessaire pour certaines
+raisons, la possibilit&#233; est pr&#233;sente.
 <LI> Speed table - pas encore vraiment au point, ce type de variable est
-destinée à fournir un tableau des tables graphiques des vitesses, que vous pouvez faire glisser autour pour
+destin&#233;e &#224; fournir un tableau des tables graphiques des vitesses, que vous pouvez faire glisser autour pour
 configurer comme vous le souhaitez.
 </ul></p>
 </dd>
 
-<dt class=left> Communication, Programmateur: états</dt>
+<dt class=left> Communication, Programmateur: &#233;tats</dt>
 <dd>
 <p>La communication avec la station de commande/programmeur, permettant la lecture et
-écriture du décodeur, n'est effectuée que lorsque les boutons "Lecture" ou "Écriture" sont pressés.
- Le programme assure le suivi de savoir si une valeur a été envoyée au
- décodeur en utilisant quatre états de variables ou de CVs::
+&#233;criture du d&#233;codeur, n'est effectu&#233;e que lorsque les boutons "Lecture" ou "&#201;criture" sont press&#233;s.
+ Le programme assure le suivi de savoir si une valeur a &#233;t&#233; envoy&#233;e au
+ d&#233;codeur en utilisant quatre &#233;tats de variables ou de CVs::
 <ul>
-<li> Read - La valeur indiquée a été lue par le décodeur.
-<LI> Stored - La valeur indiquée a été écrite dans le décodeur.
-<LI> Editted - La valeur indiquée a été changée dans l'ordinateur, mais
-pas encore écrite dans le décodeur. Appuyez sur le bouton d'écriture quand vous êtes d'accord 
+<li> Read - La valeur indiqu&#233;e a &#233;t&#233; lue par le d&#233;codeur.
+<LI> Stored - La valeur indiqu&#233;e a &#233;t&#233; &#233;crite dans le d&#233;codeur.
+<LI> Editted - La valeur indiqu&#233;e a &#233;t&#233; chang&#233;e dans l'ordinateur, mais
+pas encore &#233;crite dans le d&#233;codeur. Appuyez sur le bouton d'&#233;criture quand vous &#234;tes d'accord 
 avec la valeur. 
-<LI> Unknown - Une valeur par défaut, ou une lecture a échoué, ou pour d'autres raisons
-le programme n'a pas confiance dans la valeur, est ce vraiment celle que vous voulez?. Modifiez la valeur ou appuyez sur le bouton d'écriture.
+<LI> Unknown - Une valeur par d&#233;faut, ou une lecture a &#233;chou&#233;, ou pour d'autres raisons
+le programme n'a pas confiance dans la valeur, est ce vraiment celle que vous voulez?. Modifiez la valeur ou appuyez sur le bouton d'&#233;criture.
 </ul></p>
 </dd>
 
 <dt class=left>Impression</dt>
 <dd>
-<p>Vous pouvez imprimer les informations de la locomotive courante depuis la fenêtre du programmateur
-. Dans le menu "Fichier ...", sélectionnez "Imprimer ...", et de remplir le
-boîte de dialogue qui se présente.</p>
+<p>Vous pouvez imprimer les informations de la locomotive courante depuis la fen&#234;tre du programmateur
+. Dans le menu "Fichier ...", s&#233;lectionnez "Imprimer ...", et de remplir le
+bo&#238;te de dialogue qui se pr&#233;sente.</p>
 
-<p>L'impression est formatée par le format de programmation actuellement sélectionnée, afin que l'information de tous les onglets soit imprimée. Vous obtenez une impression plus courte  des valeurs les plus importantes lorsque vous imprimez à partir du format «de base», et une liste de tout lorsque vous utilisez le format "complet".. </p>
+<p>L'impression est format&#233;e par le format de programmation actuellement s&#233;lectionn&#233;e, afin que l'information de tous les onglets soit imprim&#233;e. Vous obtenez une impression plus courte  des valeurs les plus importantes lorsque vous imprimez &#224; partir du format "de base", et une liste de tout lorsque vous utilisez le format "complet".. </p>
 </dd>
 </dl>
     

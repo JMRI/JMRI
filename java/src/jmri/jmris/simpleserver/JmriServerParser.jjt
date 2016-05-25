@@ -1,0 +1,388 @@
+/* This is a parser grammar for the JMRI simple interconnection 
+protocol written for code generation with javacc */
+
+options {
+  STATIC=false;
+  MULTI=true;
+  VISITOR=true;
+}
+
+PARSER_BEGIN(JmriServerParser)
+
+package jmri.jmris.simpleserver.parser;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/* 
+ * This file defines a JavaTree/JavaCC parser implementation for
+ * the JMRI simple interconnection protocol.
+ * 
+ * @author Paul Bender Copyright (C) 2015
+ * @version $Revision: 17977 $
+ */
+
+// This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"NM_METHOD_NAMING_CONVENTION","RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"})
+
+public class JmriServerParser {
+  
+   static Logger log = LoggerFactory.getLogger(JmriServerParser.class.getName());
+
+  }
+
+PARSER_END(JmriServerParser)
+
+// The Tokenizer specification begins here:
+
+<DEFAULT>
+SKIP:
+{
+    <RETURN: "\r">:DEFAULT
+   | <CONTINUE: "\\\n">:DEFAULT
+   | <TAB: "\t">:DEFAULT
+   | <SPACE: " ">:DEFAULT
+}
+
+<DEFAULT,DEVICENAME,VALUE>
+TOKEN :
+{
+  < EOL : "\n" >:DEFAULT
+  | <#A:["a","A"]>
+  | <#B:["b","B"]>
+  | <#C:["c","C"]>
+  | <#D:["d","D"]>
+  | <#E:["e","E"]>
+  | <#F:["f","F"]>
+  | <#G:["g","G"]>
+  | <#H:["h","H"]>
+  | <#I:["i","I"]>
+  | <#J:["j","J"]>
+  | <#K:["k","K"]>
+  | <#L:["l","L"]>
+  | <#M:["m","M"]>
+  | <#N:["n","N"]>
+  | <#O:["o","O"]>
+  | <#P:["p","P"]>
+  | <#Q:["q","Q"]>
+  | <#R:["r","R"]>
+  | <#S:["s","S"]>
+  | <#T:["t","T"]>
+  | <#U:["u","U"]>
+  | <#V:["v","V"]>
+  | <#W:["w","W"]>
+  | <#X:["x","X"]>
+  | <#Y:["y","Y"]>
+  | <#Z:["z","Z"]>
+}
+
+<DEVICENAME>
+MORE: {
+   <~[]>
+}
+
+<DEVICENAME>
+TOKEN:
+{
+    < JMRITURNOUT:<T>(["0"-"9"])+ >:DEFAULT
+    | < JMRISENSOR:<S> (["0"-"9"])+ >:DEFAULT
+    | < JMRILIGHT:<L> (["0"-"9"])+ >:DEFAULT
+    | < JMRIREPORTER:<R> (["0"-"9"])+ >:DEFAULT
+}
+
+<VALUE>
+MORE: {
+  <~[",","\n","\r"]>
+}
+
+<VALUE,DEFAULT>
+TOKEN: {  
+  < COMMA: ",">:DEFAULT
+}
+
+<DEFAULT>
+TOKEN :
+{
+  < ADDR: ( ["0"-"9"] )+ >
+| < POWER: <P><O><W><E><R> >
+| < REPORTER: <R><E><P><O><R><T><E><R>>:DEVICENAME
+| < TURNOUT: <T><U><R><N><O><U><T>>:DEVICENAME
+| < LIGHT: <L><I><G><H><T>>:DEVICENAME
+| < SENSOR: <S><E><N><S><O><R>>:DEVICENAME
+| < THROTTLE: <T><H><R><O><T><T><L><E>>
+| < OPERATIONS: <O><P><E><R><A><T><I><O><N><S>>
+| < ONOFF: (<ON>|<OFF>) >
+| < #ON: <O><N>> 
+| < #OFF: <O>(<F>){2} >
+// turnout states
+| < THROWNCLOSED: (<THROWN>|<CLOSED>) >
+| < #THROWN: <T><H><R><O><W><N> > 
+| < #CLOSED: <C><L><O><S><E><D> >
+// dates and times
+| < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
+| < HOUR: (["0"-"2"])?["0"-"9"]>
+| < MINSEC: ["0"-"5"]["0"-"9"]>
+| < DELAY: ("-")?(["0"-"9"])+>
+// operations commands
+| < TRAIN: <T><R><A><I><N>>
+| < TRAINS: <T><R><A><I><N><S>>
+| < LOCATIONS: <L><O><C><A><T><I><O><N><S>>
+// Train stust information
+| < TRAINWEIGHT: <T><R><A><I><N><W><E><I><G><H><T>>
+| < TRAINLENGTH: <T><R><A><I><N><L><E><N><G><T><T>>
+| < TRAINCARS: <T><R><A><I><N><C><A><R><S>>
+| < TRAINLEADLOCO: <T><R><A><I><N><L><E><A><D><L><O><C><O>>
+| < TRAINCABOOSE: <T><R><A><I><N><C><A><B><O><O><S><E>>
+| < TRAINSTATUS: <T><R><A><I><N><S><T><A><T><U><S>>
+| < TRAINLOCATION: <T><R><A><I><N><L><O><C><A><T><I><O><N>>
+| < TERMINATE: <T><E><R><M><I><N><A><T><E>>
+| < EQUALS: "=">:VALUE
+// catch all
+| <BADTOKEN:~[" "]>
+}
+
+// Lexical specifications begin here
+
+SimpleNode command():{}
+{
+  // This is a simple list of the possible commands.  
+  // They are broken down further below.
+  ( powercmd() | turnoutcmd() |reportercmd() | lightcmd() |sensorcmd() | operationscmd()) <EOL>
+  {
+    log.debug("Command Production");
+    return jjtThis;
+  }
+}
+
+SimpleNode address():{Token t;}
+{
+  t=<ADDR>
+  {
+    log.debug("Address Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode powercmd():{}
+{
+   power() (onoff())?
+   {
+     return jjtThis; 
+   }
+}
+SimpleNode power():{Token t;}
+{
+  t=<POWER>   
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode onoff():{Token t;}
+{
+  t=<ONOFF>
+  {
+     log.debug("OnOff Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode turnoutcmd():{}
+{
+   // need to add system name.
+   turnout() turnoutdevice() (thrownclosed())?
+   {
+     return jjtThis; 
+   }
+}
+
+SimpleNode turnout():{Token t;}
+{
+  t=<TURNOUT>   
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode turnoutdevice():{Token t;}
+{
+  t=<JMRITURNOUT>
+  {
+     log.debug("Turnout device Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode thrownclosed():{Token t;}
+{
+  t=<THROWNCLOSED>
+  {
+     log.debug("Thrown/Closed Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode lightcmd():{}
+{
+   // need to add system name.
+   light() lightdevice() (onoff())?
+   {
+     return jjtThis; 
+   }
+}
+SimpleNode light():{Token t;}
+{
+  t=<LIGHT>   
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode lightdevice():{Token t;}
+{
+  t=<JMRILIGHT>
+  {
+     log.debug("Light device Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode reportercmd():{}
+{
+   // need to add system name.
+   reporter() reporterdevice()
+   {
+     return jjtThis; 
+   }
+}
+
+SimpleNode reporter():{Token t;}
+{
+  t=<REPORTER>   
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode reporterdevice():{Token t;}
+{
+  t=<JMRIREPORTER>
+  {
+     log.debug("Reporter device Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode sensorcmd():{}
+{
+   sensor() sensordevice()
+   {
+     return jjtThis; 
+   }
+}
+
+SimpleNode sensor():{Token t;}
+{
+  t=<SENSOR>   
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode sensordevice():{Token t;}
+{
+  t=<JMRISENSOR>
+  {
+     log.debug("Sensor device Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode operationscmd():{}
+{
+   operations() (trains() | locations() | terminate() | traincmd() ) 
+   {
+     return jjtThis; 
+   }
+}
+
+SimpleNode operations():{Token t;}
+{
+  t=<OPERATIONS>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode trains():{Token t;}
+{
+  t=<TRAINS>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode locations():{Token t;}
+{
+  t=<LOCATIONS>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode terminate():{Token t;}
+{
+  t=<TERMINATE> attributelist()
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode traincmd():{SimpleNode s;}
+{
+  <TRAIN> <EQUALS> s=value() <COMMA> attributename() (<EQUALS> value())?
+  {
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  } 
+}
+
+SimpleNode attributelist():{Token t;}
+{
+   attributename() (<EQUALS> value() (<COMMA> attributelist())?)?
+   {
+     return jjtThis;
+   }
+}
+
+SimpleNode attributename():{}
+{
+  ( <TRAIN> | <TRAINLENGTH> | <TRAINWEIGHT> | <TRAINCARS> |
+    <TRAINLEADLOCO> | <TRAINCABOOSE> | <TRAINSTATUS> | <TRAINLOCATION> )
+  {
+    return jjtThis;
+  }
+}
+
+SimpleNode value():{}
+{
+  {
+     return jjtThis;
+  }
+}

@@ -1,25 +1,25 @@
 // PrintLocationsByCarTypesAction.java
-
 package jmri.jmrit.operations.locations;
 
+import java.awt.Component;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.AbstractAction;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.setup.Control;
+import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-
-import jmri.util.davidflanagan.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
-
-import javax.swing.*;
-
-import java.util.List;
 
 /**
- * Action to print a summary of locations and tracks that service specific car types.
+ * Action to print a summary of locations and tracks that service specific car
+ * types.
  * <P>
- * This uses the older style printing, for compatibility with Java 1.1.8 in Macintosh MRJ
- * 
+ * This uses the older style printing, for compatibility with Java 1.1.8 in
+ * Macintosh MRJ
+ *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2010
@@ -27,78 +27,81 @@ import java.util.List;
  */
 public class PrintLocationsByCarTypesAction extends AbstractAction {
 
-	static final String newLine = "\n"; // NOI18N
-	static final String tab = "\t"; // NOI18N
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7757265502705876182L;
+    static final String NEW_LINE = "\n"; // NOI18N
+    static final String TAB = "\t"; // NOI18N
 
-	LocationManager locManager = LocationManager.instance();
+    LocationManager locManager = LocationManager.instance();
 
-	public PrintLocationsByCarTypesAction(String actionName, Frame frame, boolean preview,
-			Component pWho) {
-		super(actionName);
-		mFrame = frame;
-		isPreview = preview;
-	}
+    public PrintLocationsByCarTypesAction(String actionName, Frame frame, boolean preview,
+            Component pWho) {
+        super(actionName);
+        mFrame = frame;
+        isPreview = preview;
+    }
 
-	/**
-	 * Frame hosting the printing
-	 */
-	Frame mFrame;
-	/**
-	 * Variable to set whether this is to be printed or previewed
-	 */
-	boolean isPreview;
-	HardcopyWriter writer;
+    /**
+     * Frame hosting the printing
+     */
+    Frame mFrame;
+    /**
+     * Variable to set whether this is to be printed or previewed
+     */
+    boolean isPreview;
+    HardcopyWriter writer;
 
-	public void actionPerformed(ActionEvent e) {
-		// obtain a HardcopyWriter
-		try {
-			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleLocationsByType"), 10, .5,
-					.5, .5, .5, isPreview);
-		} catch (HardcopyWriter.PrintCanceledException ex) {
-			log.debug("Print cancelled");
-			return;
-		}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // obtain a HardcopyWriter
+        try {
+            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleLocationsByType"), Control.reportFontSize, .5,
+                    .5, .5, .5, isPreview);
+        } catch (HardcopyWriter.PrintCanceledException ex) {
+            log.debug("Print cancelled");
+            return;
+        }
 
-		// Loop through the car types showing which locations and tracks will
-		// service that car type
-		String carTypes[] = CarTypes.instance().getNames();
+        // Loop through the car types showing which locations and tracks will
+        // service that car type
+        String carTypes[] = CarTypes.instance().getNames();
 
-		List<String> locations = locManager.getLocationsByNameList();
+        List<Location> locations = locManager.getLocationsByNameList();
 
-		try {
-			// title line
-			String s = Bundle.getMessage("Type") + tab + Bundle.getMessage("Location") + tab
-					+ Bundle.getMessage("Track") + newLine;
-			writer.write(s);
-			// car types
-			for (int t = 0; t < carTypes.length; t++) {
-				s = carTypes[t] + newLine;
-				writer.write(s);
-				// locations
-				for (int i = 0; i < locations.size(); i++) {
-					Location location = locManager.getLocationById(locations.get(i));
-					if (location.acceptsTypeName(carTypes[t])) {
-						s = tab + location.getName() + newLine;
-						writer.write(s);
-						// tracks
-						List<String> tracks = location.getTrackIdsByNameList(null);
-						for (int j = 0; j < tracks.size(); j++) {
-							Track track = location.getTrackById(tracks.get(j));
-							if (track.acceptsTypeName(carTypes[t])) {
-								s = tab + tab + tab + track.getName() + newLine;
-								writer.write(s);
-							}
-						}
-					}
-				}
-			}
-			// and force completion of the printing
-			writer.close();
-		} catch (IOException we) {
-			log.error("Error printing PrintLocationAction: " + we);
-		}
-	}
+        try {
+            // title line
+            String s = Bundle.getMessage("Type") + TAB + Bundle.getMessage("Location") + TAB
+                    + Bundle.getMessage("Track") + NEW_LINE;
+            writer.write(s);
+            // car types
+            for (String type : carTypes) {
+                s = type + NEW_LINE;
+                writer.write(s);
+                // locations
+                for (Location location : locations) {
+                    if (location.acceptsTypeName(type)) {
+                        s = TAB + location.getName() + NEW_LINE;
+                        writer.write(s);
+                        // tracks
+                        List<Track> tracks = location.getTrackByNameList(null);
+                        for (Track track : tracks) {
+                            if (track.acceptsTypeName(type)) {
+                                s = TAB + TAB + TAB + track.getName() + NEW_LINE;
+                                writer.write(s);
+                            }
+                        }
+                    }
+                }
+            }
+            // and force completion of the printing
+            writer.close();
+        } catch (IOException we) {
+            log.error("Error printing PrintLocationAction: " + we);
+        }
+    }
 
-	static Logger log = LoggerFactory
-			.getLogger(PrintLocationsByCarTypesAction.class.getName());
+    private final static Logger log = LoggerFactory
+            .getLogger(PrintLocationsByCarTypesAction.class.getName());
 }

@@ -1,66 +1,49 @@
-
 package jmri.jmrit.withrottle;
-
 
 //  WiThrottle
 //
 //  
-
 /**
- *	ThrottleController.java
- *	Sends commands to appropriate throttle component.
+ * ThrottleController.java Sends commands to appropriate throttle component.
  *
- * Original version sorting codes for received string from client:
- *	'V'elocity followed by 0 - 126
- *      'X'stop
- *      'F'unction (1-button down, 0-button up) (0-28) e.g. F14 indicates function 4 button is pressed
- *                                              `       F04 indicates function 4 button is released
- *	di'R'ection (0=reverse, 1=forward)
- *	'L'ong address #, 'S'hort address #     e.g. L1234
- *      'r'elease, 'd'ispatch
- *      'C'consist lead address, e.g. CL1235
- *	'I'dle Idle needs to be called specifically
- *      'Q'uit
+ * Original version sorting codes for received string from client: 'V'elocity
+ * followed by 0 - 126 'X'stop 'F'unction (1-button down, 0-button up) (0-28)
+ * e.g. F14 indicates function 4 button is pressed ` F04 indicates function 4
+ * button is released di'R'ection (0=reverse, 1=forward) 'L'ong address #,
+ * 'S'hort address # e.g. L1234 'r'elease, 'd'ispatch 'C'consist lead address,
+ * e.g. CL1235 'I'dle Idle needs to be called specifically 'Q'uit
  *
  * Anything using added codes needs to verify version number for compatibility.
- * Added in v1.7:
- *      'E'ntry from roster, e.g. ESpiffy Loco
- *      'c'consist lead from roster ID, e.g. cSpiffy Loco
+ * Added in v1.7: 'E'ntry from roster, e.g. ESpiffy Loco 'c'consist lead from
+ * roster ID, e.g. cSpiffy Loco
  *
- * Added in v2.0:
- * If sent through MultiThrottle 'M' in DeviceServer, earlier versions will automatically ignore these.
- * ('M' code did not exist prior to v2.0, so it will not forward to here)
- * If sent through a 'T' or 'S', need to verify version number for compatibility.
- *      'f' set a function directly.
- *      's'peedStepMode - 1-128, 2-28, 4-27, 8-14
- *      re'q'uest information, add the following:
- *          'V' getSpeedSetting
- *          'R' getIsForward
- *          's' getSpeedStepMode
- *          'm' getF#Momentary for all functions
+ * Added in v2.0: If sent through MultiThrottle 'M' in DeviceServer, earlier
+ * versions will automatically ignore these. ('M' code did not exist prior to
+ * v2.0, so it will not forward to here) If sent through a 'T' or 'S', need to
+ * verify version number for compatibility. 'f' set a function directly.
+ * 's'peedStepMode - 1-128, 2-28, 4-27, 8-14 re'q'uest information, add the
+ * following: 'V' getSpeedSetting 'R' getIsForward 's' getSpeedStepMode 'm'
+ * getF#Momentary for all functions
  *
  *
- *	@author Brett Hoffman   Copyright (C) 2009, 2010, 2011
- *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision$
+ * @author Brett Hoffman Copyright (C) 2009, 2010, 2011
+ * @author Created by Brett Hoffman on: 8/23/09.
+ * @version $Revision$
  */
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;
-import jmri.DccThrottle;
-
 import java.util.ArrayList;
 import java.util.List;
 import jmri.DccLocoAddress;
+import jmri.DccThrottle;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-
-public class ThrottleController implements ThrottleListener, PropertyChangeListener{
+public class ThrottleController implements ThrottleListener, PropertyChangeListener {
 
     DccThrottle throttle;
     DccThrottle functionThrottle;
@@ -76,59 +59,66 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     final boolean isMomF2 = WiThrottleManager.withrottlePreferencesInstance().isUseMomF2();
 
-    public ThrottleController(){
-        speedMultiplier = 1.0f/126.0f;
+    public ThrottleController() {
+        speedMultiplier = 1.0f / 126.0f;
     }
 
-    public ThrottleController(char whichThrottleChar, ThrottleControllerListener tcl, ControllerInterface cl){
+    public ThrottleController(char whichThrottleChar, ThrottleControllerListener tcl, ControllerInterface cl) {
         this();
         setWhichThrottle(whichThrottleChar);
         addThrottleControllerListener(tcl);
         addControllerListener(cl);
     }
 
-    public void setWhichThrottle(char c){
+    public void setWhichThrottle(char c) {
         whichThrottle = c;
     }
 
     public void addThrottleControllerListener(ThrottleControllerListener l) {
-        if (listeners == null)
-                listeners = new ArrayList<ThrottleControllerListener>(1);
-        if (!listeners.contains(l))
-                listeners.add(l);
+        if (listeners == null) {
+            listeners = new ArrayList<ThrottleControllerListener>(1);
+        }
+        if (!listeners.contains(l)) {
+            listeners.add(l);
+        }
     }
 
     public void removeThrottleControllerListener(ThrottleControllerListener l) {
-        if (listeners == null)
-                return;
-        if (listeners.contains(l))
-                listeners.remove(l);
-    }
-    
-/**
- * Add a listener to handle:
- * listener.sendPacketToDevice(message);
- * @param listener
- */
-    public void addControllerListener(ControllerInterface listener){
-        if (controllerListeners == null)
-                controllerListeners = new ArrayList<ControllerInterface>(1);
-        if (!controllerListeners.contains(listener))
-                controllerListeners.add(listener);
+        if (listeners == null) {
+            return;
+        }
+        if (listeners.contains(l)) {
+            listeners.remove(l);
+        }
     }
 
-    public void removeControllerListener(ControllerInterface listener){
-        if (controllerListeners == null)
-                return;
-        if (controllerListeners.contains(listener))
-                controllerListeners.remove(listener);
+    /**
+     * Add a listener to handle: listener.sendPacketToDevice(message);
+     *
+     * @param listener
+     */
+    public void addControllerListener(ControllerInterface listener) {
+        if (controllerListeners == null) {
+            controllerListeners = new ArrayList<ControllerInterface>(1);
+        }
+        if (!controllerListeners.contains(listener)) {
+            controllerListeners.add(listener);
+        }
     }
 
+    public void removeControllerListener(ControllerInterface listener) {
+        if (controllerListeners == null) {
+            return;
+        }
+        if (controllerListeners.contains(listener)) {
+            controllerListeners.remove(listener);
+        }
+    }
 
     /**
      * Receive notification that an address has been released/dispatched
      */
-    public void addressRelease(){
+    public void addressRelease() {
         isAddressSet = false;
         jmri.InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
         throttle.removePropertyChangeListener(this);
@@ -139,11 +129,13 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         for (int i = 0; i < listeners.size(); i++) {
             ThrottleControllerListener l = listeners.get(i);
             l.notifyControllerAddressReleased(this);
-            if (log.isDebugEnabled()) log.debug("Notify TCListener address released: " + l.getClass());
+            if (log.isDebugEnabled()) {
+                log.debug("Notify TCListener address released: " + l.getClass());
+            }
         }
     }
 
-    public void addressDispatch(){
+    public void addressDispatch() {
         isAddressSet = false;
         jmri.InstanceManager.throttleManagerInstance().dispatchThrottle(throttle, this);
         throttle.removePropertyChangeListener(this);
@@ -154,38 +146,44 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         for (int i = 0; i < listeners.size(); i++) {
             ThrottleControllerListener l = listeners.get(i);
             l.notifyControllerAddressReleased(this);
-            if (log.isDebugEnabled()) log.debug("Notify TCListener address dispatched: " + l.getClass());
+            if (log.isDebugEnabled()) {
+                log.debug("Notify TCListener address dispatched: " + l.getClass());
+            }
         }
     }
-    
+
     /**
      * Recieve notification that a DccThrottle has been found and is in use.
-     * 
+     *
      * @param t The throttle which has been found
      */
 //    public void notifyAddressThrottleFound(DccThrottle throttle){
     public void notifyThrottleFound(DccThrottle t) {
-        if (isAddressSet){
-            log.debug("Throttle: "+getCurrentAddressString()+" is already set. (Found is: "+t.getLocoAddress().toString()+")");
+        if (isAddressSet) {
+            log.debug("Throttle: " + getCurrentAddressString() + " is already set. (Found is: " + t.getLocoAddress().toString() + ")");
             return;
         }
-	if (t != null) {
+        if (t != null) {
             throttle = t;
             setFunctionThrottle(throttle);
             throttle.addPropertyChangeListener(this);
             isAddressSet = true;
-            if (log.isDebugEnabled()) log.debug("DccThrottle found for: "+ throttle.getLocoAddress());
-        }else {
+            if (log.isDebugEnabled()) {
+                log.debug("DccThrottle found for: " + throttle.getLocoAddress());
+            }
+        } else {
             log.error("*throttle is null!*");
             return;
         }
         for (int i = 0; i < listeners.size(); i++) {
             ThrottleControllerListener l = listeners.get(i);
             l.notifyControllerAddressFound(this);
-            if (log.isDebugEnabled()) log.debug("Notify TCListener address found: " + l.getClass());
+            if (log.isDebugEnabled()) {
+                log.debug("Notify TCListener address found: " + l.getClass());
+            }
         }
 
-        if (rosterLoco == null){
+        if (rosterLoco == null) {
             rosterLoco = findRosterEntry(throttle);
         }
 
@@ -194,35 +192,38 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         sendAddress();
 
         sendFunctionLabels(rosterLoco);
-        
+
         sendAllFunctionStates(throttle);
 
         sendCurrentSpeed(throttle);
-        
+
         sendCurrentDirection(throttle);
 
         sendSpeedStepMode(throttle);
 
     }
 
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+        log.error("Throttle request failed for " + address + " because " + reason);
     }
 
 
-/*
- * Current Format:  RPF}|{whichThrottle]\[eventName}|{newValue
- * This format may be used to send multiple function status, for initial values.
- *
- * Event may be from regular throttle or consist throttle, but is handled the same.
- *
- * Bound params: SpeedSteps, IsForward, SpeedSetting, F##, F##Momentary
- */
+    /*
+     * Current Format:  RPF}|{whichThrottle]\[eventName}|{newValue
+     * This format may be used to send multiple function status, for initial values.
+     *
+     * Event may be from regular throttle or consist throttle, but is handled the same.
+     *
+     * Bound params: SpeedSteps, IsForward, SpeedSetting, F##, F##Momentary
+     */
     public void propertyChange(PropertyChangeEvent event) {
         String eventName = event.getPropertyName();
-        if (log.isDebugEnabled()) log.debug("property change: " + eventName);
-        if (eventName.startsWith("F")){
-            
-            if (eventName.contains("Momentary")){
+        if (log.isDebugEnabled()) {
+            log.debug("property change: " + eventName);
+        }
+        if (eventName.startsWith("F")) {
+
+            if (eventName.contains("Momentary")) {
                 return;
             }
             StringBuilder message = new StringBuilder("RPF}|{");
@@ -231,28 +232,30 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             message.append(eventName);
             message.append("}|{");
             message.append(event.getNewValue());
-            
-            for (ControllerInterface listener : controllerListeners){
+
+            for (ControllerInterface listener : controllerListeners) {
                 listener.sendPacketToDevice(message.toString());
             }
         }
-        
+
     }
- 
-    public RosterEntry findRosterEntry(DccThrottle t){
+
+    public RosterEntry findRosterEntry(DccThrottle t) {
         RosterEntry re = null;
-        if (t.getLocoAddress() != null){
-            List<RosterEntry> l = Roster.instance().matchingList(null, null, ""+((DccLocoAddress)t.getLocoAddress()).getNumber(), null, null, null, null);
-            if (l.size()>0){
-                if (log.isDebugEnabled()) log.debug("Roster Loco found: "+ l.get(0).getDccAddress());
+        if (t.getLocoAddress() != null) {
+            List<RosterEntry> l = Roster.instance().matchingList(null, null, "" + ((DccLocoAddress) t.getLocoAddress()).getNumber(), null, null, null, null);
+            if (l.size() > 0) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Roster Loco found: " + l.get(0).getDccAddress());
+                }
                 re = l.get(0);
             }
         }
         return re;
     }
 
-    public void syncThrottleFunctions(DccThrottle t, RosterEntry re){
-        if (re != null){
+    public void syncThrottleFunctions(DccThrottle t, RosterEntry re) {
+        if (re != null) {
             for (int funcNum = 0; funcNum < 29; funcNum++) {
                 try {
 
@@ -261,7 +264,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                     Object data[] = {Boolean.valueOf(!(re.getFunctionLockable(funcNum)))};
 
                     setMomentary.invoke(t, data);
-
 
                 } catch (NoSuchMethodException ea) {
                     log.warn(ea.getLocalizedMessage(), ea);
@@ -275,17 +277,17 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     }
 
-    public void sendFunctionLabels(RosterEntry re){
-        
+    public void sendFunctionLabels(RosterEntry re) {
+
         if (re != null) {
             StringBuilder functionString = new StringBuilder();
             if (whichThrottle == 'S') {
-                    functionString.append("RS29}|{");
-                } else {
-                    //  I know, it should have been 'RT' but this was before there were two throttles.
-                    functionString.append("RF29}|{");
-                }
-                functionString.append(getCurrentAddressString());
+                functionString.append("RS29}|{");
+            } else {
+                //  I know, it should have been 'RT' but this was before there were two throttles.
+                functionString.append("RF29}|{");
+            }
+            functionString.append(getCurrentAddressString());
 
             int i;
             for (i = 0; i < 29; i++) {
@@ -300,159 +302,165 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         }
 
     }
-    
-/**
- * send all function states, primarily for initial status
- * Current Format:  RPF}|{whichThrottle]\[function}|{state]\[function}|{state...
- */
-    public void sendAllFunctionStates(DccThrottle t){
+
+    /**
+     * send all function states, primarily for initial status Current Format:
+     * RPF}|{whichThrottle]\[function}|{state]\[function}|{state...
+     */
+    public void sendAllFunctionStates(DccThrottle t) {
 
         log.debug("Sending state of all functions");
         StringBuilder message = new StringBuilder(buildFStatesHeader());
 
-        try{
-            for (int cnt = 0; cnt < 29; cnt++){
-                Method getF = t.getClass().getMethod("getF"+cnt,(Class[])null);
+        try {
+            for (int cnt = 0; cnt < 29; cnt++) {
+                Method getF = t.getClass().getMethod("getF" + cnt, (Class[]) null);
                 message.append("]\\[F");
                 message.append(cnt);
                 message.append("}|{");
-                message.append(getF.invoke(t, (Object[])null));
+                message.append(getF.invoke(t, (Object[]) null));
             }
 
-        }catch (NoSuchMethodException ea){
+        } catch (NoSuchMethodException ea) {
             log.warn(ea.getLocalizedMessage(), ea);
             return;
-        }catch (IllegalAccessException eb){
+        } catch (IllegalAccessException eb) {
             log.warn(eb.getLocalizedMessage(), eb);
             return;
-        }catch (java.lang.reflect.InvocationTargetException ec){
+        } catch (java.lang.reflect.InvocationTargetException ec) {
             log.warn(ec.getLocalizedMessage(), ec);
             return;
         }
-        
-        for (ControllerInterface listener : controllerListeners){
+
+        for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }
-        
+
     }
 
-    protected String buildFStatesHeader(){
+    protected String buildFStatesHeader() {
         return ("RPF}|{" + whichThrottle);
     }
 
-    protected void sendCurrentSpeed(DccThrottle t){}
+    protected void sendCurrentSpeed(DccThrottle t) {
+    }
 
-    protected void sendCurrentDirection(DccThrottle t){}
+    protected void sendCurrentDirection(DccThrottle t) {
+    }
 
-    protected void sendSpeedStepMode(DccThrottle t){}
+    protected void sendSpeedStepMode(DccThrottle t) {
+    }
 
-    protected void sendAllMomentaryStates(DccThrottle t){}
+    protected void sendAllMomentaryStates(DccThrottle t) {
+    }
 
-/**
- * Figure out what the received command means, where it has to go,
- * and translate to a jmri method.
- * @param inPackage The package minus its prefix which steered it here.
- * @return true to keep reading in run loop.
- */
-    public boolean sort(String inPackage){
-        if (isAddressSet){
+    /**
+     * Figure out what the received command means, where it has to go, and
+     * translate to a jmri method.
+     *
+     * @param inPackage The package minus its prefix which steered it here.
+     * @return true to keep reading in run loop.
+     */
+    public boolean sort(String inPackage) {
+        if (isAddressSet) {
 
-            try{
-            switch (inPackage.charAt(0)) {
-                case 'V':	//	Velocity
+            try {
+                switch (inPackage.charAt(0)) {
+                    case 'V':	//	Velocity
                         setSpeed(Integer.parseInt(inPackage.substring(1)));
 
                         break;
 
-                case 'X':
+                    case 'X':
                         eStop();
 
                         break;
 
-                case 'F':	//	Function
-                    
+                    case 'F':	//	Function
+
                         handleFunction(inPackage);
-                    
+
                         break;
-                        
-                case 'f':	//v>=2.0	Force function
-                    
+
+                    case 'f':	//v>=2.0	Force function
+
                         forceFunction(inPackage.substring(1));
-                    
+
                         break;
-                        
-                case 'R':	//	Direction
+
+                    case 'R':	//	Direction
                         setDirection(!inPackage.endsWith("0")); // 0 sets to reverse, all others forward
                         break;
 
-                case 'r':	//	Release
+                    case 'r':	//	Release
                         addressRelease();
                         break;
 
-                case 'd':	//	Dispatch
+                    case 'd':	//	Dispatch
                         addressDispatch();
                         break;
 
-                case 'L':	//	Set a Long address.
+                    case 'L':	//	Set a Long address.
                         addressRelease();
                         int addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, true);
                         break;
 
-                case 'S':	//	Set a Short address.
+                    case 'S':	//	Set a Short address.
                         addressRelease();
                         addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, false);
                         break;
 
-                case 'E':       //v>=1.7    Address from RosterEntry
-                    addressRelease();
-                    requestEntryFromID(inPackage.substring(1));
-                    break;
-                    
-                case 'C':
-                    setLocoForConsistFunctions(inPackage.substring(1));
+                    case 'E':       //v>=1.7    Address from RosterEntry
+                        addressRelease();
+                        requestEntryFromID(inPackage.substring(1));
+                        break;
 
-                    break;
+                    case 'C':
+                        setLocoForConsistFunctions(inPackage.substring(1));
 
-                case 'c':       //v>=1.7      Consist Lead from RosterEntry
-                    setRosterLocoForConsistFunctions(inPackage.substring(1));
-                    break;
+                        break;
 
-                case 'I':
-                    idle();
-                    break;
+                    case 'c':       //v>=1.7      Consist Lead from RosterEntry
+                        setRosterLocoForConsistFunctions(inPackage.substring(1));
+                        break;
 
-                case 's':       //v>=2.0
-                    handleSpeedStepMode(Integer.parseInt(inPackage.substring(1)));
-                    break;
-                
-                case 'm':       //v>=2.0
-                    handleMomentary(inPackage.substring(1));
-                    break;
-                
-                case 'q':       //v>=2.0
-                    handleRequest(inPackage.substring(1));
-                    break;
-            }
-            }catch (NullPointerException e){
+                    case 'I':
+                        idle();
+                        break;
+
+                    case 's':       //v>=2.0
+                        handleSpeedStepMode(Integer.parseInt(inPackage.substring(1)));
+                        break;
+
+                    case 'm':       //v>=2.0
+                        handleMomentary(inPackage.substring(1));
+                        break;
+
+                    case 'q':       //v>=2.0
+                        handleRequest(inPackage.substring(1));
+                        break;
+                }
+            } catch (NullPointerException e) {
                 log.warn("No throttle frame to receive: " + inPackage);
                 return false;
             }
-            try{    //  Some layout connections cannot handle rapid inputs
+            try {    //  Some layout connections cannot handle rapid inputs
                 Thread.sleep(20);
-            } catch (java.lang.InterruptedException ex){}
-        }else{  //  Address not set
+            } catch (java.lang.InterruptedException ex) {
+            }
+        } else {  //  Address not set
             switch (inPackage.charAt(0)) {
                 case 'L':	//	Set a Long address.
-                        int addr = Integer.parseInt(inPackage.substring(1));
-                        setAddress(addr, true);
-                        break;
+                    int addr = Integer.parseInt(inPackage.substring(1));
+                    setAddress(addr, true);
+                    break;
 
                 case 'S':	//	Set a Short address.
-                        addr = Integer.parseInt(inPackage.substring(1));
-                        setAddress(addr, false);
-                        break;
+                    addr = Integer.parseInt(inPackage.substring(1));
+                    setAddress(addr, false);
+                    break;
 
                 case 'E':       //v>=1.7      Address from RosterEntry
                     requestEntryFromID(inPackage.substring(1));
@@ -468,7 +476,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                     break;
 
                 default:
-                        break;
+                    break;
             }
         }
         if (inPackage.charAt(0) == 'Q') {//	If device has Quit.
@@ -479,25 +487,25 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     }
 
-    private void clearLeadLoco(){
-        if (useLeadLocoF){
+    private void clearLeadLoco() {
+        if (useLeadLocoF) {
             leadLocoF.dispose();
             functionThrottle.removePropertyChangeListener(this);
-            if (throttle != null){
+            if (throttle != null) {
                 setFunctionThrottle(throttle);
             }
-            
+
             leadLocoF = null;
             useLeadLocoF = false;
         }
     }
-    
-    public void setFunctionThrottle(DccThrottle t){
+
+    public void setFunctionThrottle(DccThrottle t) {
         functionThrottle = t;
         functionThrottle.addPropertyChangeListener(this);
     }
 
-    public void setLocoForConsistFunctions(String inPackage){
+    public void setLocoForConsistFunctions(String inPackage) {
         /*
          *      This is used to control speed an direction on the
          *      consist address, but have functions mapped to lead.
@@ -505,8 +513,10 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
          */
 
         leadAddress = new DccLocoAddress(Integer.parseInt(inPackage.substring(1)), (inPackage.charAt(0) != 'S'));
-        if (log.isDebugEnabled()) log.debug("Setting lead loco address: "+leadAddress.toString() +
-                                            ", for consist: " + getCurrentAddressString());
+        if (log.isDebugEnabled()) {
+            log.debug("Setting lead loco address: " + leadAddress.toString()
+                    + ", for consist: " + getCurrentAddressString());
+        }
         clearLeadLoco();
         leadLocoF = new ConsistFunctionController(this);
         useLeadLocoF = leadLocoF.requestThrottle(leadAddress);
@@ -517,7 +527,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         }
     }
 
-    public void setRosterLocoForConsistFunctions(String id){
+    public void setRosterLocoForConsistFunctions(String id) {
         RosterEntry re = null;
         List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id);
         if (l.size() > 0) {
@@ -533,63 +543,63 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 log.warn("Lead loco address not available.");
                 leadLocoF = null;
             }
-        }else{
+        } else {
             log.debug("No Roster Loco found for: " + id);
             return;
         }
     }
 
-
 //  Device is quitting or has lost connection
-    public void shutdownThrottle(){
+    public void shutdownThrottle() {
 
-        try{
-        if (isAddressSet){
-            throttle.setSpeedSetting(0);
-            addressRelease();
-        }
-        }catch (NullPointerException e){
+        try {
+            if (isAddressSet) {
+                throttle.setSpeedSetting(0);
+                addressRelease();
+            }
+        } catch (NullPointerException e) {
             log.warn("No throttle to shutdown");
         }
         clearLeadLoco();
     }
 
-/**
- * handle the conversion from rawSpeed to the float value needed in
- * the DccThrottle
- * @param rawSpeed  Value sent from mobile device, range 0 - 126
- */
-    protected void setSpeed(int rawSpeed){
+    /**
+     * handle the conversion from rawSpeed to the float value needed in the
+     * DccThrottle
+     *
+     * @param rawSpeed Value sent from mobile device, range 0 - 126
+     */
+    protected void setSpeed(int rawSpeed) {
 
-        float newSpeed = (rawSpeed*speedMultiplier);
+        float newSpeed = (rawSpeed * speedMultiplier);
 
-        if (log.isDebugEnabled()) log.debug("raw: "+rawSpeed+", NewSpd: "+newSpeed);
+        if (log.isDebugEnabled()) {
+            log.debug("raw: " + rawSpeed + ", NewSpd: " + newSpeed);
+        }
         throttle.setSpeedSetting(newSpeed);
     }
 
-
-    protected void setDirection(boolean isForward){
+    protected void setDirection(boolean isForward) {
         throttle.setIsForward(isForward);
     }
 
-    protected void eStop(){
+    protected void eStop() {
         throttle.setSpeedSetting(-1);
     }
 
-    protected void idle(){
+    protected void idle() {
         throttle.setSpeedSetting(0);
     }
 
-
-    protected void setAddress(int number, boolean isLong){
-        if(rosterLoco!=null){
+    protected void setAddress(int number, boolean isLong) {
+        if (rosterLoco != null) {
             jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this);
         } else {
             jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
         }
     }
 
-    public void requestEntryFromID(String id){
+    public void requestEntryFromID(String id) {
         RosterEntry re = null;
         List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id);
         if (l.size() > 0) {
@@ -599,116 +609,125 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             re = l.get(0);
             rosterLoco = re;
             setAddress(Integer.parseInt(re.getDccAddress()), re.isLongAddress());
-        }else{
+        } else {
             log.debug("No Roster Loco found for: " + id);
         }
     }
 
-    public DccThrottle getThrottle(){
+    public DccThrottle getThrottle() {
         return throttle;
     }
 
-    public DccThrottle getFunctionThrottle(){
+    public DccThrottle getFunctionThrottle() {
         return functionThrottle;
     }
 
-
-    public DccLocoAddress getCurrentAddress(){
-        return (DccLocoAddress)throttle.getLocoAddress();
+    public DccLocoAddress getCurrentAddress() {
+        return (DccLocoAddress) throttle.getLocoAddress();
     }
 
     /**
-     * Get the string representation of this throttles address.
-     * Returns 'Not Set' if no address in use.
+     * Get the string representation of this throttles address. Returns 'Not
+     * Set' if no address in use.
      */
-    public String getCurrentAddressString(){
-        if (isAddressSet){
-            return ((DccLocoAddress)throttle.getLocoAddress()).toString();
-        }else {
+    public String getCurrentAddressString() {
+        if (isAddressSet) {
+            return ((DccLocoAddress) throttle.getLocoAddress()).toString();
+        } else {
             return "Not Set";
         }
     }
 
-    public void sendAddress(){
-        for (ControllerInterface listener : controllerListeners){
+    public void sendAddress() {
+        for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(whichThrottle + getCurrentAddressString());
         }
     }
 
 //	Function methods
-    protected void handleFunction(String inPackage){
+    protected void handleFunction(String inPackage) {
         //	get the function # sent from device
         String receivedFunction = inPackage.substring(2);
         Boolean state = false;
-        
-        if (inPackage.charAt(1) == '1'){	//	Function Button down
-            if(log.isDebugEnabled()) log.debug("Trying to set function " + receivedFunction);
+
+        if (inPackage.charAt(1) == '1') {	//	Function Button down
+            if (log.isDebugEnabled()) {
+                log.debug("Trying to set function " + receivedFunction);
+            }
             //	Toggle button state:
-            try{
-                Method getF = functionThrottle.getClass().getMethod("getF"+receivedFunction,(Class[])null);
+            try {
+                Method getF = functionThrottle.getClass().getMethod("getF" + receivedFunction, (Class[]) null);
 
                 Class<?> partypes[] = {Boolean.TYPE};
-                Method setF = functionThrottle.getClass().getMethod("setF"+receivedFunction, partypes);
-                
-                state = (Boolean)getF.invoke(functionThrottle, (Object[])null);
+                Method setF = functionThrottle.getClass().getMethod("setF" + receivedFunction, partypes);
+
+                state = (Boolean) getF.invoke(functionThrottle, (Object[]) null);
                 Object data[] = {Boolean.valueOf(!state)};
 
                 setF.invoke(functionThrottle, data);
 
-                if(log.isDebugEnabled()) log.debug("Throttle: "+functionThrottle.getLocoAddress()+", Function: " + receivedFunction+", set state: "+(!state));
-            
-            }catch (NoSuchMethodException ea){
+                if (log.isDebugEnabled()) {
+                    log.debug("Throttle: " + functionThrottle.getLocoAddress() + ", Function: " + receivedFunction + ", set state: " + (!state));
+                }
+
+            } catch (NoSuchMethodException ea) {
                 log.warn(ea.getLocalizedMessage(), ea);
-            }catch (IllegalAccessException eb){
+            } catch (IllegalAccessException eb) {
                 log.warn(eb.getLocalizedMessage(), eb);
-            }catch (java.lang.reflect.InvocationTargetException ec){
+            } catch (java.lang.reflect.InvocationTargetException ec) {
                 log.warn(ec.getLocalizedMessage(), ec);
             }
-            
-        }else {	//	Function Button up
+
+        } else {	//	Function Button up
 
             //  F2 is momentary for horn, unless prefs are set to follow roster entry
-            if ((isMomF2) && (receivedFunction.equals("2"))){
+            if ((isMomF2) && (receivedFunction.equals("2"))) {
                 functionThrottle.setF2(false);
                 return;
             }
 
             //	Do nothing if lockable, turn off if momentary
-            try{
-                Method getFMom = functionThrottle.getClass().getMethod("getF"+receivedFunction+"Momentary",(Class[])null);
+            try {
+                Method getFMom = functionThrottle.getClass().getMethod("getF" + receivedFunction + "Momentary", (Class[]) null);
 
                 Class<?> partypes[] = {Boolean.TYPE};
-                Method setF = functionThrottle.getClass().getMethod("setF"+receivedFunction, partypes);
-                
-                if ((Boolean)getFMom.invoke(functionThrottle, (Object[])null)){
+                Method setF = functionThrottle.getClass().getMethod("setF" + receivedFunction, partypes);
+
+                if ((Boolean) getFMom.invoke(functionThrottle, (Object[]) null)) {
                     Object data[] = {Boolean.valueOf(false)};
 
                     setF.invoke(functionThrottle, data);
-                    if(log.isDebugEnabled()) log.debug("Throttle: "+functionThrottle.getLocoAddress()+", Momentary Function: " + receivedFunction+", set false");
+                    if (log.isDebugEnabled()) {
+                        log.debug("Throttle: " + functionThrottle.getLocoAddress() + ", Momentary Function: " + receivedFunction + ", set false");
+                    }
                 }
-            
-            }catch (NoSuchMethodException ea){
+
+            } catch (NoSuchMethodException ea) {
                 log.warn(ea.getLocalizedMessage(), ea);
-            }catch (IllegalAccessException eb){
+            } catch (IllegalAccessException eb) {
                 log.warn(eb.getLocalizedMessage(), eb);
-            }catch (java.lang.reflect.InvocationTargetException ec){
+            } catch (java.lang.reflect.InvocationTargetException ec) {
                 log.warn(ec.getLocalizedMessage(), ec);
             }
-            
+
         }
 
     }
-    
-    protected void forceFunction(String inPackage){
+
+    protected void forceFunction(String inPackage) {
         String receivedFunction = inPackage.substring(1);
         Object data[] = new Object[1];
-        
-        if (inPackage.charAt(0) == '1'){	//	Set function on
+
+        if (inPackage.charAt(0) == '1') {	//	Set function on
             data[0] = Boolean.valueOf(true);
-            if(log.isDebugEnabled()) log.debug("Trying to set function " + receivedFunction + "to ON");
-        }else{
+            if (log.isDebugEnabled()) {
+                log.debug("Trying to set function " + receivedFunction + "to ON");
+            }
+        } else {
             data[0] = Boolean.valueOf(false);
-            if(log.isDebugEnabled()) log.debug("Trying to set function " + receivedFunction + "to OFF");
+            if (log.isDebugEnabled()) {
+                log.debug("Trying to set function " + receivedFunction + "to OFF");
+            }
         }
         try {
             Class<?> partypes[] = {Boolean.TYPE};
@@ -724,23 +743,26 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             log.warn(ec.getLocalizedMessage(), ec);
         }
 
-
     }
-    
-    protected void handleSpeedStepMode(int newMode){
+
+    protected void handleSpeedStepMode(int newMode) {
         throttle.setSpeedStepMode(newMode);
     }
-    
-    protected void handleMomentary(String inPackage){
+
+    protected void handleMomentary(String inPackage) {
         String receivedFunction = inPackage.substring(1);
         Object data[] = new Object[1];
-        
-        if (inPackage.charAt(0) == '1'){	//	Set Momentary TRUE
+
+        if (inPackage.charAt(0) == '1') {	//	Set Momentary TRUE
             data[0] = Boolean.valueOf(true);
-            if(log.isDebugEnabled()) log.debug("Trying to set function " + receivedFunction + " to Momentary");
-        }else{
+            if (log.isDebugEnabled()) {
+                log.debug("Trying to set function " + receivedFunction + " to Momentary");
+            }
+        } else {
             data[0] = Boolean.valueOf(false);
-            if(log.isDebugEnabled()) log.debug("Trying to set function " + receivedFunction + " to Locking");
+            if (log.isDebugEnabled()) {
+                log.debug("Trying to set function " + receivedFunction + " to Locking");
+            }
         }
         try {
             Class<?> partypes[] = {Boolean.TYPE};
@@ -756,27 +778,27 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             log.warn(ec.getLocalizedMessage(), ec);
         }
     }
-    
-    protected void handleRequest(String inPackage){
-        switch (inPackage.charAt(0)){
-            case 'V':{
+
+    protected void handleRequest(String inPackage) {
+        switch (inPackage.charAt(0)) {
+            case 'V': {
                 sendCurrentSpeed(throttle);
                 break;
             }
-            case 'R':{
+            case 'R': {
                 sendCurrentDirection(throttle);
                 break;
             }
-            case 's':{
+            case 's': {
                 sendSpeedStepMode(throttle);
                 break;
             }
-            case 'm':{
+            case 'm': {
                 sendAllMomentaryStates(throttle);
                 break;
             }
         }
-        
+
     }
 
     private static Logger log = LoggerFactory.getLogger(ThrottleController.class.getName());

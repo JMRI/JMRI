@@ -1,32 +1,30 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.web.server;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Provide interface for managing the JMRI web server, including migrating from
+ * the older 2.n Mini Web Server.
  *
  * @author rhwood
+ * @deprecated since 4.3.5. Use {@link jmri.web.server.WebServer#getDefault()}
+ * and {@link jmri.web.server.WebServerPreferences#getDefault()} directly to get
+ * the default instances of the WebServer and WebServerPreferences respectively.
  */
+@Deprecated
 public class WebServerManager {
 
-    static private WebServerManager instance = null;
-    private WebServerPreferences preferences;
-    private WebServer server;
-    static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     private WebServerManager() {
         if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
@@ -35,27 +33,26 @@ public class WebServerManager {
             if (!webServerPrefsFile.exists() && miniServerPrefsFile.exists()) {
                 // import Mini Server preferences into Web Server preferences
                 preferencesFromMiniServerPreferences(miniServerPrefsFile, webServerPrefsFile);
+            } else if (!webServerPrefsFile.exists()) {
+                InstanceManager.store(new WebServerPreferences(), WebServerPreferences.class);
             } else {
-                InstanceManager.store(new WebServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"), WebServerPreferences.class); // NOI18N
+                InstanceManager.store(new WebServerPreferences(webServerPrefsFile.getAbsolutePath()), WebServerPreferences.class); // NOI18N
             }
-            // disable during testing
-            // this.removeV2Index();
         }
-        preferences = InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     public static WebServerManager getInstance() {
-        if (instance == null) {
-            instance = new WebServerManager();
+        if (InstanceManager.getDefault(WebServerManager.class) == null) {
+            InstanceManager.setDefault(WebServerManager.class, new WebServerManager());
         }
-        return instance;
+        return InstanceManager.getDefault(WebServerManager.class);
     }
 
     public WebServerPreferences getPreferences() {
-        if (preferences == null) {
-            preferences = new WebServerPreferences();
+        if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
+            InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
         }
-        return preferences;
+        return InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     public static WebServerPreferences getWebServerPreferences() {
@@ -63,66 +60,21 @@ public class WebServerManager {
     }
 
     public WebServer getServer() {
-        if (server == null) {
-            try {
-                this.rebuildIndex();
-            } catch (Exception ex) {
-                log.warn("Error rebuilding index.", ex);
-            }
-            server = new WebServer();
+        if (InstanceManager.getDefault(WebServer.class) == null) {
+            InstanceManager.setDefault(WebServer.class, new WebServer());
         }
-        return server;
+        return InstanceManager.getDefault(WebServer.class);
     }
 
     public static WebServer getWebServer() {
         return getInstance().getServer();
     }
 
-    protected void rebuildIndex() throws IOException {
-        this.rebuildIndex(false);
-    }
-
-    protected void rebuildIndex(boolean force) throws IOException {
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.Html");
-        File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "networkServices" + File.separator + "index.html")); // NOI18N
-        if (force || this.getPreferences().isRebuildIndex() || !indexFile.exists()) {
-            FileWriter writer = new FileWriter(indexFile);
-            writer.write(rb.getString("HTML5DocType"));
-            writer.write(String.format(rb.getString("HeadFormat"),
-                    rb.getString("HTML5DocType"),
-                    this.getPreferences().getRailRoadName(),
-                    "index", // NOI18N
-                    rb.getString("IndexHeadExtras")));
-            writer.write(rb.getString("Index"));
-            writer.write(String.format(rb.getString("TailFormat"),
-                    "html/web/index.shtml", // NOI18N
-                    rb.getString("GeneralMenuItems")));
-            writer.close();
-            if (this.getPreferences().isRebuildIndex()) {
-                this.getPreferences().setRebuildIndex(false);
-                this.getPreferences().setIsDirty(true);
-            }
-        }
-    }
-
-    /*
-     private void removeV2Index() {
-     File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.html"));
-     File backup = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.v2.html"));
-     try {
-     if (indexFile.exists()) {
-     indexFile.renameTo(backup);
-     log.info("Renamed existing index.html in Preferences to index.v2.html.");
-     }
-     } catch (Exception ex) {
-     log.error("Failed to move index.html.", ex);
-     }
-     }
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "REC_CATCH_EXCEPTION",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION",
             justification = "Catch is covering both JDOMException and IOException, FindBugs seems confused")
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
-        WebServerPreferences.WebServerPreferencesXml xmlFile = new WebServerPreferences.WebServerPreferencesXml();
+        XmlFile xmlFile = new XmlFile() {
+        };
         try {
             Element MSRoot = xmlFile.rootFromFile(MSFile);
             Element WSRoot = new Element(WebServerPreferences.WebServerPreferences);
@@ -130,25 +82,23 @@ public class WebServerManager {
             for (Object pref : MSPrefs.getChildren()) {
                 WSRoot.addContent((Element) pref);
             }
-            for (Object attr : MSPrefs.getAttributes()) {
-                if (((Attribute) attr).getName().equals("getDisallowedFrames")) { // NOI18N
+            for (Attribute attr : MSPrefs.getAttributes()) {
+                if (attr.getName().equals("getDisallowedFrames")) { // NOI18N
                     Element DF = new Element(WebServerPreferences.DisallowedFrames);
-                    String[] frames = ((Attribute) attr).getValue().split("\\n"); // NOI18N
+                    String[] frames = attr.getValue().split("\\n"); // NOI18N
                     for (String frame : frames) {
                         DF.addContent(new Element(WebServerPreferences.Frame).addContent(frame));
                     }
                     WSRoot.addContent(DF);
-                } else if (((Attribute) attr).getName().equals("getPort")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.Port, ((Attribute) attr).getValue());
-                } else if (((Attribute) attr).getName().equals("getClickDelay")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.ClickDelay, ((Attribute) attr).getValue());
-                } else if (((Attribute) attr).getName().equals("getRefreshDelay")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.RefreshDelay, ((Attribute) attr).getValue());
-                } else if (((Attribute) attr).getName().equals("isRebuildIndex")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.RebuildIndex, ((Attribute) attr).getValue());
+                } else if (attr.getName().equals("getPort")) { // NOI18N
+                    WSRoot.setAttribute(WebServerPreferences.Port, attr.getValue());
+                } else if (attr.getName().equals("getClickDelay")) { // NOI18N
+                    WSRoot.setAttribute(WebServerPreferences.ClickDelay, attr.getValue());
+                } else if (attr.getName().equals("getRefreshDelay")) { // NOI18N
+                    WSRoot.setAttribute(WebServerPreferences.RefreshDelay, attr.getValue());
                 } else {
                     // double cast because clone() is Protected on Object
-                    WSRoot.setAttribute((Attribute) ((Attribute) attr).clone());
+                    WSRoot.setAttribute(attr.clone());
                 }
             }
             Document WSDoc = XmlFile.newDocument(WSRoot);
@@ -169,7 +119,9 @@ public class WebServerManager {
 
             xmlFile.writeXML(WSFile, WSDoc);
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
+            log.error("Error converting miniServer preferences to Web Server preferences.", ex);
+        } catch (JDOMException ex) {
             log.error("Error converting miniServer preferences to Web Server preferences.", ex);
         }
     }

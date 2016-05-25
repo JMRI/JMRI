@@ -1,12 +1,11 @@
 package jmri.implementation.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.VirtualSignalHead;
-
-import org.jdom.Element;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for VirtualSignalHead objects.
@@ -16,16 +15,17 @@ import org.jdom.Element;
  */
 public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public VirtualSignalHeadXml() {}
+    public VirtualSignalHeadXml() {
+    }
 
     /**
-     * Default implementation for storing the contents of a
-     * VirtualSignalHead
+     * Default implementation for storing the contents of a VirtualSignalHead
+     *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        VirtualSignalHead p = (VirtualSignalHead)o;
+        VirtualSignalHead p = (VirtualSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
@@ -35,27 +35,24 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
-        
+
         return element;
     }
 
-    /**
-     * Create a VirtualSignalHead
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
         SignalHead h;
-        if (uname == null)
+        if (uname == null) {
             h = new VirtualSignalHead(sys);
-        else
+        } else {
             h = new VirtualSignalHead(sys, uname);
+        }
 
-        loadCommon(h, element);
-        
+        loadCommon(h, shared);
+
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
     }
@@ -64,5 +61,5 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class.getName());
 }

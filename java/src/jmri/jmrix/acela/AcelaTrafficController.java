@@ -1,37 +1,34 @@
 // AcelaTrafficController.java
-
 package jmri.jmrix.acela;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.DataInputStream;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRNodeTrafficController;
-
-import java.io.DataInputStream;
+import jmri.jmrix.AbstractMRReply;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from Acela messages.
  * <P>
  * The "SerialInterface" side sends/receives message objects.
  * <P>
- * The connection to an AcelaPortController is via a pair of *Streams,
- * which then carry sequences of characters for transmission.
- * Note that this processing is handled in an independent thread.
+ * The connection to an AcelaPortController is via a pair of *Streams, which
+ * then carry sequences of characters for transmission. Note that this
+ * processing is handled in an independent thread.
  * <P>
- * This handles the state transitions, based on the
- * necessary state in each message.
- 
+ * This handles the state transitions, based on the necessary state in each
+ * message.
+ *
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen  Copyright (C) 2003
- * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  *
- * @author	Bob Coleman Copyright (C) 2007. 2008
- *              Based on CMRI serial example, modified to establish Acela support. 
+ * @author	Bob Coleman Copyright (C) 2007. 2008 Based on CMRI serial example,
+ * modified to establish Acela support.
  */
 public class AcelaTrafficController extends AbstractMRNodeTrafficController implements AcelaInterface {
 
@@ -40,21 +37,20 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
         // entirely poll driven, so reduce interval
         mWaitBeforePoll = 25;  // default = 25
-    	setAllowUnexpectedReply(true);
+        setAllowUnexpectedReply(true);
 
         super.init(0, 1024); // 1024 is an artifical limit but economically reasonable
-        
+
         reallyReadyToPoll = false; // Need to not start polling until we are ready
         needToPollNodes = true;   // Need to poll and create corresponding nodes
         needToInitAcelaNetwork = true;   // Need to poll and create corresponding nodes
         needToCreateNodesState = 0; // Need to initialize system and then poll
         acelaTrafficControllerState = false;                //  Flag to indicate which state we are in: 
-                                                            //  false == Initiallizing Acela Network
-                                                            //  true == Polling Sensors
+        //  false == Initiallizing Acela Network
+        //  true == Polling Sensors
     }
 
     // The methods to implement the AcelaInterface
-
     public synchronized void addAcelaListener(AcelaListener l) {
         this.addListener(l);
     }
@@ -66,97 +62,97 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     transient int curAcelaNodeIndex = -1;   // cycles over defined nodes when pollMessage is called
 
     transient private int currentOutputAddress = -1;   // Incremented as Acela Nodes are created and registered
-                                            // Corresponds to next available output address in nodeArray
-                                            // Start at -1 to avoid issues with bit address 0
+    // Corresponds to next available output address in nodeArray
+    // Start at -1 to avoid issues with bit address 0
     transient private int currentSensorAddress = -1;   // Incremented as Acela Nodes are created and registered
-                                            // Corresponds to next available sensor address in nodeArray
-                                            // Start at -1 to avoid issues with bit address 0
+    // Corresponds to next available sensor address in nodeArray
+    // Start at -1 to avoid issues with bit address 0
 
     private boolean acelaTrafficControllerState = false;    //  Flag to indicate which state we are in: 
-                                                            //  false == Initiallizing Acela Network
-                                                            //  true == Polling Sensors
+    //  false == Initiallizing Acela Network
+    //  true == Polling Sensors
     private boolean reallyReadyToPoll = false;   //  Flag to indicate that we are really ready to poll nodes
     transient private boolean needToPollNodes = true;   //  Flag to indicate that nodes have not yet been created
     private boolean needToInitAcelaNetwork = true;   //  Flag to indicate that Acela network must be initialized
     private int needToCreateNodesState = 0;     //  Need to do a few things:
-                                                //      Reset Acela Network
-                                                //      Set Acela Netwrok Online
-                                                //      Poll for Acela Nodes (and create and register the nodes)
-    
+    //      Reset Acela Network
+    //      Set Acela Netwrok Online
+    //      Poll for Acela Nodes (and create and register the nodes)
+
     private boolean acelaSensorsState = false;    //  Flag to indicate whether we have an active sensor and therefore need to poll: 
-                                                   //  false == No active sensor
-                                                   //  true == Active sensor, need to poll sensors
-    
+    //  false == No active sensor
+    //  true == Active sensor, need to poll sensors
+
     private int acelaSensorInitCount = 0;     //  Need to count sensors initialized so we know when we can poll them
-        
+
     private static int SPECIALNODE = 0;         //  Needed to initialize system
 
     /**
-     *  Public method to get minimum address of an Acela node
+     * Public method to get minimum address of an Acela node
      */
     public int getMinimumNodeAddress() {
         return minNode;
     }
-    
+
     /**
-     *  Public method to get maximum number of Acela nodes
+     * Public method to get maximum number of Acela nodes
      */
     public int getMaximumNumberOfNodes() {
         return maxNode;
     }
-    
+
     public boolean getAcelaTrafficControllerState() {
         return acelaTrafficControllerState;
     }
-    
+
     public void setAcelaTrafficControllerState(boolean newstate) {
         acelaTrafficControllerState = newstate;
     }
-    
+
     public synchronized void resetStartingAddresses() {
         currentOutputAddress = -1;
         currentSensorAddress = -1;
     }
-    
+
     public boolean getAcelaSensorsState() {
         return acelaSensorsState;
     }
-    
+
     public void setAcelaSensorsState(boolean newstate) {
         acelaSensorsState = newstate;
     }
-    
+
     public void incrementAcelaSensorInitCount() {
         acelaSensorInitCount++;
         log.debug("Number of Acela sensors initialized: " + getAcelaSensorInitCount());
 
     }
-    
+
     public int getAcelaSensorInitCount() {
         return acelaSensorInitCount;
     }
-    
+
     public synchronized boolean getNeedToPollNodes() {
         return needToPollNodes;
     }
-    
+
     public synchronized void setNeedToPollNodes(boolean newstate) {
         needToPollNodes = newstate;
     }
-    
+
     public boolean getReallyReadyToPoll() {
         return reallyReadyToPoll;
     }
-    
+
     public void setReallyReadyToPoll(boolean newstate) {
-      	log.debug("setting really ready to poll (nodes): "+newstate);
+        log.debug("setting really ready to poll (nodes): " + newstate);
         reallyReadyToPoll = newstate;
     }
-    
+
     /**
-     *  Public method to register a Acela node
+     * Public method to register a Acela node
      */
-     public void registerAcelaNode(AcelaNode node) {
+    public void registerAcelaNode(AcelaNode node) {
         synchronized (this) {
             super.registerNode(node);
 
@@ -170,7 +166,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     currentOutputAddress = 0;
                 }
                 node.setStartingOutputAddress(currentOutputAddress);
-                currentOutputAddress = currentOutputAddress + node.getNumOutputBitsPerCard()-1;
+                currentOutputAddress = currentOutputAddress + node.getNumOutputBitsPerCard() - 1;
                 node.setEndingOutputAddress(currentOutputAddress);
                 currentOutputAddress = currentOutputAddress + 1;
             }
@@ -182,7 +178,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     currentSensorAddress = 0;
                 }
                 node.setStartingSensorAddress(currentSensorAddress);
-                currentSensorAddress = currentSensorAddress + node.getNumSensorBitsPerCard()-1;
+                currentSensorAddress = currentSensorAddress + node.getNumSensorBitsPerCard() - 1;
                 node.setEndingSensorAddress(currentSensorAddress);
                 currentSensorAddress = currentSensorAddress + 1;
             }
@@ -190,9 +186,9 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     *  Public method to set up for initialization of a Acela node
+     * Public method to set up for initialization of a Acela node
      */
-     public void initializeAcelaNode(AcelaNode node) {
+    public void initializeAcelaNode(AcelaNode node) {
         synchronized (this) {
             setMustInit(node, true);
             node.initNode();
@@ -200,27 +196,26 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Public method to identify a AcelaNode from its bit address
-     *      Note:   nodeAddress is numbered from 0.
-     *              Returns '-1' if a AcelaNode with the specified address
-     *                  was not found
+     * Public method to identify a AcelaNode from its bit address Note:
+     * nodeAddress is numbered from 0. Returns '-1' if a AcelaNode with the
+     * specified address was not found
      */
     public int lookupAcelaNodeAddress(int bitAddress, boolean isSensor) {
-        for (int i=0; i<getNumNodes(); i++) { 
+        for (int i = 0; i < getNumNodes(); i++) {
             AcelaNode node = (AcelaNode) getNode(i);
             if (isSensor) {
                 if ((bitAddress >= node.getStartingSensorAddress())
-                    && (bitAddress <= node.getEndingSensorAddress())) {
-                    return(i);
+                        && (bitAddress <= node.getEndingSensorAddress())) {
+                    return (i);
                 }
             } else {
                 if ((bitAddress >= node.getStartingOutputAddress())
-                    && (bitAddress <= node.getEndingOutputAddress())) {
-                    return(i);
+                        && (bitAddress <= node.getEndingOutputAddress())) {
+                    return (i);
                 }
             }
         }
-    	return (-1);
+        return (-1);
     }
 
     protected AbstractMRMessage enterProgMode() {
@@ -237,65 +232,64 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      * Forward a AcelaMessage to all registered AcelaInterface listeners.
      */
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
-        ((AcelaListener)client).message((AcelaMessage)m);
+        ((AcelaListener) client).message((AcelaMessage) m);
     }
 
     /**
      * Forward a AcelaReply to all registered AcelaInterface listeners.
      */
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
-        ((AcelaListener)client).reply((AcelaReply)m);
+        ((AcelaListener) client).reply((AcelaReply) m);
     }
 
     AcelaSensorManager mSensorManager = null;
 
-    public void setSensorManager(AcelaSensorManager m) { 
-    	mSensorManager = m;
+    public void setSensorManager(AcelaSensorManager m) {
+        mSensorManager = m;
     }
 
     AcelaTurnoutManager mTurnoutManager = null;
 
-    public void setTurnoutManager(AcelaTurnoutManager m) { 
-    	mTurnoutManager = m;
+    public void setTurnoutManager(AcelaTurnoutManager m) {
+        mTurnoutManager = m;
     }
 
-
     /**
-     *  Handles initialization, output and polling for Acela Nodes
-     *      from within the running thread
+     * Handles initialization, output and polling for Acela Nodes from within
+     * the running thread
      */
     protected synchronized AbstractMRMessage pollMessage() {
         // Need to wait until we have read config file
         if (!reallyReadyToPoll) {
             return null;
         }
-        
+
         if (needToInitAcelaNetwork) {
-        	if (needToCreateNodesState == 0) {
-        		if (needToPollNodes) {
-        			new AcelaNode(0, AcelaNode.AC);
-        			log.info("Created a new Acela Node [0] in order to poll Acela network: " + AcelaNode.AC);
-        		}
-        		curAcelaNodeIndex = SPECIALNODE;
-        		AcelaMessage m = AcelaMessage.getAcelaResetMsg();
-            	log.debug("send Acela reset (init step 1) message: "+m);
-            	m.setTimeout(1000);  // wait for init to finish (milliseconds)
-            	mCurrentMode = NORMALMODE;
+            if (needToCreateNodesState == 0) {
+                if (needToPollNodes) {
+                    new AcelaNode(0, AcelaNode.AC);
+                    log.info("Created a new Acela Node [0] in order to poll Acela network: " + AcelaNode.AC);
+                }
+                curAcelaNodeIndex = SPECIALNODE;
+                AcelaMessage m = AcelaMessage.getAcelaResetMsg();
+                log.debug("send Acela reset (init step 1) message: " + m);
+                m.setTimeout(1000);  // wait for init to finish (milliseconds)
+                mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
-            	return m;
+                return m;
             }
             if (needToCreateNodesState == 1) {
-            	AcelaMessage m = AcelaMessage.getAcelaOnlineMsg();
-            	log.debug("send Acela Online (init step 2) message: "+m);
-            	m.setTimeout(1000);  // wait for init to finish (milliseconds)
-            	mCurrentMode = NORMALMODE;
+                AcelaMessage m = AcelaMessage.getAcelaOnlineMsg();
+                log.debug("send Acela Online (init step 2) message: " + m);
+                m.setTimeout(1000);  // wait for init to finish (milliseconds)
+                mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
-        	return m;
+                return m;
             }
             if (needToPollNodes) {
                 if (needToCreateNodesState == 2) {
                     AcelaMessage m = AcelaMessage.getAcelaPollNodesMsg();
-                    log.debug("send Acela poll nodes message: "+m);
+                    log.debug("send Acela poll nodes message: " + m);
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
                     needToInitAcelaNetwork = false;
@@ -304,23 +298,23 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                 }
             } else {
                 needToInitAcelaNetwork = false;
-                setAcelaTrafficControllerState(true); 
+                setAcelaTrafficControllerState(true);
             }
         }
-        
+
         // ensure validity of call
-        if (getNumNodes()<=0) {
+        if (getNumNodes() <= 0) {
             return null;
         }
-        
+
         // move to a new node
-        curAcelaNodeIndex ++;
-        if (curAcelaNodeIndex>=getNumNodes()) { 
+        curAcelaNodeIndex++;
+        if (curAcelaNodeIndex >= getNumNodes()) {
             curAcelaNodeIndex = 0;
         }
 
         // ensure that each node is initialized
-        AcelaNode node = (AcelaNode) getNode(curAcelaNodeIndex);       
+        AcelaNode node = (AcelaNode) getNode(curAcelaNodeIndex);
         if (node.hasActiveSensors) {
             for (int s = 0; s < node.sensorbitsPerCard; s++) {
                 if (node.sensorNeedInit[s] && !node.sensorHasBeenInit[s]) {
@@ -329,7 +323,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     byte tempbaddr = (byte) (tempiaddr);
                     m.setElement(2, tempbaddr);
                     m.setElement(3, node.sensorConfigArray[s]);
-                    log.debug("send Aclea Config Sensor message: "+m);
+                    log.debug("send Aclea Config Sensor message: " + m);
                     incrementAcelaSensorInitCount();
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
@@ -339,13 +333,13 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                 }
             }
         }
-        
+
         // send Output packet if needed
         if (getNode(curAcelaNodeIndex).mustSend()) {
             getNode(curAcelaNodeIndex).resetMustSend();
             AbstractMRMessage m = getNode(curAcelaNodeIndex).createOutPacket();
             m.setTimeout(100);  // no need to wait for output to answer
-            log.debug("request write command to send: "+m);
+            log.debug("request write command to send: " + m);
             mCurrentMode = NORMALMODE;
             return m;
         }
@@ -360,7 +354,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
         if (acelaSensorsState) {    //  Flag to indicate whether we have an active sensor and therefore need to poll
             AcelaMessage m = AcelaMessage.getAcelaPollSensorsMsg();
-            log.debug("send Acela poll sensors message: "+m);
+            log.debug("send Acela poll sensors message: " + m);
             m.setTimeout(100);  // wait for init to finish (milliseconds)
             mCurrentMode = NORMALMODE;
             return m;
@@ -370,14 +364,14 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    protected synchronized void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
+    protected synchronized void handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // inform node, and if it resets then reinitialize        
-        if (getNode(curAcelaNodeIndex).handleTimeout(m,l)) {
+        if (getNode(curAcelaNodeIndex).handleTimeout(m, l)) {
             setMustInit(curAcelaNodeIndex, true);
         }
     }
-    
+
     protected synchronized void resetTimeout(AbstractMRMessage m) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // and inform node
@@ -385,7 +379,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     protected AbstractMRListener pollReplyHandler() {
-    	return mSensorManager;
+        return mSensorManager;
     }
 
     /**
@@ -397,13 +391,16 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     /**
      * static function returning the AcelaTrafficController instance to use.
+     *
      * @return The registered AcelaTrafficController instance for general use,
      *         if need be creating one.
      */
     static public AcelaTrafficController instance() {
         // Bob C: This seems wrong
-    	if (self == null) {
-            if (log.isDebugEnabled()) log.debug("creating a new AcelaTrafficController object");
+        if (self == null) {
+            if (log.isDebugEnabled()) {
+                log.debug("creating a new AcelaTrafficController object");
+            }
             // Bob C: and the following line won't work in a static.
             // self = this;
             // So, ..., create a new one.
@@ -414,12 +411,14 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     static volatile protected AcelaTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                        justification="temporary until mult-system; only set at startup")
-    protected void setInstance() { self = this; }
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "temporary until mult-system; only set at startup")
+    protected void setInstance() {
+        self = this;
+    }
 
-    protected AbstractMRReply newReply() { 
-    	return new AcelaReply();
+    protected AbstractMRReply newReply() {
+        return new AcelaReply();
     }
 
     protected boolean endOfMessage(AbstractMRReply msg) {
@@ -428,42 +427,42 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
-        byte char1 = readByteProtected(istream);
+        int char1 = readByteProtected(istream)&0xFF;
         if (char1 == 0x00) {  // 0x00 means command processed OK.
             msg.setElement(0, char1);
-                                //  0x01 means that the Acela network is offline
-                                //  0x02 means that an illegal address was sent
-                                //  0x03 means that an illegal command was sent
-                                //  For now we are not going to check for these
-                                //  three conditions since they will only catch
-                                //  programming errors (versus runtime errors)
-                                //  and the checking may mess up the polling replies.
- 
+            //  0x01 means that the Acela network is offline
+            //  0x02 means that an illegal address was sent
+            //  0x03 means that an illegal command was sent
+            //  For now we are not going to check for these
+            //  three conditions since they will only catch
+            //  programming errors (versus runtime errors)
+            //  and the checking may mess up the polling replies.
+
         } else {
             if ((char1 == 0x81) || (char1 == 0x82)) {
-                                //  0x81 means that a sensor has changed.
-                                //  0x82 means that communications has been lost
-                                //  For now we will check for these two 
-                                //  conditions since they do represent
-                                //  runtime errors at the risk that in a very very
-                                //  large Acela network the checking may mess
-                                //  up the polling replies.
+                //  0x81 means that a sensor has changed.
+                //  0x82 means that communications has been lost
+                //  For now we will check for these two 
+                //  conditions since they do represent
+                //  runtime errors at the risk that in a very very
+                //  large Acela network the checking may mess
+                //  up the polling replies.
                 msg.setElement(0, char1);
             } else {
-                                //  We have a reply to a poll (either pollnodes 
-                                //  or pollsensors).  The first byte will be the
-                                //  length of the reply followed by the
-                                //  indicated number of bytes.
-                                //
-                                //  For now we will send the reply to the sensor
-                                //  manager.  In the future we should really have
-                                //  an Acela Network Manager and an Acela Sensor
-                                //  Manager -- but, for now, we 'know' which state
-                                //  we are in.
-                for (int i=0; i< char1; i++) {
+                //  We have a reply to a poll (either pollnodes 
+                //  or pollsensors).  The first byte will be the
+                //  length of the reply followed by the
+                //  indicated number of bytes.
+                //
+                //  For now we will send the reply to the sensor
+                //  manager.  In the future we should really have
+                //  an Acela Network Manager and an Acela Sensor
+                //  Manager -- but, for now, we 'know' which state
+                //  we are in.
+                for (int i = 0; i < char1; i++) {
                     byte charn = readByteProtected(istream);
                     msg.setElement(i, charn);
-        	}
+                }
             }
         }
     }
@@ -476,7 +475,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      * For each sensor node call markChanges.
      */
     public void updateSensorsFromPoll(AcelaReply r) {
-        for (int i=0; i< getNumNodes(); i++) {
+        for (int i = 0; i < getNumNodes(); i++) {
             AcelaNode node = (AcelaNode) getNode(i);
             if (node.getSensorBitsPerCard() > 0) {
                 node.markChanges(r);
@@ -484,7 +483,5 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTrafficController.class.getName());
 }
-
-/* @(#)AcelaTrafficController.java */

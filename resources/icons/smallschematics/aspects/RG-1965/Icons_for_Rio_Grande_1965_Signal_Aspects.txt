@@ -4,9 +4,9 @@ Base don the AAR-1946 icons.
 Place icons in the Applications/JMRI/resources/icons/smallschematics/aspects/RG-1965 Folder.
 
 Some special file versions are included:
-rule-282.gis is an animated icon, works fine in JMRI 3.2 but doesnÕt show as an aspect on the panel with JMRI 2.14.1 on Mac OSX 10.5.8 (Java 1.5).
+rule-282.gis is an animated icon, works fine in JMRI 3.2 but doesnï¿½t show as an aspect on the panel with JMRI 2.14.1 on Mac OSX 10.5.8 (Java 1.5).
 rule-282-1.gif and rule-282-2.gif are the 2 files used to create the animated gif rule-282.gif
 
-For JMRI 2.14.1 a static icon rule-282-b.gif is included, which can be renamed to rule-282.gif and can be copied to the preference folder under resource/icons/smallschematics/aspects/RG-1965 and will overrule the icons in the applicationÕs resource folder.
+For JMRI 2.14.1 a static icon rule-282-b.gif is included, which can be renamed to rule-282.gif and can be copied to the preference folder under resource/icons/smallschematics/aspects/RG-1965 and will overrule the icons in the applicationï¿½s resource folder.
 
 JMRI, Egbert Broerse, January 28, 2013.

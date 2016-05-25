@@ -1,7 +1,5 @@
 package jmri.util.datatransfer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -23,17 +21,15 @@ import jmri.jmrit.roster.RosterEntry;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Randall Wood   Copyright (C) 2011
+ * @author	Randall Wood Copyright (C) 2011
  * @version	$Revision: $
  */
 public class RosterEntrySelection implements Transferable, ClipboardOwner {
@@ -45,13 +41,14 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
     static final DataFlavor[] flavors = {
         RosterEntrySelection.rosterEntryFlavor
     };
-    
+
     private static final List<DataFlavor> flavorList = Arrays.asList(flavors);
 
     /**
      * Create the transferable.
      * <P>
-     * Takes as a parameter an ArrayList containing Strings representing RosterEntry Ids.
+     * Takes as a parameter an ArrayList containing Strings representing
+     * RosterEntry Ids.
      *
      * @param rosterEntries - an ArrayList of RosterEntry Ids
      */
@@ -66,7 +63,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      */
     public static RosterEntrySelection createRosterEntrySelection(ArrayList<RosterEntry> rosterEntries) {
         ArrayList<String> Ids = new ArrayList<String>(rosterEntries.size());
-        for (RosterEntry re: rosterEntries) {
+        for (RosterEntry re : rosterEntries) {
             Ids.add(re.getId());
         }
         return new RosterEntrySelection(Ids);
@@ -96,7 +93,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      * Get an ArrayList of RosterEntries from a RosterEntrySelection.
      *
      * @param t - a Transferable object. This should be a RosterEntrySelection,
-     * but for simplicity, will accept any Transferable object.
+     *          but for simplicity, will accept any Transferable object.
      * @throws UnsupportedFlavorException
      * @throws IOException
      */
@@ -115,8 +112,5 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
         }
         throw new UnsupportedFlavorException(t.getTransferDataFlavors()[0]);
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(RosterEntrySelection.class.getName());
 
 }

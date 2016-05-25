@@ -1,6 +1,5 @@
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -12,17 +11,16 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPSensor class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPSensorTest extends TestCase {
 
     public void testCtor() {
-        SRCPSystemConnectionMemo sm=new SRCPSystemConnectionMemo(new SRCPTrafficController(){
-          @Override
-          public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
-           }
-        });
-        SRCPSensor s = new SRCPSensor(1,sm);
+        SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
+            @Override
+            public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
+            }
+        }, "A", 1);
+        SRCPSensor s = new SRCPSensor(1, sm);
         Assert.assertNotNull(s);
     }
 
@@ -53,5 +51,4 @@ public class SRCPSensorTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = Logger.getLogger(SRCPSensorTest.class.getName());
 }

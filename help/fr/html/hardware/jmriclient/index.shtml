@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<!-- Translated by Herv&#233; Blorec 2013-09-10 -->
+<title>JMRI: JMRIClient and SimpleServer Configuration</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Connexion JMRIClient 
+</h1>
+
+<p>La connexion JMRIClient fournit une m&#233;thode de connexion &#224; distance d'un programme JMRI &#224; un autre. Il peut &#234;tre utilis&#233; pour construire un panneau sur un ordinateur qui est connect&#233; au r&#233;seau directement, mais actuellement fait fonctionner le panneau sur un ordinateur sans connexion physique au r&#233;seau.</p>
+
+    
+
+<h2>
+Le Simple Serveur JMRI
+</h2>
+
+<p>"Simple" dans ce cas, d&#233;signe en fait le protocole, pas le serveur
+lui-m&#234;me. Il utilise des commandes assez simples qui incluent le nom du p&#233;riph&#233;rique
+(sauf pour la commande d'alimentation) pour envoyer des informations bi-directionnelles. Le
+protocole limite les actions qui peuvent &#234;tre prises, de sorte qu'il sera
+&#233;ventuellement remplac&#233; par un protocole plus complet (et complexe).</p>
+
+<p> Le serveur prend en charge actuellement le basculement d'aiguillages, la commutation de lumi&#232;res et
+, les commentaires des capteurs, des commentaires de Rapports et la commande d'alimentation. Vous pouvez
+d&#233;marrer le serveur &#224; travers une action configuration. Il utilise le port TCP 2048. Le
+Port est situ&#233; dans une pr&#233;f&#233;rence, de sorte que vous pouvez le changer si n&#233;cessaire.</p>
+
+<h2> JMRIClient</h2>
+<p> JMRIClient fonctionne avec le serveur pour permettre la commande &#224; distance des
+aiguillages, lumi&#232;res, alimentation, et la r&#233;troaction &#224; distance des capteurs et
+Rapports.</p>
+
+<p> Pour configurer le JMRIClient, vous pouvez s&#233;lectionner l'option "JMRI (R&#233;seau)" dans la
+liste des fabricants de Syst&#232;mes. Sous cette option se trouve "Connexion R&#233;seau JMRI". Vous pouvez avoir plusieurs interfaces   "connexion r&#233;seau JMRI" configur&#233;es.</p>
+
+<p> Le client utilise actuellement le pr&#233;fixe du syst&#232;me pour d&#233;terminer ce qu'il faut envoyer au serveur. Si votre serveur dispose d'une connexion avec un pr&#233;fixe "XYZ", vous avez besoin de configurer votre client avec le pr&#233;fixe "XYZ" pour pouvoir acc&#233;der aux
+dispositifs nomm&#233;s sur le serveur.</p>
+
+<p> Si vous avez plus d'un syst&#232;me connect&#233; au serveur, vous devez configurer plus d'une connexion client. NOTE: Il y a actuellement un avertissement lorsque vous configurez plus d'un client, parce que toute l'information du port est la m&#234;me. Vous pouvez ignorer ceci  pour une connexion r&#233;seau.</p>
+
+<p> Une fois que le client a envoy&#233; une requ&#234;te au serveur sur un objet, tous les les changements d'&#233;tat sont affich&#233;s &#224; la fois sur le client et le serveur.</p>
+
+<h2>Exemples d'exploitations</h2>
+
+<h3>Duplication de connexion simple</h3>
+
+<p> L'utilisation op&#233;rationnelle simple de  JMRIClient et du serveur simple 
+est d'avoir un ordinateur reli&#233; directement au r&#233;seau (l'ordinateur serveur)
+et un second ordinateur (l'ordinateur client) reli&#233; au premier par l'interm&#233;diaire d'un
+r&#233;seau informatique o&#249; vous souhaitez faire fonctionner un panneau.</p>
+
+<p> Pour cet exemple, nous supposerons que le serveur dispose d'une connexion Loconet avec le pr&#233;fixe "L".</p>
+
+<p> Sur l'ordinateur serveur, ouvrez les Pr&#233;f&#233;rences et s&#233;lectionnez le groupe D&#233;marrage.
+cliquez sur le bouton "Ajouter une action", et s&#233;lectionnez "D&#233;marrer serveur simple JMRI" dans la liste
+d'options. Enregistrer les pr&#233;f&#233;rences et red&#233;marrez le programme.</P>
+
+<p>
+<img src="images/simpleserver-autostart.png" alt="Action ajout&#233; &#224; d&#233;marrer automatiquement le JMRI SimpleServer">
+</ p>
+
+<p> Sur la machine cliente, ajouter un "(R&#233;seau) JMRI" connexion. Changer le pr&#233;fixe syst&#232;me
+connexion pour "L". et d&#233;finir l'adresse IP &#224; l'adresse IP du serveur. Sauvegarder
+les pr&#233;f&#233;rences et red&#233;marrez le programme.</p>
+
+<p>
+<img src="images/jmriclient-base-configuration.png" alt="JMRIClient Configuration screen (configured for LocoNet with a server on localhost)">
+</p>
+<p> Une fois que les deux ordinateurs ont red&#233;marrer JMRI, vous serez en mesure de charger un fichier panneau
+ sur l'ordinateur client qui a &#233;t&#233; cr&#233;&#233; au paravant sur l'ordinateur serveur.</p>
+
+<p> Chaque machine aura son propre ensemble de fichiers tableaux et (&#233;ventuellement) de panneau charg&#233;s,
+si le client d&#233;clenche une action, l'information sera transf&#233;r&#233;e vers le serveur, et le serveur va d&#233;clencher une action sur le r&#233;seau. Si une action se produit sur le serveur, le serveur tramsmet une indication de l'action au client si le client a
+a indiqu&#233; qu'il s'int&#233;resse &#224; l'appareil.</p>
+
+<h2>Remarques sur l'utilisation </h2>
+<ol>
+<li> Si vous avez des logixs ou des itin&#233;raires, vous voulez probablement que ceux-ci
+ne s'ex&#233;cutent que sur une des deux machines.</li>
+<li> Pour tout renseignement sur une lumi&#232;re / aiguillage / capteur qui doivent &#234;tre restitu&#233; au client, il doit &#234;tre d&#233;fini sur le client.</li>
+<li> <p> L'inversion est d&#233;finie &#224; la fois pour les capteurs et les aiguillages. Si l'invertion est
+    activ&#233;e &#224; la fois par le client et le serveur, le dispositif r&#233;el aura
+    un comportement normal lorsque le client l'utilisera.</p>
+    <p> Celui-ci est int&#233;ressant, car il peut &#234;tre un bug ou pas un bug
+en fonction de votre cas d'utilisation.</p>
+    <p> Si votre cas d'utilisation est que le client et les serveurs ont des panneaux en cours d'ex&#233;cution
+, alors vous pourriez consid&#233;rer cela comme un bug. Il existe deux solutions de contournement
+dans ce cas 1) charger un panneau sans configuration d'inversion sur le client ou 2)
+Ex&#233;cutez le panneau sur le serveur via une seconde instance de JMRI qui est
+agissant comme un client pour la premi&#232;re instance.</p>
+    <p> Si votre cas d'utilisation est que le serveur fournit juste les connexions, mais
+ne fait pas de logique, alors ce n'est pas un bug.</p>
+
+   </li>
+</ol>
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

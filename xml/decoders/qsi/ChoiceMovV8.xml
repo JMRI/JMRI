@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,75 +12,75 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
 <!-- function output choices when moving -->
-<ienumVal>
-  <ienumChoice choice="None" value="0"/>
-  <ienumChoice choice="Horn" value="1" include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,2102,2105,5100,5101"/>
-  <ienumChoice choice="Whistle" value="1" include="3100,3101,3106,3107,4100,4101,4102"/>
-  <ienumChoice choice="Standard/Alt Horn Selection" value="2"/>
-  <ienumChoice choice="Bell" value="3"/>
-  <ienumChoice choice="Dynamic Brakes" value="5"/>
-  <ienumChoice choice="Cooling Fans" value="8" include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,2102,2105,5100,5101"/>
-  <ienumChoice choice="Blower Hiss" value="8" include="3100,3101,3106,3107,4100,4101,4102"/>
-  <ienumChoice choice="Long Air Let-off" value="9"/>
-  <ienumChoice choice="Short Air Let-off" value="10"/>
-  <ienumChoice choice="Pop-off" value="12"/>
-  <ienumChoice choice="Blow Down" value="11"/>
-  <ienumChoice choice="User Sound" value="25"/>
-  <ienumChoice choice="Loop User Sound" value="26"/>
-  <ienumChoice choice="Volume Increase" value="62"/>
-  <ienumChoice choice="Volume Decrease" value="63"/>
-  <ienumChoice choice="Mute" value="64"/>
-  <ienumChoice choice="Doppler Shift" value="65"/>
-  <ienumChoice choice="Automatic Headlight" value="70"/>
-  <ienumChoice choice="Headlight" value="71"/>
-  <ienumChoice choice="Dim Headlight" value="72"/>
-  <ienumChoice choice="Automatic Reverse Light" value="73"/>
-  <ienumChoice choice="Reverse Light" value="74"/>
-  <ienumChoice choice="Dim Reverse Light" value="75"/>
-  <ienumChoice choice="Automatic Mars Light" value="76"/>
-  <ienumChoice choice="Mars Light" value="77"/>
-  <ienumChoice choice="Dim Mars Light" value="78"/>
-  <ienumChoice choice="Strobe Mars Light" value="79"/>
-  <ienumChoice choice="Automatic Rear Mars Light" value="80" 			include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Rear Mars Light" value="81" 						include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Dim Rear Mars Light" value="82" 					include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Strobe Rear Mars Light" value="83" 				include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Automatic Ditch Light" value="84" 				include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Ditch Light" value="85" 							include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Dim Ditch Light" value="86" 						include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Strobe Ditch Light" value="87" 					include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Automatic Rear Ditch Light" value="88" 			include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Rear Ditch Light" value="89" 					include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Dim Rear Ditch Light" value="90" 				include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Strobe Rear Ditch Light" value="91" 				include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Auto Overhead Beacon Light" value="92" 			include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Overhead Beacon Light" value="93" 				include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Auto Rear Overhead Beacon Light" value="96" 		include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Rear Overhead Beacon Light" value="97" 			include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Automatic Front Number Board Lights" value="100"	include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,3100,3101,3106,3107,4100,4101,4102,5100,5101"/>
-  <ienumChoice choice="Front Number Board Lights" value="101"			include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,3100,3101,3106,3107,4100,4101,4102,5100,5101"/>
-  <ienumChoice choice="Automatic Rear Number Board Lights" value="102" 	include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Rear Number Board Lights" value="103" 			include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
-  <ienumChoice choice="Automatic Front Marker Lights" value="104"/>
-  <ienumChoice choice="Front Marker Lights" value="105"/>
-  <ienumChoice choice="Automatic Rear Marker Lights" value="106"/>
-  <ienumChoice choice="Rear Marker Lights" value="107"/>
-  <ienumChoice choice="Step Lights" value="113"						include="2105"/>
-  <ienumChoice choice="Automatic Front Cab Lights" value="116"/>
-  <ienumChoice choice="Front Cab Lights" value="117"/>
-  <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,2102,2105,3100,3101,3106,3107,4100,4101,4102,5100,5101"/>
-  <ienumChoice choice="Rear Cab  Lights" value="119" 					include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,2102,2105,3100,3101,3106,3107,4100,4101,4102,5100,5101"/>
-  <ienumChoice choice="Firebox" value="122" 							include="3100,3101,3106,3107,4100,4101,4102"/>
-  <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
-  <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
-  <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
-  <ienumChoice choice="Water Scoop Scenario" value="150"/>
-  <ienumChoice choice="Grade Crossing" value="154"/>
-  <ienumChoice choice="Air Brakes" value="176"/>
-  <ienumChoice choice="Status Report" value="178"/>
-  <ienumChoice choice="Heavy Load" value="179"/>
-  <ienumChoice choice="Coupler Effect" value="211"/>
-  <ienumChoice choice="Squealing Brakes" value="215"/>
-  <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
-  <ienumChoice choice="Steam Generator" value="218"/>
-</ienumVal>
+<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="None" value="0"/>
+  <enumChoice choice="Horn" value="1" include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,2102,2105,5100,5101"/>
+  <enumChoice choice="Whistle" value="1" include="3100,3101,3106,3107,4100,4101,4102"/>
+  <enumChoice choice="Standard/Alt Horn Selection" value="2"/>
+  <enumChoice choice="Bell" value="3"/>
+  <enumChoice choice="Dynamic Brakes" value="5"/>
+  <enumChoice choice="Cooling Fans" value="8" include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,2102,2105,5100,5101"/>
+  <enumChoice choice="Blower Hiss" value="8" include="3100,3101,3106,3107,4100,4101,4102"/>
+  <enumChoice choice="Long Air Let-off" value="9"/>
+  <enumChoice choice="Short Air Let-off" value="10"/>
+  <enumChoice choice="Pop-off" value="12"/>
+  <enumChoice choice="Blow Down" value="11"/>
+  <enumChoice choice="User Sound" value="25"/>
+  <enumChoice choice="Loop User Sound" value="26"/>
+  <enumChoice choice="Volume Increase" value="62"/>
+  <enumChoice choice="Volume Decrease" value="63"/>
+  <enumChoice choice="Mute" value="64"/>
+  <enumChoice choice="Doppler Shift" value="65"/>
+  <enumChoice choice="Automatic Headlight" value="70"/>
+  <enumChoice choice="Headlight" value="71"/>
+  <enumChoice choice="Dim Headlight" value="72"/>
+  <enumChoice choice="Automatic Reverse Light" value="73"/>
+  <enumChoice choice="Reverse Light" value="74"/>
+  <enumChoice choice="Dim Reverse Light" value="75"/>
+  <enumChoice choice="Automatic Mars Light" value="76"/>
+  <enumChoice choice="Mars Light" value="77"/>
+  <enumChoice choice="Dim Mars Light" value="78"/>
+  <enumChoice choice="Strobe Mars Light" value="79"/>
+  <enumChoice choice="Automatic Rear Mars Light" value="80" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Rear Mars Light" value="81" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Dim Rear Mars Light" value="82" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Strobe Rear Mars Light" value="83" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Automatic Ditch Light" value="84" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Ditch Light" value="85" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Dim Ditch Light" value="86" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Strobe Ditch Light" value="87" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Automatic Rear Ditch Light" value="88" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Rear Ditch Light" value="89" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Dim Rear Ditch Light" value="90" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Strobe Rear Ditch Light" value="91" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Auto Overhead Beacon Light" value="92" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Overhead Beacon Light" value="93" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Auto Rear Overhead Beacon Light" value="96" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Rear Overhead Beacon Light" value="97" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Automatic Front Number Board Lights" value="100" include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,3100,3101,3106,3107,4100,4101,4102,5100,5101"/>
+  <enumChoice choice="Front Number Board Lights" value="101" include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,3100,3101,3106,3107,4100,4101,4102,5100,5101"/>
+  <enumChoice choice="Automatic Rear Number Board Lights" value="102" include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Rear Number Board Lights" value="103" include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,5100,5101"/>
+  <enumChoice choice="Automatic Front Marker Lights" value="104"/>
+  <enumChoice choice="Front Marker Lights" value="105"/>
+  <enumChoice choice="Automatic Rear Marker Lights" value="106"/>
+  <enumChoice choice="Rear Marker Lights" value="107"/>
+  <enumChoice choice="Step Lights" value="113" include="2105"/>
+  <enumChoice choice="Automatic Front Cab Lights" value="116"/>
+  <enumChoice choice="Front Cab Lights" value="117"/>
+  <enumChoice choice="Automatic Rear Cab Lights" value="118" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,2102,2105,3100,3101,3106,3107,4100,4101,4102,5100,5101"/>
+  <enumChoice choice="Rear Cab  Lights" value="119" include="1100,1101,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,2102,2105,3100,3101,3106,3107,4100,4101,4102,5100,5101"/>
+  <enumChoice choice="Firebox" value="122" include="3100,3101,3106,3107,4100,4101,4102"/>
+  <enumChoice choice="Multiple Automatic Lights #1" value="136"/>
+  <enumChoice choice="Multiple Automatic Lights #2" value="137"/>
+  <enumChoice choice="Multiple Automatic Lights #3" value="138"/>
+  <enumChoice choice="Water Scoop Scenario" value="150"/>
+  <enumChoice choice="Grade Crossing" value="154"/>
+  <enumChoice choice="Air Brakes" value="176"/>
+  <enumChoice choice="Status Report" value="178"/>
+  <enumChoice choice="Heavy Load" value="179"/>
+  <enumChoice choice="Coupler Effect" value="211"/>
+  <enumChoice choice="Squealing Brakes" value="215"/>
+  <enumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
+  <enumChoice choice="Steam Generator" value="218"/>
+</enumVal>

@@ -32,8 +32,6 @@
 #
 # Components based on Bob Jacobsen's scripts in JMRI distribution. 
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import java
 import javax.swing

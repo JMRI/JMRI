@@ -1,102 +1,109 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: EasyDCC
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - EasyDCC</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H2> 
-      JMRI Hardware Guide: EasyDCC
-      </H2>
+<h1>Hardware Support: EasyDCC</h1>
 
-	<H3>Supported Hardware</H3>
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Command Station</h3>
+	<ul>
+	  <li>EDCSK -  EasyDCC Kit Command Station
+	  <li>EDCSA -  EasyDCC Assembled Command Station
+	  <li>EDCSB -  EasyDCC "board alone" Command Station
+	</ul>
 
-	<UL>
-	<li>EDCSK -  EasyDCC Kit Command Station
-	<li>EDCSA -  EasyDCC Assembled Command Station
-	<li>EDCSB -  EasyDCC "board alone" Command Station
-	</UL>
-
-	<H3>Limitations</H3>
+<a name="limitations"></a><h2>Limitations</h2>
 
 	<p> Some older EasyDCC systems may need an update to their program.
 	This is done by replacing the "PROM" chips in the command station
-	with a newer version.  Version 207 is known to work well, and
+	with a newer version. Version 207 is known to work well, but
 	version 022 is known to have some problems communicating with a
-	computer.  Most recent command stations will be OK.</p>
+	computer. Most recent EasyDCC command stations will be OK.</p>
 
-	<H3>Setup</H3>
-
-	  <ol>
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Wiring</h3>
+	<ol>
 	  <li> To connect your computer to an EasyDCC system, you need to
-	  connect the command station to the computer's serial port using a
+	  connect the Command Station to the computer's serial port using a
 	  special cable.  Unfortunately, this is not an item that computer
 	  stores generally stock, due to the special RJ11 connector needed at the 
 	  command station end of the cable. You'll probably have to make this
 	  cable yourself, or have another CVP user make it for you.
-	  <P>
+	  <p>
 	  For more information on how the cable is wired, see page
 	  134 of the EasyDCC V4 command station manual or page 143 of the V6 manual
 	  (a 
-	  <A HREF="http://www.cvpusa.com/doc_center/6_97_easydcc_manual_web_sec.pdf">version in a PDF file</a>
-	  is available on the web)
-	  <P>
-	  One easy way to do it is to buy a 9-pin serial cable and a phone
-	  cable, then cut them and splice them together.
+	  <a href="http://www.cvpusa.com/doc_center/r1_CS2B_User_Guide_web.pdf">version in PDF</a>
+	  is available on the web).
+	  <p>
+	  One easy way to connect the system to your computer is to buy a 9-pin serial cable and a phone
+	  cable, then cut them and splice them together.<br>
+	  A more modern alternative is to use a USB-to-Serial adapter.
 	  </li>
-
-	  <li>Next go to the preferences panel of a JMRI-based program.
+  </ol>
+	  
+<h3>Settings</h3>
+  <ul>
+	  <li>Next, go to the Preferences panel of a JMRI-based program.
 	  This opens automatically the first time a program is run, or you
-	  can select it from the "Edit" menu.  </li>
+	  can select it from the "Edit" menu.</li>
 
-	  <li> Select "EasyDCC" from the top selection box. You can then
-	  select the proper serial port in the second selection box.  </li>
+	  <li>In the <strong>Connections</strong> tab, select "Easy DCC" from the System Manufacturer selection box. 
+	</ul>
+	  
+	<h4>Serial</h4>
+	  <ul>
+	  <li>Select "EasyDCC via Serial" as the System Connection. You can then
+	  select the proper serial port from the drop-down list under Settings.</li>
+	  <li>Under Additional Connection Settings, the baud rate box will be fixed at 9,600 baud.</li>
+		</ul>
+	<h4>Network</h4>
+		<ul>
+		<li>Select "EasyDCC via Network" as the System Connection.</li>
+		<li>Under Settings, enter the IP Address (optional for zeroConfig/mDNS) and Port number.</li>
+		</ul>
+		
+	  <ul>
+	  <li>Click "Save". You'll be asked if it's OK for the program to quit; click "Yes".</li>
+	  <li>Restart JMRI. You should now be up and running.</li>
+		</ul>
 
-	  <li> The baud rate selection box will be fixed at 9600 baud.</li>
+<h3>Debugging</h3>
+	<p>Please refer to the <a href="http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC Manuals</a>.</p>
 
-	  <li> The series of radio buttons labelled "GUI style" allows you
-	  to select how the program will look.  "Metal" is the native Java
-	  look available on all types.  Other choices will vary with your
-	  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
-	  look native on Linux, Windows, MacOS "Classic" and Mac OS X
-	  respectively.</li>
+<a name="tools"></a><h2>JMRI EasyDCC Tools</h2>
+<img src="images/EasyDCCMenu.png" width="187" height="72" align="right" alt="Menu">
+<h4><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Command Monitor</a></h4>
+<img src="images/EasyDCCMonitor.png" width="364" height="99" alt="Monitor pane">
 
-	  <li> In the bottom selection box, you can pick the default
-	  programmer format. You can override this each time you open the
-	  programmer, so this is here just for convenience.  </li>
+<h4><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Send Command</a></h4>
+<img src="images/EasyDCCSendCmd.png" width="230" height="95" alt="Send Command pane">
 
-	  <li> Click "Save".  You'll be asked if it's OK for the program to
-	  quit, click "Yes".</li>
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
 
-	  <li> Restart the program. You should be up and running.</li>
-
-	  </ol>
-
-	<H3>Debugging</H3>
-
-	<p><a href="http://www.cvpusa.com/easydcc/default.htm">CVP EasyDCC Manuals</a></p>
-
+<h3>Third Party info</h3>
+<p>The <a href="http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC Manuals</a>
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

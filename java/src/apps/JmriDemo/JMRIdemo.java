@@ -1,40 +1,34 @@
-// JMRIdemo.java
-
 package apps.JmriDemo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import apps.Apps;
-
 import java.text.MessageFormat;
-
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI demo program.
  * <P>
- * If an argument is provided at startup, it will be used as the name of
- * the configuration file.  Note that this is just the name, not the path;
- * the file is searched for in the usual way, first in the preferences tree and then in
+ * If an argument is provided at startup, it will be used as the name of the
+ * configuration file. Note that this is just the name, not the path; the file
+ * is searched for in the usual way, first in the preferences tree and then in
  * xml/
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2003
  */
 public class JMRIdemo extends Apps {
 
@@ -43,15 +37,12 @@ public class JMRIdemo extends Apps {
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("JmriDemoVersionCredit"),
-                                new Object[]{jmri.Version.name()});
+        return MessageFormat.format(Bundle.getMessage("JmriDemoVersionCredit"),
+                new Object[]{jmri.Version.name()});
     }
 
     /**
      * Adds the development menu to the default main menu bar.
-     *
-     * @param menuBar
-     * @param wi
      */
     @Override
     protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
@@ -73,7 +64,7 @@ public class JMRIdemo extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(apps.Apps.startupInfo("JMRIdemo"));
+        Apps.setStartupInfo("JMRIdemo");
 
         setConfigFilename("JmriDemoConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("JmriDemo");
@@ -83,7 +74,5 @@ public class JMRIdemo extends Apps {
         splash(false);
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIdemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIdemo.class.getName());
 }
-
-

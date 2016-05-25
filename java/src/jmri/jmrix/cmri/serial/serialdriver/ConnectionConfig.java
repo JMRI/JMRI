@@ -1,39 +1,38 @@
 // ConnectionConfig.java
-
 package jmri.jmrix.cmri.serial.serialdriver;
 
-import javax.swing.*;
 import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 
 // import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 //import jmri.jmrix.cmri.serial.nodetable.NodeTableAction;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
 /**
- * Definition of objects to handle configuring a layout connection
- * via an CMRInet SerialDriverAdapter object.
+ * Definition of objects to handle configuring a layout connection via an C/MRI
+ * SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author	Chuck Catania  Copyright (C) 2014
  * @version	$Revision: 18323 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
-//        System.out.println("In jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig - super(p);");
-
     }
+
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
         super();
-//        System.out.println("In jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig - super();");
     }
 
     public void loadDetails(JPanel details) {
@@ -55,14 +54,17 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 		b.addActionListener(new NodeConfigManagerAction());		
         
     }
-    
+
     @Override
-    protected ResourceBundle getActionModelResourceBundle(){
+    protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
     }
 
-    public String name() { return "Serial"; }
+    public String name() {
+        return "Serial";
+    }
 
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    protected void setInstance() {
+        adapter = SerialDriverAdapter.instance();
+    }
 }
-

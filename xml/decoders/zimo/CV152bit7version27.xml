@@ -1,19 +1,22 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 15 Aug 11 JES
                  - added minOut
 -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
-  <variable label="FO9 directional setting" CV="152" mask="VXXXXXXX" default="0" minOut="11">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="FO9 directional setting" CV="152" mask="VXXXXXXX" default="0" minOut="11">
     <enumVal>
       <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
         <choice>Non Directional, normal NMRA mapping</choice>
+        <choice xml:lang="it">Luci non direzionali, Standard NMRA</choice>
       </enumChoice>
       <enumChoice choice="FO9 on in reverse" value="1">
         <choice>FO9 directional</choice>
+        <choice xml:lang="it">Luci direzionali FO9</choice>
       </enumChoice>
     </enumVal>
     <label>FO9 directional setting</label>
+    <label xml:lang="it">Luci direzionali FO9</label>
   </variable>
 </variables>

@@ -18,20 +18,31 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import org.jdom.Element;
+import org.jdom2.Element;
 
 abstract public class Trigger implements PropertyChangeListener {
 
-    
+    static public enum TriggerType {
 
-    static public enum TriggerType { BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT, THROTTLE }
-    static public enum TargetAction { PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, CHANGE, NOTHING }
-    static public enum CompareType { EQ, GT, LT, GTE, LTE }
-    static public enum CompareValueType { INT, FLOAT }
+        BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT, THROTTLE
+    }
+
+    static public enum TargetAction {
+
+        PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, CHANGE, NOTHING
+    }
+
+    static public enum CompareType {
+
+        EQ, GT, LT, GTE, LTE
+    }
+
+    static public enum CompareValueType {
+
+        INT, FLOAT
+    }
 
     String trigger_name; // Name for the trigger object
     String event_name;  // event to respond to
@@ -43,95 +54,93 @@ abstract public class Trigger implements PropertyChangeListener {
     TriggerListener callback;
 
     public Trigger(String name) {
-	trigger_name = name;
-	event_name = "";
-	target = null;
-	target_action = TargetAction.NOTHING;
-	trigger_type = TriggerType.NONE;
+        trigger_name = name;
+        event_name = "";
+        target = null;
+        target_action = TargetAction.NOTHING;
+        trigger_type = TriggerType.NONE;
     }
 
     abstract public void propertyChange(PropertyChangeEvent event);
-    
-    // JavaBean set/get functions
 
+    // JavaBean set/get functions
     public void setName(String tn) {
-	trigger_name = tn;
+        trigger_name = tn;
     }
 
     public String getName() {
-	return(trigger_name);
+        return (trigger_name);
     }
 
     public void setEventName(String en) {
-	event_name = en;
+        event_name = en;
     }
 
     public String getEventName() {
-	return(event_name);
+        return (event_name);
     }
 
     public void setTarget(VSDSound tgt) {
-	target = tgt;
+        target = tgt;
     }
 
     public VSDSound getTarget() {
-	return(target);
+        return (target);
     }
 
     public void setTargetName(String tn) {
-	target_name = tn;
+        target_name = tn;
     }
 
     public String getTargetName() {
-	return(target_name);
+        return (target_name);
     }
 
     public void setTargetAction(Trigger.TargetAction ta) {
-	target_action = ta;
+        target_action = ta;
     }
 
     public Trigger.TargetAction getTargetAction() {
-	return(target_action);
+        return (target_action);
     }
-    
+
     public void setTriggerType(Trigger.TriggerType ta) {
-	trigger_type = ta;
+        trigger_type = ta;
     }
 
     public Trigger.TriggerType getTriggerType() {
-	return(trigger_type);
+        return (trigger_type);
     }
 
     public void setCallback(TriggerListener cb) {
-	callback = cb;
+        callback = cb;
     }
 
     public TriggerListener getCallback() {
-	return(callback);
+        return (callback);
     }
 
     public Element getXml() {
-	Element me = new Element("Trigger");
-	me.setAttribute("name", trigger_name);
-	me.setAttribute("type", "empty");
-	// do something, eventually...
-	return(me);
+        Element me = new Element("Trigger");
+        me.setAttribute("name", trigger_name);
+        me.setAttribute("type", "empty");
+        // do something, eventually...
+        return (me);
     }
 
     public void setXml(Element e) {
-	// Grab XML content that's common to all Triggers
-	trigger_name = e.getAttributeValue("name");
-	event_name = e.getChild("event-name").getValue();
-	target_name = e.getChild("target-name").getValue();
-	try {
-	    this.setTargetAction(Trigger.TargetAction.valueOf(e.getChild("action").getValue()));
-	} catch(IllegalArgumentException iea) {
-	    this.setTargetAction(Trigger.TargetAction.NOTHING);
-	} catch(NullPointerException npe) {
-	    this.setTargetAction(Trigger.TargetAction.NOTHING);
-	}
+        // Grab XML content that's common to all Triggers
+        trigger_name = e.getAttributeValue("name");
+        event_name = e.getChild("event-name").getValue();
+        target_name = e.getChild("target-name").getValue();
+        try {
+            this.setTargetAction(Trigger.TargetAction.valueOf(e.getChild("action").getValue()));
+        } catch (IllegalArgumentException iea) {
+            this.setTargetAction(Trigger.TargetAction.NOTHING);
+        } catch (NullPointerException npe) {
+            this.setTargetAction(Trigger.TargetAction.NOTHING);
+        }
     }
 
     //private static final Logger log = LoggerFactory.getLogger(Trigger.class.getName());
-    
 }

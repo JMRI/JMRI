@@ -1,5 +1,3 @@
-// RosterEntrySelectorPanel.java
-
 package jmri.jmrit.roster.swing;
 
 import java.awt.FlowLayout;
@@ -106,7 +104,7 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
     public String getNonSelectedItem() {
         return this.entryCombo.getNonSelectedItem();
     }
-    
+
     public void setNonSelectedItem(String itemText) {
         this.entryCombo.setNonSelectedItem(itemText);
     }
