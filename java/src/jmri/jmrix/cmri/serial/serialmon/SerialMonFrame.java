@@ -81,7 +81,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             StringBuilder sb = new StringBuilder("Init ua=");
             sb.append(l.getUA());
             sb.append(" type=");
-            sb.append((char) l.getElement(2));
+            int ua=l.getElement(2);
+            sb.append((char)ua);
             int len = l.getNumDataElements();
             
             //  SMINI/SUSIC/USIC

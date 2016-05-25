@@ -39,9 +39,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for Frames displaying communications monitor information
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2014
- * @author	Bob Jacobsen   Copyright (C) 2001, 2003
  * @author	Chuck Catania  Copyright (C) 2014, 2016
- * @version	$Revision: 20196 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame {
 
@@ -171,14 +169,14 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         jScrollPane1.setVisible(true);
         jScrollPane1.setBorder(packetDisplayBorderTitled); 
                 
-        logMsgButton.setText("Start Logging");
+        logMsgButton.setText(Bundle.getMessage("ButtonStartLogging"));
         logMsgButton.setVisible(true);
-        logMsgButton.setToolTipText("Start/Stop message logging to file");
+        logMsgButton.setToolTipText(Bundle.getMessage("TooltipStartLogging")); //NOI18N
 /*
-        startLogButton.setText("Start logging");
+        startLogButton.setText(Bundle.getMessage("ButtonStartLogging"));
         startLogButton.setVisible(true);
         startLogButton.setToolTipText(Bundle.getMessage("TooltipStartLogging")); // NOI18N
-
+*/
         stopLogButton.setText(Bundle.getMessage("ButtonStopLogging")); // NOI18N
         stopLogButton.setVisible(true);
         stopLogButton.setToolTipText(Bundle.getMessage("TooltipStopLogging")); // NOI18N
@@ -198,8 +196,6 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         deltaTBox.setToolTipText("If checked, show time difference in mS");
         deltaTBox.setSelected(p.getSimplePreferenceState(deltaTCheck));
         
-        alwaysOnTopCheckBox.setText("Window always on Top");
-
         alwaysOnTopCheckBox.setText(Bundle.getMessage("ButtonWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setVisible(true);
         alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("TooltipWindowOnTop")); // NOI18N
@@ -214,7 +210,6 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         openFileChooserButton.setText(Bundle.getMessage("ButtonChooseLogFile")); // NOI18N
         openFileChooserButton.setVisible(true);
         openFileChooserButton.setToolTipText(Bundle.getMessage("TooltipChooseLogFile")); // NOI18N
-        openFileChooserButton.setToolTipText("Click here to select a new output log file");
 
         packetfilterButton.setText("Filter Packets");
         packetfilterButton.setVisible(true);
@@ -543,7 +538,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     }
     
 
-/*
+
     public synchronized void startLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
         if (logStream == null) {  // successive clicks don't restart the file
@@ -566,7 +561,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             logStream = null;
         }
     }
-*/
+
     public void openFileChooserButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start at current file, show dialog
         int retVal = logFileChooser.showSaveDialog(this);

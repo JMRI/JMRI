@@ -7,9 +7,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri CMRI-specific tools
  *
  * @author	Bob Jacobsen Copyright 2003
- * @author	Bob Jacobsen   Copyright 2003
  * @author	Chuck Catania  Copyright 2014, 2015, 2016
-* @version     $Revision: 17977 $
  */
 public class CMRIMenu extends JMenu {
 

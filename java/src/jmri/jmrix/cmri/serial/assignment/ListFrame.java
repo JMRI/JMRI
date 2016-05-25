@@ -59,6 +59,8 @@ public class ListFrame extends jmri.util.JmriJFrame {
     JRadioButton outputBits = new JRadioButton(rb.getString("ShowOutputButton"), true);
     JLabel nodeInfoText = new JLabel("Node Information Text");
 
+    JLabel nodeDesc = new JLabel("Description:");  //c2
+
     // assignment pane items
     protected JPanel assignmentPanel = null;
     protected Border inputBorder = BorderFactory.createEtchedBorder();

@@ -114,7 +114,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     public int getInitTimeout() { return initTimeout; }
     public void setXmitTimeout( int init_XmitTimeout ) { xmitTimeout = init_XmitTimeout; }
     public int getXmitTimeout() { return xmitTimeout; }
-    
+
+    public void setSensorManager(SerialSensorManager m) {
+        mSensorManager = m;
+    }
+
    /**
      *  Handles initialization, output and polling for C/MRI Serial Nodes
      *      from within the running thread

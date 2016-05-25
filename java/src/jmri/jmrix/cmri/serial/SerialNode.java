@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author      Chuck Catania, cpNode Extensions 2013, 2014, 2015, 2016
- * @version	$Revision: 17977 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -277,6 +276,7 @@ public class SerialNode extends AbstractNode {
      */
     public int numInputCards() {
         int result = 0;
+        int nodeID = this.getNodeAddress();
         for (int i = 0; i < cardTypeLocation.length; i++) {
             if (cardTypeLocation[i] == INPUT_CARD) {
                 result++;
@@ -288,7 +288,7 @@ public class SerialNode extends AbstractNode {
         {
           case SMINI:      if (result!=1)
                            {
-                            warn("CMRIS MINI "+"(Node "+nodeID+") with "+result+" INPUT cards");
+                            warn("CMRI SMINI "+"(Node "+nodeID+") with "+result+" INPUT cards");
                            }
           break;
           case USIC_SUSIC: if(result>=MAXCARDLOCATIONBYTES)
@@ -428,8 +428,7 @@ public class SerialNode extends AbstractNode {
      * Set number of bits per card.
      */
     public void setNumBitsPerCard(int bits) {
-        if ((bits == 24) || (bits == 32) || (bits == 16)) {
-        if ( (bits==24) || (bits==32) || (bits==8) ) {
+        if ((bits == 24) || (bits == 32) || (bits == 16) || (bits==8) ) {
             bitsPerCard = bits;
         } else {
             log.warn("unexpected number of bits per card: " + Integer.toString(bits));

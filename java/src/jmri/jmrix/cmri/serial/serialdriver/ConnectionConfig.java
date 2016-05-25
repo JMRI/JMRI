@@ -2,12 +2,10 @@
 package jmri.jmrix.cmri.serial.serialdriver;
 
 import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
-
 // import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
-//import jmri.jmrix.cmri.serial.nodetable.NodeTableAction;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
 /**
